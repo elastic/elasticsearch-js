@@ -309,21 +309,21 @@ export default class Connector {
   }
 
   /**
-    * Deletes a connector secret
+    * Deletes a connector secret.
     */
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretDelete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest | TB.ConnectorSecretDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretDeleteResponse>
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest | TB.ConnectorSecretDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretDeleteResponse, unknown>>
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest | TB.ConnectorSecretDeleteRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretDeleteResponse>
+  async secretDelete (this: That, params: T.ConnectorSecretDeleteRequest | TB.ConnectorSecretDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -340,21 +340,21 @@ export default class Connector {
   }
 
   /**
-    * Retrieves a secret stored by Connectors
+    * Retrieves a secret stored by Connectors.
     */
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretGet (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest | TB.ConnectorSecretGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretGetResponse>
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest | TB.ConnectorSecretGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretGetResponse, unknown>>
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest | TB.ConnectorSecretGetRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretGetResponse>
+  async secretGet (this: That, params: T.ConnectorSecretGetRequest | TB.ConnectorSecretGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -371,21 +371,34 @@ export default class Connector {
   }
 
   /**
-    * Creates a secret for a Connector
+    * Creates a secret for a Connector.
     */
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretPost (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest | TB.ConnectorSecretPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretPostResponse>
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest | TB.ConnectorSecretPostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretPostResponse, unknown>>
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest | TB.ConnectorSecretPostRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretPostResponse>
+  async secretPost (this: That, params?: T.ConnectorSecretPostRequest | TB.ConnectorSecretPostRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['value']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -399,21 +412,33 @@ export default class Connector {
   }
 
   /**
-    * Creates or updates a secret for a Connector
+    * Creates or updates a secret for a Connector.
     */
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async secretPut (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest | TB.ConnectorSecretPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretPutResponse>
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest | TB.ConnectorSecretPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorSecretPutResponse, unknown>>
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest | TB.ConnectorSecretPutRequest, options?: TransportRequestOptions): Promise<T.ConnectorSecretPutResponse>
+  async secretPut (this: That, params: T.ConnectorSecretPutRequest | TB.ConnectorSecretPutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['value']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1014,7 +1039,7 @@ export default class Connector {
 
   /**
     * Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-filtering-validation-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-connector-update-filtering-validation | Elasticsearch API documentation}
     */
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateFilteringValidationResponse, unknown>>
@@ -1146,7 +1171,7 @@ export default class Connector {
 
   /**
     * Update the connector is_native flag.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-native-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-connector-update-native | Elasticsearch API documentation}
     */
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ConnectorUpdateNativeResponse, unknown>>
