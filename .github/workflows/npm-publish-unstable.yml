@@ -76,5 +76,3 @@ jobs:
 
           # publish to npm
           npm publish --provenance --access public --tag "unstable"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
