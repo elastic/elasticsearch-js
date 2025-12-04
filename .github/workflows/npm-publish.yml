@@ -44,8 +44,6 @@ jobs:
             tag=$(echo "$tag_meta" | cut -d '.' -f1)
             npm publish --provenance --access public --tag "$tag"
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish version on GitHub
         run: |
           version=$(jq -r .version package.json)
