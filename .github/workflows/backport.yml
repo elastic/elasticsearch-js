@@ -22,6 +22,11 @@ jobs:
         )
       )
     steps:
-      - uses: tibdex/backport@9565281eda0731b1d20c4025c43339fb0a23812e  # v2.0.4
+      - name: Fetch ephemeral GitHub token
+        id: fetch-token
+        uses: elastic/ci-gh-actions/fetch-github-token@8a7604dfdd4e7fe21f969bfe9ff96e17635ea577 # v1.0.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          vault-instance: "ci-prod"
+      - uses: tibdex/backport@9565281eda0731b1d20c4025c43339fb0a23812e # v2.0.4
+        with:
+          github_token: ${{ steps.fetch-token.outputs.token }}
