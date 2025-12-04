@@ -52,7 +52,7 @@ export default class Monitoring {
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MonitoringBulkResponse, unknown>>
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.MonitoringBulkResponse>
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['type']
+    const acceptedPath: string[] = []
     const acceptedBody: string[] = ['operations']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
@@ -73,10 +73,7 @@ export default class Monitoring {
     const method = 'POST'
     const path = '/_monitoring/bulk'
     const meta: TransportRequestMetadata = {
-      name: 'monitoring.bulk',
-      pathParts: {
-        type: params.type
-      }
+      name: 'monitoring.bulk'
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }

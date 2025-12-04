@@ -91,6 +91,7 @@ Some of the officially supported clients provide helpers to assist with bulk req
 * Perl: Check out `Search::Elasticsearch::Client::5_0::Bulk` and `Search::Elasticsearch::Client::5_0::Scroll`
 * Python: Check out `elasticsearch.helpers.*`
 * JavaScript: Check out `client.helpers.*`
+* Java: Check out `co.elastic.clients.elasticsearch._helpers.bulk.BulkIngester`
 * .NET: Check out `BulkAllObservable`
 * PHP: Check out bulk indexing.
 * Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
@@ -533,14 +534,14 @@ Rethrottling that speeds up the query takes effect immediately but rethrotting t
 {ref}/docs-delete-by-query.html[Endpoint documentation]
 [source,ts]
 ----
-client.deleteByQueryRethrottle({ task_id })
+client.deleteByQueryRethrottle({ task_id, requests_per_second })
 ----
 [discrete]
 ==== Arguments
 
 * *Request (object):*
 ** *`task_id` (string | number)*: The ID for the task.
-** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`.
+** *`requests_per_second` (float)*: The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`.
 
 [discrete]
 === delete_script
@@ -1599,14 +1600,14 @@ This behavior prevents scroll timeouts.
 {ref}/docs-reindex.html[Endpoint documentation]
 [source,ts]
 ----
-client.reindexRethrottle({ task_id })
+client.reindexRethrottle({ task_id, requests_per_second })
 ----
 [discrete]
 ==== Arguments
 
 * *Request (object):*
 ** *`task_id` (string)*: The task identifier, which can be found by using the tasks API.
-** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+** *`requests_per_second` (float)*: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
 
 [discrete]
 === render_search_template
@@ -2301,14 +2302,14 @@ Rethrottling that speeds up the query takes effect immediately but rethrotting t
 {ref}/docs-update-by-query.html[Endpoint documentation]
 [source,ts]
 ----
-client.updateByQueryRethrottle({ task_id })
+client.updateByQueryRethrottle({ task_id, requests_per_second })
 ----
 [discrete]
 ==== Arguments
 
 * *Request (object):*
 ** *`task_id` (string)*: The ID for the task.
-** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second. To turn off throttling, set it to `-1`.
+** *`requests_per_second` (float)*: The throttle for this request in sub-requests per second. To turn off throttling, set it to `-1`.
 
 [discrete]
 === async_search
@@ -4652,6 +4653,8 @@ client.connector.updateFiltering({ connector_id })
 Update the connector draft filtering validation.
 
 Update the draft filtering validation info for a connector.
+
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-connector-update-filtering-validation[Endpoint documentation]
 [source,ts]
 ----
 client.connector.updateFilteringValidation({ connector_id, validation })
@@ -4704,6 +4707,8 @@ client.connector.updateName({ connector_id })
 [discrete]
 ==== update_native
 Update the connector is_native flag.
+
+https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-connector-update-native[Endpoint documentation]
 [source,ts]
 ----
 client.connector.updateNative({ connector_id, is_native })
@@ -4797,7 +4802,7 @@ For example, this can happen if you delete more than `cluster.indices.tombstones
 {ref}/dangling-index-delete.html[Endpoint documentation]
 [source,ts]
 ----
-client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
+client.danglingIndices.deleteDanglingIndex({ index_uuid })
 ----
 
 [discrete]
@@ -4805,7 +4810,7 @@ client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
 
 * *Request (object):*
 ** *`index_uuid` (string)*: The UUID of the index to delete. Use the get dangling indices API to find the UUID.
-** *`accept_data_loss` (boolean)*: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
+** *`accept_data_loss` (Optional, boolean)*: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
@@ -4819,7 +4824,7 @@ For example, this can happen if you delete more than `cluster.indices.tombstones
 {ref}/dangling-index-import.html[Endpoint documentation]
 [source,ts]
 ----
-client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
+client.danglingIndices.importDanglingIndex({ index_uuid })
 ----
 
 [discrete]
@@ -4827,7 +4832,7 @@ client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
 
 * *Request (object):*
 ** *`index_uuid` (string)*: The UUID of the index to import. Use the get dangling indices API to locate the UUID.
-** *`accept_data_loss` (boolean)*: This parameter must be set to true to import a dangling index.
+** *`accept_data_loss` (Optional, boolean)*: This parameter must be set to true to import a dangling index.
 Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
@@ -5025,7 +5030,7 @@ client.eql.search({ index, query })
 ** *`case_sensitive` (Optional, boolean)*
 ** *`event_category_field` (Optional, string)*: Field containing the event classification, such as process, file, or network.
 ** *`tiebreaker_field` (Optional, string)*: Field used to sort hits with the same timestamp in ascending order
-** *`timestamp_field` (Optional, string)*: Field containing event timestamp. Default "@timestamp"
+** *`timestamp_field` (Optional, string)*: Field containing event timestamp.
 ** *`fetch_size` (Optional, number)*: Maximum number of events to search at a time for sequence queries.
 ** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } | { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])*: Query, written in Query DSL, used to filter the events on which the EQL query runs.
 ** *`keep_alive` (Optional, string | -1 | 0)*
@@ -16013,7 +16018,7 @@ This setting primarily has an impact when a whole message Grok pattern such as `
 If the structure finder identifies a common structure but has no idea of meaning then generic field names such as `path`, `ipaddress`, `field1`, and `field2` are used in the `grok_pattern` output, with the intention that a user who knows the meanings rename these fields before using it.
 ** *`explain` (Optional, boolean)*: If this parameter is set to `true`, the response includes a field named explanation, which is an array of strings that indicate how the structure finder produced its result.
 If the structure finder produces unexpected results for some text, use this query parameter to help you determine why the returned structure was chosen.
-** *`format` (Optional, string)*: The high level structure of the text.
+** *`format` (Optional, Enum("ndjson" | "xml" | "delimited" | "semi_structured_text"))*: The high level structure of the text.
 Valid values are `ndjson`, `xml`, `delimited`, and `semi_structured_text`.
 By default, the API chooses the format.
 In this default scenario, all rows must have the same number of fields for a delimited format to be detected.

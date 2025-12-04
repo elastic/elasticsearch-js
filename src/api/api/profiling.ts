@@ -45,22 +45,27 @@ export default class Profiling {
   }
 
   /**
-    * Extracts a UI-optimized structure to render flamegraphs from Universal Profiling
+    * Returns basic information about the status of Universal Profiling.
     * @see {@link https://www.elastic.co/guide/en/observability/8.19/universal-profiling.html | Elasticsearch API documentation}
     */
-  async flamegraph (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async flamegraph (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async flamegraph (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async flamegraph (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async flamegraph (this: That, params: T.ProfilingFlamegraphRequest | TB.ProfilingFlamegraphRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingFlamegraphResponse>
+  async flamegraph (this: That, params: T.ProfilingFlamegraphRequest | TB.ProfilingFlamegraphRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingFlamegraphResponse, unknown>>
+  async flamegraph (this: That, params: T.ProfilingFlamegraphRequest | TB.ProfilingFlamegraphRequest, options?: TransportRequestOptions): Promise<T.ProfilingFlamegraphResponse>
+  async flamegraph (this: That, params: T.ProfilingFlamegraphRequest | TB.ProfilingFlamegraphRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['conditions']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -74,22 +79,27 @@ export default class Profiling {
   }
 
   /**
-    * Extracts raw stacktrace information from Universal Profiling
+    * Extracts raw stacktrace information from Universal Profiling.
     * @see {@link https://www.elastic.co/guide/en/observability/8.19/universal-profiling.html | Elasticsearch API documentation}
     */
-  async stacktraces (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async stacktraces (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async stacktraces (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async stacktraces (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async stacktraces (this: That, params: T.ProfilingStacktracesRequest | TB.ProfilingStacktracesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingStacktracesResponse>
+  async stacktraces (this: That, params: T.ProfilingStacktracesRequest | TB.ProfilingStacktracesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingStacktracesResponse, unknown>>
+  async stacktraces (this: That, params: T.ProfilingStacktracesRequest | TB.ProfilingStacktracesRequest, options?: TransportRequestOptions): Promise<T.ProfilingStacktracesResponse>
+  async stacktraces (this: That, params: T.ProfilingStacktracesRequest | TB.ProfilingStacktracesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['conditions']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -103,13 +113,13 @@ export default class Profiling {
   }
 
   /**
-    * Returns basic information about the status of Universal Profiling
+    * Returns basic information about the status of Universal Profiling.
     * @see {@link https://www.elastic.co/guide/en/observability/8.19/universal-profiling.html | Elasticsearch API documentation}
     */
-  async status (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async status (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async status (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async status (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async status (this: That, params?: T.ProfilingStatusRequest | TB.ProfilingStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingStatusResponse>
+  async status (this: That, params?: T.ProfilingStatusRequest | TB.ProfilingStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingStatusResponse, unknown>>
+  async status (this: That, params?: T.ProfilingStatusRequest | TB.ProfilingStatusRequest, options?: TransportRequestOptions): Promise<T.ProfilingStatusResponse>
+  async status (this: That, params?: T.ProfilingStatusRequest | TB.ProfilingStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -119,6 +129,7 @@ export default class Profiling {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -132,22 +143,27 @@ export default class Profiling {
   }
 
   /**
-    * Extracts a list of topN functions from Universal Profiling
+    * Extracts a list of topN functions from Universal Profiling.
     * @see {@link https://www.elastic.co/guide/en/observability/8.19/universal-profiling.html | Elasticsearch API documentation}
     */
-  async topnFunctions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async topnFunctions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async topnFunctions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async topnFunctions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async topnFunctions (this: That, params: T.ProfilingTopnFunctionsRequest | TB.ProfilingTopnFunctionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingTopnFunctionsResponse>
+  async topnFunctions (this: That, params: T.ProfilingTopnFunctionsRequest | TB.ProfilingTopnFunctionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingTopnFunctionsResponse, unknown>>
+  async topnFunctions (this: That, params: T.ProfilingTopnFunctionsRequest | TB.ProfilingTopnFunctionsRequest, options?: TransportRequestOptions): Promise<T.ProfilingTopnFunctionsResponse>
+  async topnFunctions (this: That, params: T.ProfilingTopnFunctionsRequest | TB.ProfilingTopnFunctionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['conditions']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

@@ -45,21 +45,21 @@ export default class Fleet {
   }
 
   /**
-    * Deletes a secret stored by Fleet
+    * Deletes a secret stored by Fleet.
     */
-  async deleteSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest | TB.FleetDeleteSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetDeleteSecretResponse>
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest | TB.FleetDeleteSecretRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetDeleteSecretResponse, unknown>>
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest | TB.FleetDeleteSecretRequest, options?: TransportRequestOptions): Promise<T.FleetDeleteSecretResponse>
+  async deleteSecret (this: That, params: T.FleetDeleteSecretRequest | TB.FleetDeleteSecretRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -76,21 +76,21 @@ export default class Fleet {
   }
 
   /**
-    * Retrieves a secret stored by Fleet
+    * Retrieves a secret stored by Fleet.
     */
-  async getSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getSecret (this: That, params: T.FleetGetSecretRequest | TB.FleetGetSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetGetSecretResponse>
+  async getSecret (this: That, params: T.FleetGetSecretRequest | TB.FleetGetSecretRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetGetSecretResponse, unknown>>
+  async getSecret (this: That, params: T.FleetGetSecretRequest | TB.FleetGetSecretRequest, options?: TransportRequestOptions): Promise<T.FleetGetSecretResponse>
+  async getSecret (this: That, params: T.FleetGetSecretRequest | TB.FleetGetSecretRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -183,21 +183,33 @@ export default class Fleet {
   }
 
   /**
-    * Creates a secret stored by Fleet
+    * Creates a secret stored by Fleet.
     */
-  async postSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async postSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async postSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async postSecret (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async postSecret (this: That, params: T.FleetPostSecretRequest | TB.FleetPostSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetPostSecretResponse>
+  async postSecret (this: That, params: T.FleetPostSecretRequest | TB.FleetPostSecretRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetPostSecretResponse, unknown>>
+  async postSecret (this: That, params: T.FleetPostSecretRequest | TB.FleetPostSecretRequest, options?: TransportRequestOptions): Promise<T.FleetPostSecretResponse>
+  async postSecret (this: That, params: T.FleetPostSecretRequest | TB.FleetPostSecretRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['value']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
