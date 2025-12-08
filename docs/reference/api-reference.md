@@ -10758,6 +10758,7 @@ client.ml.stopTrainedModelDeployment({ model_id })
 
 #### Request (object) [_request_ml.stop_trained_model_deployment]
 - **`model_id` (string)**: The unique identifier of the trained model.
+- **`id` (Optional, string)**: If provided, must be the same identifier as in the path.
 - **`allow_no_match` (Optional, boolean)**: Specifies what to do when the request: contains wildcard expressions and there are no deployments that match;
 contains the  `_all` string or no identifiers and there are no matches; or contains wildcard expressions and
 there are only partial matches. By default, it returns an empty array when there are no matches and the subset of results when there are partial matches.
@@ -15304,9 +15305,11 @@ index will not be deleted
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.transform.getNodeStats [_transform.get_node_stats]
-Retrieves transform usage information for transform nodes
+Get node stats.
 
-[Endpoint documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-node-stats.html)
+Get per-node information about transform usage.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-node-stats)
 
 ```ts
 client.transform.getNodeStats()
