@@ -6612,6 +6612,8 @@ To target all data streams use `*` or `_all`.
 Any time after this duration the document could be deleted.
 When empty, every document in this data stream will be stored indefinitely.
 - **`downsampling` (Optional, { after, fixed_interval }[])**: The downsampling configuration to execute for the managed backing index after rollover.
+- **`downsampling_method` (Optional, Enum("aggregate" \| "last_value"))**: The method used to downsample the data. There are two options `aggregate` and `last_value`. It requires
+`downsampling` to be defined. Defaults to `aggregate`.
 - **`enabled` (Optional, boolean)**: If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
 that's disabled (enabled: `false`) will have no effect on the data stream.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of data stream that wildcard patterns can match.

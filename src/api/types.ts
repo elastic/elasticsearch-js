@@ -19822,16 +19822,14 @@ export interface IndicesDataStreamLifecycle {
     * Any time after this duration the document could be deleted.
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
-  /** The downsampling configuration to execute for the managed backing index after rollover. */
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+  /** The list of downsampling rounds to execute as part of this downsampling configuration */
+  downsampling?: IndicesDownsamplingRound[]
+  /** The method used to downsample the data. There are two options `aggregate` and `last_value`. It requires
+    * `downsampling` to be defined. Defaults to `aggregate`. */
+  downsampling_method?: IndicesSamplingMethod
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
-}
-
-export interface IndicesDataStreamLifecycleDownsampling {
-  /** The list of downsampling rounds to execute as part of this downsampling configuration */
-  rounds: IndicesDownsamplingRound[]
 }
 
 export interface IndicesDataStreamLifecycleRolloverConditions {
@@ -21952,13 +21950,16 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
   data_retention?: Duration
   /** The downsampling configuration to execute for the managed backing index after rollover. */
   downsampling?: IndicesDownsamplingRound[]
+  /** The method used to downsample the data. There are two options `aggregate` and `last_value`. It requires
+    * `downsampling` to be defined. Defaults to `aggregate`. */
+  downsampling_method?: IndicesSamplingMethod
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, data_retention?: never, downsampling?: never, enabled?: never }
+  body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, data_retention?: never, downsampling?: never, downsampling_method?: never, enabled?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, data_retention?: never, downsampling?: never, enabled?: never }
+  querystring?: { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never, data_retention?: never, downsampling?: never, downsampling_method?: never, enabled?: never }
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
@@ -23564,7 +23565,7 @@ export interface InferenceAzureAiStudioServiceSettings {
     * Note that some providers may support only certain task types.
     * Supported providers include:
     *
-    * * `cohere` - available for `text_embedding` and `completion` task types
+    * * `cohere` - available for `text_embedding`, `rerank` and `completion` task types
     * * `databricks` - available for `completion` task type only
     * * `meta` - available for `completion` task type only
     * * `microsoft_phi` - available for `completion` task type only
@@ -39049,19 +39050,19 @@ export interface TransformGetNodeStatsRequest extends RequestBase {
   querystring?: { [key: string]: any }
 }
 
-export type TransformGetNodeStatsResponse = TransformGetNodeStatsTransformNodeStats
+export type TransformGetNodeStatsResponse = TransformGetNodeStatsTransformNodeFullStats
 
-export interface TransformGetNodeStatsScheduler {
-  scheduler: TransformGetNodeStatsTransformNodeStatsDetails
+export interface TransformGetNodeStatsTransformNodeFullStatsKeys {
+  total: TransformGetNodeStatsTransformNodeStats
+}
+export type TransformGetNodeStatsTransformNodeFullStats = TransformGetNodeStatsTransformNodeFullStatsKeys
+& { [property: string]: TransformGetNodeStatsTransformNodeStats }
+
+export interface TransformGetNodeStatsTransformNodeStats {
+  scheduler: TransformGetNodeStatsTransformSchedulerStats
 }
 
-export interface TransformGetNodeStatsTransformNodeStatsKeys {
-  total: TransformGetNodeStatsScheduler
-}
-export type TransformGetNodeStatsTransformNodeStats = TransformGetNodeStatsTransformNodeStatsKeys
-& { [property: string]: TransformGetNodeStatsScheduler }
-
-export interface TransformGetNodeStatsTransformNodeStatsDetails {
+export interface TransformGetNodeStatsTransformSchedulerStats {
   registered_transform_count: integer
   peek_transform?: string
 }
