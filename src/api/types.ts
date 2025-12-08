@@ -19464,16 +19464,11 @@ export interface IndicesDataStreamLifecycle {
     * Any time after this duration the document could be deleted.
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
-  /** The downsampling configuration to execute for the managed backing index after rollover. */
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+  /** The list of downsampling rounds to execute as part of this downsampling configuration */
+  downsampling?: IndicesDownsamplingRound[]
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
-}
-
-export interface IndicesDataStreamLifecycleDownsampling {
-  /** The list of downsampling rounds to execute as part of this downsampling configuration */
-  rounds: IndicesDownsamplingRound[]
 }
 
 export interface IndicesDataStreamLifecycleRolloverConditions {
@@ -30524,6 +30519,8 @@ export interface MlStopDatafeedResponse {
 export interface MlStopTrainedModelDeploymentRequest extends RequestBase {
   /** The unique identifier of the trained model. */
   model_id: Id
+  /** If provided, must be the same identifier as in the path. */
+  id?: Id
   /** Specifies what to do when the request: contains wildcard expressions and there are no deployments that match;
     * contains the  `_all` string or no identifiers and there are no matches; or contains wildcard expressions and
     * there are only partial matches. By default, it returns an empty array when there are no matches and the subset of results when there are partial matches.
@@ -30533,9 +30530,9 @@ export interface MlStopTrainedModelDeploymentRequest extends RequestBase {
     * restart the model deployment. */
   force?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, force?: never }
+  body?: string | { [key: string]: any } & { model_id?: never, id?: never, allow_no_match?: never, force?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { model_id?: never, allow_no_match?: never, force?: never }
+  querystring?: { [key: string]: any } & { model_id?: never, id?: never, allow_no_match?: never, force?: never }
 }
 
 export interface MlStopTrainedModelDeploymentResponse {
@@ -37938,6 +37935,30 @@ export interface TransformDeleteTransformRequest extends RequestBase {
 }
 
 export type TransformDeleteTransformResponse = AcknowledgedResponseBase
+
+export interface TransformGetNodeStatsRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type TransformGetNodeStatsResponse = TransformGetNodeStatsTransformNodeFullStats
+
+export interface TransformGetNodeStatsTransformNodeFullStatsKeys {
+  total: TransformGetNodeStatsTransformNodeStats
+}
+export type TransformGetNodeStatsTransformNodeFullStats = TransformGetNodeStatsTransformNodeFullStatsKeys
+& { [property: string]: TransformGetNodeStatsTransformNodeStats }
+
+export interface TransformGetNodeStatsTransformNodeStats {
+  scheduler: TransformGetNodeStatsTransformSchedulerStats
+}
+
+export interface TransformGetNodeStatsTransformSchedulerStats {
+  registered_transform_count: integer
+  peek_transform?: string
+}
 
 export interface TransformGetTransformRequest extends RequestBase {
   /** Identifier for the transform. It can be a transform identifier or a
