@@ -631,6 +631,7 @@ export default class Indices {
         body: [
           'data_retention',
           'downsampling',
+          'downsampling_method',
           'enabled'
         ],
         query: [
@@ -3941,6 +3942,7 @@ export default class Indices {
         'name',
         'data_retention',
         'downsampling',
+        'downsampling_method',
         'enabled',
         'expand_wildcards',
         'master_timeout',
