@@ -77,13 +77,12 @@ export default class Transform {
   }
 
   /**
-    * Retrieves transform usage information for transform nodes
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-transform-node-stats.html | Elasticsearch API documentation}
+    * Get node stats. Get per-node information about transform usage.
     */
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getNodeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getNodeStats (this: That, params?: T.TransformGetNodeStatsRequest | TB.TransformGetNodeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetNodeStatsResponse>
+  async getNodeStats (this: That, params?: T.TransformGetNodeStatsRequest | TB.TransformGetNodeStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetNodeStatsResponse, unknown>>
+  async getNodeStats (this: That, params?: T.TransformGetNodeStatsRequest | TB.TransformGetNodeStatsRequest, options?: TransportRequestOptions): Promise<T.TransformGetNodeStatsResponse>
+  async getNodeStats (this: That, params?: T.TransformGetNodeStatsRequest | TB.TransformGetNodeStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -93,6 +92,7 @@ export default class Transform {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

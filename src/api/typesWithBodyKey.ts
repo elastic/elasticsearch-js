@@ -11882,12 +11882,8 @@ export interface IndicesDataStreamIndex {
 
 export interface IndicesDataStreamLifecycle {
   data_retention?: Duration
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+  downsampling?: IndicesDownsamplingRound[]
   enabled?: boolean
-}
-
-export interface IndicesDataStreamLifecycleDownsampling {
-  rounds: IndicesDownsamplingRound[]
 }
 
 export interface IndicesDataStreamLifecycleRolloverConditions {
@@ -18161,7 +18157,11 @@ export type MlSetUpgradeModeResponse = AcknowledgedResponseBase
 
 export interface MlStartDataFrameAnalyticsRequest extends RequestBase {
   id: Id
-  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    id?: Id
+    timeout?: Duration
+  }
 }
 
 export interface MlStartDataFrameAnalyticsResponse {
@@ -18206,9 +18206,13 @@ export interface MlStartTrainedModelDeploymentResponse {
 
 export interface MlStopDataFrameAnalyticsRequest extends RequestBase {
   id: Id
-  allow_no_match?: boolean
-  force?: boolean
-  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    id?: Id
+    allow_no_match?: boolean
+    force?: boolean
+    timeout?: Duration
+  }
 }
 
 export interface MlStopDataFrameAnalyticsResponse {
@@ -18231,8 +18235,12 @@ export interface MlStopDatafeedResponse {
 
 export interface MlStopTrainedModelDeploymentRequest extends RequestBase {
   model_id: Id
-  allow_no_match?: boolean
-  force?: boolean
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    id?: Id
+    allow_no_match?: boolean
+    force?: boolean
+  }
 }
 
 export interface MlStopTrainedModelDeploymentResponse {
@@ -22537,6 +22545,26 @@ export interface TransformDeleteTransformRequest extends RequestBase {
 }
 
 export type TransformDeleteTransformResponse = AcknowledgedResponseBase
+
+export interface TransformGetNodeStatsRequest extends RequestBase {
+}
+
+export type TransformGetNodeStatsResponse = TransformGetNodeStatsTransformNodeFullStats
+
+export interface TransformGetNodeStatsTransformNodeFullStatsKeys {
+  total: TransformGetNodeStatsTransformNodeStats
+}
+export type TransformGetNodeStatsTransformNodeFullStats = TransformGetNodeStatsTransformNodeFullStatsKeys
+& { [property: string]: TransformGetNodeStatsTransformNodeStats }
+
+export interface TransformGetNodeStatsTransformNodeStats {
+  scheduler: TransformGetNodeStatsTransformSchedulerStats
+}
+
+export interface TransformGetNodeStatsTransformSchedulerStats {
+  registered_transform_count: integer
+  peek_transform?: string
+}
 
 export interface TransformGetTransformRequest extends RequestBase {
   transform_id?: Names
