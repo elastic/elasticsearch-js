@@ -504,6 +504,42 @@ test('Meta header indicates when HttpConnection is used', async t => {
   server.stop()
 })
 
+test('Meta header indicates when Bun is used', async t => {
+  t.plan(1)
+
+  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
+    t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion},bn=1.2.3`)
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
+
+  process.versions.bun = "1.2.3"
+  const client = new Client({ node: `http://localhost:${port}` })
+  delete process.versions.bun
+
+  await client.transport.request({ method: 'GET', path: '/' })
+})
+
+test('Meta header indicates when Deno is used', async t => {
+  t.plan(1)
+
+  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
+    t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion},dn=1.2.3`)
+    res.end('ok')
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  t.after(() => server.stop())
+
+  process.versions.deno = "1.2.3"
+  const client = new Client({ node: `http://localhost:${port}` })
+  delete process.versions.deno
+
+  await client.transport.request({ method: 'GET', path: '/' })
+})
+
 test('caFingerprint', t => {
   const client = new Client({
     node: 'https://localhost:9200',
