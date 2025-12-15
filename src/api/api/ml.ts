@@ -1760,7 +1760,7 @@ export default class Ml {
         job_id: params.job_id
       }
     }
-    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
