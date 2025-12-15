@@ -97,3 +97,53 @@ async function run () {
 run().catch(console.log)
 ```
 
+## Bulk ingestion with base64-encoded vectors [bulk_vectors]
+
+When ingesting dense vectors, you can encode float arrays as base64 strings for more efficient transfer. The client's `serializer` provides `encodeFloat32Vector` and `decodeFloat32Vector` methods that encode IEEE-754 float32 values in big-endian byte order.
+
+```js
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
+
+async function run () {
+  await client.indices.create({
+    index: 'my-vectors',
+    mappings: {
+      properties: {
+        title: { type: 'text' },
+        embedding: { type: 'dense_vector', dims: 3 }
+      }
+    }
+  }, { ignore: [400] })
+
+  const documents = [
+    { title: 'Document 1', embedding: [0.1, 0.2, 0.3] },
+    { title: 'Document 2', embedding: [0.4, 0.5, 0.6] },
+    { title: 'Document 3', embedding: [0.7, 0.8, 0.9] }
+  ]
+
+  const operations = documents.flatMap(doc => [
+    { index: { _index: 'my-vectors' } },
+    {
+      title: doc.title,
+      embedding: client.serializer.encodeFloat32Vector(doc.embedding)
+    }
+  ])
+
+  const bulkResponse = await client.bulk({ refresh: true, operations })
+
+  if (bulkResponse.errors) {
+    console.log('Bulk ingestion had errors')
+  } else {
+    console.log(`Indexed ${documents.length} documents with encoded vectors`)
+  }
+}
+
+run().catch(console.log)
+```
+
