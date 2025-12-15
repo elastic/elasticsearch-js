@@ -3241,15 +3241,24 @@ export type SearchTotalHitsRelation = 'eq' | 'gte'
 export type SearchTrackHits = boolean | integer
 
 export interface SearchMvtRequest extends RequestBase {
-  /** Comma-separated list of data streams, indices, or aliases to search */
+  /** A list of indices, data streams, or aliases to search.
+    * It supports wildcards (`*`).
+    * To search all data streams and indices, omit this parameter or use `*` or `_all`.
+    * To search a remote cluster, use the `<cluster>:<target>` syntax. */
   index: Indices
-  /** Field containing geospatial data to return */
+  /** A field that contains the geospatial data to return.
+    * It must be a `geo_point` or `geo_shape` field.
+    * The field must have doc values enabled. It cannot be a nested field.
+    *
+    * NOTE: Vector tiles do not natively support geometry collections.
+    * For `geometrycollection` values in a `geo_shape` field, the API returns a hits layer feature for each element of the collection.
+    * This behavior may change in a future release. */
   field: Field
-  /** Zoom level for the vector tile to search */
+  /** The zoom level of the vector tile to search. It accepts `0` to `29`. */
   zoom: SearchMvtZoomLevel
-  /** X coordinate for the vector tile to search */
+  /** The X coordinate for the vector tile to search. */
   x: SearchMvtCoordinate
-  /** Y coordinate for the vector tile to search */
+  /** The Y coordinate for the vector tile to search. */
   y: SearchMvtCoordinate
   /** Specifies a subset of projects to target for the search using project
     * metadata tags in a subset of Lucene query syntax.
@@ -10533,13 +10542,14 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   keep_alive?: Duration
   /** If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`. */
   keep_on_completion?: boolean
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+    * (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
   /** Indicate if an error should be returned if there is a partial search failure or timeout */
   allow_partial_search_results?: boolean
   /** The analyzer to use for the query string */
   analyzer?: string
-  /** Specify whether wildcard and prefix queries should be analyzed (default: false) */
+  /** Specify whether wildcard and prefix queries should be analyzed */
   analyze_wildcard?: boolean
   /** Affects how often partial results become available, which happens whenever shard results are reduced.
     * A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default). */
@@ -10550,7 +10560,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   default_operator?: QueryDslOperator
   /** The field to use as default where no field prefix is given in the query string */
   df?: string
-  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both */
   expand_wildcards?: ExpandWildcards
   /** Whether specified concrete, expanded or aliased indices should be ignored when throttled */
   ignore_throttled?: boolean
@@ -10558,9 +10568,10 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ignore_unavailable?: boolean
   /** Specify whether format-based query failures (such as providing text to a numeric field) should be ignored */
   lenient?: boolean
-  /** The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests */
+  /** The number of concurrent shard requests per node this search executes concurrently.
+    * This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests */
   max_concurrent_shard_requests?: integer
-  /** Specify the node or shard the operation should be performed on (default: random) */
+  /** Specify the node or shard the operation should be performed on */
   preference?: string
   /** Specifies a subset of projects to target for the search using project
     * metadata tags in a subset of Lucene query syntax.
@@ -10689,7 +10700,7 @@ export interface AutoscalingAutoscalingPolicy {
 }
 
 export interface AutoscalingDeleteAutoscalingPolicyRequest extends RequestBase {
-  /** the name of the autoscaling policy */
+  /** Name of the autoscaling policy */
   name: Name
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -10746,7 +10757,7 @@ export interface AutoscalingGetAutoscalingCapacityResponse {
 }
 
 export interface AutoscalingGetAutoscalingPolicyRequest extends RequestBase {
-  /** the name of the autoscaling policy */
+  /** Name of the autoscaling policy */
   name: Name
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -10760,7 +10771,7 @@ export interface AutoscalingGetAutoscalingPolicyRequest extends RequestBase {
 export type AutoscalingGetAutoscalingPolicyResponse = AutoscalingAutoscalingPolicy
 
 export interface AutoscalingPutAutoscalingPolicyRequest extends RequestBase {
-  /** the name of the autoscaling policy */
+  /** Name of the autoscaling policy */
   name: Name
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -15912,7 +15923,7 @@ export interface CcrFollowStatsResponse {
 }
 
 export interface CcrForgetFollowerRequest extends RequestBase {
-  /** the name of the leader index for which specified follower retention leases should be removed */
+  /** Name of the leader index for which specified follower retention leases should be removed */
   index: IndexName
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
@@ -16056,7 +16067,7 @@ export interface CcrResumeAutoFollowPatternRequest extends RequestBase {
 export type CcrResumeAutoFollowPatternResponse = AcknowledgedResponseBase
 
 export interface CcrResumeFollowRequest extends RequestBase {
-  /** The name of the follow index to resume following. */
+  /** Name of the follow index to resume following */
   index: IndexName
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -16359,7 +16370,7 @@ export interface ClusterGetComponentTemplateRequest extends RequestBase {
   flat_settings?: boolean
   /** Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys */
   settings_filter?: string | string[]
-  /** Return all default configurations for the component template (default: false) */
+  /** Return all default configurations for the component template */
   include_defaults?: boolean
   /** If `true`, the request retrieves information from the local node only.
     * If `false`, information is retrieved from the master node. */
@@ -16614,11 +16625,11 @@ export interface ClusterPutComponentTemplateRequest extends RequestBase {
 export type ClusterPutComponentTemplateResponse = AcknowledgedResponseBase
 
 export interface ClusterPutSettingsRequest extends RequestBase {
-  /** Return settings in flat format (default: false) */
+  /** Return settings in flat format */
   flat_settings?: boolean
-  /** Explicit operation timeout for connection to master node */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Explicit operation timeout */
+  /** The period to wait for a response. */
   timeout?: Duration
   /** The settings that persist after the cluster restarts. */
   persistent?: Record<string, any>
@@ -16784,19 +16795,20 @@ export interface ClusterRerouteResponse {
 }
 
 export interface ClusterStateRequest extends RequestBase {
-  /** Limit the information returned to the specified metrics */
+  /** Limit the information returned to the specified metrics. */
   metric?: Metrics
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+    * (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
-  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both */
   expand_wildcards?: ExpandWildcards
-  /** Return settings in flat format (default: false) */
+  /** Return settings in flat format */
   flat_settings?: boolean
   /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
-  /** Return local information, do not retrieve the state from master node (default: false) */
+  /** Return local information, do not retrieve the state from master node */
   local?: boolean
   /** Timeout for waiting for new cluster state in case it is blocked */
   master_timeout?: Duration
@@ -18182,9 +18194,9 @@ export interface DanglingIndicesDeleteDanglingIndexRequest extends RequestBase {
   index_uuid: Uuid
   /** This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index. */
   accept_data_loss?: boolean
-  /** Specify timeout for connection to master */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Explicit operation timeout */
+  /** The period to wait for a response. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index_uuid?: never, accept_data_loss?: never, master_timeout?: never, timeout?: never }
@@ -18200,9 +18212,9 @@ export interface DanglingIndicesImportDanglingIndexRequest extends RequestBase {
   /** This parameter must be set to true to import a dangling index.
     * Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster. */
   accept_data_loss?: boolean
-  /** Specify timeout for connection to master */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Explicit operation timeout */
+  /** The period to wait for a response. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index_uuid?: never, accept_data_loss?: never, master_timeout?: never, timeout?: never }
@@ -18462,7 +18474,8 @@ export interface EqlGetStatusResponse {
 export interface EqlSearchRequest extends RequestBase {
   /** Comma-separated list of index names to scope the operation */
   index: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+    * (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
@@ -20707,13 +20720,14 @@ export interface IndicesDeleteAliasRequest extends RequestBase {
 export type IndicesDeleteAliasResponse = IndicesDeleteAliasIndicesAliasesResponseBody
 
 export interface IndicesDeleteDataLifecycleRequest extends RequestBase {
-  /** A comma-separated list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams */
+  /** A comma-separated list of data streams of which the data stream lifecycle will be deleted.
+    * Use `*` to get all data streams */
   name: DataStreamNames
   /** Whether wildcard expressions should get expanded to open or closed indices (default: open) */
   expand_wildcards?: ExpandWildcards
-  /** Specify timeout for connection to master */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Explicit timestamp for the document */
+  /** The period to wait for a response. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never }
@@ -20739,13 +20753,14 @@ export interface IndicesDeleteDataStreamRequest extends RequestBase {
 export type IndicesDeleteDataStreamResponse = AcknowledgedResponseBase
 
 export interface IndicesDeleteDataStreamOptionsRequest extends RequestBase {
-  /** A comma-separated list of data streams of which the data stream options will be deleted; use `*` to get all data streams */
+  /** A comma-separated list of data streams of which the data stream options will be deleted.
+    * Use `*` to get all data streams */
   name: DataStreamNames
-  /** Whether wildcard expressions should get expanded to open or closed indices (default: open) */
+  /** Whether wildcard expressions should get expanded to open or closed indices */
   expand_wildcards?: ExpandWildcards
-  /** Specify timeout for connection to master */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
-  /** Explicit timestamp for the document */
+  /** The period to wait for a response. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, expand_wildcards?: never, master_timeout?: never, timeout?: never }
@@ -20934,9 +20949,9 @@ export interface IndicesExplainDataLifecycleDataStreamLifecycleExplain {
 export interface IndicesExplainDataLifecycleRequest extends RequestBase {
   /** Comma-separated list of index names to explain */
   index: Indices
-  /** indicates if the API should return the default values the system uses for the index's lifecycle */
+  /** Indicates if the API should return the default values the system uses for the index's lifecycle */
   include_defaults?: boolean
-  /** Specify timeout for connection to master */
+  /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, include_defaults?: never, master_timeout?: never }
@@ -21044,19 +21059,20 @@ export type IndicesFlushResponse = ShardsOperationResponseBase
 export interface IndicesForcemergeRequest extends RequestBase {
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+    * (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
-  /** Specify whether the index should be flushed after performing the operation (default: true) */
+  /** Specify whether the index should be flushed after performing the operation */
   flush?: boolean
   /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
-  /** The number of segments the index should be merged into (default: dynamic) */
+  /** The number of segments the index should be merged into (defayult: dynamic) */
   max_num_segments?: long
   /** Specify whether the operation should only expunge deleted documents */
   only_expunge_deletes?: boolean
-  /** Should the request wait until the force merge is completed. */
+  /** Should the request wait until the force merge is completed */
   wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flush?: never, ignore_unavailable?: never, max_num_segments?: never, only_expunge_deletes?: never, wait_for_completion?: never }
@@ -21590,7 +21606,7 @@ export interface IndicesOpenResponse {
 }
 
 export interface IndicesPromoteDataStreamRequest extends RequestBase {
-  /** The name of the data stream */
+  /** The name of the data stream to promote */
   name: IndexName
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
@@ -21820,7 +21836,7 @@ export interface IndicesPutIndexTemplateRequest extends RequestBase {
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
-  /** User defined reason for creating/updating the index template */
+  /** User defined reason for creating or updating the index template */
   cause?: string
   /** Name of the index template to create. */
   index_patterns?: Indices
@@ -21869,7 +21885,8 @@ export interface IndicesPutIndexTemplateRequest extends RequestBase {
 export type IndicesPutIndexTemplateResponse = AcknowledgedResponseBase
 
 export interface IndicesPutMappingRequest extends RequestBase {
-  /** A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices. */
+  /** A comma-separated list of index names the mapping should be added to (supports wildcards).
+    * Use `_all` or omit to add the mapping on all indices. */
   index: Indices
   /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
     * This behavior applies even if the request targets other open indices. */
@@ -21976,7 +21993,7 @@ export interface IndicesPutTemplateRequest extends RequestBase {
   /** Period to wait for a connection to the master node. If no response is
     * received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
-  /** User defined reason for creating/updating the index template */
+  /** User defined reason for creating or updating the index template */
   cause?: string
   /** Aliases for the index. */
   aliases?: Record<IndexName, IndicesAlias>
@@ -22166,7 +22183,8 @@ export interface IndicesReloadSearchAnalyzersReloadResult {
 export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
   /** A comma-separated list of index names to reload analyzers for */
   index: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+    * (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
@@ -22731,7 +22749,7 @@ export interface IndicesStatsMappingStats {
 }
 
 export interface IndicesStatsRequest extends RequestBase {
-  /** Limit the information returned the specific metrics. */
+  /** Limit the information returned the specific metrics */
   metric?: Metrics
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
@@ -23245,7 +23263,7 @@ export interface InferenceAzureAiStudioServiceSettings {
     * Note that some providers may support only certain task types.
     * Supported providers include:
     *
-    * * `cohere` - available for `text_embedding` and `completion` task types
+    * * `cohere` - available for `text_embedding`, `rerank` and `completion` task types
     * * `databricks` - available for `completion` task type only
     * * `meta` - available for `completion` task type only
     * * `microsoft_phi` - available for `completion` task type only
@@ -26502,7 +26520,7 @@ export interface IngestGetPipelineRequest extends RequestBase {
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
-  /** Return pipelines without their definitions (default: false) */
+  /** Return pipelines without their definitions */
   summary?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, summary?: never }
@@ -26731,7 +26749,7 @@ export interface LicensePostResponse {
 }
 
 export interface LicensePostStartBasicRequest extends RequestBase {
-  /** whether the user has acknowledged acknowledge messages (default: false) */
+  /** Whether the user has acknowledged acknowledge messages */
   acknowledge?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -26752,9 +26770,9 @@ export interface LicensePostStartBasicResponse {
 }
 
 export interface LicensePostStartTrialRequest extends RequestBase {
-  /** whether the user has acknowledged acknowledge messages (default: false) */
+  /** Whether the user has acknowledged acknowledge messages */
   acknowledge?: boolean
-  /** The type of trial license to generate (default: "trial") */
+  /** The type of trial license to generate */
   type?: string
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -29458,7 +29476,9 @@ export interface MlEvaluateDataFrameRequest extends RequestBase {
   querystring?: { [key: string]: any } & { evaluation?: never, index?: never, query?: never }
 }
 
-export interface MlEvaluateDataFrameResponse {
+export type MlEvaluateDataFrameResponse = MlEvaluateDataFrameResponseBody
+
+export interface MlEvaluateDataFrameResponseBody {
   /** Evaluation results for a classification analysis.
     * It outputs a prediction that identifies to which of the classes each document belongs. */
   classification?: MlEvaluateDataFrameDataframeClassificationSummary
@@ -31037,7 +31057,7 @@ export interface MlStartTrainedModelDeploymentRequest extends RequestBase {
     * it will automatically be changed to a value less than the number of hardware threads.
     * If adaptive_allocations is enabled, do not set this value, because it’s automatically set. */
   number_of_allocations?: integer
-  /** The deployment priority. */
+  /** The deployment priority */
   priority?: MlTrainingPriority
   /** Specifies the number of inference requests that are allowed in the queue. After the number of requests exceeds
     * this value, new requests are rejected with a 429 error. */
@@ -32349,7 +32369,7 @@ export interface NodesHotThreadsRequest extends RequestBase {
   timeout?: Duration
   /** The type to sample. */
   type?: ThreadType
-  /** The sort order for 'cpu' type (default: total) */
+  /** The sort order for 'cpu' type */
   sort?: ThreadType
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { node_id?: never, ignore_idle_threads?: never, interval?: never, snapshots?: never, threads?: never, timeout?: never, type?: never, sort?: never }
@@ -32769,7 +32789,7 @@ export interface NodesReloadSecureSettingsResponseBase extends NodesNodesRespons
 export interface NodesStatsRequest extends RequestBase {
   /** Comma-separated list of node IDs or names used to limit returned information. */
   node_id?: NodeIds
-  /** Limit the information returned to the specified metrics */
+  /** Limits the information returned to the specific metrics. */
   metric?: Metrics
   /** Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified. */
   index_metric?: Metrics
@@ -32812,7 +32832,8 @@ export interface NodesUsageNodeUsage {
 }
 
 export interface NodesUsageRequest extends RequestBase {
-  /** A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes */
+  /** A comma-separated list of node IDs or names to limit the returned information.
+    * Use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes. */
   node_id?: NodeIds
   /** Limits the information returned to the specific metrics.
     * A comma-separated list of the following options: `_all`, `rest_actions`. */
@@ -33625,9 +33646,10 @@ export interface SearchableSnapshotsClearCacheRequest extends RequestBase {
   /** A comma-separated list of data streams, indices, and aliases to clear from the cache.
     * It supports wildcards (`*`). */
   index?: Indices
-  /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
+  /** Whether to expand wildcard expression to concrete indices that are open, closed or both */
   expand_wildcards?: ExpandWildcards
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) */
+  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+    * (This includes `_all` string or when no indices have been specified) */
   allow_no_indices?: boolean
   /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
@@ -34391,7 +34413,7 @@ export interface SecurityCreateServiceTokenRequest extends RequestBase {
     * NOTE: Token names must be unique in the context of the associated service account.
     * They must also be globally unique with their fully qualified names, which are comprised of the service account principal and token name, such as `<namespace>/<service>/<token-name>`. */
   name?: Name
-  /** If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { namespace?: never, service?: never, name?: never, refresh?: never }
@@ -34514,7 +34536,7 @@ export interface SecurityDeleteServiceTokenRequest extends RequestBase {
   service: Service
   /** The name of the service account token. */
   name: Name
-  /** If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { namespace?: never, service?: never, name?: never, refresh?: never }
@@ -36258,7 +36280,7 @@ export interface SlmExecuteRetentionRequest extends RequestBase {
 export type SlmExecuteRetentionResponse = AcknowledgedResponseBase
 
 export interface SlmGetLifecycleRequest extends RequestBase {
-  /** Comma-separated list of snapshot lifecycle policies to retrieve */
+  /** A comma-separated list of snapshot lifecycle policy identifiers. */
   policy_id?: Names
   /** The period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -39729,9 +39751,9 @@ export interface WatcherPutWatchRequest extends RequestBase {
   /** The initial state of the watch.
     * The default value is `true`, which means the watch is active by default. */
   active?: boolean
-  /** only update the watch if the last operation that has changed the watch has the specified primary term */
+  /** Only update the watch if the last operation that has changed the watch has the specified primary term */
   if_primary_term?: long
-  /** only update the watch if the last operation that has changed the watch has the specified sequence number */
+  /** Only update the watch if the last operation that has changed the watch has the specified sequence number */
   if_seq_no?: SequenceNumber
   /** Explicit version number for concurrency control */
   version?: VersionNumber
@@ -39961,7 +39983,7 @@ export interface XpackInfoRequest extends RequestBase {
   /** A comma-separated list of the information categories to include in the response.
     * For example, `build,license,features`. */
   categories?: XpackInfoXPackCategory[]
-  /** If this param is used it must be set to true */
+  /** If used, this otherwise ignored parameter must be set to true */
   accept_enterprise?: boolean
   /** Defines whether additional human-readable information is included in the response.
     * In particular, it adds descriptions and a tag line. */
