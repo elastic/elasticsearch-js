@@ -3556,7 +3556,7 @@ export default class Ml {
         'reset_start'
       ]
     }
-    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**

@@ -1330,7 +1330,8 @@ If the Elasticsearch security features are enabled, you must have the following 
 * To automatically create a data stream or index with a reindex API request, you must have the `auto_configure`, `create_index`, or `manage` index privilege for the destination data stream, index, or alias.
 * If reindexing from a remote cluster, the `source.remote.user` must have the `monitor` cluster privilege and the `read` index privilege for the source data stream, index, or alias.
 
-If reindexing from a remote cluster, you must explicitly allow the remote host in the `reindex.remote.whitelist` setting.
+If reindexing from a remote cluster into a cluster using Elastic Stack, you must explicitly allow the remote host using the `reindex.remote.whitelist` node setting on the destination cluster.
+If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from Elastic Cloud Hosted are allowed.
 Automatic data stream creation requires a matching index template with data stream enabled.
 
 The `dest` element can be configured like the index API to control optimistic concurrency control.
@@ -1679,11 +1680,11 @@ client.searchMvt({ index, field, zoom, x, y })
 
 #### Request (object) [_request_search_mvt]
 
-- **`index` (string \| string[])**: List of data streams, indices, or aliases to search
-- **`field` (string)**: Field containing geospatial data to return
-- **`zoom` (number)**: Zoom level for the vector tile to search
-- **`x` (number)**: X coordinate for the vector tile to search
-- **`y` (number)**: Y coordinate for the vector tile to search
+- **`index` (string \| string[])**: A list of indices, data streams, or aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`. To search a remote cluster, use the `<cluster>:<target>` syntax.
+- **`field` (string)**: A field that contains the geospatial data to return. It must be a `geo_point` or `geo_shape` field. The field must have doc values enabled. It cannot be a nested field. NOTE: Vector tiles do not natively support geometry collections. For `geometrycollection` values in a `geo_shape` field, the API returns a hits layer feature for each element of the collection. This behavior may change in a future release.
+- **`zoom` (number)**: The zoom level of the vector tile to search. It accepts `0` to `29`.
+- **`x` (number)**: The X coordinate for the vector tile to search.
+- **`y` (number)**: The Y coordinate for the vector tile to search.
 - **`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Sub-aggregations for the geotile_grid. It supports the following aggregation types: - `avg` - `boxplot` - `cardinality` - `extended stats` - `max` - `median absolute deviation` - `min` - `percentile` - `percentile-rank` - `stats` - `sum` - `value count` The aggregation names can't start with `_mvt_`. The `_mvt_` prefix is reserved for internal aggregations.
 - **`buffer` (Optional, number)**: The size, in pixels, of a clipping buffer outside the tile. This allows renderers to avoid outline artifacts from geometries that extend past the extent of the tile.
 - **`exact_bounds` (Optional, boolean)**: If `false`, the meta layer's feature is the bounding box of the tile. If `true`, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation. The aggregation runs on <field> values that intersect the `<zoom>/<x>/<y>` tile with `wrap_longitude` set to `false`. The resulting bounding box may be larger than the vector tile.
@@ -2221,21 +2222,23 @@ When the async search completes within the timeout, the response won’t include
 - **`keep_alive` (Optional, string \| -1 \| 0)**: Specifies how long the async search needs to be available.
 Ongoing async searches and any saved search results are deleted after this period.
 - **`keep_on_completion` (Optional, boolean)**: If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+(This includes `_all` string or when no indices have been specified)
 - **`allow_partial_search_results` (Optional, boolean)**: Indicate if an error should be returned if there is a partial search failure or timeout
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string
-- **`analyze_wildcard` (Optional, boolean)**: Specify whether wildcard and prefix queries should be analyzed (default: false)
+- **`analyze_wildcard` (Optional, boolean)**: Specify whether wildcard and prefix queries should be analyzed
 - **`batched_reduce_size` (Optional, number)**: Affects how often partial results become available, which happens whenever shard results are reduced.
 A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default).
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: The default value is the only supported value.
 - **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query (AND or OR)
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both
 - **`ignore_throttled` (Optional, boolean)**: Whether specified concrete, expanded or aliased indices should be ignored when throttled
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`lenient` (Optional, boolean)**: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-- **`max_concurrent_shard_requests` (Optional, number)**: The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
-- **`preference` (Optional, string)**: Specify the node or shard the operation should be performed on (default: random)
+- **`max_concurrent_shard_requests` (Optional, number)**: The number of concurrent shard requests per node this search executes concurrently.
+This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+- **`preference` (Optional, string)**: Specify the node or shard the operation should be performed on
 - **`request_cache` (Optional, boolean)**: Specify if request cache should be used for this request or not, defaults to true
 - **`routing` (Optional, string \| string[])**: A list of specific routing values
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Search operation type
@@ -3124,7 +3127,7 @@ client.ccr.forgetFollower({ index })
 ### Arguments [_arguments_ccr.forget_follower]
 
 #### Request (object) [_request_ccr.forget_follower]
-- **`index` (string)**: the name of the leader index for which specified follower retention leases should be removed
+- **`index` (string)**: Name of the leader index for which specified follower retention leases should be removed
 - **`follower_cluster` (Optional, string)**
 - **`follower_index` (Optional, string)**
 - **`follower_index_uuid` (Optional, string)**
@@ -3273,7 +3276,7 @@ client.ccr.resumeFollow({ index })
 ### Arguments [_arguments_ccr.resume_follow]
 
 #### Request (object) [_request_ccr.resume_follow]
-- **`index` (string)**: The name of the follow index to resume following.
+- **`index` (string)**: Name of the follow index to resume following
 - **`max_outstanding_read_requests` (Optional, number)**
 - **`max_outstanding_write_requests` (Optional, number)**
 - **`max_read_request_operation_count` (Optional, number)**
@@ -3438,7 +3441,7 @@ client.cluster.getComponentTemplate({ ... })
 Wildcard (`*`) expressions are supported.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
 - **`settings_filter` (Optional, string \| string[])**: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
-- **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template (default: false)
+- **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
@@ -3621,7 +3624,7 @@ Elasticsearch includes the following built-in component templates: `logs-mapping
 Elastic Agent uses these templates to configure backing indices for its data streams.
 If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version.
 If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API.
-- **`template` ({ aliases, mappings, settings, defaults, data_stream, lifecycle })**: The template to be applied which includes mappings, settings, or aliases configuration.
+- **`template` ({ aliases, mappings, settings, lifecycle, data_stream_options })**: The template to be applied which includes mappings, settings, or aliases configuration.
 - **`version` (Optional, number)**: Version number used to manage component templates externally.
 This number isn't automatically generated or incremented by Elasticsearch.
 To unset a version, replace the template without specifying a version.
@@ -3668,9 +3671,9 @@ client.cluster.putSettings({ ... })
 #### Request (object) [_request_cluster.put_settings]
 - **`persistent` (Optional, Record<string, User-defined value>)**: The settings that persist after the cluster restarts.
 - **`transient` (Optional, Record<string, User-defined value>)**: The settings that do not persist after the cluster restarts.
-- **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout for connection to master node
-- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
+- **`flat_settings` (Optional, boolean)**: Return settings in flat format
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 
 ## client.cluster.remoteInfo [_cluster.remote_info]
 Get remote cluster information.
@@ -3757,13 +3760,14 @@ client.cluster.state({ ... })
 ### Arguments [_arguments_cluster.state]
 
 #### Request (object) [_request_cluster.state]
-- **`metric` (Optional, Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs") \| Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs")[])**: Limit the information returned to the specified metrics
+- **`metric` (Optional, Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs") \| Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs")[])**: Limit the information returned to the specified metrics.
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`flat_settings` (Optional, boolean)**: Return settings in flat format (default: false)
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+(This includes `_all` string or when no indices have been specified)
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both
+- **`flat_settings` (Optional, boolean)**: Return settings in flat format
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-- **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node (default: false)
+- **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Timeout for waiting for new cluster state in case it is blocked
 - **`wait_for_metadata_version` (Optional, number)**: Wait for the metadata version to be equal or greater than the specified metadata version
 - **`wait_for_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for wait_for_metadata_version before timing out
@@ -4353,8 +4357,8 @@ client.danglingIndices.deleteDanglingIndex({ index_uuid })
 #### Request (object) [_request_dangling_indices.delete_dangling_index]
 - **`index_uuid` (string)**: The UUID of the index to delete. Use the get dangling indices API to find the UUID.
 - **`accept_data_loss` (Optional, boolean)**: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 
 ## client.danglingIndices.importDanglingIndex [_dangling_indices.import_dangling_index]
 Import a dangling index.
@@ -4374,8 +4378,8 @@ client.danglingIndices.importDanglingIndex({ index_uuid })
 - **`index_uuid` (string)**: The UUID of the index to import. Use the get dangling indices API to locate the UUID.
 - **`accept_data_loss` (Optional, boolean)**: This parameter must be set to true to import a dangling index.
 Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string \| -1 \| 0)**: Explicit operation timeout
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 
 ## client.danglingIndices.listDanglingIndices [_dangling_indices.list_dangling_indices]
 Get the dangling indices.
@@ -4575,7 +4579,8 @@ If false, the sequence query will return successfully, but will always have empt
 - **`max_samples_per_key` (Optional, number)**: By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
 parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the
 `max_samples_per_key` parameter. Pipes are not supported for sample queries.
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+(This includes `_all` string or when no indices have been specified)
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
@@ -5686,10 +5691,11 @@ client.indices.deleteDataLifecycle({ name })
 ### Arguments [_arguments_indices.delete_data_lifecycle]
 
 #### Request (object) [_request_indices.delete_data_lifecycle]
-- **`name` (string \| string[])**: A list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams
+- **`name` (string \| string[])**: A list of data streams of which the data stream lifecycle will be deleted.
+Use `*` to get all data streams
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether wildcard expressions should get expanded to open or closed indices (default: open)
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string \| -1 \| 0)**: Explicit timestamp for the document
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 
 ## client.indices.deleteDataStream [_indices.delete_data_stream]
 Delete data streams.
@@ -5723,10 +5729,11 @@ client.indices.deleteDataStreamOptions({ name })
 ### Arguments [_arguments_indices.delete_data_stream_options]
 
 #### Request (object) [_request_indices.delete_data_stream_options]
-- **`name` (string \| string[])**: A list of data streams of which the data stream options will be deleted; use `*` to get all data streams
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether wildcard expressions should get expanded to open or closed indices (default: open)
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
-- **`timeout` (Optional, string \| -1 \| 0)**: Explicit timestamp for the document
+- **`name` (string \| string[])**: A list of data streams of which the data stream options will be deleted.
+Use `*` to get all data streams
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether wildcard expressions should get expanded to open or closed indices
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 
 ## client.indices.deleteIndexTemplate [_indices.delete_index_template]
 Delete an index template.
@@ -5944,8 +5951,8 @@ client.indices.explainDataLifecycle({ index })
 
 #### Request (object) [_request_indices.explain_data_lifecycle]
 - **`index` (string \| string[])**: List of index names to explain
-- **`include_defaults` (Optional, boolean)**: indicates if the API should return the default values the system uses for the index's lifecycle
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Specify timeout for connection to master
+- **`include_defaults` (Optional, boolean)**: Indicates if the API should return the default values the system uses for the index's lifecycle
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 
 ## client.indices.fieldUsageStats [_indices.field_usage_stats]
 Get field usage stats.
@@ -6078,13 +6085,14 @@ client.indices.forcemerge({ ... })
 
 #### Request (object) [_request_indices.forcemerge]
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+(This includes `_all` string or when no indices have been specified)
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`flush` (Optional, boolean)**: Specify whether the index should be flushed after performing the operation (default: true)
+- **`flush` (Optional, boolean)**: Specify whether the index should be flushed after performing the operation
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-- **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (default: dynamic)
+- **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (defayult: dynamic)
 - **`only_expunge_deletes` (Optional, boolean)**: Specify whether the operation should only expunge deleted documents
-- **`wait_for_completion` (Optional, boolean)**: Should the request wait until the force merge is completed.
+- **`wait_for_completion` (Optional, boolean)**: Should the request wait until the force merge is completed
 
 ## client.indices.get [_indices.get]
 Get index information.
@@ -6550,7 +6558,7 @@ client.indices.promoteDataStream({ name })
 ### Arguments [_arguments_indices.promote_data_stream]
 
 #### Request (object) [_request_indices.promote_data_stream]
-- **`name` (string)**: The name of the data stream
+- **`name` (string)**: The name of the data stream to promote
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.indices.putAlias [_indices.put_alias]
@@ -6749,7 +6757,7 @@ client.indices.putIndexTemplate({ name })
 - **`index_patterns` (Optional, string \| string[])**: Name of the index template to create.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
-- **`template` (Optional, { aliases, mappings, settings, lifecycle })**: Template to be applied.
+- **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
 - **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
@@ -6777,7 +6785,7 @@ that uses deprecated components, Elasticsearch will emit a deprecation warning.
 - **`create` (Optional, boolean)**: If `true`, this request cannot replace or update existing index templates.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`cause` (Optional, string)**: User defined reason for creating/updating the index template
+- **`cause` (Optional, string)**: User defined reason for creating or updating the index template
 
 ## client.indices.putMapping [_indices.put_mapping]
 Update field mappings.
@@ -6804,7 +6812,8 @@ client.indices.putMapping({ index })
 ### Arguments [_arguments_indices.put_mapping]
 
 #### Request (object) [_request_indices.put_mapping]
-- **`index` (string \| string[])**: A list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
+- **`index` (string \| string[])**: A list of index names the mapping should be added to (supports wildcards).
+Use `_all` or omit to add the mapping on all indices.
 - **`date_detection` (Optional, boolean)**: Controls whether dynamic date detection is enabled.
 - **`dynamic` (Optional, Enum("strict" \| "runtime" \| true \| false))**: Controls whether new fields are added dynamically.
 - **`dynamic_date_formats` (Optional, string[])**: If date detection is enabled then new string fields are checked
@@ -6978,7 +6987,7 @@ To unset a version, replace the template without specifying one.
 - **`create` (Optional, boolean)**: If true, this request cannot replace or update existing index templates.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an error.
-- **`cause` (Optional, string)**: User defined reason for creating/updating the index template
+- **`cause` (Optional, string)**: User defined reason for creating or updating the index template
 
 ## client.indices.recovery [_indices.recovery]
 Get index recovery information.
@@ -7092,7 +7101,8 @@ client.indices.reloadSearchAnalyzers({ index })
 
 #### Request (object) [_request_indices.reload_search_analyzers]
 - **`index` (string \| string[])**: A list of index names to reload analyzers for
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+(This includes `_all` string or when no indices have been specified)
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 - **`resource` (Optional, string)**: Changed resource to reload analyzers from if applicable
@@ -7484,7 +7494,7 @@ If set to `false`, then indices or data streams matching the template must alway
 - **`index_patterns` (Optional, string \| string[])**: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
-- **`template` (Optional, { aliases, mappings, settings, lifecycle })**: Template to be applied.
+- **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
 - **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
@@ -7586,7 +7596,7 @@ client.indices.stats({ ... })
 ### Arguments [_arguments_indices.stats]
 
 #### Request (object) [_request_indices.stats]
-- **`metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned the specific metrics.
+- **`metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned the specific metrics
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument
@@ -7660,12 +7670,12 @@ Supports a list of values, such as `open,hidden`.
 Perform chat completion inference on the service.
 
 The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
-It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
+It only works with the `chat_completion` task type.
 
 NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
 The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
 The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
-If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
+To determine whether a given inference service supports this task type, please see the page for that service.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference)
 
@@ -7798,7 +7808,7 @@ The following integrations are available through the inference API. You can find
 * Amazon Bedrock (`completion`, `text_embedding`)
 * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Anthropic (`completion`)
-* Azure AI Studio (`completion`, 'rerank', `text_embedding`)
+* Azure AI Studio (`completion`, `rerank`, `text_embedding`)
 * Azure OpenAI (`completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
 * DeepSeek (`chat_completion`, `completion`)
@@ -7806,6 +7816,7 @@ The following integrations are available through the inference API. You can find
 * ELSER (`sparse_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
 * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
+* Groq (`chat_completion`)
 * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * JinaAI (`rerank`, `text_embedding`)
 * Llama (`chat_completion`, `completion`, `text_embedding`)
@@ -8265,6 +8276,26 @@ Applies only to the `text_embedding` task type.
 Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
 - **`task_settings` (Optional, { auto_truncate, top_n, thinking_config, max_tokens })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putGroq [_inference.put_groq]
+Create a Groq inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `groq` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-groq)
+
+```ts
+client.inference.putGroq({ task_type, groq_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_groq]
+
+#### Request (object) [_request_inference.put_groq]
+- **`task_type` (Enum("chat_completion"))**: The type of the inference task that the model will perform.
+- **`groq_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("groq"))**: The type of service supported for the specified task type. In this case, `groq`.
+- **`service_settings` ({ model_id, api_key, rate_limit })**: Settings used to install the inference model. These settings are specific to the `groq` service.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putHuggingFace [_inference.put_hugging_face]
@@ -8749,7 +8780,7 @@ Wildcard (`*`) expressions are supported.
 To get all ingest pipelines, omit this parameter or use `*`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
-- **`summary` (Optional, boolean)**: Return pipelines without their definitions (default: false)
+- **`summary` (Optional, boolean)**: Return pipelines without their definitions
 
 ## client.ingest.processorGrok [_ingest.processor_grok]
 Run a grok processor.
@@ -8968,7 +8999,7 @@ client.license.postStartBasic({ ... })
 ### Arguments [_arguments_license.post_start_basic]
 
 #### Request (object) [_request_license.post_start_basic]
-- **`acknowledge` (Optional, boolean)**: whether the user has acknowledged acknowledge messages (default: false)
+- **`acknowledge` (Optional, boolean)**: Whether the user has acknowledged acknowledge messages
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -8991,8 +9022,8 @@ client.license.postStartTrial({ ... })
 ### Arguments [_arguments_license.post_start_trial]
 
 #### Request (object) [_request_license.post_start_trial]
-- **`acknowledge` (Optional, boolean)**: whether the user has acknowledged acknowledge messages (default: false)
-- **`type` (Optional, string)**: The type of trial license to generate (default: "trial")
+- **`acknowledge` (Optional, boolean)**: Whether the user has acknowledged acknowledge messages
+- **`type` (Optional, string)**: The type of trial license to generate
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.logstash.deletePipeline [_logstash.delete_pipeline]
@@ -10755,7 +10786,7 @@ Increasing this value generally increases the throughput.
 If this setting is greater than the number of hardware threads
 it will automatically be changed to a value less than the number of hardware threads.
 If adaptive_allocations is enabled, do not set this value, because it’s automatically set.
-- **`priority` (Optional, Enum("normal" \| "low"))**: The deployment priority.
+- **`priority` (Optional, Enum("normal" \| "low"))**: The deployment priority
 - **`queue_capacity` (Optional, number)**: Specifies the number of inference requests that are allowed in the queue. After the number of requests exceeds
 this value, new requests are rejected with a 429 error.
 - **`threads_per_allocation` (Optional, number)**: Sets the number of threads used by each model allocation during inference. This generally increases
@@ -11152,7 +11183,7 @@ a task from an empty queue) are filtered out.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received
 before the timeout expires, the request fails and returns an error.
 - **`type` (Optional, Enum("cpu" \| "wait" \| "block" \| "gpu" \| "mem"))**: The type to sample.
-- **`sort` (Optional, Enum("cpu" \| "wait" \| "block" \| "gpu" \| "mem"))**: The sort order for 'cpu' type (default: total)
+- **`sort` (Optional, Enum("cpu" \| "wait" \| "block" \| "gpu" \| "mem"))**: The sort order for 'cpu' type
 
 ## client.nodes.info [_nodes.info]
 Get node information.
@@ -11214,7 +11245,7 @@ client.nodes.stats({ ... })
 
 #### Request (object) [_request_nodes.stats]
 - **`node_id` (Optional, string \| string[])**: List of node IDs or names used to limit returned information.
-- **`metric` (Optional, Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations") \| Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations")[])**: Limit the information returned to the specified metrics
+- **`metric` (Optional, Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations") \| Enum("_all" \| "_none" \| "indices" \| "os" \| "process" \| "jvm" \| "thread_pool" \| "fs" \| "transport" \| "http" \| "breaker" \| "script" \| "discovery" \| "ingest" \| "adaptive_selection" \| "script_cache" \| "indexing_pressure" \| "repositories" \| "allocations")[])**: Limits the information returned to the specific metrics.
 - **`index_metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`fielddata_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata statistics.
@@ -11238,7 +11269,8 @@ client.nodes.usage({ ... })
 ### Arguments [_arguments_nodes.usage]
 
 #### Request (object) [_request_nodes.usage]
-- **`node_id` (Optional, string \| string[])**: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+- **`node_id` (Optional, string \| string[])**: A list of node IDs or names to limit the returned information.
+Use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes.
 - **`metric` (Optional, Enum("_all" \| "rest_actions" \| "aggregations") \| Enum("_all" \| "rest_actions" \| "aggregations")[])**: Limits the information returned to the specific metrics.
 A list of the following options: `_all`, `rest_actions`, `aggregations`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -11831,8 +11863,9 @@ client.searchableSnapshots.clearCache({ ... })
 #### Request (object) [_request_searchable_snapshots.clear_cache]
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to clear from the cache.
 It supports wildcards (`*`).
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both
+- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+(This includes `_all` string or when no indices have been specified)
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
 
 ## client.searchableSnapshots.mount [_searchable_snapshots.mount]
@@ -12250,7 +12283,7 @@ They can contain alphanumeric characters (a-z, A-Z, 0-9), dashes (`-`), and unde
 
 NOTE: Token names must be unique in the context of the associated service account.
 They must also be globally unique with their fully qualified names, which are comprised of the service account principal and token name, such as `<namespace>/<service>/<token-name>`.
-- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.delegatePki [_security.delegate_pki]
 Delegate PKI authentication.
@@ -12358,7 +12391,7 @@ client.security.deleteServiceToken({ namespace, service, name })
 - **`namespace` (string)**: The namespace, which is a top-level grouping of service accounts.
 - **`service` (string)**: The service name.
 - **`name` (string)**: The name of the service account token.
-- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.deleteUser [_security.delete_user]
 Delete users.
@@ -13792,7 +13825,7 @@ client.slm.getLifecycle({ ... })
 ### Arguments [_arguments_slm.get_lifecycle]
 
 #### Request (object) [_request_slm.get_lifecycle]
-- **`policy_id` (Optional, string \| string[])**: List of snapshot lifecycle policies to retrieve
+- **`policy_id` (Optional, string \| string[])**: A list of snapshot lifecycle policy identifiers.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
@@ -15946,8 +15979,8 @@ If both this value and the `throttle_period_in_millis` parameter are specified, 
 - **`trigger` (Optional, { schedule })**: The trigger that defines when the watch should run.
 - **`active` (Optional, boolean)**: The initial state of the watch.
 The default value is `true`, which means the watch is active by default.
-- **`if_primary_term` (Optional, number)**: only update the watch if the last operation that has changed the watch has the specified primary term
-- **`if_seq_no` (Optional, number)**: only update the watch if the last operation that has changed the watch has the specified sequence number
+- **`if_primary_term` (Optional, number)**: Only update the watch if the last operation that has changed the watch has the specified primary term
+- **`if_seq_no` (Optional, number)**: Only update the watch if the last operation that has changed the watch has the specified sequence number
 - **`version` (Optional, number)**: Explicit version number for concurrency control
 
 ## client.watcher.queryWatches [_watcher.query_watches]
@@ -16072,7 +16105,7 @@ client.xpack.info({ ... })
 #### Request (object) [_request_xpack.info]
 - **`categories` (Optional, Enum("build" \| "features" \| "license")[])**: A list of the information categories to include in the response.
 For example, `build,license,features`.
-- **`accept_enterprise` (Optional, boolean)**: If this param is used it must be set to true
+- **`accept_enterprise` (Optional, boolean)**: If used, this otherwise ignored parameter must be set to true
 - **`human` (Optional, boolean)**: Defines whether additional human-readable information is included in the response.
 In particular, it adds descriptions and a tag line.
 
