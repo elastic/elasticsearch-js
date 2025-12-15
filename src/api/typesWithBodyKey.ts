@@ -9526,6 +9526,7 @@ export interface ClusterComponentTemplateSummary {
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
   lifecycle?: IndicesDataStreamLifecycleWithRollover
+  data_stream_options?: IndicesDataStreamOptionsTemplate | null
 }
 
 export interface ClusterAllocationExplainAllocationDecision {
@@ -11872,6 +11873,16 @@ export interface IndicesDataStream {
   timestamp_field: IndicesDataStreamTimestampField
 }
 
+export interface IndicesDataStreamFailureStore {
+  enabled?: boolean
+  lifecycle?: IndicesFailureStoreLifecycle
+}
+
+export interface IndicesDataStreamFailureStoreTemplate {
+  enabled?: boolean | null
+  lifecycle?: IndicesFailureStoreLifecycleTemplate | null
+}
+
 export interface IndicesDataStreamIndex {
   index_name: IndexName
   index_uuid: Uuid
@@ -11903,6 +11914,14 @@ export interface IndicesDataStreamLifecycleWithRollover extends IndicesDataStrea
   rollover?: IndicesDataStreamLifecycleRolloverConditions
 }
 
+export interface IndicesDataStreamOptions {
+  failure_store?: IndicesDataStreamFailureStore
+}
+
+export interface IndicesDataStreamOptionsTemplate {
+  failure_store?: IndicesDataStreamFailureStoreTemplate | null
+}
+
 export interface IndicesDataStreamTimestampField {
   name: Field
 }
@@ -11925,6 +11944,16 @@ export interface IndicesFailureStore {
   enabled: boolean
   indices: IndicesDataStreamIndex[]
   rollover_on_write: boolean
+}
+
+export interface IndicesFailureStoreLifecycle {
+  data_retention?: Duration
+  enabled?: boolean
+}
+
+export interface IndicesFailureStoreLifecycleTemplate {
+  data_retention?: Duration | null
+  enabled?: boolean
 }
 
 export interface IndicesFielddataFrequencyFilter {
@@ -12103,6 +12132,7 @@ export interface IndicesIndexTemplateSummary {
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
   lifecycle?: IndicesDataStreamLifecycleWithRollover
+  data_stream_options?: IndicesDataStreamOptionsTemplate | null
 }
 
 export interface IndicesIndexVersioning {
@@ -12591,6 +12621,15 @@ export interface IndicesDeleteDataStreamRequest extends RequestBase {
 
 export type IndicesDeleteDataStreamResponse = AcknowledgedResponseBase
 
+export interface IndicesDeleteDataStreamOptionsRequest extends RequestBase {
+  name: DataStreamNames
+  expand_wildcards?: ExpandWildcards
+  master_timeout?: Duration
+  timeout?: Duration
+}
+
+export type IndicesDeleteDataStreamOptionsResponse = AcknowledgedResponseBase
+
 export interface IndicesDeleteIndexTemplateRequest extends RequestBase {
   name: Names
   master_timeout?: Duration
@@ -12855,6 +12894,21 @@ export interface IndicesGetDataStreamResponse {
   data_streams: IndicesDataStream[]
 }
 
+export interface IndicesGetDataStreamOptionsDataStreamWithOptions {
+  name: DataStreamName
+  options?: IndicesDataStreamOptions
+}
+
+export interface IndicesGetDataStreamOptionsRequest extends RequestBase {
+  name: DataStreamNames
+  expand_wildcards?: ExpandWildcards
+  master_timeout?: Duration
+}
+
+export interface IndicesGetDataStreamOptionsResponse {
+  data_streams: IndicesGetDataStreamOptionsDataStreamWithOptions[]
+}
+
 export interface IndicesGetDataStreamSettingsDataStreamSettings {
   name: string
   settings: IndicesIndexSettings
@@ -13068,6 +13122,19 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
 }
 
 export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
+
+export interface IndicesPutDataStreamOptionsRequest extends RequestBase {
+  name: DataStreamNames
+  expand_wildcards?: ExpandWildcards
+  master_timeout?: Duration
+  timeout?: Duration
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    failure_store?: IndicesDataStreamFailureStore
+  }
+}
+
+export type IndicesPutDataStreamOptionsResponse = AcknowledgedResponseBase
 
 export interface IndicesPutDataStreamSettingsDataStreamSettingsError {
   index: IndexName

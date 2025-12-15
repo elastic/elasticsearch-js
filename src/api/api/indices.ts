@@ -569,22 +569,22 @@ export default class Indices {
   }
 
   /**
-    * Deletes the data stream options of the selected data streams
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
+    * Delete data stream options. Removes the data stream options from a data stream.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-delete-data-stream-options | Elasticsearch API documentation}
     */
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest | TB.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamOptionsResponse>
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest | TB.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamOptionsResponse, unknown>>
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest | TB.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamOptionsResponse>
+  async deleteDataStreamOptions (this: That, params: T.IndicesDeleteDataStreamOptionsRequest | TB.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1196,22 +1196,22 @@ export default class Indices {
   }
 
   /**
-    * Returns the data stream options of the selected data streams
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
+    * Get data stream options. Get the data stream options configuration of one or more data streams.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-get-data-stream-options | Elasticsearch API documentation}
     */
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest | TB.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamOptionsResponse>
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest | TB.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataStreamOptionsResponse, unknown>>
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest | TB.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamOptionsResponse>
+  async getDataStreamOptions (this: That, params: T.IndicesGetDataStreamOptionsRequest | TB.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1766,22 +1766,34 @@ export default class Indices {
   }
 
   /**
-    * Updates the data stream options of the selected data streams
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html | Elasticsearch API documentation}
+    * Update data stream options. Update the data stream options of the specified data streams.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-update-data-stream-options | Elasticsearch API documentation}
     */
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putDataStreamOptions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest | TB.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamOptionsResponse>
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest | TB.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataStreamOptionsResponse, unknown>>
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest | TB.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<T.IndicesPutDataStreamOptionsResponse>
+  async putDataStreamOptions (this: That, params: T.IndicesPutDataStreamOptionsRequest | TB.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
+    const acceptedBody: string[] = ['failure_store']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
