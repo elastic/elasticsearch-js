@@ -135,6 +135,12 @@ async function index (chunkSize, base64 = false) {
 }
 
 async function run () {
+  // clean up any existing index, in case a previous run ended in a partially finished state
+  await client.indices.delete({
+    index: indexName,
+    allow_no_indices: true
+  })
+
   const measurements = []
 
   for (const chunk_size of [100, 250, 500, 1000]) {
