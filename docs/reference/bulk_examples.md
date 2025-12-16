@@ -101,6 +101,8 @@ run().catch(console.log)
 
 When ingesting dense vectors, you can encode float arrays as base64 strings for more efficient transfer. The client's `serializer` provides `encodeFloat32Vector` and `decodeFloat32Vector` methods that encode IEEE-754 float32 values in big-endian byte order.
 
+*Note: Support for ingesting base64-encoded float arrays is available starting in Elasticsearch 9.3.*
+
 ```js
 'use strict'
 
