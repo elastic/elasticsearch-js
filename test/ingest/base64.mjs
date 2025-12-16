@@ -111,6 +111,7 @@ async function index (chunkSize, base64 = false) {
   let chunk = []
 
   await client.indices.create(indexSettings)
+  await client.indices.refresh({ index: indexName })
 
   const start = Date.now()
 
