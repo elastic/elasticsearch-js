@@ -82,7 +82,10 @@ async function fetchDataSet () {
     })
   }
 
-  return await readFile(filePath, 'utf8')
+  const file = await readFile(filePath, 'utf8')
+  return file.split(/[\r\n]+/)
+    .filter(row => row.trim().length > 0)
+    .map(row => JSON.parse(row.trim()))
 }
 
 /**
@@ -106,7 +109,7 @@ function* loopDataSet (data) {
   * @returns {number} Milliseconds the serialize+index operations took
   */
 async function index (chunkSize, base64 = false) {
-  const raw = await fetchDataSet()
+  const data = await fetchDataSet()
   const serializer = new Serializer()
   let chunk = []
 
@@ -115,9 +118,7 @@ async function index (chunkSize, base64 = false) {
 
   const start = Date.now()
 
-  const lines = raw.split(/[\r\n]+/).filter(row => row.trim().length > 0)
-  for (const line of loopDataSet(lines)) {
-    const doc = JSON.parse(line)
+  for (const doc of loopDataSet(data)) {
     if (base64) doc.emb = serializer.encodeFloat32Vector(doc.emb)
     chunk.push(doc)
     if (chunk.length >= chunkSize) {
