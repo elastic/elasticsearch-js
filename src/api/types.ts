@@ -289,15 +289,6 @@ export interface CountRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * By default, it is random. */
   preference?: string
-  /** Specifies a subset of projects to target for the search using project
-    * metadata tags in a subset of Lucene query syntax.
-    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-    * Examples:
-    *  _alias:my-project
-    *  _alias:_origin
-    *  _alias:*pr*
-    * Supported in serverless only. */
-  project_routing?: ProjectRouting
   /** A custom value used to route operations to a specific shard. */
   routing?: Routing
   /** The maximum number of documents to collect for each shard.
@@ -314,10 +305,19 @@ export interface CountRequest extends RequestBase {
   /** Defines the search query using Query DSL. A request body query cannot be used
     * with the `q` query string parameter. */
   query?: QueryDslQueryContainer
+  /** Specifies a subset of projects to target using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, project_routing?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, project_routing?: never, routing?: never, terminate_after?: never, q?: never, query?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
 }
 
 export interface CountResponse {
@@ -4109,6 +4109,8 @@ export interface DiversifyRetriever extends RetrieverBase {
   rank_window_size?: integer
   /** The query vector used for diversification. */
   query_vector?: QueryVector
+  /** a dense vector query vector builder to use instead of a static query_vector */
+  query_vector_builder?: QueryVectorBuilder
   /** Controls the trade-off between relevance and diversity for MMR. A value of 0.0 focuses solely on diversity, while a value of 1.0 focuses solely on relevance. Required for MMR */
   lambda?: float
 }
@@ -8654,6 +8656,11 @@ export interface MappingDynamicTemplate {
   match_pattern?: MappingMatchType
 }
 
+export interface MappingExponentialHistogramProperty extends MappingPropertyBase {
+  time_series_metric?: MappingTimeSeriesMetricType
+  type: 'exponential_histogram'
+}
+
 export interface MappingFieldAliasProperty extends MappingPropertyBase {
   path?: Field
   type: 'alias'
@@ -8727,6 +8734,7 @@ export interface MappingHalfFloatNumberProperty extends MappingNumberPropertyBas
 
 export interface MappingHistogramProperty extends MappingPropertyBase {
   ignore_malformed?: boolean
+  time_series_metric?: MappingTimeSeriesMetricType
   type: 'histogram'
 }
 
@@ -8883,7 +8891,7 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
-export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingRankVectorProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
+export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingRankVectorProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingExponentialHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
 export interface MappingPropertyBase {
   /** Metadata about the field. */
@@ -11283,7 +11291,11 @@ export interface CatCountRequest extends CatCatRequestBase {
   index?: Indices
   /** A comma-separated list of columns names to display. It supports simple wildcards. */
   h?: CatCatCountColumns
-  /** Specifies a subset of projects to target for the search using project
+  /** List of columns that determine how the table should be sorted.
+    * Sorting defaults to ascending and can be changed by setting `:asc`
+    * or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** Specifies a subset of projects to target using project
     * metadata tags in a subset of Lucene query syntax.
     * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
     * Examples:
@@ -11292,14 +11304,10 @@ export interface CatCountRequest extends CatCatRequestBase {
     *  _alias:*pr*
     * Supported in serverless only. */
   project_routing?: ProjectRouting
-  /** List of columns that determine how the table should be sorted.
-    * Sorting defaults to ascending and can be changed by setting `:asc`
-    * or `:desc` as a suffix to the column name. */
-  s?: Names
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, h?: never, project_routing?: never, s?: never }
+  body?: string | { [key: string]: any } & { index?: never, h?: never, s?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, h?: never, project_routing?: never, s?: never }
+  querystring?: { [key: string]: any } & { index?: never, h?: never, s?: never, project_routing?: never }
 }
 
 export type CatCountResponse = CatCountCountRecord[]
@@ -18638,7 +18646,7 @@ export interface EqlSearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   /** If true, missing or closed indices are not included in the response. */
   ignore_unavailable?: boolean
-  /** Specifies a subset of projects to target for the search using project
+  /** Specifies a subset of projects to target using project
     * metadata tags in a subset of Lucene query syntax.
     * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
     * Examples:
@@ -18703,6 +18711,13 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
 }
 
 export type EsqlESQLParam = FieldValue | FieldValue[]
+
+export interface EsqlESQLView {
+  /** The name of the ES|QL view */
+  name: string
+  /** The ES|QL query */
+  query: string
+}
 
 export interface EsqlEsqlClusterDetails {
   status: EsqlEsqlClusterStatus
@@ -18895,6 +18910,17 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
 
 export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
 
+export interface EsqlDeleteViewRequest extends RequestBase {
+  /** The view name to remove. */
+  name: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type EsqlDeleteViewResponse = AcknowledgedResponseBase
+
 export interface EsqlGetQueryRequest extends RequestBase {
   /** The query ID */
   id: Id
@@ -18912,6 +18938,19 @@ export interface EsqlGetQueryResponse {
   query: string
   coordinating_node: NodeId
   data_nodes: NodeId[]
+}
+
+export interface EsqlGetViewRequest extends RequestBase {
+  /** The comma-separated view names to retrieve. */
+  name?: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export interface EsqlGetViewResponse {
+  views: EsqlESQLView[]
 }
 
 export interface EsqlListQueriesBody {
@@ -18932,6 +18971,19 @@ export interface EsqlListQueriesRequest extends RequestBase {
 export interface EsqlListQueriesResponse {
   queries: Record<TaskId, EsqlListQueriesBody>
 }
+
+export interface EsqlPutViewRequest extends RequestBase {
+  /** The view name to create or update. */
+  name: Id
+  /** The ES|QL query string from which to create a view. */
+  query: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, query?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, query?: never }
+}
+
+export type EsqlPutViewResponse = AcknowledgedResponseBase
 
 export interface EsqlQueryRequest extends RequestBase {
   /** A short version of the Accept header, e.g. json, yaml.
@@ -23647,7 +23699,7 @@ export interface InferenceAzureOpenAIServiceSettings {
   /** This setting helps to minimize the number of rate limit errors returned from Azure.
     * The `azureopenai` service sets a default number of requests allowed per minute depending on the task type.
     * For `text_embedding`, it is set to `1440`.
-    * For `completion`, it is set to `120`. */
+    * For `completion` and `chat_completion`, it is set to `120`. */
   rate_limit?: InferenceRateLimitSetting
   /** The name of your Azure OpenAI resource.
     * You can find this from the list of resources in the Azure Portal for your subscription. */
@@ -23657,12 +23709,12 @@ export interface InferenceAzureOpenAIServiceSettings {
 export type InferenceAzureOpenAIServiceType = 'azureopenai'
 
 export interface InferenceAzureOpenAITaskSettings {
-  /** For a `completion` or `text_embedding` task, specify the user issuing the request.
+  /** For a `completion`, `chat_completion` or `text_embedding` task, specify the user issuing the request.
     * This information can be used for abuse detection. */
   user?: string
 }
 
-export type InferenceAzureOpenAITaskType = 'completion' | 'text_embedding'
+export type InferenceAzureOpenAITaskType = 'completion' | 'chat_completion' | 'text_embedding'
 
 export type InferenceCohereEmbeddingType = 'binary' | 'bit' | 'byte' | 'float' | 'int8'
 
@@ -24502,6 +24554,13 @@ export interface InferenceInferenceEndpointInfoMistral extends InferenceInferenc
   task_type: InferenceTaskTypeMistral
 }
 
+export interface InferenceInferenceEndpointInfoNvidia extends InferenceInferenceEndpoint {
+  /** The inference ID */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeNvidia
+}
+
 export interface InferenceInferenceEndpointInfoOpenAI extends InferenceInferenceEndpoint {
   /** The inference Id */
   inference_id: string
@@ -24682,6 +24741,60 @@ export type InferenceMistralServiceType = 'mistral'
 
 export type InferenceMistralTaskType = 'text_embedding' | 'completion' | 'chat_completion'
 
+export type InferenceNvidiaInputType = 'ingest' | 'search'
+
+export interface InferenceNvidiaServiceSettings {
+  /** A valid API key for your Nvidia endpoint.
+    * Can be found in `API Keys` section of Nvidia account settings. */
+  api_key: string
+  /** The URL of the Nvidia model endpoint. If not provided, the default endpoint URL is used depending on the task type:
+    *
+    * * For `text_embedding` task - `https://integrate.api.nvidia.com/v1/embeddings`.
+    * * For `completion` and `chat_completion` tasks - `https://integrate.api.nvidia.com/v1/chat/completions`.
+    * * For `rerank` task - `https://ai.api.nvidia.com/v1/retrieval/nvidia/reranking`. */
+  url?: string
+  /** The name of the model to use for the inference task.
+    * Refer to the model's documentation for the name if needed.
+    * Service has been tested and confirmed to be working with the following models:
+    *
+    * * For `text_embedding` task - `nvidia/llama-3.2-nv-embedqa-1b-v2`.
+    * * For `completion` and `chat_completion` tasks - `microsoft/phi-3-mini-128k-instruct`.
+    * * For `rerank` task - `nv-rerank-qa-mistral-4b:1`.
+    * Service doesn't support `text_embedding` task `baai/bge-m3` and `nvidia/nvclip` models due to them not recognizing the `input_type` parameter. */
+  model_id: string
+  /** For a `text_embedding` task, the maximum number of tokens per input. Inputs exceeding this value are truncated prior to sending to the Nvidia API. */
+  max_input_tokens?: integer
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. */
+  similarity?: InferenceNvidiaSimilarityType
+  /** This setting helps to minimize the number of rate limit errors returned from the Nvidia API.
+    * By default, the `nvidia` service sets the number of requests allowed per minute to 3000. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceNvidiaServiceType = 'nvidia'
+
+export type InferenceNvidiaSimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
+
+export interface InferenceNvidiaTaskSettings {
+  /** For a `text_embedding` task, type of input sent to the Nvidia endpoint.
+    * Valid values are:
+    *
+    * * `ingest`: Mapped to Nvidia's `passage` value in request. Used when generating embeddings during indexing.
+    * * `search`: Mapped to Nvidia's `query` value in request. Used when generating embeddings during querying.
+    *
+    * IMPORTANT: For Nvidia endpoints, if the `input_type` field is not specified, it defaults to `query`. */
+  input_type?: InferenceNvidiaInputType
+  /** For a `text_embedding` task, the method used by the Nvidia model to handle inputs longer than the maximum token length.
+    * Valid values are:
+    *
+    * * `END`: When the input exceeds the maximum input token length, the end of the input is discarded.
+    * * `NONE`: When the input exceeds the maximum input token length, an error is returned.
+    * * `START`: When the input exceeds the maximum input token length, the start of the input is discarded. */
+  truncate?: InferenceCohereTruncateType
+}
+
+export type InferenceNvidiaTaskType = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
+
 export interface InferenceOpenAIServiceSettings {
   /** A valid API key of your OpenAI account.
     * You can find your OpenAI API keys in your OpenAI account under the API keys section.
@@ -24745,7 +24858,8 @@ export interface InferenceOpenShiftAiServiceSettings {
   model_id?: string
   /** For a `text_embedding` task, the maximum number of tokens per input before chunking occurs. */
   max_input_tokens?: integer
-  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. */
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm.
+    * If not specified, the default dot_product value is used. */
   similarity?: InferenceOpenShiftAiSimilarityType
   /** This setting helps to minimize the number of rate limit errors returned from the OpenShift AI API.
     * By default, the `openshift_ai` service sets the number of requests allowed per minute to 3000. */
@@ -24779,7 +24893,7 @@ export interface InferenceRateLimitSetting {
     * * `anthropic` service: `50`
     * * `azureaistudio` service: `240`
     * * `azureopenai` service and task type `text_embedding`: `1440`
-    * * `azureopenai` service and task type `completion`: `120`
+    * * `azureopenai` service and task types `completion` or `chat_completion`: `120`
     * * `cohere` service: `10000`
     * * `contextualai` service: `1000`
     * * `elastic` service and task type `chat_completion`: `240`
@@ -24887,7 +25001,7 @@ export type InferenceTaskTypeAnthropic = 'completion'
 
 export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion' | 'rerank'
 
-export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion'
+export type InferenceTaskTypeAzureOpenAI = 'text_embedding' | 'completion' | 'chat_completion'
 
 export type InferenceTaskTypeCohere = 'text_embedding' | 'rerank' | 'completion'
 
@@ -24914,6 +25028,8 @@ export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
 export type InferenceTaskTypeLlama = 'text_embedding' | 'chat_completion' | 'completion'
 
 export type InferenceTaskTypeMistral = 'text_embedding' | 'chat_completion' | 'completion'
+
+export type InferenceTaskTypeNvidia = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
 export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion'
 
@@ -25303,7 +25419,7 @@ export interface InferencePutAzureopenaiRequest extends RequestBase {
   timeout?: Duration
   /** The chunking configuration object.
     * Applies only to the `text_embedding` task type.
-    * Not applicable to the `completion` task type. */
+    * Not applicable to the `completion` and `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `azureopenai`. */
   service: InferenceAzureOpenAIServiceType
@@ -25628,6 +25744,35 @@ export interface InferencePutMistralRequest extends RequestBase {
 }
 
 export type InferencePutMistralResponse = InferenceInferenceEndpointInfoMistral
+
+export interface InferencePutNvidiaRequest extends RequestBase {
+  /** The type of the inference task that the model will perform.
+    * NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. */
+  task_type: InferenceNvidiaTaskType
+  /** The unique identifier of the inference endpoint. */
+  nvidia_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `nvidia`. */
+  service: InferenceNvidiaServiceType
+  /** Settings used to install the inference model. These settings are specific to the `nvidia` service. */
+  service_settings: InferenceNvidiaServiceSettings
+  /** Settings to configure the inference task.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
+    * These settings are specific to the task type you specified. */
+  task_settings?: InferenceNvidiaTaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, nvidia_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, nvidia_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+}
+
+export type InferencePutNvidiaResponse = InferenceInferenceEndpointInfoNvidia
 
 export interface InferencePutOpenaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform.
@@ -31578,10 +31723,12 @@ export interface MlStopDatafeedRequest extends RequestBase {
   force?: boolean
   /** Refer to the description for the `timeout` query parameter. */
   timeout?: Duration
+  /** Refer to the description for the `close_job` query parameter. */
+  close_job?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, force?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, force?: never, timeout?: never, close_job?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, force?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_match?: never, force?: never, timeout?: never, close_job?: never }
 }
 
 export interface MlStopDatafeedResponse {
@@ -33399,6 +33546,67 @@ export interface ProjectTagsTagsKeys {
 }
 export type ProjectTagsTags = ProjectTagsTagsKeys
 & { [property: string]: string }
+
+export type ProjectRoutingNamedProjectRoutingExpressions = Record<string, ProjectRoutingProjectRoutingExpression>
+
+export interface ProjectRoutingProjectRoutingExpression {
+  expression: ProjectRoutingRoutingExpression
+}
+
+export type ProjectRoutingRoutingExpression = string
+
+export interface ProjectRoutingCreateRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  expressions?: ProjectRoutingProjectRoutingExpression
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expressions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expressions?: never }
+}
+
+export type ProjectRoutingCreateResponse = AcknowledgedResponseBase
+
+export interface ProjectRoutingCreateManyRequest extends RequestBase {
+  expressions?: ProjectRoutingNamedProjectRoutingExpressions
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { expressions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { expressions?: never }
+}
+
+export type ProjectRoutingCreateManyResponse = AcknowledgedResponseBase
+
+export interface ProjectRoutingDeleteRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type ProjectRoutingDeleteResponse = AcknowledgedResponseBase
+
+export interface ProjectRoutingGetRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type ProjectRoutingGetResponse = ProjectRoutingProjectRoutingExpression
+
+export interface ProjectRoutingGetManyRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type ProjectRoutingGetManyResponse = ProjectRoutingNamedProjectRoutingExpressions
 
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
@@ -38084,15 +38292,6 @@ export interface SqlQueryRequest extends RequestBase {
     * You can also specify a format using the `Accept` HTTP header.
     * If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence. */
   format?: SqlQuerySqlFormat
-  /** Specifies a subset of projects to target for the search using project
-    * metadata tags in a subset of Lucene query syntax.
-    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-    * Examples:
-    *  _alias:my-project
-    *  _alias:_origin
-    *  _alias:*pr*
-    * Supported in serverless only. */
-  project_routing?: ProjectRouting
   /** If `true`, the response has partial results when there are shard request timeouts or shard failures.
     * If `false`, the API returns an error with no partial results. */
   allow_partial_search_results?: boolean
@@ -38128,6 +38327,15 @@ export interface SqlQueryRequest extends RequestBase {
   params?: any[]
   /** The SQL query to run. */
   query?: string
+  /** Specifies a subset of projects to target using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** The timeout before the request fails. */
   request_timeout?: Duration
   /** One or more runtime fields for the search request.
@@ -38142,9 +38350,9 @@ export interface SqlQueryRequest extends RequestBase {
     * To save a synchronous search, you must specify this parameter and the `keep_on_completion` parameter. */
   wait_for_completion_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, project_routing?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { format?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, project_routing?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, project_routing?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { format?: never, allow_partial_search_results?: never, catalog?: never, columnar?: never, cursor?: never, fetch_size?: never, field_multi_value_leniency?: never, filter?: never, index_using_frozen?: never, keep_alive?: never, keep_on_completion?: never, page_timeout?: never, params?: never, query?: never, project_routing?: never, request_timeout?: never, runtime_mappings?: never, time_zone?: never, wait_for_completion_timeout?: never }
 }
 
 export interface SqlQueryResponse {

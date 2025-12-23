@@ -829,12 +829,14 @@ export default class Ml {
         body: [
           'allow_no_match',
           'force',
-          'timeout'
+          'timeout',
+          'close_job'
         ],
         query: [
           'allow_no_match',
           'force',
-          'timeout'
+          'timeout',
+          'close_job'
         ]
       },
       'ml.stop_trained_model_deployment': {
@@ -4841,9 +4843,11 @@ export default class Ml {
         'allow_no_match',
         'force',
         'timeout',
+        'close_job',
         'allow_no_match',
         'force',
-        'timeout'
+        'timeout',
+        'close_job'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -66,6 +66,7 @@ import openPointInTimeApi from './api/open_point_in_time'
 import pingApi from './api/ping'
 import ProfilingApi from './api/profiling'
 import ProjectApi from './api/project'
+import ProjectRoutingApi from './api/project_routing'
 import putScriptApi from './api/put_script'
 import QueryRulesApi from './api/query_rules'
 import rankEvalApi from './api/rank_eval'
@@ -157,6 +158,7 @@ export default interface API {
   ping: typeof pingApi
   profiling: ProfilingApi
   project: ProjectApi
+  projectRouting: ProjectRoutingApi
   putScript: typeof putScriptApi
   queryRules: QueryRulesApi
   rankEval: typeof rankEvalApi
@@ -218,6 +220,7 @@ const kMonitoring = Symbol('Monitoring')
 const kNodes = Symbol('Nodes')
 const kProfiling = Symbol('Profiling')
 const kProject = Symbol('Project')
+const kProjectRouting = Symbol('ProjectRouting')
 const kQueryRules = Symbol('QueryRules')
 const kRollup = Symbol('Rollup')
 const kSearchApplication = Symbol('SearchApplication')
@@ -263,6 +266,7 @@ export default class API {
   [kNodes]: symbol | null
   [kProfiling]: symbol | null
   [kProject]: symbol | null
+  [kProjectRouting]: symbol | null
   [kQueryRules]: symbol | null
   [kRollup]: symbol | null
   [kSearchApplication]: symbol | null
@@ -307,6 +311,7 @@ export default class API {
     this[kNodes] = null
     this[kProfiling] = null
     this[kProject] = null
+    this[kProjectRouting] = null
     this[kQueryRules] = null
     this[kRollup] = null
     this[kSearchApplication] = null
@@ -449,6 +454,9 @@ Object.defineProperties(API.prototype, {
   },
   project: {
     get () { return this[kProject] === null ? (this[kProject] = new ProjectApi(this.transport)) : this[kProject] }
+  },
+  projectRouting: {
+    get () { return this[kProjectRouting] === null ? (this[kProjectRouting] = new ProjectRoutingApi(this.transport)) : this[kProjectRouting] }
   },
   queryRules: {
     get () { return this[kQueryRules] === null ? (this[kQueryRules] = new QueryRulesApi(this.transport)) : this[kQueryRules] }

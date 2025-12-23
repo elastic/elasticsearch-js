@@ -847,13 +847,14 @@ export default class Indices {
         path: [
           'name'
         ],
-        body: [],
+        body: [
+          'project_routing'
+        ],
         query: [
           'expand_wildcards',
           'ignore_unavailable',
           'allow_no_indices',
-          'mode',
-          'project_routing'
+          'mode'
         ]
       },
       'indices.rollover': {
@@ -4774,7 +4775,9 @@ export default class Indices {
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveIndexResponse>
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['indices.resolve_index']
 
     const userQuery = params?.querystring
@@ -4791,15 +4794,25 @@ export default class Indices {
     }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
-    const method = 'GET'
+    const method = body != null ? 'POST' : 'GET'
     const path = `/_resolve/index/${encodeURIComponent(params.name.toString())}`
     const meta: TransportRequestMetadata = {
       name: 'indices.resolve_index',
@@ -4808,11 +4821,11 @@ export default class Indices {
       },
       acceptedParams: [
         'name',
+        'project_routing',
         'expand_wildcards',
         'ignore_unavailable',
         'allow_no_indices',
-        'mode',
-        'project_routing'
+        'mode'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

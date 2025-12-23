@@ -34,7 +34,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'index'
     ],
     body: [
-      'query'
+      'query',
+      'project_routing'
     ],
     query: [
       'allow_no_indices',
@@ -48,7 +49,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'lenient',
       'min_score',
       'preference',
-      'project_routing',
       'routing',
       'terminate_after',
       'q'
@@ -120,6 +120,7 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
     acceptedParams: [
       'index',
       'query',
+      'project_routing',
       'allow_no_indices',
       'analyzer',
       'analyze_wildcard',
@@ -131,7 +132,6 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
       'lenient',
       'min_score',
       'preference',
-      'project_routing',
       'routing',
       'terminate_after',
       'q'

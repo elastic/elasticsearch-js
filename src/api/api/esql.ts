@@ -87,6 +87,13 @@ export default class Esql {
           'drop_null_columns'
         ]
       },
+      'esql.delete_view': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'esql.get_query': {
         path: [
           'id'
@@ -94,9 +101,25 @@ export default class Esql {
         body: [],
         query: []
       },
+      'esql.get_view': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'esql.list_queries': {
         path: [],
         body: [],
+        query: []
+      },
+      'esql.put_view': {
+        path: [
+          'name'
+        ],
+        body: [
+          'query'
+        ],
         query: []
       },
       'esql.query': {
@@ -344,6 +367,54 @@ export default class Esql {
   }
 
   /**
+    * Delete an ES|QL view. Deletes a stored ES|QL view.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async deleteView (this: That, params: T.EsqlDeleteViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlDeleteViewResponse>
+  async deleteView (this: That, params: T.EsqlDeleteViewRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlDeleteViewResponse, unknown>>
+  async deleteView (this: That, params: T.EsqlDeleteViewRequest, options?: TransportRequestOptions): Promise<T.EsqlDeleteViewResponse>
+  async deleteView (this: That, params: T.EsqlDeleteViewRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['esql.delete_view']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_query/view/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.delete_view',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: [
+        'name'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get a specific running ES|QL query information. Returns an object extended information about a running ES|QL query.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query | Elasticsearch API documentation}
     */
@@ -392,6 +463,62 @@ export default class Esql {
   }
 
   /**
+    * Get an ES|QL view. Returns a stored ES|QL view.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async getView (this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetViewResponse>
+  async getView (this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetViewResponse, unknown>>
+  async getView (this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptions): Promise<T.EsqlGetViewResponse>
+  async getView (this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['esql.get_view']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'GET'
+      path = `/_query/view/${encodeURIComponent(params.name.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_query/view'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'esql.get_view',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: [
+        'name'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Get running ES|QL queries information. Returns an object containing IDs and other information about the running ES|QL queries.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries | Elasticsearch API documentation}
     */
@@ -431,6 +558,67 @@ export default class Esql {
     const meta: TransportRequestMetadata = {
       name: 'esql.list_queries',
       acceptedParams: [
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create or update an ES|QL view.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async putView (this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutViewResponse>
+  async putView (this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlPutViewResponse, unknown>>
+  async putView (this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptions): Promise<T.EsqlPutViewResponse>
+  async putView (this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['esql.put_view']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_query/view/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.put_view',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: [
+        'name',
+        'query'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

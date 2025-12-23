@@ -85,14 +85,14 @@ export default class Sql {
           'page_timeout',
           'params',
           'query',
+          'project_routing',
           'request_timeout',
           'runtime_mappings',
           'time_zone',
           'wait_for_completion_timeout'
         ],
         query: [
-          'format',
-          'project_routing'
+          'format'
         ]
       },
       'sql.translate': {
@@ -378,12 +378,12 @@ export default class Sql {
         'page_timeout',
         'params',
         'query',
+        'project_routing',
         'request_timeout',
         'runtime_mappings',
         'time_zone',
         'wait_for_completion_timeout',
-        'format',
-        'project_routing'
+        'format'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
