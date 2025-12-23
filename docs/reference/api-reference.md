@@ -211,6 +211,7 @@ client.count({ ... })
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
@@ -222,7 +223,6 @@ client.count({ ... })
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`min_score` (Optional, number)**: The minimum `_score` value that documents must have to be included in the result.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
-- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
 - **`q` (Optional, string)**: The query in Lucene query string syntax. This parameter cannot be used with a request body.
@@ -2386,8 +2386,7 @@ client.cat.count({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 It supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`h` (Optional, Enum("epoch" \| "timestamp" \| "count") \| Enum("epoch" \| "timestamp" \| "count")[])**: A list of columns names to display. It supports simple wildcards.
-- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
 metadata tags in a subset of Lucene query syntax.
 Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
 Examples:
@@ -2395,6 +2394,7 @@ Examples:
  _alias:_origin
  _alias:*pr*
 Supported in serverless only.
+- **`h` (Optional, Enum("epoch" \| "timestamp" \| "count") \| Enum("epoch" \| "timestamp" \| "count")[])**: A list of columns names to display. It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
@@ -4557,6 +4557,14 @@ client.eql.search({ index, query })
 #### Request (object) [_request_eql.search]
 - **`index` (string \| string[])**: List of index names to scope the operation
 - **`query` (string)**: EQL query you wish to run.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 - **`case_sensitive` (Optional, boolean)**
 - **`event_category_field` (Optional, string)**: Field containing the event classification, such as process, file, or network.
 - **`tiebreaker_field` (Optional, string)**: Field used to sort hits with the same timestamp in ascending order
@@ -4584,14 +4592,6 @@ parameter to get a smaller or larger set of samples. To retrieve more than one s
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
 - **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
-- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
-metadata tags in a subset of Lucene query syntax.
-Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-Examples:
- _alias:my-project
- _alias:_origin
- _alias:*pr*
-Supported in serverless only.
 
 ## client.esql.asyncQuery [_esql.async_query]
 Run an async ES|QL query.
@@ -6825,7 +6825,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings, fields } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings, fields } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, time_series_metric, type } \| { time_series_metric, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -7245,14 +7245,6 @@ client.indices.resolveIndex({ name })
 #### Request (object) [_request_indices.resolve_index]
 - **`name` (string \| string[])**: Comma-separated name(s) or index pattern(s) of the indices, aliases, and data streams to resolve.
 Resources on remote clusters can be specified using the `<cluster>`:`<name>` syntax.
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
-If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
-For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`mode` (Optional, Enum("standard" \| "time_series" \| "logsdb" \| "lookup") \| Enum("standard" \| "time_series" \| "logsdb" \| "lookup")[])**: Filter indices by index mode - standard, lookup, time_series, etc. List of IndexMode. Empty means no filter.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
 metadata tags in a subset of Lucene query syntax.
 Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
@@ -7261,6 +7253,14 @@ Examples:
  _alias:_origin
  _alias:*pr*
 Supported in serverless only.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`mode` (Optional, Enum("standard" \| "time_series" \| "logsdb" \| "lookup") \| Enum("standard" \| "time_series" \| "logsdb" \| "lookup")[])**: Filter indices by index mode - standard, lookup, time_series, etc. List of IndexMode. Empty means no filter.
 
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
@@ -7809,7 +7809,7 @@ The following integrations are available through the inference API. You can find
 * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Anthropic (`completion`)
 * Azure AI Studio (`completion`, `rerank`, `text_embedding`)
-* Azure OpenAI (`completion`, `text_embedding`)
+* Azure OpenAI (`chat_completion`, `completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
 * DeepSeek (`chat_completion`, `completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
@@ -7821,6 +7821,7 @@ The following integrations are available through the inference API. You can find
 * JinaAI (`rerank`, `text_embedding`)
 * Llama (`chat_completion`, `completion`, `text_embedding`)
 * Mistral (`chat_completion`, `completion`, `text_embedding`)
+* Nvidia (`chat_completion`, `completion`, `text_embedding`, `rerank`)
 * OpenAI (`chat_completion`, `completion`, `text_embedding`)
 * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * VoyageAI (`rerank`, `text_embedding`)
@@ -8008,14 +8009,14 @@ client.inference.putAzureopenai({ task_type, azureopenai_inference_id, service, 
 ### Arguments [_arguments_inference.put_azureopenai]
 
 #### Request (object) [_request_inference.put_azureopenai]
-- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("completion" \| "chat_completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`azureopenai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureopenai"))**: The type of service supported for the specified task type. In this case, `azureopenai`.
 - **`service_settings` ({ api_key, api_version, deployment_id, entra_id, rate_limit, resource_name })**: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
-Not applicable to the `completion` task type.
+Not applicable to the `completion` and `chat_completion` task types.
 - **`task_settings` (Optional, { user })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8430,6 +8431,34 @@ client.inference.putMistral({ task_type, mistral_inference_id, service, service_
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `completion` or `chat_completion` task types.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putNvidia [_inference.put_nvidia]
+Create an Nvidia inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `nvidia` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-nvidia)
+
+```ts
+client.inference.putNvidia({ task_type, nvidia_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_nvidia]
+
+#### Request (object) [_request_inference.put_nvidia]
+- **`task_type` (Enum("chat_completion" \| "completion" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
+NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
+- **`nvidia_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("nvidia"))**: The type of service supported for the specified task type. In this case, `nvidia`.
+- **`service_settings` ({ api_key, url, model_id, max_input_tokens, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `nvidia` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
+- **`task_settings` (Optional, { input_type, truncate })**: Settings to configure the inference task.
+Applies only to the `text_embedding` task type.
+Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
+These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putOpenai [_inference.put_openai]
@@ -10851,6 +10880,7 @@ the identifier.
 - **`allow_no_match` (Optional, boolean)**: Refer to the description for the `allow_no_match` query parameter.
 - **`force` (Optional, boolean)**: Refer to the description for the `force` query parameter.
 - **`timeout` (Optional, string \| -1 \| 0)**: Refer to the description for the `timeout` query parameter.
+- **`close_job` (Optional, boolean)**: Refer to the description for the `close_job` query parameter.
 
 ## client.ml.stopTrainedModelDeployment [_ml.stop_trained_model_deployment]
 Stop a trained model deployment.
@@ -14677,6 +14707,14 @@ After this time period, a pagination request might fail because the scroll curso
 Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request.
 - **`params` (Optional, User-defined value[])**: The values for parameters in the query.
 - **`query` (Optional, string)**: The SQL query to run.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 - **`request_timeout` (Optional, string \| -1 \| 0)**: The timeout before the request fails.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: One or more runtime fields for the search request.
 These fields take precedence over mapped fields with the same name.
@@ -14689,14 +14727,6 @@ To save a synchronous search, you must specify this parameter and the `keep_on_c
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile"))**: The format for the response.
 You can also specify a format using the `Accept` HTTP header.
 If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence.
-- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project
-metadata tags in a subset of Lucene query syntax.
-Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-Examples:
- _alias:my-project
- _alias:_origin
- _alias:*pr*
-Supported in serverless only.
 
 ## client.sql.translate [_sql.translate]
 Translate SQL into Elasticsearch queries.

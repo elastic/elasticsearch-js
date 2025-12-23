@@ -28,6 +28,8 @@ interface That {
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
 export default class Cat {
   transport: Transport
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
@@ -86,10 +88,11 @@ export default class Cat {
         path: [
           'index'
         ],
-        body: [],
+        body: [
+          'project_routing'
+        ],
         query: [
           'h',
-          'project_routing',
           's'
         ]
       },
@@ -597,7 +600,9 @@ export default class Cat {
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<T.CatCountResponse>
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['cat.count']
 
     const userQuery = params?.querystring
@@ -615,21 +620,31 @@ export default class Cat {
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
     let method = ''
     let path = ''
     if (params.index != null) {
-      method = 'GET'
+      method = body != null ? 'POST' : 'GET'
       path = `/_cat/count/${encodeURIComponent(params.index.toString())}`
     } else {
-      method = 'GET'
+      method = body != null ? 'POST' : 'GET'
       path = '/_cat/count'
     }
     const meta: TransportRequestMetadata = {
@@ -639,8 +654,8 @@ export default class Cat {
       },
       acceptedParams: [
         'index',
-        'h',
         'project_routing',
+        'h',
         's'
       ]
     }

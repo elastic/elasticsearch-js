@@ -65,6 +65,7 @@ export default class Eql {
           'index'
         ],
         body: [
+          'project_routing',
           'query',
           'case_sensitive',
           'event_category_field',
@@ -92,7 +93,6 @@ export default class Eql {
           'ignore_unavailable',
           'keep_alive',
           'keep_on_completion',
-          'project_routing',
           'wait_for_completion_timeout'
         ]
       }
@@ -300,6 +300,7 @@ export default class Eql {
       },
       acceptedParams: [
         'index',
+        'project_routing',
         'query',
         'case_sensitive',
         'event_category_field',
@@ -325,7 +326,6 @@ export default class Eql {
         'ignore_unavailable',
         'keep_alive',
         'keep_on_completion',
-        'project_routing',
         'wait_for_completion_timeout'
       ]
     }

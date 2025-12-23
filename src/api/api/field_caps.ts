@@ -47,8 +47,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'include_unmapped',
       'filters',
       'types',
-      'include_empty_fields',
-      'project_routing'
+      'include_empty_fields'
     ]
   }
 }
@@ -127,8 +126,7 @@ export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequ
       'include_unmapped',
       'filters',
       'types',
-      'include_empty_fields',
-      'project_routing'
+      'include_empty_fields'
     ]
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
