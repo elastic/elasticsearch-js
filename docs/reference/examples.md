@@ -9,6 +9,7 @@ Following you can find some examples on how to use the client.
 
 * Use of the [asStream](/reference/as_stream_examples.md) parameter;
 * Executing a [bulk](/reference/bulk_examples.md) request;
+* Executing a [bulk request with base64-encoded vectors](/reference/bulk_examples.md#bulk_vectors);
 * Executing a [exists](/reference/exists_examples.md) request;
 * Executing a [get](/reference/get_examples.md) request;
 * Executing a [sql.query](/reference/sql_query_examples.md) request;
