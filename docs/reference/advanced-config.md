@@ -72,6 +72,8 @@ This class is responsible for the serialization of every request, it offers the 
 * `deserialize(json: string): any;` deserializes response strings.
 * `ndserialize(array: any[]): string;` serializes bulk request objects.
 * `qserialize(object: any): string;` serializes request query parameters.
+* `encodeFloat32Vector(floats: number[]): string;` encodes a float array to base64 for efficient vector ingestion.
+* `decodeFloat32Vector(base64: string): number[];` decodes a base64 string back to a float array.
 
 ```js
 const { Client, Serializer } = require('@elastic/elasticsearch')
