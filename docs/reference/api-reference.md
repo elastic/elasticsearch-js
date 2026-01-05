@@ -3468,18 +3468,31 @@ client.cluster.health({ ... })
 ### Arguments [_arguments_cluster.health]
 
 #### Request (object) [_request_cluster.health]
-- **`index` (Optional, string \| string[])**: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
-- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Can be one of cluster, indices or shards. Controls the details level of the health information returned.
-- **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
-- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
-- **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: A number controlling to how many active shards to wait for, all to wait for all shards in the cluster to be active, or 0 to not wait.
-- **`wait_for_events` (Optional, Enum("immediate" \| "urgent" \| "high" \| "normal" \| "low" \| "languid"))**: Can be one of immediate, urgent, high, normal, low, languid. Wait until all currently queued events with the given priority are processed.
-- **`wait_for_nodes` (Optional, string \| number)**: The request waits until the specified number N of nodes is available. It also accepts >=N, <=N, >N and <N. Alternatively, it is possible to use ge(N), le(N), gt(N) and lt(N) notation.
-- **`wait_for_no_initializing_shards` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard initializations. Defaults to false, which means it will not wait for initializing shards.
-- **`wait_for_no_relocating_shards` (Optional, boolean)**: A boolean value which controls whether to wait (until the timeout provided) for the cluster to have no shard relocations. Defaults to false, which means it will not wait for relocating shards.
-- **`wait_for_status` (Optional, Enum("green" \| "yellow" \| "red" \| "unknown" \| "unavailable"))**: One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status.
+- **`index` (Optional, string \| string[])**: A list of data streams, indices, and index aliases that limit the request.
+Wildcard expressions (`*`) are supported.
+To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Expand wildcard expression to concrete indices that are open, closed or both.
+- **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Return health information at a specific level of detail.
+- **`local` (Optional, boolean)**: If true, retrieve information from the local node only.
+If false, retrieve information from the master node.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+- **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: Wait for the specified number of active shards.
+Use `all` to wait for all shards in the cluster to be active.
+Use `0` to not wait.
+- **`wait_for_events` (Optional, Enum("immediate" \| "urgent" \| "high" \| "normal" \| "low" \| "languid"))**: Wait until all currently queued events with the given priority are processed.
+- **`wait_for_nodes` (Optional, string \| number)**: Wait until the specified number (N) of nodes is available.
+It also accepts `>=N`, `<=N`, `>N` and `<N`.
+Alternatively, use the notations `ge(N)`, `le(N)`, `gt(N)`, and `lt(N)`.
+- **`wait_for_no_initializing_shards` (Optional, boolean)**: Wait (until the timeout expires) for the cluster to have no shard initializations.
+If false, the request does not wait for initializing shards.
+- **`wait_for_no_relocating_shards` (Optional, boolean)**: Wait (until the timeout expires) for the cluster to have no shard relocations.
+If false, the request not wait for relocating shards.
+- **`wait_for_status` (Optional, Enum("green" \| "yellow" \| "red" \| "unknown" \| "unavailable"))**: Wait (until the timeout expires) for the cluster to reach a specific health status (or a better status).
+A green status is better than yellow and yellow is better than red.
+By default, the request does not wait for a particular status.
 
 ## client.cluster.info [_cluster.info]
 Get cluster info.
