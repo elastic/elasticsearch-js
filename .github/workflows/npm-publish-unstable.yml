@@ -18,7 +18,7 @@ jobs:
     outputs:
       src: "${{ steps.changes.outputs.src }}"
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           persist-credentials: false
       - uses: dorny/paths-filter/@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
@@ -46,7 +46,7 @@ jobs:
         uses: zachary95/github-actions-debounce@ab7363483e2837992b8aa6be891763da00ac14f9 # v0.1.0
         with:
           wait: 1800
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           persist-credentials: false
           ref: main
