@@ -38,7 +38,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'id',
       'params',
       'profile',
-      'source'
+      'source',
+      'project_routing'
     ],
     query: [
       'allow_no_indices',
@@ -49,7 +50,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'ignore_unavailable',
       'preference',
       'profile',
-      'project_routing',
       'routing',
       'scroll',
       'search_type',
@@ -127,6 +127,7 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
       'params',
       'profile',
       'source',
+      'project_routing',
       'allow_no_indices',
       'ccs_minimize_roundtrips',
       'expand_wildcards',
@@ -135,7 +136,6 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
       'ignore_unavailable',
       'preference',
       'profile',
-      'project_routing',
       'routing',
       'scroll',
       'search_type',
