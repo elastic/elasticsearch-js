@@ -51,7 +51,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'size',
       'sort',
       'track_total_hits',
-      'with_labels'
+      'with_labels',
+      'project_routing'
     ],
     query: [
       'exact_bounds',
@@ -59,7 +60,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'grid_agg',
       'grid_precision',
       'grid_type',
-      'project_routing',
       'size',
       'track_total_hits',
       'with_labels'
@@ -144,12 +144,12 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
       'sort',
       'track_total_hits',
       'with_labels',
+      'project_routing',
       'exact_bounds',
       'extent',
       'grid_agg',
       'grid_precision',
       'grid_type',
-      'project_routing',
       'size',
       'track_total_hits',
       'with_labels'

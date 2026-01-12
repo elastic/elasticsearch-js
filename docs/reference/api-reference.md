@@ -1746,13 +1746,13 @@ client.searchTemplate({ ... })
 - **`params` (Optional, Record<string, User-defined value>)**: Key-value pairs used to replace Mustache variables in the template. The key is the variable name. The value is the variable value.
 - **`profile` (Optional, boolean)**: If `true`, the query execution is profiled.
 - **`source` (Optional, string \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
-- **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
 - **`scroll` (Optional, string \| -1 \| 0)**: Specifies how long a consistent view of the index should be maintained for scrolled search.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: The type of the search operation.
@@ -3437,8 +3437,7 @@ client.cluster.getComponentTemplate({ ... })
 ### Arguments [_arguments_cluster.get_component_template]
 
 #### Request (object) [_request_cluster.get_component_template]
-- **`name` (Optional, string)**: List of component template names used to limit the request.
-Wildcard (`*`) expressions are supported.
+- **`name` (Optional, string)**: Name of component template to retrieve. Wildcard (`*`) expressions are supported.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
 - **`settings_filter` (Optional, string \| string[])**: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
 - **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template
@@ -6103,7 +6102,7 @@ client.indices.forcemerge({ ... })
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`flush` (Optional, boolean)**: Specify whether the index should be flushed after performing the operation
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-- **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (defayult: dynamic)
+- **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (default: dynamic)
 - **`only_expunge_deletes` (Optional, boolean)**: Specify whether the operation should only expunge deleted documents
 - **`wait_for_completion` (Optional, boolean)**: Should the request wait until the force merge is completed
 
@@ -7838,7 +7837,7 @@ The following integrations are available through the inference API. You can find
 * OpenAI (`chat_completion`, `completion`, `text_embedding`)
 * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * VoyageAI (`rerank`, `text_embedding`)
-* Watsonx inference integration (`text_embedding`)
+* Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put)
 
@@ -8284,7 +8283,7 @@ client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, ser
 - **`task_type` (Enum("rerank" \| "text_embedding" \| "completion" \| "chat_completion"))**: The type of the inference task that the model will perform.
 - **`googlevertexai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("googlevertexai"))**: The type of service supported for the specified task type. In this case, `googlevertexai`.
-- **`service_settings` ({ provider, url, streaming_url, location, model_id, project_id, rate_limit, service_account_json, dimensions })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
+- **`service_settings` ({ provider, url, streaming_url, location, model_id, project_id, rate_limit, service_account_json, dimensions, max_batch_size })**: Settings used to install the inference model. These settings are specific to the `googlevertexai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `rerank`, `completion`, or `chat_completion` task types.
@@ -8571,13 +8570,13 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 ### Arguments [_arguments_inference.put_watsonx]
 
 #### Request (object) [_request_inference.put_watsonx]
-- **`task_type` (Enum("text_embedding" \| "chat_completion" \| "completion"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("text_embedding" \| "rerank" \| "chat_completion" \| "completion"))**: The type of the inference task that the model will perform.
 - **`watsonx_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("watsonxai"))**: The type of service supported for the specified task type. In this case, `watsonxai`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
-Not applicable to the `completion` or `chat_completion` task types.
+Not applicable to the `rerank`, `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]
@@ -8898,8 +8897,8 @@ client.ingest.putPipeline({ id })
 - **`id` (string)**: ID of the ingest pipeline to create or update.
 - **`_meta` (Optional, Record<string, User-defined value>)**: Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch.
 - **`description` (Optional, string)**: Description of the ingest pipeline.
-- **`on_failure` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, ip_location, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])**: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
-- **`processors` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, ip_location, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])**: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
+- **`on_failure` (Optional, { append, attachment, bytes, cef, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, ip_location, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])**: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
+- **`processors` (Optional, { append, attachment, bytes, cef, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, ip_location, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])**: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
 - **`version` (Optional, number)**: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 - **`deprecated` (Optional, boolean)**: Marks this ingest pipeline as deprecated.
 When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
