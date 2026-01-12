@@ -14,6 +14,12 @@
  */
 export type TODO = Record<string, any>
 
+/**
+ * Generic type: exactly one key from T
+ */
+type ExactlyOne<T> = {
+  [K in keyof T]: { [P in K]: T[P] } & { [P in Exclude<keyof T, K>]?: never }
+}[keyof T]
 export interface BulkCreateOperation extends BulkWriteOperation {
 }
 
@@ -38,7 +44,7 @@ export interface BulkOperationBase {
   version_type?: VersionType
 }
 
-export interface BulkOperationContainer {
+interface BulkOperationContainerExclusiveProps {
   /** Index the specified document.
     * If the document exists, it replaces the document and increments the version.
     * The following line must contain the source data to be indexed. */
@@ -52,6 +58,8 @@ export interface BulkOperationContainer {
   /** Remove the specified document from the index. */
   delete?: BulkDeleteOperation
 }
+
+export type BulkOperationContainer = ExactlyOne<BulkOperationContainerExclusiveProps>
 
 export type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 
@@ -532,6 +540,8 @@ export interface DeleteByQueryResponse {
     * `search` is the number of search actions retried. */
   retries?: Retries
   slice_id?: integer
+  /** Status of each slice if the delete by query was sliced */
+  slices?: ReindexStatus[]
   task?: TaskId
   throttled?: Duration
   /** The number of milliseconds the request slept to conform to `requests_per_second`. */
@@ -1930,6 +1940,8 @@ export interface ReindexResponse {
   /** The number of requests per second effectively run during the reindex. */
   requests_per_second?: float
   slice_id?: integer
+  /** Status of each slice if the reindex was sliced */
+  slices?: ReindexStatus[]
   task?: TaskId
   /** The number of milliseconds the request slept to conform to `requests_per_second`. */
   throttled_millis?: EpochTime<UnitMillis>
@@ -1979,43 +1991,16 @@ export interface ReindexRethrottleReindexNode extends SpecUtilsBaseNode {
   tasks: Record<TaskId, ReindexRethrottleReindexTask>
 }
 
-export interface ReindexRethrottleReindexStatus {
-  /** The number of scroll responses pulled back by the reindex. */
-  batches: long
-  /** The number of documents that were successfully created. */
-  created: long
-  /** The number of documents that were successfully deleted. */
-  deleted: long
-  /** The number of documents that were ignored because the script used for the reindex returned a `noop` value for `ctx.op`. */
-  noops: long
-  /** The number of requests per second effectively executed during the reindex. */
-  requests_per_second: float
-  /** The number of retries attempted by reindex. `bulk` is the number of bulk actions retried and `search` is the number of search actions retried. */
-  retries: Retries
-  throttled?: Duration
-  /** Number of milliseconds the request slept to conform to `requests_per_second`. */
-  throttled_millis: DurationValue<UnitMillis>
-  throttled_until?: Duration
-  /** This field should always be equal to zero in a `_reindex` response.
-    * It only has meaning when using the Task API, where it indicates the next time (in milliseconds since epoch) a throttled request will be executed again in order to conform to `requests_per_second`. */
-  throttled_until_millis: DurationValue<UnitMillis>
-  /** The number of documents that were successfully processed. */
-  total: long
-  /** The number of documents that were successfully updated, for example, a document with same ID already existed prior to reindex updating it. */
-  updated: long
-  /** The number of version conflicts that reindex hits. */
-  version_conflicts: long
-}
-
 export interface ReindexRethrottleReindexTask {
   action: string
   cancellable: boolean
+  cancelled: boolean
   description: string
   id: long
   node: Name
   running_time_in_nanos: DurationValue<UnitNanos>
   start_time_in_millis: EpochTime<UnitMillis>
-  status: ReindexRethrottleReindexStatus
+  status: ReindexStatus
   type: string
   headers: HttpHeaders
 }
@@ -2617,13 +2602,7 @@ export interface SearchFieldCollapse {
   collapse?: SearchFieldCollapse
 }
 
-export interface SearchFieldSuggester {
-  /** Provides auto-complete/search-as-you-type functionality. */
-  completion?: SearchCompletionSuggester
-  /** Provides access to word alternatives on a per token basis within a certain string distance. */
-  phrase?: SearchPhraseSuggester
-  /** Suggests terms based on edit distance. */
-  term?: SearchTermSuggester
+interface SearchFieldSuggesterCommonProps {
   /** Prefix used to search for suggestions. */
   prefix?: string
   /** A prefix expressed as a regular expression. */
@@ -2632,6 +2611,17 @@ export interface SearchFieldSuggester {
     * Needs to be set globally or per suggestion. */
   text?: string
 }
+
+interface SearchFieldSuggesterExclusiveProps {
+  /** Provides auto-complete/search-as-you-type functionality. */
+  completion?: SearchCompletionSuggester
+  /** Provides access to word alternatives on a per token basis within a certain string distance. */
+  phrase?: SearchPhraseSuggester
+  /** Suggests terms based on edit distance. */
+  term?: SearchTermSuggester
+}
+
+export type SearchFieldSuggester = SearchFieldSuggesterCommonProps & ExactlyOne<SearchFieldSuggesterExclusiveProps>
 
 export interface SearchHighlight extends SearchHighlightBase {
   encoder?: SearchHighlighterEncoder
@@ -2952,12 +2942,17 @@ export interface SearchRegexOptions {
   max_determinized_states?: integer
 }
 
-export interface SearchRescore {
+interface SearchRescoreCommonProps {
   window_size?: integer
+}
+
+interface SearchRescoreExclusiveProps {
   query?: SearchRescoreQuery
   learning_to_rank?: SearchLearningToRank
   script?: SearchScriptRescore
 }
+
+export type SearchRescore = SearchRescoreCommonProps & ExactlyOne<SearchRescoreExclusiveProps>
 
 export interface SearchRescoreQuery {
   /** The query to use for rescoring.
@@ -3107,7 +3102,7 @@ export interface SearchShardProfile {
   shard_id: integer
 }
 
-export interface SearchSmoothingModelContainer {
+interface SearchSmoothingModelContainerExclusiveProps {
   /** A smoothing model that uses an additive smoothing where a constant (typically `1.0` or smaller) is added to all counts to balance weights. */
   laplace?: SearchLaplaceSmoothingModel
   /** A smoothing model that takes the weighted mean of the unigrams, bigrams, and trigrams based on user supplied weights (lambdas). */
@@ -3115,6 +3110,8 @@ export interface SearchSmoothingModelContainer {
   /** A simple backoff model that backs off to lower order n-gram models if the higher order count is `0` and discounts the lower order n-gram model by a constant factor. */
   stupid_backoff?: SearchStupidBackoffSmoothingModel
 }
+
+export type SearchSmoothingModelContainer = ExactlyOne<SearchSmoothingModelContainerExclusiveProps>
 
 export type SearchSourceConfig = boolean | SearchSourceFilter | Fields
 
@@ -3843,6 +3840,8 @@ export interface UpdateByQueryResponse {
     * `bulk` is the number of bulk actions retried.
     * `search` is the number of search actions retried. */
   retries?: Retries
+  /** Status of each slice if the update by query was sliced */
+  slices?: ReindexStatus[]
   task?: TaskId
   /** If true, some requests timed out during the update by query. */
   timed_out?: boolean
@@ -4624,9 +4623,11 @@ export interface QueryCacheStats {
 
 export type QueryVector = float[]
 
-export interface QueryVectorBuilder {
+interface QueryVectorBuilderExclusiveProps {
   text_embedding?: TextEmbedding
 }
+
+export type QueryVectorBuilder = ExactlyOne<QueryVectorBuilderExclusiveProps>
 
 export interface RRFRetriever extends RetrieverBase {
   /** A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. Each retriever can optionally include a weight parameter. */
@@ -4651,10 +4652,12 @@ export type RRFRetrieverEntry = RetrieverContainer | RRFRetrieverComponent
 export interface RankBase {
 }
 
-export interface RankContainer {
+interface RankContainerExclusiveProps {
   /** The reciprocal rank fusion parameters */
   rrf?: RrfRank
 }
+
+export type RankContainer = ExactlyOne<RankContainerExclusiveProps>
 
 export interface RecoveryStats {
   current_as_source: long
@@ -4672,6 +4675,38 @@ export interface RefreshStats {
   total: long
   total_time?: Duration
   total_time_in_millis: DurationValue<UnitMillis>
+}
+
+export interface ReindexStatus {
+  /** The slice ID */
+  slice_id?: integer
+  /** The number of scroll responses pulled back by the reindex. */
+  batches: long
+  /** The number of documents that were successfully created. */
+  created?: long
+  /** The number of documents that were successfully deleted. */
+  deleted: long
+  /** The number of documents that were ignored because the script used for the reindex returned a `noop` value for `ctx.op`. */
+  noops: long
+  /** The number of requests per second effectively executed during the reindex. */
+  requests_per_second: float
+  /** The number of retries attempted by reindex. `bulk` is the number of bulk actions retried and `search` is the number of search actions retried. */
+  retries: Retries
+  throttled?: Duration
+  /** Number of milliseconds the request slept to conform to `requests_per_second`. */
+  throttled_millis: DurationValue<UnitMillis>
+  throttled_until?: Duration
+  /** This field should always be equal to zero in a `_reindex` response.
+    * It only has meaning when using the Task API, where it indicates the next time (in milliseconds since epoch) a throttled request will be executed again in order to conform to `requests_per_second`. */
+  throttled_until_millis: DurationValue<UnitMillis>
+  /** The number of documents that were successfully processed. */
+  total: long
+  /** The number of documents that were successfully updated, for example, a document with same ID already existed prior to reindex updating it. */
+  updated?: long
+  /** The number of version conflicts that reindex hits. */
+  version_conflicts: long
+  /** The reason for cancellation if the slice was canceled */
+  cancelled?: string
 }
 
 export type RelationName = string
@@ -4720,7 +4755,7 @@ export interface RetrieverBase {
   _name?: string
 }
 
-export interface RetrieverContainer {
+interface RetrieverContainerExclusiveProps {
   /** A retriever that replaces the functionality of a traditional query. */
   standard?: StandardRetriever
   /** A retriever that replaces the functionality  of a knn search. */
@@ -4741,6 +4776,8 @@ export interface RetrieverContainer {
   /** A retriever that diversifies the results from its child retriever. */
   diversify?: DiversifyRetriever
 }
+
+export type RetrieverContainer = ExactlyOne<RetrieverContainerExclusiveProps>
 
 export type Routing = string | string[]
 
@@ -5066,11 +5103,13 @@ export interface TopRightBottomLeftGeoBounds {
   bottom_left: GeoLocation
 }
 
-export interface TransformContainer {
+interface TransformContainerExclusiveProps {
   chain?: TransformContainer[]
   script?: ScriptTransform
   search?: SearchTransform
 }
+
+export type TransformContainer = ExactlyOne<TransformContainerExclusiveProps>
 
 export interface TranslogStats {
   earliest_last_modified_age: long
@@ -5189,7 +5228,7 @@ export type AggregationsAggregateOrder = Partial<Record<Field, SortOrder>> | Par
 export interface AggregationsAggregation {
 }
 
-export interface AggregationsAggregationContainer {
+interface AggregationsAggregationContainerCommonProps {
   /** Sub-aggregations for this aggregation.
     * Only applies to bucket aggregations. */
   aggregations?: Record<string, AggregationsAggregationContainer>
@@ -5198,6 +5237,9 @@ export interface AggregationsAggregationContainer {
     * @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   meta?: Metadata
+}
+
+interface AggregationsAggregationContainerExclusiveProps {
   /** A bucket aggregation returning a form of adjacency matrix.
     * The request provides a collection of named filter expressions, similar to the `filters` aggregation.
     * Each bucket in the response represents a non-empty cell in the matrix of intersecting filters. */
@@ -5389,6 +5431,8 @@ export interface AggregationsAggregationContainer {
   /** A multi-bucket aggregation similar to the histogram, except instead of providing an interval to use as the width of each bucket, a target number of buckets is provided. */
   variable_width_histogram?: AggregationsVariableWidthHistogramAggregation
 }
+
+export type AggregationsAggregationContainer = AggregationsAggregationContainerCommonProps & ExactlyOne<AggregationsAggregationContainerExclusiveProps>
 
 export interface AggregationsAggregationRange {
   /** Start of the range (inclusive). */
@@ -5634,7 +5678,7 @@ export interface AggregationsChangePointBucketKeys extends AggregationsMultiBuck
 export type AggregationsChangePointBucket = AggregationsChangePointBucketKeys
 & { [property: string]: AggregationsAggregate | FieldValue | long }
 
-export interface AggregationsChangeType {
+interface AggregationsChangeTypeExclusiveProps {
   dip?: AggregationsDip
   distribution_change?: AggregationsDistributionChange
   indeterminable?: AggregationsIndeterminable
@@ -5644,6 +5688,8 @@ export interface AggregationsChangeType {
   step_change?: AggregationsStepChange
   trend_change?: AggregationsTrendChange
 }
+
+export type AggregationsChangeType = ExactlyOne<AggregationsChangeTypeExclusiveProps>
 
 export interface AggregationsChiSquareHeuristic {
   /** Set to `false` if you defined a custom background filter that represents a different set of documents that you want to compare to. */
@@ -5689,7 +5735,7 @@ export interface AggregationsCompositeAggregationBase {
   order?: SortOrder
 }
 
-export interface AggregationsCompositeAggregationSource {
+interface AggregationsCompositeAggregationSourceExclusiveProps {
   /** A terms aggregation. */
   terms?: AggregationsCompositeTermsAggregation
   /** A histogram aggregation. */
@@ -5699,6 +5745,8 @@ export interface AggregationsCompositeAggregationSource {
   /** A geotile grid aggregation. */
   geotile_grid?: AggregationsCompositeGeoTileGridAggregation
 }
+
+export type AggregationsCompositeAggregationSource = ExactlyOne<AggregationsCompositeAggregationSourceExclusiveProps>
 
 export interface AggregationsCompositeBucketKeys extends AggregationsMultiBucketBase {
   key: AggregationsCompositeAggregateKey
@@ -6224,12 +6272,14 @@ export interface AggregationsInferenceClassImportance {
   importance: double
 }
 
-export interface AggregationsInferenceConfigContainer {
+interface AggregationsInferenceConfigContainerExclusiveProps {
   /** Regression configuration for inference. */
   regression?: MlRegressionInferenceOptions
   /** Classification configuration for inference. */
   classification?: MlClassificationInferenceOptions
 }
+
+export type AggregationsInferenceConfigContainer = ExactlyOne<AggregationsInferenceConfigContainerExclusiveProps>
 
 export interface AggregationsInferenceFeatureImportance {
   feature_name: string
@@ -8644,9 +8694,7 @@ export interface MappingDynamicProperty extends MappingDocValuesPropertyBase {
   locale?: string
 }
 
-export interface MappingDynamicTemplate {
-  mapping?: MappingProperty
-  runtime?: MappingRuntimeField
+interface MappingDynamicTemplateCommonProps {
   match?: string | string[]
   path_match?: string | string[]
   unmatch?: string | string[]
@@ -8655,6 +8703,13 @@ export interface MappingDynamicTemplate {
   unmatch_mapping_type?: string | string[]
   match_pattern?: MappingMatchType
 }
+
+interface MappingDynamicTemplateExclusiveProps {
+  mapping?: MappingProperty
+  runtime?: MappingRuntimeField
+}
+
+export type MappingDynamicTemplate = MappingDynamicTemplateCommonProps & ExactlyOne<MappingDynamicTemplateExclusiveProps>
 
 export interface MappingExponentialHistogramProperty extends MappingPropertyBase {
   time_series_metric?: MappingTimeSeriesMetricType
@@ -9298,7 +9353,12 @@ export interface QueryDslFieldValueFactorScoreFunction {
 
 export type QueryDslFunctionBoostMode = 'multiply' | 'replace' | 'sum' | 'avg' | 'max' | 'min'
 
-export interface QueryDslFunctionScoreContainer {
+interface QueryDslFunctionScoreContainerCommonProps {
+  filter?: QueryDslQueryContainer
+  weight?: double
+}
+
+interface QueryDslFunctionScoreContainerExclusiveProps {
   /** Function that scores a document with a exponential decay, depending on the distance of a numeric field value of the document from an origin. */
   exp?: QueryDslDecayFunction
   /** Function that scores a document with a normal decay, depending on the distance of a numeric field value of the document from an origin. */
@@ -9313,9 +9373,9 @@ export interface QueryDslFunctionScoreContainer {
   random_score?: QueryDslRandomScoreFunction
   /** Enables you to wrap another query and customize the scoring of it optionally with a computation derived from other numeric field values in the doc using a script expression. */
   script_score?: QueryDslScriptScoreFunction
-  filter?: QueryDslQueryContainer
-  weight?: double
 }
+
+export type QueryDslFunctionScoreContainer = QueryDslFunctionScoreContainerCommonProps & ExactlyOne<QueryDslFunctionScoreContainerExclusiveProps>
 
 export type QueryDslFunctionScoreMode = 'multiply' | 'sum' | 'avg' | 'first' | 'max' | 'min'
 
@@ -9388,11 +9448,13 @@ export type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
 
 export type QueryDslGeoExecution = 'memory' | 'indexed'
 
-export interface QueryDslGeoGridQuery extends QueryDslQueryBase {
+interface QueryDslGeoGridQueryExclusiveProps {
   geotile?: GeoTile
   geohash?: GeoHash
   geohex?: GeoHexCell
 }
+
+export type QueryDslGeoGridQuery = QueryDslQueryBase & ExactlyOne<QueryDslGeoGridQueryExclusiveProps>
 
 export interface QueryDslGeoPolygonPoints {
   points: GeoLocation[]
@@ -9482,7 +9544,7 @@ export interface QueryDslIntervalsAnyOf {
   filter?: QueryDslIntervalsFilter
 }
 
-export interface QueryDslIntervalsContainer {
+interface QueryDslIntervalsContainerExclusiveProps {
   /** Returns matches that span a combination of other rules. */
   all_of?: QueryDslIntervalsAllOf
   /** Returns intervals produced by any of its sub-rules. */
@@ -9499,7 +9561,9 @@ export interface QueryDslIntervalsContainer {
   wildcard?: QueryDslIntervalsWildcard
 }
 
-export interface QueryDslIntervalsFilter {
+export type QueryDslIntervalsContainer = ExactlyOne<QueryDslIntervalsContainerExclusiveProps>
+
+interface QueryDslIntervalsFilterExclusiveProps {
   /** Query used to return intervals that follow an interval from the `filter` rule. */
   after?: QueryDslIntervalsContainer
   /** Query used to return intervals that occur before an interval from the `filter` rule. */
@@ -9520,6 +9584,8 @@ export interface QueryDslIntervalsFilter {
     * This script must return a boolean value: `true` or `false`. */
   script?: Script | ScriptSource
 }
+
+export type QueryDslIntervalsFilter = ExactlyOne<QueryDslIntervalsFilterExclusiveProps>
 
 export interface QueryDslIntervalsFuzzy {
   /** Analyzer used to normalize the term. */
@@ -9564,7 +9630,7 @@ export interface QueryDslIntervalsPrefix {
   use_field?: Field
 }
 
-export interface QueryDslIntervalsQuery extends QueryDslQueryBase {
+interface QueryDslIntervalsQueryExclusiveProps {
   /** Returns matches that span a combination of other rules. */
   all_of?: QueryDslIntervalsAllOf
   /** Returns intervals produced by any of its sub-rules. */
@@ -9580,6 +9646,8 @@ export interface QueryDslIntervalsQuery extends QueryDslQueryBase {
   /** Matches terms using a wildcard pattern. */
   wildcard?: QueryDslIntervalsWildcard
 }
+
+export type QueryDslIntervalsQuery = QueryDslQueryBase & ExactlyOne<QueryDslIntervalsQueryExclusiveProps>
 
 export interface QueryDslIntervalsRange {
   /** Analyzer used to analyze the `prefix`. */
@@ -9864,9 +9932,12 @@ export interface QueryDslPinnedDoc {
   _index?: IndexName
 }
 
-export interface QueryDslPinnedQuery extends QueryDslQueryBase {
+interface QueryDslPinnedQueryCommonProps {
   /** Any choice of query used to rank documents which will be ranked below the "pinned" documents. */
   organic: QueryDslQueryContainer
+}
+
+interface QueryDslPinnedQueryExclusiveProps {
   /** Document IDs listed in the order they are to appear in results.
     * Required if `docs` is not specified. */
   ids?: Id[]
@@ -9874,6 +9945,8 @@ export interface QueryDslPinnedQuery extends QueryDslQueryBase {
     * Required if `ids` is not specified. */
   docs?: QueryDslPinnedDoc[]
 }
+
+export type QueryDslPinnedQuery = QueryDslQueryBase & QueryDslPinnedQueryCommonProps & ExactlyOne<QueryDslPinnedQueryExclusiveProps>
 
 export interface QueryDslPrefixQuery extends QueryDslQueryBase {
   /** Method used to rewrite the query. */
@@ -9894,7 +9967,7 @@ export interface QueryDslQueryBase {
   _name?: string
 }
 
-export interface QueryDslQueryContainer {
+interface QueryDslQueryContainerExclusiveProps {
   /** matches documents matching boolean combinations of other queries. */
   bool?: QueryDslBoolQuery
   /** Returns documents matching a `positive` query while reducing the relevance score of documents that also match a `negative` query. */
@@ -10030,6 +10103,8 @@ export interface QueryDslQueryContainer {
   wrapper?: QueryDslWrapperQuery
   type?: QueryDslTypeQuery
 }
+
+export type QueryDslQueryContainer = ExactlyOne<QueryDslQueryContainerExclusiveProps>
 
 export interface QueryDslQueryStringQuery extends QueryDslQueryBase {
   /** If `true`, the wildcard characters `*` and `?` are allowed as the first character of the query string. */
@@ -10302,7 +10377,7 @@ export interface QueryDslSpanOrQuery extends QueryDslQueryBase {
   clauses: QueryDslSpanQuery[]
 }
 
-export interface QueryDslSpanQuery {
+interface QueryDslSpanQueryExclusiveProps {
   /** Accepts a list of span queries, but only returns those spans which also match a second span query. */
   span_containing?: QueryDslSpanContainingQuery
   /** Allows queries like `span_near` or `span_or` across different fields. */
@@ -10324,6 +10399,8 @@ export interface QueryDslSpanQuery {
   span_within?: QueryDslSpanWithinQuery
 }
 
+export type QueryDslSpanQuery = ExactlyOne<QueryDslSpanQueryExclusiveProps>
+
 export interface QueryDslSpanTermQuery extends QueryDslQueryBase {
   value: FieldValue
   /** @alias value */
@@ -10339,19 +10416,10 @@ export interface QueryDslSpanWithinQuery extends QueryDslQueryBase {
   little: QueryDslSpanQuery
 }
 
-export interface QueryDslSparseVectorQuery extends QueryDslQueryBase {
+interface QueryDslSparseVectorQueryCommonProps {
   /** The name of the field that contains the token-weight pairs to be searched against.
     * This field must be a mapped sparse_vector field. */
   field: Field
-  /** Dictionary of precomputed sparse vectors and their associated weights.
-    * Only one of inference_id or query_vector may be supplied in a request. */
-  query_vector?: Record<string, float>
-  /** The inference ID to use to convert the query text into token-weight pairs.
-    * It must be the same inference ID that was used to create the tokens from the input text.
-    * Only one of inference_id and query_vector is allowed.
-    * If inference_id is specified, query must also be specified.
-    * Only one of inference_id or query_vector may be supplied in a request. */
-  inference_id?: Id
   /** The query text you want to use for search.
     * If inference_id is specified, query must also be specified. */
   query?: string
@@ -10365,6 +10433,20 @@ export interface QueryDslSparseVectorQuery extends QueryDslQueryBase {
     * If prune is set to true but pruning_config is not specified, default values will be used. */
   pruning_config?: TokenPruningConfig
 }
+
+interface QueryDslSparseVectorQueryExclusiveProps {
+  /** Dictionary of precomputed sparse vectors and their associated weights.
+    * Only one of inference_id or query_vector may be supplied in a request. */
+  query_vector?: Record<string, float>
+  /** The inference ID to use to convert the query text into token-weight pairs.
+    * It must be the same inference ID that was used to create the tokens from the input text.
+    * Only one of inference_id and query_vector is allowed.
+    * If inference_id is specified, query must also be specified.
+    * Only one of inference_id or query_vector may be supplied in a request. */
+  inference_id?: Id
+}
+
+export type QueryDslSparseVectorQuery = QueryDslQueryBase & QueryDslSparseVectorQueryCommonProps & ExactlyOne<QueryDslSparseVectorQueryExclusiveProps>
 
 export interface QueryDslTermQuery extends QueryDslQueryBase {
   /** Term you wish to find in the provided field. */
@@ -16505,8 +16587,7 @@ export interface ClusterExistsComponentTemplateRequest extends RequestBase {
 export type ClusterExistsComponentTemplateResponse = boolean
 
 export interface ClusterGetComponentTemplateRequest extends RequestBase {
-  /** Comma-separated list of component template names used to limit the request.
-    * Wildcard (`*`) expressions are supported. */
+  /** Name of component template to retrieve. Wildcard (`*`) expressions are supported. */
   name?: Name
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
@@ -18787,12 +18868,14 @@ export interface EsqlEsqlShardInfo {
   failed?: integer
 }
 
-export interface EsqlTableValuesContainer {
+interface EsqlTableValuesContainerExclusiveProps {
   integer?: EsqlTableValuesIntegerValue[]
   keyword?: EsqlTableValuesKeywordValue[]
   long?: EsqlTableValuesLongValue[]
   double?: EsqlTableValuesLongDouble[]
 }
+
+export type EsqlTableValuesContainer = ExactlyOne<EsqlTableValuesContainerExclusiveProps>
 
 export type EsqlTableValuesIntegerValue = integer | integer[]
 
@@ -20172,7 +20255,7 @@ export interface IndicesIndexState {
 }
 
 export interface IndicesIndexTemplate {
-  /** Name of the index template. */
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns: Names
   /** An ordered list of component template names.
     * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
@@ -21335,7 +21418,7 @@ export interface IndicesForcemergeRequest extends RequestBase {
   flush?: boolean
   /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
   ignore_unavailable?: boolean
-  /** The number of segments the index should be merged into (defayult: dynamic) */
+  /** The number of segments the index should be merged into (default: dynamic) */
   max_num_segments?: long
   /** Specify whether the operation should only expunge deleted documents */
   only_expunge_deletes?: boolean
@@ -21890,7 +21973,7 @@ export interface IndicesMigrateToDataStreamRequest extends RequestBase {
 
 export type IndicesMigrateToDataStreamResponse = AcknowledgedResponseBase
 
-export interface IndicesModifyDataStreamAction {
+interface IndicesModifyDataStreamActionExclusiveProps {
   /** Adds an existing index as a backing index for a data stream.
     * The index is hidden as part of this operation.
     * WARNING: Adding indices with the `add_backing_index` action can potentially result in improper data stream behavior.
@@ -21901,6 +21984,8 @@ export interface IndicesModifyDataStreamAction {
     * A data stream’s write index cannot be removed. */
   remove_backing_index?: IndicesModifyDataStreamIndexAndDataStreamAction
 }
+
+export type IndicesModifyDataStreamAction = ExactlyOne<IndicesModifyDataStreamActionExclusiveProps>
 
 export interface IndicesModifyDataStreamIndexAndDataStreamAction {
   /** Data stream targeted by the action. */
@@ -22193,7 +22278,7 @@ export interface IndicesPutIndexTemplateRequest extends RequestBase {
   master_timeout?: Duration
   /** User defined reason for creating or updating the index template */
   cause?: string
-  /** Name of the index template to create. */
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns?: Indices
   /** An ordered list of component template names.
     * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
@@ -23264,7 +23349,7 @@ export interface IndicesStatsShardsTotalStats {
   total_count: long
 }
 
-export interface IndicesUpdateAliasesAction {
+interface IndicesUpdateAliasesActionExclusiveProps {
   /** Adds a data stream or index to an alias.
     * If the alias doesn’t exist, the `add` action creates it. */
   add?: IndicesUpdateAliasesAddAction
@@ -23274,6 +23359,8 @@ export interface IndicesUpdateAliasesAction {
     * You cannot use this action on aliases or data streams. */
   remove_index?: IndicesUpdateAliasesRemoveIndexAction
 }
+
+export type IndicesUpdateAliasesAction = ExactlyOne<IndicesUpdateAliasesActionExclusiveProps>
 
 export interface IndicesUpdateAliasesAddAction {
   /** Alias for the action.
@@ -24602,7 +24689,7 @@ export interface InferenceInferenceEndpointInfoWatsonx extends InferenceInferenc
   task_type: InferenceTaskTypeWatsonx
 }
 
-export interface InferenceInferenceResult {
+interface InferenceInferenceResultExclusiveProps {
   text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
   text_embedding_bits?: InferenceTextEmbeddingByteResult[]
   text_embedding?: InferenceTextEmbeddingResult[]
@@ -24610,6 +24697,8 @@ export interface InferenceInferenceResult {
   completion?: InferenceCompletionResult[]
   rerank?: InferenceRankedDocument[]
 }
+
+export type InferenceInferenceResult = ExactlyOne<InferenceInferenceResultExclusiveProps>
 
 export interface InferenceJinaAIServiceSettings {
   /** A valid API key of your JinaAI account.
@@ -25056,11 +25145,13 @@ export interface InferenceTextEmbeddingByteResult {
   embedding: InferenceDenseByteVector
 }
 
-export interface InferenceTextEmbeddingInferenceResult {
+interface InferenceTextEmbeddingInferenceResultExclusiveProps {
   text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
   text_embedding_bits?: InferenceTextEmbeddingByteResult[]
   text_embedding?: InferenceTextEmbeddingResult[]
 }
+
+export type InferenceTextEmbeddingInferenceResult = ExactlyOne<InferenceTextEmbeddingInferenceResultExclusiveProps>
 
 export interface InferenceTextEmbeddingResult {
   embedding: InferenceDenseVector
@@ -26003,10 +26094,17 @@ export interface IngestAppendProcessor extends IngestProcessorBase {
   field: Field
   /** The value to be appended. Supports template snippets. May specify only one of `value` or `copy_from`. */
   value?: any | any[]
+  /** The media type for encoding `value`.
+    * Applies only when value is a template snippet.
+    * Must be one of `application/json`, `text/plain`, or `application/x-www-form-urlencoded`. */
+  media_type?: string
   /** The origin field which will be appended to `field`, cannot set `value` simultaneously. */
   copy_from?: Field
   /** If `false`, the processor does not append values already present in the field. */
   allow_duplicates?: boolean
+  /** If `true`, the processor will skip empty values from the source (e.g. empty strings, and null values),
+    * rather than appending them to the field. */
+  ignore_empty_values?: boolean
 }
 
 export interface IngestAttachmentProcessor extends IngestProcessorBase {
@@ -26039,6 +26137,20 @@ export interface IngestBytesProcessor extends IngestProcessorBase {
   /** The field to assign the converted value to.
     * By default, the field is updated in-place. */
   target_field?: Field
+}
+
+export interface IngestCefProcessor extends IngestProcessorBase {
+  /** The field containing the CEF message. */
+  field: Field
+  /** If `true` and `field` does not exist or is `null`, the processor quietly exits without modifying the document. */
+  ignore_missing?: boolean
+  /** The field to assign the converted value to.
+    * By default, the `target_field` is 'cef' */
+  target_field?: Field
+  /** If `true` and value is anempty string in extensions, the processor quietly exits without modifying the document. */
+  ignore_empty_values?: boolean
+  /** The timezone to use when parsing the date and when date math index supports resolves expressions into concrete index names. */
+  timezone?: string
 }
 
 export interface IngestCircleProcessor extends IngestProcessorBase {
@@ -26118,21 +26230,31 @@ export interface IngestCsvProcessor extends IngestProcessorBase {
   trim?: boolean
 }
 
-export interface IngestDatabaseConfiguration {
+interface IngestDatabaseConfigurationCommonProps {
   /** The provider-assigned name of the IP geolocation database to download. */
   name: Name
+}
+
+interface IngestDatabaseConfigurationExclusiveProps {
   maxmind?: IngestMaxmind
   ipinfo?: IngestIpinfo
 }
 
-export interface IngestDatabaseConfigurationFull {
-  web?: IngestWeb
-  local?: IngestLocal
+export type IngestDatabaseConfiguration = IngestDatabaseConfigurationCommonProps & ExactlyOne<IngestDatabaseConfigurationExclusiveProps>
+
+interface IngestDatabaseConfigurationFullCommonProps {
   /** The provider-assigned name of the IP geolocation database to download. */
   name: Name
+}
+
+interface IngestDatabaseConfigurationFullExclusiveProps {
+  web?: IngestWeb
+  local?: IngestLocal
   maxmind?: IngestMaxmind
   ipinfo?: IngestIpinfo
 }
+
+export type IngestDatabaseConfigurationFull = IngestDatabaseConfigurationFullCommonProps & ExactlyOne<IngestDatabaseConfigurationFullExclusiveProps>
 
 export interface IngestDateIndexNameProcessor extends IngestProcessorBase {
   /** An array of the expected date formats for parsing dates / timestamps in the document being preprocessed.
@@ -26375,12 +26497,14 @@ export interface IngestHtmlStripProcessor extends IngestProcessorBase {
   target_field?: Field
 }
 
-export interface IngestInferenceConfig {
+interface IngestInferenceConfigExclusiveProps {
   /** Regression configuration for inference. */
   regression?: IngestInferenceConfigRegression
   /** Classification configuration for inference. */
   classification?: IngestInferenceConfigClassification
 }
+
+export type IngestInferenceConfig = ExactlyOne<IngestInferenceConfigExclusiveProps>
 
 export interface IngestInferenceConfigClassification {
   /** Specifies the number of top class predictions to return. */
@@ -26623,7 +26747,7 @@ export interface IngestProcessorBase {
   tag?: string
 }
 
-export interface IngestProcessorContainer {
+interface IngestProcessorContainerExclusiveProps {
   /** Appends one or more values to an existing array if the field already exists and it is an array.
     * Converts a scalar to an array and appends one or more values to it if the field exists and it is a scalar.
     * Creates an array containing the provided values if the field doesn’t exist.
@@ -26636,6 +26760,8 @@ export interface IngestProcessorContainer {
     * Supported human readable units are "b", "kb", "mb", "gb", "tb", "pb" case insensitive.
     * An error will occur if the field is not a supported format or resultant value exceeds 2^63. */
   bytes?: IngestBytesProcessor
+  /** Converts a CEF message into a structured format. */
+  cef?: IngestCefProcessor
   /** Converts circle definitions of shapes to regular polygons which approximate them. */
   circle?: IngestCircleProcessor
   /** Computes the Community ID for network flow data as defined in the
@@ -26760,6 +26886,8 @@ export interface IngestProcessorContainer {
     * This processor adds this information by default under the `user_agent` field. */
   user_agent?: IngestUserAgentProcessor
 }
+
+export type IngestProcessorContainer = ExactlyOne<IngestProcessorContainerExclusiveProps>
 
 export interface IngestRedact {
   /** indicates if document has been redacted */
@@ -28121,7 +28249,7 @@ export interface MlDataframeAnalysisClassification extends MlDataframeAnalysis {
   num_top_classes?: integer
 }
 
-export interface MlDataframeAnalysisContainer {
+interface MlDataframeAnalysisContainerExclusiveProps {
   /** The configuration information necessary to perform classification. */
   classification?: MlDataframeAnalysisClassification
   /** The configuration information necessary to perform outlier detection. NOTE: Advanced parameters are for fine-tuning classification analysis. They are set automatically by hyperparameter optimization to give the minimum validation error. It is highly recommended to use the default values unless you fully understand the function of these parameters. */
@@ -28130,7 +28258,9 @@ export interface MlDataframeAnalysisContainer {
   regression?: MlDataframeAnalysisRegression
 }
 
-export interface MlDataframeAnalysisFeatureProcessor {
+export type MlDataframeAnalysisContainer = ExactlyOne<MlDataframeAnalysisContainerExclusiveProps>
+
+interface MlDataframeAnalysisFeatureProcessorExclusiveProps {
   /** The configuration information necessary to perform frequency encoding. */
   frequency_encoding?: MlDataframeAnalysisFeatureProcessorFrequencyEncoding
   /** The configuration information necessary to perform multi encoding. It allows multiple processors to be changed together. This way the output of a processor can then be passed to another as an input. */
@@ -28142,6 +28272,8 @@ export interface MlDataframeAnalysisFeatureProcessor {
   /** The configuration information necessary to perform target mean encoding. */
   target_mean_encoding?: MlDataframeAnalysisFeatureProcessorTargetMeanEncoding
 }
+
+export type MlDataframeAnalysisFeatureProcessor = ExactlyOne<MlDataframeAnalysisFeatureProcessorExclusiveProps>
 
 export interface MlDataframeAnalysisFeatureProcessorFrequencyEncoding {
   /** The resulting feature name. */
@@ -28279,7 +28411,7 @@ export interface MlDataframeAnalyticsSource {
   _source?: MlDataframeAnalysisAnalyzedFields | string[]
 }
 
-export interface MlDataframeAnalyticsStatsContainer {
+interface MlDataframeAnalyticsStatsContainerExclusiveProps {
   /** An object containing information about the classification analysis job. */
   classification_stats?: MlDataframeAnalyticsStatsHyperparameters
   /** An object containing information about the outlier detection job. */
@@ -28287,6 +28419,8 @@ export interface MlDataframeAnalyticsStatsContainer {
   /** An object containing information about the regression analysis. */
   regression_stats?: MlDataframeAnalyticsStatsHyperparameters
 }
+
+export type MlDataframeAnalyticsStatsContainer = ExactlyOne<MlDataframeAnalyticsStatsContainerExclusiveProps>
 
 export interface MlDataframeAnalyticsStatsDataCounts {
   /** The number of documents that are skipped during the analysis because they contained values that are not supported by the analysis. For example, outlier detection does not support missing fields so it skips documents with missing fields. Likewise, all types of analysis skip documents that contain arrays with more than one element. */
@@ -28379,7 +28513,7 @@ export interface MlDataframeEvaluationClassificationMetricsAucRoc {
   include_curve?: boolean
 }
 
-export interface MlDataframeEvaluationContainer {
+interface MlDataframeEvaluationContainerExclusiveProps {
   /** Classification evaluation evaluates the results of a classification analysis which outputs a prediction that identifies to which of the classes each document belongs. */
   classification?: MlDataframeEvaluationClassification
   /** Outlier detection evaluates the results of an outlier detection analysis which outputs the probability that each document is an outlier. */
@@ -28387,6 +28521,8 @@ export interface MlDataframeEvaluationContainer {
   /** Regression evaluation evaluates the results of a regression analysis which outputs a prediction of values. */
   regression?: MlDataframeEvaluationRegression
 }
+
+export type MlDataframeEvaluationContainer = ExactlyOne<MlDataframeEvaluationContainerExclusiveProps>
 
 export interface MlDataframeEvaluationMetrics {
   /** The AUC ROC (area under the curve of the receiver operating characteristic) score and optionally the curve. It is calculated for a specific class (provided as "class_name") treated as positive. */
@@ -28713,7 +28849,7 @@ export interface MlHyperparameters {
 
 export type MlInclude = 'definition' | 'feature_importance_baseline' | 'hyperparameters' | 'total_feature_importance' | 'definition_status'
 
-export interface MlInferenceConfigCreateContainer {
+interface MlInferenceConfigCreateContainerExclusiveProps {
   /** Regression configuration for inference. */
   regression?: MlRegressionInferenceOptions
   /** Classification configuration for inference. */
@@ -28737,7 +28873,9 @@ export interface MlInferenceConfigCreateContainer {
   question_answering?: MlQuestionAnsweringInferenceOptions
 }
 
-export interface MlInferenceConfigUpdateContainer {
+export type MlInferenceConfigCreateContainer = ExactlyOne<MlInferenceConfigCreateContainerExclusiveProps>
+
+interface MlInferenceConfigUpdateContainerExclusiveProps {
   /** Regression configuration for inference. */
   regression?: MlRegressionInferenceOptions
   /** Classification configuration for inference. */
@@ -28759,6 +28897,8 @@ export interface MlInferenceConfigUpdateContainer {
   /** Question answering configuration for inference */
   question_answering?: MlQuestionAnsweringInferenceUpdateOptions
 }
+
+export type MlInferenceConfigUpdateContainer = ExactlyOne<MlInferenceConfigUpdateContainerExclusiveProps>
 
 export interface MlInferenceResponseResult {
   /** If the model is trained for named entity recognition (NER) tasks, the response contains the recognized entities. */
@@ -29356,7 +29496,7 @@ export interface MlTimingStats {
   iteration_time?: DurationValue<UnitMillis>
 }
 
-export interface MlTokenizationConfigContainer {
+interface MlTokenizationConfigContainerExclusiveProps {
   /** Indicates BERT tokenization and its options */
   bert?: MlNlpBertTokenizationConfig
   /** Indicates BERT Japanese tokenization and its options */
@@ -29367,6 +29507,8 @@ export interface MlTokenizationConfigContainer {
   roberta?: MlNlpRobertaTokenizationConfig
   xlm_roberta?: MlXlmRobertaTokenizationConfig
 }
+
+export type MlTokenizationConfigContainer = ExactlyOne<MlTokenizationConfigContainerExclusiveProps>
 
 export type MlTokenizationTruncate = 'first' | 'second' | 'none'
 
@@ -31389,11 +31531,13 @@ export interface MlPutTrainedModelOneHotEncodingPreprocessor {
   hot_map: Record<string, string>
 }
 
-export interface MlPutTrainedModelPreprocessor {
+interface MlPutTrainedModelPreprocessorExclusiveProps {
   frequency_encoding?: MlPutTrainedModelFrequencyEncodingPreprocessor
   one_hot_encoding?: MlPutTrainedModelOneHotEncodingPreprocessor
   target_mean_encoding?: MlPutTrainedModelTargetMeanEncodingPreprocessor
 }
+
+export type MlPutTrainedModelPreprocessor = ExactlyOne<MlPutTrainedModelPreprocessorExclusiveProps>
 
 export interface MlPutTrainedModelRequest extends RequestBase {
   /** The unique identifier of the trained model. */
@@ -33560,67 +33704,6 @@ export interface ProjectTagsTagsKeys {
 export type ProjectTagsTags = ProjectTagsTagsKeys
 & { [property: string]: string }
 
-export type ProjectRoutingNamedProjectRoutingExpressions = Record<string, ProjectRoutingProjectRoutingExpression>
-
-export interface ProjectRoutingProjectRoutingExpression {
-  expression: ProjectRoutingRoutingExpression
-}
-
-export type ProjectRoutingRoutingExpression = string
-
-export interface ProjectRoutingCreateRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  expressions?: ProjectRoutingProjectRoutingExpression
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expressions?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expressions?: never }
-}
-
-export type ProjectRoutingCreateResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingCreateManyRequest extends RequestBase {
-  expressions?: ProjectRoutingNamedProjectRoutingExpressions
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { expressions?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { expressions?: never }
-}
-
-export type ProjectRoutingCreateManyResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingDeleteRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
-}
-
-export type ProjectRoutingDeleteResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingGetRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
-}
-
-export type ProjectRoutingGetResponse = ProjectRoutingProjectRoutingExpression
-
-export interface ProjectRoutingGetManyRequest extends RequestBase {
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any }
-}
-
-export type ProjectRoutingGetManyResponse = ProjectRoutingNamedProjectRoutingExpressions
-
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
   rule_id: Id
@@ -34665,12 +34748,14 @@ export interface SecurityRoleMapping {
   rules: SecurityRoleMappingRule
 }
 
-export interface SecurityRoleMappingRule {
+interface SecurityRoleMappingRuleExclusiveProps {
   any?: SecurityRoleMappingRule[]
   all?: SecurityRoleMappingRule[]
   field?: Partial<Record<Field, FieldValue | FieldValue[]>>
   except?: SecurityRoleMappingRule
 }
+
+export type SecurityRoleMappingRule = ExactlyOne<SecurityRoleMappingRuleExclusiveProps>
 
 export interface SecurityRoleTemplate {
   format?: SecurityTemplateFormat
@@ -36099,7 +36184,7 @@ export interface SecurityPutUserResponse {
 
 export type SecurityQueryApiKeysApiKeyAggregate = AggregationsCardinalityAggregate | AggregationsValueCountAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsFilterAggregate | AggregationsFiltersAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsCompositeAggregate
 
-export interface SecurityQueryApiKeysApiKeyAggregationContainer {
+interface SecurityQueryApiKeysApiKeyAggregationContainerCommonProps {
   /** Sub-aggregations for this aggregation.
     * Only applies to bucket aggregations. */
   aggregations?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
@@ -36108,6 +36193,9 @@ export interface SecurityQueryApiKeysApiKeyAggregationContainer {
     * @alias aggregations */
   aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   meta?: Metadata
+}
+
+interface SecurityQueryApiKeysApiKeyAggregationContainerExclusiveProps {
   /** A single-value metrics aggregation that calculates an approximate count of distinct values. */
   cardinality?: AggregationsCardinalityAggregation
   /** A multi-bucket aggregation that creates composite buckets from different sources.
@@ -36128,6 +36216,8 @@ export interface SecurityQueryApiKeysApiKeyAggregationContainer {
   value_count?: AggregationsValueCountAggregation
 }
 
+export type SecurityQueryApiKeysApiKeyAggregationContainer = SecurityQueryApiKeysApiKeyAggregationContainerCommonProps & ExactlyOne<SecurityQueryApiKeysApiKeyAggregationContainerExclusiveProps>
+
 export interface SecurityQueryApiKeysApiKeyFiltersAggregation extends AggregationsBucketAggregationBase {
   /** Collection of queries from which to build buckets. */
   filters?: AggregationsBuckets<SecurityQueryApiKeysApiKeyQueryContainer>
@@ -36140,7 +36230,7 @@ export interface SecurityQueryApiKeysApiKeyFiltersAggregation extends Aggregatio
   keyed?: boolean
 }
 
-export interface SecurityQueryApiKeysApiKeyQueryContainer {
+interface SecurityQueryApiKeysApiKeyQueryContainerExclusiveProps {
   /** Matches documents matching boolean combinations of other queries. */
   bool?: QueryDslBoolQuery
   /** Returns documents that contain an indexed value for a field. */
@@ -36168,6 +36258,8 @@ export interface SecurityQueryApiKeysApiKeyQueryContainer {
   /** Returns documents that contain terms matching a wildcard pattern. */
   wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
 }
+
+export type SecurityQueryApiKeysApiKeyQueryContainer = ExactlyOne<SecurityQueryApiKeysApiKeyQueryContainerExclusiveProps>
 
 export interface SecurityQueryApiKeysRequest extends RequestBase {
   /** Return the snapshot of the owner user's role descriptors associated with the API key.
@@ -36288,7 +36380,7 @@ export interface SecurityQueryRoleResponse {
   roles: SecurityQueryRoleQueryRole[]
 }
 
-export interface SecurityQueryRoleRoleQueryContainer {
+interface SecurityQueryRoleRoleQueryContainerExclusiveProps {
   /** matches roles matching boolean combinations of other queries. */
   bool?: QueryDslBoolQuery
   /** Returns roles that contain an indexed value for a field. */
@@ -36316,6 +36408,8 @@ export interface SecurityQueryRoleRoleQueryContainer {
   /** Returns roles that contain terms matching a wildcard pattern. */
   wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
 }
+
+export type SecurityQueryRoleRoleQueryContainer = ExactlyOne<SecurityQueryRoleRoleQueryContainerExclusiveProps>
 
 export interface SecurityQueryUserQueryUser extends SecurityUser {
   _sort?: SortResults
@@ -36361,7 +36455,7 @@ export interface SecurityQueryUserResponse {
   users: SecurityQueryUserQueryUser[]
 }
 
-export interface SecurityQueryUserUserQueryContainer {
+interface SecurityQueryUserUserQueryContainerExclusiveProps {
   /** Returns users based on their IDs.
     * This query uses the user document IDs stored in the `_id` field. */
   ids?: QueryDslIdsQuery
@@ -36389,6 +36483,8 @@ export interface SecurityQueryUserUserQueryContainer {
   /** Returns users that contain terms matching a wildcard pattern. */
   wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
 }
+
+export type SecurityQueryUserUserQueryContainer = ExactlyOne<SecurityQueryUserUserQueryContainerExclusiveProps>
 
 export interface SecuritySamlAuthenticateRequest extends RequestBase {
   /** The SAML response as it was sent by the user's browser, usually a Base64 encoded XML document. */
@@ -39249,12 +39345,14 @@ export interface TransformPivot {
   group_by?: Record<string, TransformPivotGroupByContainer>
 }
 
-export interface TransformPivotGroupByContainer {
+interface TransformPivotGroupByContainerExclusiveProps {
   date_histogram?: AggregationsDateHistogramAggregation
   geotile_grid?: AggregationsGeoTileGridAggregation
   histogram?: AggregationsHistogramAggregation
   terms?: AggregationsTermsAggregation
 }
+
+export type TransformPivotGroupByContainer = ExactlyOne<TransformPivotGroupByContainerExclusiveProps>
 
 export interface TransformRetentionPolicy {
   /** The date field that is used to calculate the age of the document. */
@@ -39264,10 +39362,12 @@ export interface TransformRetentionPolicy {
   max_age: Duration
 }
 
-export interface TransformRetentionPolicyContainer {
+interface TransformRetentionPolicyContainerExclusiveProps {
   /** Specifies that the transform uses a time field to set the retention policy. */
   time?: TransformRetentionPolicy
 }
+
+export type TransformRetentionPolicyContainer = ExactlyOne<TransformRetentionPolicyContainerExclusiveProps>
 
 export interface TransformSettings {
   /** Specifies whether the transform checkpoint ranges should be optimized for performance. Such optimization can align
@@ -39312,10 +39412,12 @@ export interface TransformSource {
   runtime_mappings?: MappingRuntimeFields
 }
 
-export interface TransformSyncContainer {
+interface TransformSyncContainerExclusiveProps {
   /** Specifies that the transform uses a time field to synchronize the source and destination indices. */
   time?: TransformTimeSync
 }
+
+export type TransformSyncContainer = ExactlyOne<TransformSyncContainerExclusiveProps>
 
 export interface TransformTimeSync {
   /** The time delay between the current time and the latest input data time. */
@@ -39862,13 +39964,15 @@ export interface WatcherChainInput {
   inputs: Partial<Record<string, WatcherInputContainer>>[]
 }
 
-export interface WatcherConditionContainer {
+interface WatcherConditionContainerExclusiveProps {
   always?: WatcherAlwaysCondition
   array_compare?: Partial<Record<string, WatcherArrayCompareCondition>>
   compare?: Partial<Record<string, Partial<Record<WatcherConditionOp, FieldValue>>>>
   never?: WatcherNeverCondition
   script?: WatcherScriptCondition
 }
+
+export type WatcherConditionContainer = ExactlyOne<WatcherConditionContainerExclusiveProps>
 
 export type WatcherConditionOp = 'not_eq' | 'eq' | 'lt' | 'gt' | 'lte' | 'gte'
 
@@ -39907,11 +40011,13 @@ export interface WatcherEmail {
 export interface WatcherEmailAction extends WatcherEmail {
 }
 
-export interface WatcherEmailAttachmentContainer {
+interface WatcherEmailAttachmentContainerExclusiveProps {
   http?: WatcherHttpEmailAttachment
   reporting?: WatcherReportingEmailAttachment
   data?: WatcherDataEmailAttachment
 }
+
+export type WatcherEmailAttachmentContainer = ExactlyOne<WatcherEmailAttachmentContainerExclusiveProps>
 
 export interface WatcherEmailBody {
   html?: string
@@ -40060,12 +40166,14 @@ export interface WatcherIndexResultSummary {
   version: VersionNumber
 }
 
-export interface WatcherInputContainer {
+interface WatcherInputContainerExclusiveProps {
   chain?: WatcherChainInput
   http?: WatcherHttpInput
   search?: WatcherSearchInput
   simple?: Record<string, any>
 }
+
+export type WatcherInputContainer = ExactlyOne<WatcherInputContainerExclusiveProps>
 
 export type WatcherInputType = 'http' | 'search' | 'simple'
 
@@ -40143,7 +40251,7 @@ export interface WatcherReportingEmailAttachment {
 
 export type WatcherResponseContentType = 'json' | 'yaml' | 'text'
 
-export interface WatcherScheduleContainer {
+interface WatcherScheduleContainerExclusiveProps {
   timezone?: string
   cron?: WatcherCronExpression
   daily?: WatcherDailySchedule
@@ -40153,6 +40261,8 @@ export interface WatcherScheduleContainer {
   weekly?: WatcherTimeOfWeek | WatcherTimeOfWeek[]
   yearly?: WatcherTimeOfYear | WatcherTimeOfYear[]
 }
+
+export type WatcherScheduleContainer = ExactlyOne<WatcherScheduleContainerExclusiveProps>
 
 export type WatcherScheduleTimeOfDay = string | WatcherHourAndMinute
 
@@ -40275,13 +40385,17 @@ export interface WatcherTimeOfYear {
   on: integer[]
 }
 
-export interface WatcherTriggerContainer {
+interface WatcherTriggerContainerExclusiveProps {
   schedule?: WatcherScheduleContainer
 }
 
-export interface WatcherTriggerEventContainer {
+export type WatcherTriggerContainer = ExactlyOne<WatcherTriggerContainerExclusiveProps>
+
+interface WatcherTriggerEventContainerExclusiveProps {
   schedule?: WatcherScheduleTriggerEvent
 }
+
+export type WatcherTriggerEventContainer = ExactlyOne<WatcherTriggerEventContainerExclusiveProps>
 
 export interface WatcherTriggerEventResult {
   manual: WatcherTriggerEventContainer

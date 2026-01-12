@@ -71,7 +71,7 @@ export default class Profiling {
 
   /**
     * Returns basic information about the status of Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.3/universal-profiling.html | Elasticsearch API documentation}
     */
   async flamegraph (this: That, params: T.ProfilingFlamegraphRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingFlamegraphResponse>
   async flamegraph (this: That, params: T.ProfilingFlamegraphRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingFlamegraphResponse, unknown>>
@@ -118,7 +118,7 @@ export default class Profiling {
 
   /**
     * Extracts raw stacktrace information from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.3/universal-profiling.html | Elasticsearch API documentation}
     */
   async stacktraces (this: That, params: T.ProfilingStacktracesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingStacktracesResponse>
   async stacktraces (this: That, params: T.ProfilingStacktracesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingStacktracesResponse, unknown>>
@@ -165,7 +165,7 @@ export default class Profiling {
 
   /**
     * Returns basic information about the status of Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.3/universal-profiling.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.ProfilingStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingStatusResponse>
   async status (this: That, params?: T.ProfilingStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingStatusResponse, unknown>>
@@ -213,7 +213,7 @@ export default class Profiling {
 
   /**
     * Extracts a list of topN functions from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/9.3/universal-profiling.html | Elasticsearch API documentation}
     */
   async topnFunctions (this: That, params: T.ProfilingTopnFunctionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingTopnFunctionsResponse>
   async topnFunctions (this: That, params: T.ProfilingTopnFunctionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProfilingTopnFunctionsResponse, unknown>>
