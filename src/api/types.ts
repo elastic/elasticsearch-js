@@ -9432,7 +9432,7 @@ export interface ClusterComponentTemplateSummary {
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
   lifecycle?: IndicesDataStreamLifecycleWithRollover
-  data_stream_options?: IndicesDataStreamOptionsTemplate | null
+  data_stream_options?: IndicesDataStreamOptions
 }
 
 export interface ClusterAllocationExplainAllocationDecision {
@@ -9712,7 +9712,7 @@ export interface ClusterPutComponentTemplateRequest extends RequestBase {
   create?: boolean
   cause?: string
   master_timeout?: Duration
-  template: IndicesIndexState
+  template: IndicesPutIndexTemplateIndexTemplateMapping
   version?: VersionNumber
   _meta?: Metadata
   deprecated?: boolean
@@ -11929,7 +11929,7 @@ export interface IndicesIndexTemplateSummary {
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
   lifecycle?: IndicesDataStreamLifecycleWithRollover
-  data_stream_options?: IndicesDataStreamOptionsTemplate | null
+  data_stream_options?: IndicesDataStreamOptions
 }
 
 export interface IndicesIndexVersioning {
@@ -12946,6 +12946,7 @@ export interface IndicesPutIndexTemplateIndexTemplateMapping {
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
   lifecycle?: IndicesDataStreamLifecycle
+  data_stream_options?: IndicesDataStreamOptionsTemplate | null
 }
 
 export interface IndicesPutIndexTemplateRequest extends RequestBase {
@@ -14598,7 +14599,8 @@ export type InferenceUpdateResponse = InferenceInferenceEndpointInfo
 
 export interface IngestAppendProcessor extends IngestProcessorBase {
   field: Field
-  value: any | any[]
+  value?: any | any[]
+  media_type?: string
   allow_duplicates?: boolean
 }
 

@@ -3826,8 +3826,7 @@ client.cluster.getComponentTemplate({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (Optional, string)*: List of component template names used to limit the request.
-Wildcard (`*`) expressions are supported.
+** *`name` (Optional, string)*: Name of component template to retrieve. Wildcard (`*`) expressions are supported.
 ** *`flat_settings` (Optional, boolean)*: If `true`, returns settings in flat format.
 ** *`settings_filter` (Optional, string | string[])*: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
 ** *`include_defaults` (Optional, boolean)*: Return all default configurations for the component template
@@ -4020,7 +4019,7 @@ Elasticsearch includes the following built-in component templates: `logs-mapping
 Elastic Agent uses these templates to configure backing indices for its data streams.
 If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version.
 If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API.
-** *`template` ({ aliases, mappings, settings, defaults, data_stream, lifecycle })*: The template to be applied which includes mappings, settings, or aliases configuration.
+** *`template` ({ aliases, mappings, settings, lifecycle, data_stream_options })*: The template to be applied which includes mappings, settings, or aliases configuration.
 ** *`version` (Optional, number)*: Version number used to manage component templates externally.
 This number isn't automatically generated or incremented by Elasticsearch.
 To unset a version, replace the template without specifying a version.
@@ -6567,7 +6566,7 @@ client.indices.forcemerge({ ... })
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 ** *`flush` (Optional, boolean)*: Specify whether the index should be flushed after performing the operation
 ** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`max_num_segments` (Optional, number)*: The number of segments the index should be merged into (defayult: dynamic)
+** *`max_num_segments` (Optional, number)*: The number of segments the index should be merged into (default: dynamic)
 ** *`only_expunge_deletes` (Optional, boolean)*: Specify whether the operation should only expunge deleted documents
 ** *`wait_for_completion` (Optional, boolean)*: Should the request wait until the force merge is completed
 
@@ -7210,7 +7209,7 @@ client.indices.putIndexTemplate({ name })
 ** *`index_patterns` (Optional, string | string[])*: Name of the index template to create.
 ** *`composed_of` (Optional, string[])*: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
-** *`template` (Optional, { aliases, mappings, settings, lifecycle })*: Template to be applied.
+** *`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })*: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
 ** *`data_stream` (Optional, { hidden, allow_custom_routing })*: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
@@ -7933,7 +7932,7 @@ If set to `false`, then indices or data streams matching the template must alway
 ** *`index_patterns` (Optional, string | string[])*: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
 ** *`composed_of` (Optional, string[])*: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
-** *`template` (Optional, { aliases, mappings, settings, lifecycle })*: Template to be applied.
+** *`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })*: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
 ** *`data_stream` (Optional, { hidden, allow_custom_routing })*: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
