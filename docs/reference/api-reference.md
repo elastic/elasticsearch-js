@@ -3410,8 +3410,7 @@ client.cluster.getComponentTemplate({ ... })
 ### Arguments [_arguments_cluster.get_component_template]
 
 #### Request (object) [_request_cluster.get_component_template]
-- **`name` (Optional, string)**: List of component template names used to limit the request.
-Wildcard (`*`) expressions are supported.
+- **`name` (Optional, string)**: Name of component template to retrieve. Wildcard (`*`) expressions are supported.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
 - **`settings_filter` (Optional, string \| string[])**: Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
 - **`include_defaults` (Optional, boolean)**: Return all default configurations for the component template
@@ -3610,7 +3609,7 @@ Elasticsearch includes the following built-in component templates: `logs-mapping
 Elastic Agent uses these templates to configure backing indices for its data streams.
 If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version.
 If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API.
-- **`template` ({ aliases, mappings, settings, defaults, data_stream, lifecycle })**: The template to be applied which includes mappings, settings, or aliases configuration.
+- **`template` ({ aliases, mappings, settings, lifecycle, data_stream_options })**: The template to be applied which includes mappings, settings, or aliases configuration.
 - **`version` (Optional, number)**: Version number used to manage component templates externally.
 This number isn't automatically generated or incremented by Elasticsearch.
 To unset a version, replace the template without specifying a version.
@@ -6063,7 +6062,7 @@ client.indices.forcemerge({ ... })
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`flush` (Optional, boolean)**: Specify whether the index should be flushed after performing the operation
 - **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-- **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (defayult: dynamic)
+- **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (default: dynamic)
 - **`only_expunge_deletes` (Optional, boolean)**: Specify whether the operation should only expunge deleted documents
 - **`wait_for_completion` (Optional, boolean)**: Should the request wait until the force merge is completed
 
@@ -6725,10 +6724,10 @@ client.indices.putIndexTemplate({ name })
 
 #### Request (object) [_request_indices.put_index_template]
 - **`name` (string)**: Index or template name
-- **`index_patterns` (Optional, string \| string[])**: Name of the index template to create.
+- **`index_patterns` (Optional, string \| string[])**: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
-- **`template` (Optional, { aliases, mappings, settings, lifecycle })**: Template to be applied.
+- **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
 - **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
@@ -7465,7 +7464,7 @@ If set to `false`, then indices or data streams matching the template must alway
 - **`index_patterns` (Optional, string \| string[])**: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
-- **`template` (Optional, { aliases, mappings, settings, lifecycle })**: Template to be applied.
+- **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
 - **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
@@ -7638,7 +7637,7 @@ Supports a list of values, such as `open,hidden`.
 - **`q` (Optional, string)**: Query in the Lucene query string syntax.
 
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
-Perform chat completion inference.
+Perform chat completion inference on the service.
 
 The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
 It only works with the `chat_completion` task type.
@@ -7663,6 +7662,13 @@ client.inference.chatCompletionUnified({ inference_id })
 
 ## client.inference.completion [_inference.completion]
 Perform completion inference on the service.
+
+Get responses for completion tasks.
+This API works only with the completion task type.
+
+IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+
+This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
 
@@ -8466,11 +8472,9 @@ client.inference.rerank({ inference_id, query, input })
 #### Request (object) [_request_inference.rerank]
 - **`inference_id` (string)**: The unique identifier for the inference endpoint.
 - **`query` (string)**: Query input.
-- **`input` (string \| string[])**: The text on which you want to perform the inference task.
-It can be a single string or an array.
-
-> info
-> Inference endpoints for the `completion` task type currently only support a single string as input.
+- **`input` (string \| string[])**: The documents to rank.
+- **`return_documents` (Optional, boolean)**: Include the document text in the response.
+- **`top_n` (Optional, number)**: Limit the response to the top N documents.
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
@@ -8494,7 +8498,7 @@ Either a string or an array of strings.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.streamCompletion [_inference.stream_completion]
-Perform streaming inference.
+Perform streaming inference on the service.
 
 Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation.
 This API works only with the completion task type.

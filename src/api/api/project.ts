@@ -44,6 +44,7 @@ export default class Project {
 
   /**
     * Get tags. Get the tags that are defined for the project.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch-serverless/operation/operation-project-tags | Elasticsearch API documentation}
     */
   async tags (this: That, params?: T.ProjectTagsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectTagsResponse>
   async tags (this: That, params?: T.ProjectTagsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectTagsResponse, unknown>>
