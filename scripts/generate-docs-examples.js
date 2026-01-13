@@ -5,19 +5,27 @@
 
 const { join } = require('path')
 const { writeFile } = require('fs/promises')
-const fetch = require('node-fetch')
+// Using native fetch (Node.js 18+)
 const { rimraf } = require('rimraf')
-const ora = require('ora')
 const { convertRequests } = require('@elastic/request-converter')
 const minimist = require('minimist')
 
 const docsExamplesDir = join('docs', 'doc_examples')
 
-const log = ora('Generating example snippets')
-
 const failures = {}
 
+let log = null
+
+async function initOra () {
+  if (log === null) {
+    const ora = (await import('ora')).default
+    log = ora('Generating example snippets')
+  }
+  return log
+}
+
 async function getAlternativesReport (version = 'master') {
+  const log = await initOra()
   const reportUrl = `https://raw.githubusercontent.com/elastic/built-docs/master/raw/en/elasticsearch/reference/${version}/alternatives_report.json`
   const response = await fetch(reportUrl)
   if (!response.ok) {
@@ -44,6 +52,7 @@ async function makeSnippet (example) {
 }
 
 async function generate (version) {
+  const log = await initOra()
   log.start()
 
   rimraf.sync(join(docsExamplesDir, '*'))
@@ -85,8 +94,14 @@ const options = minimist(process.argv.slice(2), {
 })
 
 generate(options.version)
-  .then(() => log.succeed('done!'))
-  .catch(err => log.fail(err.message))
+  .then(async () => {
+    const log = await initOra()
+    log.succeed('done!')
+  })
+  .catch(async err => {
+    const log = await initOra()
+    log.fail(err.message)
+  })
   .finally(() => {
     const keys = Object.keys(failures)
     if (keys.length > 0 && options.debug) {

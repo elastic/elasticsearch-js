@@ -4,16 +4,14 @@
  */
 
 const { join } = require('path')
-const stream = require('stream')
-const { promisify } = require('util')
+const { pipeline } = require('stream/promises')
 const { createWriteStream, promises } = require('fs')
 const { rimraf } = require('rimraf')
-const fetch = require('node-fetch')
+// Using native fetch (Node.js 18+)
 const crossZip = require('cross-zip')
-const ora = require('ora')
+const { promisify } = require('util')
 
 const { mkdir, cp } = promises
-const pipeline = promisify(stream.pipeline)
 const unzip = promisify(crossZip.unzip)
 
 const testYamlFolder = join(__dirname, '..', 'yaml-rest-tests')
@@ -23,6 +21,7 @@ const schemaFolder = join(__dirname, '..', 'schema')
 const schemaJson = join(schemaFolder, 'schema.json')
 
 async function downloadArtifacts (localTests, version = 'main') {
+  const ora = (await import('ora')).default
   const log = ora('Checking out spec and test').start()
 
   const { GITHUB_TOKEN } = process.env
