@@ -5,7 +5,7 @@ Hello there!
 Thank you for opening a pull request!
 Please remember to always tag the relative issue (if any) and give a brief explanation on what your changes are doing.
 
-If you are patching a security issue, please take a look at https://www.elastic.co/community/security
+If you are patching a security issue, please take a look at https://github.com/elastic/.github/blob/main/SECURITY.md
 
 Finally, please make sure you have signed the Contributor License Agreement
 We are not asking you to assign copyright to us, but to give us the right to distribute your code without restriction.
