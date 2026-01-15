@@ -6,7 +6,6 @@
 'use strict'
 
 const assert = require('node:assert')
-// Using native fetch (Node.js 18+)
 
 function runInParallel (client, operation, options, clientOptions) {
   if (options.length === 0) return Promise.resolve()
