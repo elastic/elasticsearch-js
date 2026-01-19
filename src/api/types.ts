@@ -24921,12 +24921,16 @@ export interface InferenceOpenAIServiceSettings {
     * For `text_embedding`, it is set to `3000`.
     * For `completion`, it is set to `500`. */
   rate_limit?: InferenceRateLimitSetting
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. Defaults to `dot_product`. */
+  similarity?: InferenceOpenAISimilarityType
   /** The URL endpoint to use for the requests.
     * It can be changed for testing purposes. */
   url?: string
 }
 
 export type InferenceOpenAIServiceType = 'openai'
+
+export type InferenceOpenAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceOpenAITaskSettings {
   /** For a `completion` or `text_embedding` task, specify the user issuing the request.
