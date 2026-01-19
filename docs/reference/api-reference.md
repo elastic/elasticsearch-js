@@ -6700,6 +6700,8 @@ If no response is received before the timeout expires, the request fails and ret
 ## client.indices.putDataStreamSettings [_indices.put_data_stream_settings]
 Update data stream settings.
 
+NOTE: Available in 8.19. Not available in earlier versions.
+
 This API can be used to override settings on specific data streams. These overrides will take precedence over what
 is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state,
 only certain settings are allowed. If possible, the setting change is applied to all
@@ -6766,7 +6768,7 @@ client.indices.putIndexTemplate({ name })
 
 #### Request (object) [_request_indices.put_index_template]
 - **`name` (string)**: Index or template name
-- **`index_patterns` (Optional, string \| string[])**: Name of the index template to create.
+- **`index_patterns` (Optional, string \| string[])**: Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation.
 - **`composed_of` (Optional, string[])**: An ordered list of component template names.
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
@@ -8395,7 +8397,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `rerank` task type.
-- **`task_settings` (Optional, { return_documents, task, top_n })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { return_documents, task, late_chunking, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8491,7 +8493,7 @@ client.inference.putOpenai({ task_type, openai_inference_id, service, service_se
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`openai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
-- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
+- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, similarity, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `completion` or `chat_completion` task types.

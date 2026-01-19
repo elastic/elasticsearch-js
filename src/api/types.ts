@@ -17436,6 +17436,11 @@ export interface ClusterStatsExtendedRetrieversSearchUsage {
 
 export interface ClusterStatsExtendedSearchUsage {
   retrievers?: ClusterStatsExtendedRetrieversSearchUsage
+  section?: ClusterStatsExtendedSectionSearchUsage
+}
+
+export interface ClusterStatsExtendedSectionSearchUsage {
+  sort?: Record<ClusterStatsSortType, long>
 }
 
 export interface ClusterStatsExtendedTextSimilarityRetrieverUsage {
@@ -17654,6 +17659,8 @@ export interface ClusterStatsSnapshotCurrentCounts {
   /** Cleanups in progress, not counted in concurrent_operations as they are not concurrent */
   cleanups: integer
 }
+
+export type ClusterStatsSortType = '_doc' | '_geo_distance' | '_score' | '_script' | 'field_sort'
 
 export interface ClusterStatsSparseVectorStats {
   value_count: long
@@ -20254,7 +20261,7 @@ export interface IndicesIndexState {
 }
 
 export interface IndicesIndexTemplate {
-  /** Name of the index template. */
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns: Names
   /** An ordered list of component template names.
     * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
@@ -22277,7 +22284,7 @@ export interface IndicesPutIndexTemplateRequest extends RequestBase {
   master_timeout?: Duration
   /** User defined reason for creating or updating the index template */
   cause?: string
-  /** Name of the index template to create. */
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns?: Indices
   /** An ordered list of component template names.
     * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
@@ -24750,6 +24757,13 @@ export interface InferenceJinaAITaskSettings {
     * * `ingest`: Use it for storing document embeddings in a vector database.
     * * `search`: Use it for storing embeddings of search queries run against a vector database to find relevant documents. */
   task?: InferenceJinaAITextEmbeddingTask
+  /** For a `text_embedding` task, controls when text is split into chunks.
+    * When set to `true`, a request from Elasticsearch contains only chunks related to a single document. Instead of batching chunks across documents, Elasticsearch sends them in separate requests. This ensures that chunk embeddings retain context from the entire document, improving semantic quality.
+    *
+    * If a document exceeds the model's context limits, late chunking is automatically disabled for that document only and standard chunking is used instead.
+    *
+    * If not specified, defaults to `false`. */
+  late_chunking?: boolean
   /** For a `rerank` task, the number of most relevant documents to return.
     * It defaults to the number of the documents.
     * If this inference endpoint is used in a `text_similarity_reranker` retriever query and `top_n` is set, it must be greater than or equal to `rank_window_size` in the query. */
@@ -24935,12 +24949,16 @@ export interface InferenceOpenAIServiceSettings {
     * For `text_embedding`, it is set to `3000`.
     * For `completion`, it is set to `500`. */
   rate_limit?: InferenceRateLimitSetting
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. Defaults to `dot_product`. */
+  similarity?: InferenceOpenAISimilarityType
   /** The URL endpoint to use for the requests.
     * It can be changed for testing purposes. */
   url?: string
 }
 
 export type InferenceOpenAIServiceType = 'openai'
+
+export type InferenceOpenAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceOpenAITaskSettings {
   /** For a `completion` or `text_embedding` task, specify the user issuing the request.
@@ -33692,6 +33710,67 @@ export interface ProfilingTopnFunctionsRequest extends RequestBase {
 
 export type ProfilingTopnFunctionsResponse = any
 
+export type ProjectNamedProjectRoutingExpressions = Record<string, ProjectProjectRoutingExpression>
+
+export interface ProjectProjectRoutingExpression {
+  expression: ProjectRoutingExpression
+}
+
+export type ProjectRoutingExpression = string
+
+export interface ProjectCreateManyRoutingRequest extends RequestBase {
+  expressions?: ProjectNamedProjectRoutingExpressions
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { expressions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { expressions?: never }
+}
+
+export type ProjectCreateManyRoutingResponse = AcknowledgedResponseBase
+
+export interface ProjectCreateRoutingRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  expressions?: ProjectProjectRoutingExpression
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expressions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expressions?: never }
+}
+
+export type ProjectCreateRoutingResponse = AcknowledgedResponseBase
+
+export interface ProjectDeleteRoutingRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type ProjectDeleteRoutingResponse = AcknowledgedResponseBase
+
+export interface ProjectGetManyRoutingRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type ProjectGetManyRoutingResponse = ProjectNamedProjectRoutingExpressions
+
+export interface ProjectGetRoutingRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type ProjectGetRoutingResponse = ProjectProjectRoutingExpression
+
 export interface ProjectTagsProjectTags {
   origin: Partial<Record<string, ProjectTagsTags>>
   linked_projects?: Record<string, ProjectTagsTags>
@@ -33717,67 +33796,6 @@ export interface ProjectTagsTagsKeys {
 }
 export type ProjectTagsTags = ProjectTagsTagsKeys
 & { [property: string]: string }
-
-export type ProjectRoutingNamedProjectRoutingExpressions = Record<string, ProjectRoutingProjectRoutingExpression>
-
-export interface ProjectRoutingProjectRoutingExpression {
-  expression: ProjectRoutingRoutingExpression
-}
-
-export type ProjectRoutingRoutingExpression = string
-
-export interface ProjectRoutingCreateRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  expressions?: ProjectRoutingProjectRoutingExpression
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expressions?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expressions?: never }
-}
-
-export type ProjectRoutingCreateResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingCreateManyRequest extends RequestBase {
-  expressions?: ProjectRoutingNamedProjectRoutingExpressions
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { expressions?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { expressions?: never }
-}
-
-export type ProjectRoutingCreateManyResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingDeleteRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
-}
-
-export type ProjectRoutingDeleteResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingGetRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
-}
-
-export type ProjectRoutingGetResponse = ProjectRoutingProjectRoutingExpression
-
-export interface ProjectRoutingGetManyRequest extends RequestBase {
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any }
-}
-
-export type ProjectRoutingGetManyResponse = ProjectRoutingNamedProjectRoutingExpressions
 
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
