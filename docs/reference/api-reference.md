@@ -7792,7 +7792,7 @@ The following integrations are available through the inference API. You can find
 * Mistral (`chat_completion`, `completion`, `text_embedding`)
 * OpenAI (`chat_completion`, `completion`, `text_embedding`)
 * VoyageAI (`rerank`, `text_embedding`)
-* Watsonx inference integration (`text_embedding`)
+* Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put)
 
@@ -8398,7 +8398,7 @@ client.inference.putOpenai({ task_type, openai_inference_id, service, service_se
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`openai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
-- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
+- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, similarity, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `completion` or `chat_completion` task types.
@@ -8449,13 +8449,13 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 ### Arguments [_arguments_inference.put_watsonx]
 
 #### Request (object) [_request_inference.put_watsonx]
-- **`task_type` (Enum("text_embedding" \| "chat_completion" \| "completion"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("text_embedding" \| "rerank" \| "chat_completion" \| "completion"))**: The type of the inference task that the model will perform.
 - **`watsonx_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("watsonxai"))**: The type of service supported for the specified task type. In this case, `watsonxai`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
-Not applicable to the `completion` or `chat_completion` task types.
+Not applicable to the `rerank`, `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]

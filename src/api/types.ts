@@ -24435,12 +24435,16 @@ export interface InferenceOpenAIServiceSettings {
     * For `text_embedding`, it is set to `3000`.
     * For `completion`, it is set to `500`. */
   rate_limit?: InferenceRateLimitSetting
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. Defaults to `dot_product`. */
+  similarity?: InferenceOpenAISimilarityType
   /** The URL endpoint to use for the requests.
     * It can be changed for testing purposes. */
   url?: string
 }
 
 export type InferenceOpenAIServiceType = 'openai'
+
+export type InferenceOpenAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceOpenAITaskSettings {
   /** For a `completion` or `text_embedding` task, specify the user issuing the request.
@@ -24717,7 +24721,7 @@ export interface InferenceWatsonxServiceSettings {
 
 export type InferenceWatsonxServiceType = 'watsonxai'
 
-export type InferenceWatsonxTaskType = 'text_embedding' | 'chat_completion' | 'completion'
+export type InferenceWatsonxTaskType = 'text_embedding' | 'rerank' | 'chat_completion' | 'completion'
 
 export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
   /** The inference Id */
@@ -25363,7 +25367,7 @@ export interface InferencePutWatsonxRequest extends RequestBase {
   timeout?: Duration
   /** The chunking configuration object.
     * Applies only to the `text_embedding` task type.
-    * Not applicable to the `completion` or `chat_completion` task types. */
+    * Not applicable to the `rerank`, `completion` or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `watsonxai`. */
   service: InferenceWatsonxServiceType
