@@ -8491,7 +8491,7 @@ client.inference.putOpenai({ task_type, openai_inference_id, service, service_se
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`openai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
-- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
+- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, similarity, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `completion` or `chat_completion` task types.
