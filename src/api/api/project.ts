@@ -28,12 +28,49 @@ interface That {
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
 export default class Project {
   transport: Transport
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
     this[kAcceptedParams] = {
+      'project.create_many_routing': {
+        path: [],
+        body: [
+          'expressions'
+        ],
+        query: []
+      },
+      'project.create_routing': {
+        path: [
+          'name'
+        ],
+        body: [
+          'expressions'
+        ],
+        query: []
+      },
+      'project.delete_routing': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
+      'project.get_many_routing': {
+        path: [],
+        body: [],
+        query: []
+      },
+      'project.get_routing': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: []
+      },
       'project.tags': {
         path: [],
         body: [],
@@ -42,6 +79,245 @@ export default class Project {
         ]
       }
     }
+  }
+
+  /**
+    * Create of update named project routing expressions.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async createManyRouting (this: That, params: T.ProjectCreateManyRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectCreateManyRoutingResponse>
+  async createManyRouting (this: That, params: T.ProjectCreateManyRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectCreateManyRoutingResponse, unknown>>
+  async createManyRouting (this: That, params: T.ProjectCreateManyRoutingRequest, options?: TransportRequestOptions): Promise<T.ProjectCreateManyRoutingResponse>
+  async createManyRouting (this: That, params: T.ProjectCreateManyRoutingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['project.create_many_routing']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = '/_project_routing'
+    const meta: TransportRequestMetadata = {
+      name: 'project.create_many_routing',
+      acceptedParams: [
+        'expressions'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create of update a single named project routing expression.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async createRouting (this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectCreateRoutingResponse>
+  async createRouting (this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectCreateRoutingResponse, unknown>>
+  async createRouting (this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptions): Promise<T.ProjectCreateRoutingResponse>
+  async createRouting (this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['project.create_routing']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_project_routing/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'project.create_routing',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: [
+        'name',
+        'expressions'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Delete named project routing expressions.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async deleteRouting (this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectDeleteRoutingResponse>
+  async deleteRouting (this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectDeleteRoutingResponse, unknown>>
+  async deleteRouting (this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptions): Promise<T.ProjectDeleteRoutingResponse>
+  async deleteRouting (this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['project.delete_routing']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_project_routing/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'project.delete_routing',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: [
+        'name'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get named project routing expressions.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async getManyRouting (this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectGetManyRoutingResponse>
+  async getManyRouting (this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectGetManyRoutingResponse, unknown>>
+  async getManyRouting (this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptions): Promise<T.ProjectGetManyRoutingResponse>
+  async getManyRouting (this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['project.get_many_routing']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_project_routing'
+    const meta: TransportRequestMetadata = {
+      name: 'project.get_many_routing',
+      acceptedParams: [
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get named project routing expressions.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async getRouting (this: That, params: T.ProjectGetRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectGetRoutingResponse>
+  async getRouting (this: That, params: T.ProjectGetRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectGetRoutingResponse, unknown>>
+  async getRouting (this: That, params: T.ProjectGetRoutingRequest, options?: TransportRequestOptions): Promise<T.ProjectGetRoutingResponse>
+  async getRouting (this: That, params: T.ProjectGetRoutingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['project.get_routing']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_project_routing/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'project.get_routing',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: [
+        'name'
+      ]
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**

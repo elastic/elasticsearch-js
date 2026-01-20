@@ -4072,7 +4072,7 @@ export default class Indices {
   }
 
   /**
-    * Update data stream settings. This API can be used to override settings on specific data streams. These overrides will take precedence over what is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state, only certain settings are allowed. If possible, the setting change is applied to all backing indices. Otherwise, it will be applied when the data stream is next rolled over.
+    * Update data stream settings. NOTE: Available in 8.19. Not available in earlier versions. This API can be used to override settings on specific data streams. These overrides will take precedence over what is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state, only certain settings are allowed. If possible, the setting change is applied to all backing indices. Otherwise, it will be applied when the data stream is next rolled over.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-settings | Elasticsearch API documentation}
     */
   async putDataStreamSettings (this: That, params: T.IndicesPutDataStreamSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamSettingsResponse>
