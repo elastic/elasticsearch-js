@@ -28,7 +28,7 @@ interface That {
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
-const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty', 'format', 'help', 'v', 'bytes', 'time']
 
 export default class Cat {
   transport: Transport

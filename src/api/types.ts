@@ -23525,9 +23525,7 @@ export interface InferenceAi21ServiceSettings {
   /** A valid API key for accessing AI21 API.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key?: string
   /** This setting helps to minimize the number of rate limit errors returned from the AI21 API.
     * By default, the `ai21` service sets the number of requests allowed per minute to 200. Please refer to AI21 documentation for more details. */
@@ -23727,9 +23725,7 @@ export interface InferenceAzureAiStudioServiceSettings {
     * This key can be found on the overview page for your deployment in the management section of your Azure AI Studio account.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The type of endpoint that is available for deployment through Azure AI Studio: `token` or `realtime`.
     * The `token` endpoint type is for "pay as you go" endpoints that are billed per token.
@@ -23788,9 +23784,7 @@ export interface InferenceAzureOpenAIServiceSettings {
     * If you do not provide either or you provide both, you will receive an error when you try to create your model.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key?: string
   /** The Azure API version ID to use.
     * It is recommended to use the latest supported non-preview version. */
@@ -23831,9 +23825,7 @@ export interface InferenceCohereServiceSettings {
     * You can find or create your Cohere API keys on the Cohere API key settings page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** For a `text_embedding` task, the types of embeddings you want to get back.
     * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision.
@@ -23943,9 +23935,7 @@ export interface InferenceContextualAIServiceSettings {
   /** A valid API key for your Contexutual AI account.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The name of the model to use for the inference task.
     * Refer to the Contextual AI documentation for the list of available rerank models. */
@@ -24219,9 +24209,7 @@ export interface InferenceDeepSeekServiceSettings {
     * You can find or create your DeepSeek API keys on the DeepSeek API key page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** For a `completion` or `chat_completion` task, the name of the model to use for the inference task.
     *
@@ -24425,9 +24413,7 @@ export interface InferenceGroqServiceSettings {
   /** A valid API key for accessing Groq API.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key?: string
   /** This setting helps to minimize the number of rate limit errors returned from the Groq API.
     * By default, the `groq` service sets the number of requests allowed per minute to 1000. Refer to Groq documentation for more details. */
@@ -24443,9 +24429,7 @@ export interface InferenceHuggingFaceServiceSettings {
     * You can create or find your access tokens on the HuggingFace settings page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** This setting helps to minimize the number of rate limit errors returned from Hugging Face.
     * By default, the `hugging_face` service sets the number of requests allowed per minute to 3000 for all supported tasks.
@@ -24721,18 +24705,16 @@ interface InferenceInferenceResultExclusiveProps {
 
 export type InferenceInferenceResult = ExactlyOne<InferenceInferenceResultExclusiveProps>
 
+export type InferenceJinaAIElementType = 'binary' | 'bit' | 'float'
+
 export interface InferenceJinaAIServiceSettings {
   /** A valid API key of your JinaAI account.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
-  /** The name of the model to use for the inference task.
-    * For a `rerank` task, it is required.
-    * For a `text_embedding` task, it is optional. */
-  model_id?: string
+  /** The name of the model to use for the inference task. */
+  model_id: string
   /** This setting helps to minimize the number of rate limit errors returned from JinaAI.
     * By default, the `jinaai` service sets the number of requests allowed per minute to 2000 for all task types. */
   rate_limit?: InferenceRateLimitSetting
@@ -24740,6 +24722,15 @@ export interface InferenceJinaAIServiceSettings {
     * The default values varies with the embedding type.
     * For example, a float embedding type uses a `dot_product` similarity measure by default. */
   similarity?: InferenceJinaAISimilarityType
+  /** For an `embedding` or `text_embedding` task, the number of dimensions the resulting output embeddings should have.
+    * By default, the model's standard output dimension is used.
+    * Refer to the Jina documentation for more information. */
+  dimensions?: integer
+  /** For an `embedding` or `text_embedding` task, the data type returned by the model.
+    * Use `bit` for binary embeddings, which are encoded as bytes with signed int8 precision.
+    * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `bit`).
+    * Use `float` for the default float embeddings. */
+  element_type?: InferenceJinaAIElementType
 }
 
 export type InferenceJinaAIServiceType = 'jinaai'
@@ -24853,9 +24844,7 @@ export interface InferenceMistralServiceSettings {
     * You can find your Mistral API keys or you can create a new one on the API Keys page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The maximum number of tokens per input before chunking occurs. */
   max_input_tokens?: integer
@@ -24930,9 +24919,7 @@ export interface InferenceOpenAIServiceSettings {
     * You can find your OpenAI API keys in your OpenAI account under the API keys section.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The number of dimensions the resulting output embeddings should have.
     * It is supported only in `text-embedding-3` and later models.
@@ -25114,6 +25101,8 @@ export interface InferenceSparseEmbeddingInferenceResult {
 }
 
 export interface InferenceSparseEmbeddingResult {
+  /** Indicates if the text input was truncated in the request sent to the service */
+  is_truncated: boolean
   embedding: InferenceSparseVector
 }
 
@@ -25256,9 +25245,7 @@ export interface InferenceWatsonxServiceSettings {
     * You can find your Watsonx API keys or you can create a new one on the API keys page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** A version parameter that takes a version date in the format of `YYYY-MM-DD`.
     * For the active version data parameters, refer to the Wastonx documentation. */
