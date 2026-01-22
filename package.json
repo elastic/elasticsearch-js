@@ -29,6 +29,7 @@
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
     "test:esm": "npm run build && cd test/esm/ && npm install && node test-import.mjs",
+    "test:cjs": "npm run build && node test/cjs-test.js",
     "test:coverage-100": "npm run build && tap --coverage --100",
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",

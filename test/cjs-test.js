@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Client, errors, Transport, SniffingTransport } from '@elastic/elasticsearch'
+const { Client, errors, Transport, SniffingTransport } = require('@elastic/elasticsearch')
 
-console.log('ESM Import Test:')
+console.log('CJS Import Test:')
 console.log('✓ Client imported:', typeof Client === 'function')
 console.log('✓ errors imported:', typeof errors === 'object')
 console.log('✓ Transport imported:', typeof Transport === 'function')
@@ -15,9 +15,9 @@ const client = new Client({
   node: 'http://localhost:9200',
   auth: {
     username: 'elastic',
-    password: 'changeme',
+    password: 'changeme'
   }
 })
 
 console.log('✓ Client instantiation successful')
-console.log('\nAll ESM tests passed! ✅')
+console.log('\nAll CJS tests passed! ✅')
