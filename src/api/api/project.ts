@@ -82,8 +82,7 @@ export default class Project {
   }
 
   /**
-    * Create of update named project routing expressions.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Create or update project routing expressions.
     */
   async createManyRouting (this: That, params: T.ProjectCreateManyRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectCreateManyRoutingResponse>
   async createManyRouting (this: That, params: T.ProjectCreateManyRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectCreateManyRoutingResponse, unknown>>
@@ -129,8 +128,7 @@ export default class Project {
   }
 
   /**
-    * Create of update a single named project routing expression.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Create or update a project routing expression.
     */
   async createRouting (this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectCreateRoutingResponse>
   async createRouting (this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectCreateRoutingResponse, unknown>>
@@ -180,8 +178,7 @@ export default class Project {
   }
 
   /**
-    * Delete named project routing expressions.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Delete a project routing expression.
     */
   async deleteRouting (this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectDeleteRoutingResponse>
   async deleteRouting (this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectDeleteRoutingResponse, unknown>>
@@ -228,8 +225,7 @@ export default class Project {
   }
 
   /**
-    * Get named project routing expressions.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Get project routing expressions.
     */
   async getManyRouting (this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectGetManyRoutingResponse>
   async getManyRouting (this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectGetManyRoutingResponse, unknown>>
@@ -273,8 +269,7 @@ export default class Project {
   }
 
   /**
-    * Get named project routing expressions.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Get a project routing expression.
     */
   async getRouting (this: That, params: T.ProjectGetRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectGetRoutingResponse>
   async getRouting (this: That, params: T.ProjectGetRoutingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ProjectGetRoutingResponse, unknown>>
