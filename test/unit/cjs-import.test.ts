@@ -4,9 +4,9 @@
  */
 
 import { test } from 'tap'
-import { Client, errors, Transport, SniffingTransport } from '@elastic/elasticsearch'
+import { Client, errors, Transport, SniffingTransport } from '../../../'
 
-test('ESM imports work correctly', async (t) => {
+test('CommonJS imports work correctly', async (t) => {
   t.equal(typeof Client, 'function', 'Client should be a function')
   t.equal(typeof errors, 'object', 'errors should be an object')
   t.equal(typeof Transport, 'function', 'Transport should be a function')
