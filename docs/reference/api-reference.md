@@ -8326,7 +8326,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`task_type` (Enum("rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`jinaai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
-- **`service_settings` ({ api_key, model_id, rate_limit, similarity })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
+- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, element_type })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `rerank` task type.
