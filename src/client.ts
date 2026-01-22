@@ -36,12 +36,16 @@ import BaseConnection, { prepareHeaders, ConnectionOptions } from '@elastic/tran
 import SniffingTransport from './sniffingTransport'
 import Helpers from './helpers'
 import API from './api'
-import packageJson from '../package.json'
-import transportPackageJson from '@elastic/transport/package.json'
+import { kAcceptedParams } from './symbols'
+
+/* eslint-disable @typescript-eslint/no-var-requires */
+const packageJson = require('../package.json')
+const transportPackageJson = require('@elastic/transport/package.json')
+/* eslint-enable @typescript-eslint/no-var-requires */
 
 const kChild = Symbol('elasticsearchjs-child')
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
-export const kAcceptedParams = Symbol('elasticsearchjs-accepted-params')
+export { kAcceptedParams }
 
 let clientVersion: string = packageJson.version
 /* istanbul ignore next */

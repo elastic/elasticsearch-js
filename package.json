@@ -3,12 +3,26 @@
   "version": "9.2.0",
   "versionCanary": "9.2.0-canary.0",
   "description": "The official Elasticsearch client for Node.js",
+  "type": "commonjs",
   "main": "./index.js",
   "types": "index.d.ts",
   "exports": {
-    "require": "./index.js",
-    "import": "./index.js",
-    "types": "./index.d.ts"
+    ".": {
+      "import": "./lib/esm/index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./lib/*": {
+      "import": "./lib/esm/*.js",
+      "require": "./lib/*.js",
+      "types": "./lib/*.d.ts"
+    },
+    "./*": {
+      "import": "./lib/esm/*.js",
+      "require": "./lib/*.js",
+      "types": "./lib/*.d.ts"
+    }
   },
   "scripts": {
     "test": "npm run build && npm run lint && tap",
@@ -25,7 +39,11 @@
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
     "license-header": "./scripts/check-spdx",
     "prebuild": "npm run clean-build && npm run lint",
-    "build": "tsc && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:esm-fix && npm run build:esm-package",
+    "build:cjs": "tsc && rm -f lib/package.json lib/index.js lib/index.d.ts",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:esm-fix": "tsc-esm-fix --target=lib/esm && node scripts/fix-esm-require.js",
+    "build:esm-package": "echo '{\"type\":\"module\"}' > lib/esm/package.json",
     "clean-build": "rimraf ./lib && mkdir lib",
     "prepublishOnly": "npm run build"
   },
@@ -87,6 +105,7 @@
     "tap": "21.5.0",
     "ts-node": "10.9.2",
     "ts-standard": "12.0.2",
+    "tsc-esm-fix": "^3.1.2",
     "typescript": "5.9.3",
     "workq": "3.0.0",
     "xmlbuilder2": "3.1.1",
