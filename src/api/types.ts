@@ -17436,6 +17436,11 @@ export interface ClusterStatsExtendedRetrieversSearchUsage {
 
 export interface ClusterStatsExtendedSearchUsage {
   retrievers?: ClusterStatsExtendedRetrieversSearchUsage
+  section?: ClusterStatsExtendedSectionSearchUsage
+}
+
+export interface ClusterStatsExtendedSectionSearchUsage {
+  sort?: Record<ClusterStatsSortType, long>
 }
 
 export interface ClusterStatsExtendedTextSimilarityRetrieverUsage {
@@ -17654,6 +17659,8 @@ export interface ClusterStatsSnapshotCurrentCounts {
   /** Cleanups in progress, not counted in concurrent_operations as they are not concurrent */
   cleanups: integer
 }
+
+export type ClusterStatsSortType = '_doc' | '_geo_distance' | '_score' | '_script' | 'field_sort'
 
 export interface ClusterStatsSparseVectorStats {
   value_count: long
@@ -20254,7 +20261,7 @@ export interface IndicesIndexState {
 }
 
 export interface IndicesIndexTemplate {
-  /** Name of the index template. */
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns: Names
   /** An ordered list of component template names.
     * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
@@ -22277,7 +22284,7 @@ export interface IndicesPutIndexTemplateRequest extends RequestBase {
   master_timeout?: Duration
   /** User defined reason for creating or updating the index template */
   cause?: string
-  /** Name of the index template to create. */
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns?: Indices
   /** An ordered list of component template names.
     * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
@@ -23518,9 +23525,7 @@ export interface InferenceAi21ServiceSettings {
   /** A valid API key for accessing AI21 API.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key?: string
   /** This setting helps to minimize the number of rate limit errors returned from the AI21 API.
     * By default, the `ai21` service sets the number of requests allowed per minute to 200. Please refer to AI21 documentation for more details. */
@@ -23720,9 +23725,7 @@ export interface InferenceAzureAiStudioServiceSettings {
     * This key can be found on the overview page for your deployment in the management section of your Azure AI Studio account.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The type of endpoint that is available for deployment through Azure AI Studio: `token` or `realtime`.
     * The `token` endpoint type is for "pay as you go" endpoints that are billed per token.
@@ -23781,9 +23784,7 @@ export interface InferenceAzureOpenAIServiceSettings {
     * If you do not provide either or you provide both, you will receive an error when you try to create your model.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key?: string
   /** The Azure API version ID to use.
     * It is recommended to use the latest supported non-preview version. */
@@ -23824,9 +23825,7 @@ export interface InferenceCohereServiceSettings {
     * You can find or create your Cohere API keys on the Cohere API key settings page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** For a `text_embedding` task, the types of embeddings you want to get back.
     * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision.
@@ -23936,9 +23935,7 @@ export interface InferenceContextualAIServiceSettings {
   /** A valid API key for your Contexutual AI account.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The name of the model to use for the inference task.
     * Refer to the Contextual AI documentation for the list of available rerank models. */
@@ -24212,9 +24209,7 @@ export interface InferenceDeepSeekServiceSettings {
     * You can find or create your DeepSeek API keys on the DeepSeek API key page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** For a `completion` or `chat_completion` task, the name of the model to use for the inference task.
     *
@@ -24418,9 +24413,7 @@ export interface InferenceGroqServiceSettings {
   /** A valid API key for accessing Groq API.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key?: string
   /** This setting helps to minimize the number of rate limit errors returned from the Groq API.
     * By default, the `groq` service sets the number of requests allowed per minute to 1000. Refer to Groq documentation for more details. */
@@ -24436,9 +24429,7 @@ export interface InferenceHuggingFaceServiceSettings {
     * You can create or find your access tokens on the HuggingFace settings page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** This setting helps to minimize the number of rate limit errors returned from Hugging Face.
     * By default, the `hugging_face` service sets the number of requests allowed per minute to 3000 for all supported tasks.
@@ -24714,18 +24705,16 @@ interface InferenceInferenceResultExclusiveProps {
 
 export type InferenceInferenceResult = ExactlyOne<InferenceInferenceResultExclusiveProps>
 
+export type InferenceJinaAIElementType = 'binary' | 'bit' | 'float'
+
 export interface InferenceJinaAIServiceSettings {
   /** A valid API key of your JinaAI account.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
-  /** The name of the model to use for the inference task.
-    * For a `rerank` task, it is required.
-    * For a `text_embedding` task, it is optional. */
-  model_id?: string
+  /** The name of the model to use for the inference task. */
+  model_id: string
   /** This setting helps to minimize the number of rate limit errors returned from JinaAI.
     * By default, the `jinaai` service sets the number of requests allowed per minute to 2000 for all task types. */
   rate_limit?: InferenceRateLimitSetting
@@ -24733,6 +24722,15 @@ export interface InferenceJinaAIServiceSettings {
     * The default values varies with the embedding type.
     * For example, a float embedding type uses a `dot_product` similarity measure by default. */
   similarity?: InferenceJinaAISimilarityType
+  /** For an `embedding` or `text_embedding` task, the number of dimensions the resulting output embeddings should have.
+    * By default, the model's standard output dimension is used.
+    * Refer to the Jina documentation for more information. */
+  dimensions?: integer
+  /** For an `embedding` or `text_embedding` task, the data type returned by the model.
+    * Use `bit` for binary embeddings, which are encoded as bytes with signed int8 precision.
+    * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `bit`).
+    * Use `float` for the default float embeddings. */
+  element_type?: InferenceJinaAIElementType
 }
 
 export type InferenceJinaAIServiceType = 'jinaai'
@@ -24750,6 +24748,13 @@ export interface InferenceJinaAITaskSettings {
     * * `ingest`: Use it for storing document embeddings in a vector database.
     * * `search`: Use it for storing embeddings of search queries run against a vector database to find relevant documents. */
   task?: InferenceJinaAITextEmbeddingTask
+  /** For a `text_embedding` task, controls when text is split into chunks.
+    * When set to `true`, a request from Elasticsearch contains only chunks related to a single document. Instead of batching chunks across documents, Elasticsearch sends them in separate requests. This ensures that chunk embeddings retain context from the entire document, improving semantic quality.
+    *
+    * If a document exceeds the model's context limits, late chunking is automatically disabled for that document only and standard chunking is used instead.
+    *
+    * If not specified, defaults to `false`. */
+  late_chunking?: boolean
   /** For a `rerank` task, the number of most relevant documents to return.
     * It defaults to the number of the documents.
     * If this inference endpoint is used in a `text_similarity_reranker` retriever query and `top_n` is set, it must be greater than or equal to `rank_window_size` in the query. */
@@ -24839,9 +24844,7 @@ export interface InferenceMistralServiceSettings {
     * You can find your Mistral API keys or you can create a new one on the API Keys page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The maximum number of tokens per input before chunking occurs. */
   max_input_tokens?: integer
@@ -24916,9 +24919,7 @@ export interface InferenceOpenAIServiceSettings {
     * You can find your OpenAI API keys in your OpenAI account under the API keys section.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** The number of dimensions the resulting output embeddings should have.
     * It is supported only in `text-embedding-3` and later models.
@@ -24935,12 +24936,16 @@ export interface InferenceOpenAIServiceSettings {
     * For `text_embedding`, it is set to `3000`.
     * For `completion`, it is set to `500`. */
   rate_limit?: InferenceRateLimitSetting
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. Defaults to `dot_product`. */
+  similarity?: InferenceOpenAISimilarityType
   /** The URL endpoint to use for the requests.
     * It can be changed for testing purposes. */
   url?: string
 }
 
 export type InferenceOpenAIServiceType = 'openai'
+
+export type InferenceOpenAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceOpenAITaskSettings {
   /** For a `completion` or `text_embedding` task, specify the user issuing the request.
@@ -25096,6 +25101,8 @@ export interface InferenceSparseEmbeddingInferenceResult {
 }
 
 export interface InferenceSparseEmbeddingResult {
+  /** Indicates if the text input was truncated in the request sent to the service */
+  is_truncated: boolean
   embedding: InferenceSparseVector
 }
 
@@ -25238,9 +25245,7 @@ export interface InferenceWatsonxServiceSettings {
     * You can find your Watsonx API keys or you can create a new one on the API keys page.
     *
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key.
-    * After creating the inference model, you cannot change the associated API key.
-    * If you want to use a different API key, delete the inference model and recreate it with the same name and the updated API key. */
+    * The get inference endpoint API does not retrieve your API key. */
   api_key: string
   /** A version parameter that takes a version date in the format of `YYYY-MM-DD`.
     * For the active version data parameters, refer to the Wastonx documentation. */
@@ -33692,6 +33697,67 @@ export interface ProfilingTopnFunctionsRequest extends RequestBase {
 
 export type ProfilingTopnFunctionsResponse = any
 
+export type ProjectNamedProjectRoutingExpressions = Record<string, ProjectProjectRoutingExpression>
+
+export interface ProjectProjectRoutingExpression {
+  expression: ProjectRoutingExpression
+}
+
+export type ProjectRoutingExpression = string
+
+export interface ProjectCreateManyRoutingRequest extends RequestBase {
+  expressions?: ProjectNamedProjectRoutingExpressions
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { expressions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { expressions?: never }
+}
+
+export type ProjectCreateManyRoutingResponse = AcknowledgedResponseBase
+
+export interface ProjectCreateRoutingRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  expressions?: ProjectProjectRoutingExpression
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, expressions?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, expressions?: never }
+}
+
+export type ProjectCreateRoutingResponse = AcknowledgedResponseBase
+
+export interface ProjectDeleteRoutingRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type ProjectDeleteRoutingResponse = AcknowledgedResponseBase
+
+export interface ProjectGetManyRoutingRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type ProjectGetManyRoutingResponse = ProjectNamedProjectRoutingExpressions
+
+export interface ProjectGetRoutingRequest extends RequestBase {
+  /** The name of project routing expression */
+  name: string
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never }
+}
+
+export type ProjectGetRoutingResponse = ProjectProjectRoutingExpression
+
 export interface ProjectTagsProjectTags {
   origin: Partial<Record<string, ProjectTagsTags>>
   linked_projects?: Record<string, ProjectTagsTags>
@@ -33717,67 +33783,6 @@ export interface ProjectTagsTagsKeys {
 }
 export type ProjectTagsTags = ProjectTagsTagsKeys
 & { [property: string]: string }
-
-export type ProjectRoutingNamedProjectRoutingExpressions = Record<string, ProjectRoutingProjectRoutingExpression>
-
-export interface ProjectRoutingProjectRoutingExpression {
-  expression: ProjectRoutingRoutingExpression
-}
-
-export type ProjectRoutingRoutingExpression = string
-
-export interface ProjectRoutingCreateRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  expressions?: ProjectRoutingProjectRoutingExpression
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, expressions?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, expressions?: never }
-}
-
-export type ProjectRoutingCreateResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingCreateManyRequest extends RequestBase {
-  expressions?: ProjectRoutingNamedProjectRoutingExpressions
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { expressions?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { expressions?: never }
-}
-
-export type ProjectRoutingCreateManyResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingDeleteRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
-}
-
-export type ProjectRoutingDeleteResponse = AcknowledgedResponseBase
-
-export interface ProjectRoutingGetRequest extends RequestBase {
-  /** The name of project routing expression */
-  name: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
-}
-
-export type ProjectRoutingGetResponse = ProjectRoutingProjectRoutingExpression
-
-export interface ProjectRoutingGetManyRequest extends RequestBase {
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any }
-}
-
-export type ProjectRoutingGetManyResponse = ProjectRoutingNamedProjectRoutingExpressions
 
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */

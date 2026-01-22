@@ -5,8 +5,85 @@ on:
       branch:
         description: "Git branch to build and publish"
         required: true
+  push:
+    branches:
+      - main
+
+# kill in-progress action if another one is triggered (only for unstable publishes)
+concurrency:
+  group: ${{ github.event_name == 'push' && 'publish-unstable' || format('publish-manual-{0}', github.run_id) }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
+
 jobs:
+  # don't publish unstable if source code has not changed
+  paths-filter:
+    name: Detect files changed
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      src: "${{ steps.changes.outputs.src }}"
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter/@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'src/**'
+              - 'package.json'
+              - 'tsconfig.json'
+              - 'index.d.ts'
+              - 'index.js'
+
+  unstable:
+    name: Run tests and publish unstable
+    needs: paths-filter
+    if: github.event_name == 'push' && needs.paths-filter.outputs.src == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      # pause for 30 minutes to avoid publishing more than 2x per hour
+      - name: Debounce 30 minutes
+        uses: zachary95/github-actions-debounce@ab7363483e2837992b8aa6be891763da00ac14f9 # v0.1.0
+        with:
+          wait: 1800
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: |
+          npm install -g npm
+          npm install
+      - name: Run tests
+        run: npm test
+      # if tests pass, publish unstable
+      - name: publish unstable build
+        run: |
+          # set unstable version value
+          unstable_tag="unstable.$(date --utc +%Y%m%d%H%M%S)"
+          latest=$(npm view @elastic/elasticsearch --json | jq -r '.["dist-tags"].latest')
+          next=$(npx -y 'semver@^7.7.0' -i minor "$latest")
+          unstable_version="$next-$unstable_tag"
+
+          # overwrite package.json with unstable version value
+          mv package.json package.json.bak
+          jq --arg v "$unstable_version" '.version = $v' package.json.bak > package.json
+          rm package.json.bak
+
+          # publish to npm
+          npm publish --provenance --access public --tag "unstable"
+
   build:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -55,7 +132,7 @@ jobs:
           tag_meta=$(echo "$version" | cut -s -d '-' -f2)
           if [[ -z "$tag_meta" ]]; then
             gh release create \
-              -n "[Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/$BRANCH_NAME/changelog-client.html)"
+              -n "[Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/$BRANCH_NAME/changelog-client.html)" \
               --target "$BRANCH_NAME" \
               --title "v$version" \
               "v$version"
