@@ -81,8 +81,6 @@ jobs:
 
           # publish to npm
           npm publish --provenance --access public --tag "unstable"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   build:
     if: github.event_name == 'workflow_dispatch'
@@ -123,8 +121,6 @@ jobs:
             tag=$(echo "$tag_meta" | cut -d '.' -f1)
             npm publish --provenance --access public --tag "$tag"
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Fetch ephemeral GitHub token
         id: fetch-token
         uses: elastic/ci-gh-actions/fetch-github-token@8a7604dfdd4e7fe21f969bfe9ff96e17635ea577 # v1.0.0
