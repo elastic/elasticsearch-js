@@ -1,34 +1,21 @@
 # Client.healthReport
 
-## Method Signature
+## API Method
 
 ```typescript
-healthReport
+client.healthReport(params?: HealthReportRequest): Promise<HealthReportResponse>
 ```
 
-## Description
+### Parameters
 
-This method is part of the Elasticsearch JavaScript client API.
+- [`HealthReportRequest`](../types/HealthReportRequest.md) - Request parameters
 
-## Related Types
+### Returns
 
-- See [All Types](../types/index.md) for request and response type definitions
-
-## Example
-
-```typescript
-import { Client } from '@elastic/elasticsearch';
-
-const client = new Client({
-  node: 'http://localhost:9200'
-});
-
-// Use the healthReport method
-const result = await client.healthReport(/* parameters */);
-```
+- [`HealthReportResponse`](../types/HealthReportResponse.md) - Response data
 
 ## See Also
 
-- [Client API Reference](../client-api.md)
-- [Type Definitions](../types/index.md)
-- [Transport Documentation](../transport/README.md)
+- [Client](../client.md)
+- [All APIs](../index.md)
+- [Type Definitions](../types/)

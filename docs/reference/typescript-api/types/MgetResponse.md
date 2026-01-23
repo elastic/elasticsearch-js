@@ -1,0 +1,16 @@
+# MgetResponse
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `docs` | `MgetResponseItem<TDocument>[]` | The response includes a docs array that contains the documents in the order specified in the request.
+The structure of the returned documents is similar to that returned by the get API.
+If there is a failure getting a particular document, the error is included in place of the document. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

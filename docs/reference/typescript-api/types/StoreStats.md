@@ -1,0 +1,21 @@
+# StoreStats
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `size?` | [`ByteSize`](ByteSize.md) | Total size of all shards assigned to selected nodes. |
+| `size_in_bytes` | `long` | Total size, in bytes, of all shards assigned to selected nodes. |
+| `reserved?` | [`ByteSize`](ByteSize.md) | A prediction of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. |
+| `reserved_in_bytes` | `long` | A prediction, in bytes, of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. |
+| `total_data_set_size?` | [`ByteSize`](ByteSize.md) | Total data set size of all shards assigned to selected nodes.
+This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. |
+| `total_data_set_size_in_bytes?` | `long` | Total data set size, in bytes, of all shards assigned to selected nodes.
+This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

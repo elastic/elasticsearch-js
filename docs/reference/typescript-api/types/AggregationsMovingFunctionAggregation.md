@@ -1,0 +1,17 @@
+# AggregationsMovingFunctionAggregation
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `script?` | `string` | The script that should be executed on each window of data. |
+| `shift?` | `integer` | By default, the window consists of the last n values excluding the current bucket.
+Increasing `shift` by 1, moves the starting window position by 1 to the right. |
+| `window?` | `integer` | The size of window to "slide" across the histogram. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

@@ -1,0 +1,14 @@
+# AnalysisDecimalDigitTokenFilter
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `type` | `'decimal_digit'` | - |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

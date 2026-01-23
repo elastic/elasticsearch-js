@@ -1,0 +1,22 @@
+# ConnectorSyncJobUpdateStatsRequest
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `connector_sync_job_id` | [`Id`](Id.md) | The unique identifier of the connector sync job. |
+| `deleted_document_count` | `long` | The number of documents the sync job deleted. |
+| `indexed_document_count` | `long` | The number of documents the sync job indexed. |
+| `indexed_document_volume` | `long` | The total size of the data (in MiB) the sync job indexed. |
+| `last_seen?` | [`Duration`](Duration.md) | The timestamp to use in the `last_seen` property for the connector sync job. |
+| `metadata?` | [`Metadata`](Metadata.md) | The connector-specific metadata. |
+| `total_document_count?` | `integer` | The total number of documents in the target index after the sync job finished. |
+| `body?` | `string | { [key: string]: any } & { connector_sync_job_id?: never, deleted_document_count?: never, indexed_document_count?: never, indexed_document_volume?: never, last_seen?: never, metadata?: never, total_document_count?: never }` | All values in `body` will be added to the request body. |
+| `querystring?` | `{ [key: string]: any } & { connector_sync_job_id?: never, deleted_document_count?: never, indexed_document_count?: never, indexed_document_volume?: never, last_seen?: never, metadata?: never, total_document_count?: never }` | All values in `querystring` will be added to the request querystring. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

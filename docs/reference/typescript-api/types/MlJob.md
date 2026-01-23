@@ -1,0 +1,70 @@
+# MlJob
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `allow_lazy_open` | `boolean` | Advanced configuration option.
+Specifies whether this job can open when there is insufficient machine learning node capacity for it to be immediately assigned to a node. |
+| `analysis_config` | [`MlAnalysisConfig`](MlAnalysisConfig.md) | The analysis configuration, which specifies how to analyze the data.
+After you create a job, you cannot change the analysis configuration; all the properties are informational. |
+| `analysis_limits?` | [`MlAnalysisLimits`](MlAnalysisLimits.md) | Limits can be applied for the resources required to hold the mathematical models in memory.
+These limits are approximate and can be set per job.
+They do not control the memory used by other processes, for example the Elasticsearch Java processes. |
+| `background_persist_interval?` | [`Duration`](Duration.md) | Advanced configuration option.
+The time between each periodic persistence of the model.
+The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time.
+The smallest allowed value is 1 hour. |
+| `blocked?` | [`MlJobBlocked`](MlJobBlocked.md) | - |
+| `create_time?` | [`DateTime`](DateTime.md) | - |
+| `custom_settings?` | [`MlCustomSettings`](MlCustomSettings.md) | Advanced configuration option.
+Contains custom metadata about the job. |
+| `daily_model_snapshot_retention_after_days?` | `long` | Advanced configuration option, which affects the automatic removal of old model snapshots for this job.
+It specifies a period of time (in days) after which only the first snapshot per day is retained.
+This period is relative to the timestamp of the most recent snapshot for this job.
+Valid values range from 0 to `model_snapshot_retention_days`. |
+| `data_description` | [`MlDataDescription`](MlDataDescription.md) | The data description defines the format of the input data when you send data to the job by using the post data API.
+Note that when configuring a datafeed, these properties are automatically set.
+When data is received via the post data API, it is not stored in Elasticsearch.
+Only the results for anomaly detection are retained. |
+| `datafeed_config?` | [`MlDatafeed`](MlDatafeed.md) | The datafeed, which retrieves data from Elasticsearch for analysis by the job.
+You can associate only one datafeed with each anomaly detection job. |
+| `deleting?` | `boolean` | Indicates that the process of deleting the job is in progress but not yet completed.
+It is only reported when `true`. |
+| `description?` | `string` | A description of the job. |
+| `finished_time?` | [`DateTime`](DateTime.md) | If the job closed or failed, this is the time the job finished, otherwise it is `null`.
+This property is informational; you cannot change its value. |
+| `groups?` | `string[]` | A list of job groups.
+A job can belong to no groups or many. |
+| `job_id` | [`Id`](Id.md) | Identifier for the anomaly detection job.
+This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
+It must start and end with alphanumeric characters. |
+| `job_type?` | `string` | Reserved for future use, currently set to `anomaly_detector`. |
+| `job_version?` | [`VersionString`](VersionString.md) | The machine learning configuration version number at which the the job was created. |
+| `model_plot_config?` | [`MlModelPlotConfig`](MlModelPlotConfig.md) | This advanced configuration option stores model information along with the results.
+It provides a more detailed view into anomaly detection.
+Model plot provides a simplified and indicative view of the model and its bounds. |
+| `model_snapshot_id?` | [`Id`](Id.md) | - |
+| `model_snapshot_retention_days` | `long` | Advanced configuration option, which affects the automatic removal of old model snapshots for this job.
+It specifies the maximum period of time (in days) that snapshots are retained.
+This period is relative to the timestamp of the most recent snapshot for this job.
+By default, snapshots ten days older than the newest snapshot are deleted. |
+| `renormalization_window_days?` | `long` | Advanced configuration option.
+The period over which adjustments to the score are applied, as new data is seen.
+The default value is the longer of 30 days or 100 `bucket_spans`. |
+| `results_index_name` | [`IndexName`](IndexName.md) | A text string that affects the name of the machine learning results index.
+The default value is `shared`, which generates an index named `.ml-anomalies-shared`. |
+| `results_retention_days?` | `long` | Advanced configuration option.
+The period of time (in days) that results are retained.
+Age is calculated relative to the timestamp of the latest bucket result.
+If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch.
+The default value is null, which means all results are retained.
+Annotations generated by the system also count as results for retention purposes; they are deleted after the same number of days as results.
+Annotations added by users are retained forever. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

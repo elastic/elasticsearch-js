@@ -1,0 +1,14 @@
+# AnalysisIndicNormalizationTokenFilter
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `type` | `'indic_normalization'` | - |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

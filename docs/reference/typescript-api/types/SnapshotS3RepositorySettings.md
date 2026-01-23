@@ -1,0 +1,60 @@
+# SnapshotS3RepositorySettings
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `bucket` | `string` | The name of the S3 bucket to use for snapshots.
+The bucket name must adhere to Amazon's S3 bucket naming rules. |
+| `base_path?` | `string` | The path to the repository data within its bucket.
+It defaults to an empty string, meaning that the repository is at the root of the bucket.
+The value of this setting should not start or end with a forward slash (`/`).
+
+NOTE: Don't set base_path when configuring a snapshot repository for Elastic Cloud Enterprise.
+Elastic Cloud Enterprise automatically generates the `base_path` for each deployment so that multiple deployments may share the same bucket. |
+| `buffer_size?` | [`ByteSize`](ByteSize.md) | The minimum threshold below which the chunk is uploaded using a single request.
+Beyond this threshold, the S3 repository will use the AWS Multipart Upload API to split the chunk into several parts, each of `buffer_size` length, and to upload each part in its own request.
+Note that setting a buffer size lower than 5mb is not allowed since it will prevent the use of the Multipart API and may result in upload errors.
+It is also not possible to set a buffer size greater than 5gb as it is the maximum upload size allowed by S3.
+Defaults to `100mb` or 5% of JVM heap, whichever is smaller. |
+| `canned_acl?` | `string` | The S3 repository supports all S3 canned ACLs: `private`, `public-read`, `public-read-write`, `authenticated-read`, `log-delivery-write`, `bucket-owner-read`, `bucket-owner-full-control`.
+You could specify a canned ACL using the `canned_acl` setting.
+When the S3 repository creates buckets and objects, it adds the canned ACL into the buckets and objects. |
+| `client?` | `string` | The name of the S3 client to use to connect to S3. |
+| `delete_objects_max_size?` | `integer` | The maxmimum batch size, between 1 and 1000, used for `DeleteObjects` requests.
+Defaults to 1000 which is the maximum number supported by the  AWS DeleteObjects API. |
+| `get_register_retry_delay?` | [`Duration`](Duration.md) | The time to wait before trying again if an attempt to read a linearizable register fails. |
+| `max_multipart_parts?` | `integer` | The maximum number of parts that Elasticsearch will write during a multipart upload of a single object.
+Files which are larger than `buffer_size × max_multipart_parts` will be chunked into several smaller objects.
+Elasticsearch may also split a file across multiple objects to satisfy other constraints such as the `chunk_size` limit.
+Defaults to `10000` which is the maximum number of parts in a multipart upload in AWS S3. |
+| `max_multipart_upload_cleanup_size?` | `integer` | The maximum number of possibly-dangling multipart uploads to clean up in each batch of snapshot deletions.
+Defaults to 1000 which is the maximum number supported by the AWS ListMultipartUploads API.
+If set to `0`, Elasticsearch will not attempt to clean up dangling multipart uploads. |
+| `readonly?` | `boolean` | If true, the repository is read-only.
+The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
+
+Only a cluster with write access can create snapshots in the repository.
+All other clusters connected to the repository should have the `readonly` parameter set to `true`.
+
+If `false`, the cluster can write to the repository and create snapshots in it.
+
+IMPORTANT: If you register the same snapshot repository with multiple clusters, only one cluster should have write access to the repository.
+Having multiple clusters write to the repository at the same time risks corrupting the contents of the repository. |
+| `server_side_encryption?` | `boolean` | When set to `true`, files are encrypted on server side using an AES256 algorithm. |
+| `storage_class?` | `string` | The S3 storage class for objects written to the repository.
+Values may be `standard`, `reduced_redundancy`, `standard_ia`, `onezone_ia`, and `intelligent_tiering`. |
+| `'throttled_delete_retry.delay_increment'?` | [`Duration`](Duration.md) | The delay before the first retry and the amount the delay is incremented by on each subsequent retry.
+The default is 50ms and the minimum is 0ms. |
+| `'throttled_delete_retry.maximum_delay'?` | [`Duration`](Duration.md) | The upper bound on how long the delays between retries will grow to.
+The default is 5s and the minimum is 0ms. |
+| `'throttled_delete_retry.maximum_number_of_retries'?` | `integer` | The number times to retry a throttled snapshot deletion.
+The default is 10 and the minimum value is 0 which will disable retries altogether.
+Note that if retries are enabled in the Azure client, each of these retries comprises that many client-level retries. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)

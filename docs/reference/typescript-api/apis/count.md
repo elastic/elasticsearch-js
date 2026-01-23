@@ -1,34 +1,21 @@
 # Client.count
 
-## Method Signature
+## API Method
 
 ```typescript
-count
+client.count(params?: CountRequest): Promise<CountResponse>
 ```
 
-## Description
+### Parameters
 
-This method is part of the Elasticsearch JavaScript client API.
+- [`CountRequest`](../types/CountRequest.md) - Request parameters
 
-## Related Types
+### Returns
 
-- See [All Types](../types/index.md) for request and response type definitions
-
-## Example
-
-```typescript
-import { Client } from '@elastic/elasticsearch';
-
-const client = new Client({
-  node: 'http://localhost:9200'
-});
-
-// Use the count method
-const result = await client.count(/* parameters */);
-```
+- [`CountResponse`](../types/CountResponse.md) - Response data
 
 ## See Also
 
-- [Client API Reference](../client-api.md)
-- [Type Definitions](../types/index.md)
-- [Transport Documentation](../transport/README.md)
+- [Client](../client.md)
+- [All APIs](../index.md)
+- [Type Definitions](../types/)

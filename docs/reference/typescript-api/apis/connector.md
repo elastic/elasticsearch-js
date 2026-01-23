@@ -1,34 +1,17 @@
 # Client.connector
 
-## Method Signature
+## API Namespace
+
+This namespace contains related API methods. Access methods via:
 
 ```typescript
-connector
+client.connector.methodName(params)
 ```
 
-## Description
-
-This method is part of the Elasticsearch JavaScript client API.
-
-## Related Types
-
-- See [All Types](../types/index.md) for request and response type definitions
-
-## Example
-
-```typescript
-import { Client } from '@elastic/elasticsearch';
-
-const client = new Client({
-  node: 'http://localhost:9200'
-});
-
-// Use the connector method
-const result = await client.connector(/* parameters */);
-```
+See the [Client documentation](../client.md) for available methods in this namespace.
 
 ## See Also
 
-- [Client API Reference](../client-api.md)
-- [Type Definitions](../types/index.md)
-- [Transport Documentation](../transport/README.md)
+- [Client](../client.md)
+- [All APIs](../index.md)
+- [Type Definitions](../types/)

@@ -1,34 +1,21 @@
 # Client.updateByQuery
 
-## Method Signature
+## API Method
 
 ```typescript
-updateByQuery
+client.updateByQuery(params?: UpdateByQueryRequest): Promise<UpdateByQueryResponse>
 ```
 
-## Description
+### Parameters
 
-This method is part of the Elasticsearch JavaScript client API.
+- [`UpdateByQueryRequest`](../types/UpdateByQueryRequest.md) - Request parameters
 
-## Related Types
+### Returns
 
-- See [All Types](../types/index.md) for request and response type definitions
-
-## Example
-
-```typescript
-import { Client } from '@elastic/elasticsearch';
-
-const client = new Client({
-  node: 'http://localhost:9200'
-});
-
-// Use the updateByQuery method
-const result = await client.updateByQuery(/* parameters */);
-```
+- [`UpdateByQueryResponse`](../types/UpdateByQueryResponse.md) - Response data
 
 ## See Also
 
-- [Client API Reference](../client-api.md)
-- [Type Definitions](../types/index.md)
-- [Transport Documentation](../transport/README.md)
+- [Client](../client.md)
+- [All APIs](../index.md)
+- [Type Definitions](../types/)

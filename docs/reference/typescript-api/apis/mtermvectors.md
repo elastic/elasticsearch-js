@@ -1,34 +1,21 @@
 # Client.mtermvectors
 
-## Method Signature
+## API Method
 
 ```typescript
-mtermvectors
+client.mtermvectors(params?: MtermvectorsRequest): Promise<MtermvectorsResponse>
 ```
 
-## Description
+### Parameters
 
-This method is part of the Elasticsearch JavaScript client API.
+- [`MtermvectorsRequest`](../types/MtermvectorsRequest.md) - Request parameters
 
-## Related Types
+### Returns
 
-- See [All Types](../types/index.md) for request and response type definitions
-
-## Example
-
-```typescript
-import { Client } from '@elastic/elasticsearch';
-
-const client = new Client({
-  node: 'http://localhost:9200'
-});
-
-// Use the mtermvectors method
-const result = await client.mtermvectors(/* parameters */);
-```
+- [`MtermvectorsResponse`](../types/MtermvectorsResponse.md) - Response data
 
 ## See Also
 
-- [Client API Reference](../client-api.md)
-- [Type Definitions](../types/index.md)
-- [Transport Documentation](../transport/README.md)
+- [Client](../client.md)
+- [All APIs](../index.md)
+- [Type Definitions](../types/)

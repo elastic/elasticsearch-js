@@ -1,0 +1,34 @@
+# FleetMsearchRequest
+
+## Interface
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `index?` | `IndexName | IndexAlias` | A single target to search. If the target is an index alias, it must resolve to a single index. |
+| `allow_no_indices?` | `boolean` | If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. |
+| `ccs_minimize_roundtrips?` | `boolean` | If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. |
+| `expand_wildcards?` | [`ExpandWildcards`](ExpandWildcards.md) | Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. |
+| `ignore_throttled?` | `boolean` | If true, concrete, expanded or aliased indices are ignored when frozen. |
+| `ignore_unavailable?` | `boolean` | If true, missing or closed indices are not included in the response. |
+| `max_concurrent_searches?` | `integer` | Maximum number of concurrent searches the multi search API can execute. |
+| `max_concurrent_shard_requests?` | `integer` | Maximum number of concurrent shard requests that each sub-search request executes per node. |
+| `pre_filter_shard_size?` | `long` | Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint. |
+| `search_type?` | [`SearchType`](SearchType.md) | Indicates whether global term and document frequencies should be used when scoring returned documents. |
+| `rest_total_hits_as_int?` | `boolean` | If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object. |
+| `typed_keys?` | `boolean` | Specifies whether aggregation and suggester names should be prefixed by their respective types in the response. |
+| `wait_for_checkpoints?` | `FleetCheckpoint[]` | A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
+after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
+Elasticsearch to immediately execute the search. |
+| `allow_partial_search_results?` | `boolean` | If true, returns partial results if there are shard request timeouts or shard failures.
+If false, returns an error with no partial results.
+Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default. |
+| `searches?` | `MsearchRequestItem[]` | - |
+| `body?` | `string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, searches?: never }` | All values in `body` will be added to the request body. |
+| `querystring?` | `{ [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, searches?: never }` | All values in `querystring` will be added to the request querystring. |
+
+## See Also
+
+- [All Types](./)
+- [API Methods](../index.md)
