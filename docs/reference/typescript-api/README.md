@@ -143,4 +143,4 @@ npm run docs:generate
 
 ---
 
-*Documentation generated: 2026-01-23T16:25:16.697Z*
+*Documentation generated: 2026-01-23T16:26:44.563Z*
