@@ -73,3 +73,6 @@ yaml-rest-tests
 generated-tests
 schema
 base64-data
+
+# TypeDoc intermediate output (keep the processed docs in typescript-api)
+docs/reference/typescript
