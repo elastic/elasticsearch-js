@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsAggregateBase`](AggregationsAggregateBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `buckets` | `AggregationsBuckets<TBucket>` | - |
+| `buckets` | [`AggregationsBuckets`](AggregationsBuckets.md)<TBucket> | - |
 
 ## See Also
 

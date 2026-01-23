@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `results` | `ConnectorConnectorSyncJob[]` | - |
+| `count` | [`long`](long.md) | - |
+| `results` | [`ConnectorConnectorSyncJob`](ConnectorConnectorSyncJob.md)[] | - |
 
 ## See Also
 

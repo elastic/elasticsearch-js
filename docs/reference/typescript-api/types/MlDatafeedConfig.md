@@ -16,12 +16,12 @@
 | `indexes?` | [`Indices`](Indices.md) | An array of index names. Wildcards are supported. If any indices are in remote clusters, the machine learning nodes must have the `remote_cluster_client` role. |
 | `indices_options?` | [`IndicesOptions`](IndicesOptions.md) | Specifies index expansion options that are used during search. |
 | `job_id?` | [`Id`](Id.md) | - |
-| `max_empty_searches?` | `integer` | If a real-time datafeed has never seen any data (including during any initial training period) then it will automatically stop itself and close its associated job after this many real-time searches that return no documents. In other words, it will stop after `frequency` times `max_empty_searches` of real-time operation. If not set then a datafeed with no end time that sees no data will remain started until it is explicitly stopped. |
+| `max_empty_searches?` | [`integer`](integer.md) | If a real-time datafeed has never seen any data (including during any initial training period) then it will automatically stop itself and close its associated job after this many real-time searches that return no documents. In other words, it will stop after `frequency` times `max_empty_searches` of real-time operation. If not set then a datafeed with no end time that sees no data will remain started until it is explicitly stopped. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this object is passed verbatim to Elasticsearch. |
 | `query_delay?` | [`Duration`](Duration.md) | The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default value is randomly selected between `60s` and `120s`. This randomness improves the query performance when there are multiple jobs running on the same node. |
 | `runtime_mappings?` | [`MappingRuntimeFields`](MappingRuntimeFields.md) | Specifies runtime fields for the datafeed search. |
 | `script_fields?` | `Record<string, ScriptField>` | Specifies scripts that evaluate custom expressions and returns script fields to the datafeed. The detector configuration objects in a job can contain functions that use these script fields. |
-| `scroll_size?` | `integer` | The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations. The maximum value is the value of `index.max_result_window`, which is 10,000 by default. |
+| `scroll_size?` | [`integer`](integer.md) | The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations. The maximum value is the value of `index.max_result_window`, which is 10,000 by default. |
 
 ## See Also
 

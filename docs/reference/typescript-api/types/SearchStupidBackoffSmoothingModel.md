@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `discount` | `double` | A constant factor that the lower order n-gram model is discounted by. |
+| `discount` | [`double`](double.md) | A constant factor that the lower order n-gram model is discounted by. |
 
 ## See Also
 

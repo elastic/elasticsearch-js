@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsMultiBucketBase`](AggregationsMultiBucketBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `score` | `double` | - |
-| `bg_count` | `long` | - |
+| `score` | [`double`](double.md) | - |
+| `bg_count` | [`long`](long.md) | - |
 
 ## See Also
 

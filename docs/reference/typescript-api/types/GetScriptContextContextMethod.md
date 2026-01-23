@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `name` | [`Name`](Name.md) | - |
 | `return_type` | `string` | - |
-| `params` | `GetScriptContextContextMethodParam[]` | - |
+| `params` | [`GetScriptContextContextMethodParam`](GetScriptContextContextMethodParam.md)[] | - |
 
 ## See Also
 

@@ -11,7 +11,7 @@ You can find your OpenAI API keys in your OpenAI account under the API keys sect
 
 IMPORTANT: You need to provide the API key only once, during the inference model creation.
 The get inference endpoint API does not retrieve your API key. |
-| `dimensions?` | `integer` | The number of dimensions the resulting output embeddings should have.
+| `dimensions?` | [`integer`](integer.md) | The number of dimensions the resulting output embeddings should have.
 It is supported only in `text-embedding-3` and later models.
 If it is not set, the OpenAI defined default for the model is used. |
 | `model_id` | `string` | The name of the model to use for the inference task.

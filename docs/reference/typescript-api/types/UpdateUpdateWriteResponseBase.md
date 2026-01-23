@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`WriteResponseBase`](WriteResponseBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `get?` | `InlineGet<TDocument>` | - |
+| `get?` | [`InlineGet`](InlineGet.md)<TDocument> | - |
 
 ## See Also
 

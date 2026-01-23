@@ -11,8 +11,8 @@
 | `node?` | `string` | - |
 | `_node?` | `string` | - |
 | `reason` | [`ErrorCause`](ErrorCause.md) | - |
-| `shard?` | `integer` | - |
-| `_shard?` | `integer` | - |
+| `shard?` | [`integer`](integer.md) | - |
+| `_shard?` | [`integer`](integer.md) | - |
 | `status?` | `string` | - |
 | `primary?` | `boolean` | - |
 

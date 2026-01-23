@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `uid` | [`SecurityUserProfileId`](SecurityUserProfileId.md) | A unique identifier for the user profile. |
 | `if_seq_no?` | [`SequenceNumber`](SequenceNumber.md) | Only perform the operation if the document has this sequence number. |
-| `if_primary_term?` | `long` | Only perform the operation if the document has this primary term. |
+| `if_primary_term?` | [`long`](long.md) | Only perform the operation if the document has this primary term. |
 | `refresh?` | [`Refresh`](Refresh.md) | If 'true', Elasticsearch refreshes the affected shards to make this operation
 visible to search.
 If 'wait_for', it waits for a refresh to make this operation visible to search.

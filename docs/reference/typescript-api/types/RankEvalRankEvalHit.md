@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `_id` | [`Id`](Id.md) | - |
 | `_index` | [`IndexName`](IndexName.md) | - |
-| `_score` | `double` | - |
+| `_score` | [`double`](double.md) | - |
 
 ## See Also
 

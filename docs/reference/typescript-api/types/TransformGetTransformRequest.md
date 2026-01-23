@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -18,8 +22,8 @@ wildcard expression. You can get information for all transforms by using
 
 If this parameter is false, the request returns a 404 status code when
 there are no matches or only partial matches. |
-| `from?` | `integer` | Skips the specified number of transforms. |
-| `size?` | `integer` | Specifies the maximum number of transforms to obtain. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of transforms. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of transforms to obtain. |
 | `exclude_generated?` | `boolean` | Excludes fields that were automatically added when creating the
 transform. This allows the configuration to be in an acceptable format to
 be retrieved and then added to another cluster. |

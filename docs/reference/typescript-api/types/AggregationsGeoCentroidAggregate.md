@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsAggregateBase`](AggregationsAggregateBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
+| `count` | [`long`](long.md) | - |
 | `location?` | [`GeoLocation`](GeoLocation.md) | - |
 
 ## See Also

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -35,7 +39,7 @@ It must be a non-negative long number. |
 | `wait_for_active_shards?` | [`WaitForActiveShards`](WaitForActiveShards.md) | The number of shard copies that must be active before proceeding with the operation.
 You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 The default value of `1` means it waits for each primary shard to be active. |
-| `document?` | [`TDocument`](TDocument.md) | - |
+| `document?` | `TDocument` | - |
 | `body?` | `string | { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, require_alias?: never, require_data_stream?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, require_alias?: never, require_data_stream?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }` | All values in `querystring` will be added to the request querystring. |
 

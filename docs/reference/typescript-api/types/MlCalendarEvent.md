@@ -13,7 +13,7 @@
 | `start_time` | [`DateTime`](DateTime.md) | The timestamp for the beginning of the scheduled event in milliseconds since the epoch or ISO 8601 format. |
 | `skip_result?` | `boolean` | When true the model will not create results for this calendar period. |
 | `skip_model_update?` | `boolean` | When true the model will not be updated for this calendar period. |
-| `force_time_shift?` | `integer` | Shift time by this many seconds. For example adjust time for daylight savings changes |
+| `force_time_shift?` | [`integer`](integer.md) | Shift time by this many seconds. For example adjust time for daylight savings changes |
 
 ## See Also
 

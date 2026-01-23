@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `cluster_name` | [`Name`](Name.md) | - |
 | `last_seen_metadata_version` | [`VersionNumber`](VersionNumber.md) | - |
-| `time_since_last_check_millis` | `DurationValue<UnitMillis>` | - |
+| `time_since_last_check_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

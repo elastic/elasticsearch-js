@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `registered_transform_count` | `integer` | - |
+| `registered_transform_count` | [`integer`](integer.md) | - |
 | `peek_transform?` | `string` | - |
 
 ## See Also

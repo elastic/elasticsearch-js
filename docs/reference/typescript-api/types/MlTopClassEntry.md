@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `class_name` | `string` | - |
-| `class_probability` | `double` | - |
-| `class_score` | `double` | - |
+| `class_probability` | [`double`](double.md) | - |
+| `class_score` | [`double`](double.md) | - |
 
 ## See Also
 

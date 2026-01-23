@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `from?` | `integer` | Starting offset |
-| `size?` | `integer` | Specifies a max number of results to get |
+| `from?` | [`integer`](integer.md) | Starting offset |
+| `size?` | [`integer`](integer.md) | Specifies a max number of results to get |
 | `status?` | [`ConnectorSyncStatus`](ConnectorSyncStatus.md) | A sync job status to fetch connector sync jobs for |
 | `connector_id?` | [`Id`](Id.md) | A connector id to fetch connector sync jobs for |
 | `job_type?` | `ConnectorSyncJobType | ConnectorSyncJobType[]` | A comma-separated list of job types to fetch the sync jobs for |

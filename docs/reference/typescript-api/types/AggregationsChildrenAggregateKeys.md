@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsSingleBucketAggregateBase`](AggregationsSingleBucketAggregateBase.md)
+
 ## See Also
 
 - [All Types](./)

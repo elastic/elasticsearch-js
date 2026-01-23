@@ -9,9 +9,9 @@
 | `fields?` | `Record<string, any>` | - |
 | `found` | `boolean` | - |
 | `_seq_no?` | [`SequenceNumber`](SequenceNumber.md) | - |
-| `_primary_term?` | `long` | - |
+| `_primary_term?` | [`long`](long.md) | - |
 | `_routing?` | [`Routing`](Routing.md) | - |
-| `_source?` | [`TDocument`](TDocument.md) | - |
+| `_source?` | `TDocument` | - |
 
 ## See Also
 

@@ -1,21 +1,24 @@
 # Client.capabilities
 
-## API Method
+## Method Signature
 
 ```typescript
-client.capabilities(params?: CapabilitiesRequest): Promise<CapabilitiesResponse>
+client.capabilities(this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`CapabilitiesRequest`](../types/CapabilitiesRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.CapabilitiesRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`CapabilitiesResponse`](../types/CapabilitiesResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

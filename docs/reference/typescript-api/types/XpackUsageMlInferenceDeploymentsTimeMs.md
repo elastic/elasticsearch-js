@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `avg` | `double` | - |
+| `avg` | [`double`](double.md) | - |
 
 ## See Also
 

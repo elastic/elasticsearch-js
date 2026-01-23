@@ -9,7 +9,7 @@
 | `created_at?` | [`DateTime`](DateTime.md) | - |
 | `field` | [`Field`](Field.md) | - |
 | `id` | [`Id`](Id.md) | - |
-| `order` | `integer` | - |
+| `order` | [`integer`](integer.md) | - |
 | `policy` | [`ConnectorFilteringPolicy`](ConnectorFilteringPolicy.md) | - |
 | `rule` | [`ConnectorFilteringRuleRule`](ConnectorFilteringRuleRule.md) | - |
 | `updated_at?` | [`DateTime`](DateTime.md) | - |

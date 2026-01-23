@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `current` | `long` | - |
-| `failed` | `long` | - |
+| `count` | [`long`](long.md) | - |
+| `current` | [`long`](long.md) | - |
+| `failed` | [`long`](long.md) | - |
 | `time?` | [`Duration`](Duration.md) | - |
-| `time_in_millis` | `DurationValue<UnitMillis>` | - |
+| `time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `current_as_source` | `long` | - |
-| `current_as_target` | `long` | - |
+| `current_as_source` | [`long`](long.md) | - |
+| `current_as_target` | [`long`](long.md) | - |
 | `throttle_time?` | [`Duration`](Duration.md) | - |
-| `throttle_time_in_millis` | `DurationValue<UnitMillis>` | - |
+| `throttle_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

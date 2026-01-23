@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -13,10 +17,10 @@ The default value means it is unset and results are not limited to
 specific timestamps. |
 | `exclude_interim?` | `boolean` | If true, the output excludes interim results. By default, interim results
 are included. |
-| `influencer_score?` | `double` | Returns influencers with anomaly scores greater than or equal to this
+| `influencer_score?` | [`double`](double.md) | Returns influencers with anomaly scores greater than or equal to this
 value. |
-| `from?` | `integer` | Skips the specified number of influencers. |
-| `size?` | `integer` | Specifies the maximum number of influencers to obtain. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of influencers. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of influencers to obtain. |
 | `sort?` | [`Field`](Field.md) | Specifies the sort field for the requested influencers. By default, the
 influencers are sorted by the `influencer_score` value. |
 | `start?` | [`DateTime`](DateTime.md) | Returns influencers with timestamps after this time. The default value

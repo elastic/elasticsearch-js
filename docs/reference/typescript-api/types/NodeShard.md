@@ -9,7 +9,7 @@
 | `state` | [`IndicesStatsShardRoutingState`](IndicesStatsShardRoutingState.md) | - |
 | `primary` | `boolean` | - |
 | `node?` | [`NodeName`](NodeName.md) | - |
-| `shard` | `integer` | - |
+| `shard` | [`integer`](integer.md) | - |
 | `index` | [`IndexName`](IndexName.md) | - |
 | `allocation_id?` | `Record<string, Id>` | - |
 | `recovery_source?` | `Record<string, Id>` | - |

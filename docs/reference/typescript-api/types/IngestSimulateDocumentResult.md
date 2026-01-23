@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `doc?` | [`IngestDocumentSimulation`](IngestDocumentSimulation.md) | - |
 | `error?` | [`ErrorCause`](ErrorCause.md) | - |
-| `processor_results?` | `IngestPipelineProcessorResult[]` | - |
+| `processor_results?` | [`IngestPipelineProcessorResult`](IngestPipelineProcessorResult.md)[] | - |
 
 ## See Also
 

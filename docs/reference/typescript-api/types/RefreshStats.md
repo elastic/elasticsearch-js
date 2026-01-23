@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `external_total` | `long` | - |
-| `external_total_time_in_millis` | `DurationValue<UnitMillis>` | - |
-| `listeners` | `long` | - |
-| `total` | `long` | - |
+| `external_total` | [`long`](long.md) | - |
+| `external_total_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `listeners` | [`long`](long.md) | - |
+| `total` | [`long`](long.md) | - |
 | `total_time?` | [`Duration`](Duration.md) | - |
-| `total_time_in_millis` | `DurationValue<UnitMillis>` | - |
+| `total_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

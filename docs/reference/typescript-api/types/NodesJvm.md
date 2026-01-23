@@ -11,10 +11,10 @@
 | `gc?` | [`NodesGarbageCollector`](NodesGarbageCollector.md) | Contains statistics about JVM garbage collectors for the node. |
 | `mem?` | [`NodesJvmMemoryStats`](NodesJvmMemoryStats.md) | Contains JVM memory usage statistics for the node. |
 | `threads?` | [`NodesJvmThreads`](NodesJvmThreads.md) | Contains statistics about JVM thread usage for the node. |
-| `timestamp?` | `long` | Last time JVM statistics were refreshed. |
+| `timestamp?` | [`long`](long.md) | Last time JVM statistics were refreshed. |
 | `uptime?` | `string` | Human-readable JVM uptime.
 Only returned if the `human` query parameter is `true`. |
-| `uptime_in_millis?` | `long` | JVM uptime in milliseconds. |
+| `uptime_in_millis?` | [`long`](long.md) | JVM uptime in milliseconds. |
 
 ## See Also
 

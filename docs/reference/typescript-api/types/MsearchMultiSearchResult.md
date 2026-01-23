@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `took` | `long` | - |
-| `responses` | `MsearchResponseItem<TDocument>[]` | - |
+| `took` | [`long`](long.md) | - |
+| `responses` | [`MsearchResponseItem`](MsearchResponseItem.md)<TDocument>[] | - |
 
 ## See Also
 

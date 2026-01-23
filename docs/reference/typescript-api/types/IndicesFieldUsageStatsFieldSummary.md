@@ -6,13 +6,13 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `any` | `uint` | - |
-| `stored_fields` | `uint` | - |
-| `doc_values` | `uint` | - |
-| `points` | `uint` | - |
-| `norms` | `uint` | - |
-| `term_vectors` | `uint` | - |
-| `knn_vectors` | `uint` | - |
+| `any` | [`uint`](uint.md) | - |
+| `stored_fields` | [`uint`](uint.md) | - |
+| `doc_values` | [`uint`](uint.md) | - |
+| `points` | [`uint`](uint.md) | - |
+| `norms` | [`uint`](uint.md) | - |
+| `term_vectors` | [`uint`](uint.md) | - |
+| `knn_vectors` | [`uint`](uint.md) | - |
 | `inverted_index` | [`IndicesFieldUsageStatsInvertedIndex`](IndicesFieldUsageStatsInvertedIndex.md) | - |
 
 ## See Also

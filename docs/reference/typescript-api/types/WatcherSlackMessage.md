@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `attachments` | `WatcherSlackAttachment[]` | - |
+| `attachments` | [`WatcherSlackAttachment`](WatcherSlackAttachment.md)[] | - |
 | `dynamic_attachments?` | [`WatcherSlackDynamicAttachment`](WatcherSlackDynamicAttachment.md) | - |
 | `from` | `string` | - |
 | `icon?` | `string` | - |

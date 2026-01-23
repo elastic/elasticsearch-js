@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -38,20 +42,20 @@ It supports the following aggregation types:
 - `value count`
 
 The aggregation names can't start with `_mvt_`. The `_mvt_` prefix is reserved for internal aggregations. |
-| `buffer?` | `integer` | The size, in pixels, of a clipping buffer outside the tile. This allows renderers
+| `buffer?` | [`integer`](integer.md) | The size, in pixels, of a clipping buffer outside the tile. This allows renderers
 to avoid outline artifacts from geometries that extend past the extent of the tile. |
 | `exact_bounds?` | `boolean` | If `false`, the meta layer's feature is the bounding box of the tile.
 If `true`, the meta layer's feature is a bounding box resulting from a
 `geo_bounds` aggregation. The aggregation runs on <field> values that intersect
 the `<zoom>/<x>/<y>` tile with `wrap_longitude` set to `false`. The resulting
 bounding box may be larger than the vector tile. |
-| `extent?` | `integer` | The size, in pixels, of a side of the tile. Vector tiles are square with equal sides. |
+| `extent?` | [`integer`](integer.md) | The size, in pixels, of a side of the tile. Vector tiles are square with equal sides. |
 | `fields?` | [`Fields`](Fields.md) | The fields to return in the `hits` layer.
 It supports wildcards (`*`).
 This parameter does not support fields with array values. Fields with array
 values may return inconsistent results. |
 | `grid_agg?` | [`SearchMvtGridAggregationType`](SearchMvtGridAggregationType.md) | The aggregation used to create a grid for the `field`. |
-| `grid_precision?` | `integer` | Additional zoom levels available through the aggs layer. For example, if `<zoom>` is `7`
+| `grid_precision?` | [`integer`](integer.md) | Additional zoom levels available through the aggs layer. For example, if `<zoom>` is `7`
 and `grid_precision` is `8`, you can zoom in up to level 15. Accepts 0-8. If 0, results
 don't include the aggs layer. |
 | `grid_type?` | [`SearchMvtGridType`](SearchMvtGridType.md) | Determines the geometry type for features in the aggs layer. In the aggs layer,
@@ -61,7 +65,7 @@ of the cell. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The query DSL used to filter documents for the search. |
 | `runtime_mappings?` | [`MappingRuntimeFields`](MappingRuntimeFields.md) | Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name. |
-| `size?` | `integer` | The maximum number of features to return in the hits layer. Accepts 0-10000.
+| `size?` | [`integer`](integer.md) | The maximum number of features to return in the hits layer. Accepts 0-10000.
 If 0, results don't include the hits layer. |
 | `sort?` | [`Sort`](Sort.md) | Sort the features in the hits layer. By default, the API calculates a bounding
 box for each feature. It sorts features based on this box's diagonal length,

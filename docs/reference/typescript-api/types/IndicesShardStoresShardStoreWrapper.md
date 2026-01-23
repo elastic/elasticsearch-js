@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `stores` | `IndicesShardStoresShardStore[]` | - |
+| `stores` | [`IndicesShardStoresShardStore`](IndicesShardStoresShardStore.md)[] | - |
 
 ## See Also
 

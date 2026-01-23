@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `failures` | `ShardFailure[]` | - |
+| `failures` | [`ShardFailure`](ShardFailure.md)[] | - |
 
 ## See Also
 

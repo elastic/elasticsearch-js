@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `errors` | `ConnectorFilteringValidation[]` | - |
+| `errors` | [`ConnectorFilteringValidation`](ConnectorFilteringValidation.md)[] | - |
 | `state` | [`ConnectorFilteringValidationState`](ConnectorFilteringValidationState.md) | - |
 
 ## See Also

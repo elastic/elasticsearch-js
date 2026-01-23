@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `oversample` | `float` | Applies the specified oversample factor to k on the approximate kNN search |
+| `oversample` | [`float`](float.md) | Applies the specified oversample factor to k on the approximate kNN search |
 
 ## See Also
 

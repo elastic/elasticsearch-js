@@ -9,9 +9,9 @@
 | `shards?` | `string` | Number of primary and replica shards assigned to the node. |
 | `s?` | `string` | Number of primary and replica shards assigned to the node. |
 | `'shards.undesired'?` | `string | null` | Amount of shards that are scheduled to be moved elsewhere in the cluster or -1 other than desired balance allocator is used |
-| `'write_load.forecast'?` | `SpecUtilsStringified<double> | null` | Sum of index write load forecasts |
-| `wlf?` | `SpecUtilsStringified<double> | null` | Sum of index write load forecasts |
-| `writeLoadForecast?` | `SpecUtilsStringified<double> | null` | Sum of index write load forecasts |
+| `'write_load.forecast'?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<double> | null | Sum of index write load forecasts |
+| `wlf?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<double> | null | Sum of index write load forecasts |
+| `writeLoadForecast?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<double> | null | Sum of index write load forecasts |
 | `'disk.indices.forecast'?` | `ByteSize | null` | Sum of shard size forecasts |
 | `dif?` | `ByteSize | null` | Sum of shard size forecasts |
 | `diskIndicesForecast?` | `ByteSize | null` | Sum of shard size forecasts |

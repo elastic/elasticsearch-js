@@ -39,10 +39,10 @@ For Google Model Garden's `completion` and `chat_completion` tasks, when `provid
 | `rate_limit?` | [`InferenceRateLimitSetting`](InferenceRateLimitSetting.md) | This setting helps to minimize the number of rate limit errors returned from Google Vertex AI.
 By default, the `googlevertexai` service sets the number of requests allowed per minute to 30.000. |
 | `service_account_json` | `string` | A valid service account in JSON format for the Google Vertex AI API. |
-| `dimensions?` | `integer` | For a `text_embedding` task, the number of dimensions the resulting output embeddings should have.
+| `dimensions?` | [`integer`](integer.md) | For a `text_embedding` task, the number of dimensions the resulting output embeddings should have.
 By default, the model's standard output dimension is used.
 Refer to the Google documentation for more information. |
-| `max_batch_size?` | `integer` | Only applicable for the `text_embedding` task type.
+| `max_batch_size?` | [`integer`](integer.md) | Only applicable for the `text_embedding` task type.
 Controls the batch size of chunked inference requests sent to Google Vertex AI.
 
 Setting this parameter lower reduces the risk of exceeding token limits but may result in more API calls. Setting it higher increases throughput but may risk hitting token limits.

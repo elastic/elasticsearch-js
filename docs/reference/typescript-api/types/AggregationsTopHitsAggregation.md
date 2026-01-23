@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsMetricAggregationBase`](AggregationsMetricAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,10 +14,10 @@
 | `explain?` | `boolean` | If `true`, returns detailed information about score computation as part of a hit. |
 | `fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response. |
-| `from?` | `integer` | Starting document offset. |
+| `from?` | [`integer`](integer.md) | Starting document offset. |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in the search results. |
 | `script_fields?` | `Record<string, ScriptField>` | Returns the result of one or more script evaluations for each hit. |
-| `size?` | `integer` | The maximum number of top matching hits to return per bucket. |
+| `size?` | [`integer`](integer.md) | The maximum number of top matching hits to return per bucket. |
 | `sort?` | [`Sort`](Sort.md) | Sort order of the top matching hits.
 By default, the hits are sorted by the score of the main query. |
 | `_source?` | [`SearchSourceConfig`](SearchSourceConfig.md) | Selects the fields of the source that are returned. |

@@ -6,14 +6,14 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `load_source?` | `integer` | - |
-| `load_source_count?` | `integer` | - |
-| `load_stored_fields?` | `integer` | - |
-| `load_stored_fields_count?` | `integer` | - |
-| `next_reader?` | `integer` | - |
-| `next_reader_count?` | `integer` | - |
-| `process_count?` | `integer` | - |
-| `process?` | `integer` | - |
+| `load_source?` | [`integer`](integer.md) | - |
+| `load_source_count?` | [`integer`](integer.md) | - |
+| `load_stored_fields?` | [`integer`](integer.md) | - |
+| `load_stored_fields_count?` | [`integer`](integer.md) | - |
+| `next_reader?` | [`integer`](integer.md) | - |
+| `next_reader_count?` | [`integer`](integer.md) | - |
+| `process_count?` | [`integer`](integer.md) | - |
+| `process?` | [`integer`](integer.md) | - |
 
 ## See Also
 

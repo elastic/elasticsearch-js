@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `model_id` | [`Id`](Id.md) | The unique identifier of the trained model. Currently, only PyTorch models are supported. |
-| `number_of_allocations?` | `integer` | The number of model allocations on each node where the model is deployed.
+| `number_of_allocations?` | [`integer`](integer.md) | The number of model allocations on each node where the model is deployed.
 All allocations on a node share the same copy of the model in memory but use
 a separate set of threads to evaluate the model.
 Increasing this value generally increases the throughput.

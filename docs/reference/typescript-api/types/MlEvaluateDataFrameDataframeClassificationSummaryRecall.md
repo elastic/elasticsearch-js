@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `classes` | `MlEvaluateDataFrameDataframeEvaluationClass[]` | - |
-| `avg_recall` | `double` | - |
+| `classes` | [`MlEvaluateDataFrameDataframeEvaluationClass`](MlEvaluateDataFrameDataframeEvaluationClass.md)[] | - |
+| `avg_recall` | [`double`](double.md) | - |
 
 ## See Also
 

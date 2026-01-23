@@ -15,8 +15,8 @@
 | `create_time?` | [`DateTime`](DateTime.md) | The time when the trained model was created. |
 | `default_field_map?` | `Record<string, string>` | Any field map described in the inference configuration takes precedence. |
 | `description?` | `string` | The free-text description of the trained model. |
-| `estimated_heap_memory_usage_bytes?` | `integer` | The estimated heap usage in bytes to keep the trained model in memory. |
-| `estimated_operations?` | `integer` | The estimated number of operations to use the trained model. |
+| `estimated_heap_memory_usage_bytes?` | [`integer`](integer.md) | The estimated heap usage in bytes to keep the trained model in memory. |
+| `estimated_operations?` | [`integer`](integer.md) | The estimated number of operations to use the trained model. |
 | `fully_defined?` | `boolean` | True if the full model definition is present. |
 | `inference_config?` | [`MlInferenceConfigCreateContainer`](MlInferenceConfigCreateContainer.md) | The default configuration for inference. This can be either a regression, classification, or one of the many NLP focused configurations. It must match the underlying definition.trained_model's target_type. For pre-packaged models such as ELSER the config is not required. |
 | `input` | [`MlTrainedModelConfigInput`](MlTrainedModelConfigInput.md) | The input field names for the model definition. |

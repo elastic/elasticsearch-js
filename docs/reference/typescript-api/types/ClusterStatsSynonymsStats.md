@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `integer` | - |
-| `index_count` | `integer` | - |
+| `count` | [`integer`](integer.md) | - |
+| `index_count` | [`integer`](integer.md) | - |
 
 ## See Also
 

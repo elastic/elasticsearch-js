@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `accepted` | `boolean` | - |
-| `features?` | `MigrationPostFeatureUpgradeMigrationFeature[]` | - |
+| `features?` | [`MigrationPostFeatureUpgradeMigrationFeature`](MigrationPostFeatureUpgradeMigrationFeature.md)[] | - |
 | `reason?` | `string` | - |
 
 ## See Also

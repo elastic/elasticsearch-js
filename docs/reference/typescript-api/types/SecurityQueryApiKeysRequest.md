@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -32,14 +36,14 @@ You can query the following public information associated with an API key: `id`,
 NOTE: The queryable string values associated with API keys are internally mapped as keywords.
 Consequently, if no `analyzer` parameter is specified for a `match` query, then the provided match query string is interpreted as a single keyword value.
 Such a match query is hence equivalent to a `term` query. |
-| `from?` | `integer` | The starting document offset.
+| `from?` | [`integer`](integer.md) | The starting document offset.
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter. |
 | `sort?` | [`Sort`](Sort.md) | The sort definition.
 Other than `id`, all public fields of an API key are eligible for sorting.
 In addition, sort can also be applied to the `_doc` field to sort by index order. |
-| `size?` | `integer` | The number of hits to return.
+| `size?` | [`integer`](integer.md) | The number of hits to return.
 It must not be negative.
 The `size` parameter can be set to `0`, in which case no API key matches are returned, only the aggregation results.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.

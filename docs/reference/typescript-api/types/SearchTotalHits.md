@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `relation` | [`SearchTotalHitsRelation`](SearchTotalHitsRelation.md) | - |
-| `value` | `long` | - |
+| `value` | [`long`](long.md) | - |
 
 ## See Also
 

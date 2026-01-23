@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `features` | `FeaturesFeature[]` | - |
+| `features` | [`FeaturesFeature`](FeaturesFeature.md)[] | - |
 
 ## See Also
 

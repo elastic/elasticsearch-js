@@ -17,8 +17,8 @@
 | `mappings` | [`MappingTypeMapping`](MappingTypeMapping.md) | - |
 | `multiline_start_pattern?` | `string` | - |
 | `need_client_timezone` | `boolean` | - |
-| `num_lines_analyzed` | `integer` | - |
-| `num_messages_analyzed` | `integer` | - |
+| `num_lines_analyzed` | [`integer`](integer.md) | - |
+| `num_messages_analyzed` | [`integer`](integer.md) | - |
 | `sample_start` | `string` | - |
 | `timestamp_field?` | [`Field`](Field.md) | - |
 

@@ -10,7 +10,7 @@
 | `mem?` | [`NodesExtendedMemoryStats`](NodesExtendedMemoryStats.md) | - |
 | `swap?` | [`NodesMemoryStats`](NodesMemoryStats.md) | - |
 | `cgroup?` | [`NodesCgroup`](NodesCgroup.md) | - |
-| `timestamp?` | `long` | - |
+| `timestamp?` | [`long`](long.md) | - |
 
 ## See Also
 

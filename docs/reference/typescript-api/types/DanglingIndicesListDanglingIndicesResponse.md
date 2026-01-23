@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `dangling_indices` | `DanglingIndicesListDanglingIndicesDanglingIndex[]` | - |
+| `dangling_indices` | [`DanglingIndicesListDanglingIndicesDanglingIndex`](DanglingIndicesListDanglingIndicesDanglingIndex.md)[] | - |
 
 ## See Also
 

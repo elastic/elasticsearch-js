@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -21,7 +25,7 @@ You can also use this parameter to exclude fields from the subset specified in `
 If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter.
 If the `_source` parameter is `false`, this parameter is ignored. |
 | `stored_fields?` | [`Fields`](Fields.md) | If `true`, retrieves the document fields stored in the index rather than the document `_source`. |
-| `docs?` | `MgetOperation[]` | The documents you want to retrieve. Required if no index is specified in the request URI. |
+| `docs?` | [`MgetOperation`](MgetOperation.md)[] | The documents you want to retrieve. Required if no index is specified in the request URI. |
 | `ids?` | [`Ids`](Ids.md) | The IDs of the documents you want to retrieve. Allowed when the index is specified in the request URI. |
 | `body?` | `string | { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }` | All values in `querystring` will be added to the request querystring. |

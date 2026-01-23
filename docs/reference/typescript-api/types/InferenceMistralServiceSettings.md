@@ -11,7 +11,7 @@ You can find your Mistral API keys or you can create a new one on the API Keys p
 
 IMPORTANT: You need to provide the API key only once, during the inference model creation.
 The get inference endpoint API does not retrieve your API key. |
-| `max_input_tokens?` | `integer` | The maximum number of tokens per input before chunking occurs. |
+| `max_input_tokens?` | [`integer`](integer.md) | The maximum number of tokens per input before chunking occurs. |
 | `model` | `string` | The name of the model to use for the inference task.
 Refer to the Mistral models documentation for the list of available models. |
 | `rate_limit?` | [`InferenceRateLimitSetting`](InferenceRateLimitSetting.md) | This setting helps to minimize the number of rate limit errors returned from the Mistral API.

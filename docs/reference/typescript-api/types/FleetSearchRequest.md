@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,7 +14,7 @@
 | `allow_no_indices?` | `boolean` | - |
 | `analyzer?` | `string` | - |
 | `analyze_wildcard?` | `boolean` | - |
-| `batched_reduce_size?` | `long` | - |
+| `batched_reduce_size?` | [`long`](long.md) | - |
 | `ccs_minimize_roundtrips?` | `boolean` | - |
 | `default_operator?` | [`QueryDslOperator`](QueryDslOperator.md) | - |
 | `df?` | `string` | - |
@@ -18,23 +22,23 @@
 | `ignore_throttled?` | `boolean` | - |
 | `ignore_unavailable?` | `boolean` | - |
 | `lenient?` | `boolean` | - |
-| `max_concurrent_shard_requests?` | `integer` | - |
+| `max_concurrent_shard_requests?` | [`integer`](integer.md) | - |
 | `preference?` | `string` | - |
-| `pre_filter_shard_size?` | `long` | - |
+| `pre_filter_shard_size?` | [`long`](long.md) | - |
 | `request_cache?` | `boolean` | - |
 | `routing?` | [`Routing`](Routing.md) | - |
 | `scroll?` | [`Duration`](Duration.md) | - |
 | `search_type?` | [`SearchType`](SearchType.md) | - |
 | `suggest_field?` | [`Field`](Field.md) | Specifies which field to use for suggestions. |
 | `suggest_mode?` | [`SuggestMode`](SuggestMode.md) | - |
-| `suggest_size?` | `long` | - |
+| `suggest_size?` | [`long`](long.md) | - |
 | `suggest_text?` | `string` | The source text for which the suggestions should be returned. |
 | `typed_keys?` | `boolean` | - |
 | `rest_total_hits_as_int?` | `boolean` | - |
 | `_source_excludes?` | [`Fields`](Fields.md) | - |
 | `_source_includes?` | [`Fields`](Fields.md) | - |
 | `q?` | `string` | - |
-| `wait_for_checkpoints?` | `FleetCheckpoint[]` | A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
+| `wait_for_checkpoints?` | [`FleetCheckpoint`](FleetCheckpoint.md)[] | A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
 after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
 Elasticsearch to immediately execute the search. |
 | `allow_partial_search_results?` | `boolean` | If true, returns partial results if there are shard request timeouts or shard failures.
@@ -45,7 +49,7 @@ Defaults to the configured cluster setting `search.default_allow_partial_results
 | `collapse?` | [`SearchFieldCollapse`](SearchFieldCollapse.md) | - |
 | `explain?` | `boolean` | If true, returns detailed information about score computation as part of a hit. |
 | `ext?` | `Record<string, any>` | Configuration of search extensions defined by Elasticsearch plugins. |
-| `from?` | `integer` | Starting document offset. By default, you cannot page through more than 10,000
+| `from?` | [`integer`](integer.md) | Starting document offset. By default, you cannot page through more than 10,000
 hits using the from and size parameters. To page through more hits, use the
 search_after parameter. |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | - |
@@ -56,7 +60,7 @@ Defaults to 10,000 hits. |
 | `indices_boost?` | `Partial<Record<IndexName, double>>[]` | Boosts the _score of documents from specified indices. |
 | `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response. |
-| `min_score?` | `double` | Minimum _score for matching documents. Documents with a lower _score are
+| `min_score?` | [`double`](double.md) | Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations. |
 | `post_filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 | `profile?` | `boolean` | - |
@@ -64,7 +68,7 @@ not included in search results and results collected by aggregations. |
 | `rescore?` | `SearchRescore | SearchRescore[]` | - |
 | `script_fields?` | `Record<string, ScriptField>` | Retrieve a script evaluation (based on different fields) for each hit. |
 | `search_after?` | [`SortResults`](SortResults.md) | - |
-| `size?` | `integer` | The number of hits to return. By default, you cannot page through more
+| `size?` | [`integer`](integer.md) | The number of hits to return. By default, you cannot page through more
 than 10,000 hits using the from and size parameters. To page through more
 hits, use the search_after parameter. |
 | `slice?` | [`SlicedScroll`](SlicedScroll.md) | - |
@@ -74,7 +78,7 @@ fields are returned in the hits._source property of the search response. |
 | `fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response. |
 | `suggest?` | [`SearchSuggester`](SearchSuggester.md) | - |
-| `terminate_after?` | `long` | Maximum number of documents to collect for each shard. If a query reaches this
+| `terminate_after?` | [`long`](long.md) | Maximum number of documents to collect for each shard. If a query reaches this
 limit, Elasticsearch terminates the query early. Elasticsearch collects documents
 before sorting. Defaults to 0, which does not terminate query execution early. |
 | `timeout?` | `string` | Specifies the period of time to wait for a response from each shard. If no response

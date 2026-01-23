@@ -7,9 +7,9 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `name?` | [`Name`](Name.md) | The name of the policy to use to manage the index. For information about how Elasticsearch applies policy changes, see Policy updates. |
-| `indexing_complete?` | `SpecUtilsStringified<boolean>` | Indicates whether or not the index has been rolled over. Automatically set to true when ILM completes the rollover action.
+| `indexing_complete?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<boolean> | Indicates whether or not the index has been rolled over. Automatically set to true when ILM completes the rollover action.
 You can explicitly set it to skip rollover. |
-| `origination_date?` | `long` | If specified, this is the timestamp used to calculate the index age for its phase transitions. Use this setting
+| `origination_date?` | [`long`](long.md) | If specified, this is the timestamp used to calculate the index age for its phase transitions. Use this setting
 if you create a new index that contains old data and want to use the original creation date to calculate the index
 age. Specified as a Unix epoch value in milliseconds. |
 | `parse_origination_date?` | `boolean` | Set to true to parse the origination date from the index name. This origination date is used to calculate the index age

@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingCorePropertyBase`](MappingCorePropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type?` | `'passthrough'` | - |
 | `enabled?` | `boolean` | - |
-| `priority?` | `integer` | - |
+| `priority?` | [`integer`](integer.md) | - |
 | `time_series_dimension?` | `boolean` | - |
 
 ## See Also

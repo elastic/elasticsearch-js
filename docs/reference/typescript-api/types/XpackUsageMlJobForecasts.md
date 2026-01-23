@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `long` | - |
-| `forecasted_jobs` | `long` | - |
+| `total` | [`long`](long.md) | - |
+| `forecasted_jobs` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `took?` | `DurationValue<UnitMillis>` | - |
+| `took?` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `is_partial?` | `boolean` | - |
-| `all_columns?` | `EsqlEsqlColumnInfo[]` | - |
-| `columns` | `EsqlEsqlColumnInfo[]` | - |
+| `all_columns?` | [`EsqlEsqlColumnInfo`](EsqlEsqlColumnInfo.md)[] | - |
+| `columns` | [`EsqlEsqlColumnInfo`](EsqlEsqlColumnInfo.md)[] | - |
 | `values` | `FieldValue[][]` | - |
 | `_clusters?` | [`EsqlEsqlClusterInfo`](EsqlEsqlClusterInfo.md) | Cross-cluster search information. Present if `include_ccs_metadata` was `true` in the request
 and a cross-cluster search was performed. |

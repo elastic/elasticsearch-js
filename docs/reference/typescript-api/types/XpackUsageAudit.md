@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`XpackUsageFeatureToggle`](XpackUsageFeatureToggle.md)
+
 ### Properties
 
 | Property | Type | Description |

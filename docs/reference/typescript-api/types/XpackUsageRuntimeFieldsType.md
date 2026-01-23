@@ -6,20 +6,20 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `chars_max` | `long` | - |
-| `chars_total` | `long` | - |
-| `count` | `long` | - |
-| `doc_max` | `long` | - |
-| `doc_total` | `long` | - |
-| `index_count` | `long` | - |
+| `chars_max` | [`long`](long.md) | - |
+| `chars_total` | [`long`](long.md) | - |
+| `count` | [`long`](long.md) | - |
+| `doc_max` | [`long`](long.md) | - |
+| `doc_total` | [`long`](long.md) | - |
+| `index_count` | [`long`](long.md) | - |
 | `lang` | `string[]` | - |
-| `lines_max` | `long` | - |
-| `lines_total` | `long` | - |
+| `lines_max` | [`long`](long.md) | - |
+| `lines_total` | [`long`](long.md) | - |
 | `name` | [`Field`](Field.md) | - |
-| `scriptless_count` | `long` | - |
-| `shadowed_count` | `long` | - |
-| `source_max` | `long` | - |
-| `source_total` | `long` | - |
+| `scriptless_count` | [`long`](long.md) | - |
+| `shadowed_count` | [`long`](long.md) | - |
+| `source_max` | [`long`](long.md) | - |
+| `source_total` | [`long`](long.md) | - |
 
 ## See Also
 

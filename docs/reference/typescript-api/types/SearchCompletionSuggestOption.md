@@ -12,10 +12,10 @@
 | `_id?` | `string` | - |
 | `_index?` | [`IndexName`](IndexName.md) | - |
 | `_routing?` | [`Routing`](Routing.md) | - |
-| `_score?` | `double` | - |
-| `_source?` | [`TDocument`](TDocument.md) | - |
+| `_score?` | [`double`](double.md) | - |
+| `_source?` | `TDocument` | - |
 | `text` | `string` | - |
-| `score?` | `double` | - |
+| `score?` | [`double`](double.md) | - |
 
 ## See Also
 

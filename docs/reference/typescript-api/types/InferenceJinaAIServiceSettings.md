@@ -16,7 +16,7 @@ By default, the `jinaai` service sets the number of requests allowed per minute 
 | `similarity?` | [`InferenceJinaAISimilarityType`](InferenceJinaAISimilarityType.md) | For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm.
 The default values varies with the embedding type.
 For example, a float embedding type uses a `dot_product` similarity measure by default. |
-| `dimensions?` | `integer` | For an `embedding` or `text_embedding` task, the number of dimensions the resulting output embeddings should have.
+| `dimensions?` | [`integer`](integer.md) | For an `embedding` or `text_embedding` task, the number of dimensions the resulting output embeddings should have.
 By default, the model's standard output dimension is used.
 Refer to the Jina documentation for more information. |
 | `element_type?` | [`InferenceJinaAIElementType`](InferenceJinaAIElementType.md) | For an `embedding` or `text_embedding` task, the data type returned by the model.

@@ -25,15 +25,15 @@ Returned values include:
 `IN_PROGRESS`: The snapshot process started but has not completed.
 `PARTIAL`: The snapshot process completed with a partial success.
 `SUCCESS`: The snapshot process completed with a full success. |
-| `start_epoch?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process started. |
-| `ste?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process started. |
-| `startEpoch?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process started. |
+| `start_epoch?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process started. |
+| `ste?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process started. |
+| `startEpoch?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process started. |
 | `start_time?` | [`WatcherScheduleTimeOfDay`](WatcherScheduleTimeOfDay.md) | The time (HH:MM:SS) at which the snapshot process started. |
 | `sti?` | [`WatcherScheduleTimeOfDay`](WatcherScheduleTimeOfDay.md) | The time (HH:MM:SS) at which the snapshot process started. |
 | `startTime?` | [`WatcherScheduleTimeOfDay`](WatcherScheduleTimeOfDay.md) | The time (HH:MM:SS) at which the snapshot process started. |
-| `end_epoch?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process ended. |
-| `ete?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process ended. |
-| `endEpoch?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process ended. |
+| `end_epoch?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process ended. |
+| `ete?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process ended. |
+| `endEpoch?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | The Unix epoch time (seconds since 1970-01-01 00:00:00) at which the snapshot process ended. |
 | `end_time?` | [`TimeOfDay`](TimeOfDay.md) | The time (HH:MM:SS) at which the snapshot process ended. |
 | `eti?` | [`TimeOfDay`](TimeOfDay.md) | The time (HH:MM:SS) at which the snapshot process ended. |
 | `endTime?` | [`TimeOfDay`](TimeOfDay.md) | The time (HH:MM:SS) at which the snapshot process ended. |

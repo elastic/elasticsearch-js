@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `sparse_embedding` | `InferenceSparseEmbeddingResult[]` | - |
+| `sparse_embedding` | [`InferenceSparseEmbeddingResult`](InferenceSparseEmbeddingResult.md)[] | - |
 
 ## See Also
 

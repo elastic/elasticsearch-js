@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `dls` | `boolean` | - |
 | `fls` | `boolean` | - |
-| `size` | `long` | - |
+| `size` | [`long`](long.md) | - |
 
 ## See Also
 

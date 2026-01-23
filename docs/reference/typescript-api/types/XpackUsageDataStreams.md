@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`XpackUsageBase`](XpackUsageBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `long` | - |
-| `indices_count` | `long` | - |
+| `data_streams` | [`long`](long.md) | - |
+| `indices_count` | [`long`](long.md) | - |
 
 ## See Also
 

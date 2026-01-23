@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `slm_status` | [`LifecycleOperationMode`](LifecycleOperationMode.md) | - |
-| `policies` | `long` | - |
+| `policies` | [`long`](long.md) | - |
 | `unhealthy_policies?` | [`HealthReportSlmIndicatorUnhealthyPolicies`](HealthReportSlmIndicatorUnhealthyPolicies.md) | - |
 
 ## See Also

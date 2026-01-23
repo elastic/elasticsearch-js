@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `follower_indices` | `CcrFollowInfoFollowerIndex[]` | - |
+| `follower_indices` | [`CcrFollowInfoFollowerIndex`](CcrFollowInfoFollowerIndex.md)[] | - |
 
 ## See Also
 

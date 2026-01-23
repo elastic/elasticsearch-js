@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`SecurityUserProfile`](SecurityUserProfile.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `last_synchronized` | `long` | - |
+| `last_synchronized` | [`long`](long.md) | - |
 | `_doc` | [`SecurityUserProfileHitMetadata`](SecurityUserProfileHitMetadata.md) | - |
 
 ## See Also

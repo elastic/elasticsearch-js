@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -18,7 +22,7 @@ It supports comma-separated values, such as `open,hidden`. |
 | `allow_partial_search_results?` | `boolean` | Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
 If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception.
 If `true`, the point in time will contain all the shards that are available at the time of the request. |
-| `max_concurrent_shard_requests?` | `integer` | Maximum number of concurrent shard requests that each sub-search request executes per node. |
+| `max_concurrent_shard_requests?` | [`integer`](integer.md) | Maximum number of concurrent shard requests that each sub-search request executes per node. |
 | `index_filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | Filter indices if the provided query rewrites to `match_none` on every shard. |
 | `project_routing?` | [`ProjectRouting`](ProjectRouting.md) | Specifies a subset of projects to target for the PIT request using project
 metadata tags in a subset of Lucene query syntax.

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`QueryDslDecayFunctionBase`](QueryDslDecayFunctionBase.md)
+
 ## See Also
 
 - [All Types](./)

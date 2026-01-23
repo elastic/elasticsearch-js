@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisCharFilterBase`](AnalysisCharFilterBase.md)
+
 ### Properties
 
 | Property | Type | Description |

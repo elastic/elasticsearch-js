@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `enabled` | `boolean` | - |
-| `indices` | `IndicesDataStreamIndex[]` | - |
+| `indices` | [`IndicesDataStreamIndex`](IndicesDataStreamIndex.md)[] | - |
 | `rollover_on_write` | `boolean` | - |
 
 ## See Also

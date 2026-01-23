@@ -9,10 +9,10 @@
 | `action_type?` | [`WatcherActionType`](WatcherActionType.md) | - |
 | `condition?` | [`WatcherConditionContainer`](WatcherConditionContainer.md) | - |
 | `foreach?` | `string` | - |
-| `max_iterations?` | `integer` | - |
+| `max_iterations?` | [`integer`](integer.md) | - |
 | `name?` | [`Name`](Name.md) | - |
 | `throttle_period?` | [`Duration`](Duration.md) | - |
-| `throttle_period_in_millis?` | `DurationValue<UnitMillis>` | - |
+| `throttle_period_in_millis?` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `transform?` | [`TransformContainer`](TransformContainer.md) | - |
 | `index?` | [`WatcherIndexAction`](WatcherIndexAction.md) | - |
 | `logging?` | [`WatcherLoggingAction`](WatcherLoggingAction.md) | - |

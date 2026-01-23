@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `error` | [`ErrorCause`](ErrorCause.md) | - |
-| `status` | `integer` | - |
+| `status` | [`integer`](integer.md) | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`BulkWriteOperation`](BulkWriteOperation.md)
+
 ## See Also
 
 - [All Types](./)

@@ -11,10 +11,10 @@ If `enabled` is true, the number of allocations of the model is set based on the
 When the load is high, a new model allocation is automatically created, respecting the value of `max_number_of_allocations` if it's set.
 When the load is low, a model allocation is automatically removed, respecting the value of `min_number_of_allocations` if it's set.
 If `enabled` is true, do not set the number of allocations manually. |
-| `num_allocations` | `integer` | The total number of allocations this model is assigned across machine learning nodes.
+| `num_allocations` | [`integer`](integer.md) | The total number of allocations this model is assigned across machine learning nodes.
 Increasing this value generally increases the throughput.
 If adaptive allocations is enabled, do not set this value because it's automatically set. |
-| `num_threads` | `integer` | The number of threads used by each model allocation during inference.
+| `num_threads` | [`integer`](integer.md) | The number of threads used by each model allocation during inference.
 Increasing this value generally increases the speed per inference request.
 The inference process is a compute-bound process; `threads_per_allocations` must not exceed the number of available allocated processors per node.
 The value must be a power of 2.

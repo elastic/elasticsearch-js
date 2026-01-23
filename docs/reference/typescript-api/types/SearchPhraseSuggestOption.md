@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `text` | `string` | - |
-| `score` | `double` | - |
+| `score` | [`double`](double.md) | - |
 | `highlighted?` | `string` | - |
 | `collate_match?` | `boolean` | - |
 

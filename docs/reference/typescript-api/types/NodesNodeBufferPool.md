@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count?` | `long` | Number of buffer pools. |
+| `count?` | [`long`](long.md) | Number of buffer pools. |
 | `total_capacity?` | `string` | Total capacity of buffer pools. |
-| `total_capacity_in_bytes?` | `long` | Total capacity of buffer pools in bytes. |
+| `total_capacity_in_bytes?` | [`long`](long.md) | Total capacity of buffer pools in bytes. |
 | `used?` | `string` | Size of buffer pools. |
-| `used_in_bytes?` | `long` | Size of buffer pools in bytes. |
+| `used_in_bytes?` | [`long`](long.md) | Size of buffer pools in bytes. |
 
 ## See Also
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `shards` | `IndicesFieldUsageStatsUsageStatsShards[]` | - |
+| `shards` | [`IndicesFieldUsageStatsUsageStatsShards`](IndicesFieldUsageStatsUsageStatsShards.md)[] | - |
 
 ## See Also
 

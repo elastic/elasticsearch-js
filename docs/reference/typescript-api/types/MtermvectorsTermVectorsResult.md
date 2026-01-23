@@ -9,7 +9,7 @@
 | `_id?` | [`Id`](Id.md) | - |
 | `_index` | [`IndexName`](IndexName.md) | - |
 | `_version?` | [`VersionNumber`](VersionNumber.md) | - |
-| `took?` | `long` | - |
+| `took?` | [`long`](long.md) | - |
 | `found?` | `boolean` | - |
 | `term_vectors?` | `Record<Field, TermvectorsTermVector>` | - |
 | `error?` | [`ErrorCause`](ErrorCause.md) | - |

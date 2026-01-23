@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `key` | `double` | - |
+| `key` | [`double`](double.md) | - |
 | `value` | `double | null` | - |
 | `value_as_string?` | `string` | - |
 

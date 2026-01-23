@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `avg` | `long` | Average number of concurrently open file descriptors.
+| `avg` | [`long`](long.md) | Average number of concurrently open file descriptors.
 Returns `-1` if not supported. |
-| `max` | `long` | Maximum number of concurrently open file descriptors allowed across all selected nodes.
+| `max` | [`long`](long.md) | Maximum number of concurrently open file descriptors allowed across all selected nodes.
 Returns `-1` if not supported. |
-| `min` | `long` | Minimum number of concurrently open file descriptors across all selected nodes.
+| `min` | [`long`](long.md) | Minimum number of concurrently open file descriptors across all selected nodes.
 Returns -1 if not supported. |
 
 ## See Also

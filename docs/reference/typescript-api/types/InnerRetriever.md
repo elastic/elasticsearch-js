@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `retriever` | [`RetrieverContainer`](RetrieverContainer.md) | - |
-| `weight` | `float` | - |
+| `weight` | [`float`](float.md) | - |
 | `normalizer` | [`ScoreNormalizer`](ScoreNormalizer.md) | - |
 
 ## See Also

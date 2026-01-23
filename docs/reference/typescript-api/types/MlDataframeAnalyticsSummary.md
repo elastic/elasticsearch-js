@@ -10,11 +10,11 @@
 | `analysis` | [`MlDataframeAnalysisContainer`](MlDataframeAnalysisContainer.md) | - |
 | `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string[]` | - |
 | `authorization?` | [`MlDataframeAnalyticsAuthorization`](MlDataframeAnalyticsAuthorization.md) | The security privileges that the job uses to run its queries. If Elastic Stack security features were disabled at the time of the most recent update to the job, this property is omitted. |
-| `create_time?` | `EpochTime<UnitMillis>` | - |
+| `create_time?` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `description?` | `string` | - |
 | `dest` | [`MlDataframeAnalyticsDestination`](MlDataframeAnalyticsDestination.md) | - |
 | `id` | [`Id`](Id.md) | - |
-| `max_num_threads?` | `integer` | - |
+| `max_num_threads?` | [`integer`](integer.md) | - |
 | `model_memory_limit?` | `string` | - |
 | `source` | [`MlDataframeAnalyticsSource`](MlDataframeAnalyticsSource.md) | - |
 | `version?` | [`VersionString`](VersionString.md) | - |

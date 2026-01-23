@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `total_size_in_bytes` | `long` | - |
-| `size_histogram` | `NodesSizeHttpHistogram[]` | - |
+| `count` | [`long`](long.md) | - |
+| `total_size_in_bytes` | [`long`](long.md) | - |
+| `size_histogram` | [`NodesSizeHttpHistogram`](NodesSizeHttpHistogram.md)[] | - |
 
 ## See Also
 

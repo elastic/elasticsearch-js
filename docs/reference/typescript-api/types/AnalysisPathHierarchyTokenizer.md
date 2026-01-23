@@ -2,16 +2,20 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenizerBase`](AnalysisTokenizerBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'path_hierarchy'` | - |
-| `buffer_size?` | `SpecUtilsStringified<integer>` | - |
+| `buffer_size?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<integer> | - |
 | `delimiter?` | `string` | - |
 | `replacement?` | `string` | - |
-| `reverse?` | `SpecUtilsStringified<boolean>` | - |
-| `skip?` | `SpecUtilsStringified<integer>` | - |
+| `reverse?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<boolean> | - |
+| `skip?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<integer> | - |
 
 ## See Also
 

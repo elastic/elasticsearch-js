@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsSignificantTermsAggregateBase`](AggregationsSignificantTermsAggregateBase.md)
+
 ## See Also
 
 - [All Types](./)

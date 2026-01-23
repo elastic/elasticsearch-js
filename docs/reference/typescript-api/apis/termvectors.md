@@ -1,21 +1,24 @@
 # Client.termvectors
 
-## API Method
+## Method Signature
 
 ```typescript
-client.termvectors(params?: TermvectorsRequest): Promise<TermvectorsResponse>
+client.termvectors(this: That, params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`TermvectorsRequest`](../types/TermvectorsRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.TermvectorsRequest<TDocument>` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`TermvectorsResponse`](../types/TermvectorsResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

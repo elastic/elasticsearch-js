@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `avg` | `double` | - |
-| `max` | `double` | - |
-| `min` | `double` | - |
-| `total` | `double` | - |
+| `avg` | [`double`](double.md) | - |
+| `max` | [`double`](double.md) | - |
+| `min` | [`double`](double.md) | - |
+| `total` | [`double`](double.md) | - |
 
 ## See Also
 

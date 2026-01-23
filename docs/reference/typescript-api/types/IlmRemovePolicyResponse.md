@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `failed_indexes` | `IndexName[]` | - |
+| `failed_indexes` | [`IndexName`](IndexName.md)[] | - |
 | `has_failures` | `boolean` | - |
 
 ## See Also

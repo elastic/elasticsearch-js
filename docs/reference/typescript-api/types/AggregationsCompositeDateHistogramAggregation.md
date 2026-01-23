@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsCompositeAggregationBase`](AggregationsCompositeAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |

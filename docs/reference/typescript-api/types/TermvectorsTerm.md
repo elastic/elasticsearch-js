@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `doc_freq?` | `integer` | - |
-| `score?` | `double` | - |
-| `term_freq` | `integer` | - |
-| `tokens?` | `TermvectorsToken[]` | - |
-| `ttf?` | `integer` | - |
+| `doc_freq?` | [`integer`](integer.md) | - |
+| `score?` | [`double`](double.md) | - |
+| `term_freq` | [`integer`](integer.md) | - |
+| `tokens?` | [`TermvectorsToken`](TermvectorsToken.md)[] | - |
+| `ttf?` | [`integer`](integer.md) | - |
 
 ## See Also
 

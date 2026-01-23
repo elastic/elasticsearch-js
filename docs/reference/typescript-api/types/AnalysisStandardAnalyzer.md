@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'standard'` | - |
-| `max_token_length?` | `integer` | The maximum token length. If a token is seen that exceeds this length then it is split at `max_token_length` intervals.
+| `max_token_length?` | [`integer`](integer.md) | The maximum token length. If a token is seen that exceeds this length then it is split at `max_token_length` intervals.
 Defaults to `255`. |
 | `stopwords?` | [`AnalysisStopWords`](AnalysisStopWords.md) | A pre-defined stop words list like `_english_` or an array containing a list of stop words.
 Defaults to `_none_`. |

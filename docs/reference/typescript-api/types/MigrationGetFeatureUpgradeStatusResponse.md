@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `features` | `MigrationGetFeatureUpgradeStatusMigrationFeature[]` | - |
+| `features` | [`MigrationGetFeatureUpgradeStatusMigrationFeature`](MigrationGetFeatureUpgradeStatusMigrationFeature.md)[] | - |
 | `migration_status` | [`MigrationGetFeatureUpgradeStatusMigrationStatus`](MigrationGetFeatureUpgradeStatusMigrationStatus.md) | - |
 
 ## See Also

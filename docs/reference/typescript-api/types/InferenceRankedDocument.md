@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `index` | `integer` | - |
-| `relevance_score` | `float` | - |
+| `index` | [`integer`](integer.md) | - |
+| `relevance_score` | [`float`](float.md) | - |
 | `text?` | `string` | - |
 
 ## See Also

@@ -14,8 +14,8 @@ It does not necessarily mean that the remote cluster is down or unavailable, jus
 | `skip_unavailable` | `boolean` | If `true`, cross-cluster search skips the remote cluster when its nodes are unavailable during the search and ignores errors returned by the remote cluster. |
 | `proxy_address` | `string` | The address for remote connections when proxy mode is configured. |
 | `server_name` | `string` | - |
-| `num_proxy_sockets_connected` | `integer` | The number of open socket connections to the remote cluster when proxy mode is configured. |
-| `max_proxy_socket_connections` | `integer` | The maximum number of socket connections to the remote cluster when proxy mode is configured. |
+| `num_proxy_sockets_connected` | [`integer`](integer.md) | The number of open socket connections to the remote cluster when proxy mode is configured. |
+| `max_proxy_socket_connections` | [`integer`](integer.md) | The maximum number of socket connections to the remote cluster when proxy mode is configured. |
 | `cluster_credentials?` | `string` | This field is present and has a value of `::es_redacted::` only when the remote cluster is configured with the API key based model. Otherwise, the field is not present. |
 
 ## See Also

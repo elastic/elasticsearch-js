@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `core?` | `integer` | - |
+| `core?` | [`integer`](integer.md) | - |
 | `keep_alive?` | [`Duration`](Duration.md) | - |
-| `max?` | `integer` | - |
-| `queue_size` | `integer` | - |
-| `size?` | `integer` | - |
+| `max?` | [`integer`](integer.md) | - |
+| `queue_size` | [`integer`](integer.md) | - |
+| `size?` | [`integer`](integer.md) | - |
 | `type` | `string` | - |
 
 ## See Also

@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `actions` | `WatcherExecutionResultAction[]` | - |
+| `actions` | [`WatcherExecutionResultAction`](WatcherExecutionResultAction.md)[] | - |
 | `condition` | [`WatcherExecutionResultCondition`](WatcherExecutionResultCondition.md) | - |
-| `execution_duration` | `DurationValue<UnitMillis>` | - |
+| `execution_duration` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `execution_time` | [`DateTime`](DateTime.md) | - |
 | `input` | [`WatcherExecutionResultInput`](WatcherExecutionResultInput.md) | - |
 

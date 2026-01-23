@@ -9,11 +9,11 @@
 | `id` | [`Id`](Id.md) | Id for the API key |
 | `name` | [`Name`](Name.md) | Name of the API key. |
 | `type` | [`SecurityApiKeyType`](SecurityApiKeyType.md) | The type of the API key (e.g. `rest` or `cross_cluster`). |
-| `creation` | `EpochTime<UnitMillis>` | Creation time for the API key in milliseconds. |
-| `expiration?` | `EpochTime<UnitMillis>` | Expiration time for the API key in milliseconds. |
+| `creation` | [`EpochTime`](EpochTime.md)<UnitMillis> | Creation time for the API key in milliseconds. |
+| `expiration?` | [`EpochTime`](EpochTime.md)<UnitMillis> | Expiration time for the API key in milliseconds. |
 | `invalidated` | `boolean` | Invalidation status for the API key.
 If the key has been invalidated, it has a value of `true`. Otherwise, it is `false`. |
-| `invalidation?` | `EpochTime<UnitMillis>` | If the key has been invalidated, invalidation time in milliseconds. |
+| `invalidation?` | [`EpochTime`](EpochTime.md)<UnitMillis> | If the key has been invalidated, invalidation time in milliseconds. |
 | `username` | [`Username`](Username.md) | Principal for which this API key was created |
 | `realm` | `string` | Realm name of the principal for which this API key was created. |
 | `realm_type?` | `string` | Realm type of the principal for which this API key was created |

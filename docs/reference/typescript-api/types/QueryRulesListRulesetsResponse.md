@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `results` | `QueryRulesListRulesetsQueryRulesetListItem[]` | - |
+| `count` | [`long`](long.md) | - |
+| `results` | [`QueryRulesListRulesetsQueryRulesetListItem`](QueryRulesListRulesetsQueryRulesetListItem.md)[] | - |
 
 ## See Also
 

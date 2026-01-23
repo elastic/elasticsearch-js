@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `value_count` | `long` | - |
+| `value_count` | [`long`](long.md) | - |
 | `off_heap?` | [`ClusterStatsDenseVectorOffHeapStats`](ClusterStatsDenseVectorOffHeapStats.md) | - |
 
 ## See Also

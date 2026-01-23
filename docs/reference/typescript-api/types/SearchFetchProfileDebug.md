@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `stored_fields?` | `string[]` | - |
-| `fast_path?` | `integer` | - |
+| `fast_path?` | [`integer`](integer.md) | - |
 
 ## See Also
 

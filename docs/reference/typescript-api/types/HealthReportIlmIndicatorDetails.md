@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `ilm_status` | [`LifecycleOperationMode`](LifecycleOperationMode.md) | - |
-| `policies` | `long` | - |
-| `stagnating_indices` | `integer` | - |
+| `policies` | [`long`](long.md) | - |
+| `stagnating_indices` | [`integer`](integer.md) | - |
 
 ## See Also
 

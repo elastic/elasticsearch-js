@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `categories` | `MlCategory[]` | - |
-| `count` | `long` | - |
+| `categories` | [`MlCategory`](MlCategory.md)[] | - |
+| `count` | [`long`](long.md) | - |
 
 ## See Also
 

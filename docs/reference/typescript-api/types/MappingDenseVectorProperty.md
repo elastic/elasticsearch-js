@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingPropertyBase`](MappingPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'dense_vector'` | - |
-| `dims?` | `integer` | Number of vector dimensions. Can't exceed `4096`. If `dims` is not specified, it will be set to the length of
+| `dims?` | [`integer`](integer.md) | Number of vector dimensions. Can't exceed `4096`. If `dims` is not specified, it will be set to the length of
 the first vector added to the field. |
 | `element_type?` | [`MappingDenseVectorElementType`](MappingDenseVectorElementType.md) | The data type used to encode vectors. The supported data types are `float` (default), `byte`, and `bit`. |
 | `index?` | `boolean` | If `true`, you can search this field using the kNN search API. |

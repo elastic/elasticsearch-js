@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `ge_millis?` | `long` | - |
-| `lt_millis?` | `long` | - |
+| `count` | [`long`](long.md) | - |
+| `ge_millis?` | [`long`](long.md) | - |
+| `lt_millis?` | [`long`](long.md) | - |
 
 ## See Also
 

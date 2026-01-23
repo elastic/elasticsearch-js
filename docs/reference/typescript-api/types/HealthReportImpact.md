@@ -8,8 +8,8 @@
 |----------|------|-------------|
 | `description` | `string` | - |
 | `id` | `string` | - |
-| `impact_areas` | `HealthReportImpactArea[]` | - |
-| `severity` | `integer` | - |
+| `impact_areas` | [`HealthReportImpactArea`](HealthReportImpactArea.md)[] | - |
+| `severity` | [`integer`](integer.md) | - |
 
 ## See Also
 

@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `integer` | - |
-| `successful?` | `integer` | - |
-| `skipped?` | `integer` | - |
-| `failed?` | `integer` | - |
+| `total` | [`integer`](integer.md) | - |
+| `successful?` | [`integer`](integer.md) | - |
+| `skipped?` | [`integer`](integer.md) | - |
+| `failed?` | [`integer`](integer.md) | - |
 
 ## See Also
 

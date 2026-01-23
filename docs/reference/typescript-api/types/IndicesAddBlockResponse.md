@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `acknowledged` | `boolean` | - |
 | `shards_acknowledged` | `boolean` | - |
-| `indices` | `IndicesAddBlockAddIndicesBlockStatus[]` | - |
+| `indices` | [`IndicesAddBlockAddIndicesBlockStatus`](IndicesAddBlockAddIndicesBlockStatus.md)[] | - |
 
 ## See Also
 

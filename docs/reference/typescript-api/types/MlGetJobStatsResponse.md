@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `jobs` | `MlJobStats[]` | - |
+| `count` | [`long`](long.md) | - |
+| `jobs` | [`MlJobStats`](MlJobStats.md)[] | - |
 
 ## See Also
 

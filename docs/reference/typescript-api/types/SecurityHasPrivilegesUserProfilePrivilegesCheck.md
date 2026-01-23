@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `application?` | `SecurityHasPrivilegesApplicationPrivilegesCheck[]` | - |
-| `cluster?` | `SecurityClusterPrivilege[]` | A list of the cluster privileges that you want to check. |
-| `index?` | `SecurityHasPrivilegesIndexPrivilegesCheck[]` | - |
+| `application?` | [`SecurityHasPrivilegesApplicationPrivilegesCheck`](SecurityHasPrivilegesApplicationPrivilegesCheck.md)[] | - |
+| `cluster?` | [`SecurityClusterPrivilege`](SecurityClusterPrivilege.md)[] | A list of the cluster privileges that you want to check. |
+| `index?` | [`SecurityHasPrivilegesIndexPrivilegesCheck`](SecurityHasPrivilegesIndexPrivilegesCheck.md)[] | - |
 
 ## See Also
 

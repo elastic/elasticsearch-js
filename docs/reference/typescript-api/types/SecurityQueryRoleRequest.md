@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -12,7 +16,7 @@ The query supports a subset of query types, including `match_all`, `bool`, `term
 `ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`.
 You can query the following information associated with roles: `name`, `description`, `metadata`,
 `applications.application`, `applications.privileges`, and `applications.resources`. |
-| `from?` | `integer` | The starting document offset.
+| `from?` | [`integer`](integer.md) | The starting document offset.
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter. |
@@ -20,7 +24,7 @@ To page through more hits, use the `search_after` parameter. |
 You can sort on `name`, `description`, `metadata`, `applications.application`, `applications.privileges`,
 and `applications.resources`.
 In addition, sort can also be applied to the `_doc` field to sort by index order. |
-| `size?` | `integer` | The number of hits to return.
+| `size?` | [`integer`](integer.md) | The number of hits to return.
 It must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter. |

@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `acknowledged` | `boolean` | - |
-| `task_failures?` | `TaskFailure[]` | - |
+| `task_failures?` | [`TaskFailure`](TaskFailure.md)[] | - |
 
 ## See Also
 

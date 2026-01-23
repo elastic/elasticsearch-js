@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`WatcherStatsWatchRecordQueuedStats`](WatcherStatsWatchRecordQueuedStats.md)
+
 ### Properties
 
 | Property | Type | Description |

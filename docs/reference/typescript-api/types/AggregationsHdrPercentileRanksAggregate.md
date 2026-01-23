@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsPercentilesAggregateBase`](AggregationsPercentilesAggregateBase.md)
+
 ## See Also
 
 - [All Types](./)

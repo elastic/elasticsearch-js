@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingNumberPropertyBase`](MappingNumberPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'long'` | - |
-| `null_value?` | `long` | - |
+| `null_value?` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -16,8 +20,8 @@ comma-separated list or a wildcard expression. |
 
 If true, it returns an empty array when there are no matches and the
 subset of results when there are partial matches. |
-| `from?` | `integer` | Skips the specified number of models. |
-| `size?` | `integer` | Specifies the maximum number of models to obtain. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of models. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of models to obtain. |
 | `body?` | `string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, from?: never, size?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { model_id?: never, allow_no_match?: never, from?: never, size?: never }` | All values in `querystring` will be added to the request querystring. |
 

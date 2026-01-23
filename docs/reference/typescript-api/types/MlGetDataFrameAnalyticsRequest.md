@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -20,8 +24,8 @@ The default value returns an empty data_frame_analytics array when there
 are no matches and the subset of results when there are partial matches.
 If this parameter is `false`, the request returns a 404 status code when
 there are no matches or only partial matches. |
-| `from?` | `integer` | Skips the specified number of data frame analytics jobs. |
-| `size?` | `integer` | Specifies the maximum number of data frame analytics jobs to obtain. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of data frame analytics jobs. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of data frame analytics jobs to obtain. |
 | `exclude_generated?` | `boolean` | Indicates if certain fields should be removed from the configuration on
 retrieval. This allows the configuration to be in an acceptable format to
 be retrieved and then added to another cluster. |

@@ -10,8 +10,8 @@
 | `reason?` | `string | null` | A human-readable explanation of the error, in English. |
 | `stack_trace?` | `string` | The server stack trace. Present only if the `error_trace=true` parameter was sent with the request. |
 | `caused_by?` | [`ErrorCause`](ErrorCause.md) | - |
-| `root_cause?` | `ErrorCause[]` | - |
-| `suppressed?` | `ErrorCause[]` | - |
+| `root_cause?` | [`ErrorCause`](ErrorCause.md)[] | - |
+| `suppressed?` | [`ErrorCause`](ErrorCause.md)[] | - |
 
 ## See Also
 

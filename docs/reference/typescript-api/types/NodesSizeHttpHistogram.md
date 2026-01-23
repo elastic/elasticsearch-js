@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `ge_bytes?` | `long` | - |
-| `lt_bytes?` | `long` | - |
+| `count` | [`long`](long.md) | - |
+| `ge_bytes?` | [`long`](long.md) | - |
+| `lt_bytes?` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `shard` | `integer` | - |
+| `shard` | [`integer`](integer.md) | - |
 | `index` | `IndexName | null` | - |
 | `node?` | [`NodeId`](NodeId.md) | - |
 | `reason` | [`ErrorCause`](ErrorCause.md) | - |

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `value` | `long` | - |
+| `value` | [`long`](long.md) | - |
 | `relation` | [`RelationName`](RelationName.md) | - |
 
 ## See Also

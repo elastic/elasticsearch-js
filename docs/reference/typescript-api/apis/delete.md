@@ -1,21 +1,24 @@
 # Client.delete
 
-## API Method
+## Method Signature
 
 ```typescript
-client.delete(params?: DeleteRequest): Promise<DeleteResponse>
+client.delete(this: That, params: T.DeleteRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`DeleteRequest`](../types/DeleteRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.DeleteRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`DeleteResponse`](../types/DeleteResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

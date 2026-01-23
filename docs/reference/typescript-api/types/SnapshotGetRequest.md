@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -27,8 +31,8 @@ If no response is received before the timeout expires, the request fails and ret
 | `order?` | [`SortOrder`](SortOrder.md) | The sort order.
 Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order. |
-| `offset?` | `integer` | Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. |
-| `size?` | `integer` | The maximum number of snapshots to return.
+| `offset?` | [`integer`](integer.md) | Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. |
+| `size?` | [`integer`](integer.md) | The maximum number of snapshots to return.
 The default is 0, which means to return all that match the request without limit. |
 | `slm_policy_filter?` | [`Name`](Name.md) | Filter snapshots by a comma-separated list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
 

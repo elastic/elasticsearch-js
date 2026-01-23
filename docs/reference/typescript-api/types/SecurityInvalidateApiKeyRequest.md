@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `id?` | [`Id`](Id.md) | - |
-| `ids?` | `Id[]` | A list of API key ids.
+| `ids?` | [`Id`](Id.md)[] | A list of API key ids.
 This parameter cannot be used with any of `name`, `realm_name`, or `username`. |
 | `name?` | [`Name`](Name.md) | An API key name.
 This parameter cannot be used with any of `ids`, `realm_name` or `username`. |

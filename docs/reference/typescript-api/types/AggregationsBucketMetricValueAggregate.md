@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsSingleMetricAggregateBase`](AggregationsSingleMetricAggregateBase.md)
+
 ### Properties
 
 | Property | Type | Description |

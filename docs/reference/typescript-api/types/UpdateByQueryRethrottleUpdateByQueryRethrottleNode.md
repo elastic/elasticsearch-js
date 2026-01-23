@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SpecUtilsBaseNode`](SpecUtilsBaseNode.md)
+
 ### Properties
 
 | Property | Type | Description |

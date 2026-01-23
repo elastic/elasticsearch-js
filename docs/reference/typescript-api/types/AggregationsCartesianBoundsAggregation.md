@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsMetricAggregationBase`](AggregationsMetricAggregationBase.md)
+
 ## See Also
 
 - [All Types](./)

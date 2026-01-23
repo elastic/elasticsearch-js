@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SnapshotRepositorySettingsBase`](SnapshotRepositorySettingsBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -23,14 +27,14 @@ Defaults to `100mb` or 5% of JVM heap, whichever is smaller. |
 You could specify a canned ACL using the `canned_acl` setting.
 When the S3 repository creates buckets and objects, it adds the canned ACL into the buckets and objects. |
 | `client?` | `string` | The name of the S3 client to use to connect to S3. |
-| `delete_objects_max_size?` | `integer` | The maxmimum batch size, between 1 and 1000, used for `DeleteObjects` requests.
+| `delete_objects_max_size?` | [`integer`](integer.md) | The maxmimum batch size, between 1 and 1000, used for `DeleteObjects` requests.
 Defaults to 1000 which is the maximum number supported by the  AWS DeleteObjects API. |
 | `get_register_retry_delay?` | [`Duration`](Duration.md) | The time to wait before trying again if an attempt to read a linearizable register fails. |
-| `max_multipart_parts?` | `integer` | The maximum number of parts that Elasticsearch will write during a multipart upload of a single object.
+| `max_multipart_parts?` | [`integer`](integer.md) | The maximum number of parts that Elasticsearch will write during a multipart upload of a single object.
 Files which are larger than `buffer_size × max_multipart_parts` will be chunked into several smaller objects.
 Elasticsearch may also split a file across multiple objects to satisfy other constraints such as the `chunk_size` limit.
 Defaults to `10000` which is the maximum number of parts in a multipart upload in AWS S3. |
-| `max_multipart_upload_cleanup_size?` | `integer` | The maximum number of possibly-dangling multipart uploads to clean up in each batch of snapshot deletions.
+| `max_multipart_upload_cleanup_size?` | [`integer`](integer.md) | The maximum number of possibly-dangling multipart uploads to clean up in each batch of snapshot deletions.
 Defaults to 1000 which is the maximum number supported by the AWS ListMultipartUploads API.
 If set to `0`, Elasticsearch will not attempt to clean up dangling multipart uploads. |
 | `readonly?` | `boolean` | If true, the repository is read-only.
@@ -50,7 +54,7 @@ Values may be `standard`, `reduced_redundancy`, `standard_ia`, `onezone_ia`, and
 The default is 50ms and the minimum is 0ms. |
 | `'throttled_delete_retry.maximum_delay'?` | [`Duration`](Duration.md) | The upper bound on how long the delays between retries will grow to.
 The default is 5s and the minimum is 0ms. |
-| `'throttled_delete_retry.maximum_number_of_retries'?` | `integer` | The number times to retry a throttled snapshot deletion.
+| `'throttled_delete_retry.maximum_number_of_retries'?` | [`integer`](integer.md) | The number times to retry a throttled snapshot deletion.
 The default is 10 and the minimum value is 0 which will disable retries altogether.
 Note that if retries are enabled in the Azure client, each of these retries comprises that many client-level retries. |
 

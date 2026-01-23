@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -14,7 +18,7 @@ The name is used solely as an identifier to facilitate interaction via the API; 
 Within the metadata object, keys beginning with `_` are reserved for system usage. |
 | `roles?` | `string[]` | A list of role names that are granted to the users that match the role mapping rules.
 Exactly one of `roles` or `role_templates` must be specified. |
-| `role_templates?` | `SecurityRoleTemplate[]` | A list of Mustache templates that will be evaluated to determine the roles names that should granted to the users that match the role mapping rules.
+| `role_templates?` | [`SecurityRoleTemplate`](SecurityRoleTemplate.md)[] | A list of Mustache templates that will be evaluated to determine the roles names that should granted to the users that match the role mapping rules.
 Exactly one of `roles` or `role_templates` must be specified. |
 | `rules?` | [`SecurityRoleMappingRule`](SecurityRoleMappingRule.md) | The rules that determine which users should be matched by the mapping.
 A rule is a logical condition that is expressed by using a JSON DSL. |

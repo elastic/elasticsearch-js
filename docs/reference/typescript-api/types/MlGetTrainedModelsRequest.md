@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -24,10 +28,10 @@ JSON map (true) or in a custom compressed format (false). |
 | `exclude_generated?` | `boolean` | Indicates if certain fields should be removed from the configuration on
 retrieval. This allows the configuration to be in an acceptable format to
 be retrieved and then added to another cluster. |
-| `from?` | `integer` | Skips the specified number of models. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of models. |
 | `include?` | [`MlInclude`](MlInclude.md) | A comma delimited string of optional fields to include in the response
 body. |
-| `size?` | `integer` | Specifies the maximum number of models to obtain. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of models to obtain. |
 | `tags?` | `string | string[]` | A comma delimited string of tags. A trained model can have many tags, or
 none. When supplied, only trained models that contain all the supplied
 tags are returned. |

@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `connections` | `GraphConnection[]` | - |
-| `failures` | `ShardFailure[]` | - |
+| `connections` | [`GraphConnection`](GraphConnection.md)[] | - |
+| `failures` | [`ShardFailure`](ShardFailure.md)[] | - |
 | `timed_out` | `boolean` | - |
-| `took` | `long` | - |
-| `vertices` | `GraphVertex[]` | - |
+| `took` | [`long`](long.md) | - |
+| `vertices` | [`GraphVertex`](GraphVertex.md)[] | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,7 +14,7 @@
 Wildcard (`*`) expressions are supported.
 To search all data streams or indices, omit this parameter or use `*`  or `_all`. |
 | `field` | [`Field`](Field.md) | The string to match at the start of indexed terms. If not provided, all terms in the field are considered. |
-| `size?` | `integer` | The number of matching terms to return. |
+| `size?` | [`integer`](integer.md) | The number of matching terms to return. |
 | `timeout?` | [`Duration`](Duration.md) | The maximum length of time to spend collecting results.
 If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty. |
 | `case_insensitive?` | `boolean` | When `true`, the provided search string is matched against index terms without case sensitivity. |

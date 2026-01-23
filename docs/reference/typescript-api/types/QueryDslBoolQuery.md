@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`QueryDslQueryBase`](QueryDslQueryBase.md)
+
 ### Properties
 
 | Property | Type | Description |

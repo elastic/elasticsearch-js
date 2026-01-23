@@ -14,11 +14,11 @@
 | `jvm` | [`ClusterStatsClusterJvm`](ClusterStatsClusterJvm.md) | Contains statistics about the Java Virtual Machines (JVMs) used by selected nodes. |
 | `network_types` | [`ClusterStatsClusterNetworkTypes`](ClusterStatsClusterNetworkTypes.md) | Contains statistics about the transport and HTTP networks used by selected nodes. |
 | `os` | [`ClusterStatsClusterOperatingSystem`](ClusterStatsClusterOperatingSystem.md) | Contains statistics about the operating systems used by selected nodes. |
-| `packaging_types` | `ClusterStatsNodePackagingType[]` | Contains statistics about Elasticsearch distributions installed on selected nodes. |
-| `plugins` | `PluginStats[]` | Contains statistics about installed plugins and modules by selected nodes.
+| `packaging_types` | [`ClusterStatsNodePackagingType`](ClusterStatsNodePackagingType.md)[] | Contains statistics about Elasticsearch distributions installed on selected nodes. |
+| `plugins` | [`PluginStats`](PluginStats.md)[] | Contains statistics about installed plugins and modules by selected nodes.
 If no plugins or modules are installed, this array is empty. |
 | `process` | [`ClusterStatsClusterProcess`](ClusterStatsClusterProcess.md) | Contains statistics about processes used by selected nodes. |
-| `versions` | `VersionString[]` | Array of Elasticsearch versions used on selected nodes. |
+| `versions` | [`VersionString`](VersionString.md)[] | Array of Elasticsearch versions used on selected nodes. |
 
 ## See Also
 

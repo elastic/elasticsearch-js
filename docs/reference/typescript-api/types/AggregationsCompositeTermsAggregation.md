@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsCompositeAggregationBase`](AggregationsCompositeAggregationBase.md)
+
 ## See Also
 
 - [All Types](./)

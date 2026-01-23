@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `results` | `SearchApplicationSearchApplication[]` | - |
+| `count` | [`long`](long.md) | - |
+| `results` | [`SearchApplicationSearchApplication`](SearchApplicationSearchApplication.md)[] | - |
 
 ## See Also
 

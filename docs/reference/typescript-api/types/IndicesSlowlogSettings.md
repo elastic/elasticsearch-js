@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `level?` | `string` | - |
-| `source?` | `integer` | - |
+| `source?` | [`integer`](integer.md) | - |
 | `reformat?` | `boolean` | - |
 | `threshold?` | [`IndicesSlowlogTresholds`](IndicesSlowlogTresholds.md) | - |
 

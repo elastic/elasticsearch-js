@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MlDataframeEvaluationMetrics`](MlDataframeEvaluationMetrics.md)
+
 ### Properties
 
 | Property | Type | Description |

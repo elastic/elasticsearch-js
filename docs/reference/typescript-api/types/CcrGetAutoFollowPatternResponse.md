@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `patterns` | `CcrGetAutoFollowPatternAutoFollowPattern[]` | - |
+| `patterns` | [`CcrGetAutoFollowPatternAutoFollowPattern`](CcrGetAutoFollowPatternAutoFollowPattern.md)[] | - |
 
 ## See Also
 

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `calendars` | `MlGetCalendarsCalendar[]` | - |
-| `count` | `long` | - |
+| `calendars` | [`MlGetCalendarsCalendar`](MlGetCalendarsCalendar.md)[] | - |
+| `count` | [`long`](long.md) | - |
 
 ## See Also
 

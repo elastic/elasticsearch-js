@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingDocValuesPropertyBase`](MappingDocValuesPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -9,7 +13,7 @@
 | `type` | `'{dynamic_type}'` | - |
 | `enabled?` | `boolean` | - |
 | `null_value?` | [`FieldValue`](FieldValue.md) | - |
-| `boost?` | `double` | - |
+| `boost?` | [`double`](double.md) | - |
 | `coerce?` | `boolean` | - |
 | `script?` | `Script | ScriptSource` | - |
 | `on_script_error?` | [`MappingOnScriptError`](MappingOnScriptError.md) | - |
@@ -22,12 +26,12 @@
 | `index_phrases?` | `boolean` | - |
 | `index_prefixes?` | `MappingTextIndexPrefixes | null` | - |
 | `norms?` | `boolean` | - |
-| `position_increment_gap?` | `integer` | - |
+| `position_increment_gap?` | [`integer`](integer.md) | - |
 | `search_analyzer?` | `string` | - |
 | `search_quote_analyzer?` | `string` | - |
 | `term_vector?` | [`MappingTermVectorOption`](MappingTermVectorOption.md) | - |
 | `format?` | `string` | - |
-| `precision_step?` | `integer` | - |
+| `precision_step?` | [`integer`](integer.md) | - |
 | `locale?` | `string` | - |
 
 ## See Also

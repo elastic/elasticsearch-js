@@ -7,11 +7,11 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `description` | `string` | - |
-| `size_in_bytes` | `long` | - |
-| `min_size_in_bytes?` | `long` | - |
-| `max_size_in_bytes?` | `long` | - |
-| `average_size_in_bytes?` | `long` | - |
-| `count?` | `long` | - |
+| `size_in_bytes` | [`long`](long.md) | - |
+| `min_size_in_bytes?` | [`long`](long.md) | - |
+| `max_size_in_bytes?` | [`long`](long.md) | - |
+| `average_size_in_bytes?` | [`long`](long.md) | - |
+| `count?` | [`long`](long.md) | - |
 
 ## See Also
 

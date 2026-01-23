@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `number_of_pipelines` | `integer` | - |
+| `number_of_pipelines` | [`integer`](integer.md) | - |
 | `processor_stats` | `Record<string, ClusterStatsClusterProcessor>` | - |
 
 ## See Also

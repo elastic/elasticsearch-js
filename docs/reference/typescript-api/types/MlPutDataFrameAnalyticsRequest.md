@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -50,7 +54,7 @@ values to a single number. For example, in case of age ranges, you can
 model the values as `0-14 = 0`, `15-24 = 1`, `25-34 = 2`, and so on. |
 | `description?` | `string` | A description of the job. |
 | `dest` | [`MlDataframeAnalyticsDestination`](MlDataframeAnalyticsDestination.md) | The destination configuration. |
-| `max_num_threads?` | `integer` | The maximum number of threads to be used by the analysis. Using more
+| `max_num_threads?` | [`integer`](integer.md) | The maximum number of threads to be used by the analysis. Using more
 threads may decrease the time necessary to complete the analysis at the
 cost of using more CPU. Note that the process may use additional threads
 for operational functionality other than the analysis itself. |

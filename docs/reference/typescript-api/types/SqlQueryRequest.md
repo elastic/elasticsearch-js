@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -18,7 +22,7 @@ The API supports this parameter only for CBOR, JSON, SMILE, and YAML responses. 
 | `cursor?` | `string` | The cursor used to retrieve a set of paginated results.
 If you specify a cursor, the API only uses the `columnar` and `time_zone` request body parameters.
 It ignores other request body parameters. |
-| `fetch_size?` | `integer` | The maximum number of rows (or entries) to return in one response. |
+| `fetch_size?` | [`integer`](integer.md) | The maximum number of rows (or entries) to return in one response. |
 | `field_multi_value_leniency?` | `boolean` | If `false`, the API returns an exception when encountering multiple values for a field.
 If `true`, the API is lenient and returns the first value from the array with no guarantee of consistent results. |
 | `filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The Elasticsearch query DSL for additional filtering. |

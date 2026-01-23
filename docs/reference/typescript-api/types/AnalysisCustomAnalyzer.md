@@ -9,8 +9,8 @@
 | `type` | `'custom'` | - |
 | `char_filter?` | `string | string[]` | - |
 | `filter?` | `string | string[]` | - |
-| `position_increment_gap?` | `integer` | - |
-| `position_offset_gap?` | `integer` | - |
+| `position_increment_gap?` | [`integer`](integer.md) | - |
+| `position_offset_gap?` | [`integer`](integer.md) | - |
 | `tokenizer` | `string` | - |
 
 ## See Also

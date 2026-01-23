@@ -6,17 +6,9 @@
  */
 
 /**
- * Custom TypeScript AST-based Documentation Generator
+ * Comprehensive TypeScript Documentation Generator
  * 
- * This script parses TypeScript source files using the TypeScript compiler API
- * to generate precise, structured documentation that meets all requirements:
- * 
- * 1. Separate file per type in types/
- * 2. Only document actual APIs from src/api/index.ts (no private symbols)
- * 3. Don't document namespace classes, only their methods
- * 4. Document helpers in helpers.md
- * 5. Generate transport documentation
- * 6. Reference-focused structure
+ * Generates exhaustive API reference documentation by parsing TypeScript AST
  */
 
 const ts = require('typescript');
@@ -26,8 +18,8 @@ const path = require('path');
 const DOCS_DIR = path.join(__dirname, '../docs/reference/typescript-api');
 const SRC_DIR = path.join(__dirname, '../src');
 
-console.log('🔨 Custom TypeScript Documentation Generator');
-console.log('===========================================\n');
+console.log('🔨 Comprehensive TypeScript Documentation Generator');
+console.log('===================================================\n');
 
 // Clean and setup directories
 console.log('📁 Setting up documentation directories...');
@@ -38,171 +30,193 @@ fs.mkdirSync(DOCS_DIR, { recursive: true });
 fs.mkdirSync(path.join(DOCS_DIR, 'apis'), { recursive: true });
 fs.mkdirSync(path.join(DOCS_DIR, 'types'), { recursive: true });
 
-// Parse TypeScript files
 console.log('📚 Parsing TypeScript source files...\n');
 
+// Create program
 const program = ts.createProgram({
   rootNames: [
+    path.join(SRC_DIR, 'client.ts'),
     path.join(SRC_DIR, 'api/index.ts'),
     path.join(SRC_DIR, 'api/types.ts'),
-    path.join(SRC_DIR, 'client.ts'),
-    path.join(SRC_DIR, 'helpers.ts')
+    path.join(SRC_DIR, 'helpers.ts'),
+    path.join(__dirname, '../node_modules/@elastic/transport/index.d.ts')
   ],
   options: {
     target: ts.ScriptTarget.ES2019,
-    module: ts.ModuleKind.CommonJS
+    module: ts.ModuleKind.CommonJS,
+    moduleResolution: ts.ModuleResolutionKind.NodeJs,
+    skipLibCheck: true
   }
 });
 
 const checker = program.getTypeChecker();
+const allTypes = new Map();
 
-// Step 1: Extract API methods from src/api/index.ts
-const apiMethods = extractApiMethods();
-console.log(`✓ Found ${apiMethods.length} API methods`);
-
-// Step 2: Extract types from src/api/types.ts
-const types = extractTypes();
-console.log(`✓ Found ${types.length} types to document`);
-
-// Step 3: Generate documentation
-console.log('\n📝 Generating documentation files...\n');
-
-// Generate API documentation
-apiMethods.forEach(api => generateApiDoc(api));
-console.log(`✓ Generated ${apiMethods.length} API documentation files`);
-
-// Generate type documentation
-types.forEach(type => generateTypeDoc(type));
-console.log(`✓ Generated ${types.length} type documentation files`);
-
-// Generate helpers documentation
-generateHelpersDoc();
-console.log(`✓ Generated helpers documentation`);
-
-// Generate transport documentation
-generateTransportDoc();
-console.log(`✓ Generated transport documentation`);
-
-// Generate Client documentation
-generateClientDoc();
-console.log(`✓ Generated Client documentation`);
-
-// Generate main index
-generateIndexDoc(apiMethods);
-console.log(`✓ Generated index documentation`);
-
-// Generate README
-generateReadme();
-console.log(`✓ Generated README`);
-
-console.log('\n✨ Documentation generation complete!\n');
-console.log(`📍 Output: ${DOCS_DIR}\n`);
-
-/**
- * Extract API methods from src/api/index.ts
- */
-function extractApiMethods() {
-  const apis = [];
-  const sourceFile = program.getSourceFile(path.join(SRC_DIR, 'api/index.ts'));
+// Helper to get JSDoc comment
+function getJSDocComment(node) {
+  const docs = ts.getJSDocCommentsAndTags(node);
+  if (docs.length === 0) return '';
   
-  if (!sourceFile) {
-    console.error('Could not find api/index.ts');
-    return apis;
-  }
+  const parts = [];
+  docs.forEach(doc => {
+    if (ts.isJSDoc(doc) && doc.comment) {
+      if (typeof doc.comment === 'string') {
+        parts.push(doc.comment);
+      } else {
+        parts.push(doc.comment.map(c => c.text || '').join(''));
+      }
+    }
+  });
+  return parts.join('\n');
+}
 
-  // Find the API interface
-  ts.forEachChild(sourceFile, node => {
-    if (ts.isInterfaceDeclaration(node) && node.name.text === 'API') {
-      // Iterate through interface members
-      node.members.forEach(member => {
-        if (ts.isPropertySignature(member) && member.name) {
-          const name = member.name.getText(sourceFile);
-          
-          // Skip constructor
-          if (name === 'new') return;
-          
-          // Determine if it's a function or namespace class
-          const typeNode = member.type;
-          let isFunction = false;
-          let isNamespace = false;
-          
-          if (typeNode) {
-            const typeText = typeNode.getText(sourceFile);
-            isFunction = typeText.includes('typeof') && typeText.includes('Api');
-            isNamespace = !isFunction && (typeText.endsWith('Api') || typeText.includes('Api'));
+// Helper to get parameter docs
+function getParamDocs(node) {
+  const paramDocs = {};
+  const docs = ts.getJSDocCommentsAndTags(node);
+  
+  docs.forEach(doc => {
+    if (ts.isJSDoc(doc) && doc.tags) {
+      doc.tags.forEach(tag => {
+        if (tag.tagName.text === 'param' && tag.name) {
+          const paramName = tag.name.getText();
+          const comment = tag.comment;
+          if (comment) {
+            paramDocs[paramName] = typeof comment === 'string' 
+              ? comment 
+              : comment.map(c => c.text || '').join('');
           }
-          
-          // Get JSDoc comment
-          const jsDoc = ts.getJSDocCommentsAndTags(member);
-          let comment = '';
-          if (jsDoc.length > 0) {
-            const firstDoc = jsDoc[0];
-            if (ts.isJSDoc(firstDoc) && firstDoc.comment) {
-              comment = typeof firstDoc.comment === 'string' 
-                ? firstDoc.comment 
-                : firstDoc.comment.map(c => c.text).join('');
-            }
-          }
-          
-          apis.push({
-            name,
-            isFunction,
-            isNamespace,
-            comment
-          });
         }
       });
     }
   });
-  
-  return apis;
+  return paramDocs;
 }
 
-/**
- * Extract types from src/api/types.ts
- */
-function extractTypes() {
-  const types = [];
-  const sourceFile = program.getSourceFile(path.join(SRC_DIR, 'api/types.ts'));
-  
-  if (!sourceFile) {
-    console.error('Could not find api/types.ts');
-    return types;
-  }
+// Extract APIs
+const apis = [];
+const apiDir = path.join(SRC_DIR, 'api/api');
 
-  ts.forEachChild(sourceFile, node => {
-    // Extract interfaces
-    if (ts.isInterfaceDeclaration(node) && node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
-      const name = node.name.text;
-      const jsDoc = ts.getJSDocCommentsAndTags(node);
-      let comment = '';
-      
-      if (jsDoc.length > 0) {
-        const firstDoc = jsDoc[0];
-        if (ts.isJSDoc(firstDoc) && firstDoc.comment) {
-          comment = typeof firstDoc.comment === 'string' 
-            ? firstDoc.comment 
-            : firstDoc.comment.map(c => c.text).join('');
-        }
+if (fs.existsSync(apiDir)) {
+  const files = fs.readdirSync(apiDir).filter(f => f.endsWith('.ts'));
+  
+  files.forEach(file => {
+    const filePath = path.join(apiDir, file);
+    const sourceFile = program.getSourceFile(filePath);
+    if (!sourceFile) return;
+    
+    const apiName = file.replace('.ts', '');
+    
+    ts.forEachChild(sourceFile, node => {
+      if (ts.isClassDeclaration(node) && node.name) {
+        const className = node.name.text;
+        const methods = [];
+        
+        node.members.forEach(member => {
+          if (ts.isMethodDeclaration(member) && member.name) {
+            const methodName = member.name.getText(sourceFile);
+            if (methodName === 'constructor') return;
+            
+            const comment = getJSDocComment(member);
+            const paramDocs = getParamDocs(member);
+            const params = [];
+            
+            member.parameters.forEach(param => {
+              if (!param.name) return;
+              const paramName = param.name.getText(sourceFile);
+              const paramType = param.type ? param.type.getText(sourceFile) : 'any';
+              const optional = param.questionToken ? true : false;
+              
+              params.push({
+                name: paramName,
+                type: paramType,
+                optional,
+                description: paramDocs[paramName] || ''
+              });
+            });
+            
+            const returnType = member.type ? member.type.getText(sourceFile) : 'any';
+            
+            methods.push({
+              name: methodName,
+              comment,
+              params,
+              returnType
+            });
+          }
+        });
+        
+        apis.push({
+          name: apiName,
+          isNamespace: true,
+          className,
+          methods,
+          comment: getJSDocComment(node)
+        });
       }
       
+      if (ts.isFunctionDeclaration(node) && node.name) {
+        const comment = getJSDocComment(node);
+        const paramDocs = getParamDocs(node);
+        const params = [];
+        
+        node.parameters.forEach(param => {
+          if (!param.name) return;
+          const paramName = param.name.getText(sourceFile);
+          const paramType = param.type ? param.type.getText(sourceFile) : 'any';
+          const optional = param.questionToken ? true : false;
+          
+          params.push({
+            name: paramName,
+            type: paramType,
+            optional,
+            description: paramDocs[paramName] || ''
+          });
+        });
+        
+        const returnType = node.type ? node.type.getText(sourceFile) : 'any';
+        
+        apis.push({
+          name: apiName,
+          isNamespace: false,
+          comment,
+          params,
+          returnType
+        });
+      }
+    });
+  });
+}
+
+console.log(`✓ Found ${apis.length} API namespaces/methods`);
+
+// Extract types
+const types = [];
+const sourceFile = program.getSourceFile(path.join(SRC_DIR, 'api/types.ts'));
+
+if (sourceFile) {
+  ts.forEachChild(sourceFile, node => {
+    if (ts.isInterfaceDeclaration(node) && 
+        node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
+      const name = node.name.text;
+      const comment = getJSDocComment(node);
       const properties = [];
+      const extendsTypes = [];
+      
+      if (node.heritageClauses) {
+        node.heritageClauses.forEach(clause => {
+          clause.types.forEach(type => {
+            extendsTypes.push(type.expression.getText(sourceFile));
+          });
+        });
+      }
+      
       node.members.forEach(member => {
         if (ts.isPropertySignature(member) && member.name) {
           const propName = member.name.getText(sourceFile);
           const propType = member.type ? member.type.getText(sourceFile) : 'any';
           const optional = member.questionToken ? true : false;
-          
-          const propJsDoc = ts.getJSDocCommentsAndTags(member);
-          let propComment = '';
-          if (propJsDoc.length > 0) {
-            const firstPropDoc = propJsDoc[0];
-            if (ts.isJSDoc(firstPropDoc) && firstPropDoc.comment) {
-              propComment = typeof firstPropDoc.comment === 'string' 
-                ? firstPropDoc.comment 
-                : firstPropDoc.comment.map(c => c.text).join('');
-            }
-          }
+          const propComment = getJSDocComment(member);
           
           properties.push({
             name: propName,
@@ -217,84 +231,311 @@ function extractTypes() {
         kind: 'interface',
         name,
         comment,
-        properties
+        properties,
+        extends: extendsTypes
       });
+      
+      allTypes.set(name, { kind: 'interface' });
     }
     
-    // Extract type aliases
-    if (ts.isTypeAliasDeclaration(node) && node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
+    if (ts.isTypeAliasDeclaration(node) && 
+        node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
       const name = node.name.text;
+      const comment = getJSDocComment(node);
       const typeText = node.type.getText(sourceFile);
-      
-      const jsDoc = ts.getJSDocCommentsAndTags(node);
-      let comment = '';
-      
-      if (jsDoc.length > 0) {
-        const firstDoc = jsDoc[0];
-        if (ts.isJSDoc(firstDoc) && firstDoc.comment) {
-          comment = typeof firstDoc.comment === 'string' 
-            ? firstDoc.comment 
-            : firstDoc.comment.map(c => c.text).join('');
-        }
-      }
       
       types.push({
         kind: 'type',
         name,
         comment,
-        typeDefinition: typeText
+        definition: typeText
+      });
+      
+      allTypes.set(name, { kind: 'type' });
+    }
+    
+    if (ts.isEnumDeclaration(node) && 
+        node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
+      const name = node.name.text;
+      const comment = getJSDocComment(node);
+      const members = [];
+      
+      node.members.forEach(member => {
+        if (member.name) {
+          const memberName = member.name.getText(sourceFile);
+          const memberValue = member.initializer ? member.initializer.getText(sourceFile) : undefined;
+          members.push({ name: memberName, value: memberValue });
+        }
+      });
+      
+      types.push({
+        kind: 'enum',
+        name,
+        comment,
+        members
+      });
+      
+      allTypes.set(name, { kind: 'enum' });
+    }
+  });
+}
+
+console.log(`✓ Found ${types.length} types`);
+
+// Extract helpers
+const helpers = { functions: [] };
+const helpersFile = program.getSourceFile(path.join(SRC_DIR, 'helpers.ts'));
+
+if (helpersFile) {
+  ts.forEachChild(helpersFile, node => {
+    if (ts.isClassDeclaration(node) && node.name && node.name.text === 'Helpers') {
+      node.members.forEach(member => {
+        if (ts.isMethodDeclaration(member) && member.name) {
+          const methodName = member.name.getText(helpersFile);
+          if (methodName === 'constructor') return;
+          
+          const comment = getJSDocComment(member);
+          const paramDocs = getParamDocs(member);
+          const params = [];
+          
+          member.parameters.forEach(param => {
+            if (!param.name) return;
+            const paramName = param.name.getText(helpersFile);
+            const paramType = param.type ? param.type.getText(helpersFile) : 'any';
+            const optional = param.questionToken ? true : false;
+            
+            params.push({
+              name: paramName,
+              type: paramType,
+              optional,
+              description: paramDocs[paramName] || ''
+            });
+          });
+          
+          const returnType = member.type ? member.type.getText(helpersFile) : 'any';
+          
+          helpers.functions.push({
+            name: methodName,
+            comment,
+            params,
+            returnType
+          });
+        }
       });
     }
   });
-  
-  return types;
 }
 
-/**
- * Generate API documentation file
- */
-function generateApiDoc(api) {
-  const fileName = `${api.name}.md`;
-  const filePath = path.join(DOCS_DIR, 'apis', fileName);
-  
-  let content = `# Client.${api.name}\n\n`;
-  
-  if (api.comment) {
-    content += `${api.comment}\n\n`;
+console.log(`✓ Found ${helpers.functions.length} helper functions`);
+
+// Extract Client info
+const clientInfo = { options: [], comment: '' };
+const clientFile = program.getSourceFile(path.join(SRC_DIR, 'client.ts'));
+
+if (clientFile) {
+  ts.forEachChild(clientFile, node => {
+    if (ts.isInterfaceDeclaration(node) && node.name.text === 'ClientOptions') {
+      clientInfo.comment = getJSDocComment(node);
+      
+      node.members.forEach(member => {
+        if (ts.isPropertySignature(member) && member.name) {
+          const propName = member.name.getText(clientFile);
+          const propType = member.type ? member.type.getText(clientFile) : 'any';
+          const optional = member.questionToken ? true : false;
+          const propComment = getJSDocComment(member);
+          
+          clientInfo.options.push({
+            name: propName,
+            type: propType,
+            optional,
+            comment: propComment
+          });
+        }
+      });
+    }
+  });
+}
+
+console.log(`✓ Extracted Client documentation`);
+
+// Extract transport info
+const transportInfo = { classes: [], interfaces: [] };
+const transportFile = path.join(__dirname, '../node_modules/@elastic/transport/index.d.ts');
+const transportSource = program.getSourceFile(transportFile);
+
+if (transportSource) {
+  ts.forEachChild(transportSource, node => {
+    if (ts.isClassDeclaration(node) && node.name && 
+        node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
+      const className = node.name.text;
+      const comment = getJSDocComment(node);
+      const methods = [];
+      const properties = [];
+      
+      node.members.forEach(member => {
+        if (ts.isMethodDeclaration(member) && member.name) {
+          const methodName = member.name.getText(transportSource);
+          const methodComment = getJSDocComment(member);
+          methods.push({ name: methodName, comment: methodComment });
+        }
+        
+        if (ts.isPropertyDeclaration(member) && member.name) {
+          const propName = member.name.getText(transportSource);
+          const propType = member.type ? member.type.getText(transportSource) : 'any';
+          const propComment = getJSDocComment(member);
+          properties.push({ name: propName, type: propType, comment: propComment });
+        }
+      });
+      
+      transportInfo.classes.push({
+        name: className,
+        comment,
+        methods,
+        properties
+      });
+    }
+    
+    if (ts.isInterfaceDeclaration(node) && node.name && 
+        node.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) {
+      const name = node.name.text;
+      const comment = getJSDocComment(node);
+      const properties = [];
+      
+      node.members.forEach(member => {
+        if (ts.isPropertySignature(member) && member.name) {
+          const propName = member.name.getText(transportSource);
+          const propType = member.type ? member.type.getText(transportSource) : 'any';
+          const propComment = getJSDocComment(member);
+          properties.push({ name: propName, type: propType, comment: propComment });
+        }
+      });
+      
+      transportInfo.interfaces.push({
+        name,
+        comment,
+        properties
+      });
+    }
+  });
+}
+
+console.log(`✓ Extracted Transport documentation`);
+
+// Helper to check if type is primitive
+function isPrimitive(type) {
+  const primitives = ['string', 'number', 'boolean', 'any', 'void', 'null', 'undefined', 
+                      'unknown', 'never', 'object', 'symbol', 'bigint'];
+  return primitives.includes(type.toLowerCase());
+}
+
+// Helper to convert type to link
+function typeToLink(typeStr) {
+  if (typeStr.endsWith('[]')) {
+    const baseType = typeStr.slice(0, -2);
+    if (!isPrimitive(baseType) && allTypes.has(baseType)) {
+      return `[\`${baseType}\`](${baseType}.md)[]`;
+    }
   }
   
-  if (api.isFunction) {
-    content += `## API Method\n\n`;
+  if (!isPrimitive(typeStr) && allTypes.has(typeStr)) {
+    return `[\`${typeStr}\`](${typeStr}.md)`;
+  }
+  
+  const genericMatch = typeStr.match(/^(\w+)</);
+  if (genericMatch && !isPrimitive(genericMatch[1]) && allTypes.has(genericMatch[1])) {
+    return typeStr.replace(genericMatch[1], `[\`${genericMatch[1]}\`](${genericMatch[1]}.md)`);
+  }
+  
+  return `\`${typeStr}\``;
+}
+
+// Generate API docs
+console.log('\n📝 Generating documentation files...\n');
+
+apis.forEach(api => {
+  if (api.isNamespace && api.methods) {
+    api.methods.forEach(method => {
+      const fileName = `${api.name}.${method.name}.md`;
+      const filePath = path.join(DOCS_DIR, 'apis', fileName);
+      
+      let content = `# Client.${api.name}.${method.name}\n\n`;
+      
+      if (method.comment) {
+        content += `${method.comment}\n\n`;
+      }
+      
+      content += `## Method Signature\n\n`;
+      content += `\`\`\`typescript\n`;
+      content += `client.${api.name}.${method.name}(`;
+      content += method.params.map(p => `${p.name}${p.optional ? '?' : ''}: ${p.type}`).join(', ');
+      content += `): ${method.returnType}\n`;
+      content += `\`\`\`\n\n`;
+      
+      if (method.params.length > 0) {
+        content += `### Parameters\n\n`;
+        content += `| Parameter | Type | Description |\n`;
+        content += `|-----------|------|-------------|\n`;
+        method.params.forEach(param => {
+          const typeLink = typeToLink(param.type);
+          content += `| \`${param.name}${param.optional ? '?' : ''}\` | ${typeLink} | ${param.description || '-'} |\n`;
+        });
+        content += `\n`;
+      }
+      
+      content += `### Returns\n\n`;
+      content += `${typeToLink(method.returnType)}\n\n`;
+      
+      content += `## See Also\n\n`;
+      content += `- [Client](../client.md)\n`;
+      content += `- [All APIs](../index.md)\n`;
+      
+      fs.writeFileSync(filePath, content);
+    });
+  } else {
+    const fileName = `${api.name}.md`;
+    const filePath = path.join(DOCS_DIR, 'apis', fileName);
+    
+    let content = `# Client.${api.name}\n\n`;
+    
+    if (api.comment) {
+      content += `${api.comment}\n\n`;
+    }
+    
+    content += `## Method Signature\n\n`;
     content += `\`\`\`typescript\n`;
-    content += `client.${api.name}(params?: ${capitalize(api.name)}Request): Promise<${capitalize(api.name)}Response>\n`;
+    content += `client.${api.name}(`;
+    if (api.params) {
+      content += api.params.map(p => `${p.name}${p.optional ? '?' : ''}: ${p.type}`).join(', ');
+    }
+    content += `): ${api.returnType || 'Promise<any>'}\n`;
     content += `\`\`\`\n\n`;
     
-    content += `### Parameters\n\n`;
-    content += `- [\`${capitalize(api.name)}Request\`](../types/${capitalize(api.name)}Request.md) - Request parameters\n\n`;
+    if (api.params && api.params.length > 0) {
+      content += `### Parameters\n\n`;
+      content += `| Parameter | Type | Description |\n`;
+      content += `|-----------|------|-------------|\n`;
+      api.params.forEach(param => {
+        const typeLink = typeToLink(param.type);
+        content += `| \`${param.name}${param.optional ? '?' : ''}\` | ${typeLink} | ${param.description || '-'} |\n`;
+      });
+      content += `\n`;
+    }
     
     content += `### Returns\n\n`;
-    content += `- [\`${capitalize(api.name)}Response\`](../types/${capitalize(api.name)}Response.md) - Response data\n\n`;
-  } else if (api.isNamespace) {
-    content += `## API Namespace\n\n`;
-    content += `This namespace contains related API methods. Access methods via:\n\n`;
-    content += `\`\`\`typescript\n`;
-    content += `client.${api.name}.methodName(params)\n`;
-    content += `\`\`\`\n\n`;
-    content += `See the [Client documentation](../client.md) for available methods in this namespace.\n\n`;
+    content += `${typeToLink(api.returnType || 'any')}\n\n`;
+    
+    content += `## See Also\n\n`;
+    content += `- [Client](../client.md)\n`;
+    content += `- [All APIs](../index.md)\n`;
+    
+    fs.writeFileSync(filePath, content);
   }
-  
-  content += `## See Also\n\n`;
-  content += `- [Client](../client.md)\n`;
-  content += `- [All APIs](../index.md)\n`;
-  content += `- [Type Definitions](../types/)\n`;
-  
-  fs.writeFileSync(filePath, content);
-}
+});
 
-/**
- * Generate type documentation file
- */
-function generateTypeDoc(type) {
+console.log(`✓ Generated API documentation`);
+
+// Generate type docs
+types.forEach(type => {
   const fileName = `${type.name}.md`;
   const filePath = path.join(DOCS_DIR, 'types', fileName);
   
@@ -307,25 +548,42 @@ function generateTypeDoc(type) {
   if (type.kind === 'interface') {
     content += `## Interface\n\n`;
     
+    if (type.extends && type.extends.length > 0) {
+      content += `### Extends\n\n`;
+      type.extends.forEach(ext => {
+        content += `- ${typeToLink(ext)}\n`;
+      });
+      content += `\n`;
+    }
+    
     if (type.properties && type.properties.length > 0) {
       content += `### Properties\n\n`;
       content += `| Property | Type | Description |\n`;
       content += `|----------|------|-------------|\n`;
       
       type.properties.forEach(prop => {
-        const optional = prop.optional ? '?' : '';
-        const typeLink = makeTypeLink(prop.type);
+        const typeLink = typeToLink(prop.type);
         const desc = prop.comment || '-';
-        content += `| \`${prop.name}${optional}\` | ${typeLink} | ${desc} |\n`;
+        content += `| \`${prop.name}${prop.optional ? '?' : ''}\` | ${typeLink} | ${desc} |\n`;
       });
-      
       content += `\n`;
     }
   } else if (type.kind === 'type') {
     content += `## Type Alias\n\n`;
     content += `\`\`\`typescript\n`;
-    content += `type ${type.name} = ${type.typeDefinition}\n`;
+    content += `type ${type.name} = ${type.definition}\n`;
     content += `\`\`\`\n\n`;
+  } else if (type.kind === 'enum') {
+    content += `## Enum\n\n`;
+    if (type.members && type.members.length > 0) {
+      content += `### Members\n\n`;
+      content += `| Member | Value |\n`;
+      content += `|--------|-------|\n`;
+      type.members.forEach(member => {
+        content += `| \`${member.name}\` | ${member.value || '-'} |\n`;
+      });
+      content += `\n`;
+    }
   }
   
   content += `## See Also\n\n`;
@@ -333,254 +591,201 @@ function generateTypeDoc(type) {
   content += `- [API Methods](../index.md)\n`;
   
   fs.writeFileSync(filePath, content);
+});
+
+console.log(`✓ Generated type documentation`);
+
+// Generate helpers doc
+const helpersPath = path.join(DOCS_DIR, 'helpers.md');
+let helpersContent = `# Client.helpers\n\n`;
+helpersContent += `The \`Client.helpers\` namespace provides utility methods for common operations.\n\n`;
+
+if (helpers.functions.length > 0) {
+  helpers.functions.forEach(func => {
+    helpersContent += `## ${func.name}\n\n`;
+    
+    if (func.comment) {
+      helpersContent += `${func.comment}\n\n`;
+    }
+    
+    helpersContent += `### Signature\n\n`;
+    helpersContent += `\`\`\`typescript\n`;
+    helpersContent += `client.helpers.${func.name}(`;
+    helpersContent += func.params.map(p => `${p.name}${p.optional ? '?' : ''}: ${p.type}`).join(', ');
+    helpersContent += `): ${func.returnType}\n`;
+    helpersContent += `\`\`\`\n\n`;
+    
+    if (func.params.length > 0) {
+      helpersContent += `### Parameters\n\n`;
+      helpersContent += `| Parameter | Type | Description |\n`;
+      helpersContent += `|-----------|------|-------------|\n`;
+      func.params.forEach(param => {
+        helpersContent += `| \`${param.name}${param.optional ? '?' : ''}\` | \`${param.type}\` | ${param.description || '-'} |\n`;
+      });
+      helpersContent += `\n`;
+    }
+  });
 }
 
-/**
- * Generate helpers documentation
- */
-function generateHelpersDoc() {
-  const filePath = path.join(DOCS_DIR, 'helpers.md');
+helpersContent += `## See Also\n\n`;
+helpersContent += `- [Client](./client.md)\n`;
+
+fs.writeFileSync(helpersPath, helpersContent);
+console.log(`✓ Generated helpers documentation`);
+
+// Generate Client doc
+const clientPath = path.join(DOCS_DIR, 'client.md');
+let clientContent = `# Client\n\n`;
+clientContent += `The main Elasticsearch client class.\n\n`;
+
+clientContent += `## Constructor\n\n`;
+clientContent += `\`\`\`typescript\n`;
+clientContent += `import { Client } from '@elastic/elasticsearch';\n\n`;
+clientContent += `const client = new Client(options: ClientOptions);\n`;
+clientContent += `\`\`\`\n\n`;
+
+if (clientInfo.options.length > 0) {
+  clientContent += `### ClientOptions\n\n`;
+  clientContent += `| Option | Type | Description |\n`;
+  clientContent += `|--------|------|-------------|\n`;
   
-  let content = `# Client.helpers\n\n`;
-  content += `The \`Client.helpers\` namespace provides utility methods for common operations.\n\n`;
-  
-  content += `## Available Helpers\n\n`;
-  content += `### bulk\n\n`;
-  content += `Bulk indexing helper for efficiently indexing large amounts of data.\n\n`;
-  content += `\`\`\`typescript\n`;
-  content += `const result = await client.helpers.bulk({\n`;
-  content += `  datasource: documents,\n`;
-  content += `  onDocument: (doc) => ({ index: { _index: 'my-index' } }),\n`;
-  content += `  onDrop: (doc) => console.log('Dropped:', doc)\n`;
-  content += `});\n`;
-  content += `\`\`\`\n\n`;
-  
-  content += `### search\n\n`;
-  content += `Search helper with advanced options.\n\n`;
-  
-  content += `### scrollSearch\n\n`;
-  content += `Scroll search helper for retrieving large result sets.\n\n`;
-  
-  content += `### scrollDocuments\n\n`;
-  content += `Scroll documents helper for iterating through all documents.\n\n`;
-  
-  content += `## See Also\n\n`;
-  content += `- [Client](./client.md)\n`;
-  content += `- [Helper Documentation](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)\n`;
-  
-  fs.writeFileSync(filePath, content);
+  clientInfo.options.forEach(opt => {
+    const typeLink = opt.name === 'Transport' ? '[`Transport`](./transport.md)' : typeToLink(opt.type);
+    clientContent += `| \`${opt.name}${opt.optional ? '?' : ''}\` | ${typeLink} | ${opt.comment || '-'} |\n`;
+  });
+  clientContent += `\n`;
 }
 
-/**
- * Generate transport documentation
- */
-function generateTransportDoc() {
-  const filePath = path.join(DOCS_DIR, 'transport.md');
+clientContent += `## See Also\n\n`;
+clientContent += `- [API Methods](./index.md)\n`;
+clientContent += `- [Helpers](./helpers.md)\n`;
+
+fs.writeFileSync(clientPath, clientContent);
+console.log(`✓ Generated Client documentation`);
+
+// Generate Transport doc
+const transportPath = path.join(DOCS_DIR, 'transport.md');
+let transportContent = `# Transport Layer\n\n`;
+transportContent += `The Elasticsearch JavaScript client is built on [@elastic/transport](https://github.com/elastic/elastic-transport-js).\n\n`;
+
+if (transportInfo.classes.length > 0) {
+  transportContent += `## Classes\n\n`;
   
-  let content = `# Transport\n\n`;
-  content += `The Elasticsearch JavaScript client is built on [@elastic/transport](https://github.com/elastic/elastic-transport-js).\n\n`;
-  
-  content += `## Overview\n\n`;
-  content += `The transport layer handles:\n\n`;
-  content += `- HTTP/HTTPS connections\n`;
-  content += `- Connection pooling and management\n`;
-  content += `- Request/response serialization\n`;
-  content += `- Retry logic\n`;
-  content += `- Node discovery and sniffing\n\n`;
-  
-  content += `## Key Classes\n\n`;
-  content += `### Transport\n\n`;
-  content += `Main transport class that manages connections and request handling.\n\n`;
-  
-  content += `### Connection\n\n`;
-  content += `Base connection class. Specific implementations:\n\n`;
-  content += `- \`UndiciConnection\` - Default connection using undici\n`;
-  content += `- \`HttpConnection\` - HTTP-based connection\n\n`;
-  
-  content += `### ConnectionPool\n\n`;
-  content += `Manages a pool of connections. Implementations:\n\n`;
-  content += `- \`CloudConnectionPool\` - For Elastic Cloud connections\n`;
-  content += `- \`WeightedConnectionPool\` - Default connection pool\n\n`;
-  
-  content += `### Serializer\n\n`;
-  content += `Handles serialization and deserialization of requests and responses.\n\n`;
-  
-  content += `## Configuration\n\n`;
-  content += `Transport options can be configured when creating the client:\n\n`;
-  content += `\`\`\`typescript\n`;
-  content += `const client = new Client({\n`;
-  content += `  node: 'http://localhost:9200',\n`;
-  content += `  maxRetries: 3,\n`;
-  content += `  requestTimeout: 30000,\n`;
-  content += `  sniffOnStart: true\n`;
-  content += `});\n`;
-  content += `\`\`\`\n\n`;
-  
-  content += `## See Also\n\n`;
-  content += `- [Client](./client.md)\n`;
-  content += `- [@elastic/transport Documentation](https://github.com/elastic/elastic-transport-js)\n`;
-  
-  fs.writeFileSync(filePath, content);
+  transportInfo.classes.forEach(cls => {
+    transportContent += `### ${cls.name}\n\n`;
+    
+    if (cls.comment) {
+      transportContent += `${cls.comment}\n\n`;
+    }
+    
+    if (cls.properties.length > 0) {
+      transportContent += `#### Properties\n\n`;
+      transportContent += `| Property | Type | Description |\n`;
+      transportContent += `|----------|------|-------------|\n`;
+      cls.properties.forEach(prop => {
+        transportContent += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.comment || '-'} |\n`;
+      });
+      transportContent += `\n`;
+    }
+    
+    if (cls.methods.length > 0) {
+      transportContent += `#### Methods\n\n`;
+      cls.methods.forEach(method => {
+        transportContent += `- \`${method.name}()\``;
+        if (method.comment) {
+          transportContent += ` - ${method.comment}`;
+        }
+        transportContent += `\n`;
+      });
+      transportContent += `\n`;
+    }
+  });
 }
 
-/**
- * Generate Client documentation
- */
-function generateClientDoc() {
-  const filePath = path.join(DOCS_DIR, 'client.md');
+if (transportInfo.interfaces.length > 0) {
+  transportContent += `## Interfaces\n\n`;
   
-  let content = `# Client\n\n`;
-  content += `The main Elasticsearch client class.\n\n`;
-  
-  content += `## Constructor\n\n`;
-  content += `\`\`\`typescript\n`;
-  content += `import { Client } from '@elastic/elasticsearch';\n\n`;
-  content += `const client = new Client(options: ClientOptions);\n`;
-  content += `\`\`\`\n\n`;
-  
-  content += `### Client Options\n\n`;
-  content += `| Option | Type | Description |\n`;
-  content += `|--------|------|-------------|\n`;
-  content += `| \`node\` | \`string \\| string[]\` | Elasticsearch node URL(s) |\n`;
-  content += `| \`nodes\` | \`string \\| string[]\` | Alias for \`node\` |\n`;
-  content += `| \`cloud\` | \`object\` | Elastic Cloud configuration |\n`;
-  content += `| \`auth\` | \`object\` | Authentication options |\n`;
-  content += `| \`maxRetries\` | \`number\` | Maximum number of retries (default: 3) |\n`;
-  content += `| \`requestTimeout\` | \`number\` | Request timeout in milliseconds |\n`;
-  content += `| \`sniffOnStart\` | \`boolean\` | Sniff for nodes on start |\n`;
-  content += `| \`sniffInterval\` | \`number\` | Interval for sniffing (ms) |\n\n`;
-  
-  content += `## API Methods\n\n`;
-  content += `All Elasticsearch API methods are available on the client instance. See:\n\n`;
-  content += `- [All API Methods](./index.md#api-methods)\n`;
-  content += `- [Individual API Documentation](./apis/)\n\n`;
-  
-  content += `## Helpers\n\n`;
-  content += `- [\`client.helpers\`](./helpers.md) - Helper utilities\n\n`;
-  
-  content += `## Transport\n\n`;
-  content += `- [\`client.transport\`](./transport.md) - Transport layer\n\n`;
-  
-  content += `## See Also\n\n`;
-  content += `- [API Reference](./index.md)\n`;
-  content += `- [Getting Started Guide](../getting-started.md)\n`;
-  
-  fs.writeFileSync(filePath, content);
+  transportInfo.interfaces.forEach(iface => {
+    transportContent += `### ${iface.name}\n\n`;
+    
+    if (iface.comment) {
+      transportContent += `${iface.comment}\n\n`;
+    }
+    
+    if (iface.properties.length > 0) {
+      transportContent += `#### Properties\n\n`;
+      transportContent += `| Property | Type | Description |\n`;
+      transportContent += `|----------|------|-------------|\n`;
+      iface.properties.forEach(prop => {
+        transportContent += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.comment || '-'} |\n`;
+      });
+      transportContent += `\n`;
+    }
+  });
 }
 
-/**
- * Generate index documentation
- */
-function generateIndexDoc(apiMethods) {
-  const filePath = path.join(DOCS_DIR, 'index.md');
-  
-  let content = `# Elasticsearch JavaScript Client - API Reference\n\n`;
-  content += `Complete TypeScript API reference for the Elasticsearch JavaScript client.\n\n`;
-  
-  content += `## Quick Navigation\n\n`;
-  content += `- [Client](#client)\n`;
-  content += `- [API Methods](#api-methods)\n`;
-  content += `- [Type Definitions](#type-definitions)\n`;
-  content += `- [Helpers](#helpers)\n`;
-  content += `- [Transport](#transport)\n\n`;
-  
-  content += `## Client\n\n`;
-  content += `- [Client](./client.md) - Main client class and options\n\n`;
-  
-  content += `## API Methods\n\n`;
-  
-  const functions = apiMethods.filter(m => m.isFunction);
-  const namespaces = apiMethods.filter(m => m.isNamespace);
-  
-  if (functions.length > 0) {
-    content += `### Core API Methods\n\n`;
-    functions.forEach(method => {
-      content += `- [\`client.${method.name}()\`](apis/${method.name}.md)`;
-      if (method.comment) {
-        const shortComment = method.comment.split('.')[0];
-        content += ` - ${shortComment}`;
-      }
-      content += `\n`;
+transportContent += `## See Also\n\n`;
+transportContent += `- [Client](./client.md)\n`;
+transportContent += `- [@elastic/transport Documentation](https://github.com/elastic/elastic-transport-js)\n`;
+
+fs.writeFileSync(transportPath, transportContent);
+console.log(`✓ Generated Transport documentation`);
+
+// Generate index doc
+const indexPath = path.join(DOCS_DIR, 'index.md');
+let indexContent = `# Elasticsearch JavaScript Client - API Reference\n\n`;
+indexContent += `Complete TypeScript API reference for the Elasticsearch JavaScript client.\n\n`;
+
+indexContent += `## Navigation\n\n`;
+indexContent += `- [Client](./client.md)\n`;
+indexContent += `- [API Methods](#api-methods)\n`;
+indexContent += `- [Type Definitions](./types/)\n`;
+indexContent += `- [Helpers](./helpers.md)\n`;
+indexContent += `- [Transport](./transport.md)\n\n`;
+
+indexContent += `## API Methods\n\n`;
+
+const allMethods = [];
+apis.forEach(api => {
+  if (api.isNamespace && api.methods) {
+    api.methods.forEach(method => {
+      allMethods.push({
+        name: `${api.name}.${method.name}`,
+        file: `${api.name}.${method.name}.md`
+      });
     });
-    content += `\n`;
-  }
-  
-  if (namespaces.length > 0) {
-    content += `### Namespaced APIs\n\n`;
-    namespaces.forEach(ns => {
-      content += `- [\`client.${ns.name}\`](apis/${ns.name}.md) - ${capitalize(ns.name)} operations\n`;
+  } else {
+    allMethods.push({
+      name: api.name,
+      file: `${api.name}.md`
     });
-    content += `\n`;
   }
-  
-  content += `## Type Definitions\n\n`;
-  content += `TypeScript type definitions for all requests and responses:\n\n`;
-  content += `- [Browse All Types](types/)\n\n`;
-  
-  content += `Each API method has corresponding request and response types documented individually.\n\n`;
-  
-  content += `## Helpers\n\n`;
-  content += `- [Client Helpers](helpers.md) - Utility functions for common operations\n\n`;
-  
-  content += `## Transport\n\n`;
-  content += `- [Transport Layer](transport.md) - Low-level transport documentation\n\n`;
-  
-  fs.writeFileSync(filePath, content);
-}
+});
 
-/**
- * Generate README
- */
-function generateReadme() {
-  const filePath = path.join(DOCS_DIR, 'README.md');
-  
-  let content = `# TypeScript API Reference\n\n`;
-  content += `Complete TypeScript API reference for the Elasticsearch JavaScript client.\n\n`;
-  
-  content += `## Documentation Structure\n\n`;
-  content += `- **[index.md](./index.md)** - Main API reference index\n`;
-  content += `- **[client.md](./client.md)** - Client class documentation\n`;
-  content += `- **[apis/](./apis/)** - Individual API method documentation\n`;
-  content += `- **[types/](./types/)** - TypeScript type definitions\n`;
-  content += `- **[helpers.md](./helpers.md)** - Helper utilities\n`;
-  content += `- **[transport.md](./transport.md)** - Transport layer\n\n`;
-  
-  content += `## Key Features\n\n`;
-  content += `- **Comprehensive**: Every API method and type documented\n`;
-  content += `- **Organized**: Separate file per API and type for easy navigation\n`;
-  content += `- **Cross-referenced**: Links between related APIs and types\n`;
-  content += `- **TypeScript-first**: Generated from TypeScript source code\n\n`;
-  
-  content += `## Getting Started\n\n`;
-  content += `For getting started guides, tutorials, and examples, see the [main documentation](../../).\n\n`;
-  
-  content += `This reference documentation is focused on exhaustively documenting every API method and type.\n\n`;
-  
-  content += `## Regenerating Documentation\n\n`;
-  content += `To regenerate this documentation:\n\n`;
-  content += `\`\`\`bash\n`;
-  content += `npm run docs:generate\n`;
-  content += `\`\`\`\n`;
-  
-  fs.writeFileSync(filePath, content);
-}
+allMethods.sort((a, b) => a.name.localeCompare(b.name));
 
-/**
- * Utility: Capitalize first letter
- */
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+allMethods.forEach(method => {
+  indexContent += `- [\`client.${method.name}()\`](apis/${method.file})\n`;
+});
 
-/**
- * Utility: Convert type references to links
- */
-function makeTypeLink(typeText) {
-  // Simple type (no generics, no unions)
-  if (/^[A-Z][a-zA-Z0-9]*$/.test(typeText)) {
-    return `[\`${typeText}\`](${typeText}.md)`;
-  }
-  
-  // Just return as code for complex types
-  return `\`${typeText}\``;
-}
+fs.writeFileSync(indexPath, indexContent);
+console.log(`✓ Generated index documentation`);
+
+// Generate README
+const readmePath = path.join(DOCS_DIR, 'README.md');
+let readmeContent = `# TypeScript API Reference\n\n`;
+readmeContent += `Complete TypeScript API reference for the Elasticsearch JavaScript client.\n\n`;
+
+readmeContent += `## Documentation\n\n`;
+readmeContent += `- **[index.md](./index.md)** - Main API reference index\n`;
+readmeContent += `- **[client.md](./client.md)** - Client class documentation\n`;
+readmeContent += `- **[apis/](./apis/)** - Individual API method documentation\n`;
+readmeContent += `- **[types/](./types/)** - TypeScript type definitions\n`;
+readmeContent += `- **[helpers.md](./helpers.md)** - Helper utilities\n`;
+readmeContent += `- **[transport.md](./transport.md)** - Transport layer\n`;
+
+fs.writeFileSync(readmePath, readmeContent);
+console.log(`✓ Generated README`);
+
+console.log('\n✨ Documentation generation complete!\n');
+console.log(`📍 Output: ${DOCS_DIR}\n`);

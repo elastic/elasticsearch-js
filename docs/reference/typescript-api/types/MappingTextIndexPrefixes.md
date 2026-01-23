@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_chars` | `integer` | - |
-| `min_chars` | `integer` | - |
+| `max_chars` | [`integer`](integer.md) | - |
+| `min_chars` | [`integer`](integer.md) | - |
 
 ## See Also
 

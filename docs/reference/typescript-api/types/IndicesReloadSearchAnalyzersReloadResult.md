@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `reload_details` | `IndicesReloadSearchAnalyzersReloadDetails[]` | - |
+| `reload_details` | [`IndicesReloadSearchAnalyzersReloadDetails`](IndicesReloadSearchAnalyzersReloadDetails.md)[] | - |
 | `_shards` | [`ShardStatistics`](ShardStatistics.md) | - |
 
 ## See Also

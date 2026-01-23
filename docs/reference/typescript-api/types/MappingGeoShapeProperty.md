@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingDocValuesPropertyBase`](MappingDocValuesPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |

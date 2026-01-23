@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `component_templates` | `ClusterComponentTemplate[]` | - |
+| `component_templates` | [`ClusterComponentTemplate`](ClusterComponentTemplate.md)[] | - |
 
 ## See Also
 

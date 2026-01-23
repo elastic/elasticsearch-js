@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`InferenceInferenceEndpoint`](InferenceInferenceEndpoint.md)
+
 ### Properties
 
 | Property | Type | Description |

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenFilterBase`](AnalysisTokenFilterBase.md)
+
 ### Properties
 
 | Property | Type | Description |

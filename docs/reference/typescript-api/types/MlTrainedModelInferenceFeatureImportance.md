@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `feature_name` | `string` | - |
-| `importance?` | `double` | - |
-| `classes?` | `MlTrainedModelInferenceClassImportance[]` | - |
+| `importance?` | [`double`](double.md) | - |
+| `classes?` | [`MlTrainedModelInferenceClassImportance`](MlTrainedModelInferenceClassImportance.md)[] | - |
 
 ## See Also
 

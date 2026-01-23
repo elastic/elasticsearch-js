@@ -9,7 +9,7 @@
 | `feature_name` | `string` | - |
 | `minimum_index_version` | [`VersionString`](VersionString.md) | - |
 | `migration_status` | [`MigrationGetFeatureUpgradeStatusMigrationStatus`](MigrationGetFeatureUpgradeStatusMigrationStatus.md) | - |
-| `indices` | `MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo[]` | - |
+| `indices` | [`MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo`](MigrationGetFeatureUpgradeStatusMigrationFeatureIndexInfo.md)[] | - |
 
 ## See Also
 

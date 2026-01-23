@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `bound_address` | `TransportAddress[]` | - |
+| `bound_address` | [`TransportAddress`](TransportAddress.md)[] | - |
 | `publish_address` | [`TransportAddress`](TransportAddress.md) | - |
 
 ## See Also

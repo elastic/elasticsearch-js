@@ -9,7 +9,7 @@
 | `_nodes` | [`NodeStatistics`](NodeStatistics.md) | - |
 | `cluster_name` | [`Name`](Name.md) | - |
 | `manually_stopped` | `boolean` | - |
-| `stats` | `WatcherStatsWatcherNodeStats[]` | - |
+| `stats` | [`WatcherStatsWatcherNodeStats`](WatcherStatsWatcherNodeStats.md)[] | - |
 
 ## See Also
 

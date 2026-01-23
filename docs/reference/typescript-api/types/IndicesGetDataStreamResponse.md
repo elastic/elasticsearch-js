@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `IndicesDataStream[]` | - |
+| `data_streams` | [`IndicesDataStream`](IndicesDataStream.md)[] | - |
 
 ## See Also
 

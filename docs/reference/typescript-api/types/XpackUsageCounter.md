@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `active` | `long` | - |
-| `total` | `long` | - |
+| `active` | [`long`](long.md) | - |
+| `total` | [`long`](long.md) | - |
 
 ## See Also
 

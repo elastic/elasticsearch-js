@@ -6,14 +6,14 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `collection_statistics` | `long` | - |
-| `collection_statistics_count` | `long` | - |
-| `create_weight` | `long` | - |
-| `create_weight_count` | `long` | - |
-| `rewrite` | `long` | - |
-| `rewrite_count` | `long` | - |
-| `term_statistics` | `long` | - |
-| `term_statistics_count` | `long` | - |
+| `collection_statistics` | [`long`](long.md) | - |
+| `collection_statistics_count` | [`long`](long.md) | - |
+| `create_weight` | [`long`](long.md) | - |
+| `create_weight_count` | [`long`](long.md) | - |
+| `rewrite` | [`long`](long.md) | - |
+| `rewrite_count` | [`long`](long.md) | - |
+| `term_statistics` | [`long`](long.md) | - |
+| `term_statistics_count` | [`long`](long.md) | - |
 
 ## See Also
 

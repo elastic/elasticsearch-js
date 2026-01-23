@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`SearchResponseBody`](SearchResponseBody.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `status?` | `integer` | - |
+| `status?` | [`integer`](integer.md) | - |
 
 ## See Also
 

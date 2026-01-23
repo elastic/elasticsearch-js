@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `indices_managed` | `integer` | - |
+| `indices_managed` | [`integer`](integer.md) | - |
 | `phases` | [`XpackUsagePhases`](XpackUsagePhases.md) | - |
 
 ## See Also

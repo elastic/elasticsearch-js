@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `results` | `ConnectorConnector[]` | - |
+| `count` | [`long`](long.md) | - |
+| `results` | [`ConnectorConnector`](ConnectorConnector.md)[] | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`IngestProcessorBase`](IngestProcessorBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -12,7 +16,7 @@ Common Schema (ECS) field names. |
 | `ignore_missing?` | `boolean` | If `true` and `field` does not exist or is `null`, the processor quietly exits without modifying the document. |
 | `pattern_definitions?` | `Record<string, string>` | A map of pattern-name and pattern tuples defining custom patterns to be used by the current processor.
 Patterns matching existing names will override the pre-existing definition. |
-| `patterns` | `GrokPattern[]` | An ordered list of grok expression to match and extract named captures with.
+| `patterns` | [`GrokPattern`](GrokPattern.md)[] | An ordered list of grok expression to match and extract named captures with.
 Returns on the first expression in the list that matches. |
 | `trace_match?` | `boolean` | When `true`, `_ingest._grok_match_index` will be inserted into your matched document’s metadata with the index into the pattern found in `patterns` that matched. |
 

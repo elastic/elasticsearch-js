@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `thinking_budget?` | `integer` | Indicates the desired thinking budget in tokens. |
+| `thinking_budget?` | [`integer`](integer.md) | Indicates the desired thinking budget in tokens. |
 
 ## See Also
 

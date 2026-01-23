@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -27,11 +31,11 @@ It supports comma-separated values, such as `open,hidden`. |
 | `ignore_unavailable?` | `boolean` | If `false`, the request returns an error if it targets a missing or closed index. |
 | `lenient?` | `boolean` | If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 This parameter can be used only when the `q` query string parameter is specified. |
-| `min_score?` | `double` | The minimum `_score` value that documents must have to be included in the result. |
+| `min_score?` | [`double`](double.md) | The minimum `_score` value that documents must have to be included in the result. |
 | `preference?` | `string` | The node or shard the operation should be performed on.
 By default, it is random. |
 | `routing?` | [`Routing`](Routing.md) | A custom value used to route operations to a specific shard. |
-| `terminate_after?` | `long` | The maximum number of documents to collect for each shard.
+| `terminate_after?` | [`long`](long.md) | The maximum number of documents to collect for each shard.
 If a query reaches this limit, Elasticsearch terminates the query early.
 Elasticsearch collects documents before sorting.
 

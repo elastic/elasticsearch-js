@@ -20,7 +20,7 @@ When set to `true`, a request from Elasticsearch contains only chunks related to
 If a document exceeds the model's context limits, late chunking is automatically disabled for that document only and standard chunking is used instead.
 
 If not specified, defaults to `false`. |
-| `top_n?` | `integer` | For a `rerank` task, the number of most relevant documents to return.
+| `top_n?` | [`integer`](integer.md) | For a `rerank` task, the number of most relevant documents to return.
 It defaults to the number of the documents.
 If this inference endpoint is used in a `text_similarity_reranker` retriever query and `top_n` is set, it must be greater than or equal to `rank_window_size` in the query. |
 

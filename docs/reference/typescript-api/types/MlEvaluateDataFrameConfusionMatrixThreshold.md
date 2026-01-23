@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `tp` | `integer` | True Positive |
-| `fp` | `integer` | False Positive |
-| `tn` | `integer` | True Negative |
-| `fn` | `integer` | False Negative |
+| `tp` | [`integer`](integer.md) | True Positive |
+| `fp` | [`integer`](integer.md) | False Positive |
+| `tn` | [`integer`](integer.md) | True Negative |
+| `fn` | [`integer`](integer.md) | False Negative |
 
 ## See Also
 

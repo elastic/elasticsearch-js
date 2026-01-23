@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
+| `count` | [`long`](long.md) | - |
 | `value` | `any` | - |
 
 ## See Also

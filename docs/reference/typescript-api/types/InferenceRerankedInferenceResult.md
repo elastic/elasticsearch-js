@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `rerank` | `InferenceRankedDocument[]` | - |
+| `rerank` | [`InferenceRankedDocument`](InferenceRankedDocument.md)[] | - |
 
 ## See Also
 

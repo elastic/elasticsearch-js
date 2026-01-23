@@ -10,7 +10,7 @@
 | `classification_labels?` | `string[]` | - |
 | `feature_names?` | `string[]` | - |
 | `target_type?` | `string` | - |
-| `trained_models` | `MlPutTrainedModelTrainedModel[]` | - |
+| `trained_models` | [`MlPutTrainedModelTrainedModel`](MlPutTrainedModelTrainedModel.md)[] | - |
 
 ## See Also
 

@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`IngestProcessorBase`](IngestProcessorBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `field` | [`Field`](Field.md) | The field to be redacted |
-| `patterns` | `GrokPattern[]` | A list of grok expressions to match and redact named captures with |
+| `patterns` | [`GrokPattern`](GrokPattern.md)[] | A list of grok expressions to match and redact named captures with |
 | `pattern_definitions?` | `Record<string, string>` | - |
 | `prefix?` | `string` | Start a redacted section with this token |
 | `suffix?` | `string` | End a redacted section with this token |

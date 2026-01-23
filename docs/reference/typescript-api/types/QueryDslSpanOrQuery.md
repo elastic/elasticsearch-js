@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`QueryDslQueryBase`](QueryDslQueryBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `clauses` | `QueryDslSpanQuery[]` | Array of one or more other span type queries. |
+| `clauses` | [`QueryDslSpanQuery`](QueryDslSpanQuery.md)[] | Array of one or more other span type queries. |
 
 ## See Also
 

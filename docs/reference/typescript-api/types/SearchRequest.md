@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -20,7 +24,7 @@ To override the default behavior, you can set the `search.default_allow_partial_
 This parameter can be used only when the `q` query string parameter is specified. |
 | `analyze_wildcard?` | `boolean` | If `true`, wildcard and prefix queries are analyzed.
 This parameter can be used only when the `q` query string parameter is specified. |
-| `batched_reduce_size?` | `long` | The number of shard results that should be reduced at once on the coordinating node.
+| `batched_reduce_size?` | [`long`](long.md) | The number of shard results that should be reduced at once on the coordinating node.
 If the potential number of shards in the request can be large, this value should be used as a protection mechanism to reduce the memory overhead per search request. |
 | `ccs_minimize_roundtrips?` | `boolean` | If `true`, network round-trips between the coordinating node and the remote clusters are minimized when running cross-cluster search (CCS) requests. |
 | `default_operator?` | [`QueryDslOperator`](QueryDslOperator.md) | The default operator for the query string query: `and` or `or`.
@@ -39,7 +43,7 @@ Typically, this adds a small overhead to a request.
 However, using computationally expensive named queries on a large number of hits may add significant overhead. |
 | `lenient?` | `boolean` | If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 This parameter can be used only when the `q` query string parameter is specified. |
-| `max_concurrent_shard_requests?` | `integer` | The number of concurrent shard requests per node that the search runs concurrently.
+| `max_concurrent_shard_requests?` | [`integer`](integer.md) | The number of concurrent shard requests per node that the search runs concurrently.
 This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests. |
 | `preference?` | `string` | The nodes and shards used for the search.
 By default, Elasticsearch selects from eligible nodes and shards using adaptive replica selection, accounting for allocation awareness.
@@ -51,7 +55,7 @@ Valid values are:
 * `_prefer_nodes:<node-id>,<node-id>` to if possible, run the search on the specified nodes IDs. If not, select shards using the default method.
 * `_shards:<shard>,<shard>` to run the search only on the specified shards. You can combine this value with other `preference` values. However, the `_shards` value must come first. For example: `_shards:2,3|_local`.
 * `<custom-string>` (any string that does not start with `_`) to route searches with the same `<custom-string>` to the same shards in the same order. |
-| `pre_filter_shard_size?` | `long` | A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold.
+| `pre_filter_shard_size?` | [`long`](long.md) | A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold.
 This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method (if date filters are mandatory to match but the shard bounds and the query are disjoint).
 When unspecified, the pre-filter phase is executed if any of these conditions is met:
 
@@ -68,7 +72,7 @@ You can change this limit by using the `search.max_keep_alive` cluster-level set
 | `suggest_field?` | [`Field`](Field.md) | The field to use for suggestions. |
 | `suggest_mode?` | [`SuggestMode`](SuggestMode.md) | The suggest mode.
 This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified. |
-| `suggest_size?` | `long` | The number of suggestions to return.
+| `suggest_size?` | [`long`](long.md) | The number of suggestions to return.
 This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified. |
 | `suggest_text?` | `string` | The source text for which the suggestions should be returned.
 This parameter can be used only when the `suggest_field` and `suggest_text` query string parameters are specified. |
@@ -95,7 +99,7 @@ Fetches with this enabled will be slower the enabling synthetic source natively 
 | `collapse?` | [`SearchFieldCollapse`](SearchFieldCollapse.md) | Collapses search results the values of the specified field. |
 | `explain?` | `boolean` | If `true`, the request returns detailed information about score computation as part of a hit. |
 | `ext?` | `Record<string, any>` | Configuration of search extensions defined by Elasticsearch plugins. |
-| `from?` | `integer` | The starting document offset, which must be non-negative.
+| `from?` | [`integer`](integer.md) | The starting document offset, which must be non-negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter. |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in your search results. |
@@ -110,7 +114,7 @@ A boost value between `0` and `1.0` decreases the score. |
 The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. |
 | `knn?` | `KnnSearch | KnnSearch[]` | The approximate kNN search to run. |
 | `rank?` | [`RankContainer`](RankContainer.md) | The Reciprocal Rank Fusion (RRF) to use. |
-| `min_score?` | `double` | The minimum `_score` for matching documents.
+| `min_score?` | [`double`](double.md) | The minimum `_score` for matching documents.
 Documents with a lower `_score` are not included in search results and results collected by aggregations. |
 | `post_filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | Use the `post_filter` parameter to filter search results.
 The search hits are filtered after the aggregations are calculated.
@@ -123,7 +127,7 @@ NOTE: This is a debugging tool and adds significant overhead to search execution
 A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`. |
 | `script_fields?` | `Record<string, ScriptField>` | Retrieve a script evaluation (based on different fields) for each hit. |
 | `search_after?` | [`SortResults`](SortResults.md) | Used to retrieve the next page of hits using a set of sort values from the previous page. |
-| `size?` | `integer` | The number of hits to return, which must not be negative.
+| `size?` | [`integer`](integer.md) | The number of hits to return, which must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` property. |
 | `slice?` | [`SlicedScroll`](SlicedScroll.md) | Split a scrolled search into multiple slices that can be consumed independently. |
@@ -135,7 +139,7 @@ Otherwise, it defaults to `true`. |
 | `fields?` | `(QueryDslFieldAndFormat | Field)[]` | An array of wildcard (`*`) field patterns.
 The request returns values for field names matching these patterns in the `hits.fields` property of the response. |
 | `suggest?` | [`SearchSuggester`](SearchSuggester.md) | Defines a suggester that provides similar looking terms based on a provided text. |
-| `terminate_after?` | `long` | The maximum number of documents to collect for each shard.
+| `terminate_after?` | [`long`](long.md) | The maximum number of documents to collect for each shard.
 If a query reaches this limit, Elasticsearch terminates the query early.
 Elasticsearch collects documents before sorting.
 

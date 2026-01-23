@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `inference_results` | `MlInferenceResponseResult[]` | - |
+| `inference_results` | [`MlInferenceResponseResult`](MlInferenceResponseResult.md)[] | - |
 
 ## See Also
 

@@ -1,21 +1,24 @@
 # Client.msearch
 
-## API Method
+## Method Signature
 
 ```typescript
-client.msearch(params?: MsearchRequest): Promise<MsearchResponse>
+client.msearch(this: That, params: T.MsearchRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`MsearchRequest`](../types/MsearchRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.MsearchRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`MsearchResponse`](../types/MsearchResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

@@ -6,14 +6,14 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `long` | - |
-| `prepackaged` | `long` | - |
-| `other` | `long` | - |
-| `pass_through?` | `long` | - |
-| `regression?` | `long` | - |
-| `classification?` | `long` | - |
-| `ner?` | `long` | - |
-| `text_embedding?` | `long` | - |
+| `total` | [`long`](long.md) | - |
+| `prepackaged` | [`long`](long.md) | - |
+| `other` | [`long`](long.md) | - |
+| `pass_through?` | [`long`](long.md) | - |
+| `regression?` | [`long`](long.md) | - |
+| `classification?` | [`long`](long.md) | - |
+| `ner?` | [`long`](long.md) | - |
+| `text_embedding?` | [`long`](long.md) | - |
 
 ## See Also
 

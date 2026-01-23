@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsBucketAggregationBase`](AggregationsBucketAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `buckets?` | `integer` | The target number of buckets. |
+| `buckets?` | [`integer`](integer.md) | The target number of buckets. |
 | `field?` | [`Field`](Field.md) | The field on which to run the aggregation. |
 | `format?` | `string` | The date format used to format `key_as_string` in the response.
 If no `format` is specified, the first date format specified in the field mapping is used. |

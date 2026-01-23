@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `views` | `EsqlESQLView[]` | - |
+| `views` | [`EsqlESQLView`](EsqlESQLView.md)[] | - |
 
 ## See Also
 

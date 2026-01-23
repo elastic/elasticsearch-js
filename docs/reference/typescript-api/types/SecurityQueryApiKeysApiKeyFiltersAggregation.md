@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsBucketAggregationBase`](AggregationsBucketAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `filters?` | `AggregationsBuckets<SecurityQueryApiKeysApiKeyQueryContainer>` | Collection of queries from which to build buckets. |
+| `filters?` | [`AggregationsBuckets`](AggregationsBuckets.md)<SecurityQueryApiKeysApiKeyQueryContainer> | Collection of queries from which to build buckets. |
 | `other_bucket?` | `boolean` | Set to `true` to add a bucket to the response which will contain all documents that do not match any of the given filters. |
 | `other_bucket_key?` | `string` | The key with which the other bucket is returned. |
 | `keyed?` | `boolean` | By default, the named filters aggregation returns the buckets as an object.

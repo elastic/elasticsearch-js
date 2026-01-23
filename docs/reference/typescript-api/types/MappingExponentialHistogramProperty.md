@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingPropertyBase`](MappingPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |

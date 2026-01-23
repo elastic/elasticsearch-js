@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `generation` | `integer` | - |
+| `generation` | [`integer`](integer.md) | - |
 | `id` | [`Id`](Id.md) | - |
-| `num_docs` | `long` | - |
+| `num_docs` | [`long`](long.md) | - |
 | `user_data` | `Record<string, string>` | - |
 
 ## See Also

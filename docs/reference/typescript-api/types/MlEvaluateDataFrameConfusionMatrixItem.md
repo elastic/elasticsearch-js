@@ -7,9 +7,9 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `actual_class` | [`Name`](Name.md) | - |
-| `actual_class_doc_count` | `integer` | - |
-| `predicted_classes` | `MlEvaluateDataFrameConfusionMatrixPrediction[]` | - |
-| `other_predicted_class_doc_count` | `integer` | - |
+| `actual_class_doc_count` | [`integer`](integer.md) | - |
+| `predicted_classes` | [`MlEvaluateDataFrameConfusionMatrixPrediction`](MlEvaluateDataFrameConfusionMatrixPrediction.md)[] | - |
+| `other_predicted_class_doc_count` | [`integer`](integer.md) | - |
 
 ## See Also
 

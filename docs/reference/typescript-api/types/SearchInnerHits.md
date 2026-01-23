@@ -8,8 +8,8 @@
 |----------|------|-------------|
 | `name?` | [`Name`](Name.md) | The name for the particular inner hit definition in the response.
 Useful when a search request contains multiple inner hits. |
-| `size?` | `integer` | The maximum number of hits to return per `inner_hits`. |
-| `from?` | `integer` | Inner hit starting document offset. |
+| `size?` | [`integer`](integer.md) | The maximum number of hits to return per `inner_hits`. |
+| `from?` | [`integer`](integer.md) | Inner hit starting document offset. |
 | `collapse?` | [`SearchFieldCollapse`](SearchFieldCollapse.md) | - |
 | `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | - |
 | `explain?` | `boolean` | - |
@@ -17,7 +17,7 @@ Useful when a search request contains multiple inner hits. |
 | `ignore_unmapped?` | `boolean` | - |
 | `script_fields?` | `Record<Field, ScriptField>` | - |
 | `seq_no_primary_term?` | `boolean` | - |
-| `fields?` | `Field[]` | - |
+| `fields?` | [`Field`](Field.md)[] | - |
 | `sort?` | [`Sort`](Sort.md) | How the inner hits should be sorted per `inner_hits`.
 By default, inner hits are sorted by score. |
 | `_source?` | [`SearchSourceConfig`](SearchSourceConfig.md) | - |

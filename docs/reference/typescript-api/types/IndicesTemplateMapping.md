@@ -7,9 +7,9 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `aliases` | `Record<IndexName, IndicesAlias>` | - |
-| `index_patterns` | `Name[]` | - |
+| `index_patterns` | [`Name`](Name.md)[] | - |
 | `mappings` | [`MappingTypeMapping`](MappingTypeMapping.md) | - |
-| `order` | `integer` | - |
+| `order` | [`integer`](integer.md) | - |
 | `settings` | `Record<string, any>` | - |
 | `version?` | [`VersionNumber`](VersionNumber.md) | - |
 

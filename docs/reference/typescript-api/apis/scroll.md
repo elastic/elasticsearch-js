@@ -1,21 +1,24 @@
 # Client.scroll
 
-## API Method
+## Method Signature
 
 ```typescript
-client.scroll(params?: ScrollRequest): Promise<ScrollResponse>
+client.scroll(this: That, params: T.ScrollRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`ScrollRequest`](../types/ScrollRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.ScrollRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`ScrollResponse`](../types/ScrollResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

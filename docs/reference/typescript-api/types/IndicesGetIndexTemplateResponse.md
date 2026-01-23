@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `index_templates` | `IndicesGetIndexTemplateIndexTemplateItem[]` | - |
+| `index_templates` | [`IndicesGetIndexTemplateIndexTemplateItem`](IndicesGetIndexTemplateIndexTemplateItem.md)[] | - |
 
 ## See Also
 

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `model_snapshots` | `MlModelSnapshot[]` | - |
+| `count` | [`long`](long.md) | - |
+| `model_snapshots` | [`MlModelSnapshot`](MlModelSnapshot.md)[] | - |
 
 ## See Also
 

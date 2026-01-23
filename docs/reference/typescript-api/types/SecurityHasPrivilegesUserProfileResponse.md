@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `has_privilege_uids` | `SecurityUserProfileId[]` | The subset of the requested profile IDs of the users that
+| `has_privilege_uids` | [`SecurityUserProfileId`](SecurityUserProfileId.md)[] | The subset of the requested profile IDs of the users that
 have all the requested privileges. |
 | `errors?` | [`SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors`](SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors.md) | The subset of the requested profile IDs for which an error
 was encountered. It does not include the missing profile IDs

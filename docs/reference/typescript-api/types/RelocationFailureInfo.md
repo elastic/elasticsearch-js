@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `failed_attempts` | `integer` | - |
+| `failed_attempts` | [`integer`](integer.md) | - |
 
 ## See Also
 

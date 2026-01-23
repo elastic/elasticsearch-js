@@ -14,12 +14,12 @@
 | `sh?` | `string` | The shard name. |
 | `start_time?` | [`DateTime`](DateTime.md) | The recovery start time. |
 | `start?` | [`DateTime`](DateTime.md) | The recovery start time. |
-| `start_time_millis?` | `EpochTime<UnitMillis>` | The recovery start time in epoch milliseconds. |
-| `start_millis?` | `EpochTime<UnitMillis>` | The recovery start time in epoch milliseconds. |
+| `start_time_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | The recovery start time in epoch milliseconds. |
+| `start_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | The recovery start time in epoch milliseconds. |
 | `stop_time?` | [`DateTime`](DateTime.md) | The recovery stop time. |
 | `stop?` | [`DateTime`](DateTime.md) | The recovery stop time. |
-| `stop_time_millis?` | `EpochTime<UnitMillis>` | The recovery stop time in epoch milliseconds. |
-| `stop_millis?` | `EpochTime<UnitMillis>` | The recovery stop time in epoch milliseconds. |
+| `stop_time_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | The recovery stop time in epoch milliseconds. |
+| `stop_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | The recovery stop time in epoch milliseconds. |
 | `time?` | [`Duration`](Duration.md) | The recovery time. |
 | `t?` | [`Duration`](Duration.md) | The recovery time. |
 | `ti?` | [`Duration`](Duration.md) | The recovery time. |

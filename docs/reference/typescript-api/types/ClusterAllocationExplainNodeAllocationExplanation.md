@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `deciders?` | `ClusterAllocationExplainAllocationDecision[]` | - |
+| `deciders?` | [`ClusterAllocationExplainAllocationDecision`](ClusterAllocationExplainAllocationDecision.md)[] | - |
 | `node_attributes` | `Record<string, string>` | - |
 | `node_decision` | [`ClusterAllocationExplainDecision`](ClusterAllocationExplainDecision.md) | - |
 | `node_id` | [`Id`](Id.md) | - |
@@ -14,7 +14,7 @@
 | `roles` | [`NodeRoles`](NodeRoles.md) | - |
 | `store?` | [`ClusterAllocationExplainAllocationStore`](ClusterAllocationExplainAllocationStore.md) | - |
 | `transport_address` | [`TransportAddress`](TransportAddress.md) | - |
-| `weight_ranking?` | `integer` | - |
+| `weight_ranking?` | [`integer`](integer.md) | - |
 
 ## See Also
 

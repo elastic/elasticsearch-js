@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `predicted_class` | [`Name`](Name.md) | - |
-| `count` | `integer` | - |
+| `count` | [`integer`](integer.md) | - |
 
 ## See Also
 

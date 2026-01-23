@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -20,8 +24,8 @@ It is random by default. |
 | `term_statistics?` | `boolean` | If true, the response includes term frequency and document frequency. |
 | `version?` | [`VersionNumber`](VersionNumber.md) | If `true`, returns the document version as part of a hit. |
 | `version_type?` | [`VersionType`](VersionType.md) | The version type. |
-| `docs?` | `MtermvectorsOperation[]` | An array of existing or artificial documents. |
-| `ids?` | `Id[]` | A simplified syntax to specify documents by their ID if they're in the same index. |
+| `docs?` | [`MtermvectorsOperation`](MtermvectorsOperation.md)[] | An array of existing or artificial documents. |
+| `ids?` | [`Id`](Id.md)[] | A simplified syntax to specify documents by their ID if they're in the same index. |
 | `body?` | `string | { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }` | All values in `querystring` will be added to the request querystring. |
 

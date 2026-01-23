@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsBucketAggregationBase`](AggregationsBucketAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -14,7 +18,7 @@
 | `gnd?` | [`AggregationsGoogleNormalizedDistanceHeuristic`](AggregationsGoogleNormalizedDistanceHeuristic.md) | Use Google normalized distance as described in "The Google Similarity Distance", Cilibrasi and Vitanyi, 2007, as the significance score. |
 | `include?` | [`AggregationsTermsInclude`](AggregationsTermsInclude.md) | Terms to include. |
 | `jlh?` | [`EmptyObject`](EmptyObject.md) | Use JLH score as the significance score. |
-| `min_doc_count?` | `long` | Only return terms that are found in more than `min_doc_count` hits. |
+| `min_doc_count?` | [`long`](long.md) | Only return terms that are found in more than `min_doc_count` hits. |
 | `mutual_information?` | [`AggregationsMutualInformationHeuristic`](AggregationsMutualInformationHeuristic.md) | Use mutual information as described in "Information Retrieval", Manning et al., Chapter 13.5.1, as the significance score. |
 | `percentage?` | [`AggregationsPercentageScoreHeuristic`](AggregationsPercentageScoreHeuristic.md) | A simple calculation of the number of documents in the foreground sample with a term divided by the number of documents in the background with the term. |
 | `script_heuristic?` | [`AggregationsScriptedHeuristic`](AggregationsScriptedHeuristic.md) | Customized score, implemented via a script. |
@@ -25,11 +29,11 @@ the results actually observed, under the assumption that the null hypothesis is
 correct. The p-value is calculated assuming that the foreground set and the
 background set are independent https://en.wikipedia.org/wiki/Bernoulli_trial, with the null
 hypothesis that the probabilities are the same. |
-| `shard_min_doc_count?` | `long` | Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`.
+| `shard_min_doc_count?` | [`long`](long.md) | Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`.
 Terms will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. |
-| `shard_size?` | `integer` | Can be used to control the volumes of candidate terms produced by each shard.
+| `shard_size?` | [`integer`](integer.md) | Can be used to control the volumes of candidate terms produced by each shard.
 By default, `shard_size` will be automatically estimated based on the number of shards and the `size` parameter. |
-| `size?` | `integer` | The number of buckets returned out of the overall terms list. |
+| `size?` | [`integer`](integer.md) | The number of buckets returned out of the overall terms list. |
 
 ## See Also
 

@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`XpackUsageBase`](XpackUsageBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `field_types` | `XpackUsageRuntimeFieldsType[]` | - |
+| `field_types` | [`XpackUsageRuntimeFieldsType`](XpackUsageRuntimeFieldsType.md)[] | - |
 
 ## See Also
 

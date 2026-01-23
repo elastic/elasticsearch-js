@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsAbstractChangePoint`](AggregationsAbstractChangePoint.md)
+
 ## See Also
 
 - [All Types](./)

@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsCompositeAggregationBase`](AggregationsCompositeAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `interval` | `double` | - |
+| `interval` | [`double`](double.md) | - |
 
 ## See Also
 

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `influencers` | `MlInfluencer[]` | Array of influencer objects |
+| `count` | [`long`](long.md) | - |
+| `influencers` | [`MlInfluencer`](MlInfluencer.md)[] | Array of influencer objects |
 
 ## See Also
 

@@ -1,21 +1,24 @@
 # Client.count
 
-## API Method
+## Method Signature
 
 ```typescript
-client.count(params?: CountRequest): Promise<CountResponse>
+client.count(this: That, params?: T.CountRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`CountRequest`](../types/CountRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.CountRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`CountResponse`](../types/CountResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

@@ -12,7 +12,7 @@
 | `metadata?` | [`Metadata`](Metadata.md) | - |
 | `status?` | [`WatcherWatchStatus`](WatcherWatchStatus.md) | - |
 | `throttle_period?` | [`Duration`](Duration.md) | - |
-| `throttle_period_in_millis?` | `DurationValue<UnitMillis>` | - |
+| `throttle_period_in_millis?` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `transform?` | [`TransformContainer`](TransformContainer.md) | - |
 | `trigger` | [`WatcherTriggerContainer`](WatcherTriggerContainer.md) | - |
 

@@ -9,10 +9,10 @@
 | `type` | `string` | - |
 | `description` | `string` | - |
 | `time?` | [`Duration`](Duration.md) | - |
-| `time_in_nanos` | `DurationValue<UnitNanos>` | - |
+| `time_in_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | - |
 | `breakdown` | [`SearchKnnQueryProfileBreakdown`](SearchKnnQueryProfileBreakdown.md) | - |
 | `debug?` | `Record<string, any>` | - |
-| `children?` | `SearchKnnQueryProfileResult[]` | - |
+| `children?` | [`SearchKnnQueryProfileResult`](SearchKnnQueryProfileResult.md)[] | - |
 
 ## See Also
 

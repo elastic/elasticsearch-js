@@ -1,21 +1,24 @@
 # Client.explain
 
-## API Method
+## Method Signature
 
 ```typescript
-client.explain(params?: ExplainRequest): Promise<ExplainResponse>
+client.explain(this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`ExplainRequest`](../types/ExplainRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.ExplainRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`ExplainResponse`](../types/ExplainResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `priority?` | `integer` | - |
+| `priority?` | [`integer`](integer.md) | - |
 
 ## See Also
 

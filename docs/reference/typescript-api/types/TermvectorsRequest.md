@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -11,14 +15,14 @@
 | `preference?` | `string` | The node or shard the operation should be performed on.
 It is random by default. |
 | `realtime?` | `boolean` | If true, the request is real-time as opposed to near-real-time. |
-| `doc?` | [`TDocument`](TDocument.md) | An artificial document (a document not present in the index) for which you want to retrieve term vectors. |
+| `doc?` | `TDocument` | An artificial document (a document not present in the index) for which you want to retrieve term vectors. |
 | `filter?` | [`TermvectorsFilter`](TermvectorsFilter.md) | Filter terms based on their tf-idf scores.
 This could be useful in order find out a good characteristic vector of a document.
 This feature works in a similar manner to the second phase of the More Like This Query. |
 | `per_field_analyzer?` | `Record<Field, string>` | Override the default per-field analyzer.
 This is useful in order to generate term vectors in any fashion, especially when using artificial documents.
 When providing an analyzer for a field that already stores term vectors, the term vectors will be regenerated. |
-| `fields?` | `Field[]` | A list of fields to include in the statistics.
+| `fields?` | [`Field`](Field.md)[] | A list of fields to include in the statistics.
 It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters. |
 | `field_statistics?` | `boolean` | If `true`, the response includes:
 

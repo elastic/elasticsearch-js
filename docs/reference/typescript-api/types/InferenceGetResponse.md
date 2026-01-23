@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `endpoints` | `InferenceInferenceEndpointInfo[]` | - |
+| `endpoints` | [`InferenceInferenceEndpointInfo`](InferenceInferenceEndpointInfo.md)[] | - |
 
 ## See Also
 

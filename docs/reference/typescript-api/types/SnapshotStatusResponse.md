@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `snapshots` | `SnapshotStatus[]` | - |
+| `snapshots` | [`SnapshotStatus`](SnapshotStatus.md)[] | - |
 
 ## See Also
 

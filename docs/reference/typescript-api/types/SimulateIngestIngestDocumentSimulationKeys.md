@@ -9,7 +9,7 @@
 | `_id` | [`Id`](Id.md) | Identifier for the document. |
 | `_index` | [`IndexName`](IndexName.md) | Name of the index that the document would be indexed into if this were not a simulation. |
 | `_source` | `Record<string, any>` | JSON body for the document. |
-| `_version` | `SpecUtilsStringified<VersionNumber>` | - |
+| `_version` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<VersionNumber> | - |
 | `executed_pipelines` | `string[]` | A list of the names of the pipelines executed on this document. |
 | `ignored_fields?` | `Record<string, string>[]` | A list of the fields that would be ignored at the indexing step. For example, a field whose
 value is larger than the allowed limit would make it through all of the pipelines, but

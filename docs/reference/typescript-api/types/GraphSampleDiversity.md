@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `field` | [`Field`](Field.md) | - |
-| `max_docs_per_value` | `integer` | - |
+| `max_docs_per_value` | [`integer`](integer.md) | - |
 
 ## See Also
 

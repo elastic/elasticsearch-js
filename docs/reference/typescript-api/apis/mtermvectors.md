@@ -1,21 +1,24 @@
 # Client.mtermvectors
 
-## API Method
+## Method Signature
 
 ```typescript
-client.mtermvectors(params?: MtermvectorsRequest): Promise<MtermvectorsResponse>
+client.mtermvectors(this: That, params?: T.MtermvectorsRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`MtermvectorsRequest`](../types/MtermvectorsRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.MtermvectorsRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`MtermvectorsResponse`](../types/MtermvectorsResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `file_count` | `integer` | - |
-| `size_in_bytes` | `long` | - |
+| `file_count` | [`integer`](integer.md) | - |
+| `size_in_bytes` | [`long`](long.md) | - |
 
 ## See Also
 

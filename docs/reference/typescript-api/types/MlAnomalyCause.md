@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `actual?` | `double[]` | - |
+| `actual?` | [`double`](double.md)[] | - |
 | `by_field_name?` | [`Name`](Name.md) | - |
 | `by_field_value?` | `string` | - |
 | `correlated_by_field_value?` | `string` | - |
@@ -14,13 +14,13 @@
 | `function?` | `string` | - |
 | `function_description?` | `string` | - |
 | `geo_results?` | [`MlGeoResults`](MlGeoResults.md) | - |
-| `influencers?` | `MlInfluence[]` | - |
+| `influencers?` | [`MlInfluence`](MlInfluence.md)[] | - |
 | `over_field_name?` | [`Name`](Name.md) | - |
 | `over_field_value?` | `string` | - |
 | `partition_field_name?` | `string` | - |
 | `partition_field_value?` | `string` | - |
-| `probability` | `double` | - |
-| `typical?` | `double[]` | - |
+| `probability` | [`double`](double.md) | - |
+| `typical?` | [`double`](double.md)[] | - |
 
 ## See Also
 

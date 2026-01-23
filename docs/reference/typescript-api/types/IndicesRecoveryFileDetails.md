@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `length` | `long` | - |
+| `length` | [`long`](long.md) | - |
 | `name` | `string` | - |
-| `recovered` | `long` | - |
+| `recovered` | [`long`](long.md) | - |
 
 ## See Also
 

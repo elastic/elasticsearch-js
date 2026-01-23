@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `minute` | `integer[]` | - |
+| `minute` | [`integer`](integer.md)[] | - |
 
 ## See Also
 

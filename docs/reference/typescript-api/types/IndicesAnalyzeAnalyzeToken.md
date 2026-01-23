@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `end_offset` | `long` | - |
-| `position` | `long` | - |
-| `positionLength?` | `long` | - |
-| `start_offset` | `long` | - |
+| `end_offset` | [`long`](long.md) | - |
+| `position` | [`long`](long.md) | - |
+| `positionLength?` | [`long`](long.md) | - |
+| `start_offset` | [`long`](long.md) | - |
 | `token` | `string` | - |
 | `type` | `string` | - |
 

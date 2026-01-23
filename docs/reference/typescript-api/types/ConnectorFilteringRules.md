@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `advanced_snippet` | [`ConnectorFilteringAdvancedSnippet`](ConnectorFilteringAdvancedSnippet.md) | - |
-| `rules` | `ConnectorFilteringRule[]` | - |
+| `rules` | [`ConnectorFilteringRule`](ConnectorFilteringRule.md)[] | - |
 | `validation` | [`ConnectorFilteringRulesValidation`](ConnectorFilteringRulesValidation.md) | - |
 
 ## See Also

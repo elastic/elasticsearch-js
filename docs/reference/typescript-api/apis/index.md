@@ -1,21 +1,24 @@
 # Client.index
 
-## API Method
+## Method Signature
 
 ```typescript
-client.index(params?: IndexRequest): Promise<IndexResponse>
+client.index(this: That, params: T.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`IndexRequest`](../types/IndexRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.IndexRequest<TDocument>` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`IndexResponse`](../types/IndexResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

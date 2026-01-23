@@ -15,11 +15,11 @@
 | `indices` | `string[]` | - |
 | `indexes?` | `string[]` | - |
 | `job_id` | [`Id`](Id.md) | - |
-| `max_empty_searches?` | `integer` | - |
+| `max_empty_searches?` | [`integer`](integer.md) | - |
 | `query` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 | `query_delay?` | [`Duration`](Duration.md) | - |
 | `script_fields?` | `Record<string, ScriptField>` | - |
-| `scroll_size?` | `integer` | - |
+| `scroll_size?` | [`integer`](integer.md) | - |
 | `delayed_data_check_config` | [`MlDelayedDataCheckConfig`](MlDelayedDataCheckConfig.md) | - |
 | `runtime_mappings?` | [`MappingRuntimeFields`](MappingRuntimeFields.md) | - |
 | `indices_options?` | [`IndicesOptions`](IndicesOptions.md) | - |

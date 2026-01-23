@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `statistics?` | [`SearchDfsStatisticsProfile`](SearchDfsStatisticsProfile.md) | - |
-| `knn?` | `SearchDfsKnnProfile[]` | - |
+| `knn?` | [`SearchDfsKnnProfile`](SearchDfsKnnProfile.md)[] | - |
 
 ## See Also
 

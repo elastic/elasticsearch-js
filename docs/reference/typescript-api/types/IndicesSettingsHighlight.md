@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_analyzed_offset?` | `integer` | - |
+| `max_analyzed_offset?` | [`integer`](integer.md) | - |
 
 ## See Also
 

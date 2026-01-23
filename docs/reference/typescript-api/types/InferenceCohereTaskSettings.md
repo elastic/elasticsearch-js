@@ -16,7 +16,7 @@ Valid values are:
 
 IMPORTANT: The `input_type` field is required when using embedding models `v3` and higher. |
 | `return_documents?` | `boolean` | For a `rerank` task, return doc text within the results. |
-| `top_n?` | `integer` | For a `rerank` task, the number of most relevant documents to return.
+| `top_n?` | [`integer`](integer.md) | For a `rerank` task, the number of most relevant documents to return.
 It defaults to the number of the documents.
 If this inference endpoint is used in a `text_similarity_reranker` retriever query and `top_n` is set, it must be greater than or equal to `rank_window_size` in the query. |
 | `truncate?` | [`InferenceCohereTruncateType`](InferenceCohereTruncateType.md) | For a `text_embedding` task, the method to handle inputs longer than the maximum token length.

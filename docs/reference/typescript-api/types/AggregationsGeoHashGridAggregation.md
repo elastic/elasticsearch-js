@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsBucketAggregationBase`](AggregationsBucketAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,9 +14,9 @@
 | `field?` | [`Field`](Field.md) | Field containing indexed `geo_point` or `geo_shape` values.
 If the field contains an array, `geohash_grid` aggregates all array values. |
 | `precision?` | [`GeoHashPrecision`](GeoHashPrecision.md) | The string length of the geohashes used to define cells/buckets in the results. |
-| `shard_size?` | `integer` | Allows for more accurate counting of the top cells returned in the final result the aggregation.
+| `shard_size?` | [`integer`](integer.md) | Allows for more accurate counting of the top cells returned in the final result the aggregation.
 Defaults to returning `max(10,(size x number-of-shards))` buckets from each shard. |
-| `size?` | `integer` | The maximum number of geohash buckets to return. |
+| `size?` | [`integer`](integer.md) | The maximum number of geohash buckets to return. |
 
 ## See Also
 

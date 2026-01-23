@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `description` | `string` | - |
-| `details` | `ExplainExplanationDetail[]` | - |
-| `value` | `float` | - |
+| `details` | [`ExplainExplanationDetail`](ExplainExplanationDetail.md)[] | - |
+| `value` | [`float`](float.md) | - |
 
 ## See Also
 

@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `_id` | [`Id`](Id.md) | The unique identifier for the added document. |
 | `_index` | [`IndexName`](IndexName.md) | The name of the index the document was added to. |
-| `_primary_term?` | `long` | The primary term assigned to the document for the indexing operation. |
+| `_primary_term?` | [`long`](long.md) | The primary term assigned to the document for the indexing operation. |
 | `result` | [`Result`](Result.md) | The result of the indexing operation: `created` or `updated`. |
 | `_seq_no?` | [`SequenceNumber`](SequenceNumber.md) | The sequence number assigned to the document for the indexing operation.
 Sequence numbers are used to ensure an older version of a document doesn't overwrite a newer version. |

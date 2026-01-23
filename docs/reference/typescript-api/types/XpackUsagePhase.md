@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `actions` | `string[]` | - |
-| `min_age` | `DurationValue<UnitMillis>` | - |
+| `min_age` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

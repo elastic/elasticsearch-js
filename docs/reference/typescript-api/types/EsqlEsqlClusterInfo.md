@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `integer` | - |
-| `successful` | `integer` | - |
-| `running` | `integer` | - |
-| `skipped` | `integer` | - |
-| `partial` | `integer` | - |
-| `failed` | `integer` | - |
+| `total` | [`integer`](integer.md) | - |
+| `successful` | [`integer`](integer.md) | - |
+| `running` | [`integer`](integer.md) | - |
+| `skipped` | [`integer`](integer.md) | - |
+| `partial` | [`integer`](integer.md) | - |
+| `failed` | [`integer`](integer.md) | - |
 | `details` | `Record<string, EsqlEsqlClusterDetails>` | - |
 
 ## See Also

@@ -7,13 +7,13 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `node_id` | [`Id`](Id.md) | - |
-| `count` | `integer` | - |
-| `hits` | `integer` | - |
-| `hits_time_in_millis` | `DurationValue<UnitMillis>` | - |
-| `misses` | `integer` | - |
-| `misses_time_in_millis` | `DurationValue<UnitMillis>` | - |
-| `evictions` | `integer` | - |
-| `size_in_bytes` | `long` | - |
+| `count` | [`integer`](integer.md) | - |
+| `hits` | [`integer`](integer.md) | - |
+| `hits_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `misses` | [`integer`](integer.md) | - |
+| `misses_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `evictions` | [`integer`](integer.md) | - |
+| `size_in_bytes` | [`long`](long.md) | - |
 
 ## See Also
 

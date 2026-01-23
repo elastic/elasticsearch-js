@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -14,7 +18,7 @@ Only a single character is supported; the delimiter cannot have multiple charact
 By default, the API considers the following possibilities: comma, tab, semi-colon, and pipe (`|`).
 In this default scenario, all rows must have the same number of fields for the delimited format to be detected.
 If you specify a delimiter, up to 10% of the rows can have a different number of columns than the first row. |
-| `documents_to_sample?` | `uint` | The number of documents to include in the structural analysis.
+| `documents_to_sample?` | [`uint`](uint.md) | The number of documents to include in the structural analysis.
 The minimum value is 2. |
 | `ecs_compatibility?` | [`TextStructureEcsCompatibilityType`](TextStructureEcsCompatibilityType.md) | The mode of compatibility with ECS compliant Grok patterns.
 Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.

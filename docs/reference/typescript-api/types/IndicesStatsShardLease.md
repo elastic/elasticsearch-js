@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `id` | [`Id`](Id.md) | - |
 | `retaining_seq_no` | [`SequenceNumber`](SequenceNumber.md) | - |
-| `timestamp` | `long` | - |
+| `timestamp` | [`long`](long.md) | - |
 | `source` | `string` | - |
 
 ## See Also

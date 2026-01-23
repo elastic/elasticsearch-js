@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `IndicesGetDataStreamSettingsDataStreamSettings[]` | - |
+| `data_streams` | [`IndicesGetDataStreamSettingsDataStreamSettings`](IndicesGetDataStreamSettingsDataStreamSettings.md)[] | - |
 
 ## See Also
 

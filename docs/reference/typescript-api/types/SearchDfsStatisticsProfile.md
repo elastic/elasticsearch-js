@@ -9,10 +9,10 @@
 | `type` | `string` | - |
 | `description` | `string` | - |
 | `time?` | [`Duration`](Duration.md) | - |
-| `time_in_nanos` | `DurationValue<UnitNanos>` | - |
+| `time_in_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | - |
 | `breakdown` | [`SearchDfsStatisticsBreakdown`](SearchDfsStatisticsBreakdown.md) | - |
 | `debug?` | `Record<string, any>` | - |
-| `children?` | `SearchDfsStatisticsProfile[]` | - |
+| `children?` | [`SearchDfsStatisticsProfile`](SearchDfsStatisticsProfile.md)[] | - |
 
 ## See Also
 

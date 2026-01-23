@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,8 +14,8 @@
 | `snapshot_id?` | [`Id`](Id.md) | A numerical character string that uniquely identifies the model snapshot. You can get information for multiple
 snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using `_all`,
 by specifying `*` as the snapshot ID, or by omitting the snapshot ID. |
-| `from?` | `integer` | Skips the specified number of snapshots. |
-| `size?` | `integer` | Specifies the maximum number of snapshots to obtain. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of snapshots. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of snapshots to obtain. |
 | `desc?` | `boolean` | Refer to the description for the `desc` query parameter. |
 | `end?` | [`DateTime`](DateTime.md) | Refer to the description for the `end` query parameter. |
 | `page?` | [`MlPage`](MlPage.md) | - |

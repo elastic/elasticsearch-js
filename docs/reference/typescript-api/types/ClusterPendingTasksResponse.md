@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `tasks` | `ClusterPendingTasksPendingTask[]` | - |
+| `tasks` | [`ClusterPendingTasksPendingTask`](ClusterPendingTasksPendingTask.md)[] | - |
 
 ## See Also
 

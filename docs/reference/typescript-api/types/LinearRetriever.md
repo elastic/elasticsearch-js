@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RetrieverBase`](RetrieverBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `retrievers?` | `InnerRetriever[]` | Inner retrievers. |
-| `rank_window_size?` | `integer` | - |
+| `retrievers?` | [`InnerRetriever`](InnerRetriever.md)[] | Inner retrievers. |
+| `rank_window_size?` | [`integer`](integer.md) | - |
 | `query?` | `string` | - |
 | `fields?` | `string[]` | - |
 | `normalizer?` | [`ScoreNormalizer`](ScoreNormalizer.md) | - |

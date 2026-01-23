@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`XpackUsageCounter`](XpackUsageCounter.md)
+
 ### Properties
 
 | Property | Type | Description |

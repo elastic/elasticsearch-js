@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `detail?` | [`IndicesAnalyzeAnalyzeDetail`](IndicesAnalyzeAnalyzeDetail.md) | - |
-| `tokens?` | `IndicesAnalyzeAnalyzeToken[]` | - |
+| `tokens?` | [`IndicesAnalyzeAnalyzeToken`](IndicesAnalyzeAnalyzeToken.md)[] | - |
 
 ## See Also
 

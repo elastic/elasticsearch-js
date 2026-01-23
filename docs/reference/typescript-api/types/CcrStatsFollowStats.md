@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `indices` | `CcrFollowIndexStats[]` | - |
+| `indices` | [`CcrFollowIndexStats`](CcrFollowIndexStats.md)[] | - |
 
 ## See Also
 

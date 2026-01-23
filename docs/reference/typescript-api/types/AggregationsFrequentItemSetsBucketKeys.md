@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsMultiBucketBase`](AggregationsMultiBucketBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `key` | `Record<Field, string[]>` | - |
-| `support` | `double` | - |
+| `support` | [`double`](double.md) | - |
 
 ## See Also
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `alpha?` | `float` | - |
+| `alpha?` | [`float`](float.md) | - |
 
 ## See Also
 

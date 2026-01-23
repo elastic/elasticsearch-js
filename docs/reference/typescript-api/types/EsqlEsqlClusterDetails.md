@@ -8,9 +8,9 @@
 |----------|------|-------------|
 | `status` | [`EsqlEsqlClusterStatus`](EsqlEsqlClusterStatus.md) | - |
 | `indices` | `string` | - |
-| `took?` | `DurationValue<UnitMillis>` | - |
+| `took?` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `_shards?` | [`EsqlEsqlShardInfo`](EsqlEsqlShardInfo.md) | - |
-| `failures?` | `EsqlEsqlShardFailure[]` | - |
+| `failures?` | [`EsqlEsqlShardFailure`](EsqlEsqlShardFailure.md)[] | - |
 
 ## See Also
 

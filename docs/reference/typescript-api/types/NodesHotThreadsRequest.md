@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,8 +14,8 @@
 | `ignore_idle_threads?` | `boolean` | If true, known idle threads (e.g. waiting in a socket select, or to get
 a task from an empty queue) are filtered out. |
 | `interval?` | [`Duration`](Duration.md) | The interval to do the second sampling of threads. |
-| `snapshots?` | `long` | Number of samples of thread stacktrace. |
-| `threads?` | `long` | Specifies the number of hot threads to provide information for. |
+| `snapshots?` | [`long`](long.md) | Number of samples of thread stacktrace. |
+| `threads?` | [`long`](long.md) | Specifies the number of hot threads to provide information for. |
 | `timeout?` | [`Duration`](Duration.md) | Period to wait for a response. If no response is received
 before the timeout expires, the request fails and returns an error. |
 | `type?` | [`ThreadType`](ThreadType.md) | The type to sample. |

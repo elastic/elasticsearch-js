@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `class_name` | `string` | - |
-| `importance` | `double` | - |
+| `importance` | [`double`](double.md) | - |
 
 ## See Also
 

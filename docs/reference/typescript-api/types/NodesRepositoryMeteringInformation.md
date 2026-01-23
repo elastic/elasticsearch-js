@@ -10,8 +10,8 @@
 | `repository_type` | `string` | Repository type. |
 | `repository_location` | [`NodesRepositoryLocation`](NodesRepositoryLocation.md) | Represents an unique location within the repository. |
 | `repository_ephemeral_id` | [`Id`](Id.md) | An identifier that changes every time the repository is updated. |
-| `repository_started_at` | `EpochTime<UnitMillis>` | Time the repository was created or updated. Recorded in milliseconds since the Unix Epoch. |
-| `repository_stopped_at?` | `EpochTime<UnitMillis>` | Time the repository was deleted or updated. Recorded in milliseconds since the Unix Epoch. |
+| `repository_started_at` | [`EpochTime`](EpochTime.md)<UnitMillis> | Time the repository was created or updated. Recorded in milliseconds since the Unix Epoch. |
+| `repository_stopped_at?` | [`EpochTime`](EpochTime.md)<UnitMillis> | Time the repository was deleted or updated. Recorded in milliseconds since the Unix Epoch. |
 | `archived` | `boolean` | A flag that tells whether or not this object has been archived. When a repository is closed or updated the
 repository metering information is archived and kept for a certain period of time. This allows retrieving the
 repository metering information of previous repository instantiations. |

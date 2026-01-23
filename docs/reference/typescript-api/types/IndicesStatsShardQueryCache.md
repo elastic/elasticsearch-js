@@ -6,13 +6,13 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `cache_count` | `long` | - |
-| `cache_size` | `long` | - |
-| `evictions` | `long` | - |
-| `hit_count` | `long` | - |
-| `memory_size_in_bytes` | `long` | - |
-| `miss_count` | `long` | - |
-| `total_count` | `long` | - |
+| `cache_count` | [`long`](long.md) | - |
+| `cache_size` | [`long`](long.md) | - |
+| `evictions` | [`long`](long.md) | - |
+| `hit_count` | [`long`](long.md) | - |
+| `memory_size_in_bytes` | [`long`](long.md) | - |
+| `miss_count` | [`long`](long.md) | - |
+| `total_count` | [`long`](long.md) | - |
 
 ## See Also
 

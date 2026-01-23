@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `current` | `long` | - |
-| `total` | `long` | - |
+| `current` | [`long`](long.md) | - |
+| `total` | [`long`](long.md) | - |
 | `total_time?` | [`Duration`](Duration.md) | - |
-| `total_time_in_millis` | `DurationValue<UnitMillis>` | - |
+| `total_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -12,12 +16,12 @@ If no index is specified or the index does not have a default analyzer, the anal
 | `analyzer?` | `string` | The name of the analyzer that should be applied to the provided `text`.
 This could be a built-in analyzer, or an analyzer that’s been configured in the index. |
 | `attributes?` | `string[]` | Array of token attributes used to filter the output of the `explain` parameter. |
-| `char_filter?` | `AnalysisCharFilter[]` | Array of character filters used to preprocess characters before the tokenizer. |
+| `char_filter?` | [`AnalysisCharFilter`](AnalysisCharFilter.md)[] | Array of character filters used to preprocess characters before the tokenizer. |
 | `explain?` | `boolean` | If `true`, the response includes token attributes and additional details. |
 | `field?` | [`Field`](Field.md) | Field used to derive the analyzer.
 To use this parameter, you must specify an index.
 If specified, the `analyzer` parameter overrides this value. |
-| `filter?` | `AnalysisTokenFilter[]` | Array of token filters used to apply after the tokenizer. |
+| `filter?` | [`AnalysisTokenFilter`](AnalysisTokenFilter.md)[] | Array of token filters used to apply after the tokenizer. |
 | `normalizer?` | `string` | Normalizer to use to convert text into a single token. |
 | `text?` | [`IndicesAnalyzeTextToAnalyze`](IndicesAnalyzeTextToAnalyze.md) | Text to analyze.
 If an array of strings is provided, it is analyzed as a multi-value field. |

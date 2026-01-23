@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `end_offset?` | `integer` | - |
+| `end_offset?` | [`integer`](integer.md) | - |
 | `payload?` | `string` | - |
-| `position` | `integer` | - |
-| `start_offset?` | `integer` | - |
+| `position` | [`integer`](integer.md) | - |
+| `start_offset?` | [`integer`](integer.md) | - |
 
 ## See Also
 

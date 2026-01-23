@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RankEvalRankEvalMetricBase`](RankEvalRankEvalMetricBase.md)
+
 ### Properties
 
 | Property | Type | Description |

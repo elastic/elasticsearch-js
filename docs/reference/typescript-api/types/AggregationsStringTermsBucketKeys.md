@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsTermsBucketBase`](AggregationsTermsBucketBase.md)
+
 ### Properties
 
 | Property | Type | Description |

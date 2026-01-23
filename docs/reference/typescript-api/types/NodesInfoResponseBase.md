@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`NodesNodesResponseBase`](NodesNodesResponseBase.md)
+
 ### Properties
 
 | Property | Type | Description |

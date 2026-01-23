@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'LMDirichlet'` | - |
-| `mu?` | `double` | - |
+| `mu?` | [`double`](double.md) | - |
 
 ## See Also
 

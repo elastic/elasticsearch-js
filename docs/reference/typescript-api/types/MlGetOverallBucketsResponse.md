@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `overall_buckets` | `MlOverallBucket[]` | Array of overall bucket objects |
+| `count` | [`long`](long.md) | - |
+| `overall_buckets` | [`MlOverallBucket`](MlOverallBucket.md)[] | Array of overall bucket objects |
 
 ## See Also
 

@@ -12,7 +12,7 @@
 | `id` | [`Id`](Id.md) | The unique identifier of the data frame analytics job. |
 | `memory_usage` | [`MlDataframeAnalyticsStatsMemoryUsage`](MlDataframeAnalyticsStatsMemoryUsage.md) | An object describing memory usage of the analytics. It is present only after the job is started and memory usage is reported. |
 | `node?` | [`NodeAttributes`](NodeAttributes.md) | Contains properties for the node that runs the job. This information is available only for running jobs. |
-| `progress` | `MlDataframeAnalyticsStatsProgress[]` | The progress report of the data frame analytics job by phase. |
+| `progress` | [`MlDataframeAnalyticsStatsProgress`](MlDataframeAnalyticsStatsProgress.md)[] | The progress report of the data frame analytics job by phase. |
 | `state` | [`MlDataframeState`](MlDataframeState.md) | The status of the data frame analytics job, which can be one of the following values: failed, started, starting, stopping, stopped. |
 
 ## See Also

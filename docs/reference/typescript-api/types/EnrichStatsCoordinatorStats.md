@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `executed_searches_total` | `long` | - |
+| `executed_searches_total` | [`long`](long.md) | - |
 | `node_id` | [`Id`](Id.md) | - |
-| `queue_size` | `integer` | - |
-| `remote_requests_current` | `integer` | - |
-| `remote_requests_total` | `long` | - |
+| `queue_size` | [`integer`](integer.md) | - |
+| `remote_requests_current` | [`integer`](integer.md) | - |
+| `remote_requests_total` | [`long`](long.md) | - |
 
 ## See Also
 

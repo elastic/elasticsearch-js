@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `history_id` | `string` | The history ID |
-| `version` | `long` | The version number |
+| `version` | [`long`](long.md) | The version number |
 | `dry_run?` | `boolean` | Simulate the update |
 | `master_timeout?` | [`Duration`](Duration.md) | Period to wait for a connection to the master node. |
 | `timeout?` | [`Duration`](Duration.md) | Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. |

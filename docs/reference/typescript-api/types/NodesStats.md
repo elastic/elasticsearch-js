@@ -22,7 +22,7 @@ Based on the node name setting. |
 | `script?` | [`NodesScripting`](NodesScripting.md) | Contains script statistics for the node. |
 | `script_cache?` | `Record<string, NodesScriptCache | NodesScriptCache[]>` | - |
 | `thread_pool?` | `Record<string, NodesThreadCount>` | Statistics about each thread pool, including current size, queue and rejected tasks. |
-| `timestamp?` | `long` | - |
+| `timestamp?` | [`long`](long.md) | - |
 | `transport?` | [`NodesTransport`](NodesTransport.md) | Transport statistics about sent and received bytes in cluster communication. |
 | `transport_address?` | [`TransportAddress`](TransportAddress.md) | Host and port for the transport layer, used for internal communication between nodes in a cluster. |
 | `attributes?` | `Record<Field, string>` | Contains a list of attributes for the node. |

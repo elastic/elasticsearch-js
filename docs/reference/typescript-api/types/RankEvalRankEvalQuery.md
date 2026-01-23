@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `query` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
-| `size?` | `integer` | - |
+| `size?` | [`integer`](integer.md) | - |
 
 ## See Also
 

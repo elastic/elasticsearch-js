@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `integer` | The total number of synonyms rules that the synonyms set contains. |
-| `synonyms_set` | `SynonymsSynonymRuleRead[]` | Synonym rule details. |
+| `count` | [`integer`](integer.md) | The total number of synonyms rules that the synonyms set contains. |
+| `synonyms_set` | [`SynonymsSynonymRuleRead`](SynonymsSynonymRuleRead.md)[] | Synonym rule details. |
 
 ## See Also
 

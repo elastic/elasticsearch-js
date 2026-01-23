@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingDocValuesPropertyBase`](MappingDocValuesPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `boost?` | `double` | - |
+| `boost?` | [`double`](double.md) | - |
 | `eager_global_ordinals?` | `boolean` | - |
 | `index?` | `boolean` | - |
 | `index_options?` | [`MappingIndexOptions`](MappingIndexOptions.md) | - |

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenizerBase`](AnalysisTokenizerBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -9,7 +13,7 @@
 | `type` | `'kuromoji_tokenizer'` | - |
 | `discard_punctuation?` | `boolean` | - |
 | `mode` | [`AnalysisKuromojiTokenizationMode`](AnalysisKuromojiTokenizationMode.md) | - |
-| `nbest_cost?` | `integer` | - |
+| `nbest_cost?` | [`integer`](integer.md) | - |
 | `nbest_examples?` | `string` | - |
 | `user_dictionary?` | `string` | - |
 | `user_dictionary_rules?` | `string[]` | - |

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `aliases?` | `Name[]` | - |
+| `aliases?` | [`Name`](Name.md)[] | - |
 | `filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 
 ## See Also

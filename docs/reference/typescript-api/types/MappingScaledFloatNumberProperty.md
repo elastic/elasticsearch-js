@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingNumberPropertyBase`](MappingNumberPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'scaled_float'` | - |
-| `null_value?` | `double` | - |
-| `scaling_factor?` | `double` | - |
+| `null_value?` | [`double`](double.md) | - |
+| `scaling_factor?` | [`double`](double.md) | - |
 
 ## See Also
 

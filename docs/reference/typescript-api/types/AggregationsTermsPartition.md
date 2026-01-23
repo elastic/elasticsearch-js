@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `num_partitions` | `long` | The number of partitions. |
-| `partition` | `long` | The partition number for this request. |
+| `num_partitions` | [`long`](long.md) | The number of partitions. |
+| `partition` | [`long`](long.md) | The partition number for this request. |
 
 ## See Also
 

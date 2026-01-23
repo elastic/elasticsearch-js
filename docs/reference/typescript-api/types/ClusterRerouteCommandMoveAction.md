@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `index` | [`IndexName`](IndexName.md) | - |
-| `shard` | `integer` | - |
+| `shard` | [`integer`](integer.md) | - |
 | `from_node` | `string` | The node to move the shard from |
 | `to_node` | `string` | The node to move the shard to |
 

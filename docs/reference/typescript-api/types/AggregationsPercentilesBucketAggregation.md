@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsPipelineAggregationBase`](AggregationsPipelineAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `percents?` | `double[]` | The list of percentiles to calculate. |
+| `percents?` | [`double`](double.md)[] | The list of percentiles to calculate. |
 
 ## See Also
 

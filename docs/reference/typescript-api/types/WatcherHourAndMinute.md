@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `hour` | `integer[]` | - |
-| `minute` | `integer[]` | - |
+| `hour` | [`integer`](integer.md)[] | - |
+| `minute` | [`integer`](integer.md)[] | - |
 
 ## See Also
 

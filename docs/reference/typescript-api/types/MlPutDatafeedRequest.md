@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -39,7 +43,7 @@ nodes and the machine learning nodes must have the `remote_cluster_client` role.
 nodes and the machine learning nodes must have the `remote_cluster_client` role. |
 | `indices_options?` | [`IndicesOptions`](IndicesOptions.md) | Specifies index expansion options that are used during search |
 | `job_id?` | [`Id`](Id.md) | Identifier for the anomaly detection job. |
-| `max_empty_searches?` | `integer` | If a real-time datafeed has never seen any data (including during any initial training period), it automatically
+| `max_empty_searches?` | [`integer`](integer.md) | If a real-time datafeed has never seen any data (including during any initial training period), it automatically
 stops and closes the associated job after this many real-time searches return no documents. In other words,
 it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
 end time that sees no data remains started until it is explicitly stopped. By default, it is not set. |
@@ -53,7 +57,7 @@ when there are multiple jobs running on the same node. |
 | `runtime_mappings?` | [`MappingRuntimeFields`](MappingRuntimeFields.md) | Specifies runtime fields for the datafeed search. |
 | `script_fields?` | `Record<string, ScriptField>` | Specifies scripts that evaluate custom expressions and returns script fields to the datafeed.
 The detector configuration objects in a job can contain functions that use these script fields. |
-| `scroll_size?` | `integer` | The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
+| `scroll_size?` | [`integer`](integer.md) | The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`, which is 10,000 by default. |
 | `headers?` | [`HttpHeaders`](HttpHeaders.md) | - |
 | `body?` | `string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }` | All values in `body` will be added to the request body. |

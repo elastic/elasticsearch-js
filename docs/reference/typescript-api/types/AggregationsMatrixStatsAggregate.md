@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsAggregateBase`](AggregationsAggregateBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `doc_count` | `long` | - |
-| `fields?` | `AggregationsMatrixStatsFields[]` | - |
+| `doc_count` | [`long`](long.md) | - |
+| `fields?` | [`AggregationsMatrixStatsFields`](AggregationsMatrixStatsFields.md)[] | - |
 
 ## See Also
 

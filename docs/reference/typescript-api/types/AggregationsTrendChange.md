@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `p_value` | `double` | - |
-| `r_value` | `double` | - |
-| `change_point` | `integer` | - |
+| `p_value` | [`double`](double.md) | - |
+| `r_value` | [`double`](double.md) | - |
+| `change_point` | [`integer`](integer.md) | - |
 
 ## See Also
 

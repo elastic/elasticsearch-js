@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `create_time?` | `EpochTime<UnitMillis>` | - |
+| `create_time?` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `description?` | `string` | - |
 | `inference_config?` | `Record<string, any>` | - |
 | `metadata?` | [`Metadata`](Metadata.md) | - |

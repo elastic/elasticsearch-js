@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingCorePropertyBase`](MappingCorePropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -9,7 +13,7 @@
 | `analyzer?` | `string` | - |
 | `index?` | `boolean` | - |
 | `index_options?` | [`MappingIndexOptions`](MappingIndexOptions.md) | - |
-| `max_shingle_size?` | `integer` | - |
+| `max_shingle_size?` | [`integer`](integer.md) | - |
 | `norms?` | `boolean` | - |
 | `search_analyzer?` | `string` | - |
 | `search_quote_analyzer?` | `string` | - |

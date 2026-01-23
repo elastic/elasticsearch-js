@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `integer` | - |
+| `count` | [`integer`](integer.md) | - |
 | `created_by` | `Record<string, long>` | - |
 | `detectors` | [`MlJobStatistics`](MlJobStatistics.md) | - |
 | `forecasts` | [`XpackUsageMlJobForecasts`](XpackUsageMlJobForecasts.md) | - |

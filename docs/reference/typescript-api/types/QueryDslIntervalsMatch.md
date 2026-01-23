@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `analyzer?` | `string` | Analyzer used to analyze terms in the query. |
-| `max_gaps?` | `integer` | Maximum number of positions between the matching terms.
+| `max_gaps?` | [`integer`](integer.md) | Maximum number of positions between the matching terms.
 Terms further apart than this are not considered matches. |
 | `ordered?` | `boolean` | If `true`, matching terms must appear in their specified order. |
 | `query` | `string` | Text you wish to find in the provided field. |

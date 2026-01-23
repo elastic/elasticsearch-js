@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `applications` | `SecurityApplicationPrivileges[]` | - |
+| `applications` | [`SecurityApplicationPrivileges`](SecurityApplicationPrivileges.md)[] | - |
 | `cluster` | `string[]` | - |
-| `remote_cluster?` | `SecurityRemoteClusterPrivileges[]` | - |
-| `global` | `SecurityGlobalPrivilege[]` | - |
-| `indices` | `SecurityUserIndicesPrivileges[]` | - |
-| `remote_indices?` | `SecurityRemoteUserIndicesPrivileges[]` | - |
+| `remote_cluster?` | [`SecurityRemoteClusterPrivileges`](SecurityRemoteClusterPrivileges.md)[] | - |
+| `global` | [`SecurityGlobalPrivilege`](SecurityGlobalPrivilege.md)[] | - |
+| `indices` | [`SecurityUserIndicesPrivileges`](SecurityUserIndicesPrivileges.md)[] | - |
+| `remote_indices?` | [`SecurityRemoteUserIndicesPrivileges`](SecurityRemoteUserIndicesPrivileges.md)[] | - |
 | `run_as` | `string[]` | - |
 
 ## See Also

@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `fetch_size?` | `integer` | The maximum number of rows (or entries) to return in one response. |
+| `fetch_size?` | [`integer`](integer.md) | The maximum number of rows (or entries) to return in one response. |
 | `filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The Elasticsearch query DSL for additional filtering. |
 | `query` | `string` | The SQL query to run. |
 | `time_zone?` | [`TimeZone`](TimeZone.md) | The ISO-8601 time zone ID for the search. |

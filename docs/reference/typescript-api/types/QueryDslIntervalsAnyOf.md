@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `intervals` | `QueryDslIntervalsContainer[]` | An array of rules to match. |
+| `intervals` | [`QueryDslIntervalsContainer`](QueryDslIntervalsContainer.md)[] | An array of rules to match. |
 | `filter?` | [`QueryDslIntervalsFilter`](QueryDslIntervalsFilter.md) | Rule used to filter returned intervals. |
 
 ## See Also

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `databases` | `IngestGetIpLocationDatabaseDatabaseConfigurationMetadata[]` | - |
+| `databases` | [`IngestGetIpLocationDatabaseDatabaseConfigurationMetadata`](IngestGetIpLocationDatabaseDatabaseConfigurationMetadata.md)[] | - |
 
 ## See Also
 

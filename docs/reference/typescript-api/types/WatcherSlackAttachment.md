@@ -11,7 +11,7 @@
 | `author_name` | `string` | - |
 | `color?` | `string` | - |
 | `fallback?` | `string` | - |
-| `fields?` | `WatcherSlackAttachmentField[]` | - |
+| `fields?` | [`WatcherSlackAttachmentField`](WatcherSlackAttachmentField.md)[] | - |
 | `footer?` | `string` | - |
 | `footer_icon?` | `string` | - |
 | `image_url?` | `string` | - |
@@ -20,7 +20,7 @@
 | `thumb_url?` | `string` | - |
 | `title` | `string` | - |
 | `title_link?` | `string` | - |
-| `ts?` | `EpochTime<UnitSeconds>` | - |
+| `ts?` | [`EpochTime`](EpochTime.md)<UnitSeconds> | - |
 
 ## See Also
 

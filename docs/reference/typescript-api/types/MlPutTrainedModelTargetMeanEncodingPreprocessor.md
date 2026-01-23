@@ -9,7 +9,7 @@
 | `field` | `string` | - |
 | `feature_name` | `string` | - |
 | `target_map` | `Record<string, double>` | - |
-| `default_value` | `double` | - |
+| `default_value` | [`double`](double.md) | - |
 
 ## See Also
 

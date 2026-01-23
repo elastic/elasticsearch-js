@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenizerBase`](AnalysisTokenizerBase.md)
+
 ### Properties
 
 | Property | Type | Description |

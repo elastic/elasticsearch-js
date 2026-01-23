@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -24,7 +28,7 @@ This parameter can be used only when the `q` query string parameter is specified
 | `expand_wildcards?` | [`ExpandWildcards`](ExpandWildcards.md) | The type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 It supports comma-separated values, such as `open,hidden`. |
-| `from?` | `long` | Skips the specified number of documents. |
+| `from?` | [`long`](long.md) | Skips the specified number of documents. |
 | `ignore_unavailable?` | `boolean` | If `false`, the request returns an error if it targets a missing or closed index. |
 | `lenient?` | `boolean` | If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 This parameter can be used only when the `q` query string parameter is specified. |
@@ -35,18 +39,18 @@ This is different than the delete API's `refresh` parameter, which causes just t
 Unlike the delete API, it does not support `wait_for`. |
 | `request_cache?` | `boolean` | If `true`, the request cache is used for this request.
 Defaults to the index-level setting. |
-| `requests_per_second?` | `float` | The throttle for this request in sub-requests per second. |
+| `requests_per_second?` | [`float`](float.md) | The throttle for this request in sub-requests per second. |
 | `routing?` | [`Routing`](Routing.md) | A custom value used to route operations to a specific shard. |
 | `q?` | `string` | A query in the Lucene query string syntax. |
 | `scroll?` | [`Duration`](Duration.md) | The period to retain the search context for scrolling. |
-| `scroll_size?` | `long` | The size of the scroll request that powers the operation. |
+| `scroll_size?` | [`long`](long.md) | The size of the scroll request that powers the operation. |
 | `search_timeout?` | [`Duration`](Duration.md) | The explicit timeout for each search request.
 It defaults to no timeout. |
 | `search_type?` | [`SearchType`](SearchType.md) | The type of the search operation.
 Available options include `query_then_fetch` and `dfs_query_then_fetch`. |
 | `slices?` | [`Slices`](Slices.md) | The number of slices this task should be divided into. |
 | `stats?` | `string[]` | The specific `tag` of the request for logging and statistical purposes. |
-| `terminate_after?` | `long` | The maximum number of documents to collect for each shard.
+| `terminate_after?` | [`long`](long.md) | The maximum number of documents to collect for each shard.
 If a query reaches this limit, Elasticsearch terminates the query early.
 Elasticsearch collects documents before sorting.
 
@@ -61,7 +65,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 The `timeout` value controls how long each write request waits for unavailable shards to become available. |
 | `wait_for_completion?` | `boolean` | If `true`, the request blocks until the operation is complete.
 If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to cancel or get the status of the task. Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`. When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space. |
-| `max_docs?` | `long` | The maximum number of documents to delete. |
+| `max_docs?` | [`long`](long.md) | The maximum number of documents to delete. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The documents to delete specified with Query DSL. |
 | `slice?` | [`SlicedScroll`](SlicedScroll.md) | Slice the request manually using the provided slice ID and total number of slices. |
 | `sort?` | [`Sort`](Sort.md) | A sort object that specifies the order of deleted documents. |

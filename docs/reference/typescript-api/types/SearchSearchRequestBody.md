@@ -11,7 +11,7 @@
 | `collapse?` | [`SearchFieldCollapse`](SearchFieldCollapse.md) | Collapses search results the values of the specified field. |
 | `explain?` | `boolean` | If `true`, the request returns detailed information about score computation as part of a hit. |
 | `ext?` | `Record<string, any>` | Configuration of search extensions defined by Elasticsearch plugins. |
-| `from?` | `integer` | The starting document offset, which must be non-negative.
+| `from?` | [`integer`](integer.md) | The starting document offset, which must be non-negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter. |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in your search results. |
@@ -26,7 +26,7 @@ A boost value between `0` and `1.0` decreases the score. |
 The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. |
 | `knn?` | `KnnSearch | KnnSearch[]` | The approximate kNN search to run. |
 | `rank?` | [`RankContainer`](RankContainer.md) | The Reciprocal Rank Fusion (RRF) to use. |
-| `min_score?` | `double` | The minimum `_score` for matching documents.
+| `min_score?` | [`double`](double.md) | The minimum `_score` for matching documents.
 Documents with a lower `_score` are not included in search results or results collected by aggregations. |
 | `post_filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | Use the `post_filter` parameter to filter search results.
 The search hits are filtered after the aggregations are calculated.
@@ -39,7 +39,7 @@ NOTE: This is a debugging tool and adds significant overhead to search execution
 A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`. |
 | `script_fields?` | `Record<string, ScriptField>` | Retrieve a script evaluation (based on different fields) for each hit. |
 | `search_after?` | [`SortResults`](SortResults.md) | Used to retrieve the next page of hits using a set of sort values from the previous page. |
-| `size?` | `integer` | The number of hits to return, which must not be negative.
+| `size?` | [`integer`](integer.md) | The number of hits to return, which must not be negative.
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` property. |
 | `slice?` | [`SlicedScroll`](SlicedScroll.md) | Split a scrolled search into multiple slices that can be consumed independently. |
@@ -51,7 +51,7 @@ Otherwise, it defaults to `true`. |
 | `fields?` | `(QueryDslFieldAndFormat | Field)[]` | An array of wildcard (`*`) field patterns.
 The request returns values for field names matching these patterns in the `hits.fields` property of the response. |
 | `suggest?` | [`SearchSuggester`](SearchSuggester.md) | Defines a suggester that provides similar looking terms based on a provided text. |
-| `terminate_after?` | `long` | The maximum number of documents to collect for each shard.
+| `terminate_after?` | [`long`](long.md) | The maximum number of documents to collect for each shard.
 If a query reaches this limit, Elasticsearch terminates the query early.
 Elasticsearch collects documents before sorting.
 

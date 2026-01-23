@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `scroll_size` | `integer` | - |
+| `scroll_size` | [`integer`](integer.md) | - |
 
 ## See Also
 

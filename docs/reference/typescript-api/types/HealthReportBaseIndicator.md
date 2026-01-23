@@ -8,8 +8,8 @@
 |----------|------|-------------|
 | `status` | [`HealthReportIndicatorHealthStatus`](HealthReportIndicatorHealthStatus.md) | - |
 | `symptom` | `string` | - |
-| `impacts?` | `HealthReportImpact[]` | - |
-| `diagnosis?` | `HealthReportDiagnosis[]` | - |
+| `impacts?` | [`HealthReportImpact`](HealthReportImpact.md)[] | - |
+| `diagnosis?` | [`HealthReportDiagnosis`](HealthReportDiagnosis.md)[] | - |
 
 ## See Also
 

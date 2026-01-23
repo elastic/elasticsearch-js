@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -19,7 +23,7 @@ To override the default behavior, you can set the `esql.query.allow_partial_resu
 | `columnar?` | `boolean` | By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results. |
 | `filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. |
 | `locale?` | `string` | - |
-| `params?` | `EsqlESQLParam[]` | To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. |
+| `params?` | [`EsqlESQLParam`](EsqlESQLParam.md)[] | To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. |
 | `profile?` | `boolean` | If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance

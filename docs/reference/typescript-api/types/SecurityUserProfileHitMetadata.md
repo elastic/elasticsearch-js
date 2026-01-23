@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `_primary_term` | `long` | - |
+| `_primary_term` | [`long`](long.md) | - |
 | `_seq_no` | [`SequenceNumber`](SequenceNumber.md) | - |
 
 ## See Also

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `model_snapshot_upgrades` | `MlModelSnapshotUpgrade[]` | - |
+| `count` | [`long`](long.md) | - |
+| `model_snapshot_upgrades` | [`MlModelSnapshotUpgrade`](MlModelSnapshotUpgrade.md)[] | - |
 
 ## See Also
 

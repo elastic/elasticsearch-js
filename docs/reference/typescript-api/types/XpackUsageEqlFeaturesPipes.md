@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `pipe_tail` | `uint` | - |
-| `pipe_head` | `uint` | - |
+| `pipe_tail` | [`uint`](uint.md) | - |
+| `pipe_head` | [`uint`](uint.md) | - |
 
 ## See Also
 

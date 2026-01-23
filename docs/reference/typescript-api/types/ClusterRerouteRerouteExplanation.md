@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `command` | `string` | - |
-| `decisions` | `ClusterRerouteRerouteDecision[]` | - |
+| `decisions` | [`ClusterRerouteRerouteDecision`](ClusterRerouteRerouteDecision.md)[] | - |
 | `parameters` | [`ClusterRerouteRerouteParameters`](ClusterRerouteRerouteParameters.md) | - |
 
 ## See Also

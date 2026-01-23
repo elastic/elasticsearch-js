@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `lenient` | `SpecUtilsStringified<boolean>` | - |
+| `lenient` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<boolean> | - |
 
 ## See Also
 

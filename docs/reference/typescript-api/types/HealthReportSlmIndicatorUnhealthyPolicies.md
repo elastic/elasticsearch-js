@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
+| `count` | [`long`](long.md) | - |
 | `invocations_since_last_success?` | `Record<string, long>` | - |
 
 ## See Also

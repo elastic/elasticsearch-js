@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_thread_count?` | `SpecUtilsStringified<integer>` | - |
-| `max_merge_count?` | `SpecUtilsStringified<integer>` | - |
+| `max_thread_count?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<integer> | - |
+| `max_merge_count?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<integer> | - |
 
 ## See Also
 

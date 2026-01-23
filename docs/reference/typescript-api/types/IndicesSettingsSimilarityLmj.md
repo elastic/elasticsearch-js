@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'LMJelinekMercer'` | - |
-| `lambda?` | `double` | - |
+| `lambda?` | [`double`](double.md) | - |
 
 ## See Also
 

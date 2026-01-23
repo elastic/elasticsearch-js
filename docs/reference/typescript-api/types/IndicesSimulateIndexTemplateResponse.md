@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `overlapping?` | `IndicesSimulateTemplateOverlapping[]` | - |
+| `overlapping?` | [`IndicesSimulateTemplateOverlapping`](IndicesSimulateTemplateOverlapping.md)[] | - |
 | `template` | [`IndicesSimulateTemplateTemplate`](IndicesSimulateTemplateTemplate.md) | - |
 
 ## See Also

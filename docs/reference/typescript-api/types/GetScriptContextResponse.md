@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `contexts` | `GetScriptContextContext[]` | - |
+| `contexts` | [`GetScriptContextContext`](GetScriptContextContext.md)[] | - |
 
 ## See Also
 

@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsPipelineAggregationBase`](AggregationsPipelineAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `minimize?` | `boolean` | - |
-| `predict?` | `integer` | - |
-| `window?` | `integer` | - |
+| `predict?` | [`integer`](integer.md) | - |
+| `window?` | [`integer`](integer.md) | - |
 
 ## See Also
 

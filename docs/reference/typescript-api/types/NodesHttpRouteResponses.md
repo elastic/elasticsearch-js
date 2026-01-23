@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `total_size_in_bytes` | `long` | - |
-| `handling_time_histogram` | `NodesTimeHttpHistogram[]` | - |
-| `size_histogram` | `NodesSizeHttpHistogram[]` | - |
+| `count` | [`long`](long.md) | - |
+| `total_size_in_bytes` | [`long`](long.md) | - |
+| `handling_time_histogram` | [`NodesTimeHttpHistogram`](NodesTimeHttpHistogram.md)[] | - |
+| `size_histogram` | [`NodesSizeHttpHistogram`](NodesSizeHttpHistogram.md)[] | - |
 
 ## See Also
 

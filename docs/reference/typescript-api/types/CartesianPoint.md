@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `x` | `double` | - |
-| `y` | `double` | - |
+| `x` | [`double`](double.md) | - |
+| `y` | [`double`](double.md) | - |
 
 ## See Also
 

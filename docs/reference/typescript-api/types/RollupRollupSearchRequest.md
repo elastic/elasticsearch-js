@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -18,7 +22,7 @@ This parameter has the following rules:
 | `aggregations?` | `Record<string, AggregationsAggregationContainer>` | Specifies aggregations. |
 | `aggs?` | `Record<string, AggregationsAggregationContainer>` | Specifies aggregations. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | Specifies a DSL query that is subject to some limitations. |
-| `size?` | `integer` | Must be zero if set, as rollups work on pre-aggregated data. |
+| `size?` | [`integer`](integer.md) | Must be zero if set, as rollups work on pre-aggregated data. |
 | `body?` | `string | { [key: string]: any } & { index?: never, rest_total_hits_as_int?: never, typed_keys?: never, aggregations?: never, aggs?: never, query?: never, size?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { index?: never, rest_total_hits_as_int?: never, typed_keys?: never, aggregations?: never, aggs?: never, query?: never, size?: never }` | All values in `querystring` will be added to the request querystring. |
 

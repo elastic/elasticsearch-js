@@ -17,10 +17,10 @@ For information about creating and managing access and secret keys, refer to the
 | `target_model?` | `string` | The model ID when calling a multi-model endpoint. |
 | `target_container_hostname?` | `string` | The container to directly invoke when calling a multi-container endpoint. |
 | `inference_component_name?` | `string` | The inference component to directly invoke when calling a multi-component endpoint. |
-| `batch_size?` | `integer` | The maximum number of inputs in each batch. This value is used by inference ingestion pipelines
+| `batch_size?` | [`integer`](integer.md) | The maximum number of inputs in each batch. This value is used by inference ingestion pipelines
 when processing semantic values. It correlates to the number of times the SageMaker endpoint is
 invoked (one per batch of input). |
-| `dimensions?` | `integer` | The number of dimensions returned by the text embedding models. If this value is not provided, then
+| `dimensions?` | [`integer`](integer.md) | The number of dimensions returned by the text embedding models. If this value is not provided, then
 it is guessed by making invoking the endpoint for the `text_embedding` task. |
 
 ## See Also

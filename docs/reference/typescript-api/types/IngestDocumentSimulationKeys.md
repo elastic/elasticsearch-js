@@ -11,7 +11,7 @@
 | `_ingest` | [`IngestIngest`](IngestIngest.md) | - |
 | `_routing?` | `string` | Value used to send the document to a specific primary shard. |
 | `_source` | `Record<string, any>` | JSON body for the document. |
-| `_version?` | `SpecUtilsStringified<VersionNumber>` | - |
+| `_version?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<VersionNumber> | - |
 | `_version_type?` | [`VersionType`](VersionType.md) | - |
 
 ## See Also

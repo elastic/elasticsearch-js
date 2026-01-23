@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `scaling_factor` | `float` | Configurable scaling factor. |
+| `scaling_factor` | [`float`](float.md) | Configurable scaling factor. |
 
 ## See Also
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `methods` | `GetScriptContextContextMethod[]` | - |
+| `methods` | [`GetScriptContextContextMethod`](GetScriptContextContextMethod.md)[] | - |
 | `name` | [`Name`](Name.md) | - |
 
 ## See Also

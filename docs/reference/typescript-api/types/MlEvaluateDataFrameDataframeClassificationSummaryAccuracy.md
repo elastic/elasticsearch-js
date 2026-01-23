@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `classes` | `MlEvaluateDataFrameDataframeEvaluationClass[]` | - |
-| `overall_accuracy` | `double` | - |
+| `classes` | [`MlEvaluateDataFrameDataframeEvaluationClass`](MlEvaluateDataFrameDataframeEvaluationClass.md)[] | - |
+| `overall_accuracy` | [`double`](double.md) | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`NodesNodesResponseBase`](NodesNodesResponseBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -13,7 +17,7 @@
 | `repositories` | `Record<Name, Record<Name, long>>` | Contains stats on repository feature usage exposed in cluster stats for telemetry. |
 | `snapshots` | [`ClusterStatsClusterSnapshotStats`](ClusterStatsClusterSnapshotStats.md) | Contains stats cluster snapshots. |
 | `status?` | [`HealthStatus`](HealthStatus.md) | Health status of the cluster, based on the state of its primary and replica shards. |
-| `timestamp` | `long` | Unix timestamp, in milliseconds, for the last time the cluster statistics were refreshed. |
+| `timestamp` | [`long`](long.md) | Unix timestamp, in milliseconds, for the last time the cluster statistics were refreshed. |
 | `ccs` | [`ClusterStatsCCSStats`](ClusterStatsCCSStats.md) | Cross-cluster stats |
 
 ## See Also

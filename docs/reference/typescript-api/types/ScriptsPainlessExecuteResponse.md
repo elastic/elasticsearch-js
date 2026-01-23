@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `result` | [`TResult`](TResult.md) | - |
+| `result` | `TResult` | - |
 
 ## See Also
 

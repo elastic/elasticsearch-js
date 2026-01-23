@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RetrieverBase`](RetrieverBase.md)
+
 ### Properties
 
 | Property | Type | Description |

@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'included_in'` | - |
-| `constraint` | `ScalarValue[]` | - |
+| `constraint` | [`ScalarValue`](ScalarValue.md)[] | - |
 
 ## See Also
 

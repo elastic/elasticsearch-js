@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsStatsAggregate`](AggregationsStatsAggregate.md)
+
 ### Properties
 
 | Property | Type | Description |

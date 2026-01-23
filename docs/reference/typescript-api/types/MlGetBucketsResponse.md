@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `buckets` | `MlBucketSummary[]` | - |
-| `count` | `long` | - |
+| `buckets` | [`MlBucketSummary`](MlBucketSummary.md)[] | - |
+| `count` | [`long`](long.md) | - |
 
 ## See Also
 

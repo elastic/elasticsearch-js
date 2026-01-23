@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisCompoundWordTokenFilterBase`](AnalysisCompoundWordTokenFilterBase.md)
+
 ### Properties
 
 | Property | Type | Description |

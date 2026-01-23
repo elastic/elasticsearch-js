@@ -6,18 +6,18 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `documents_processed` | `long` | - |
-| `index_failures` | `long` | - |
-| `index_time_in_ms` | `DurationValue<UnitMillis>` | - |
-| `index_total` | `long` | - |
-| `pages_processed` | `long` | - |
-| `rollups_indexed` | `long` | - |
-| `search_failures` | `long` | - |
-| `search_time_in_ms` | `DurationValue<UnitMillis>` | - |
-| `search_total` | `long` | - |
-| `trigger_count` | `long` | - |
-| `processing_time_in_ms` | `DurationValue<UnitMillis>` | - |
-| `processing_total` | `long` | - |
+| `documents_processed` | [`long`](long.md) | - |
+| `index_failures` | [`long`](long.md) | - |
+| `index_time_in_ms` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `index_total` | [`long`](long.md) | - |
+| `pages_processed` | [`long`](long.md) | - |
+| `rollups_indexed` | [`long`](long.md) | - |
+| `search_failures` | [`long`](long.md) | - |
+| `search_time_in_ms` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `search_total` | [`long`](long.md) | - |
+| `trigger_count` | [`long`](long.md) | - |
+| `processing_time_in_ms` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `processing_total` | [`long`](long.md) | - |
 
 ## See Also
 

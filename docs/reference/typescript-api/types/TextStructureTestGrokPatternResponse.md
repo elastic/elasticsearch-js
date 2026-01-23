@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `matches` | `TextStructureTestGrokPatternMatchedText[]` | - |
+| `matches` | [`TextStructureTestGrokPatternMatchedText`](TextStructureTestGrokPatternMatchedText.md)[] | - |
 
 ## See Also
 

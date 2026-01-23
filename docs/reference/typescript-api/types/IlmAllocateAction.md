@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `number_of_replicas?` | `integer` | - |
-| `total_shards_per_node?` | `integer` | - |
+| `number_of_replicas?` | [`integer`](integer.md) | - |
+| `total_shards_per_node?` | [`integer`](integer.md) | - |
 | `include?` | `Record<string, string>` | - |
 | `exclude?` | `Record<string, string>` | - |
 | `require?` | `Record<string, string>` | - |

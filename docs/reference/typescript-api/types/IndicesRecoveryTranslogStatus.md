@@ -7,11 +7,11 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `percent` | [`Percentage`](Percentage.md) | - |
-| `recovered` | `long` | - |
-| `total` | `long` | - |
-| `total_on_start` | `long` | - |
+| `recovered` | [`long`](long.md) | - |
+| `total` | [`long`](long.md) | - |
+| `total_on_start` | [`long`](long.md) | - |
 | `total_time?` | [`Duration`](Duration.md) | - |
-| `total_time_in_millis` | `DurationValue<UnitMillis>` | - |
+| `total_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 
 ## See Also
 

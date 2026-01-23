@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`ShardsOperationResponseBase`](ShardsOperationResponseBase.md)
+
 ### Properties
 
 | Property | Type | Description |

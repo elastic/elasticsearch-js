@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `aggregations?` | [`TAggregations`](TAggregations.md) | Partial aggregations results, coming from the shards that have already completed running the query. |
+| `aggregations?` | `TAggregations` | Partial aggregations results, coming from the shards that have already completed running the query. |
 | `_clusters?` | [`ClusterStatistics`](ClusterStatistics.md) | - |
 | `fields?` | `Record<string, any>` | - |
-| `hits` | `SearchHitsMetadata<TDocument>` | - |
-| `max_score?` | `double` | - |
-| `num_reduce_phases?` | `long` | Indicates how many reductions of the results have been performed.
+| `hits` | [`SearchHitsMetadata`](SearchHitsMetadata.md)<TDocument> | - |
+| `max_score?` | [`double`](double.md) | - |
+| `num_reduce_phases?` | [`long`](long.md) | Indicates how many reductions of the results have been performed.
 If this number increases compared to the last retrieved results for a get asynch search request, you can expect additional results included in the search response. |
 | `profile?` | [`SearchProfile`](SearchProfile.md) | - |
 | `pit_id?` | [`Id`](Id.md) | - |
@@ -21,7 +21,7 @@ Note that in order for shard results to be included in the search response, they
 | `suggest?` | `Record<SuggestionName, SearchSuggest<TDocument>[]>` | - |
 | `terminated_early?` | `boolean` | - |
 | `timed_out` | `boolean` | - |
-| `took` | `long` | - |
+| `took` | [`long`](long.md) | - |
 
 ## See Also
 

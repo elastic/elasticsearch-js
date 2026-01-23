@@ -17,9 +17,9 @@
 | `time_series_dimension?` | `boolean` | Whether this field is used as a time series dimension. |
 | `time_series_metric?` | [`MappingTimeSeriesMetricType`](MappingTimeSeriesMetricType.md) | Contains metric type if this fields is used as a time series
 metrics, absent if the field is not used as metric. |
-| `non_dimension_indices?` | `IndexName[]` | If this list is present in response then some indices have the
+| `non_dimension_indices?` | [`IndexName`](IndexName.md)[] | If this list is present in response then some indices have the
 field marked as a dimension and other indices, the ones in this list, do not. |
-| `metric_conflicts_indices?` | `IndexName[]` | The list of indices where this field is present if these indices
+| `metric_conflicts_indices?` | [`IndexName`](IndexName.md)[] | The list of indices where this field is present if these indices
 don’t have the same `time_series_metric` value for this field. |
 
 ## See Also

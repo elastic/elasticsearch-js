@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `text` | `string` | - |
-| `score` | `double` | - |
-| `freq` | `long` | - |
+| `score` | [`double`](double.md) | - |
+| `freq` | [`long`](long.md) | - |
 | `highlighted?` | `string` | - |
 | `collate_match?` | `boolean` | - |
 

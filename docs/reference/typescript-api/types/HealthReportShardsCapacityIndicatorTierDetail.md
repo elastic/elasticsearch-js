@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_shards_in_cluster` | `integer` | - |
-| `current_used_shards?` | `integer` | - |
+| `max_shards_in_cluster` | [`integer`](integer.md) | - |
+| `current_used_shards?` | [`integer`](integer.md) | - |
 
 ## See Also
 

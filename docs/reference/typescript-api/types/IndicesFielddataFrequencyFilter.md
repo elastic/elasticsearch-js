@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max` | `double` | - |
-| `min` | `double` | - |
-| `min_segment_size` | `integer` | - |
+| `max` | [`double`](double.md) | - |
+| `min` | [`double`](double.md) | - |
+| `min_segment_size` | [`integer`](integer.md) | - |
 
 ## See Also
 

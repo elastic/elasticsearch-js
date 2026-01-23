@@ -9,7 +9,7 @@
 | `node_id` | [`NodeId`](NodeId.md) | - |
 | `type` | [`ShutdownGetNodeShutdownType`](ShutdownGetNodeShutdownType.md) | - |
 | `reason` | `string` | - |
-| `shutdown_startedmillis` | `EpochTime<UnitMillis>` | - |
+| `shutdown_startedmillis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `status` | [`ShutdownGetNodeShutdownStatus`](ShutdownGetNodeShutdownStatus.md) | - |
 | `shard_migration` | [`ShutdownGetNodeShardMigrationStatus`](ShutdownGetNodeShardMigrationStatus.md) | - |
 | `persistent_tasks` | [`ShutdownGetNodePersistentTaskStatus`](ShutdownGetNodePersistentTaskStatus.md) | - |

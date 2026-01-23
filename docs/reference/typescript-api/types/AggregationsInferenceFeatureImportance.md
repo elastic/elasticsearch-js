@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `feature_name` | `string` | - |
-| `importance?` | `double` | - |
-| `classes?` | `AggregationsInferenceClassImportance[]` | - |
+| `importance?` | [`double`](double.md) | - |
+| `classes?` | [`AggregationsInferenceClassImportance`](AggregationsInferenceClassImportance.md)[] | - |
 
 ## See Also
 

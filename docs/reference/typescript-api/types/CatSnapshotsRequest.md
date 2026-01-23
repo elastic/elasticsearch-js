@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`CatCatRequestBase`](CatCatRequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |

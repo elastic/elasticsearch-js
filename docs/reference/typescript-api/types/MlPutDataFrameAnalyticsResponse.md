@@ -10,11 +10,11 @@
 | `allow_lazy_start` | `boolean` | - |
 | `analysis` | [`MlDataframeAnalysisContainer`](MlDataframeAnalysisContainer.md) | - |
 | `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string[]` | - |
-| `create_time` | `EpochTime<UnitMillis>` | - |
+| `create_time` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `description?` | `string` | - |
 | `dest` | [`MlDataframeAnalyticsDestination`](MlDataframeAnalyticsDestination.md) | - |
 | `id` | [`Id`](Id.md) | - |
-| `max_num_threads` | `integer` | - |
+| `max_num_threads` | [`integer`](integer.md) | - |
 | `_meta?` | [`Metadata`](Metadata.md) | - |
 | `model_memory_limit` | `string` | - |
 | `source` | [`MlDataframeAnalyticsSource`](MlDataframeAnalyticsSource.md) | - |

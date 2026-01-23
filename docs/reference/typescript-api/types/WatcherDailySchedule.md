@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `at` | `WatcherScheduleTimeOfDay[]` | - |
+| `at` | [`WatcherScheduleTimeOfDay`](WatcherScheduleTimeOfDay.md)[] | - |
 
 ## See Also
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `docs` | `MsearchResponseItem<TDocument>[]` | - |
+| `docs` | [`MsearchResponseItem`](MsearchResponseItem.md)<TDocument>[] | - |
 
 ## See Also
 

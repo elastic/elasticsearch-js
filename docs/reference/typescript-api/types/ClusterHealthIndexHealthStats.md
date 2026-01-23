@@ -6,16 +6,16 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `active_primary_shards` | `integer` | - |
-| `active_shards` | `integer` | - |
-| `initializing_shards` | `integer` | - |
-| `number_of_replicas` | `integer` | - |
-| `number_of_shards` | `integer` | - |
-| `relocating_shards` | `integer` | - |
+| `active_primary_shards` | [`integer`](integer.md) | - |
+| `active_shards` | [`integer`](integer.md) | - |
+| `initializing_shards` | [`integer`](integer.md) | - |
+| `number_of_replicas` | [`integer`](integer.md) | - |
+| `number_of_shards` | [`integer`](integer.md) | - |
+| `relocating_shards` | [`integer`](integer.md) | - |
 | `shards?` | `Record<string, ClusterHealthShardHealthStats>` | - |
 | `status` | [`HealthStatus`](HealthStatus.md) | - |
-| `unassigned_shards` | `integer` | - |
-| `unassigned_primary_shards` | `integer` | - |
+| `unassigned_shards` | [`integer`](integer.md) | - |
+| `unassigned_primary_shards` | [`integer`](integer.md) | - |
 
 ## See Also
 

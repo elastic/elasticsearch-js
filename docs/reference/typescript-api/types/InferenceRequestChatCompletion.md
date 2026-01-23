@@ -6,13 +6,13 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `messages` | `InferenceMessage[]` | A list of objects representing the conversation.
+| `messages` | [`InferenceMessage`](InferenceMessage.md)[] | A list of objects representing the conversation.
 Requests should generally only add new messages from the user (role `user`).
 The other message roles (`assistant`, `system`, or `tool`) should generally only be copied from the response to a previous completion request, such that the messages array is built up throughout a conversation. |
 | `model?` | `string` | The ID of the model to use. By default, the model ID is set to the value included when creating the inference endpoint. |
-| `max_completion_tokens?` | `long` | The upper bound limit for the number of tokens that can be generated for a completion request. |
+| `max_completion_tokens?` | [`long`](long.md) | The upper bound limit for the number of tokens that can be generated for a completion request. |
 | `stop?` | `string[]` | A sequence of strings to control when the model should stop generating additional tokens. |
-| `temperature?` | `float` | The sampling temperature to use. |
+| `temperature?` | [`float`](float.md) | The sampling temperature to use. |
 | `tool_choice?` | [`InferenceCompletionToolType`](InferenceCompletionToolType.md) | Controls which tool is called by the model.
 String representation: One of `auto`, `none`, or `requrired`. `auto` allows the model to choose between calling tools and generating a message. `none` causes the model to not call any tools. `required` forces the model to call one or more tools.
 Example (object representation):
@@ -26,7 +26,7 @@ Example (object representation):
   }
 }
 ``` |
-| `tools?` | `InferenceCompletionTool[]` | A list of tools that the model can call.
+| `tools?` | [`InferenceCompletionTool`](InferenceCompletionTool.md)[] | A list of tools that the model can call.
 Example:
 ```
 {
@@ -52,7 +52,7 @@ Example:
   ]
 }
 ``` |
-| `top_p?` | `float` | Nucleus sampling, an alternative to sampling with temperature. |
+| `top_p?` | [`float`](float.md) | Nucleus sampling, an alternative to sampling with temperature. |
 
 ## See Also
 

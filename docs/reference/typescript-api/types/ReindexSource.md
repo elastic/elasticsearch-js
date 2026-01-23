@@ -10,7 +10,7 @@
 It accepts a comma-separated list to reindex from multiple sources. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The documents to reindex, which is defined with Query DSL. |
 | `remote?` | [`ReindexRemoteSource`](ReindexRemoteSource.md) | A remote instance of Elasticsearch that you want to index from. |
-| `size?` | `integer` | The number of documents to index per batch.
+| `size?` | [`integer`](integer.md) | The number of documents to index per batch.
 Use it when you are indexing from remote to ensure that the batches fit within the on-heap buffer, which defaults to a maximum size of 100 MB. |
 | `slice?` | [`SlicedScroll`](SlicedScroll.md) | Slice the reindex request manually using the provided slice ID and total number of slices. |
 | `sort?` | [`Sort`](Sort.md) | A comma-separated list of `<field>:<direction>` pairs to sort by before indexing.

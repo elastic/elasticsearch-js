@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SearchHighlightBase`](SearchHighlightBase.md)
+
 ### Properties
 
 | Property | Type | Description |

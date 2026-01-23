@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `datafeeds` | `MlDatafeedStats[]` | - |
+| `count` | [`long`](long.md) | - |
+| `datafeeds` | [`MlDatafeedStats`](MlDatafeedStats.md)[] | - |
 
 ## See Also
 

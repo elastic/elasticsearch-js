@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `policies` | `EnrichSummary[]` | - |
+| `policies` | [`EnrichSummary`](EnrichSummary.md)[] | - |
 
 ## See Also
 

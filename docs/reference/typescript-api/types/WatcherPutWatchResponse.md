@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `created` | `boolean` | - |
 | `_id` | [`Id`](Id.md) | - |
-| `_primary_term` | `long` | - |
+| `_primary_term` | [`long`](long.md) | - |
 | `_seq_no` | [`SequenceNumber`](SequenceNumber.md) | - |
 | `_version` | [`VersionNumber`](VersionNumber.md) | - |
 

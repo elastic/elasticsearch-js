@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `classification?` | `integer` | - |
-| `outlier_detection?` | `integer` | - |
-| `regression?` | `integer` | - |
+| `classification?` | [`integer`](integer.md) | - |
+| `outlier_detection?` | [`integer`](integer.md) | - |
+| `regression?` | [`integer`](integer.md) | - |
 
 ## See Also
 

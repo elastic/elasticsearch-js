@@ -8,18 +8,18 @@
 |----------|------|-------------|
 | `category?` | `string` | - |
 | `default_value` | [`ScalarValue`](ScalarValue.md) | - |
-| `depends_on` | `ConnectorDependency[]` | - |
+| `depends_on` | [`ConnectorDependency`](ConnectorDependency.md)[] | - |
 | `display` | [`ConnectorDisplayType`](ConnectorDisplayType.md) | - |
 | `label` | `string` | - |
-| `options` | `ConnectorSelectOption[]` | - |
-| `order?` | `integer` | - |
+| `options` | [`ConnectorSelectOption`](ConnectorSelectOption.md)[] | - |
+| `order?` | [`integer`](integer.md) | - |
 | `placeholder?` | `string` | - |
 | `required` | `boolean` | - |
 | `sensitive` | `boolean` | - |
 | `tooltip?` | `string | null` | - |
 | `type?` | [`ConnectorConnectorFieldType`](ConnectorConnectorFieldType.md) | - |
 | `ui_restrictions?` | `string[]` | - |
-| `validations?` | `ConnectorValidation[]` | - |
+| `validations?` | [`ConnectorValidation`](ConnectorValidation.md)[] | - |
 | `value` | `any` | - |
 
 ## See Also

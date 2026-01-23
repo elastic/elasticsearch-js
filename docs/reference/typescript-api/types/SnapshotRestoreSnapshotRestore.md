@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `indices` | `IndexName[]` | - |
+| `indices` | [`IndexName`](IndexName.md)[] | - |
 | `snapshot` | `string` | - |
 | `shards` | [`ShardStatistics`](ShardStatistics.md) | - |
 

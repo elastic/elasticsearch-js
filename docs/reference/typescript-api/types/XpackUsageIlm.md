@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `policy_count` | `integer` | - |
-| `policy_stats` | `XpackUsageIlmPolicyStatistics[]` | - |
+| `policy_count` | [`integer`](integer.md) | - |
+| `policy_stats` | [`XpackUsageIlmPolicyStatistics`](XpackUsageIlmPolicyStatistics.md)[] | - |
 
 ## See Also
 

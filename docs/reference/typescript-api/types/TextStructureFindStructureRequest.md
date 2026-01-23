@@ -36,9 +36,9 @@ If that parameter is not specified, the name of the timestamp field in the Grok 
 If `grok_pattern` is not specified, the structure finder creates a Grok pattern. |
 | `has_header_row?` | `boolean` | If you have set `format` to `delimited`, you can use this parameter to indicate whether the column names are in the first row of the text.
 If this parameter is not specified, the structure finder guesses based on the similarity of the first row of the text to other rows. |
-| `line_merge_size_limit?` | `uint` | The maximum number of characters in a message when lines are merged to form messages while analyzing semi-structured text.
+| `line_merge_size_limit?` | [`uint`](uint.md) | The maximum number of characters in a message when lines are merged to form messages while analyzing semi-structured text.
 If you have extremely long messages you may need to increase this, but be aware that this may lead to very long processing times if the way to group lines into messages is misdetected. |
-| `lines_to_sample?` | `uint` | The number of lines to include in the structural analysis, starting from the beginning of the text.
+| `lines_to_sample?` | [`uint`](uint.md) | The number of lines to include in the structural analysis, starting from the beginning of the text.
 The minimum is 2.
 If the value of this parameter is greater than the number of lines in the text, the analysis proceeds (as long as there are at least two lines in the text) for all of the lines.
 

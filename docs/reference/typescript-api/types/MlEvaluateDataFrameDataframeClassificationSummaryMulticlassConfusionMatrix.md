@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `confusion_matrix` | `MlEvaluateDataFrameConfusionMatrixItem[]` | - |
-| `other_actual_class_count` | `integer` | - |
+| `confusion_matrix` | [`MlEvaluateDataFrameConfusionMatrixItem`](MlEvaluateDataFrameConfusionMatrixItem.md)[] | - |
+| `other_actual_class_count` | [`integer`](integer.md) | - |
 
 ## See Also
 

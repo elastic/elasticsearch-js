@@ -2,17 +2,21 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsAggregateBase`](AggregationsAggregateBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `min` | `double` | - |
-| `max` | `double` | - |
-| `q1` | `double` | - |
-| `q2` | `double` | - |
-| `q3` | `double` | - |
-| `lower` | `double` | - |
-| `upper` | `double` | - |
+| `min` | [`double`](double.md) | - |
+| `max` | [`double`](double.md) | - |
+| `q1` | [`double`](double.md) | - |
+| `q2` | [`double`](double.md) | - |
+| `q3` | [`double`](double.md) | - |
+| `lower` | [`double`](double.md) | - |
+| `upper` | [`double`](double.md) | - |
 | `min_as_string?` | `string` | - |
 | `max_as_string?` | `string` | - |
 | `q1_as_string?` | `string` | - |

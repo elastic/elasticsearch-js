@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | `string` | - |
-| `tokens` | `IndicesAnalyzeExplainAnalyzeToken[]` | - |
+| `tokens` | [`IndicesAnalyzeExplainAnalyzeToken`](IndicesAnalyzeExplainAnalyzeToken.md)[] | - |
 
 ## See Also
 

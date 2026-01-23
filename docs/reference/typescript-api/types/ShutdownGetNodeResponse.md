@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `nodes` | `ShutdownGetNodeNodeShutdownStatus[]` | - |
+| `nodes` | [`ShutdownGetNodeNodeShutdownStatus`](ShutdownGetNodeNodeShutdownStatus.md)[] | - |
 
 ## See Also
 

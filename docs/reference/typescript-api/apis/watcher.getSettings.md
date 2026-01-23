@@ -1,0 +1,24 @@
+# Client.watcher.getSettings
+
+## Method Signature
+
+```typescript
+client.watcher.getSettings(this: That, params?: T.WatcherGetSettingsRequest, options?: TransportRequestOptions): Promise<any>
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.WatcherGetSettingsRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
+
+### Returns
+
+`Promise<any>`
+
+## See Also
+
+- [Client](../client.md)
+- [All APIs](../index.md)

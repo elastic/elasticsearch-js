@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_token_count?` | `SpecUtilsStringified<integer>` | - |
+| `max_token_count?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<integer> | - |
 
 ## See Also
 

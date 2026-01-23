@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AcknowledgedResponseBase`](AcknowledgedResponseBase.md)
+
 ### Properties
 
 | Property | Type | Description |

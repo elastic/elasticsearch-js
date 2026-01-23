@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `length` | `integer` | - |
-| `offset` | `integer` | - |
+| `length` | [`integer`](integer.md) | - |
+| `offset` | [`integer`](integer.md) | - |
 | `text` | `string` | - |
 
 ## See Also

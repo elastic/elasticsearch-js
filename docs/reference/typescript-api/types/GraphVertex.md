@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `depth` | `long` | - |
+| `depth` | [`long`](long.md) | - |
 | `field` | [`Field`](Field.md) | - |
 | `term` | `string` | - |
-| `weight` | `double` | - |
+| `weight` | [`double`](double.md) | - |
 
 ## See Also
 

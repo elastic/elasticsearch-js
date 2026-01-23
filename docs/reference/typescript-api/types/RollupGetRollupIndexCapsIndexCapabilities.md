@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `rollup_jobs` | `RollupGetRollupIndexCapsRollupJobSummary[]` | - |
+| `rollup_jobs` | [`RollupGetRollupIndexCapsRollupJobSummary`](RollupGetRollupIndexCapsRollupJobSummary.md)[] | - |
 
 ## See Also
 

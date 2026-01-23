@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`QueryDslRangeQueryBase`](QueryDslRangeQueryBase.md)
+
 ### Properties
 
 | Property | Type | Description |

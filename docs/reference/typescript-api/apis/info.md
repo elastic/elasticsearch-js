@@ -1,21 +1,24 @@
 # Client.info
 
-## API Method
+## Method Signature
 
 ```typescript
-client.info(params?: InfoRequest): Promise<InfoResponse>
+client.info(this: That, params?: T.InfoRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`InfoRequest`](../types/InfoRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.InfoRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`InfoResponse`](../types/InfoResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

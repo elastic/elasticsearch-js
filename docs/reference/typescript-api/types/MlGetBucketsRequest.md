@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -9,9 +13,9 @@
 | `job_id` | [`Id`](Id.md) | Identifier for the anomaly detection job. |
 | `timestamp?` | [`DateTime`](DateTime.md) | The timestamp of a single bucket result. If you do not specify this
 parameter, the API returns information about all buckets. |
-| `from?` | `integer` | Skips the specified number of buckets. |
-| `size?` | `integer` | Specifies the maximum number of buckets to obtain. |
-| `anomaly_score?` | `double` | Refer to the description for the `anomaly_score` query parameter. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of buckets. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of buckets to obtain. |
+| `anomaly_score?` | [`double`](double.md) | Refer to the description for the `anomaly_score` query parameter. |
 | `desc?` | `boolean` | Refer to the description for the `desc` query parameter. |
 | `end?` | [`DateTime`](DateTime.md) | Refer to the description for the `end` query parameter. |
 | `exclude_interim?` | `boolean` | Refer to the description for the `exclude_interim` query parameter. |

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`WatcherHttpInputRequestDefinition`](WatcherHttpInputRequestDefinition.md)
+
 ## See Also
 
 - [All Types](./)

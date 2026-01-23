@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `body?` | [`WatcherSearchInputRequestBody`](WatcherSearchInputRequestBody.md) | - |
-| `indices?` | `IndexName[]` | - |
+| `indices?` | [`IndexName`](IndexName.md)[] | - |
 | `indices_options?` | [`IndicesOptions`](IndicesOptions.md) | - |
 | `search_type?` | [`SearchType`](SearchType.md) | - |
 | `template?` | [`WatcherSearchTemplateRequestBody`](WatcherSearchTemplateRequestBody.md) | - |

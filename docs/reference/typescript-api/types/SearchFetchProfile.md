@@ -8,10 +8,10 @@
 |----------|------|-------------|
 | `type` | `string` | - |
 | `description` | `string` | - |
-| `time_in_nanos` | `DurationValue<UnitNanos>` | - |
+| `time_in_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | - |
 | `breakdown` | [`SearchFetchProfileBreakdown`](SearchFetchProfileBreakdown.md) | - |
 | `debug?` | [`SearchFetchProfileDebug`](SearchFetchProfileDebug.md) | - |
-| `children?` | `SearchFetchProfile[]` | - |
+| `children?` | [`SearchFetchProfile`](SearchFetchProfile.md)[] | - |
 
 ## See Also
 

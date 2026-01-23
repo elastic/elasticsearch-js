@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `indices` | `IndicesResolveIndexResolveIndexItem[]` | - |
-| `aliases` | `IndicesResolveIndexResolveIndexAliasItem[]` | - |
-| `data_streams` | `IndicesResolveIndexResolveIndexDataStreamsItem[]` | - |
+| `indices` | [`IndicesResolveIndexResolveIndexItem`](IndicesResolveIndexResolveIndexItem.md)[] | - |
+| `aliases` | [`IndicesResolveIndexResolveIndexAliasItem`](IndicesResolveIndexResolveIndexAliasItem.md)[] | - |
+| `data_streams` | [`IndicesResolveIndexResolveIndexDataStreamsItem`](IndicesResolveIndexResolveIndexDataStreamsItem.md)[] | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SecurityRoleDescriptor`](SecurityRoleDescriptor.md)
+
 ### Properties
 
 | Property | Type | Description |

@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `repository` | [`Name`](Name.md) | - |
-| `snapshots?` | `SnapshotSnapshotInfo[]` | - |
+| `snapshots?` | [`SnapshotSnapshotInfo`](SnapshotSnapshotInfo.md)[] | - |
 | `error?` | [`ErrorCause`](ErrorCause.md) | - |
 
 ## See Also

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `failure_streak` | `long` | - |
+| `failure_streak` | [`long`](long.md) | - |
 | `most_recent_failure` | `string` | - |
 
 ## See Also

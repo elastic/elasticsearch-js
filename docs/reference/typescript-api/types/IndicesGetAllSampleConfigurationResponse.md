@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `configurations` | `IndicesGetAllSampleConfigurationIndexSamplingConfiguration[]` | - |
+| `configurations` | [`IndicesGetAllSampleConfigurationIndexSamplingConfiguration`](IndicesGetAllSampleConfigurationIndexSamplingConfiguration.md)[] | - |
 
 ## See Also
 

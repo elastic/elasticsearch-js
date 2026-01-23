@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -25,7 +29,7 @@ ELSER the config is not required. |
 | `input?` | [`MlPutTrainedModelInput`](MlPutTrainedModelInput.md) | The input field names for the model definition. |
 | `metadata?` | `any` | An object map that contains metadata about the model. |
 | `model_type?` | [`MlTrainedModelType`](MlTrainedModelType.md) | The model type. |
-| `model_size_bytes?` | `long` | The estimated memory usage in bytes to keep the trained model in memory.
+| `model_size_bytes?` | [`long`](long.md) | The estimated memory usage in bytes to keep the trained model in memory.
 This property is supported only if defer_definition_decompression is true
 or the model definition is not supplied. |
 | `platform_architecture?` | `string` | The platform architecture (if applicable) of the trained mode. If the model

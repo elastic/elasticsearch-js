@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `error` | `string` | - |
-| `status` | `integer` | - |
+| `status` | [`integer`](integer.md) | - |
 
 ## See Also
 

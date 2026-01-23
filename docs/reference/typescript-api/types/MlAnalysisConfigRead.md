@@ -15,11 +15,11 @@ The resulting categories must be used in a detector by setting `by_field_name`, 
 | `categorization_filters?` | `string[]` | If `categorization_field_name` is specified, you can also define optional filters.
 This property expects an array of regular expressions.
 The expressions are used to filter out matching sequences from the categorization field values. |
-| `detectors` | `MlDetectorRead[]` | An array of detector configuration objects.
+| `detectors` | [`MlDetectorRead`](MlDetectorRead.md)[] | An array of detector configuration objects.
 Detector configuration objects specify which data fields a job analyzes.
 They also specify which analytical functions are used.
 You can specify multiple detectors for a job. |
-| `influencers` | `Field[]` | A comma separated list of influencer field names.
+| `influencers` | [`Field`](Field.md)[] | A comma separated list of influencer field names.
 Typically these can be the by, over, or partition fields that are used in the detector configuration.
 You might also want to use a field name that is not specifically named in a detector, but is available as part of the input data.
 When you use multiple detectors, the use of influencers is recommended as it aggregates results for each influencer entity. |

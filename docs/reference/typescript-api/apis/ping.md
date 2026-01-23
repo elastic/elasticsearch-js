@@ -1,21 +1,24 @@
 # Client.ping
 
-## API Method
+## Method Signature
 
 ```typescript
-client.ping(params?: PingRequest): Promise<PingResponse>
+client.ping(this: That, params?: T.PingRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`PingRequest`](../types/PingRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.PingRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`PingResponse`](../types/PingResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

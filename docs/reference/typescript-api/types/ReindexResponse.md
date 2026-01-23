@@ -6,28 +6,28 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `batches?` | `long` | The number of scroll responses that were pulled back by the reindex. |
-| `created?` | `long` | The number of documents that were successfully created. |
-| `deleted?` | `long` | The number of documents that were successfully deleted. |
-| `failures?` | `BulkIndexByScrollFailure[]` | If there were any unrecoverable errors during the process, it is an array of those failures.
+| `batches?` | [`long`](long.md) | The number of scroll responses that were pulled back by the reindex. |
+| `created?` | [`long`](long.md) | The number of documents that were successfully created. |
+| `deleted?` | [`long`](long.md) | The number of documents that were successfully deleted. |
+| `failures?` | [`BulkIndexByScrollFailure`](BulkIndexByScrollFailure.md)[] | If there were any unrecoverable errors during the process, it is an array of those failures.
 If this array is not empty, the request ended because of those failures.
 Reindex is implemented using batches and any failure causes the entire process to end but all failures in the current batch are collected into the array.
 You can use the `conflicts` option to prevent the reindex from ending on version conflicts. |
-| `noops?` | `long` | The number of documents that were ignored because the script used for the reindex returned a `noop` value for `ctx.op`. |
+| `noops?` | [`long`](long.md) | The number of documents that were ignored because the script used for the reindex returned a `noop` value for `ctx.op`. |
 | `retries?` | [`Retries`](Retries.md) | The number of retries attempted by reindex. |
-| `requests_per_second?` | `float` | The number of requests per second effectively run during the reindex. |
-| `slice_id?` | `integer` | - |
-| `slices?` | `ReindexStatus[]` | Status of each slice if the reindex was sliced |
+| `requests_per_second?` | [`float`](float.md) | The number of requests per second effectively run during the reindex. |
+| `slice_id?` | [`integer`](integer.md) | - |
+| `slices?` | [`ReindexStatus`](ReindexStatus.md)[] | Status of each slice if the reindex was sliced |
 | `task?` | [`TaskId`](TaskId.md) | - |
-| `throttled_millis?` | `EpochTime<UnitMillis>` | The number of milliseconds the request slept to conform to `requests_per_second`. |
-| `throttled_until_millis?` | `EpochTime<UnitMillis>` | This field should always be equal to zero in a reindex response.
+| `throttled_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | The number of milliseconds the request slept to conform to `requests_per_second`. |
+| `throttled_until_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | This field should always be equal to zero in a reindex response.
 It has meaning only when using the task API, where it indicates the next time (in milliseconds since epoch) that a throttled request will be run again in order to conform to `requests_per_second`. |
 | `timed_out?` | `boolean` | If any of the requests that ran during the reindex timed out, it is `true`. |
-| `took?` | `DurationValue<UnitMillis>` | The total milliseconds the entire operation took. |
-| `total?` | `long` | The number of documents that were successfully processed. |
-| `updated?` | `long` | The number of documents that were successfully updated.
+| `took?` | [`DurationValue`](DurationValue.md)<UnitMillis> | The total milliseconds the entire operation took. |
+| `total?` | [`long`](long.md) | The number of documents that were successfully processed. |
+| `updated?` | [`long`](long.md) | The number of documents that were successfully updated.
 That is to say, a document with the same ID already existed before the reindex updated it. |
-| `version_conflicts?` | `long` | The number of version conflicts that occurred. |
+| `version_conflicts?` | [`long`](long.md) | The number of version conflicts that occurred. |
 
 ## See Also
 

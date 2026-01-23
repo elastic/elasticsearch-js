@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `records` | `MlAnomaly[]` | - |
+| `count` | [`long`](long.md) | - |
+| `records` | [`MlAnomaly`](MlAnomaly.md)[] | - |
 
 ## See Also
 

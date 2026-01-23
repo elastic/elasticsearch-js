@@ -13,8 +13,8 @@
 | `attributes` | `Record<string, string>` | Lists node attributes. |
 | `roles` | [`NodeRoles`](NodeRoles.md) | - |
 | `version` | [`VersionString`](VersionString.md) | - |
-| `min_index_version` | `integer` | - |
-| `max_index_version` | `integer` | - |
+| `min_index_version` | [`integer`](integer.md) | - |
+| `max_index_version` | [`integer`](integer.md) | - |
 
 ## See Also
 

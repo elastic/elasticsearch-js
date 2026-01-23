@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`QueryDslQueryBase`](QueryDslQueryBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_expansions?` | `integer` | Maximum number of variations created. |
-| `prefix_length?` | `integer` | Number of beginning characters left unchanged when creating expansions. |
+| `max_expansions?` | [`integer`](integer.md) | Maximum number of variations created. |
+| `prefix_length?` | [`integer`](integer.md) | Number of beginning characters left unchanged when creating expansions. |
 | `rewrite?` | [`MultiTermQueryRewrite`](MultiTermQueryRewrite.md) | Number of beginning characters left unchanged when creating expansions. |
 | `transpositions?` | `boolean` | Indicates whether edits include transpositions of two adjacent characters (for example `ab` to `ba`). |
 | `fuzziness?` | [`Fuzziness`](Fuzziness.md) | Maximum edit distance allowed for matching. |

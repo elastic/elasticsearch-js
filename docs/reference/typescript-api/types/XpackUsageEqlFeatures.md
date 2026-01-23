@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `join` | `uint` | - |
+| `join` | [`uint`](uint.md) | - |
 | `joins` | [`XpackUsageEqlFeaturesJoin`](XpackUsageEqlFeaturesJoin.md) | - |
 | `keys` | [`XpackUsageEqlFeaturesKeys`](XpackUsageEqlFeaturesKeys.md) | - |
-| `event` | `uint` | - |
+| `event` | [`uint`](uint.md) | - |
 | `pipes` | [`XpackUsageEqlFeaturesPipes`](XpackUsageEqlFeaturesPipes.md) | - |
-| `sequence` | `uint` | - |
+| `sequence` | [`uint`](uint.md) | - |
 | `sequences` | [`XpackUsageEqlFeaturesSequences`](XpackUsageEqlFeaturesSequences.md) | - |
 
 ## See Also

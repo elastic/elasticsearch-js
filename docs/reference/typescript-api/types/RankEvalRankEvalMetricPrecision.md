@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RankEvalRankEvalMetricRatingTreshold`](RankEvalRankEvalMetricRatingTreshold.md)
+
 ### Properties
 
 | Property | Type | Description |

@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `num_committed_segments` | `integer` | - |
+| `num_committed_segments` | [`integer`](integer.md) | - |
 | `routing` | [`IndicesSegmentsShardSegmentRouting`](IndicesSegmentsShardSegmentRouting.md) | - |
-| `num_search_segments` | `integer` | - |
+| `num_search_segments` | [`integer`](integer.md) | - |
 | `segments` | `Record<string, IndicesSegmentsSegment>` | - |
 
 ## See Also

@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `from?` | `integer` | Starting offset |
-| `size?` | `integer` | Specifies a max number of results to get |
+| `from?` | [`integer`](integer.md) | Starting offset |
+| `size?` | [`integer`](integer.md) | Specifies a max number of results to get |
 | `index_name?` | [`Indices`](Indices.md) | A comma-separated list of connector index names to fetch connector documents for |
 | `connector_name?` | [`Names`](Names.md) | A comma-separated list of connector names to fetch connector documents for |
 | `service_type?` | [`Names`](Names.md) | A comma-separated list of connector service types to fetch connector documents for |

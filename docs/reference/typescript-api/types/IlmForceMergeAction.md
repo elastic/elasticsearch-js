@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max_num_segments` | `integer` | - |
+| `max_num_segments` | [`integer`](integer.md) | - |
 | `index_codec?` | `string` | - |
 
 ## See Also

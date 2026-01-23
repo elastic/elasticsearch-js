@@ -2,33 +2,37 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | [`Name`](Name.md) | The name of the repository. |
-| `blob_count?` | `integer` | The total number of blobs to write to the repository during the test.
+| `blob_count?` | [`integer`](integer.md) | The total number of blobs to write to the repository during the test.
 For realistic experiments, set this parameter to at least `2000`. |
-| `concurrency?` | `integer` | The number of operations to run concurrently during the test.
+| `concurrency?` | [`integer`](integer.md) | The number of operations to run concurrently during the test.
 For realistic experiments, leave this parameter unset. |
 | `detailed?` | `boolean` | Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
 If false, it returns only a summary of the analysis. |
-| `early_read_node_count?` | `integer` | The number of nodes on which to perform an early read operation while writing each blob.
+| `early_read_node_count?` | [`integer`](integer.md) | The number of nodes on which to perform an early read operation while writing each blob.
 Early read operations are only rarely performed.
 For realistic experiments, leave this parameter unset. |
 | `max_blob_size?` | [`ByteSize`](ByteSize.md) | The maximum size of a blob to be written during the test.
 For realistic experiments, set this parameter to at least `2gb`. |
 | `max_total_data_size?` | [`ByteSize`](ByteSize.md) | An upper limit on the total size of all the blobs written during the test.
 For realistic experiments, set this parameter to at least `1tb`. |
-| `rare_action_probability?` | `double` | The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
+| `rare_action_probability?` | [`double`](double.md) | The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
 For realistic experiments, leave this parameter unset. |
 | `rarely_abort_writes?` | `boolean` | Indicates whether to rarely cancel writes before they complete.
 For realistic experiments, leave this parameter unset. |
-| `read_node_count?` | `integer` | The number of nodes on which to read a blob after writing.
+| `read_node_count?` | [`integer`](integer.md) | The number of nodes on which to read a blob after writing.
 For realistic experiments, leave this parameter unset. |
-| `register_operation_count?` | `integer` | The minimum number of linearizable register operations to perform in total.
+| `register_operation_count?` | [`integer`](integer.md) | The minimum number of linearizable register operations to perform in total.
 For realistic experiments, set this parameter to at least `100`. |
-| `seed?` | `integer` | The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
+| `seed?` | [`integer`](integer.md) | The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
 To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
 Note that the operations are performed concurrently so might not always happen in the same order on each run.
 For realistic experiments, leave this parameter unset. |

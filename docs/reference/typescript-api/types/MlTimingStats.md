@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `elapsed_time` | `DurationValue<UnitMillis>` | Runtime of the analysis in milliseconds. |
-| `iteration_time?` | `DurationValue<UnitMillis>` | Runtime of the latest iteration of the analysis in milliseconds. |
+| `elapsed_time` | [`DurationValue`](DurationValue.md)<UnitMillis> | Runtime of the analysis in milliseconds. |
+| `iteration_time?` | [`DurationValue`](DurationValue.md)<UnitMillis> | Runtime of the latest iteration of the analysis in milliseconds. |
 
 ## See Also
 

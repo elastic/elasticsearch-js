@@ -6,13 +6,13 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `terms` | `uint` | - |
-| `postings` | `uint` | - |
-| `proximity` | `uint` | - |
-| `positions` | `uint` | - |
-| `term_frequencies` | `uint` | - |
-| `offsets` | `uint` | - |
-| `payloads` | `uint` | - |
+| `terms` | [`uint`](uint.md) | - |
+| `postings` | [`uint`](uint.md) | - |
+| `proximity` | [`uint`](uint.md) | - |
+| `positions` | [`uint`](uint.md) | - |
+| `term_frequencies` | [`uint`](uint.md) | - |
+| `offsets` | [`uint`](uint.md) | - |
+| `payloads` | [`uint`](uint.md) | - |
 
 ## See Also
 

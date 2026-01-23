@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `url` | `string` | - |
 | `inline?` | `boolean` | - |
-| `retries?` | `integer` | - |
+| `retries?` | [`integer`](integer.md) | - |
 | `interval?` | [`Duration`](Duration.md) | - |
 | `request?` | [`WatcherHttpInputRequestDefinition`](WatcherHttpInputRequestDefinition.md) | - |
 

@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `integer` | - |
-| `complete` | `integer` | - |
-| `incomplete` | `integer` | - |
+| `total` | [`integer`](integer.md) | - |
+| `complete` | [`integer`](integer.md) | - |
+| `incomplete` | [`integer`](integer.md) | - |
 | `states` | `Record<ClusterStatsShardState, integer>` | - |
 
 ## See Also

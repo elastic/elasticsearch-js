@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `lat` | `double` | Latitude |
-| `lon` | `double` | Longitude |
+| `lat` | [`double`](double.md) | Latitude |
+| `lon` | [`double`](double.md) | Longitude |
 
 ## See Also
 

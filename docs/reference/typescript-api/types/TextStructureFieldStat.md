@@ -6,13 +6,13 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `integer` | - |
-| `cardinality` | `integer` | - |
-| `top_hits` | `TextStructureTopHit[]` | - |
-| `mean_value?` | `integer` | - |
-| `median_value?` | `integer` | - |
-| `max_value?` | `integer` | - |
-| `min_value?` | `integer` | - |
+| `count` | [`integer`](integer.md) | - |
+| `cardinality` | [`integer`](integer.md) | - |
+| `top_hits` | [`TextStructureTopHit`](TextStructureTopHit.md)[] | - |
+| `mean_value?` | [`integer`](integer.md) | - |
+| `median_value?` | [`integer`](integer.md) | - |
+| `max_value?` | [`integer`](integer.md) | - |
+| `min_value?` | [`integer`](integer.md) | - |
 | `earliest?` | `string` | - |
 | `latest?` | `string` | - |
 

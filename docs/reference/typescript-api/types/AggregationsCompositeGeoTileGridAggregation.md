@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsCompositeAggregationBase`](AggregationsCompositeAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `precision?` | `integer` | - |
+| `precision?` | [`integer`](integer.md) | - |
 | `bounds?` | [`GeoBounds`](GeoBounds.md) | - |
 
 ## See Also

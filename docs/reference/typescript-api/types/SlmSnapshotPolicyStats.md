@@ -7,10 +7,10 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `policy` | `string` | - |
-| `snapshots_taken` | `long` | - |
-| `snapshots_failed` | `long` | - |
-| `snapshots_deleted` | `long` | - |
-| `snapshot_deletion_failures` | `long` | - |
+| `snapshots_taken` | [`long`](long.md) | - |
+| `snapshots_failed` | [`long`](long.md) | - |
+| `snapshots_deleted` | [`long`](long.md) | - |
+| `snapshot_deletion_failures` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MlEvaluateDataFrameDataframeEvaluationValue`](MlEvaluateDataFrameDataframeEvaluationValue.md)
+
 ### Properties
 
 | Property | Type | Description |

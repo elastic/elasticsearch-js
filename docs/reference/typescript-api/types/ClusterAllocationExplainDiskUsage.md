@@ -7,11 +7,11 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `path` | `string` | - |
-| `total_bytes` | `long` | - |
-| `used_bytes` | `long` | - |
-| `free_bytes` | `long` | - |
-| `free_disk_percent` | `double` | - |
-| `used_disk_percent` | `double` | - |
+| `total_bytes` | [`long`](long.md) | - |
+| `used_bytes` | [`long`](long.md) | - |
+| `free_bytes` | [`long`](long.md) | - |
+| `free_disk_percent` | [`double`](double.md) | - |
+| `used_disk_percent` | [`double`](double.md) | - |
 
 ## See Also
 

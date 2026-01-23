@@ -1,21 +1,24 @@
 # Client.create
 
-## API Method
+## Method Signature
 
 ```typescript
-client.create(params?: CreateRequest): Promise<CreateResponse>
+client.create(this: That, params: T.CreateRequest<TDocument>, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`CreateRequest`](../types/CreateRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.CreateRequest<TDocument>` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`CreateResponse`](../types/CreateResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

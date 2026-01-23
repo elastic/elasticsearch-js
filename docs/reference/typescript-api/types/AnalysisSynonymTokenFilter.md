@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisSynonymTokenFilterBase`](AnalysisSynonymTokenFilterBase.md)
+
 ### Properties
 
 | Property | Type | Description |

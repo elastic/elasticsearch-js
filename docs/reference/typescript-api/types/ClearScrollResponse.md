@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `succeeded` | `boolean` | If `true`, the request succeeded.
 This does not indicate whether any scrolling search requests were cleared. |
-| `num_freed` | `integer` | The number of scrolling search requests cleared. |
+| `num_freed` | [`integer`](integer.md) | The number of scrolling search requests cleared. |
 
 ## See Also
 

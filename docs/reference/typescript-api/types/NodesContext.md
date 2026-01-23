@@ -7,9 +7,9 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `context?` | `string` | - |
-| `compilations?` | `long` | - |
-| `cache_evictions?` | `long` | - |
-| `compilation_limit_triggered?` | `long` | - |
+| `compilations?` | [`long`](long.md) | - |
+| `cache_evictions?` | [`long`](long.md) | - |
+| `compilation_limit_triggered?` | [`long`](long.md) | - |
 
 ## See Also
 

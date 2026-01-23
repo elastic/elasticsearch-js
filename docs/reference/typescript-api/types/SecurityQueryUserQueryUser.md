@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SecurityUser`](SecurityUser.md)
+
 ### Properties
 
 | Property | Type | Description |

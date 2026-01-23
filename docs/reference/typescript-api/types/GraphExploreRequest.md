@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -14,7 +18,7 @@ Defaults to no timeout. |
 | `connections?` | [`GraphHop`](GraphHop.md) | Specifies or more fields from which you want to extract terms that are associated with the specified vertices. |
 | `controls?` | [`GraphExploreControls`](GraphExploreControls.md) | Direct the Graph API how to build the graph. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | A seed query that identifies the documents of interest. Can be any valid Elasticsearch query. |
-| `vertices?` | `GraphVertexDefinition[]` | Specifies one or more fields that contain the terms you want to include in the graph as vertices. |
+| `vertices?` | [`GraphVertexDefinition`](GraphVertexDefinition.md)[] | Specifies one or more fields that contain the terms you want to include in the graph as vertices. |
 | `body?` | `string | { [key: string]: any } & { index?: never, routing?: never, timeout?: never, connections?: never, controls?: never, query?: never, vertices?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { index?: never, routing?: never, timeout?: never, connections?: never, controls?: never, query?: never, vertices?: never }` | All values in `querystring` will be added to the request querystring. |
 

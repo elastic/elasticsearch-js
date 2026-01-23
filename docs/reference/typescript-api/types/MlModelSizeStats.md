@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `bucket_allocation_failures_count` | `long` | - |
+| `bucket_allocation_failures_count` | [`long`](long.md) | - |
 | `job_id` | [`Id`](Id.md) | - |
 | `log_time` | [`DateTime`](DateTime.md) | - |
 | `memory_status` | [`MlMemoryStatus`](MlMemoryStatus.md) | - |
@@ -17,17 +17,17 @@
 | `peak_model_bytes?` | [`ByteSize`](ByteSize.md) | - |
 | `assignment_memory_basis?` | `string` | - |
 | `result_type` | `string` | - |
-| `total_by_field_count` | `long` | - |
-| `total_over_field_count` | `long` | - |
-| `total_partition_field_count` | `long` | - |
+| `total_by_field_count` | [`long`](long.md) | - |
+| `total_over_field_count` | [`long`](long.md) | - |
+| `total_partition_field_count` | [`long`](long.md) | - |
 | `categorization_status` | [`MlCategorizationStatus`](MlCategorizationStatus.md) | - |
-| `categorized_doc_count` | `integer` | - |
-| `dead_category_count` | `integer` | - |
-| `failed_category_count` | `integer` | - |
-| `frequent_category_count` | `integer` | - |
-| `rare_category_count` | `integer` | - |
-| `total_category_count` | `integer` | - |
-| `timestamp?` | `long` | - |
+| `categorized_doc_count` | [`integer`](integer.md) | - |
+| `dead_category_count` | [`integer`](integer.md) | - |
+| `failed_category_count` | [`integer`](integer.md) | - |
+| `frequent_category_count` | [`integer`](integer.md) | - |
+| `rare_category_count` | [`integer`](integer.md) | - |
+| `total_category_count` | [`integer`](integer.md) | - |
+| `timestamp?` | [`long`](long.md) | - |
 
 ## See Also
 

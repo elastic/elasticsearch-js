@@ -14,7 +14,7 @@
 | `method?` | [`WatcherHttpInputMethod`](WatcherHttpInputMethod.md) | - |
 | `params?` | `Record<string, string>` | - |
 | `path?` | `string` | - |
-| `port?` | `uint` | - |
+| `port?` | [`uint`](uint.md) | - |
 | `proxy?` | [`WatcherHttpInputProxy`](WatcherHttpInputProxy.md) | - |
 | `read_timeout?` | [`Duration`](Duration.md) | - |
 | `scheme?` | [`WatcherConnectionScheme`](WatcherConnectionScheme.md) | - |

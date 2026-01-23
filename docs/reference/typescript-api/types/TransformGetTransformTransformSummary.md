@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `authorization?` | [`MlTransformAuthorization`](MlTransformAuthorization.md) | The security privileges that the transform uses to run its queries. If Elastic Stack security features were disabled at the time of the most recent update to the transform, this property is omitted. |
-| `create_time?` | `EpochTime<UnitMillis>` | The time the transform was created. |
+| `create_time?` | [`EpochTime`](EpochTime.md)<UnitMillis> | The time the transform was created. |
 | `create_time_string?` | [`DateTime`](DateTime.md) | - |
 | `description?` | `string` | Free text description of the transform. |
 | `dest` | [`ReindexDestination`](ReindexDestination.md) | The destination for the transform. |

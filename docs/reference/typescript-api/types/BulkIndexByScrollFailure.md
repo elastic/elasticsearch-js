@@ -9,7 +9,7 @@
 | `cause` | [`ErrorCause`](ErrorCause.md) | - |
 | `id` | [`Id`](Id.md) | - |
 | `index` | [`IndexName`](IndexName.md) | - |
-| `status` | `integer` | - |
+| `status` | [`integer`](integer.md) | - |
 
 ## See Also
 

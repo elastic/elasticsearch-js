@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `tpr` | `double` | - |
-| `fpr` | `double` | - |
-| `threshold` | `double` | - |
+| `tpr` | [`double`](double.md) | - |
+| `fpr` | [`double`](double.md) | - |
+| `threshold` | [`double`](double.md) | - |
 
 ## See Also
 

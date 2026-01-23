@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `expiry_date_in_millis` | `EpochTime<UnitMillis>` | - |
+| `expiry_date_in_millis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `mode` | [`LicenseLicenseType`](LicenseLicenseType.md) | - |
 | `status` | [`LicenseLicenseStatus`](LicenseLicenseStatus.md) | - |
 | `type` | [`LicenseLicenseType`](LicenseLicenseType.md) | - |

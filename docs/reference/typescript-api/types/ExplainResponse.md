@@ -10,7 +10,7 @@
 | `_id` | [`Id`](Id.md) | - |
 | `matched` | `boolean` | - |
 | `explanation?` | [`ExplainExplanationDetail`](ExplainExplanationDetail.md) | - |
-| `get?` | `InlineGet<TDocument>` | - |
+| `get?` | [`InlineGet`](InlineGet.md)<TDocument> | - |
 
 ## See Also
 

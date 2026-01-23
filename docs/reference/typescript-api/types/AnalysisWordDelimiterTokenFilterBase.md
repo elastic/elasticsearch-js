@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenFilterBase`](AnalysisTokenFilterBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -11,7 +15,7 @@
 | `catenate_words?` | `boolean` | If `true`, the filter produces catenated tokens for chains of alphabetical characters separated by non-alphabetic delimiters. Defaults to `false`. |
 | `generate_number_parts?` | `boolean` | If `true`, the filter includes tokens consisting of only numeric characters in the output. If `false`, the filter excludes these tokens from the output. Defaults to `true`. |
 | `generate_word_parts?` | `boolean` | If `true`, the filter includes tokens consisting of only alphabetical characters in the output. If `false`, the filter excludes these tokens from the output. Defaults to `true`. |
-| `preserve_original?` | `SpecUtilsStringified<boolean>` | If `true`, the filter includes the original version of any split tokens in the output. This original version includes non-alphanumeric delimiters. Defaults to `false`. |
+| `preserve_original?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<boolean> | If `true`, the filter includes the original version of any split tokens in the output. This original version includes non-alphanumeric delimiters. Defaults to `false`. |
 | `protected_words?` | `string[]` | Array of tokens the filter won’t split. |
 | `protected_words_path?` | `string` | Path to a file that contains a list of tokens the filter won’t split.
 This path must be absolute or relative to the `config` location, and the file must be UTF-8 encoded. Each token in the file must be separated by a line break. |

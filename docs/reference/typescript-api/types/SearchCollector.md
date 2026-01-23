@@ -8,8 +8,8 @@
 |----------|------|-------------|
 | `name` | `string` | - |
 | `reason` | `string` | - |
-| `time_in_nanos` | `DurationValue<UnitNanos>` | - |
-| `children?` | `SearchCollector[]` | - |
+| `time_in_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | - |
+| `children?` | [`SearchCollector`](SearchCollector.md)[] | - |
 
 ## See Also
 

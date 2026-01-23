@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisWordDelimiterTokenFilterBase`](AnalysisWordDelimiterTokenFilterBase.md)
+
 ### Properties
 
 | Property | Type | Description |

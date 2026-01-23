@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`HealthReportBaseIndicator`](HealthReportBaseIndicator.md)
+
 ### Properties
 
 | Property | Type | Description |

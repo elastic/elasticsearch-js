@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`SnapshotRepositorySettingsBase`](SnapshotRepositorySettingsBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `http_max_retries?` | `integer` | The maximum number of retries for HTTP and HTTPS URLs. |
+| `http_max_retries?` | [`integer`](integer.md) | The maximum number of retries for HTTP and HTTPS URLs. |
 | `http_socket_timeout?` | [`Duration`](Duration.md) | The maximum wait time for data transfers over a connection. |
-| `max_number_of_snapshots?` | `integer` | The maximum number of snapshots the repository can contain.
+| `max_number_of_snapshots?` | [`integer`](integer.md) | The maximum number of snapshots the repository can contain.
 The default is `Integer.MAX_VALUE`, which is 2^31-1 or `2147483647`. |
 | `url` | `string` | The URL location of the root of the shared filesystem repository.
 The following protocols are supported:

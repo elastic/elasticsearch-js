@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `boost?` | `double` | - |
+| `boost?` | [`double`](double.md) | - |
 | `term` | `string` | - |
 
 ## See Also

@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `docs_indexed` | `long` | - |
-| `docs_processed` | `long` | - |
-| `docs_remaining?` | `long` | - |
-| `percent_complete?` | `double` | - |
-| `total_docs?` | `long` | - |
+| `docs_indexed` | [`long`](long.md) | - |
+| `docs_processed` | [`long`](long.md) | - |
+| `docs_remaining?` | [`long`](long.md) | - |
+| `percent_complete?` | [`double`](double.md) | - |
+| `total_docs?` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `alpha?` | `float` | - |
-| `beta?` | `float` | - |
-| `gamma?` | `float` | - |
+| `alpha?` | [`float`](float.md) | - |
+| `beta?` | [`float`](float.md) | - |
+| `gamma?` | [`float`](float.md) | - |
 | `pad?` | `boolean` | - |
-| `period?` | `integer` | - |
+| `period?` | [`integer`](integer.md) | - |
 | `type?` | [`AggregationsHoltWintersType`](AggregationsHoltWintersType.md) | - |
 
 ## See Also

@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | [`Name`](Name.md) | - |
-| `start_time_millis` | `EpochTime<UnitMillis>` | - |
+| `start_time_millis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `state` | `string` | - |
 | `uuid` | [`Uuid`](Uuid.md) | - |
 

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total_repositories?` | `long` | - |
-| `corrupted_repositories?` | `long` | - |
+| `total_repositories?` | [`long`](long.md) | - |
+| `corrupted_repositories?` | [`long`](long.md) | - |
 | `corrupted?` | `string[]` | - |
 
 ## See Also

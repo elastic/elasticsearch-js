@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`IngestProcessorBase`](IngestProcessorBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -9,7 +13,7 @@
 | `field` | [`Field`](Field.md) | The field in the input document that matches the policies match_field used to retrieve the enrichment data.
 Supports template snippets. |
 | `ignore_missing?` | `boolean` | If `true` and `field` does not exist, the processor quietly exits without modifying the document. |
-| `max_matches?` | `integer` | The maximum number of matched documents to include under the configured target field.
+| `max_matches?` | [`integer`](integer.md) | The maximum number of matched documents to include under the configured target field.
 The `target_field` will be turned into a json array if `max_matches` is higher than 1, otherwise `target_field` will become a json object.
 In order to avoid documents getting too large, the maximum allowed value is 128. |
 | `override?` | `boolean` | If processor will update fields with pre-existing non-null-valued field.

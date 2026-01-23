@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'less_than'` | - |
-| `constraint` | `double` | - |
+| `constraint` | [`double`](double.md) | - |
 
 ## See Also
 

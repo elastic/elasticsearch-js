@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`RankEvalRankEvalMetricBase`](RankEvalRankEvalMetricBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `maximum_relevance` | `integer` | The highest relevance grade used in the user-supplied relevance judgments. |
+| `maximum_relevance` | [`integer`](integer.md) | The highest relevance grade used in the user-supplied relevance judgments. |
 
 ## See Also
 

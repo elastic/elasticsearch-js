@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SnapshotRepositoryBase`](SnapshotRepositoryBase.md)
+
 ### Properties
 
 | Property | Type | Description |

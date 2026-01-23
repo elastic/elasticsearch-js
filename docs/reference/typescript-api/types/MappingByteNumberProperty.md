@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingNumberPropertyBase`](MappingNumberPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'byte'` | - |
-| `null_value?` | `byte` | - |
+| `null_value?` | [`byte`](byte.md) | - |
 
 ## See Also
 

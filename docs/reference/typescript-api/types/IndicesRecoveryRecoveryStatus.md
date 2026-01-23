@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `shards` | `IndicesRecoveryShardRecovery[]` | - |
+| `shards` | [`IndicesRecoveryShardRecovery`](IndicesRecoveryShardRecovery.md)[] | - |
 
 ## See Also
 

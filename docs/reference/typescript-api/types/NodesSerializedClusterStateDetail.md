@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count?` | `long` | - |
+| `count?` | [`long`](long.md) | - |
 | `uncompressed_size?` | `string` | - |
-| `uncompressed_size_in_bytes?` | `long` | - |
+| `uncompressed_size_in_bytes?` | [`long`](long.md) | - |
 | `compressed_size?` | `string` | - |
-| `compressed_size_in_bytes?` | `long` | - |
+| `compressed_size_in_bytes?` | [`long`](long.md) | - |
 
 ## See Also
 

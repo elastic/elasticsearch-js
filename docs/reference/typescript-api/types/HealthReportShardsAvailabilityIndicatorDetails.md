@@ -6,16 +6,16 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `creating_primaries` | `long` | - |
-| `creating_replicas` | `long` | - |
-| `initializing_primaries` | `long` | - |
-| `initializing_replicas` | `long` | - |
-| `restarting_primaries` | `long` | - |
-| `restarting_replicas` | `long` | - |
-| `started_primaries` | `long` | - |
-| `started_replicas` | `long` | - |
-| `unassigned_primaries` | `long` | - |
-| `unassigned_replicas` | `long` | - |
+| `creating_primaries` | [`long`](long.md) | - |
+| `creating_replicas` | [`long`](long.md) | - |
+| `initializing_primaries` | [`long`](long.md) | - |
+| `initializing_replicas` | [`long`](long.md) | - |
+| `restarting_primaries` | [`long`](long.md) | - |
+| `restarting_replicas` | [`long`](long.md) | - |
+| `started_primaries` | [`long`](long.md) | - |
+| `started_replicas` | [`long`](long.md) | - |
+| `unassigned_primaries` | [`long`](long.md) | - |
+| `unassigned_replicas` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `long` | - |
+| `total` | [`long`](long.md) | - |
 
 ## See Also
 

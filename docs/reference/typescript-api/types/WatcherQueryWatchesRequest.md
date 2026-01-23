@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `from?` | `integer` | The offset from the first result to fetch.
+| `from?` | [`integer`](integer.md) | The offset from the first result to fetch.
 It must be non-negative. |
-| `size?` | `integer` | The number of hits to return.
+| `size?` | [`integer`](integer.md) | The number of hits to return.
 It must be non-negative. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | A query that filters the watches to be returned. |
 | `sort?` | [`Sort`](Sort.md) | One or more fields used to sort the search results. |

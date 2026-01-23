@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`IndicesDataStreamLifecycle`](IndicesDataStreamLifecycle.md)
+
 ### Properties
 
 | Property | Type | Description |

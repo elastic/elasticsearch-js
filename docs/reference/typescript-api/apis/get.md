@@ -1,21 +1,24 @@
 # Client.get
 
-## API Method
+## Method Signature
 
 ```typescript
-client.get(params?: GetRequest): Promise<GetResponse>
+client.get(this: That, params: T.GetRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`GetRequest`](../types/GetRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.GetRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`GetResponse`](../types/GetResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

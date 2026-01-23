@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `epoch?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | seconds since 1970-01-01 00:00:00 |
-| `time?` | `SpecUtilsStringified<EpochTime<UnitSeconds>>` | seconds since 1970-01-01 00:00:00 |
+| `epoch?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | seconds since 1970-01-01 00:00:00 |
+| `time?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitSeconds>> | seconds since 1970-01-01 00:00:00 |
 | `timestamp?` | [`TimeOfDay`](TimeOfDay.md) | time in HH:MM:SS |
 | `ts?` | [`TimeOfDay`](TimeOfDay.md) | time in HH:MM:SS |
 | `hms?` | [`TimeOfDay`](TimeOfDay.md) | time in HH:MM:SS |

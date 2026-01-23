@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `doc_count` | `long` | - |
-| `source` | `long` | - |
-| `target` | `long` | - |
-| `weight` | `double` | - |
+| `doc_count` | [`long`](long.md) | - |
+| `source` | [`long`](long.md) | - |
+| `target` | [`long`](long.md) | - |
+| `weight` | [`double`](double.md) | - |
 
 ## See Also
 

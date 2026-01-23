@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`BulkOperationBase`](BulkOperationBase.md)
+
 ## See Also
 
 - [All Types](./)

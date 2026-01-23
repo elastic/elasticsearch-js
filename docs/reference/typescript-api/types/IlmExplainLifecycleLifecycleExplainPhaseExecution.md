@@ -9,7 +9,7 @@
 | `phase_definition?` | [`IlmPhase`](IlmPhase.md) | - |
 | `policy` | [`Name`](Name.md) | - |
 | `version` | [`VersionNumber`](VersionNumber.md) | - |
-| `modified_date_in_millis` | `EpochTime<UnitMillis>` | - |
+| `modified_date_in_millis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 
 ## See Also
 

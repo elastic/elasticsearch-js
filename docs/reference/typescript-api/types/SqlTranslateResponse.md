@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `aggregations?` | `Record<string, AggregationsAggregationContainer>` | - |
-| `size?` | `long` | - |
+| `size?` | [`long`](long.md) | - |
 | `_source?` | [`SearchSourceConfig`](SearchSourceConfig.md) | - |
 | `fields?` | `(QueryDslFieldAndFormat | Field)[]` | - |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |

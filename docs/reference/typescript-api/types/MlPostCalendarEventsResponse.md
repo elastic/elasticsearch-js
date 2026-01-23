@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `events` | `MlCalendarEvent[]` | - |
+| `events` | [`MlCalendarEvent`](MlCalendarEvent.md)[] | - |
 
 ## See Also
 

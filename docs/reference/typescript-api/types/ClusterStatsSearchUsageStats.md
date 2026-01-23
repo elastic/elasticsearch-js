@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total` | `long` | - |
+| `total` | [`long`](long.md) | - |
 | `queries` | `Record<Name, long>` | - |
 | `rescorers` | `Record<Name, long>` | - |
 | `sections` | `Record<Name, long>` | - |

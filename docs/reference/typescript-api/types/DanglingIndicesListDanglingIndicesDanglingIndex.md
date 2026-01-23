@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `index_name` | `string` | - |
 | `index_uuid` | `string` | - |
-| `creation_date_millis` | `EpochTime<UnitMillis>` | - |
+| `creation_date_millis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `node_ids` | [`Ids`](Ids.md) | - |
 
 ## See Also

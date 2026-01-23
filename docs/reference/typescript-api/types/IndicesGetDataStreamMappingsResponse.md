@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `IndicesGetDataStreamMappingsDataStreamMappings[]` | - |
+| `data_streams` | [`IndicesGetDataStreamMappingsDataStreamMappings`](IndicesGetDataStreamMappingsDataStreamMappings.md)[] | - |
 
 ## See Also
 

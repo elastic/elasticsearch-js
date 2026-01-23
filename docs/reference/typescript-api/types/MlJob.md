@@ -21,7 +21,7 @@ The smallest allowed value is 1 hour. |
 | `create_time?` | [`DateTime`](DateTime.md) | - |
 | `custom_settings?` | [`MlCustomSettings`](MlCustomSettings.md) | Advanced configuration option.
 Contains custom metadata about the job. |
-| `daily_model_snapshot_retention_after_days?` | `long` | Advanced configuration option, which affects the automatic removal of old model snapshots for this job.
+| `daily_model_snapshot_retention_after_days?` | [`long`](long.md) | Advanced configuration option, which affects the automatic removal of old model snapshots for this job.
 It specifies a period of time (in days) after which only the first snapshot per day is retained.
 This period is relative to the timestamp of the most recent snapshot for this job.
 Valid values range from 0 to `model_snapshot_retention_days`. |
@@ -47,16 +47,16 @@ It must start and end with alphanumeric characters. |
 It provides a more detailed view into anomaly detection.
 Model plot provides a simplified and indicative view of the model and its bounds. |
 | `model_snapshot_id?` | [`Id`](Id.md) | - |
-| `model_snapshot_retention_days` | `long` | Advanced configuration option, which affects the automatic removal of old model snapshots for this job.
+| `model_snapshot_retention_days` | [`long`](long.md) | Advanced configuration option, which affects the automatic removal of old model snapshots for this job.
 It specifies the maximum period of time (in days) that snapshots are retained.
 This period is relative to the timestamp of the most recent snapshot for this job.
 By default, snapshots ten days older than the newest snapshot are deleted. |
-| `renormalization_window_days?` | `long` | Advanced configuration option.
+| `renormalization_window_days?` | [`long`](long.md) | Advanced configuration option.
 The period over which adjustments to the score are applied, as new data is seen.
 The default value is the longer of 30 days or 100 `bucket_spans`. |
 | `results_index_name` | [`IndexName`](IndexName.md) | A text string that affects the name of the machine learning results index.
 The default value is `shared`, which generates an index named `.ml-anomalies-shared`. |
-| `results_retention_days?` | `long` | Advanced configuration option.
+| `results_retention_days?` | [`long`](long.md) | Advanced configuration option.
 The period of time (in days) that results are retained.
 Age is calculated relative to the timestamp of the latest bucket result.
 If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch.

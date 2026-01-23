@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `docs` | `IngestSimulateDocumentResult[]` | - |
+| `docs` | [`IngestSimulateDocumentResult`](IngestSimulateDocumentResult.md)[] | - |
 
 ## See Also
 

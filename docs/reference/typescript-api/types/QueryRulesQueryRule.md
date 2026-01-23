@@ -14,7 +14,7 @@
 If multiple criteria are specified for a rule, all criteria must be met for the rule to be applied. |
 | `actions` | [`QueryRulesQueryRuleActions`](QueryRulesQueryRuleActions.md) | The actions to take when the rule is matched.
 The format of this action depends on the rule type. |
-| `priority?` | `integer` | - |
+| `priority?` | [`integer`](integer.md) | - |
 
 ## See Also
 

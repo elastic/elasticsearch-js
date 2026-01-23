@@ -6,11 +6,11 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `details?` | `IndicesRecoveryFileDetails[]` | - |
+| `details?` | [`IndicesRecoveryFileDetails`](IndicesRecoveryFileDetails.md)[] | - |
 | `percent` | [`Percentage`](Percentage.md) | - |
-| `recovered` | `long` | - |
-| `reused` | `long` | - |
-| `total` | `long` | - |
+| `recovered` | [`long`](long.md) | - |
+| `reused` | [`long`](long.md) | - |
+| `total` | [`long`](long.md) | - |
 
 ## See Also
 

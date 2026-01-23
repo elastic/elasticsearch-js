@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -12,9 +16,9 @@ received before the timeout expires, the request fails and returns an
 error. |
 | `timeout?` | [`Duration`](Duration.md) | Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error. |
-| `rate` | `SpecUtilsStringified<double>` | The fraction of documents to sample. Must be greater than 0 and less than or equal to 1.
+| `rate` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<double> | The fraction of documents to sample. Must be greater than 0 and less than or equal to 1.
 Can be specified as a number or a string. |
-| `max_samples?` | `integer` | The maximum number of documents to sample. Must be greater than 0 and less than or equal to 10,000. |
+| `max_samples?` | [`integer`](integer.md) | The maximum number of documents to sample. Must be greater than 0 and less than or equal to 10,000. |
 | `max_size?` | [`ByteSize`](ByteSize.md) | The maximum total size of sampled documents. Must be greater than 0 and less than or equal to 5GB. |
 | `time_to_live?` | [`Duration`](Duration.md) | The duration for which the sampled documents should be retained.
 Must be greater than 0 and less than or equal to 30 days. |

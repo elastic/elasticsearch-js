@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `jobs` | `RollupGetJobsRollupJob[]` | - |
+| `jobs` | [`RollupGetJobsRollupJob`](RollupGetJobsRollupJob.md)[] | - |
 
 ## See Also
 

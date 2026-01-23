@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenizerBase`](AnalysisTokenizerBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'whitespace'` | - |
-| `max_token_length?` | `integer` | - |
+| `max_token_length?` | [`integer`](integer.md) | - |
 
 ## See Also
 

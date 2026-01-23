@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `docs` | `MtermvectorsTermVectorsResult[]` | - |
+| `docs` | [`MtermvectorsTermVectorsResult`](MtermvectorsTermVectorsResult.md)[] | - |
 
 ## See Also
 

@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsBucketAggregationBase`](AggregationsBucketAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `field?` | [`Field`](Field.md) | The date field whose values are used to build ranges. |
-| `ranges?` | `AggregationsIpRangeAggregationRange[]` | Array of IP ranges. |
+| `ranges?` | [`AggregationsIpRangeAggregationRange`](AggregationsIpRangeAggregationRange.md)[] | Array of IP ranges. |
 
 ## See Also
 

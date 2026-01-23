@@ -13,7 +13,7 @@ The values are summations of the individual node statistics.
 The format matches the ingest section in the nodes stats API. |
 | `model_id` | [`Id`](Id.md) | The unique identifier of the trained model. |
 | `model_size_stats` | [`MlTrainedModelSizeStats`](MlTrainedModelSizeStats.md) | A collection of model size stats. |
-| `pipeline_count` | `integer` | The number of ingest pipelines that currently refer to the model. |
+| `pipeline_count` | [`integer`](integer.md) | The number of ingest pipelines that currently refer to the model. |
 
 ## See Also
 

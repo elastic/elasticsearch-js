@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`MlCommonTokenizationConfig`](MlCommonTokenizationConfig.md)
+
 ### Properties
 
 | Property | Type | Description |

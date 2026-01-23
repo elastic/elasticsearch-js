@@ -8,10 +8,10 @@
 |----------|------|-------------|
 | `breakdown` | [`SearchAggregationBreakdown`](SearchAggregationBreakdown.md) | - |
 | `description` | `string` | - |
-| `time_in_nanos` | `DurationValue<UnitNanos>` | - |
+| `time_in_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | - |
 | `type` | `string` | - |
 | `debug?` | [`SearchAggregationProfileDebug`](SearchAggregationProfileDebug.md) | - |
-| `children?` | `SearchAggregationProfile[]` | - |
+| `children?` | [`SearchAggregationProfile`](SearchAggregationProfile.md)[] | - |
 
 ## See Also
 

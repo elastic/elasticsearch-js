@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `authorization?` | [`MlTransformAuthorization`](MlTransformAuthorization.md) | - |
-| `create_time` | `long` | - |
+| `create_time` | [`long`](long.md) | - |
 | `description` | `string` | - |
 | `dest` | [`ReindexDestination`](ReindexDestination.md) | - |
 | `frequency?` | [`Duration`](Duration.md) | - |

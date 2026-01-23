@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `enabled` | `integer` | - |
-| `size` | `integer` | - |
+| `enabled` | [`integer`](integer.md) | - |
+| `size` | [`integer`](integer.md) | - |
 
 ## See Also
 

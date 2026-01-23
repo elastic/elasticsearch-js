@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `access_token` | `string` | - |
-| `expires_in` | `long` | - |
+| `expires_in` | [`long`](long.md) | - |
 | `scope?` | `string` | - |
 | `type` | `string` | - |
 | `refresh_token?` | `string` | - |

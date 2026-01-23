@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `skipped` | `integer` | - |
-| `successful` | `integer` | - |
-| `total` | `integer` | - |
-| `running` | `integer` | - |
-| `partial` | `integer` | - |
-| `failed` | `integer` | - |
+| `skipped` | [`integer`](integer.md) | - |
+| `successful` | [`integer`](integer.md) | - |
+| `total` | [`integer`](integer.md) | - |
+| `running` | [`integer`](integer.md) | - |
+| `partial` | [`integer`](integer.md) | - |
+| `failed` | [`integer`](integer.md) | - |
 | `details?` | `Record<ClusterAlias, ClusterDetails>` | - |
 
 ## See Also

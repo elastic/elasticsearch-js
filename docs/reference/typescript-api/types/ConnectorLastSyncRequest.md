@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -10,9 +14,9 @@
 | `last_access_control_sync_error?` | `string` | - |
 | `last_access_control_sync_scheduled_at?` | [`DateTime`](DateTime.md) | - |
 | `last_access_control_sync_status?` | [`ConnectorSyncStatus`](ConnectorSyncStatus.md) | - |
-| `last_deleted_document_count?` | `long` | - |
+| `last_deleted_document_count?` | [`long`](long.md) | - |
 | `last_incremental_sync_scheduled_at?` | [`DateTime`](DateTime.md) | - |
-| `last_indexed_document_count?` | `long` | - |
+| `last_indexed_document_count?` | [`long`](long.md) | - |
 | `last_seen?` | [`DateTime`](DateTime.md) | - |
 | `last_sync_error?` | `string` | - |
 | `last_sync_scheduled_at?` | [`DateTime`](DateTime.md) | - |

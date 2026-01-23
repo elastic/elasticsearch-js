@@ -9,11 +9,11 @@
 | `_id?` | `string | null` | The document ID associated with the operation. |
 | `_index` | `string` | The name of the index associated with the operation.
 If the operation targeted a data stream, this is the backing index into which the document was written. |
-| `status` | `integer` | The HTTP status code returned for the operation. |
+| `status` | [`integer`](integer.md) | The HTTP status code returned for the operation. |
 | `failure_store?` | [`BulkFailureStoreStatus`](BulkFailureStoreStatus.md) | - |
 | `error?` | [`ErrorCause`](ErrorCause.md) | Additional information about the failed operation.
 The property is returned only for failed operations. |
-| `_primary_term?` | `long` | The primary term assigned to the document for the operation.
+| `_primary_term?` | [`long`](long.md) | The primary term assigned to the document for the operation.
 This property is returned only for successful operations. |
 | `result?` | `string` | The result of the operation.
 Successful values are `created`, `deleted`, and `updated`. |
@@ -24,7 +24,7 @@ Sequence numbers are used to ensure an older version of a document doesn't overw
 The document version is incremented each time the document is updated.
 This property is returned only for successful actions. |
 | `forced_refresh?` | `boolean` | - |
-| `get?` | `InlineGet<Record<string, any>>` | - |
+| `get?` | [`InlineGet`](InlineGet.md)<Record<string, any>> | - |
 
 ## See Also
 

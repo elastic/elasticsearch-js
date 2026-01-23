@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `body` | `string` | - |
 | `headers` | [`HttpHeaders`](HttpHeaders.md) | - |
-| `status` | `integer` | - |
+| `status` | [`integer`](integer.md) | - |
 
 ## See Also
 

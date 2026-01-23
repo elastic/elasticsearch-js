@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `total` | `string` | - |
-| `total_in_bytes` | `long` | - |
+| `total_in_bytes` | [`long`](long.md) | - |
 
 ## See Also
 

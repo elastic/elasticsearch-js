@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`EsqlEsqlResult`](EsqlEsqlResult.md)
+
 ### Properties
 
 | Property | Type | Description |

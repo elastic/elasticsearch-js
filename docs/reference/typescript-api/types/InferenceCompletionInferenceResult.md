@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `completion` | `InferenceCompletionResult[]` | - |
+| `completion` | [`InferenceCompletionResult`](InferenceCompletionResult.md)[] | - |
 
 ## See Also
 

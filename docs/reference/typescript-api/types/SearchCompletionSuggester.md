@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`SearchSuggesterBase`](SearchSuggesterBase.md)
+
 ### Properties
 
 | Property | Type | Description |

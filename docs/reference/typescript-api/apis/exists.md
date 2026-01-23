@@ -1,21 +1,24 @@
 # Client.exists
 
-## API Method
+## Method Signature
 
 ```typescript
-client.exists(params?: ExistsRequest): Promise<ExistsResponse>
+client.exists(this: That, params: T.ExistsRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`ExistsRequest`](../types/ExistsRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.ExistsRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`ExistsResponse`](../types/ExistsResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

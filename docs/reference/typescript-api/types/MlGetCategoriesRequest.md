@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -12,9 +16,9 @@ neither the category ID nor the partition_field_value, the API returns
 information about all categories. If you specify only the
 partition_field_value, it returns information about all categories for
 the specified partition. |
-| `from?` | `integer` | Skips the specified number of categories. |
+| `from?` | [`integer`](integer.md) | Skips the specified number of categories. |
 | `partition_field_value?` | `string` | Only return categories for the specified partition. |
-| `size?` | `integer` | Specifies the maximum number of categories to obtain. |
+| `size?` | [`integer`](integer.md) | Specifies the maximum number of categories to obtain. |
 | `page?` | [`MlPage`](MlPage.md) | Configures pagination.
 This parameter has the `from` and `size` properties. |
 | `body?` | `string | { [key: string]: any } & { job_id?: never, category_id?: never, from?: never, partition_field_value?: never, size?: never, page?: never }` | All values in `body` will be added to the request body. |

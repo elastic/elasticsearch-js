@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `preprocessors?` | `MlPutTrainedModelPreprocessor[]` | Collection of preprocessors |
+| `preprocessors?` | [`MlPutTrainedModelPreprocessor`](MlPutTrainedModelPreprocessor.md)[] | Collection of preprocessors |
 | `trained_model` | [`MlPutTrainedModelTrainedModel`](MlPutTrainedModelTrainedModel.md) | The definition of the trained model. |
 
 ## See Also

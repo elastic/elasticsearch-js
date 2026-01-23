@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `global_checkpoints` | `FleetCheckpoint[]` | - |
+| `global_checkpoints` | [`FleetCheckpoint`](FleetCheckpoint.md)[] | - |
 | `timed_out` | `boolean` | - |
 
 ## See Also

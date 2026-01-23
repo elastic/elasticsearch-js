@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `primary_term` | `long` | - |
+| `primary_term` | [`long`](long.md) | - |
 | `version` | [`VersionNumber`](VersionNumber.md) | - |
-| `leases` | `IndicesStatsShardLease[]` | - |
+| `leases` | [`IndicesStatsShardLease`](IndicesStatsShardLease.md)[] | - |
 
 ## See Also
 

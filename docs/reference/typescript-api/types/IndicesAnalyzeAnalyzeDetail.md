@@ -7,9 +7,9 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `analyzer?` | [`IndicesAnalyzeAnalyzerDetail`](IndicesAnalyzeAnalyzerDetail.md) | - |
-| `charfilters?` | `IndicesAnalyzeCharFilterDetail[]` | - |
+| `charfilters?` | [`IndicesAnalyzeCharFilterDetail`](IndicesAnalyzeCharFilterDetail.md)[] | - |
 | `custom_analyzer` | `boolean` | - |
-| `tokenfilters?` | `IndicesAnalyzeTokenDetail[]` | - |
+| `tokenfilters?` | [`IndicesAnalyzeTokenDetail`](IndicesAnalyzeTokenDetail.md)[] | - |
 | `tokenizer?` | [`IndicesAnalyzeTokenDetail`](IndicesAnalyzeTokenDetail.md) | - |
 
 ## See Also

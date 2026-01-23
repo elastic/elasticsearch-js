@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `points` | `GeoLocation[]` | - |
+| `points` | [`GeoLocation`](GeoLocation.md)[] | - |
 
 ## See Also
 

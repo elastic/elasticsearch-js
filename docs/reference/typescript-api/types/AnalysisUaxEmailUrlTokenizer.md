@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenizerBase`](AnalysisTokenizerBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'uax_url_email'` | - |
-| `max_token_length?` | `integer` | - |
+| `max_token_length?` | [`integer`](integer.md) | - |
 
 ## See Also
 

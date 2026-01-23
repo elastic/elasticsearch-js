@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsPipelineAggregationBase`](AggregationsPipelineAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |

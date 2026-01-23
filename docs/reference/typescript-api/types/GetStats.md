@@ -6,16 +6,16 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `current` | `long` | - |
+| `current` | [`long`](long.md) | - |
 | `exists_time?` | [`Duration`](Duration.md) | - |
-| `exists_time_in_millis` | `DurationValue<UnitMillis>` | - |
-| `exists_total` | `long` | - |
+| `exists_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `exists_total` | [`long`](long.md) | - |
 | `missing_time?` | [`Duration`](Duration.md) | - |
-| `missing_time_in_millis` | `DurationValue<UnitMillis>` | - |
-| `missing_total` | `long` | - |
+| `missing_time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `missing_total` | [`long`](long.md) | - |
 | `time?` | [`Duration`](Duration.md) | - |
-| `time_in_millis` | `DurationValue<UnitMillis>` | - |
-| `total` | `long` | - |
+| `time_in_millis` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
+| `total` | [`long`](long.md) | - |
 
 ## See Also
 

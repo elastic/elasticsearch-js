@@ -9,8 +9,8 @@
 | `gc_collectors` | `string[]` | - |
 | `mem` | [`NodesInfoNodeInfoJvmMemory`](NodesInfoNodeInfoJvmMemory.md) | - |
 | `memory_pools` | `string[]` | - |
-| `pid` | `integer` | - |
-| `start_time_in_millis` | `EpochTime<UnitMillis>` | - |
+| `pid` | [`integer`](integer.md) | - |
+| `start_time_in_millis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `version` | [`VersionString`](VersionString.md) | - |
 | `vm_name` | [`Name`](Name.md) | - |
 | `vm_vendor` | `string` | - |

@@ -8,10 +8,10 @@
 |----------|------|-------------|
 | `status` | [`ClusterSearchStatus`](ClusterSearchStatus.md) | - |
 | `indices` | `string` | - |
-| `took?` | `DurationValue<UnitMillis>` | - |
+| `took?` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `timed_out` | `boolean` | - |
 | `_shards?` | [`ShardStatistics`](ShardStatistics.md) | - |
-| `failures?` | `ShardFailure[]` | - |
+| `failures?` | [`ShardFailure`](ShardFailure.md)[] | - |
 
 ## See Also
 

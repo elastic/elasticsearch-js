@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `IndicesPutDataStreamMappingsUpdatedDataStreamMappings[]` | - |
+| `data_streams` | [`IndicesPutDataStreamMappingsUpdatedDataStreamMappings`](IndicesPutDataStreamMappingsUpdatedDataStreamMappings.md)[] | - |
 
 ## See Also
 

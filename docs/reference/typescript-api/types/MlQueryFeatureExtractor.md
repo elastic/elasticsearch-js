@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `default_score?` | `float` | - |
+| `default_score?` | [`float`](float.md) | - |
 | `feature_name` | `string` | - |
 | `query` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 

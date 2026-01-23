@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `databases` | `IngestGetGeoipDatabaseDatabaseConfigurationMetadata[]` | - |
+| `databases` | [`IngestGetGeoipDatabaseDatabaseConfigurationMetadata`](IngestGetGeoipDatabaseDatabaseConfigurationMetadata.md)[] | - |
 
 ## See Also
 

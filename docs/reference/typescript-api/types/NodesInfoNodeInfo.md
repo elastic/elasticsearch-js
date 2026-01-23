@@ -18,18 +18,18 @@
 | `jvm?` | [`NodesInfoNodeJvmInfo`](NodesInfoNodeJvmInfo.md) | - |
 | `name` | [`Name`](Name.md) | The node's name |
 | `os?` | [`NodesInfoNodeOperatingSystemInfo`](NodesInfoNodeOperatingSystemInfo.md) | - |
-| `plugins?` | `PluginStats[]` | - |
+| `plugins?` | [`PluginStats`](PluginStats.md)[] | - |
 | `process?` | [`NodesInfoNodeProcessInfo`](NodesInfoNodeProcessInfo.md) | - |
 | `roles` | [`NodeRoles`](NodeRoles.md) | - |
 | `settings?` | [`NodesInfoNodeInfoSettings`](NodesInfoNodeInfoSettings.md) | - |
 | `thread_pool?` | `Record<string, NodesInfoNodeThreadPoolInfo>` | - |
-| `total_indexing_buffer?` | `long` | Total heap allowed to be used to hold recently indexed documents before they must be written to disk. This size is a shared pool across all shards on this node, and is controlled by Indexing Buffer settings. |
+| `total_indexing_buffer?` | [`long`](long.md) | Total heap allowed to be used to hold recently indexed documents before they must be written to disk. This size is a shared pool across all shards on this node, and is controlled by Indexing Buffer settings. |
 | `total_indexing_buffer_in_bytes?` | [`ByteSize`](ByteSize.md) | Same as total_indexing_buffer, but expressed in bytes. |
 | `transport?` | [`NodesInfoNodeInfoTransport`](NodesInfoNodeInfoTransport.md) | - |
 | `transport_address` | [`TransportAddress`](TransportAddress.md) | Host and port where transport HTTP connections are accepted. |
 | `transport_version` | [`VersionNumber`](VersionNumber.md) | - |
 | `version` | [`VersionString`](VersionString.md) | Elasticsearch version running on this node. |
-| `modules?` | `PluginStats[]` | - |
+| `modules?` | [`PluginStats`](PluginStats.md)[] | - |
 | `ingest?` | [`NodesInfoNodeInfoIngest`](NodesInfoNodeInfoIngest.md) | - |
 | `aggregations?` | `Record<string, NodesInfoNodeInfoAggregation>` | - |
 | `remote_cluster_server?` | [`NodesInfoRemoveClusterServer`](NodesInfoRemoveClusterServer.md) | - |

@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `transforms` | `TransformGetTransformTransformSummary[]` | - |
+| `count` | [`long`](long.md) | - |
+| `transforms` | [`TransformGetTransformTransformSummary`](TransformGetTransformTransformSummary.md)[] | - |
 
 ## See Also
 

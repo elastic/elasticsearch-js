@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `indices` | `CcrFollowIndexStats[]` | An array of follower index statistics. |
+| `indices` | [`CcrFollowIndexStats`](CcrFollowIndexStats.md)[] | An array of follower index statistics. |
 
 ## See Also
 

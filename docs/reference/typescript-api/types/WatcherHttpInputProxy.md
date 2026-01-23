@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `host` | [`Host`](Host.md) | - |
-| `port` | `uint` | - |
+| `port` | [`uint`](uint.md) | - |
 
 ## See Also
 

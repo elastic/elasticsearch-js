@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `field?` | [`Field`](Field.md) | - |
 | `id` | [`Id`](Id.md) | - |
-| `max` | `integer` | - |
+| `max` | [`integer`](integer.md) | - |
 
 ## See Also
 

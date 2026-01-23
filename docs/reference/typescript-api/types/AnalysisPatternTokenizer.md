@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`AnalysisTokenizerBase`](AnalysisTokenizerBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'pattern'` | - |
 | `flags?` | `string` | - |
-| `group?` | `integer` | - |
+| `group?` | [`integer`](integer.md) | - |
 | `pattern?` | `string` | - |
 
 ## See Also

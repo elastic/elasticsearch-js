@@ -6,12 +6,12 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `checkpoint` | `long` | - |
+| `checkpoint` | [`long`](long.md) | - |
 | `checkpoint_progress?` | [`TransformGetTransformStatsTransformProgress`](TransformGetTransformStatsTransformProgress.md) | - |
 | `timestamp?` | [`DateTime`](DateTime.md) | - |
-| `timestamp_millis?` | `EpochTime<UnitMillis>` | - |
+| `timestamp_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `time_upper_bound?` | [`DateTime`](DateTime.md) | - |
-| `time_upper_bound_millis?` | `EpochTime<UnitMillis>` | - |
+| `time_upper_bound_millis?` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 
 ## See Also
 

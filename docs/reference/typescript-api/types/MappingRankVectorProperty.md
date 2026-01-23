@@ -2,13 +2,17 @@
 
 ## Interface
 
+### Extends
+
+- [`MappingPropertyBase`](MappingPropertyBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'rank_vectors'` | - |
 | `element_type?` | [`MappingRankVectorElementType`](MappingRankVectorElementType.md) | - |
-| `dims?` | `integer` | - |
+| `dims?` | [`integer`](integer.md) | - |
 
 ## See Also
 

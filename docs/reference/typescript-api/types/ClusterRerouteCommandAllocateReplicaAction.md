@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `index` | [`IndexName`](IndexName.md) | - |
-| `shard` | `integer` | - |
+| `shard` | [`integer`](integer.md) | - |
 | `node` | `string` | - |
 
 ## See Also

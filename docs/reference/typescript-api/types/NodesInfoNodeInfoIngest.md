@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `processors` | `NodesInfoNodeInfoIngestProcessor[]` | - |
+| `processors` | [`NodesInfoNodeInfoIngestProcessor`](NodesInfoNodeInfoIngestProcessor.md)[] | - |
 
 ## See Also
 

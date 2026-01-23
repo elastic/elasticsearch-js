@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsMatrixAggregation`](AggregationsMatrixAggregation.md)
+
 ### Properties
 
 | Property | Type | Description |

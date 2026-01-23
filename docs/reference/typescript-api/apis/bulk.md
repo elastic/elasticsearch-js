@@ -1,21 +1,24 @@
 # Client.bulk
 
-## API Method
+## Method Signature
 
 ```typescript
-client.bulk(params?: BulkRequest): Promise<BulkResponse>
+client.bulk(this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`BulkRequest`](../types/BulkRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.BulkRequest<TDocument, TPartialDocument>` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`BulkResponse`](../types/BulkResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

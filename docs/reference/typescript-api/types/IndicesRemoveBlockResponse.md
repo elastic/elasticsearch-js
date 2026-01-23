@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `acknowledged` | `boolean` | - |
-| `indices` | `IndicesRemoveBlockRemoveIndicesBlockStatus[]` | - |
+| `indices` | [`IndicesRemoveBlockRemoveIndicesBlockStatus`](IndicesRemoveBlockRemoveIndicesBlockStatus.md)[] | - |
 
 ## See Also
 

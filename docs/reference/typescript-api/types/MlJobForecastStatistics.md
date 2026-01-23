@@ -10,8 +10,8 @@
 | `processing_time_ms?` | [`MlJobStatistics`](MlJobStatistics.md) | - |
 | `records?` | [`MlJobStatistics`](MlJobStatistics.md) | - |
 | `status?` | `Record<string, long>` | - |
-| `total` | `long` | - |
-| `forecasted_jobs` | `integer` | - |
+| `total` | [`long`](long.md) | - |
+| `forecasted_jobs` | [`integer`](integer.md) | - |
 
 ## See Also
 

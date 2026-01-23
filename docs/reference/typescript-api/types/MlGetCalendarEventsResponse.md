@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `events` | `MlCalendarEvent[]` | - |
+| `count` | [`long`](long.md) | - |
+| `events` | [`MlCalendarEvent`](MlCalendarEvent.md)[] | - |
 
 ## See Also
 

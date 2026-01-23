@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `recordings?` | `NodesRecording[]` | - |
+| `recordings?` | [`NodesRecording`](NodesRecording.md)[] | - |
 
 ## See Also
 

@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `index` | [`IndexName`](IndexName.md) | The name of the follower index. |
-| `shards` | `CcrShardStats[]` | An array of shard-level following task statistics. |
+| `shards` | [`CcrShardStats`](CcrShardStats.md)[] | An array of shard-level following task statistics. |
 
 ## See Also
 

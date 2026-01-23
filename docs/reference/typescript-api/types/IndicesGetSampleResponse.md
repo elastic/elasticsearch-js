@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `sample` | `IndicesGetSampleRawDocument[]` | - |
+| `sample` | [`IndicesGetSampleRawDocument`](IndicesGetSampleRawDocument.md)[] | - |
 
 ## See Also
 

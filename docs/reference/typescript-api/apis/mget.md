@@ -1,21 +1,24 @@
 # Client.mget
 
-## API Method
+## Method Signature
 
 ```typescript
-client.mget(params?: MgetRequest): Promise<MgetResponse>
+client.mget(this: That, params?: T.MgetRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`MgetRequest`](../types/MgetRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.MgetRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`MgetResponse`](../types/MgetResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

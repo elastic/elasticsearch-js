@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `api_keys` | `SecurityApiKey[]` | - |
+| `api_keys` | [`SecurityApiKey`](SecurityApiKey.md)[] | - |
 
 ## See Also
 

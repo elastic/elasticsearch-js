@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `requests_per_minute?` | `integer` | The number of requests allowed per minute.
+| `requests_per_minute?` | [`integer`](integer.md) | The number of requests allowed per minute.
 By default, the number of requests allowed per minute is set by each service as follows:
 
 * `alibabacloud-ai-search` service: `1000`

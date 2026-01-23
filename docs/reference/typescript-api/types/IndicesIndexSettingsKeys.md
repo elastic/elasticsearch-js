@@ -13,47 +13,47 @@
 | `sort?` | [`IndicesIndexSegmentSort`](IndicesIndexSegmentSort.md) | - |
 | `number_of_shards?` | `integer | string` | - |
 | `number_of_replicas?` | `integer | string` | - |
-| `number_of_routing_shards?` | `integer` | - |
+| `number_of_routing_shards?` | [`integer`](integer.md) | - |
 | `check_on_startup?` | [`IndicesIndexCheckOnStartup`](IndicesIndexCheckOnStartup.md) | - |
 | `codec?` | `string` | - |
-| `routing_partition_size?` | `SpecUtilsStringified<integer>` | - |
+| `routing_partition_size?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<integer> | - |
 | `load_fixed_bitset_filters_eagerly?` | `boolean` | - |
 | `hidden?` | `boolean | string` | - |
-| `auto_expand_replicas?` | `SpecUtilsWithNullValue<string>` | - |
+| `auto_expand_replicas?` | [`SpecUtilsWithNullValue`](SpecUtilsWithNullValue.md)<string> | - |
 | `merge?` | [`IndicesMerge`](IndicesMerge.md) | - |
 | `search?` | [`IndicesSettingsSearch`](IndicesSettingsSearch.md) | - |
 | `refresh_interval?` | [`Duration`](Duration.md) | - |
-| `max_result_window?` | `integer` | - |
-| `max_inner_result_window?` | `integer` | - |
-| `max_rescore_window?` | `integer` | - |
-| `max_docvalue_fields_search?` | `integer` | - |
-| `max_script_fields?` | `integer` | - |
-| `max_ngram_diff?` | `integer` | - |
-| `max_shingle_diff?` | `integer` | - |
+| `max_result_window?` | [`integer`](integer.md) | - |
+| `max_inner_result_window?` | [`integer`](integer.md) | - |
+| `max_rescore_window?` | [`integer`](integer.md) | - |
+| `max_docvalue_fields_search?` | [`integer`](integer.md) | - |
+| `max_script_fields?` | [`integer`](integer.md) | - |
+| `max_ngram_diff?` | [`integer`](integer.md) | - |
+| `max_shingle_diff?` | [`integer`](integer.md) | - |
 | `blocks?` | [`IndicesIndexSettingBlocks`](IndicesIndexSettingBlocks.md) | - |
-| `max_refresh_listeners?` | `integer` | - |
+| `max_refresh_listeners?` | [`integer`](integer.md) | - |
 | `analyze?` | [`IndicesSettingsAnalyze`](IndicesSettingsAnalyze.md) | Settings to define analyzers, tokenizers, token filters and character filters.
 Refer to the linked documentation for step-by-step examples of updating analyzers on existing indices. |
 | `highlight?` | [`IndicesSettingsHighlight`](IndicesSettingsHighlight.md) | - |
-| `max_terms_count?` | `integer` | - |
-| `max_regex_length?` | `integer` | - |
+| `max_terms_count?` | [`integer`](integer.md) | - |
+| `max_regex_length?` | [`integer`](integer.md) | - |
 | `routing?` | [`IndicesIndexRouting`](IndicesIndexRouting.md) | - |
 | `gc_deletes?` | [`Duration`](Duration.md) | - |
 | `default_pipeline?` | [`PipelineName`](PipelineName.md) | - |
 | `final_pipeline?` | [`PipelineName`](PipelineName.md) | - |
 | `lifecycle?` | [`IndicesIndexSettingsLifecycle`](IndicesIndexSettingsLifecycle.md) | - |
 | `provided_name?` | [`Name`](Name.md) | - |
-| `creation_date?` | `SpecUtilsStringified<EpochTime<UnitMillis>>` | - |
+| `creation_date?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<EpochTime<UnitMillis>> | - |
 | `creation_date_string?` | [`DateTime`](DateTime.md) | - |
 | `uuid?` | [`Uuid`](Uuid.md) | - |
 | `version?` | [`IndicesIndexVersioning`](IndicesIndexVersioning.md) | - |
 | `verified_before_close?` | `boolean | string` | - |
 | `format?` | `string | integer` | - |
-| `max_slices_per_scroll?` | `integer` | - |
+| `max_slices_per_scroll?` | [`integer`](integer.md) | - |
 | `translog?` | [`IndicesTranslog`](IndicesTranslog.md) | - |
 | `query_string?` | [`IndicesSettingsQueryString`](IndicesSettingsQueryString.md) | - |
 | `priority?` | `integer | string` | - |
-| `top_metrics_max_size?` | `integer` | - |
+| `top_metrics_max_size?` | [`integer`](integer.md) | - |
 | `analysis?` | [`IndicesIndexSettingsAnalysis`](IndicesIndexSettingsAnalysis.md) | - |
 | `settings?` | [`IndicesIndexSettings`](IndicesIndexSettings.md) | - |
 | `time_series?` | [`IndicesIndexSettingsTimeSeries`](IndicesIndexSettingsTimeSeries.md) | - |

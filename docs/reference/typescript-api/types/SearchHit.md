@@ -20,10 +20,10 @@
 | `_shard?` | `string` | - |
 | `_node?` | `string` | - |
 | `_routing?` | `string` | - |
-| `_source?` | [`TDocument`](TDocument.md) | - |
-| `_rank?` | `integer` | - |
+| `_source?` | `TDocument` | - |
+| `_rank?` | [`integer`](integer.md) | - |
 | `_seq_no?` | [`SequenceNumber`](SequenceNumber.md) | - |
-| `_primary_term?` | `long` | - |
+| `_primary_term?` | [`long`](long.md) | - |
 | `_version?` | [`VersionNumber`](VersionNumber.md) | - |
 | `sort?` | [`SortResults`](SortResults.md) | - |
 

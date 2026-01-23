@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -15,7 +19,7 @@ received before the timeout expires, the request fails and returns an error. |
 | `index_patterns?` | `string | string[]` | Array of wildcard expressions used to match the names
 of indices during creation. |
 | `mappings?` | [`MappingTypeMapping`](MappingTypeMapping.md) | Mapping for fields in the index. |
-| `order?` | `integer` | Order in which Elasticsearch applies this template if index
+| `order?` | [`integer`](integer.md) | Order in which Elasticsearch applies this template if index
 matches multiple templates.
 
 Templates with lower 'order' values are merged first. Templates with higher

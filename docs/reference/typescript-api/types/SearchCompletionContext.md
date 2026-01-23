@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `boost?` | `double` | The factor by which the score of the suggestion should be boosted.
+| `boost?` | [`double`](double.md) | The factor by which the score of the suggestion should be boosted.
 The score is computed by multiplying the boost with the suggestion weight. |
 | `context` | [`SearchContext`](SearchContext.md) | The value of the category to filter/boost on. |
-| `neighbours?` | `GeoHashPrecision[]` | An array of precision values at which neighboring geohashes should be taken into account.
+| `neighbours?` | [`GeoHashPrecision`](GeoHashPrecision.md)[] | An array of precision values at which neighboring geohashes should be taken into account.
 Precision value can be a distance value (`5m`, `10km`, etc.) or a raw geohash precision (`1`..`12`).
 Defaults to generating neighbors for index time precision level. |
 | `precision?` | [`GeoHashPrecision`](GeoHashPrecision.md) | The precision of the geohash to encode the query geo point.

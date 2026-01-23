@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `bound_address` | `string[]` | - |
 | `max_content_length?` | [`ByteSize`](ByteSize.md) | - |
-| `max_content_length_in_bytes` | `long` | - |
+| `max_content_length_in_bytes` | [`long`](long.md) | - |
 | `publish_address` | `string` | - |
 
 ## See Also

@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `max` | `long` | - |
-| `sum` | `long` | - |
-| `min` | `long` | - |
+| `max` | [`long`](long.md) | - |
+| `sum` | [`long`](long.md) | - |
+| `min` | [`long`](long.md) | - |
 
 ## See Also
 

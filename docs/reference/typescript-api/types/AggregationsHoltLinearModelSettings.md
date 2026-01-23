@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `alpha?` | `float` | - |
-| `beta?` | `float` | - |
+| `alpha?` | [`float`](float.md) | - |
+| `beta?` | [`float`](float.md) | - |
 
 ## See Also
 

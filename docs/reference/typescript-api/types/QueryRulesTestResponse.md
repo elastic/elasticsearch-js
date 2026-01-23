@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `total_matched_rules` | `integer` | - |
-| `matched_rules` | `QueryRulesTestQueryRulesetMatchedRule[]` | - |
+| `total_matched_rules` | [`integer`](integer.md) | - |
+| `matched_rules` | [`QueryRulesTestQueryRulesetMatchedRule`](QueryRulesTestQueryRulesetMatchedRule.md)[] | - |
 
 ## See Also
 

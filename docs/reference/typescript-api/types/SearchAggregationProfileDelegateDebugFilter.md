@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `results_from_metadata?` | `integer` | - |
+| `results_from_metadata?` | [`integer`](integer.md) | - |
 | `query?` | `string` | - |
 | `specialized_for?` | `string` | - |
-| `segments_counted_in_constant_time?` | `integer` | - |
+| `segments_counted_in_constant_time?` | [`integer`](integer.md) | - |
 
 ## See Also
 

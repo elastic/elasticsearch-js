@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `pivot` | `float` | Configurable pivot value so that the result will be less than 0.5. |
-| `exponent` | `float` | Configurable Exponent. |
+| `pivot` | [`float`](float.md) | Configurable pivot value so that the result will be less than 0.5. |
+| `exponent` | [`float`](float.md) | Configurable Exponent. |
 
 ## See Also
 

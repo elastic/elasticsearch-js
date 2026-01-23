@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsBucketPathAggregation`](AggregationsBucketPathAggregation.md)
+
 ### Properties
 
 | Property | Type | Description |

@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | [`Id`](Id.md) | - |
-| `version` | `long` | - |
-| `modified_date_millis` | `EpochTime<UnitMillis>` | - |
+| `version` | [`long`](long.md) | - |
+| `modified_date_millis` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `database` | [`IngestDatabaseConfiguration`](IngestDatabaseConfiguration.md) | - |
 
 ## See Also

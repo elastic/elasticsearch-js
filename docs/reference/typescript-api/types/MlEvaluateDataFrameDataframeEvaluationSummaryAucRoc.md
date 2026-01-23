@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`MlEvaluateDataFrameDataframeEvaluationValue`](MlEvaluateDataFrameDataframeEvaluationValue.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `curve?` | `MlEvaluateDataFrameDataframeEvaluationSummaryAucRocCurveItem[]` | - |
+| `curve?` | [`MlEvaluateDataFrameDataframeEvaluationSummaryAucRocCurveItem`](MlEvaluateDataFrameDataframeEvaluationSummaryAucRocCurveItem.md)[] | - |
 
 ## See Also
 

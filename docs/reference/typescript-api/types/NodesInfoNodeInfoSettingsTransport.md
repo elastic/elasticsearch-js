@@ -9,7 +9,7 @@
 | `type` | `NodesInfoNodeInfoSettingsTransportType | string` | - |
 | `'type.default'?` | `string` | - |
 | `features?` | [`NodesInfoNodeInfoSettingsTransportFeatures`](NodesInfoNodeInfoSettingsTransportFeatures.md) | - |
-| `ignore_deserialization_errors?` | `SpecUtilsStringified<boolean>` | Only used in unit tests |
+| `ignore_deserialization_errors?` | [`SpecUtilsStringified`](SpecUtilsStringified.md)<boolean> | Only used in unit tests |
 
 ## See Also
 

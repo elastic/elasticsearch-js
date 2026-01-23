@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `percent` | `integer` | Percentage of CPU used across all selected nodes.
+| `percent` | [`integer`](integer.md) | Percentage of CPU used across all selected nodes.
 Returns `-1` if not supported. |
 
 ## See Also

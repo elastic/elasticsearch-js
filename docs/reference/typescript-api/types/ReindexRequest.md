@@ -2,12 +2,16 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `refresh?` | `boolean` | If `true`, the request refreshes affected shards to make this operation visible to search. |
-| `requests_per_second?` | `float` | The throttle for this request in sub-requests per second.
+| `requests_per_second?` | [`float`](float.md) | The throttle for this request in sub-requests per second.
 By default, there is no throttle. |
 | `scroll?` | [`Duration`](Duration.md) | The period of time that a consistent view of the index should be maintained for scrolled search. |
 | `slices?` | [`Slices`](Slices.md) | The number of slices this task should be divided into.
@@ -31,7 +35,7 @@ The default value is one, which means it waits for each primary shard to be acti
 | `require_alias?` | `boolean` | If `true`, the destination must be an index alias. |
 | `conflicts?` | [`Conflicts`](Conflicts.md) | Indicates whether to continue reindexing even when there are conflicts. |
 | `dest` | [`ReindexDestination`](ReindexDestination.md) | The destination you are copying to. |
-| `max_docs?` | `long` | The maximum number of documents to reindex.
+| `max_docs?` | [`long`](long.md) | The maximum number of documents to reindex.
 By default, all documents are reindexed.
 If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation.
 

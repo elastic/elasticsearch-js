@@ -1,21 +1,24 @@
 # Client.reindex
 
-## API Method
+## Method Signature
 
 ```typescript
-client.reindex(params?: ReindexRequest): Promise<ReindexResponse>
+client.reindex(this: That, params: T.ReindexRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`ReindexRequest`](../types/ReindexRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.ReindexRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`ReindexResponse`](../types/ReindexResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -15,7 +19,7 @@ This value can be used to override the default pipeline of the index. |
 The allowed values are one of index or template.
 The index option merges mappings the way they would be merged into an existing index.
 The template option merges mappings the way they would be merged into a template. |
-| `docs` | `IngestDocument[]` | Sample documents to test in the pipeline. |
+| `docs` | [`IngestDocument`](IngestDocument.md)[] | Sample documents to test in the pipeline. |
 | `component_template_substitutions?` | `Record<string, ClusterComponentTemplateNode>` | A map of component template names to substitute component template definition objects. |
 | `index_template_substitutions?` | `Record<string, IndicesIndexTemplate>` | A map of index template names to substitute index template definition objects. |
 | `mapping_addition?` | [`MappingTypeMapping`](MappingTypeMapping.md) | - |

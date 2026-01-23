@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`IngestProcessorBase`](IngestProcessorBase.md)
+
 ### Properties
 
 | Property | Type | Description |

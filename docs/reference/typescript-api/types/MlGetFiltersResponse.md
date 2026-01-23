@@ -6,8 +6,8 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
-| `filters` | `MlFilter[]` | - |
+| `count` | [`long`](long.md) | - |
+| `filters` | [`MlFilter`](MlFilter.md)[] | - |
 
 ## See Also
 

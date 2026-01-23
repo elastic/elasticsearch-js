@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `collector` | `SearchCollector[]` | - |
-| `query` | `SearchQueryProfile[]` | - |
-| `rewrite_time` | `long` | - |
+| `collector` | [`SearchCollector`](SearchCollector.md)[] | - |
+| `query` | [`SearchQueryProfile`](SearchQueryProfile.md)[] | - |
+| `rewrite_time` | [`long`](long.md) | - |
 
 ## See Also
 

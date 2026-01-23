@@ -1,21 +1,24 @@
 # Client.search
 
-## API Method
+## Method Signature
 
 ```typescript
-client.search(params?: SearchRequest): Promise<SearchResponse>
+client.search(this: That, params?: T.SearchRequest, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`SearchRequest`](../types/SearchRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params?` | `T.SearchRequest` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`SearchResponse`](../types/SearchResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

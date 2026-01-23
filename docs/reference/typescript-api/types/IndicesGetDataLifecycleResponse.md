@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `IndicesGetDataLifecycleDataStreamWithLifecycle[]` | - |
+| `data_streams` | [`IndicesGetDataLifecycleDataStreamWithLifecycle`](IndicesGetDataLifecycleDataStreamWithLifecycle.md)[] | - |
 
 ## See Also
 

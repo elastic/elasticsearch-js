@@ -10,7 +10,7 @@
 If empty, the response omits this property. |
 | `allow_custom_routing?` | `boolean` | If `true`, the data stream allows custom routing on write request. |
 | `failure_store?` | [`IndicesFailureStore`](IndicesFailureStore.md) | Information about failure store backing indices |
-| `generation` | `integer` | Current generation for the data stream. This number acts as a cumulative count of the stream’s rollovers, starting at 1. |
+| `generation` | [`integer`](integer.md) | Current generation for the data stream. This number acts as a cumulative count of the stream’s rollovers, starting at 1. |
 | `hidden` | `boolean` | If `true`, the data stream is hidden. |
 | `ilm_policy?` | [`Name`](Name.md) | Name of the current ILM lifecycle policy in the stream’s matching index template.
 This lifecycle policy is set in the `index.lifecycle.name` setting.
@@ -18,7 +18,7 @@ If the template does not include a lifecycle policy, this property is not includ
 NOTE: A data stream’s backing indices may be assigned different lifecycle policies. To retrieve the lifecycle policy for individual backing indices, use the get index settings API. |
 | `next_generation_managed_by` | [`IndicesManagedBy`](IndicesManagedBy.md) | Name of the lifecycle system that'll manage the next generation of the data stream. |
 | `prefer_ilm` | `boolean` | Indicates if ILM should take precedence over DSL in case both are configured to managed this data stream. |
-| `indices` | `IndicesDataStreamIndex[]` | Array of objects containing information about the data stream’s backing indices.
+| `indices` | [`IndicesDataStreamIndex`](IndicesDataStreamIndex.md)[] | Array of objects containing information about the data stream’s backing indices.
 The last item in this array contains information about the stream’s current write index. |
 | `lifecycle?` | [`IndicesDataStreamLifecycleWithRollover`](IndicesDataStreamLifecycleWithRollover.md) | Contains the configuration for the data stream lifecycle of this data stream. |
 | `name` | [`DataStreamName`](DataStreamName.md) | Name of the data stream. |

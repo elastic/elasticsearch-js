@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `task_id` | `long` | - |
+| `task_id` | [`long`](long.md) | - |
 | `node_id` | [`NodeId`](NodeId.md) | - |
 | `status` | `string` | - |
 | `reason` | [`ErrorCause`](ErrorCause.md) | - |

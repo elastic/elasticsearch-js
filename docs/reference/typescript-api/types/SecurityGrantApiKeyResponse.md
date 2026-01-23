@@ -9,7 +9,7 @@
 | `api_key` | `string` | - |
 | `id` | [`Id`](Id.md) | - |
 | `name` | [`Name`](Name.md) | - |
-| `expiration?` | `EpochTime<UnitMillis>` | - |
+| `expiration?` | [`EpochTime`](EpochTime.md)<UnitMillis> | - |
 | `encoded` | `string` | - |
 
 ## See Also

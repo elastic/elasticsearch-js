@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `required_capacity` | [`AutoscalingGetAutoscalingCapacityAutoscalingCapacity`](AutoscalingGetAutoscalingCapacityAutoscalingCapacity.md) | - |
 | `current_capacity` | [`AutoscalingGetAutoscalingCapacityAutoscalingCapacity`](AutoscalingGetAutoscalingCapacityAutoscalingCapacity.md) | - |
-| `current_nodes` | `AutoscalingGetAutoscalingCapacityAutoscalingNode[]` | - |
+| `current_nodes` | [`AutoscalingGetAutoscalingCapacityAutoscalingNode`](AutoscalingGetAutoscalingCapacityAutoscalingNode.md)[] | - |
 | `deciders` | `Record<string, AutoscalingGetAutoscalingCapacityAutoscalingDecider>` | - |
 
 ## See Also

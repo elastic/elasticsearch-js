@@ -10,8 +10,8 @@
 | `groups` | [`RollupGroupings`](RollupGroupings.md) | - |
 | `id` | [`Id`](Id.md) | - |
 | `index_pattern` | `string` | - |
-| `metrics` | `RollupFieldMetric[]` | - |
-| `page_size` | `long` | - |
+| `metrics` | [`RollupFieldMetric`](RollupFieldMetric.md)[] | - |
+| `page_size` | [`long`](long.md) | - |
 | `rollup_index` | [`IndexName`](IndexName.md) | - |
 | `timeout` | [`Duration`](Duration.md) | - |
 

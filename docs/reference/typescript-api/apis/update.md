@@ -1,21 +1,24 @@
 # Client.update
 
-## API Method
+## Method Signature
 
 ```typescript
-client.update(params?: UpdateRequest): Promise<UpdateResponse>
+client.update(this: That, params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any>
 ```
 
 ### Parameters
 
-- [`UpdateRequest`](../types/UpdateRequest.md) - Request parameters
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `this` | `That` | - |
+| `params` | `T.UpdateRequest<TDocument, TPartialDocument>` | - |
+| `options?` | `TransportRequestOptions` | - |
 
 ### Returns
 
-- [`UpdateResponse`](../types/UpdateResponse.md) - Response data
+`Promise<any>`
 
 ## See Also
 
 - [Client](../client.md)
 - [All APIs](../index.md)
-- [Type Definitions](../types/)

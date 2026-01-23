@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -17,7 +21,7 @@ Ongoing async searches and any saved search results are deleted after this perio
 | `allow_partial_search_results?` | `boolean` | Indicate if an error should be returned if there is a partial search failure or timeout |
 | `analyzer?` | `string` | The analyzer to use for the query string |
 | `analyze_wildcard?` | `boolean` | Specify whether wildcard and prefix queries should be analyzed |
-| `batched_reduce_size?` | `long` | Affects how often partial results become available, which happens whenever shard results are reduced.
+| `batched_reduce_size?` | [`long`](long.md) | Affects how often partial results become available, which happens whenever shard results are reduced.
 A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default). |
 | `ccs_minimize_roundtrips?` | `boolean` | The default value is the only supported value. |
 | `default_operator?` | [`QueryDslOperator`](QueryDslOperator.md) | The default operator for query string query (AND or OR) |
@@ -26,7 +30,7 @@ A partial reduction is performed every time the coordinating node has received a
 | `ignore_throttled?` | `boolean` | Whether specified concrete, expanded or aliased indices should be ignored when throttled |
 | `ignore_unavailable?` | `boolean` | Whether specified concrete indices should be ignored when unavailable (missing or closed) |
 | `lenient?` | `boolean` | Specify whether format-based query failures (such as providing text to a numeric field) should be ignored |
-| `max_concurrent_shard_requests?` | `integer` | The number of concurrent shard requests per node this search executes concurrently.
+| `max_concurrent_shard_requests?` | [`integer`](integer.md) | The number of concurrent shard requests per node this search executes concurrently.
 This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests |
 | `preference?` | `string` | Specify the node or shard the operation should be performed on |
 | `request_cache?` | `boolean` | Specify if request cache should be used for this request or not, defaults to true |
@@ -34,7 +38,7 @@ This value should be used to limit the impact of the search on the cluster in or
 | `search_type?` | [`SearchType`](SearchType.md) | Search operation type |
 | `suggest_field?` | [`Field`](Field.md) | Specifies which field to use for suggestions. |
 | `suggest_mode?` | [`SuggestMode`](SuggestMode.md) | Specify suggest mode |
-| `suggest_size?` | `long` | How many suggestions to return in response |
+| `suggest_size?` | [`long`](long.md) | How many suggestions to return in response |
 | `suggest_text?` | `string` | The source text for which the suggestions should be returned. |
 | `typed_keys?` | `boolean` | Specify whether aggregation and suggester names should be prefixed by their respective types in the response |
 | `rest_total_hits_as_int?` | `boolean` | Indicates whether hits.total should be rendered as an integer or an object in the rest search response |
@@ -46,7 +50,7 @@ This value should be used to limit the impact of the search on the cluster in or
 | `collapse?` | [`SearchFieldCollapse`](SearchFieldCollapse.md) | - |
 | `explain?` | `boolean` | If true, returns detailed information about score computation as part of a hit. |
 | `ext?` | `Record<string, any>` | Configuration of search extensions defined by Elasticsearch plugins. |
-| `from?` | `integer` | Starting document offset. By default, you cannot page through more than 10,000
+| `from?` | [`integer`](integer.md) | Starting document offset. By default, you cannot page through more than 10,000
 hits using the from and size parameters. To page through more hits, use the
 search_after parameter. |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | - |
@@ -58,7 +62,7 @@ Defaults to 10,000 hits. |
 | `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response. |
 | `knn?` | `KnnSearch | KnnSearch[]` | Defines the approximate kNN search to run. |
-| `min_score?` | `double` | Minimum _score for matching documents. Documents with a lower _score are
+| `min_score?` | [`double`](double.md) | Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations. |
 | `post_filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 | `profile?` | `boolean` | - |
@@ -66,7 +70,7 @@ not included in search results and results collected by aggregations. |
 | `rescore?` | `SearchRescore | SearchRescore[]` | - |
 | `script_fields?` | `Record<string, ScriptField>` | Retrieve a script evaluation (based on different fields) for each hit. |
 | `search_after?` | [`SortResults`](SortResults.md) | - |
-| `size?` | `integer` | The number of hits to return. By default, you cannot page through more
+| `size?` | [`integer`](integer.md) | The number of hits to return. By default, you cannot page through more
 than 10,000 hits using the from and size parameters. To page through more
 hits, use the search_after parameter. |
 | `slice?` | [`SlicedScroll`](SlicedScroll.md) | - |
@@ -76,7 +80,7 @@ fields are returned in the hits._source property of the search response. |
 | `fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response. |
 | `suggest?` | [`SearchSuggester`](SearchSuggester.md) | - |
-| `terminate_after?` | `long` | Maximum number of documents to collect for each shard. If a query reaches this
+| `terminate_after?` | [`long`](long.md) | Maximum number of documents to collect for each shard. If a query reaches this
 limit, Elasticsearch terminates the query early. Elasticsearch collects documents
 before sorting. Defaults to 0, which does not terminate query execution early. |
 | `timeout?` | `string` | Specifies the period of time to wait for a response from each shard. If no response

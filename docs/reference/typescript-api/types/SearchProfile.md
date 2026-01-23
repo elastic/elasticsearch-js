@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `shards` | `SearchShardProfile[]` | - |
+| `shards` | [`SearchShardProfile`](SearchShardProfile.md)[] | - |
 
 ## See Also
 

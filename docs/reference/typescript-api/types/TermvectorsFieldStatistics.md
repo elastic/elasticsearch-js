@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `doc_count` | `integer` | - |
-| `sum_doc_freq` | `long` | - |
-| `sum_ttf` | `long` | - |
+| `doc_count` | [`integer`](integer.md) | - |
+| `sum_doc_freq` | [`long`](long.md) | - |
+| `sum_ttf` | [`long`](long.md) | - |
 
 ## See Also
 

@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`QueryDslQueryBase`](QueryDslQueryBase.md)
+
 ## See Also
 
 - [All Types](./)

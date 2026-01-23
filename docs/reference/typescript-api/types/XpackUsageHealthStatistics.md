@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`XpackUsageBase`](XpackUsageBase.md)
+
 ### Properties
 
 | Property | Type | Description |

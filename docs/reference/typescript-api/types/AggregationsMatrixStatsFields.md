@@ -7,11 +7,11 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | [`Field`](Field.md) | - |
-| `count` | `long` | - |
-| `mean` | `double` | - |
-| `variance` | `double` | - |
-| `skewness` | `double` | - |
-| `kurtosis` | `double` | - |
+| `count` | [`long`](long.md) | - |
+| `mean` | [`double`](double.md) | - |
+| `variance` | [`double`](double.md) | - |
+| `skewness` | [`double`](double.md) | - |
+| `kurtosis` | [`double`](double.md) | - |
 | `covariance` | `Record<Field, double>` | - |
 | `correlation` | `Record<Field, double>` | - |
 

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `explanations?` | `IndicesValidateQueryIndicesValidationExplanation[]` | - |
+| `explanations?` | [`IndicesValidateQueryIndicesValidationExplanation`](IndicesValidateQueryIndicesValidationExplanation.md)[] | - |
 | `_shards?` | [`ShardStatistics`](ShardStatistics.md) | - |
 | `valid` | `boolean` | - |
 | `error?` | `string` | - |

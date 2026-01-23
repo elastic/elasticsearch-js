@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `chunk_rescorer?` | `long` | - |
+| `chunk_rescorer?` | [`long`](long.md) | - |
 
 ## See Also
 

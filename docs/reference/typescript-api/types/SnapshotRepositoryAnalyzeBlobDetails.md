@@ -10,11 +10,11 @@
 | `overwritten` | `boolean` | Indicates whether the blob was overwritten while the read operations were ongoing.
   /** |
 | `read_early` | `boolean` | - |
-| `read_end` | `long` | The position, in bytes, at which read operations completed. |
-| `read_start` | `long` | The position, in bytes, at which read operations started. |
+| `read_end` | [`long`](long.md) | The position, in bytes, at which read operations completed. |
+| `read_start` | [`long`](long.md) | The position, in bytes, at which read operations started. |
 | `reads` | [`SnapshotRepositoryAnalyzeReadBlobDetails`](SnapshotRepositoryAnalyzeReadBlobDetails.md) | A description of every read operation performed on the blob. |
 | `size` | [`ByteSize`](ByteSize.md) | The size of the blob. |
-| `size_bytes` | `long` | The size of the blob in bytes. |
+| `size_bytes` | [`long`](long.md) | The size of the blob in bytes. |
 
 ## See Also
 

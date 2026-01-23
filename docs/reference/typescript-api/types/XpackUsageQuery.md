@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count?` | `integer` | - |
-| `failed?` | `integer` | - |
-| `paging?` | `integer` | - |
-| `total?` | `integer` | - |
+| `count?` | [`integer`](integer.md) | - |
+| `failed?` | [`integer`](integer.md) | - |
+| `paging?` | [`integer`](integer.md) | - |
+| `total?` | [`integer`](integer.md) | - |
 
 ## See Also
 

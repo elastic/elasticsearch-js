@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `count` | `long` | - |
+| `count` | [`long`](long.md) | - |
 | `_shards` | [`ShardStatistics`](ShardStatistics.md) | - |
 
 ## See Also

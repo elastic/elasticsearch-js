@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`AggregationsMovingAverageAggregationBase`](AggregationsMovingAverageAggregationBase.md)
+
 ### Properties
 
 | Property | Type | Description |

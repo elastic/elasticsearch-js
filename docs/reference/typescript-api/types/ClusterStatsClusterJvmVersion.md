@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `bundled_jdk` | `boolean` | Always `true`. All distributions come with a bundled Java Development Kit (JDK). |
-| `count` | `integer` | Total number of selected nodes using JVM. |
+| `count` | [`integer`](integer.md) | Total number of selected nodes using JVM. |
 | `using_bundled_jdk` | `boolean` | If `true`, a bundled JDK is in use by JVM. |
 | `version` | [`VersionString`](VersionString.md) | Version of JVM used by one or more selected nodes. |
 | `vm_name` | `string` | Name of the JVM. |

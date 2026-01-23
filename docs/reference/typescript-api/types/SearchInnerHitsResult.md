@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `hits` | `SearchHitsMetadata<any>` | - |
+| `hits` | [`SearchHitsMetadata`](SearchHitsMetadata.md)<any> | - |
 
 ## See Also
 

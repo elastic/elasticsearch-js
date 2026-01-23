@@ -11,7 +11,7 @@
 | `roles` | [`NodeRoles`](NodeRoles.md) | - |
 | `attributes` | `Record<string, string>` | - |
 | `transport_address` | [`TransportAddress`](TransportAddress.md) | - |
-| `weight_ranking` | `integer` | - |
+| `weight_ranking` | [`integer`](integer.md) | - |
 
 ## See Also
 

@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `index` | `string` | - |
-| `total_doc_count` | `long` | - |
-| `reindexed_doc_count` | `long` | - |
+| `total_doc_count` | [`long`](long.md) | - |
+| `reindexed_doc_count` | [`long`](long.md) | - |
 
 ## See Also
 

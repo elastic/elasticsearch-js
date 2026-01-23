@@ -9,7 +9,7 @@
 | `_nodes` | [`NodeStatistics`](NodeStatistics.md) | - |
 | `cluster_name` | [`Name`](Name.md) | - |
 | `supported` | `boolean | null` | - |
-| `failures?` | `CapabilitiesFailedNodeException[]` | - |
+| `failures?` | [`CapabilitiesFailedNodeException`](CapabilitiesFailedNodeException.md)[] | - |
 
 ## See Also
 

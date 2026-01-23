@@ -6,10 +6,10 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `top` | `double` | - |
-| `bottom` | `double` | - |
-| `left` | `double` | - |
-| `right` | `double` | - |
+| `top` | [`double`](double.md) | - |
+| `bottom` | [`double`](double.md) | - |
+| `left` | [`double`](double.md) | - |
+| `right` | [`double`](double.md) | - |
 
 ## See Also
 

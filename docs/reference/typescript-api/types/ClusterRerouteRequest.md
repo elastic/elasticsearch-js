@@ -2,6 +2,10 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
@@ -13,7 +17,7 @@ It will calculate the result of applying the commands to the current cluster sta
 | `retry_failed?` | `boolean` | If true, then retries allocation of shards that are blocked due to too many subsequent allocation failures. |
 | `master_timeout?` | [`Duration`](Duration.md) | Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. |
 | `timeout?` | [`Duration`](Duration.md) | Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. |
-| `commands?` | `ClusterRerouteCommand[]` | Defines the commands to perform. |
+| `commands?` | [`ClusterRerouteCommand`](ClusterRerouteCommand.md)[] | Defines the commands to perform. |
 | `body?` | `string | { [key: string]: any } & { dry_run?: never, explain?: never, metric?: never, retry_failed?: never, master_timeout?: never, timeout?: never, commands?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { dry_run?: never, explain?: never, metric?: never, retry_failed?: never, master_timeout?: never, timeout?: never, commands?: never }` | All values in `querystring` will be added to the request querystring. |
 

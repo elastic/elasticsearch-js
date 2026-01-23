@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `weights` | `double` | - |
+| `weights` | [`double`](double.md) | - |
 
 ## See Also
 

@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`SearchSuggestBase`](SearchSuggestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `options` | `SearchCompletionSuggestOption<TDocument> | SearchCompletionSuggestOption<TDocument>[]` | - |
+| `options` | [`SearchCompletionSuggestOption`](SearchCompletionSuggestOption.md)<TDocument> | SearchCompletionSuggestOption<TDocument>[] | - |
 
 ## See Also
 

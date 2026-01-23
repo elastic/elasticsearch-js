@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `service_account` | `string` | - |
-| `count` | `integer` | - |
+| `count` | [`integer`](integer.md) | - |
 | `tokens` | `Record<string, Metadata>` | - |
 | `nodes_credentials` | [`SecurityGetServiceCredentialsNodesCredentials`](SecurityGetServiceCredentialsNodesCredentials.md) | Service account credentials collected from all nodes of the cluster. |
 

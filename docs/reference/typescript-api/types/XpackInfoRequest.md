@@ -2,11 +2,15 @@
 
 ## Interface
 
+### Extends
+
+- [`RequestBase`](RequestBase.md)
+
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `categories?` | `XpackInfoXPackCategory[]` | A comma-separated list of the information categories to include in the response.
+| `categories?` | [`XpackInfoXPackCategory`](XpackInfoXPackCategory.md)[] | A comma-separated list of the information categories to include in the response.
 For example, `build,license,features`. |
 | `accept_enterprise?` | `boolean` | If used, this otherwise ignored parameter must be set to true |
 | `human?` | `boolean` | Defines whether additional human-readable information is included in the response.
