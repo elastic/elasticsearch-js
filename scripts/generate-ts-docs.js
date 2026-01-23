@@ -37,7 +37,11 @@ fs.mkdirSync(DOCS_DIR, { recursive: true });
 // Step 2: Generate base documentation using TypeDoc
 console.log('📚 Generating base documentation with TypeDoc...');
 try {
-  execSync('npx typedoc', { stdio: 'inherit' });
+  // Set a reasonable timeout (5 minutes) for TypeDoc generation
+  execSync('npx typedoc', { 
+    stdio: 'inherit',
+    timeout: 300000 // 5 minutes
+  });
 } catch (error) {
   console.error('⚠️  TypeDoc generation had warnings (this is expected)');
 }
@@ -59,9 +63,12 @@ if (fs.existsSync(TYPEDOC_OUT)) {
   console.log('\n🔧 Running post-processing...');
   const processScript = path.join(__dirname, 'process-ts-docs.js');
   try {
-    execSync(`node "${processScript}"`, { stdio: 'inherit' });
+    execSync(`node "${processScript}"`, { 
+      stdio: 'inherit',
+      timeout: 60000 // 1 minute timeout
+    });
   } catch (error) {
-    console.error('⚠️  Post-processing had issues');
+    console.error('⚠️  Post-processing had issues:', error.message);
   }
   
   // Create an index file

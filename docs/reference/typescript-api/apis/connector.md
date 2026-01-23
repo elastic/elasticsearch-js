@@ -3,7 +3,7 @@
 ## Method Signature
 
 ```typescript
-undefined
+connector
 ```
 
 ## Description

@@ -65,7 +65,10 @@ console.log('\n✨ Documentation processing complete!\n');
 function extractApiMethods(content) {
   const methods = [];
   
-  // Parse the properties table to extract API methods with their full signatures
+  // Parse the properties table to extract API methods
+  // Note: This parsing relies on TypeDoc's markdown output format.
+  // If TypeDoc's output format changes significantly, this may need updates.
+  // Alternative: Use TypeDoc's JSON output mode for more robust parsing.
   const lines = content.split('\n');
   let inPropertiesTable = false;
   let currentProperty = null;
@@ -95,10 +98,14 @@ function extractApiMethods(content) {
         const typeMatch = line.match(/\|\s+<a[^>]*><\/a>\s+`[^`]+`\s+\|\s+([^|]+)\s+\|/);
         const typeInfo = typeMatch ? typeMatch[1].trim() : '';
         
+        // Use name as signature fallback
+        const signature = name || id;
+        
         methods.push({
           id,
           name,
-          type: typeInfo
+          type: typeInfo,
+          signature
         });
       }
     }

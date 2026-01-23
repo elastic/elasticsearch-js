@@ -3,7 +3,7 @@
 ## Method Signature
 
 ```typescript
-undefined
+[kRollup]
 ```
 
 ## Description
