@@ -114,9 +114,9 @@ async function codegen (args) {
 
   // run docs example generation
   if (version === 'main') {
-    await $`node ./scripts/generate-docs-examples.js`
+    await $`node ./scripts/generate-docs-examples.mjs`
   } else {
-    await $`node ./scripts/generate-docs-examples.js ${version.split('.').slice(0, 2).join('.')}`
+    await $`node ./scripts/generate-docs-examples.mjs ${version.split('.').slice(0, 2).join('.')}`
   }
 }
 
