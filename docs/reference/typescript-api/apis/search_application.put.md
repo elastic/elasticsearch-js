@@ -1,9 +1,11 @@
 # Client.search_application.put
 
+Create or update a search application.
+
 ## Method Signature
 
 ```typescript
-client.search_application.put(this: That, params: T.SearchApplicationPutRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.put(this: That, params: T.SearchApplicationPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPutResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.put(this: That, params: T.SearchApplicationPutRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchApplicationPutRequest`](../types/SearchApplicationPutRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationPutResponse>`
 
 ## See Also
 

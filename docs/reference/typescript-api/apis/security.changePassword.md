@@ -1,9 +1,11 @@
 # Client.security.changePassword
 
+Change passwords. Change the passwords of users in the native realm and built-in users.
+
 ## Method Signature
 
 ```typescript
-client.security.changePassword(this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<any>
+client.security.changePassword(this: That, params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityChangePasswordResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.changePassword(this: That, params?: T.SecurityChangePasswordRequ
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityChangePasswordRequest`](../types/SecurityChangePasswordRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityChangePasswordResponse>`
 
 ## See Also
 

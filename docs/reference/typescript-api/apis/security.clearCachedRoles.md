@@ -1,9 +1,11 @@
 # Client.security.clearCachedRoles
 
+Clear the roles cache. Evict roles from the native role cache.
+
 ## Method Signature
 
 ```typescript
-client.security.clearCachedRoles(this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any>
+client.security.clearCachedRoles(this: That, params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRolesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.clearCachedRoles(this: That, params: T.SecurityClearCachedRolesR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityClearCachedRolesRequest`](../types/SecurityClearCachedRolesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityClearCachedRolesResponse>`
 
 ## See Also
 

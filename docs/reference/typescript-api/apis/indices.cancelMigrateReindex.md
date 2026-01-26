@@ -1,9 +1,11 @@
 # Client.indices.cancelMigrateReindex
 
+Cancel a migration reindex operation. Cancel a migration reindex attempt for a data stream or index.
+
 ## Method Signature
 
 ```typescript
-client.indices.cancelMigrateReindex(this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.cancelMigrateReindex(this: That, params: T.IndicesCancelMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCancelMigrateReindexResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.cancelMigrateReindex(this: That, params: T.IndicesCancelMigrateRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesCancelMigrateReindexRequest`](../types/IndicesCancelMigrateReindexRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesCancelMigrateReindexResponse>`
 
 ## See Also
 

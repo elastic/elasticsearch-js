@@ -1,9 +1,11 @@
 # Client.security.deleteRole
 
+Delete roles. Delete roles in the native realm. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The delete roles API cannot remove roles that are defined in roles files.
+
 ## Method Signature
 
 ```typescript
-client.security.deleteRole(this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any>
+client.security.deleteRole(this: That, params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.deleteRole(this: That, params: T.SecurityDeleteRoleRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityDeleteRoleRequest`](../types/SecurityDeleteRoleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityDeleteRoleResponse>`
 
 ## See Also
 

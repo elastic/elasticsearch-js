@@ -1,9 +1,11 @@
 # Client.connector.updateName
 
+Update the connector name and description.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateName(this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateName(this: That, params: T.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNameResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateName(this: That, params: T.ConnectorUpdateNameRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateNameRequest`](../types/ConnectorUpdateNameRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateNameResponse>`
 
 ## See Also
 

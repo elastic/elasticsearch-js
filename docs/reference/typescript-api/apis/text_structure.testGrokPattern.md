@@ -1,9 +1,11 @@
 # Client.text_structure.testGrokPattern
 
+Test a Grok pattern. Test a Grok pattern on one or more lines of text. The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
+
 ## Method Signature
 
 ```typescript
-client.text_structure.testGrokPattern(this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<any>
+client.text_structure.testGrokPattern(this: That, params: T.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.text_structure.testGrokPattern(this: That, params: T.TextStructureTestGro
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`TextStructureTestGrokPatternRequest`](../types/TextStructureTestGrokPatternRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TextStructureTestGrokPatternResponse>`
 
 ## See Also
 

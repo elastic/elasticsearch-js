@@ -1,9 +1,11 @@
 # Client.search_application.get
 
+Get search application details.
+
 ## Method Signature
 
 ```typescript
-client.search_application.get(this: That, params: T.SearchApplicationGetRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.get(this: That, params: T.SearchApplicationGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationGetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.get(this: That, params: T.SearchApplicationGetRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchApplicationGetRequest`](../types/SearchApplicationGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationGetResponse>`
 
 ## See Also
 

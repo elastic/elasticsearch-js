@@ -1,9 +1,11 @@
 # Client.indices.removeBlock
 
+Remove an index block. Remove an index block from an index. Index blocks limit the operations allowed on an index by blocking specific operation types.
+
 ## Method Signature
 
 ```typescript
-client.indices.removeBlock(this: That, params: T.IndicesRemoveBlockRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.removeBlock(this: That, params: T.IndicesRemoveBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRemoveBlockResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.removeBlock(this: That, params: T.IndicesRemoveBlockRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesRemoveBlockRequest`](../types/IndicesRemoveBlockRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesRemoveBlockResponse>`
 
 ## See Also
 

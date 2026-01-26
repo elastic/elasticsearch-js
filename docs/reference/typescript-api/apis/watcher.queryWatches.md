@@ -1,9 +1,11 @@
 # Client.watcher.queryWatches
 
+Query watches. Get all registered watches in a paginated manner and optionally filter watches by a query. Note that only the `_id` and `metadata.*` fields are queryable or sortable.
+
 ## Method Signature
 
 ```typescript
-client.watcher.queryWatches(this: That, params?: T.WatcherQueryWatchesRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.queryWatches(this: That, params?: T.WatcherQueryWatchesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherQueryWatchesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.queryWatches(this: That, params?: T.WatcherQueryWatchesRequest, o
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`WatcherQueryWatchesRequest`](../types/WatcherQueryWatchesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherQueryWatchesResponse>`
 
 ## See Also
 

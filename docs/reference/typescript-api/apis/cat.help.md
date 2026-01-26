@@ -1,9 +1,11 @@
 # Client.cat.help
 
+Get CAT help. Get help for the CAT APIs.
+
 ## Method Signature
 
 ```typescript
-client.cat.help(this: That, params?: T.CatHelpRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.help(this: That, params?: T.CatHelpRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHelpResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.help(this: That, params?: T.CatHelpRequest, options?: TransportReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatHelpRequest`](../types/CatHelpRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatHelpResponse>`
 
 ## See Also
 

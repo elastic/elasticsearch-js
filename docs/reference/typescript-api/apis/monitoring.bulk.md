@@ -1,9 +1,11 @@
 # Client.monitoring.bulk
 
+Send monitoring data. This API is used by the monitoring features to send monitoring data.
+
 ## Method Signature
 
 ```typescript
-client.monitoring.bulk(this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any>
+client.monitoring.bulk(this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MonitoringBulkResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.monitoring.bulk(this: That, params: T.MonitoringBulkRequest<TDocument, TP
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MonitoringBulkRequest`](../types/MonitoringBulkRequest.md)<TDocument, TPartialDocument> | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MonitoringBulkResponse>`
 
 ## See Also
 

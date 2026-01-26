@@ -1,9 +1,11 @@
 # Client.indices.getMigrateReindexStatus
 
+Get the migration reindexing status. Get the status of a migration reindex attempt for a data stream or index.
+
 ## Method Signature
 
 ```typescript
-client.indices.getMigrateReindexStatus(this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getMigrateReindexStatus(this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getMigrateReindexStatus(this: That, params: T.IndicesGetMigrateRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetMigrateReindexStatusRequest`](../types/IndicesGetMigrateReindexStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetMigrateReindexStatusResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.license.delete
 
+Delete the license. When the license expires, your subscription level reverts to Basic. If the operator privileges feature is enabled, only operator users can use this API.
+
 ## Method Signature
 
 ```typescript
-client.license.delete(this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.license.delete(this: That, params?: T.LicenseDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.license.delete(this: That, params?: T.LicenseDeleteRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`LicenseDeleteRequest`](../types/LicenseDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.LicenseDeleteResponse>`
 
 ## See Also
 

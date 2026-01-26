@@ -1,9 +1,11 @@
 # Client.connector.updateScheduling
 
+Update the connector scheduling.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateScheduling(this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateScheduling(this: That, params: T.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateSchedulingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateScheduling(this: That, params: T.ConnectorUpdateSchedulin
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateSchedulingRequest`](../types/ConnectorUpdateSchedulingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateSchedulingResponse>`
 
 ## See Also
 

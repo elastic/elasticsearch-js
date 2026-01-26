@@ -1,9 +1,11 @@
 # Client.searchable_snapshots.stats
 
+Get searchable snapshot statistics.
+
 ## Method Signature
 
 ```typescript
-client.searchable_snapshots.stats(this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.searchable_snapshots.stats(this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.searchable_snapshots.stats(this: That, params?: T.SearchableSnapshotsStat
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SearchableSnapshotsStatsRequest`](../types/SearchableSnapshotsStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchableSnapshotsStatsResponse>`
 
 ## See Also
 

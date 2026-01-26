@@ -1,9 +1,11 @@
 # Client.synonyms.putSynonymRule
 
+Create or update a synonym rule. Create or update a synonym rule in a synonym set. If any of the synonym rules included is invalid, the API returns an error. When you update a synonym rule, all analyzers using the synonyms set will be reloaded automatically to reflect the new rule.
+
 ## Method Signature
 
 ```typescript
-client.synonyms.putSynonymRule(this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptions): Promise<any>
+client.synonyms.putSynonymRule(this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymRuleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.synonyms.putSynonymRule(this: That, params: T.SynonymsPutSynonymRuleReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SynonymsPutSynonymRuleRequest`](../types/SynonymsPutSynonymRuleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SynonymsPutSynonymRuleResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.xpack.info
 
+Get information. The information provided by the API includes: * Build information including the build number and timestamp. * License information about the currently installed license. * Feature information for the features that are currently enabled and available under the current license.
+
 ## Method Signature
 
 ```typescript
-client.xpack.info(this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptions): Promise<any>
+client.xpack.info(this: That, params?: T.XpackInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackInfoResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.xpack.info(this: That, params?: T.XpackInfoRequest, options?: TransportRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`XpackInfoRequest`](../types/XpackInfoRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.XpackInfoResponse>`
 
 ## See Also
 

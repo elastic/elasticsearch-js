@@ -1,9 +1,11 @@
 # Client.inference.get
 
+Get an inference endpoint. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
+
 ## Method Signature
 
 ```typescript
-client.inference.get(this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.get(this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.get(this: That, params?: T.InferenceGetRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`InferenceGetRequest`](../types/InferenceGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferenceGetResponse>`
 
 ## See Also
 

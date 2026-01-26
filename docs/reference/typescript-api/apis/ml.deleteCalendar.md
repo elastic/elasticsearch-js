@@ -1,9 +1,11 @@
 # Client.ml.deleteCalendar
 
+Delete a calendar. Remove all scheduled events from a calendar, then delete it.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteCalendar(this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteCalendar(this: That, params: T.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteCalendar(this: That, params: T.MlDeleteCalendarRequest, options?
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteCalendarRequest`](../types/MlDeleteCalendarRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteCalendarResponse>`
 
 ## See Also
 

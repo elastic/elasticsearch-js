@@ -1,9 +1,11 @@
 # Client.transform.deleteTransform
 
+Delete a transform.
+
 ## Method Signature
 
 ```typescript
-client.transform.deleteTransform(this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<any>
+client.transform.deleteTransform(this: That, params: T.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformDeleteTransformResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.transform.deleteTransform(this: That, params: T.TransformDeleteTransformR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`TransformDeleteTransformRequest`](../types/TransformDeleteTransformRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TransformDeleteTransformResponse>`
 
 ## See Also
 

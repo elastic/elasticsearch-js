@@ -1,9 +1,11 @@
 # Client.connector.updateNative
 
+Update the connector is_native flag.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateNative(this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateNative(this: That, params: T.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateNative(this: That, params: T.ConnectorUpdateNativeRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateNativeRequest`](../types/ConnectorUpdateNativeRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateNativeResponse>`
 
 ## See Also
 

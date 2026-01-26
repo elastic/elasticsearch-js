@@ -1,9 +1,11 @@
 # Client.ml.evaluateDataFrame
 
+Evaluate data frame analytics. The API packages together commonly used evaluation metrics for various types of machine learning features. This has been designed for use on indexes created by data frame analytics. Evaluation requires both a ground truth field and an analytics result field to be present.
+
 ## Method Signature
 
 ```typescript
-client.ml.evaluateDataFrame(this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.evaluateDataFrame(this: That, params: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEvaluateDataFrameResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.evaluateDataFrame(this: That, params: T.MlEvaluateDataFrameRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlEvaluateDataFrameRequest`](../types/MlEvaluateDataFrameRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlEvaluateDataFrameResponse>`
 
 ## See Also
 

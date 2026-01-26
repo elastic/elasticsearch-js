@@ -1,9 +1,11 @@
 # Client.ml.updateTrainedModelDeployment
 
+Update a trained model deployment.
+
 ## Method Signature
 
 ```typescript
-client.ml.updateTrainedModelDeployment(this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.updateTrainedModelDeployment(this: That, params: T.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateTrainedModelDeploymentResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.updateTrainedModelDeployment(this: That, params: T.MlUpdateTrainedMode
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlUpdateTrainedModelDeploymentRequest`](../types/MlUpdateTrainedModelDeploymentRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlUpdateTrainedModelDeploymentResponse>`
 
 ## See Also
 

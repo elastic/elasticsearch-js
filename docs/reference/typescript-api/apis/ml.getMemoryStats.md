@@ -1,9 +1,11 @@
 # Client.ml.getMemoryStats
 
+Get machine learning memory usage info. Get information about how machine learning jobs and trained models are using memory, on each node, both within the JVM heap, and natively, outside of the JVM.
+
 ## Method Signature
 
 ```typescript
-client.ml.getMemoryStats(this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getMemoryStats(this: That, params?: T.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetMemoryStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getMemoryStats(this: That, params?: T.MlGetMemoryStatsRequest, options
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetMemoryStatsRequest`](../types/MlGetMemoryStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetMemoryStatsResponse>`
 
 ## See Also
 

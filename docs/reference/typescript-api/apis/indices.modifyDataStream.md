@@ -1,9 +1,11 @@
 # Client.indices.modifyDataStream
 
+Update data streams. Performs one or more data stream modification actions in a single atomic operation.
+
 ## Method Signature
 
 ```typescript
-client.indices.modifyDataStream(this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.modifyDataStream(this: That, params: T.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesModifyDataStreamResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.modifyDataStream(this: That, params: T.IndicesModifyDataStreamReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesModifyDataStreamRequest`](../types/IndicesModifyDataStreamRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesModifyDataStreamResponse>`
 
 ## See Also
 

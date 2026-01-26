@@ -1,9 +1,11 @@
 # Client.esql.getQuery
 
+Get a specific running ES|QL query information. Returns an object extended information about a running ES|QL query.
+
 ## Method Signature
 
 ```typescript
-client.esql.getQuery(this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.getQuery(this: That, params: T.EsqlGetQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetQueryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.getQuery(this: That, params: T.EsqlGetQueryRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EsqlGetQueryRequest`](../types/EsqlGetQueryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlGetQueryResponse>`
 
 ## See Also
 

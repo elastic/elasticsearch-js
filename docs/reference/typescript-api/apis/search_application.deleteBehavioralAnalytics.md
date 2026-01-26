@@ -1,9 +1,11 @@
 # Client.search_application.deleteBehavioralAnalytics
 
+Delete a behavioral analytics collection. The associated data stream is also deleted.
+
 ## Method Signature
 
 ```typescript
-client.search_application.deleteBehavioralAnalytics(this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.deleteBehavioralAnalytics(this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteBehavioralAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.deleteBehavioralAnalytics(this: That, params: T.Search
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchApplicationDeleteBehavioralAnalyticsRequest`](../types/SearchApplicationDeleteBehavioralAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationDeleteBehavioralAnalyticsResponse>`
 
 ## See Also
 

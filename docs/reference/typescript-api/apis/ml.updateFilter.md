@@ -1,9 +1,11 @@
 # Client.ml.updateFilter
 
+Update a filter. Updates the description of a filter, adds items, or removes items from the list.
+
 ## Method Signature
 
 ```typescript
-client.ml.updateFilter(this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.updateFilter(this: That, params: T.MlUpdateFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateFilterResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.updateFilter(this: That, params: T.MlUpdateFilterRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlUpdateFilterRequest`](../types/MlUpdateFilterRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlUpdateFilterResponse>`
 
 ## See Also
 

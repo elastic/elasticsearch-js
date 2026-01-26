@@ -1,9 +1,11 @@
 # Client.ilm.explainLifecycle
 
+Explain the lifecycle state. Get the current lifecycle status for one or more indices. For data streams, the API retrieves the current lifecycle status for the stream's backing indices. The response indicates when the index entered each lifecycle state, provides the definition of the running phase, and information about any failures.
+
 ## Method Signature
 
 ```typescript
-client.ilm.explainLifecycle(this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.explainLifecycle(this: That, params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmExplainLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.explainLifecycle(this: That, params: T.IlmExplainLifecycleRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IlmExplainLifecycleRequest`](../types/IlmExplainLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmExplainLifecycleResponse>`
 
 ## See Also
 

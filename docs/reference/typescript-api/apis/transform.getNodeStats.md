@@ -1,9 +1,11 @@
 # Client.transform.getNodeStats
 
+Get node stats. Get per-node information about transform usage.
+
 ## Method Signature
 
 ```typescript
-client.transform.getNodeStats(this: That, params?: T.TransformGetNodeStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.transform.getNodeStats(this: That, params?: T.TransformGetNodeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetNodeStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.transform.getNodeStats(this: That, params?: T.TransformGetNodeStatsReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`TransformGetNodeStatsRequest`](../types/TransformGetNodeStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TransformGetNodeStatsResponse>`
 
 ## See Also
 

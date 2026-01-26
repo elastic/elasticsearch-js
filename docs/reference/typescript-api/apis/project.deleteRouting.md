@@ -1,9 +1,11 @@
 # Client.project.deleteRouting
 
+Delete a project routing expression.
+
 ## Method Signature
 
 ```typescript
-client.project.deleteRouting(this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptions): Promise<any>
+client.project.deleteRouting(this: That, params: T.ProjectDeleteRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectDeleteRoutingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.project.deleteRouting(this: That, params: T.ProjectDeleteRoutingRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ProjectDeleteRoutingRequest`](../types/ProjectDeleteRoutingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProjectDeleteRoutingResponse>`
 
 ## See Also
 

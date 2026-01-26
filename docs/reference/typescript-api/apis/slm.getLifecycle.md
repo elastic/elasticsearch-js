@@ -1,9 +1,11 @@
 # Client.slm.getLifecycle
 
+Get policy information. Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+
 ## Method Signature
 
 ```typescript
-client.slm.getLifecycle(this: That, params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.getLifecycle(this: That, params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.getLifecycle(this: That, params?: T.SlmGetLifecycleRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SlmGetLifecycleRequest`](../types/SlmGetLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmGetLifecycleResponse>`
 
 ## See Also
 

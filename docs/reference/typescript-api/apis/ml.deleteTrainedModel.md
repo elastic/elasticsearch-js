@@ -1,9 +1,11 @@
 # Client.ml.deleteTrainedModel
 
+Delete an unreferenced trained model. The request deletes a trained inference model that is not referenced by an ingest pipeline.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteTrainedModel(this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteTrainedModel(this: That, params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteTrainedModel(this: That, params: T.MlDeleteTrainedModelRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteTrainedModelRequest`](../types/MlDeleteTrainedModelRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteTrainedModelResponse>`
 
 ## See Also
 

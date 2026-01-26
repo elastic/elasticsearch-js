@@ -1,9 +1,11 @@
 # Client.watcher.start
 
+Start the watch service. Start the Watcher service if it is not already running.
+
 ## Method Signature
 
 ```typescript
-client.watcher.start(this: That, params?: T.WatcherStartRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.start(this: That, params?: T.WatcherStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStartResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.start(this: That, params?: T.WatcherStartRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`WatcherStartRequest`](../types/WatcherStartRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherStartResponse>`
 
 ## See Also
 

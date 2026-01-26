@@ -1,9 +1,11 @@
 # Client.query_rules.deleteRule
 
+Delete a query rule. Delete a query rule within a query ruleset. This is a destructive action that is only recoverable by re-adding the same rule with the create or update query rule API.
+
 ## Method Signature
 
 ```typescript
-client.query_rules.deleteRule(this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptions): Promise<any>
+client.query_rules.deleteRule(this: That, params: T.QueryRulesDeleteRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRuleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.query_rules.deleteRule(this: That, params: T.QueryRulesDeleteRuleRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`QueryRulesDeleteRuleRequest`](../types/QueryRulesDeleteRuleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.QueryRulesDeleteRuleResponse>`
 
 ## See Also
 

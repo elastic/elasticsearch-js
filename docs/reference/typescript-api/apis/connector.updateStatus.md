@@ -1,9 +1,11 @@
 # Client.connector.updateStatus
 
+Update the connector status.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateStatus(this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateStatus(this: That, params: T.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateStatus(this: That, params: T.ConnectorUpdateStatusRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateStatusRequest`](../types/ConnectorUpdateStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateStatusResponse>`
 
 ## See Also
 

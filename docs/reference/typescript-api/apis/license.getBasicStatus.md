@@ -1,9 +1,11 @@
 # Client.license.getBasicStatus
 
+Get the basic license status.
+
 ## Method Signature
 
 ```typescript
-client.license.getBasicStatus(this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.license.getBasicStatus(this: That, params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetBasicStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.license.getBasicStatus(this: That, params?: T.LicenseGetBasicStatusReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`LicenseGetBasicStatusRequest`](../types/LicenseGetBasicStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.LicenseGetBasicStatusResponse>`
 
 ## See Also
 

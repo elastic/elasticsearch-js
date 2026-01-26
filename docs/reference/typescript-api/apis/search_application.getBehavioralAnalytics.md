@@ -1,9 +1,11 @@
 # Client.search_application.getBehavioralAnalytics
 
+Get behavioral analytics collections.
+
 ## Method Signature
 
 ```typescript
-client.search_application.getBehavioralAnalytics(this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.getBehavioralAnalytics(this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationGetBehavioralAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.getBehavioralAnalytics(this: That, params?: T.SearchAp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SearchApplicationGetBehavioralAnalyticsRequest`](../types/SearchApplicationGetBehavioralAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationGetBehavioralAnalyticsResponse>`
 
 ## See Also
 

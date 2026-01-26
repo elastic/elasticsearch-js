@@ -1,9 +1,11 @@
 # Client.autoscaling.getAutoscalingPolicy
 
+Get an autoscaling policy. NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
 ## Method Signature
 
 ```typescript
-client.autoscaling.getAutoscalingPolicy(this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.autoscaling.getAutoscalingPolicy(this: That, params: T.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AutoscalingGetAutoscalingPolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.autoscaling.getAutoscalingPolicy(this: That, params: T.AutoscalingGetAuto
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`AutoscalingGetAutoscalingPolicyRequest`](../types/AutoscalingGetAutoscalingPolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.AutoscalingGetAutoscalingPolicyResponse>`
 
 ## See Also
 

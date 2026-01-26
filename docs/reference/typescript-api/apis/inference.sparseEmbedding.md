@@ -1,9 +1,11 @@
 # Client.inference.sparseEmbedding
 
+Perform sparse embedding inference on the service.
+
 ## Method Signature
 
 ```typescript
-client.inference.sparseEmbedding(this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.sparseEmbedding(this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceSparseEmbeddingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.sparseEmbedding(this: That, params: T.InferenceSparseEmbeddingR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferenceSparseEmbeddingRequest`](../types/InferenceSparseEmbeddingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferenceSparseEmbeddingResponse>`
 
 ## See Also
 

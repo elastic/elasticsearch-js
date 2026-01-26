@@ -1,9 +1,11 @@
 # Client.indices.deleteAlias
 
+Delete an alias. Removes a data stream or index from an alias.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteAlias(this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteAlias(this: That, params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteAliasResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteAlias(this: That, params: T.IndicesDeleteAliasRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteAliasRequest`](../types/IndicesDeleteAliasRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteAliasResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.indices.deleteSampleConfiguration
 
+Delete sampling configuration. Delete the sampling configuration for the specified index.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteSampleConfiguration(this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteSampleConfiguration(this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteSampleConfigurationResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteSampleConfiguration(this: That, params: T.IndicesDeleteSamp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteSampleConfigurationRequest`](../types/IndicesDeleteSampleConfigurationRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteSampleConfigurationResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.connector.updateFeatures
 
+Update the connector features. Update the connector features in the connector document. This API can be used to control the following aspects of a connector: * document-level security * incremental syncs * advanced sync rules * basic sync rules Normally, the running connector service automatically manages these features. However, you can use this API to override the default behavior. To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure. This service runs automatically on Elastic Cloud for Elastic managed connectors.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateFeatures(this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateFeatures(this: That, params: T.ConnectorUpdateFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFeaturesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateFeatures(this: That, params: T.ConnectorUpdateFeaturesReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateFeaturesRequest`](../types/ConnectorUpdateFeaturesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateFeaturesResponse>`
 
 ## See Also
 

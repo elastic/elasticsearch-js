@@ -1,9 +1,11 @@
 # Client.cat.snapshots
 
+Get snapshot information. Get information about the snapshots stored in one or more repositories. A snapshot is a backup of an index or running Elasticsearch cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot API.
+
 ## Method Signature
 
 ```typescript
-client.cat.snapshots(this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.snapshots(this: That, params?: T.CatSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSnapshotsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.snapshots(this: That, params?: T.CatSnapshotsRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatSnapshotsRequest`](../types/CatSnapshotsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatSnapshotsResponse>`
 
 ## See Also
 

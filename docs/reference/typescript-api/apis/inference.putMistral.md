@@ -1,9 +1,11 @@
 # Client.inference.putMistral
 
+Create a Mistral inference endpoint. Create an inference endpoint to perform an inference task with the `mistral` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putMistral(this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putMistral(this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutMistralResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putMistral(this: That, params: T.InferencePutMistralRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutMistralRequest`](../types/InferencePutMistralRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutMistralResponse>`
 
 ## See Also
 

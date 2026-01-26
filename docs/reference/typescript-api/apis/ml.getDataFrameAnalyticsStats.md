@@ -1,9 +1,11 @@
 # Client.ml.getDataFrameAnalyticsStats
 
+Get data frame analytics job stats.
+
 ## Method Signature
 
 ```typescript
-client.ml.getDataFrameAnalyticsStats(this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getDataFrameAnalyticsStats(this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getDataFrameAnalyticsStats(this: That, params?: T.MlGetDataFrameAnalyt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetDataFrameAnalyticsStatsRequest`](../types/MlGetDataFrameAnalyticsStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetDataFrameAnalyticsStatsResponse>`
 
 ## See Also
 

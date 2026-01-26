@@ -1,9 +1,11 @@
 # Client.cluster.getComponentTemplate
 
+Get component templates. Get information about component templates.
+
 ## Method Signature
 
 ```typescript
-client.cluster.getComponentTemplate(this: That, params?: T.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.cluster.getComponentTemplate(this: That, params?: T.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetComponentTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cluster.getComponentTemplate(this: That, params?: T.ClusterGetComponentTe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ClusterGetComponentTemplateRequest`](../types/ClusterGetComponentTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClusterGetComponentTemplateResponse>`
 
 ## See Also
 

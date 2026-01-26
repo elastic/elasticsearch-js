@@ -1,9 +1,11 @@
 # Client.inference.putWatsonx
 
+Create a Watsonx inference endpoint. Create an inference endpoint to perform an inference task with the `watsonxai` service. You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service. You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
+
 ## Method Signature
 
 ```typescript
-client.inference.putWatsonx(this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putWatsonx(this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutWatsonxResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putWatsonx(this: That, params: T.InferencePutWatsonxRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutWatsonxRequest`](../types/InferencePutWatsonxRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutWatsonxResponse>`
 
 ## See Also
 

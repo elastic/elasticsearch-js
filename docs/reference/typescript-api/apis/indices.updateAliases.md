@@ -1,9 +1,11 @@
 # Client.indices.updateAliases
 
+Create or update an alias. Adds a data stream or index to an alias.
+
 ## Method Signature
 
 ```typescript
-client.indices.updateAliases(this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.updateAliases(this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.updateAliases(this: That, params?: T.IndicesUpdateAliasesRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesUpdateAliasesRequest`](../types/IndicesUpdateAliasesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesUpdateAliasesResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.transform.getTransform
 
+Get transforms. Get configuration information for transforms.
+
 ## Method Signature
 
 ```typescript
-client.transform.getTransform(this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<any>
+client.transform.getTransform(this: That, params?: T.TransformGetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.transform.getTransform(this: That, params?: T.TransformGetTransformReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`TransformGetTransformRequest`](../types/TransformGetTransformRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TransformGetTransformResponse>`
 
 ## See Also
 

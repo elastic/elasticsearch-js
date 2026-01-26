@@ -1,9 +1,11 @@
 # Client.eql.get
 
+Get async EQL search results. Get the current status and available results for an async EQL search or a stored synchronous EQL search.
+
 ## Method Signature
 
 ```typescript
-client.eql.get(this: That, params: T.EqlGetRequest, options?: TransportRequestOptions): Promise<any>
+client.eql.get(this: That, params: T.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.eql.get(this: That, params: T.EqlGetRequest, options?: TransportRequestOp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EqlGetRequest`](../types/EqlGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EqlGetResponse<TEvent>>`
 
 ## See Also
 

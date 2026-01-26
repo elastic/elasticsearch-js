@@ -1,9 +1,11 @@
 # Client.logstash.getPipeline
 
+Get Logstash pipelines. Get pipelines that are used for Logstash Central Management.
+
 ## Method Signature
 
 ```typescript
-client.logstash.getPipeline(this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.logstash.getPipeline(this: That, params?: T.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.logstash.getPipeline(this: That, params?: T.LogstashGetPipelineRequest, o
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`LogstashGetPipelineRequest`](../types/LogstashGetPipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.LogstashGetPipelineResponse>`
 
 ## See Also
 

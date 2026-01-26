@@ -1,9 +1,11 @@
 # Client.indices.putDataLifecycle
 
+Update data stream lifecycles. Update the data stream lifecycle of the specified data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.putDataLifecycle(this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.putDataLifecycle(this: That, params: T.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.putDataLifecycle(this: That, params: T.IndicesPutDataLifecycleReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesPutDataLifecycleRequest`](../types/IndicesPutDataLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesPutDataLifecycleResponse>`
 
 ## See Also
 

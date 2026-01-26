@@ -1,9 +1,11 @@
 # Client.connector.updateConfiguration
 
+Update the connector configuration. Update the configuration field in the connector document.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateConfiguration(this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateConfiguration(this: That, params: T.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateConfigurationResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateConfiguration(this: That, params: T.ConnectorUpdateConfig
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateConfigurationRequest`](../types/ConnectorUpdateConfigurationRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateConfigurationResponse>`
 
 ## See Also
 

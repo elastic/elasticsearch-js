@@ -1,9 +1,11 @@
 # Client.watcher.stop
 
+Stop the watch service. Stop the Watcher service if it is running.
+
 ## Method Signature
 
 ```typescript
-client.watcher.stop(this: That, params?: T.WatcherStopRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.stop(this: That, params?: T.WatcherStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStopResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.stop(this: That, params?: T.WatcherStopRequest, options?: Transpo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`WatcherStopRequest`](../types/WatcherStopRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherStopResponse>`
 
 ## See Also
 

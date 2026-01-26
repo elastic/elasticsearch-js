@@ -1,9 +1,11 @@
 # Client.esql.listQueries
 
+Get running ES|QL queries information. Returns an object containing IDs and other information about the running ES|QL queries.
+
 ## Method Signature
 
 ```typescript
-client.esql.listQueries(this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.listQueries(this: That, params?: T.EsqlListQueriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlListQueriesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.listQueries(this: That, params?: T.EsqlListQueriesRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`EsqlListQueriesRequest`](../types/EsqlListQueriesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlListQueriesResponse>`
 
 ## See Also
 

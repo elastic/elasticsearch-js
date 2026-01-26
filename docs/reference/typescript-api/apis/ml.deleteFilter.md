@@ -1,9 +1,11 @@
 # Client.ml.deleteFilter
 
+Delete a filter. If an anomaly detection job references the filter, you cannot delete the filter. You must update or delete the job before you can delete the filter.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteFilter(this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteFilter(this: That, params: T.MlDeleteFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteFilterResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteFilter(this: That, params: T.MlDeleteFilterRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteFilterRequest`](../types/MlDeleteFilterRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteFilterResponse>`
 
 ## See Also
 

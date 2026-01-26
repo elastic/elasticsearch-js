@@ -1,9 +1,11 @@
 # Client.security.getPrivileges
 
+Get application privileges. To use this API, you must have one of the following privileges: * The `read_security` cluster privilege (or a greater privilege such as `manage_security` or `all`). * The "Manage Application Privileges" global privilege for the application being referenced in the request.
+
 ## Method Signature
 
 ```typescript
-client.security.getPrivileges(this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any>
+client.security.getPrivileges(this: That, params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetPrivilegesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.getPrivileges(this: That, params?: T.SecurityGetPrivilegesReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityGetPrivilegesRequest`](../types/SecurityGetPrivilegesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityGetPrivilegesResponse>`
 
 ## See Also
 

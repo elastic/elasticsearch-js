@@ -1,9 +1,11 @@
 # Client.ml.postCalendarEvents
 
+Add scheduled events to the calendar.
+
 ## Method Signature
 
 ```typescript
-client.ml.postCalendarEvents(this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.postCalendarEvents(this: That, params: T.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostCalendarEventsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.postCalendarEvents(this: That, params: T.MlPostCalendarEventsRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPostCalendarEventsRequest`](../types/MlPostCalendarEventsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPostCalendarEventsResponse>`
 
 ## See Also
 

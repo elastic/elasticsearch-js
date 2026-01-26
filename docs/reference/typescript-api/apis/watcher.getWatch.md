@@ -1,9 +1,11 @@
 # Client.watcher.getWatch
 
+Get a watch.
+
 ## Method Signature
 
 ```typescript
-client.watcher.getWatch(this: That, params: T.WatcherGetWatchRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.getWatch(this: That, params: T.WatcherGetWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherGetWatchResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.getWatch(this: That, params: T.WatcherGetWatchRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`WatcherGetWatchRequest`](../types/WatcherGetWatchRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherGetWatchResponse>`
 
 ## See Also
 

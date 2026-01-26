@@ -1,9 +1,11 @@
 # Client.cat.transforms
 
+Get transform information. Get configuration and usage information about transforms. CAT APIs are only intended for human consumption using the Kibana console or command line. They are not intended for use by applications. For application consumption, use the get transform statistics API.
+
 ## Method Signature
 
 ```typescript
-client.cat.transforms(this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.transforms(this: That, params?: T.CatTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTransformsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.transforms(this: That, params?: T.CatTransformsRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatTransformsRequest`](../types/CatTransformsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatTransformsResponse>`
 
 ## See Also
 

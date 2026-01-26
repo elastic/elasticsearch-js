@@ -1,9 +1,11 @@
 # Client.nodes.clearRepositoriesMeteringArchive
 
+Clear the archived repositories metering. Clear the archived repositories metering information in the cluster.
+
 ## Method Signature
 
 ```typescript
-client.nodes.clearRepositoriesMeteringArchive(this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptions): Promise<any>
+client.nodes.clearRepositoriesMeteringArchive(this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesClearRepositoriesMeteringArchiveResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.nodes.clearRepositoriesMeteringArchive(this: That, params: T.NodesClearRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`NodesClearRepositoriesMeteringArchiveRequest`](../types/NodesClearRepositoriesMeteringArchiveRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.NodesClearRepositoriesMeteringArchiveResponse>`
 
 ## See Also
 

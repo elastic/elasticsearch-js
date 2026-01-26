@@ -1,9 +1,11 @@
 # Client.connector.updateActiveFiltering
 
+Activate the connector draft filter. Activates the valid draft filtering for a connector.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateActiveFiltering(this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateActiveFiltering(this: That, params: T.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateActiveFilteringResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateActiveFiltering(this: That, params: T.ConnectorUpdateActi
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateActiveFilteringRequest`](../types/ConnectorUpdateActiveFilteringRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateActiveFilteringResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ml.openJob
 
+Open anomaly detection jobs. An anomaly detection job must be opened to be ready to receive and analyze data. It can be opened and closed multiple times throughout its lifecycle. When you open a new job, it starts with an empty model. When you open an existing job, the most recent model state is automatically loaded. The job is ready to resume its analysis from where it left off, once new data is received.
+
 ## Method Signature
 
 ```typescript
-client.ml.openJob(this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.openJob(this: That, params: T.MlOpenJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlOpenJobResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.openJob(this: That, params: T.MlOpenJobRequest, options?: TransportReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlOpenJobRequest`](../types/MlOpenJobRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlOpenJobResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.profiling.status
 
+Returns basic information about the status of Universal Profiling.
+
 ## Method Signature
 
 ```typescript
-client.profiling.status(this: That, params?: T.ProfilingStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.profiling.status(this: That, params?: T.ProfilingStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.profiling.status(this: That, params?: T.ProfilingStatusRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ProfilingStatusRequest`](../types/ProfilingStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProfilingStatusResponse>`
 
 ## See Also
 

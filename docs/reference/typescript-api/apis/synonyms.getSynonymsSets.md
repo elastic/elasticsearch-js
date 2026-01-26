@@ -1,9 +1,11 @@
 # Client.synonyms.getSynonymsSets
 
+Get all synonym sets. Get a summary of all defined synonym sets.
+
 ## Method Signature
 
 ```typescript
-client.synonyms.getSynonymsSets(this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptions): Promise<any>
+client.synonyms.getSynonymsSets(this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymsSetsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.synonyms.getSynonymsSets(this: That, params?: T.SynonymsGetSynonymsSetsRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SynonymsGetSynonymsSetsRequest`](../types/SynonymsGetSynonymsSetsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SynonymsGetSynonymsSetsResponse>`
 
 ## See Also
 

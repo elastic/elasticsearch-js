@@ -1,9 +1,11 @@
 # Client.nodes.hotThreads
 
+Get the hot threads for nodes. Get a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of the top hot threads for each node.
+
 ## Method Signature
 
 ```typescript
-client.nodes.hotThreads(this: That, params?: T.NodesHotThreadsRequest, options?: TransportRequestOptions): Promise<any>
+client.nodes.hotThreads(this: That, params?: T.NodesHotThreadsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesHotThreadsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.nodes.hotThreads(this: That, params?: T.NodesHotThreadsRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`NodesHotThreadsRequest`](../types/NodesHotThreadsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.NodesHotThreadsResponse>`
 
 ## See Also
 

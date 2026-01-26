@@ -1,9 +1,11 @@
 # Client.watcher.stats
 
+Get Watcher statistics. This API always returns basic metrics. You retrieve more metrics by using the metric parameter.
+
 ## Method Signature
 
 ```typescript
-client.watcher.stats(this: That, params?: T.WatcherStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.stats(this: That, params?: T.WatcherStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.stats(this: That, params?: T.WatcherStatsRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`WatcherStatsRequest`](../types/WatcherStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherStatsResponse>`
 
 ## See Also
 

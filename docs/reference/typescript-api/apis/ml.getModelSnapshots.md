@@ -1,9 +1,11 @@
 # Client.ml.getModelSnapshots
 
+Get model snapshots info.
+
 ## Method Signature
 
 ```typescript
-client.ml.getModelSnapshots(this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getModelSnapshots(this: That, params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getModelSnapshots(this: That, params: T.MlGetModelSnapshotsRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlGetModelSnapshotsRequest`](../types/MlGetModelSnapshotsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetModelSnapshotsResponse>`
 
 ## See Also
 

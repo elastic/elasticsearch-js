@@ -1,9 +1,11 @@
 # Client.esql.asyncQueryDelete
 
+Delete an async ES|QL query. If the query is still running, it is cancelled. Otherwise, the stored results are deleted. If the Elasticsearch security features are enabled, only the following users can use this API to delete a query: * The authenticated user that submitted the original query request * Users with the `cancel_task` cluster privilege
+
 ## Method Signature
 
 ```typescript
-client.esql.asyncQueryDelete(this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.asyncQueryDelete(this: That, params: T.EsqlAsyncQueryDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.asyncQueryDelete(this: That, params: T.EsqlAsyncQueryDeleteRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EsqlAsyncQueryDeleteRequest`](../types/EsqlAsyncQueryDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlAsyncQueryDeleteResponse>`
 
 ## See Also
 

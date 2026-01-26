@@ -1,9 +1,11 @@
 # Client.ml.putTrainedModelVocabulary
 
+Create a trained model vocabulary. This API is supported only for natural language processing (NLP) models. The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
+
 ## Method Signature
 
 ```typescript
-client.ml.putTrainedModelVocabulary(this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.putTrainedModelVocabulary(this: That, params: T.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.putTrainedModelVocabulary(this: That, params: T.MlPutTrainedModelVocab
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPutTrainedModelVocabularyRequest`](../types/MlPutTrainedModelVocabularyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPutTrainedModelVocabularyResponse>`
 
 ## See Also
 

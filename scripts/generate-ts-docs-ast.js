@@ -60,6 +60,48 @@ function getJSDoc(node) {
   return parts.join('\n').trim();
 }
 
+// Helper: Get property description from @property tag
+function getPropertyDoc(node, sourceFile) {
+  const docs = ts.getJSDocCommentsAndTags(node);
+  
+  for (const doc of docs) {
+    if (ts.isJSDoc(doc)) {
+      // Check for @property tags
+      if (doc.tags) {
+        for (const tag of doc.tags) {
+          if (tag.tagName.text === 'property') {
+            // Extract description after property name
+            const comment = tag.comment;
+            if (comment) {
+              const commentText = typeof comment === 'string' 
+                ? comment 
+                : comment.map(c => c.text || '').join('');
+              
+              // Format: "@property propName Description here"
+              // Strip the first word (property name) from the comment
+              const parts = commentText.trim().split(/\s+/);
+              if (parts.length > 1) {
+                return parts.slice(1).join(' ');
+              }
+              return commentText.trim();
+            }
+          }
+        }
+      }
+      
+      // Fallback to regular comment if no @property tag
+      if (doc.comment) {
+        const commentText = typeof doc.comment === 'string' 
+          ? doc.comment 
+          : doc.comment.map(c => c.text || '').join('');
+        return commentText.trim();
+      }
+    }
+  }
+  
+  return '';
+}
+
 // Helper: Get parameter docs from JSDoc
 function getParamDocs(node) {
   const paramDocs = {};
@@ -227,8 +269,8 @@ console.log(`✓ Found ${types.length} types`);
 
 console.log('📚 Extracting API methods...');
 
-// Extract APIs from api/api directory
-const apis = [];
+// Extract APIs from api/api directory - with deduplication
+const apiMap = new Map(); // Use Map to deduplicate by fullName
 const apiDir = path.join(SRC_DIR, 'api/api');
 
 if (fs.existsSync(apiDir)) {
@@ -244,16 +286,19 @@ if (fs.existsSync(apiDir)) {
     ts.forEachChild(sourceFile, node => {
       // Handle class exports (namespace APIs)
       if (ts.isClassDeclaration(node) && node.name) {
-        const methods = [];
-        
         node.members.forEach(member => {
           if (ts.isMethodDeclaration(member) && member.name) {
-        if (apiMap.has(fullName)) return;
+            const methodName = member.name.getText(sourceFile);
             if (methodName === 'constructor') return;
+            
+            const fullName = `${apiName}.${methodName}`;
+            
+            // Deduplicate: only add if not already in map
+            if (apiMap.has(fullName)) return;
             
             const comment = getJSDoc(member);
             const paramDocs = getParamDocs(member);
-        const apiInfo = {
+            const params = [];
             
             member.parameters.forEach(param => {
               if (!param.name) return;
@@ -268,35 +313,31 @@ if (fs.existsSync(apiDir)) {
                 description: paramDocs[paramName] || ''
               });
             });
-        apiMap.set(fullName, apiInfo);
+            
             const returnType = member.type ? member.type.getText(sourceFile) : 'any';
             
-            methods.push({
-              name: methodName,
+            const apiInfo = {
+              fullName,
+              namespace: apiName,
+              methodName,
+              isNamespace: true,
               comment,
               params,
               returnType
-            });
+            };
+            
+            apiMap.set(fullName, apiInfo);
           }
         });
-        
-        if (methods.length > 0) {
-          methods.forEach(method => {
-            apis.push({
-              fullName: `${apiName}.${method.name}`,
-              namespace: apiName,
-              methodName: method.name,
-              isNamespace: true,
-              comment: method.comment,
-              params: method.params,
-              returnType: method.returnType
-            });
-          });
-        }
       }
       
       // Handle function exports (direct APIs)
       if (ts.isFunctionDeclaration(node) && node.name) {
+        const fullName = apiName;
+        
+        // Deduplicate: only add if not already in map
+        if (apiMap.has(fullName)) return;
+        
         const comment = getJSDoc(node);
         const paramDocs = getParamDocs(node);
         const params = [];
@@ -317,25 +358,30 @@ if (fs.existsSync(apiDir)) {
         
         const returnType = node.type ? node.type.getText(sourceFile) : 'any';
         
-        apis.push({
-          fullName: apiName,
+        const apiInfo = {
+          fullName,
           namespace: null,
           methodName: apiName,
           isNamespace: false,
           comment,
           params,
           returnType
-        });
+        };
+        
+        apiMap.set(fullName, apiInfo);
       }
     });
   });
 }
 
-console.log(`✓ Found ${apis.length} API methods`);
+// Convert Map to array for processing
+const apis = Array.from(apiMap.values());
+
+console.log(`✓ Found ${apis.length} unique API methods`);
 
 console.log('📚 Extracting Client options...');
 
-// Extract Client options
+// Extract Client options with @property tag support
 const clientOptions = [];
 const clientFile = program.getSourceFile(path.join(SRC_DIR, 'client.ts'));
 
@@ -347,7 +393,7 @@ if (clientFile) {
           const propName = member.name.getText(clientFile);
           const propType = member.type ? member.type.getText(clientFile) : 'any';
           const optional = member.questionToken ? true : false;
-          const propComment = getJSDoc(member);
+          const propComment = getPropertyDoc(member, clientFile);
           
           clientOptions.push({
             name: propName,

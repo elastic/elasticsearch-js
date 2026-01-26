@@ -1,9 +1,11 @@
 # Client.connector.secretGet
 
+Retrieves a secret stored by Connectors.
+
 ## Method Signature
 
 ```typescript
-client.connector.secretGet(this: That, params: T.ConnectorSecretGetRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.secretGet(this: That, params: T.ConnectorSecretGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretGetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.secretGet(this: That, params: T.ConnectorSecretGetRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorSecretGetRequest`](../types/ConnectorSecretGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSecretGetResponse>`
 
 ## See Also
 

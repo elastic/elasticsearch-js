@@ -1,9 +1,11 @@
 # Client.inference.putNvidia
 
+Create an Nvidia inference endpoint. Create an inference endpoint to perform an inference task with the `nvidia` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putNvidia(this: That, params: T.InferencePutNvidiaRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putNvidia(this: That, params: T.InferencePutNvidiaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutNvidiaResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putNvidia(this: That, params: T.InferencePutNvidiaRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutNvidiaRequest`](../types/InferencePutNvidiaRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutNvidiaResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.slm.deleteLifecycle
 
+Delete a policy. Delete a snapshot lifecycle policy definition. This operation prevents any future snapshots from being taken but does not cancel in-progress snapshots or remove previously-taken snapshots.
+
 ## Method Signature
 
 ```typescript
-client.slm.deleteLifecycle(this: That, params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.deleteLifecycle(this: That, params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmDeleteLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.deleteLifecycle(this: That, params: T.SlmDeleteLifecycleRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SlmDeleteLifecycleRequest`](../types/SlmDeleteLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmDeleteLifecycleResponse>`
 
 ## See Also
 

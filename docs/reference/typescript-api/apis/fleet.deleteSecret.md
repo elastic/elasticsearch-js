@@ -1,9 +1,11 @@
 # Client.fleet.deleteSecret
 
+Deletes a secret stored by Fleet.
+
 ## Method Signature
 
 ```typescript
-client.fleet.deleteSecret(this: That, params: T.FleetDeleteSecretRequest, options?: TransportRequestOptions): Promise<any>
+client.fleet.deleteSecret(this: That, params: T.FleetDeleteSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetDeleteSecretResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.fleet.deleteSecret(this: That, params: T.FleetDeleteSecretRequest, option
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`FleetDeleteSecretRequest`](../types/FleetDeleteSecretRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.FleetDeleteSecretResponse>`
 
 ## See Also
 

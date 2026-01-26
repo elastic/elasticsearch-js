@@ -1,9 +1,11 @@
 # Client.slm.executeRetention
 
+Run a retention policy. Manually apply the retention policy to force immediate removal of snapshots that are expired according to the snapshot lifecycle policy retention rules. The retention policy is normally applied according to its schedule.
+
 ## Method Signature
 
 ```typescript
-client.slm.executeRetention(this: That, params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.executeRetention(this: That, params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmExecuteRetentionResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.executeRetention(this: That, params?: T.SlmExecuteRetentionRequest, o
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SlmExecuteRetentionRequest`](../types/SlmExecuteRetentionRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmExecuteRetentionResponse>`
 
 ## See Also
 

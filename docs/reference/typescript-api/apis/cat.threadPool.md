@@ -1,9 +1,11 @@
 # Client.cat.threadPool
 
+Get thread pool statistics. Get thread pool statistics for each node in a cluster. Returned information includes all built-in thread pools and custom thread pools. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+
 ## Method Signature
 
 ```typescript
-client.cat.threadPool(this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.threadPool(this: That, params?: T.CatThreadPoolRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatThreadPoolResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.threadPool(this: That, params?: T.CatThreadPoolRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatThreadPoolRequest`](../types/CatThreadPoolRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatThreadPoolResponse>`
 
 ## See Also
 

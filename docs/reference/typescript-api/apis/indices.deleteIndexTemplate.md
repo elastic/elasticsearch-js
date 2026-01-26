@@ -1,9 +1,11 @@
 # Client.indices.deleteIndexTemplate
 
+Delete an index template. The provided <index-template> may contain multiple template names separated by a comma. If multiple template names are specified then there is no wildcard support and the provided names should match completely with existing templates.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteIndexTemplate(this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteIndexTemplate(this: That, params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteIndexTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteIndexTemplate(this: That, params: T.IndicesDeleteIndexTempl
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteIndexTemplateRequest`](../types/IndicesDeleteIndexTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteIndexTemplateResponse>`
 
 ## See Also
 

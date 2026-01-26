@@ -1,9 +1,11 @@
 # Client.search_application.postBehavioralAnalyticsEvent
 
+Create a behavioral analytics collection event.
+
 ## Method Signature
 
 ```typescript
-client.search_application.postBehavioralAnalyticsEvent(this: That, params: T.SearchApplicationPostBehavioralAnalyticsEventRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.postBehavioralAnalyticsEvent(this: That, params: T.SearchApplicationPostBehavioralAnalyticsEventRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPostBehavioralAnalyticsEventResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.postBehavioralAnalyticsEvent(this: That, params: T.Sea
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchApplicationPostBehavioralAnalyticsEventRequest`](../types/SearchApplicationPostBehavioralAnalyticsEventRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationPostBehavioralAnalyticsEventResponse>`
 
 ## See Also
 

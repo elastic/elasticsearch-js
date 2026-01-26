@@ -1,9 +1,11 @@
 # Client.capabilities
 
+Checks if the specified combination of method, API, parameters, and arbitrary capabilities are supported.
+
 ## Method Signature
 
 ```typescript
-client.capabilities(this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptions): Promise<any>
+client.capabilities(this: That, params?: T.CapabilitiesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CapabilitiesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.capabilities(this: That, params?: T.CapabilitiesRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CapabilitiesRequest`](../types/CapabilitiesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CapabilitiesResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.enrich.stats
 
+Get enrich stats. Returns enrich coordinator statistics and information about enrich policies that are currently executing.
+
 ## Method Signature
 
 ```typescript
-client.enrich.stats(this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.enrich.stats(this: That, params?: T.EnrichStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.enrich.stats(this: That, params?: T.EnrichStatsRequest, options?: Transpo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`EnrichStatsRequest`](../types/EnrichStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EnrichStatsResponse>`
 
 ## See Also
 

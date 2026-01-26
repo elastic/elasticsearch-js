@@ -1,9 +1,11 @@
 # Client.cluster.deleteComponentTemplate
 
+Delete component templates. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
+
 ## Method Signature
 
 ```typescript
-client.cluster.deleteComponentTemplate(this: That, params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.cluster.deleteComponentTemplate(this: That, params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteComponentTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cluster.deleteComponentTemplate(this: That, params: T.ClusterDeleteCompon
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ClusterDeleteComponentTemplateRequest`](../types/ClusterDeleteComponentTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClusterDeleteComponentTemplateResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.indices.migrateReindex
 
+Reindex legacy backing indices. Reindex all legacy backing indices for a data stream. This operation occurs in a persistent task. The persistent task ID is returned immediately and the reindexing work is completed in that task.
+
 ## Method Signature
 
 ```typescript
-client.indices.migrateReindex(this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.migrateReindex(this: That, params: T.IndicesMigrateReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateReindexResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.migrateReindex(this: That, params: T.IndicesMigrateReindexRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesMigrateReindexRequest`](../types/IndicesMigrateReindexRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesMigrateReindexResponse>`
 
 ## See Also
 

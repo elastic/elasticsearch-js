@@ -1,9 +1,11 @@
 # Client.profiling.topnFunctions
 
+Extracts a list of topN functions from Universal Profiling.
+
 ## Method Signature
 
 ```typescript
-client.profiling.topnFunctions(this: That, params: T.ProfilingTopnFunctionsRequest, options?: TransportRequestOptions): Promise<any>
+client.profiling.topnFunctions(this: That, params: T.ProfilingTopnFunctionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingTopnFunctionsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.profiling.topnFunctions(this: That, params: T.ProfilingTopnFunctionsReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ProfilingTopnFunctionsRequest`](../types/ProfilingTopnFunctionsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProfilingTopnFunctionsResponse>`
 
 ## See Also
 

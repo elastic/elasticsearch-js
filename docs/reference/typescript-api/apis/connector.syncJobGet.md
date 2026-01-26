@@ -1,9 +1,11 @@
 # Client.connector.syncJobGet
 
+Get a connector sync job.
+
 ## Method Signature
 
 ```typescript
-client.connector.syncJobGet(this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.syncJobGet(this: That, params: T.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobGetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.syncJobGet(this: That, params: T.ConnectorSyncJobGetRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorSyncJobGetRequest`](../types/ConnectorSyncJobGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSyncJobGetResponse>`
 
 ## See Also
 

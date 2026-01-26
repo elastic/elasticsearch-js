@@ -1,9 +1,11 @@
 # Client.inference.textEmbedding
 
+Perform text embedding inference on the service.
+
 ## Method Signature
 
 ```typescript
-client.inference.textEmbedding(this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.textEmbedding(this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceTextEmbeddingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.textEmbedding(this: That, params: T.InferenceTextEmbeddingReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferenceTextEmbeddingRequest`](../types/InferenceTextEmbeddingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferenceTextEmbeddingResponse>`
 
 ## See Also
 

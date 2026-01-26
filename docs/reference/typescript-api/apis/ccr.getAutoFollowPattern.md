@@ -1,9 +1,11 @@
 # Client.ccr.getAutoFollowPattern
 
+Get auto-follow patterns. Get cross-cluster replication auto-follow patterns.
+
 ## Method Signature
 
 ```typescript
-client.ccr.getAutoFollowPattern(this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any>
+client.ccr.getAutoFollowPattern(this: That, params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrGetAutoFollowPatternResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ccr.getAutoFollowPattern(this: That, params?: T.CcrGetAutoFollowPatternRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CcrGetAutoFollowPatternRequest`](../types/CcrGetAutoFollowPatternRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CcrGetAutoFollowPatternResponse>`
 
 ## See Also
 

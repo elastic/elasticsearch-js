@@ -1,9 +1,11 @@
 # Client.watcher.deactivateWatch
 
+Deactivate a watch. A watch can be either active or inactive.
+
 ## Method Signature
 
 ```typescript
-client.watcher.deactivateWatch(this: That, params: T.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.deactivateWatch(this: That, params: T.WatcherDeactivateWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherDeactivateWatchResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.deactivateWatch(this: That, params: T.WatcherDeactivateWatchReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`WatcherDeactivateWatchRequest`](../types/WatcherDeactivateWatchRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherDeactivateWatchResponse>`
 
 ## See Also
 

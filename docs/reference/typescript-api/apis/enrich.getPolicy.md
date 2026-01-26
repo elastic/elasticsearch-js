@@ -1,9 +1,11 @@
 # Client.enrich.getPolicy
 
+Get an enrich policy. Returns information about an enrich policy.
+
 ## Method Signature
 
 ```typescript
-client.enrich.getPolicy(this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.enrich.getPolicy(this: That, params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichGetPolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.enrich.getPolicy(this: That, params?: T.EnrichGetPolicyRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`EnrichGetPolicyRequest`](../types/EnrichGetPolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EnrichGetPolicyResponse>`
 
 ## See Also
 

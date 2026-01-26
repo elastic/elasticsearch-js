@@ -1,9 +1,11 @@
 # Client.ml.getFilters
 
+Get filters. You can get a single filter or all filters.
+
 ## Method Signature
 
 ```typescript
-client.ml.getFilters(this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getFilters(this: That, params?: T.MlGetFiltersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetFiltersResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getFilters(this: That, params?: T.MlGetFiltersRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetFiltersRequest`](../types/MlGetFiltersRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetFiltersResponse>`
 
 ## See Also
 

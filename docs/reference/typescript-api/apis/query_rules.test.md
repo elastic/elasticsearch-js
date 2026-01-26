@@ -1,9 +1,11 @@
 # Client.query_rules.test
 
+Test a query ruleset. Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
+
 ## Method Signature
 
 ```typescript
-client.query_rules.test(this: That, params: T.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<any>
+client.query_rules.test(this: That, params: T.QueryRulesTestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesTestResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.query_rules.test(this: That, params: T.QueryRulesTestRequest, options?: T
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`QueryRulesTestRequest`](../types/QueryRulesTestRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.QueryRulesTestResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.enrich.putPolicy
 
+Create an enrich policy. Creates an enrich policy.
+
 ## Method Signature
 
 ```typescript
-client.enrich.putPolicy(this: That, params: T.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.enrich.putPolicy(this: That, params: T.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichPutPolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.enrich.putPolicy(this: That, params: T.EnrichPutPolicyRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EnrichPutPolicyRequest`](../types/EnrichPutPolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EnrichPutPolicyResponse>`
 
 ## See Also
 

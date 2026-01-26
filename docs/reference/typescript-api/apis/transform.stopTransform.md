@@ -1,9 +1,11 @@
 # Client.transform.stopTransform
 
+Stop transforms. Stops one or more transforms.
+
 ## Method Signature
 
 ```typescript
-client.transform.stopTransform(this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<any>
+client.transform.stopTransform(this: That, params: T.TransformStopTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStopTransformResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.transform.stopTransform(this: That, params: T.TransformStopTransformReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`TransformStopTransformRequest`](../types/TransformStopTransformRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TransformStopTransformResponse>`
 
 ## See Also
 

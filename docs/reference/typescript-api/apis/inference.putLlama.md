@@ -1,9 +1,11 @@
 # Client.inference.putLlama
 
+Create a Llama inference endpoint. Create an inference endpoint to perform an inference task with the `llama` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putLlama(this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putLlama(this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutLlamaResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putLlama(this: That, params: T.InferencePutLlamaRequest, option
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutLlamaRequest`](../types/InferencePutLlamaRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutLlamaResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.inference.putAmazonsagemaker
 
+Create an Amazon SageMaker inference endpoint. Create an inference endpoint to perform an inference task with the `amazon_sagemaker` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putAmazonsagemaker(this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putAmazonsagemaker(this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonsagemakerResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putAmazonsagemaker(this: That, params: T.InferencePutAmazonsage
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutAmazonsagemakerRequest`](../types/InferencePutAmazonsagemakerRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutAmazonsagemakerResponse>`
 
 ## See Also
 

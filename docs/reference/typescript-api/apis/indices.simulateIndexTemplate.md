@@ -1,9 +1,11 @@
 # Client.indices.simulateIndexTemplate
 
+Simulate an index. Get the index configuration that would be applied to the specified index from an existing index template.
+
 ## Method Signature
 
 ```typescript
-client.indices.simulateIndexTemplate(this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.simulateIndexTemplate(this: That, params: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateIndexTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.simulateIndexTemplate(this: That, params: T.IndicesSimulateIndexT
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesSimulateIndexTemplateRequest`](../types/IndicesSimulateIndexTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesSimulateIndexTemplateResponse>`
 
 ## See Also
 

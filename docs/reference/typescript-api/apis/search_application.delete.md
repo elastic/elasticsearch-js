@@ -1,9 +1,11 @@
 # Client.search_application.delete
 
+Delete a search application. Remove a search application and its associated alias. Indices attached to the search application are not removed.
+
 ## Method Signature
 
 ```typescript
-client.search_application.delete(this: That, params: T.SearchApplicationDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.delete(this: That, params: T.SearchApplicationDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.delete(this: That, params: T.SearchApplicationDeleteRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchApplicationDeleteRequest`](../types/SearchApplicationDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationDeleteResponse>`
 
 ## See Also
 

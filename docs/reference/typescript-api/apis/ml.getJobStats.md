@@ -1,9 +1,11 @@
 # Client.ml.getJobStats
 
+Get anomaly detection job stats.
+
 ## Method Signature
 
 ```typescript
-client.ml.getJobStats(this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getJobStats(this: That, params?: T.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getJobStats(this: That, params?: T.MlGetJobStatsRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetJobStatsRequest`](../types/MlGetJobStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetJobStatsResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.indices.deleteDataStream
 
+Delete data streams. Deletes one or more data streams and their backing indices.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteDataStream(this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteDataStream(this: That, params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteDataStream(this: That, params: T.IndicesDeleteDataStreamReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteDataStreamRequest`](../types/IndicesDeleteDataStreamRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteDataStreamResponse>`
 
 ## See Also
 

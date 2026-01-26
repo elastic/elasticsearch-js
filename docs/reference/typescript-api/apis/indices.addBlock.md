@@ -1,9 +1,11 @@
 # Client.indices.addBlock
 
+Add an index block. Add an index block to an index. Index blocks limit the operations allowed on an index by blocking specific operation types.
+
 ## Method Signature
 
 ```typescript
-client.indices.addBlock(this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.addBlock(this: That, params: T.IndicesAddBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAddBlockResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.addBlock(this: That, params: T.IndicesAddBlockRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesAddBlockRequest`](../types/IndicesAddBlockRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesAddBlockResponse>`
 
 ## See Also
 

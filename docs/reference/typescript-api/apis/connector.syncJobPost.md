@@ -1,9 +1,11 @@
 # Client.connector.syncJobPost
 
+Create a connector sync job. Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
+
 ## Method Signature
 
 ```typescript
-client.connector.syncJobPost(this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.syncJobPost(this: That, params: T.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobPostResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.syncJobPost(this: That, params: T.ConnectorSyncJobPostRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorSyncJobPostRequest`](../types/ConnectorSyncJobPostRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSyncJobPostResponse>`
 
 ## See Also
 

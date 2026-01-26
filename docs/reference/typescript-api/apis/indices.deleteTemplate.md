@@ -1,9 +1,11 @@
 # Client.indices.deleteTemplate
 
+Delete a legacy index template. IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteTemplate(this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteTemplate(this: That, params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteTemplate(this: That, params: T.IndicesDeleteTemplateRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteTemplateRequest`](../types/IndicesDeleteTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteTemplateResponse>`
 
 ## See Also
 

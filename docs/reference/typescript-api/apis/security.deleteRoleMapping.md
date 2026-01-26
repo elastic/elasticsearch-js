@@ -1,9 +1,11 @@
 # Client.security.deleteRoleMapping
 
+Delete role mappings. Role mappings define which roles are assigned to each user. The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The delete role mappings API cannot remove role mappings that are defined in role mapping files.
+
 ## Method Signature
 
 ```typescript
-client.security.deleteRoleMapping(this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any>
+client.security.deleteRoleMapping(this: That, params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleMappingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.deleteRoleMapping(this: That, params: T.SecurityDeleteRoleMappin
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityDeleteRoleMappingRequest`](../types/SecurityDeleteRoleMappingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityDeleteRoleMappingResponse>`
 
 ## See Also
 

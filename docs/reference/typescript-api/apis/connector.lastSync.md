@@ -1,9 +1,11 @@
 # Client.connector.lastSync
 
+Update the connector last sync stats. Update the fields related to the last sync of a connector. This action is used for analytics and monitoring.
+
 ## Method Signature
 
 ```typescript
-client.connector.lastSync(this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.lastSync(this: That, params: T.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorLastSyncResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.lastSync(this: That, params: T.ConnectorLastSyncRequest, option
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorLastSyncRequest`](../types/ConnectorLastSyncRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorLastSyncResponse>`
 
 ## See Also
 

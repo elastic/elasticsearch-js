@@ -1,9 +1,11 @@
 # Client.project.createRouting
 
+Create or update a project routing expression.
+
 ## Method Signature
 
 ```typescript
-client.project.createRouting(this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptions): Promise<any>
+client.project.createRouting(this: That, params: T.ProjectCreateRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectCreateRoutingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.project.createRouting(this: That, params: T.ProjectCreateRoutingRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ProjectCreateRoutingRequest`](../types/ProjectCreateRoutingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProjectCreateRoutingResponse>`
 
 ## See Also
 

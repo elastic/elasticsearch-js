@@ -1,9 +1,11 @@
 # Client.cat.tasks
 
+Get task information. Get information about tasks currently running in the cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
+
 ## Method Signature
 
 ```typescript
-client.cat.tasks(this: That, params?: T.CatTasksRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.tasks(this: That, params?: T.CatTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTasksResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.tasks(this: That, params?: T.CatTasksRequest, options?: TransportRequ
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatTasksRequest`](../types/CatTasksRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatTasksResponse>`
 
 ## See Also
 

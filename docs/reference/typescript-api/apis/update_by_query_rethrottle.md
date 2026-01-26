@@ -1,9 +1,11 @@
 # Client.update_by_query_rethrottle
 
+Throttle an update by query operation. Change the number of requests per second for a particular update by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
+
 ## Method Signature
 
 ```typescript
-client.update_by_query_rethrottle(this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any>
+client.update_by_query_rethrottle(this: That, params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.UpdateByQueryRethrottleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.update_by_query_rethrottle(this: That, params: T.UpdateByQueryRethrottleR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`UpdateByQueryRethrottleRequest`](../types/UpdateByQueryRethrottleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.UpdateByQueryRethrottleResponse>`
 
 ## See Also
 

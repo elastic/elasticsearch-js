@@ -1,9 +1,11 @@
 # Client.indices.putDataStreamOptions
 
+Update data stream options. Update the data stream options of the specified data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.putDataStreamOptions(this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.putDataStreamOptions(this: That, params: T.IndicesPutDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataStreamOptionsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.putDataStreamOptions(this: That, params: T.IndicesPutDataStreamOp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesPutDataStreamOptionsRequest`](../types/IndicesPutDataStreamOptionsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesPutDataStreamOptionsResponse>`
 
 ## See Also
 

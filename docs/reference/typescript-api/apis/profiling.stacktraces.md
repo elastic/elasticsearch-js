@@ -1,9 +1,11 @@
 # Client.profiling.stacktraces
 
+Extracts raw stacktrace information from Universal Profiling.
+
 ## Method Signature
 
 ```typescript
-client.profiling.stacktraces(this: That, params: T.ProfilingStacktracesRequest, options?: TransportRequestOptions): Promise<any>
+client.profiling.stacktraces(this: That, params: T.ProfilingStacktracesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingStacktracesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.profiling.stacktraces(this: That, params: T.ProfilingStacktracesRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ProfilingStacktracesRequest`](../types/ProfilingStacktracesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProfilingStacktracesResponse>`
 
 ## See Also
 

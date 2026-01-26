@@ -1,9 +1,11 @@
 # Client.security.deleteServiceToken
 
+Delete service account tokens. Delete service account tokens for a service in a specified namespace.
+
 ## Method Signature
 
 ```typescript
-client.security.deleteServiceToken(this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any>
+client.security.deleteServiceToken(this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.deleteServiceToken(this: That, params: T.SecurityDeleteServiceTo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityDeleteServiceTokenRequest`](../types/SecurityDeleteServiceTokenRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityDeleteServiceTokenResponse>`
 
 ## See Also
 

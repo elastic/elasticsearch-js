@@ -1,9 +1,11 @@
 # Client.streams.status
 
+Get the status of streams. Get the current status for all types of streams.
+
 ## Method Signature
 
 ```typescript
-client.streams.status(this: That, params?: T.StreamsStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.streams.status(this: That, params?: T.StreamsStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.streams.status(this: That, params?: T.StreamsStatusRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`StreamsStatusRequest`](../types/StreamsStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.StreamsStatusResponse>`
 
 ## See Also
 

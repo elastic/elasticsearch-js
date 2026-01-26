@@ -1,9 +1,11 @@
 # Client.snapshot.cleanupRepository
 
+Clean up the snapshot repository. Trigger the review of the contents of a snapshot repository and delete any stale data not referenced by existing snapshots.
+
 ## Method Signature
 
 ```typescript
-client.snapshot.cleanupRepository(this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any>
+client.snapshot.cleanupRepository(this: That, params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.snapshot.cleanupRepository(this: That, params: T.SnapshotCleanupRepositor
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SnapshotCleanupRepositoryRequest`](../types/SnapshotCleanupRepositoryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SnapshotCleanupRepositoryResponse>`
 
 ## See Also
 

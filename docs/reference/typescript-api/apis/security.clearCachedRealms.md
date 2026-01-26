@@ -1,9 +1,11 @@
 # Client.security.clearCachedRealms
 
+Clear the user cache. Evict users from the user cache. You can completely clear the cache or evict specific users. User credentials are cached in memory on each node to avoid connecting to a remote authentication service or hitting the disk for every incoming request. There are realm settings that you can use to configure the user cache. For more information, refer to the documentation about controlling the user cache.
+
 ## Method Signature
 
 ```typescript
-client.security.clearCachedRealms(this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any>
+client.security.clearCachedRealms(this: That, params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRealmsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.clearCachedRealms(this: That, params: T.SecurityClearCachedRealm
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityClearCachedRealmsRequest`](../types/SecurityClearCachedRealmsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityClearCachedRealmsResponse>`
 
 ## See Also
 

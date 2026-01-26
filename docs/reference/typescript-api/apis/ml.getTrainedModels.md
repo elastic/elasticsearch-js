@@ -1,9 +1,11 @@
 # Client.ml.getTrainedModels
 
+Get trained model configuration info.
+
 ## Method Signature
 
 ```typescript
-client.ml.getTrainedModels(this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getTrainedModels(this: That, params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getTrainedModels(this: That, params?: T.MlGetTrainedModelsRequest, opt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetTrainedModelsRequest`](../types/MlGetTrainedModelsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetTrainedModelsResponse>`
 
 ## See Also
 

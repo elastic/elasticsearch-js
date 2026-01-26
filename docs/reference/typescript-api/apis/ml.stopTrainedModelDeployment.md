@@ -1,9 +1,11 @@
 # Client.ml.stopTrainedModelDeployment
 
+Stop a trained model deployment.
+
 ## Method Signature
 
 ```typescript
-client.ml.stopTrainedModelDeployment(this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.stopTrainedModelDeployment(this: That, params: T.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.stopTrainedModelDeployment(this: That, params: T.MlStopTrainedModelDep
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlStopTrainedModelDeploymentRequest`](../types/MlStopTrainedModelDeploymentRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlStopTrainedModelDeploymentResponse>`
 
 ## See Also
 

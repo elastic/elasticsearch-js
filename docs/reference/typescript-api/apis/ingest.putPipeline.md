@@ -1,9 +1,11 @@
 # Client.ingest.putPipeline
 
+Create or update a pipeline. Changes made using this API take effect immediately.
+
 ## Method Signature
 
 ```typescript
-client.ingest.putPipeline(this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.putPipeline(this: That, params: T.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.putPipeline(this: That, params: T.IngestPutPipelineRequest, option
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IngestPutPipelineRequest`](../types/IngestPutPipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestPutPipelineResponse>`
 
 ## See Also
 

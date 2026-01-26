@@ -1,9 +1,11 @@
 # Client.ccr.stats
 
+Get cross-cluster replication stats. This API returns stats about auto-following and the same shard-level stats as the get follower stats API.
+
 ## Method Signature
 
 ```typescript
-client.ccr.stats(this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ccr.stats(this: That, params?: T.CcrStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ccr.stats(this: That, params?: T.CcrStatsRequest, options?: TransportRequ
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CcrStatsRequest`](../types/CcrStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CcrStatsResponse>`
 
 ## See Also
 

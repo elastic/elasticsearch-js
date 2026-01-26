@@ -1,9 +1,11 @@
 # Client.eql.search
 
+Get EQL search results. Returns search results for an Event Query Language (EQL) query. EQL assumes each document in a data stream or index corresponds to an event.
+
 ## Method Signature
 
 ```typescript
-client.eql.search(this: That, params: T.EqlSearchRequest, options?: TransportRequestOptions): Promise<any>
+client.eql.search(this: That, params: T.EqlSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlSearchResponse<TEvent>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.eql.search(this: That, params: T.EqlSearchRequest, options?: TransportReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EqlSearchRequest`](../types/EqlSearchRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EqlSearchResponse<TEvent>>`
 
 ## See Also
 

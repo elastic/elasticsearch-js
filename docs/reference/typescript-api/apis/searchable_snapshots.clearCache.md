@@ -1,9 +1,11 @@
 # Client.searchable_snapshots.clearCache
 
+Clear the cache. Clear indices and data streams from the shared cache for partially mounted indices.
+
 ## Method Signature
 
 ```typescript
-client.searchable_snapshots.clearCache(this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): Promise<any>
+client.searchable_snapshots.clearCache(this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsClearCacheResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.searchable_snapshots.clearCache(this: That, params?: T.SearchableSnapshot
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SearchableSnapshotsClearCacheRequest`](../types/SearchableSnapshotsClearCacheRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchableSnapshotsClearCacheResponse>`
 
 ## See Also
 

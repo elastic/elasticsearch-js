@@ -1,9 +1,11 @@
 # Client.security.getStats
 
+Get security stats. Gather security usage statistics from all node(s) within the cluster.
+
 ## Method Signature
 
 ```typescript
-client.security.getStats(this: That, params?: T.SecurityGetStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.security.getStats(this: That, params?: T.SecurityGetStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.getStats(this: That, params?: T.SecurityGetStatsRequest, options
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityGetStatsRequest`](../types/SecurityGetStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityGetStatsResponse>`
 
 ## See Also
 

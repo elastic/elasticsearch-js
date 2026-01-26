@@ -1,9 +1,11 @@
 # Client.indices.exists
 
+Check indices. Check if one or more indices, index aliases, or data streams exist.
+
 ## Method Signature
 
 ```typescript
-client.indices.exists(this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.exists(this: That, params: T.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.exists(this: That, params: T.IndicesExistsRequest, options?: Tran
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesExistsRequest`](../types/IndicesExistsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesExistsResponse>`
 
 ## See Also
 

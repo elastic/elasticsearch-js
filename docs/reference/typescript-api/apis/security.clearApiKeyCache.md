@@ -1,9 +1,11 @@
 # Client.security.clearApiKeyCache
 
+Clear the API key cache. Evict a subset of all entries from the API key cache. The cache is also automatically cleared on state changes of the security index.
+
 ## Method Signature
 
 ```typescript
-client.security.clearApiKeyCache(this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any>
+client.security.clearApiKeyCache(this: That, params: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearApiKeyCacheResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.clearApiKeyCache(this: That, params: T.SecurityClearApiKeyCacheR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityClearApiKeyCacheRequest`](../types/SecurityClearApiKeyCacheRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityClearApiKeyCacheResponse>`
 
 ## See Also
 

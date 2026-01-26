@@ -1,9 +1,11 @@
 # Client.ml.updateModelSnapshot
 
+Update a snapshot. Updates certain properties of a snapshot.
+
 ## Method Signature
 
 ```typescript
-client.ml.updateModelSnapshot(this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.updateModelSnapshot(this: That, params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateModelSnapshotResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.updateModelSnapshot(this: That, params: T.MlUpdateModelSnapshotRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlUpdateModelSnapshotRequest`](../types/MlUpdateModelSnapshotRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlUpdateModelSnapshotResponse>`
 
 ## See Also
 

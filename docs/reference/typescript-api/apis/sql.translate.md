@@ -1,9 +1,11 @@
 # Client.sql.translate
 
+Translate SQL into Elasticsearch queries. Translate an SQL search into a search API request containing Query DSL. It accepts the same request body parameters as the SQL search API, excluding `cursor`.
+
 ## Method Signature
 
 ```typescript
-client.sql.translate(this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptions): Promise<any>
+client.sql.translate(this: That, params: T.SqlTranslateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlTranslateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.sql.translate(this: That, params: T.SqlTranslateRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SqlTranslateRequest`](../types/SqlTranslateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SqlTranslateResponse>`
 
 ## See Also
 

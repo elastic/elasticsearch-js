@@ -1,9 +1,11 @@
 # Client.cat.nodeattrs
 
+Get node attribute information. Get information about custom node attributes. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+
 ## Method Signature
 
 ```typescript
-client.cat.nodeattrs(this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.nodeattrs(this: That, params?: T.CatNodeattrsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodeattrsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.nodeattrs(this: That, params?: T.CatNodeattrsRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatNodeattrsRequest`](../types/CatNodeattrsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatNodeattrsResponse>`
 
 ## See Also
 

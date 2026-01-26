@@ -1,9 +1,11 @@
 # Client.slm.executeLifecycle
 
+Run a policy. Immediately create a snapshot according to the snapshot lifecycle policy without waiting for the scheduled time. The snapshot policy is normally applied according to its schedule, but you might want to manually run a policy before performing an upgrade or other maintenance.
+
 ## Method Signature
 
 ```typescript
-client.slm.executeLifecycle(this: That, params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.executeLifecycle(this: That, params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmExecuteLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.executeLifecycle(this: That, params: T.SlmExecuteLifecycleRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SlmExecuteLifecycleRequest`](../types/SlmExecuteLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmExecuteLifecycleResponse>`
 
 ## See Also
 

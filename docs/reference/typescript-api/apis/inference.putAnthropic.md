@@ -1,9 +1,11 @@
 # Client.inference.putAnthropic
 
+Create an Anthropic inference endpoint. Create an inference endpoint to perform an inference task with the `anthropic` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putAnthropic(this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putAnthropic(this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAnthropicResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putAnthropic(this: That, params: T.InferencePutAnthropicRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutAnthropicRequest`](../types/InferencePutAnthropicRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutAnthropicResponse>`
 
 ## See Also
 

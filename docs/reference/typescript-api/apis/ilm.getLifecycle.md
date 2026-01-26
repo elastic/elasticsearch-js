@@ -1,9 +1,11 @@
 # Client.ilm.getLifecycle
 
+Get lifecycle policies.
+
 ## Method Signature
 
 ```typescript
-client.ilm.getLifecycle(this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.getLifecycle(this: That, params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.getLifecycle(this: That, params?: T.IlmGetLifecycleRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IlmGetLifecycleRequest`](../types/IlmGetLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmGetLifecycleResponse>`
 
 ## See Also
 

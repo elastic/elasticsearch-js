@@ -1,9 +1,11 @@
 # Client.dangling_indices.deleteDanglingIndex
 
+Delete a dangling index. If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling. For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
+
 ## Method Signature
 
 ```typescript
-client.dangling_indices.deleteDanglingIndex(this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptions): Promise<any>
+client.dangling_indices.deleteDanglingIndex(this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesDeleteDanglingIndexResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.dangling_indices.deleteDanglingIndex(this: That, params: T.DanglingIndice
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`DanglingIndicesDeleteDanglingIndexRequest`](../types/DanglingIndicesDeleteDanglingIndexRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.DanglingIndicesDeleteDanglingIndexResponse>`
 
 ## See Also
 

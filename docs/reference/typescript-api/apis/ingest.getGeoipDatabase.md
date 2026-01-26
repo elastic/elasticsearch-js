@@ -1,9 +1,11 @@
 # Client.ingest.getGeoipDatabase
 
+Get GeoIP database configurations. Get information about one or more IP geolocation database configurations.
+
 ## Method Signature
 
 ```typescript
-client.ingest.getGeoipDatabase(this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.getGeoipDatabase(this: That, params?: T.IngestGetGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetGeoipDatabaseResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.getGeoipDatabase(this: That, params?: T.IngestGetGeoipDatabaseRequ
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IngestGetGeoipDatabaseRequest`](../types/IngestGetGeoipDatabaseRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestGetGeoipDatabaseResponse>`
 
 ## See Also
 

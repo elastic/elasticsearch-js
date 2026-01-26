@@ -1,9 +1,11 @@
 # Client.transform.getTransformStats
 
+Get transform stats. Get usage information for transforms.
+
 ## Method Signature
 
 ```typescript
-client.transform.getTransformStats(this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.transform.getTransformStats(this: That, params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.transform.getTransformStats(this: That, params: T.TransformGetTransformSt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`TransformGetTransformStatsRequest`](../types/TransformGetTransformStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TransformGetTransformStatsResponse>`
 
 ## See Also
 

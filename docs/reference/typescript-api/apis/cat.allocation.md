@@ -1,9 +1,11 @@
 # Client.cat.allocation
 
+Get shard allocation information. Get a snapshot of the number of shards allocated to each data node and their disk space. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
+
 ## Method Signature
 
 ```typescript
-client.cat.allocation(this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.allocation(this: That, params?: T.CatAllocationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAllocationResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.allocation(this: That, params?: T.CatAllocationRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatAllocationRequest`](../types/CatAllocationRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatAllocationResponse>`
 
 ## See Also
 

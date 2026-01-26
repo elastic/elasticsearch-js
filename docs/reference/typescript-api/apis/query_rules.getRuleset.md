@@ -1,9 +1,11 @@
 # Client.query_rules.getRuleset
 
+Get a query ruleset. Get details about a query ruleset.
+
 ## Method Signature
 
 ```typescript
-client.query_rules.getRuleset(this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptions): Promise<any>
+client.query_rules.getRuleset(this: That, params: T.QueryRulesGetRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesGetRulesetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.query_rules.getRuleset(this: That, params: T.QueryRulesGetRulesetRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`QueryRulesGetRulesetRequest`](../types/QueryRulesGetRulesetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.QueryRulesGetRulesetResponse>`
 
 ## See Also
 

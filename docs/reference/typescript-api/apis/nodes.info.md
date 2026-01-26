@@ -1,9 +1,11 @@
 # Client.nodes.info
 
+Get node information. By default, the API returns all attributes and core settings for cluster nodes.
+
 ## Method Signature
 
 ```typescript
-client.nodes.info(this: That, params?: T.NodesInfoRequest, options?: TransportRequestOptions): Promise<any>
+client.nodes.info(this: That, params?: T.NodesInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesInfoResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.nodes.info(this: That, params?: T.NodesInfoRequest, options?: TransportRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`NodesInfoRequest`](../types/NodesInfoRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.NodesInfoResponse>`
 
 ## See Also
 

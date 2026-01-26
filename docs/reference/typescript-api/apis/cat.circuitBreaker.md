@@ -1,9 +1,11 @@
 # Client.cat.circuitBreaker
 
+Get circuit breakers statistics. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
+
 ## Method Signature
 
 ```typescript
-client.cat.circuitBreaker(this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.circuitBreaker(this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCircuitBreakerResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.circuitBreaker(this: That, params?: T.CatCircuitBreakerRequest, optio
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatCircuitBreakerRequest`](../types/CatCircuitBreakerRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatCircuitBreakerResponse>`
 
 ## See Also
 

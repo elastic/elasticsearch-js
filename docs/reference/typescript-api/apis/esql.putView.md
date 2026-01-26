@@ -1,9 +1,11 @@
 # Client.esql.putView
 
+Create or update an ES|QL view.
+
 ## Method Signature
 
 ```typescript
-client.esql.putView(this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.putView(this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutViewResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.putView(this: That, params: T.EsqlPutViewRequest, options?: Transpor
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EsqlPutViewRequest`](../types/EsqlPutViewRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlPutViewResponse>`
 
 ## See Also
 

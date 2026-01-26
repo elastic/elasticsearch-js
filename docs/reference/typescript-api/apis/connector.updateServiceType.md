@@ -1,9 +1,11 @@
 # Client.connector.updateServiceType
 
+Update the connector service type.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateServiceType(this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateServiceType(this: That, params: T.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateServiceTypeResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateServiceType(this: That, params: T.ConnectorUpdateServiceT
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateServiceTypeRequest`](../types/ConnectorUpdateServiceTypeRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateServiceTypeResponse>`
 
 ## See Also
 

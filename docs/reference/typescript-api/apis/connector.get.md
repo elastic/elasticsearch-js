@@ -1,9 +1,11 @@
 # Client.connector.get
 
+Get a connector. Get the details about a connector.
+
 ## Method Signature
 
 ```typescript
-client.connector.get(this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.get(this: That, params: T.ConnectorGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorGetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.get(this: That, params: T.ConnectorGetRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorGetRequest`](../types/ConnectorGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorGetResponse>`
 
 ## See Also
 

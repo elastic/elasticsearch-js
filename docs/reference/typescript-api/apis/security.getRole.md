@@ -1,9 +1,11 @@
 # Client.security.getRole
 
+Get roles. Get roles in the native realm. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The get roles API cannot retrieve roles that are defined in roles files.
+
 ## Method Signature
 
 ```typescript
-client.security.getRole(this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any>
+client.security.getRole(this: That, params?: T.SecurityGetRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.getRole(this: That, params?: T.SecurityGetRoleRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityGetRoleRequest`](../types/SecurityGetRoleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityGetRoleResponse>`
 
 ## See Also
 

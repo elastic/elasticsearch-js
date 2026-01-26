@@ -1,9 +1,11 @@
 # Client.ml.postData
 
+Send data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
+
 ## Method Signature
 
 ```typescript
-client.ml.postData(this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<any>
+client.ml.postData(this: That, params: T.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostDataResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.postData(this: That, params: T.MlPostDataRequest<TData>, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPostDataRequest`](../types/MlPostDataRequest.md)<TData> | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPostDataResponse>`
 
 ## See Also
 

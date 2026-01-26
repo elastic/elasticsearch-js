@@ -1,9 +1,11 @@
 # Client.transform.resetTransform
 
+Reset a transform. Before you can reset it, you must stop it; alternatively, use the `force` query parameter. If the destination index was created by the transform, it is deleted.
+
 ## Method Signature
 
 ```typescript
-client.transform.resetTransform(this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptions): Promise<any>
+client.transform.resetTransform(this: That, params: T.TransformResetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformResetTransformResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.transform.resetTransform(this: That, params: T.TransformResetTransformReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`TransformResetTransformRequest`](../types/TransformResetTransformRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.TransformResetTransformResponse>`
 
 ## See Also
 

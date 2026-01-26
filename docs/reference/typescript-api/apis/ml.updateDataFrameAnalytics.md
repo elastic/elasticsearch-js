@@ -1,9 +1,11 @@
 # Client.ml.updateDataFrameAnalytics
 
+Update a data frame analytics job.
+
 ## Method Signature
 
 ```typescript
-client.ml.updateDataFrameAnalytics(this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.updateDataFrameAnalytics(this: That, params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.updateDataFrameAnalytics(this: That, params: T.MlUpdateDataFrameAnalyt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlUpdateDataFrameAnalyticsRequest`](../types/MlUpdateDataFrameAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlUpdateDataFrameAnalyticsResponse>`
 
 ## See Also
 

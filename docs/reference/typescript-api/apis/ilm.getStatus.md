@@ -1,9 +1,11 @@
 # Client.ilm.getStatus
 
+Get the ILM status. Get the current index lifecycle management status.
+
 ## Method Signature
 
 ```typescript
-client.ilm.getStatus(this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.getStatus(this: That, params?: T.IlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.getStatus(this: That, params?: T.IlmGetStatusRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IlmGetStatusRequest`](../types/IlmGetStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmGetStatusResponse>`
 
 ## See Also
 

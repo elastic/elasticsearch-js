@@ -1,9 +1,11 @@
 # Client.ml.stopDatafeed
 
+Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle.
+
 ## Method Signature
 
 ```typescript
-client.ml.stopDatafeed(this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.stopDatafeed(this: That, params: T.MlStopDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDatafeedResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.stopDatafeed(this: That, params: T.MlStopDatafeedRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlStopDatafeedRequest`](../types/MlStopDatafeedRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlStopDatafeedResponse>`
 
 ## See Also
 

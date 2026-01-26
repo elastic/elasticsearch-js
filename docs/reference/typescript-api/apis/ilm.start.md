@@ -1,9 +1,11 @@
 # Client.ilm.start
 
+Start the ILM plugin. Start the index lifecycle management plugin if it is currently stopped. ILM is started automatically when the cluster is formed. Restarting ILM is necessary only when it has been stopped using the stop ILM API.
+
 ## Method Signature
 
 ```typescript
-client.ilm.start(this: That, params?: T.IlmStartRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.start(this: That, params?: T.IlmStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmStartResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.start(this: That, params?: T.IlmStartRequest, options?: TransportRequ
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IlmStartRequest`](../types/IlmStartRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmStartResponse>`
 
 ## See Also
 

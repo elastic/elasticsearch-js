@@ -1,9 +1,11 @@
 # Client.ml.stopDataFrameAnalytics
 
+Stop data frame analytics jobs. A data frame analytics job can be started and stopped multiple times throughout its lifecycle.
+
 ## Method Signature
 
 ```typescript
-client.ml.stopDataFrameAnalytics(this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.stopDataFrameAnalytics(this: That, params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDataFrameAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.stopDataFrameAnalytics(this: That, params: T.MlStopDataFrameAnalyticsR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlStopDataFrameAnalyticsRequest`](../types/MlStopDataFrameAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlStopDataFrameAnalyticsResponse>`
 
 ## See Also
 

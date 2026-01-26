@@ -1,9 +1,11 @@
 # Client.connector.updateFilteringValidation
 
+Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
+
 ## Method Signature
 
 ```typescript
-client.connector.updateFilteringValidation(this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updateFilteringValidation(this: That, params: T.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updateFilteringValidation(this: That, params: T.ConnectorUpdate
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdateFilteringValidationRequest`](../types/ConnectorUpdateFilteringValidationRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdateFilteringValidationResponse>`
 
 ## See Also
 

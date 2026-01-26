@@ -1,9 +1,11 @@
 # Client.indices.getDataStreamOptions
 
+Get data stream options. Get the data stream options configuration of one or more data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.getDataStreamOptions(this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getDataStreamOptions(this: That, params: T.IndicesGetDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamOptionsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getDataStreamOptions(this: That, params: T.IndicesGetDataStreamOp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetDataStreamOptionsRequest`](../types/IndicesGetDataStreamOptionsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetDataStreamOptionsResponse>`
 
 ## See Also
 

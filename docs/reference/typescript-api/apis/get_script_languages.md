@@ -1,9 +1,11 @@
 # Client.get_script_languages
 
+Get script languages. Get a list of available script types, languages, and contexts.
+
 ## Method Signature
 
 ```typescript
-client.get_script_languages(this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<any>
+client.get_script_languages(this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptLanguagesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.get_script_languages(this: That, params?: T.GetScriptLanguagesRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`GetScriptLanguagesRequest`](../types/GetScriptLanguagesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.GetScriptLanguagesResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ml.validateDetector
 
+Validate an anomaly detection job.
+
 ## Method Signature
 
 ```typescript
-client.ml.validateDetector(this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.validateDetector(this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.validateDetector(this: That, params: T.MlValidateDetectorRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlValidateDetectorRequest`](../types/MlValidateDetectorRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlValidateDetectorResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.indices.deleteDataStreamOptions
 
+Delete data stream options. Removes the data stream options from a data stream.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteDataStreamOptions(this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteDataStreamOptions(this: That, params: T.IndicesDeleteDataStreamOptionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamOptionsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteDataStreamOptions(this: That, params: T.IndicesDeleteDataSt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteDataStreamOptionsRequest`](../types/IndicesDeleteDataStreamOptionsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteDataStreamOptionsResponse>`
 
 ## See Also
 

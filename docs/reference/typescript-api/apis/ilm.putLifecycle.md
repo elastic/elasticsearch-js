@@ -1,9 +1,11 @@
 # Client.ilm.putLifecycle
 
+Create or update a lifecycle policy. If the specified policy exists, it is replaced and the policy version is incremented. NOTE: Only the latest version of the policy is stored, you cannot revert to previous versions.
+
 ## Method Signature
 
 ```typescript
-client.ilm.putLifecycle(this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.putLifecycle(this: That, params: T.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmPutLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.putLifecycle(this: That, params: T.IlmPutLifecycleRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IlmPutLifecycleRequest`](../types/IlmPutLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmPutLifecycleResponse>`
 
 ## See Also
 

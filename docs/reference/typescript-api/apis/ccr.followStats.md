@@ -1,9 +1,11 @@
 # Client.ccr.followStats
 
+Get follower stats. Get cross-cluster replication follower stats. The API returns shard-level stats about the "following tasks" associated with each shard for the specified indices.
+
 ## Method Signature
 
 ```typescript
-client.ccr.followStats(this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ccr.followStats(this: That, params: T.CcrFollowStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ccr.followStats(this: That, params: T.CcrFollowStatsRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`CcrFollowStatsRequest`](../types/CcrFollowStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CcrFollowStatsResponse>`
 
 ## See Also
 

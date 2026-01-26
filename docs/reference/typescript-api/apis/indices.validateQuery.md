@@ -1,9 +1,11 @@
 # Client.indices.validateQuery
 
+Validate a query. Validates a query without running it.
+
 ## Method Signature
 
 ```typescript
-client.indices.validateQuery(this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.validateQuery(this: That, params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesValidateQueryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.validateQuery(this: That, params?: T.IndicesValidateQueryRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesValidateQueryRequest`](../types/IndicesValidateQueryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesValidateQueryResponse>`
 
 ## See Also
 

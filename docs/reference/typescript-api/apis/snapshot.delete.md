@@ -1,9 +1,11 @@
 # Client.snapshot.delete
 
+Delete snapshots.
+
 ## Method Signature
 
 ```typescript
-client.snapshot.delete(this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.snapshot.delete(this: That, params: T.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.snapshot.delete(this: That, params: T.SnapshotDeleteRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SnapshotDeleteRequest`](../types/SnapshotDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SnapshotDeleteResponse>`
 
 ## See Also
 

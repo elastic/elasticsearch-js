@@ -1,9 +1,11 @@
 # Client.ml.previewDatafeed
 
+Preview a datafeed. This API returns the first "page" of search results from a datafeed. You can preview an existing datafeed or provide configuration details for a datafeed and anomaly detection job in the API. The preview shows the structure of the data that will be passed to the anomaly detection engine. IMPORTANT: When Elasticsearch security features are enabled, the preview uses the credentials of the user that called the API. However, when the datafeed starts it uses the roles of the last user that created or updated the datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials. You can also use secondary authorization headers to supply the credentials.
+
 ## Method Signature
 
 ```typescript
-client.ml.previewDatafeed(this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.previewDatafeed(this: That, params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDatafeedResponse<TDocument>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.previewDatafeed(this: That, params?: T.MlPreviewDatafeedRequest, optio
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlPreviewDatafeedRequest`](../types/MlPreviewDatafeedRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPreviewDatafeedResponse<TDocument>>`
 
 ## See Also
 

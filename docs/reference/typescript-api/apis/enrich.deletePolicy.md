@@ -1,9 +1,11 @@
 # Client.enrich.deletePolicy
 
+Delete an enrich policy. Deletes an existing enrich policy and its enrich index.
+
 ## Method Signature
 
 ```typescript
-client.enrich.deletePolicy(this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.enrich.deletePolicy(this: That, params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichDeletePolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.enrich.deletePolicy(this: That, params: T.EnrichDeletePolicyRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EnrichDeletePolicyRequest`](../types/EnrichDeletePolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EnrichDeletePolicyResponse>`
 
 ## See Also
 

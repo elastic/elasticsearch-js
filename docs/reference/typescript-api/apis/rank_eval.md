@@ -1,9 +1,11 @@
 # Client.rank_eval
 
+Evaluate ranked search results. Evaluate the quality of ranked search results over a set of typical search queries.
+
 ## Method Signature
 
 ```typescript
-client.rank_eval(this: That, params: T.RankEvalRequest, options?: TransportRequestOptions): Promise<any>
+client.rank_eval(this: That, params: T.RankEvalRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RankEvalResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.rank_eval(this: That, params: T.RankEvalRequest, options?: TransportReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`RankEvalRequest`](../types/RankEvalRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.RankEvalResponse>`
 
 ## See Also
 

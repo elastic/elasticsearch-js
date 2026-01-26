@@ -1,9 +1,11 @@
 # Client.nodes.stats
 
+Get node statistics. Get statistics for nodes in a cluster. By default, all stats are returned. You can limit the returned information by using metrics.
+
 ## Method Signature
 
 ```typescript
-client.nodes.stats(this: That, params?: T.NodesStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.nodes.stats(this: That, params?: T.NodesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.nodes.stats(this: That, params?: T.NodesStatsRequest, options?: Transport
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`NodesStatsRequest`](../types/NodesStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.NodesStatsResponse>`
 
 ## See Also
 

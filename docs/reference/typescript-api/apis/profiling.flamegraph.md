@@ -1,9 +1,11 @@
 # Client.profiling.flamegraph
 
+Returns basic information about the status of Universal Profiling.
+
 ## Method Signature
 
 ```typescript
-client.profiling.flamegraph(this: That, params: T.ProfilingFlamegraphRequest, options?: TransportRequestOptions): Promise<any>
+client.profiling.flamegraph(this: That, params: T.ProfilingFlamegraphRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProfilingFlamegraphResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.profiling.flamegraph(this: That, params: T.ProfilingFlamegraphRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ProfilingFlamegraphRequest`](../types/ProfilingFlamegraphRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProfilingFlamegraphResponse>`
 
 ## See Also
 

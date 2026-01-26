@@ -1,9 +1,11 @@
 # Client.inference.putDeepseek
 
+Create a DeepSeek inference endpoint. Create an inference endpoint to perform an inference task with the `deepseek` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putDeepseek(this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putDeepseek(this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutDeepseekResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putDeepseek(this: That, params: T.InferencePutDeepseekRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutDeepseekRequest`](../types/InferencePutDeepseekRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutDeepseekResponse>`
 
 ## See Also
 

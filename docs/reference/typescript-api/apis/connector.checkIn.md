@@ -1,9 +1,11 @@
 # Client.connector.checkIn
 
+Check in a connector. Update the `last_seen` field in the connector and set it to the current timestamp.
+
 ## Method Signature
 
 ```typescript
-client.connector.checkIn(this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.checkIn(this: That, params: T.ConnectorCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorCheckInResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.checkIn(this: That, params: T.ConnectorCheckInRequest, options?
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorCheckInRequest`](../types/ConnectorCheckInRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorCheckInResponse>`
 
 ## See Also
 

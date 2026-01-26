@@ -1,9 +1,11 @@
 # Client.inference.putGoogleaistudio
 
+Create an Google AI Studio inference endpoint. Create an inference endpoint to perform an inference task with the `googleaistudio` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putGoogleaistudio(this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putGoogleaistudio(this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGoogleaistudioResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putGoogleaistudio(this: That, params: T.InferencePutGoogleaistu
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutGoogleaistudioRequest`](../types/InferencePutGoogleaistudioRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutGoogleaistudioResponse>`
 
 ## See Also
 

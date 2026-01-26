@@ -1,9 +1,11 @@
 # Client.connector.secretPost
 
+Creates a secret for a Connector.
+
 ## Method Signature
 
 ```typescript
-client.connector.secretPost(this: That, params?: T.ConnectorSecretPostRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.secretPost(this: That, params?: T.ConnectorSecretPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretPostResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.secretPost(this: That, params?: T.ConnectorSecretPostRequest, o
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ConnectorSecretPostRequest`](../types/ConnectorSecretPostRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSecretPostResponse>`
 
 ## See Also
 

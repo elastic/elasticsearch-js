@@ -1,9 +1,11 @@
 # Client.watcher.getSettings
 
+Get Watcher index settings. Get settings for the Watcher internal index (`.watches`). Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
+
 ## Method Signature
 
 ```typescript
-client.watcher.getSettings(this: That, params?: T.WatcherGetSettingsRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.getSettings(this: That, params?: T.WatcherGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherGetSettingsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.getSettings(this: That, params?: T.WatcherGetSettingsRequest, opt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`WatcherGetSettingsRequest`](../types/WatcherGetSettingsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherGetSettingsResponse>`
 
 ## See Also
 

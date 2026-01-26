@@ -1,9 +1,11 @@
 # Client.cluster.deleteVotingConfigExclusions
 
+Clear cluster voting config exclusions. Remove master-eligible nodes from the voting configuration exclusion list.
+
 ## Method Signature
 
 ```typescript
-client.cluster.deleteVotingConfigExclusions(this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any>
+client.cluster.deleteVotingConfigExclusions(this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteVotingConfigExclusionsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cluster.deleteVotingConfigExclusions(this: That, params?: T.ClusterDelete
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ClusterDeleteVotingConfigExclusionsRequest`](../types/ClusterDeleteVotingConfigExclusionsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClusterDeleteVotingConfigExclusionsResponse>`
 
 ## See Also
 

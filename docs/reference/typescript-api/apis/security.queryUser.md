@@ -1,9 +1,11 @@
 # Client.security.queryUser
 
+Find users with a query. Get information for users in a paginated manner. You can optionally filter the results with a query. NOTE: As opposed to the get user API, built-in users are excluded from the result. This API is only for native users.
+
 ## Method Signature
 
 ```typescript
-client.security.queryUser(this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<any>
+client.security.queryUser(this: That, params?: T.SecurityQueryUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryUserResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.queryUser(this: That, params?: T.SecurityQueryUserRequest, optio
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityQueryUserRequest`](../types/SecurityQueryUserRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityQueryUserResponse>`
 
 ## See Also
 

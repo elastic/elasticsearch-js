@@ -1,9 +1,11 @@
 # Client.indices.existsAlias
 
+Check aliases. Check if one or more data stream or index aliases exist.
+
 ## Method Signature
 
 ```typescript
-client.indices.existsAlias(this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.existsAlias(this: That, params: T.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsAliasResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.existsAlias(this: That, params: T.IndicesExistsAliasRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesExistsAliasRequest`](../types/IndicesExistsAliasRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesExistsAliasResponse>`
 
 ## See Also
 

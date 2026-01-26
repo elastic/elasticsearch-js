@@ -1,9 +1,11 @@
 # Client.logstash.deletePipeline
 
+Delete a Logstash pipeline. Delete a pipeline that is used for Logstash Central Management. If the request succeeds, you receive an empty response with an appropriate status code.
+
 ## Method Signature
 
 ```typescript
-client.logstash.deletePipeline(this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.logstash.deletePipeline(this: That, params: T.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.logstash.deletePipeline(this: That, params: T.LogstashDeletePipelineReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`LogstashDeletePipelineRequest`](../types/LogstashDeletePipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.LogstashDeletePipelineResponse>`
 
 ## See Also
 

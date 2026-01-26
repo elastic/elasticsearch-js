@@ -1,9 +1,11 @@
 # Client.knn_search
 
+Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API.
+
 ## Method Signature
 
 ```typescript
-client.knn_search(this: That, params: T.KnnSearchRequest, options?: TransportRequestOptions): Promise<any>
+client.knn_search(this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.knn_search(this: That, params: T.KnnSearchRequest, options?: TransportReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`KnnSearchRequest`](../types/KnnSearchRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.KnnSearchResponse<TDocument>>`
 
 ## See Also
 

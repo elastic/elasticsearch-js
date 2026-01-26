@@ -1,9 +1,11 @@
 # Client.ml.putCalendarJob
 
+Add anomaly detection job to calendar.
+
 ## Method Signature
 
 ```typescript
-client.ml.putCalendarJob(this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.putCalendarJob(this: That, params: T.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarJobResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.putCalendarJob(this: That, params: T.MlPutCalendarJobRequest, options?
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPutCalendarJobRequest`](../types/MlPutCalendarJobRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPutCalendarJobResponse>`
 
 ## See Also
 

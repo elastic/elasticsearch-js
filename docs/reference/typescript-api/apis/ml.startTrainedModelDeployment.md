@@ -1,9 +1,11 @@
 # Client.ml.startTrainedModelDeployment
 
+Start a trained model deployment. It allocates the model to every machine learning node.
+
 ## Method Signature
 
 ```typescript
-client.ml.startTrainedModelDeployment(this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.startTrainedModelDeployment(this: That, params: T.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.startTrainedModelDeployment(this: That, params: T.MlStartTrainedModelD
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlStartTrainedModelDeploymentRequest`](../types/MlStartTrainedModelDeploymentRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlStartTrainedModelDeploymentResponse>`
 
 ## See Also
 

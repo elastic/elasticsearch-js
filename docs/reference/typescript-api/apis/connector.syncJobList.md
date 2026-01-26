@@ -1,9 +1,11 @@
 # Client.connector.syncJobList
 
+Get all connector sync jobs. Get information about all stored connector sync jobs listed by their creation date in ascending order.
+
 ## Method Signature
 
 ```typescript
-client.connector.syncJobList(this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.syncJobList(this: That, params?: T.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobListResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.syncJobList(this: That, params?: T.ConnectorSyncJobListRequest,
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ConnectorSyncJobListRequest`](../types/ConnectorSyncJobListRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSyncJobListResponse>`
 
 ## See Also
 

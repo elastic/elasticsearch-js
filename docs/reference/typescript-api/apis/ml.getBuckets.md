@@ -1,9 +1,11 @@
 # Client.ml.getBuckets
 
+Get anomaly detection job results for buckets. The API presents a chronological view of the records, grouped by bucket.
+
 ## Method Signature
 
 ```typescript
-client.ml.getBuckets(this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getBuckets(this: That, params: T.MlGetBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetBucketsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getBuckets(this: That, params: T.MlGetBucketsRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlGetBucketsRequest`](../types/MlGetBucketsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetBucketsResponse>`
 
 ## See Also
 

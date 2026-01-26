@@ -1,9 +1,11 @@
 # Client.ilm.removePolicy
 
+Remove policies from an index. Remove the assigned lifecycle policies from an index or a data stream's backing indices. It also stops managing the indices.
+
 ## Method Signature
 
 ```typescript
-client.ilm.removePolicy(this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.removePolicy(this: That, params: T.IlmRemovePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRemovePolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.removePolicy(this: That, params: T.IlmRemovePolicyRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IlmRemovePolicyRequest`](../types/IlmRemovePolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmRemovePolicyResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.slm.getStats
 
+Get snapshot lifecycle management statistics. Get global and policy-level statistics about actions taken by snapshot lifecycle management.
+
 ## Method Signature
 
 ```typescript
-client.slm.getStats(this: That, params?: T.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.getStats(this: That, params?: T.SlmGetStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.getStats(this: That, params?: T.SlmGetStatsRequest, options?: Transpo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SlmGetStatsRequest`](../types/SlmGetStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmGetStatsResponse>`
 
 ## See Also
 

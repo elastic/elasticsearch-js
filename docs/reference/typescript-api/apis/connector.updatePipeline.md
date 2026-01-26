@@ -1,9 +1,11 @@
 # Client.connector.updatePipeline
 
+Update the connector pipeline. When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
+
 ## Method Signature
 
 ```typescript
-client.connector.updatePipeline(this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.updatePipeline(this: That, params: T.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdatePipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.updatePipeline(this: That, params: T.ConnectorUpdatePipelineReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorUpdatePipelineRequest`](../types/ConnectorUpdatePipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorUpdatePipelineResponse>`
 
 ## See Also
 

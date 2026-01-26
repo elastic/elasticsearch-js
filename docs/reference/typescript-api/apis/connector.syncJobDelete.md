@@ -1,9 +1,11 @@
 # Client.connector.syncJobDelete
 
+Delete a connector sync job. Remove a connector sync job and its associated data. This is a destructive action that is not recoverable.
+
 ## Method Signature
 
 ```typescript
-client.connector.syncJobDelete(this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.syncJobDelete(this: That, params: T.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.syncJobDelete(this: That, params: T.ConnectorSyncJobDeleteReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorSyncJobDeleteRequest`](../types/ConnectorSyncJobDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSyncJobDeleteResponse>`
 
 ## See Also
 

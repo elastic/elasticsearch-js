@@ -1,9 +1,11 @@
 # Client.nodes.usage
 
+Get feature usage information.
+
 ## Method Signature
 
 ```typescript
-client.nodes.usage(this: That, params?: T.NodesUsageRequest, options?: TransportRequestOptions): Promise<any>
+client.nodes.usage(this: That, params?: T.NodesUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesUsageResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.nodes.usage(this: That, params?: T.NodesUsageRequest, options?: Transport
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`NodesUsageRequest`](../types/NodesUsageRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.NodesUsageResponse>`
 
 ## See Also
 

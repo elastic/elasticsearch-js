@@ -1,9 +1,11 @@
 # Client.project.getManyRouting
 
+Get project routing expressions.
+
 ## Method Signature
 
 ```typescript
-client.project.getManyRouting(this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptions): Promise<any>
+client.project.getManyRouting(this: That, params?: T.ProjectGetManyRoutingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ProjectGetManyRoutingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.project.getManyRouting(this: That, params?: T.ProjectGetManyRoutingReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ProjectGetManyRoutingRequest`](../types/ProjectGetManyRoutingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ProjectGetManyRoutingResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.enrich.executePolicy
 
+Run an enrich policy. Create the enrich index for an existing enrich policy.
+
 ## Method Signature
 
 ```typescript
-client.enrich.executePolicy(this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.enrich.executePolicy(this: That, params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichExecutePolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.enrich.executePolicy(this: That, params: T.EnrichExecutePolicyRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EnrichExecutePolicyRequest`](../types/EnrichExecutePolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EnrichExecutePolicyResponse>`
 
 ## See Also
 

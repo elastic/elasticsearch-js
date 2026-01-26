@@ -1,9 +1,11 @@
 # Client.inference.putGroq
 
+Create a Groq inference endpoint. Create an inference endpoint to perform an inference task with the `groq` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putGroq(this: That, params: T.InferencePutGroqRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putGroq(this: That, params: T.InferencePutGroqRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGroqResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putGroq(this: That, params: T.InferencePutGroqRequest, options?
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutGroqRequest`](../types/InferencePutGroqRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutGroqResponse>`
 
 ## See Also
 

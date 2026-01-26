@@ -1,9 +1,11 @@
 # Client.indices.getDataLifecycle
 
+Get data stream lifecycles. Get the data stream lifecycle configuration of one or more data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.getDataLifecycle(this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getDataLifecycle(this: That, params: T.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getDataLifecycle(this: That, params: T.IndicesGetDataLifecycleReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetDataLifecycleRequest`](../types/IndicesGetDataLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetDataLifecycleResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.inference.putOpenai
 
+Create an OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
+
 ## Method Signature
 
 ```typescript
-client.inference.putOpenai(this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putOpenai(this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutOpenaiResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putOpenai(this: That, params: T.InferencePutOpenaiRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutOpenaiRequest`](../types/InferencePutOpenaiRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutOpenaiResponse>`
 
 ## See Also
 

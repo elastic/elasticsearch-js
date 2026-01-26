@@ -1,9 +1,11 @@
 # Client.ml.putTrainedModelDefinitionPart
 
+Create part of a trained model definition.
+
 ## Method Signature
 
 ```typescript
-client.ml.putTrainedModelDefinitionPart(this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.putTrainedModelDefinitionPart(this: That, params: T.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.putTrainedModelDefinitionPart(this: That, params: T.MlPutTrainedModelD
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPutTrainedModelDefinitionPartRequest`](../types/MlPutTrainedModelDefinitionPartRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPutTrainedModelDefinitionPartResponse>`
 
 ## See Also
 

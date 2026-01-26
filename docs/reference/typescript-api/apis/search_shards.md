@@ -1,9 +1,11 @@
 # Client.search_shards
 
+Get the search shards. Get the indices and shards that a search request would be run against. This information can be useful for working out issues or planning optimizations with routing and shard preferences. When filtered aliases are used, the filter is returned as part of the `indices` section. If the Elasticsearch security features are enabled, you must have the `view_index_metadata` or `manage` index privilege for the target data stream, index, or alias.
+
 ## Method Signature
 
 ```typescript
-client.search_shards(this: That, params?: T.SearchShardsRequest, options?: TransportRequestOptions): Promise<any>
+client.search_shards(this: That, params?: T.SearchShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchShardsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_shards(this: That, params?: T.SearchShardsRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SearchShardsRequest`](../types/SearchShardsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchShardsResponse>`
 
 ## See Also
 

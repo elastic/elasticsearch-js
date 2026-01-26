@@ -1,9 +1,11 @@
 # Client.ingest.getPipeline
 
+Get pipelines. Get information about one or more ingest pipelines. This API returns a local reference of the pipeline.
+
 ## Method Signature
 
 ```typescript
-client.ingest.getPipeline(this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.getPipeline(this: That, params?: T.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.getPipeline(this: That, params?: T.IngestGetPipelineRequest, optio
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IngestGetPipelineRequest`](../types/IngestGetPipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestGetPipelineResponse>`
 
 ## See Also
 

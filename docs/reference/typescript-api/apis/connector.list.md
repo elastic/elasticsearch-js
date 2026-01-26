@@ -1,9 +1,11 @@
 # Client.connector.list
 
+Get all connectors. Get information about all connectors.
+
 ## Method Signature
 
 ```typescript
-client.connector.list(this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.list(this: That, params?: T.ConnectorListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorListResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.list(this: That, params?: T.ConnectorListRequest, options?: Tra
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ConnectorListRequest`](../types/ConnectorListRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorListResponse>`
 
 ## See Also
 

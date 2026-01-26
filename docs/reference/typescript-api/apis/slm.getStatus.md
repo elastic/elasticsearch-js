@@ -1,9 +1,11 @@
 # Client.slm.getStatus
 
+Get the snapshot lifecycle management status.
+
 ## Method Signature
 
 ```typescript
-client.slm.getStatus(this: That, params?: T.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.getStatus(this: That, params?: T.SlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.getStatus(this: That, params?: T.SlmGetStatusRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SlmGetStatusRequest`](../types/SlmGetStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmGetStatusResponse>`
 
 ## See Also
 

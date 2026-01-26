@@ -1,9 +1,11 @@
 # Client.ingest.getIpLocationDatabase
 
+Get IP geolocation database configurations.
+
 ## Method Signature
 
 ```typescript
-client.ingest.getIpLocationDatabase(this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.getIpLocationDatabase(this: That, params?: T.IngestGetIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetIpLocationDatabaseResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.getIpLocationDatabase(this: That, params?: T.IngestGetIpLocationDa
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IngestGetIpLocationDatabaseRequest`](../types/IngestGetIpLocationDatabaseRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestGetIpLocationDatabaseResponse>`
 
 ## See Also
 

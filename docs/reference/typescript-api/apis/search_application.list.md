@@ -1,9 +1,11 @@
 # Client.search_application.list
 
+Get search applications. Get information about search applications.
+
 ## Method Signature
 
 ```typescript
-client.search_application.list(this: That, params?: T.SearchApplicationListRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.list(this: That, params?: T.SearchApplicationListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationListResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.list(this: That, params?: T.SearchApplicationListReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SearchApplicationListRequest`](../types/SearchApplicationListRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationListResponse>`
 
 ## See Also
 

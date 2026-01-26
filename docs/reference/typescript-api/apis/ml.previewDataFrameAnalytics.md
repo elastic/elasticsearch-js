@@ -1,9 +1,11 @@
 # Client.ml.previewDataFrameAnalytics
 
+Preview features used by data frame analytics. Preview the extracted features used by a data frame analytics config.
+
 ## Method Signature
 
 ```typescript
-client.ml.previewDataFrameAnalytics(this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.previewDataFrameAnalytics(this: That, params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.previewDataFrameAnalytics(this: That, params?: T.MlPreviewDataFrameAna
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlPreviewDataFrameAnalyticsRequest`](../types/MlPreviewDataFrameAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPreviewDataFrameAnalyticsResponse>`
 
 ## See Also
 

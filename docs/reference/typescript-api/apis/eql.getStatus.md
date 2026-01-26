@@ -1,9 +1,11 @@
 # Client.eql.getStatus
 
+Get the async EQL status. Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
+
 ## Method Signature
 
 ```typescript
-client.eql.getStatus(this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.eql.getStatus(this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.eql.getStatus(this: That, params: T.EqlGetStatusRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EqlGetStatusRequest`](../types/EqlGetStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EqlGetStatusResponse>`
 
 ## See Also
 

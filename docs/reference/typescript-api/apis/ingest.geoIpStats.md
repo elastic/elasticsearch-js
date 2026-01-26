@@ -1,9 +1,11 @@
 # Client.ingest.geoIpStats
 
+Get GeoIP statistics. Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
+
 ## Method Signature
 
 ```typescript
-client.ingest.geoIpStats(this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.geoIpStats(this: That, params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.geoIpStats(this: That, params?: T.IngestGeoIpStatsRequest, options
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IngestGeoIpStatsRequest`](../types/IngestGeoIpStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestGeoIpStatsResponse>`
 
 ## See Also
 

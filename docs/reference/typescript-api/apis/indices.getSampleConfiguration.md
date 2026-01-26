@@ -1,9 +1,11 @@
 # Client.indices.getSampleConfiguration
 
+Get sampling configuration. Get the sampling configuration for the specified index.
+
 ## Method Signature
 
 ```typescript
-client.indices.getSampleConfiguration(this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getSampleConfiguration(this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleConfigurationResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getSampleConfiguration(this: That, params: T.IndicesGetSampleConf
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetSampleConfigurationRequest`](../types/IndicesGetSampleConfigurationRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetSampleConfigurationResponse>`
 
 ## See Also
 

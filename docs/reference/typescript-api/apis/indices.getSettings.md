@@ -1,9 +1,11 @@
 # Client.indices.getSettings
 
+Get index settings. Get setting information for one or more indices. For data streams, it returns setting information for the stream's backing indices.
+
 ## Method Signature
 
 ```typescript
-client.indices.getSettings(this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getSettings(this: That, params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSettingsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getSettings(this: That, params?: T.IndicesGetSettingsRequest, opt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesGetSettingsRequest`](../types/IndicesGetSettingsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetSettingsResponse>`
 
 ## See Also
 

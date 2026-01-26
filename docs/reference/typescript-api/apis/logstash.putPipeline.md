@@ -1,9 +1,11 @@
 # Client.logstash.putPipeline
 
+Create or update a Logstash pipeline. Create a pipeline that is used for Logstash Central Management. If the specified pipeline exists, it is replaced.
+
 ## Method Signature
 
 ```typescript
-client.logstash.putPipeline(this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.logstash.putPipeline(this: That, params: T.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashPutPipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.logstash.putPipeline(this: That, params: T.LogstashPutPipelineRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`LogstashPutPipelineRequest`](../types/LogstashPutPipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.LogstashPutPipelineResponse>`
 
 ## See Also
 

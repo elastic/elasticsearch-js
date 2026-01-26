@@ -1,9 +1,11 @@
 # Client.indices.get
 
+Get index information. Get information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
+
 ## Method Signature
 
 ```typescript
-client.indices.get(this: That, params: T.IndicesGetRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.get(this: That, params: T.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.get(this: That, params: T.IndicesGetRequest, options?: TransportR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetRequest`](../types/IndicesGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetResponse>`
 
 ## See Also
 

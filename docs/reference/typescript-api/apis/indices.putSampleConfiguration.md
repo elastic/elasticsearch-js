@@ -1,9 +1,11 @@
 # Client.indices.putSampleConfiguration
 
+Create or update sampling configuration. Create or update the sampling configuration for the specified index.
+
 ## Method Signature
 
 ```typescript
-client.indices.putSampleConfiguration(this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.putSampleConfiguration(this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSampleConfigurationResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.putSampleConfiguration(this: That, params: T.IndicesPutSampleConf
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesPutSampleConfigurationRequest`](../types/IndicesPutSampleConfigurationRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesPutSampleConfigurationResponse>`
 
 ## See Also
 

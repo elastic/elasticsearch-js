@@ -1,9 +1,11 @@
 # Client.indices.resolveIndex
 
+Resolve indices. Resolve the names and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
+
 ## Method Signature
 
 ```typescript
-client.indices.resolveIndex(this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.resolveIndex(this: That, params: T.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveIndexResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.resolveIndex(this: That, params: T.IndicesResolveIndexRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesResolveIndexRequest`](../types/IndicesResolveIndexRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesResolveIndexResponse>`
 
 ## See Also
 

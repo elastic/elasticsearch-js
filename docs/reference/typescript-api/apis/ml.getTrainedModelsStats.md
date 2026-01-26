@@ -1,9 +1,11 @@
 # Client.ml.getTrainedModelsStats
 
+Get trained models usage info. You can get usage information for multiple trained models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
+
 ## Method Signature
 
 ```typescript
-client.ml.getTrainedModelsStats(this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getTrainedModelsStats(this: That, params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getTrainedModelsStats(this: That, params?: T.MlGetTrainedModelsStatsRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetTrainedModelsStatsRequest`](../types/MlGetTrainedModelsStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetTrainedModelsStatsResponse>`
 
 ## See Also
 

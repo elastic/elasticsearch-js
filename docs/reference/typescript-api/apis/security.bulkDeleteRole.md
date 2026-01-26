@@ -1,9 +1,11 @@
 # Client.security.bulkDeleteRole
 
+Bulk delete roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk delete roles API cannot delete roles that are defined in roles files.
+
 ## Method Signature
 
 ```typescript
-client.security.bulkDeleteRole(this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<any>
+client.security.bulkDeleteRole(this: That, params: T.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkDeleteRoleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.bulkDeleteRole(this: That, params: T.SecurityBulkDeleteRoleReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityBulkDeleteRoleRequest`](../types/SecurityBulkDeleteRoleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityBulkDeleteRoleResponse>`
 
 ## See Also
 

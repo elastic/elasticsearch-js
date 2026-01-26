@@ -1,9 +1,11 @@
 # Client.explain
 
+Explain a document match result. Get information about why a specific document matches, or doesn't match, a query. It computes a score explanation for a query and a specific document.
+
 ## Method Signature
 
 ```typescript
-client.explain(this: That, params: T.ExplainRequest, options?: TransportRequestOptions): Promise<any>
+client.explain(this: That, params: T.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.explain(this: That, params: T.ExplainRequest, options?: TransportRequestO
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ExplainRequest`](../types/ExplainRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ExplainResponse<TDocument>>`
 
 ## See Also
 

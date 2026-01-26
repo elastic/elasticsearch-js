@@ -1,9 +1,11 @@
 # Client.ml.deleteExpiredData
 
+Delete expired ML data. Delete all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteExpiredData(this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteExpiredData(this: That, params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteExpiredDataResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteExpiredData(this: That, params?: T.MlDeleteExpiredDataRequest, o
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlDeleteExpiredDataRequest`](../types/MlDeleteExpiredDataRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteExpiredDataResponse>`
 
 ## See Also
 

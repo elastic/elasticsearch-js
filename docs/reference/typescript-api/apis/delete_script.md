@@ -1,9 +1,11 @@
 # Client.delete_script
 
+Delete a script or search template. Deletes a stored script or search template.
+
 ## Method Signature
 
 ```typescript
-client.delete_script(this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any>
+client.delete_script(this: That, params: T.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.delete_script(this: That, params: T.DeleteScriptRequest, options?: Transp
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`DeleteScriptRequest`](../types/DeleteScriptRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.DeleteScriptResponse>`
 
 ## See Also
 

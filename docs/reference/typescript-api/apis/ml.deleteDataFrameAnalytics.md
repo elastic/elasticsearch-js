@@ -1,9 +1,11 @@
 # Client.ml.deleteDataFrameAnalytics
 
+Delete a data frame analytics job.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteDataFrameAnalytics(this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteDataFrameAnalytics(this: That, params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDataFrameAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteDataFrameAnalytics(this: That, params: T.MlDeleteDataFrameAnalyt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteDataFrameAnalyticsRequest`](../types/MlDeleteDataFrameAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteDataFrameAnalyticsResponse>`
 
 ## See Also
 

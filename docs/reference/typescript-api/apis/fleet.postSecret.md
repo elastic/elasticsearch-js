@@ -1,9 +1,11 @@
 # Client.fleet.postSecret
 
+Creates a secret stored by Fleet.
+
 ## Method Signature
 
 ```typescript
-client.fleet.postSecret(this: That, params: T.FleetPostSecretRequest, options?: TransportRequestOptions): Promise<any>
+client.fleet.postSecret(this: That, params: T.FleetPostSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetPostSecretResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.fleet.postSecret(this: That, params: T.FleetPostSecretRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`FleetPostSecretRequest`](../types/FleetPostSecretRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.FleetPostSecretResponse>`
 
 ## See Also
 

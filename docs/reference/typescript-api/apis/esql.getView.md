@@ -1,9 +1,11 @@
 # Client.esql.getView
 
+Get an ES|QL view. Returns a stored ES|QL view.
+
 ## Method Signature
 
 ```typescript
-client.esql.getView(this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.getView(this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetViewResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.getView(this: That, params?: T.EsqlGetViewRequest, options?: Transpo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`EsqlGetViewRequest`](../types/EsqlGetViewRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlGetViewResponse>`
 
 ## See Also
 

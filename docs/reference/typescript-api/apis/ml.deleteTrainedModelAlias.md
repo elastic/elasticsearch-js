@@ -1,9 +1,11 @@
 # Client.ml.deleteTrainedModelAlias
 
+Delete a trained model alias. This API deletes an existing model alias that refers to a trained model. If the model alias is missing or refers to a model other than the one identified by the `model_id`, this API returns an error.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteTrainedModelAlias(this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteTrainedModelAlias(this: That, params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelAliasResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteTrainedModelAlias(this: That, params: T.MlDeleteTrainedModelAlia
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteTrainedModelAliasRequest`](../types/MlDeleteTrainedModelAliasRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteTrainedModelAliasResponse>`
 
 ## See Also
 

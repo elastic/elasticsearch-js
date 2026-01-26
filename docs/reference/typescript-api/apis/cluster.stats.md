@@ -1,9 +1,11 @@
 # Client.cluster.stats
 
+Get cluster statistics. Get basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
+
 ## Method Signature
 
 ```typescript
-client.cluster.stats(this: That, params?: T.ClusterStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.cluster.stats(this: That, params?: T.ClusterStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cluster.stats(this: That, params?: T.ClusterStatsRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ClusterStatsRequest`](../types/ClusterStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClusterStatsResponse>`
 
 ## See Also
 

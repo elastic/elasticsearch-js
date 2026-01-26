@@ -1,9 +1,11 @@
 # Client.connector.put
 
+Create or update a connector.
+
 ## Method Signature
 
 ```typescript
-client.connector.put(this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.put(this: That, params?: T.ConnectorPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPutResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.put(this: That, params?: T.ConnectorPutRequest, options?: Trans
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ConnectorPutRequest`](../types/ConnectorPutRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorPutResponse>`
 
 ## See Also
 

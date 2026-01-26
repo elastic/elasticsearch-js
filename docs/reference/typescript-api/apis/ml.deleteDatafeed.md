@@ -1,9 +1,11 @@
 # Client.ml.deleteDatafeed
 
+Delete a datafeed.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteDatafeed(this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteDatafeed(this: That, params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDatafeedResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteDatafeed(this: That, params: T.MlDeleteDatafeedRequest, options?
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteDatafeedRequest`](../types/MlDeleteDatafeedRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteDatafeedResponse>`
 
 ## See Also
 

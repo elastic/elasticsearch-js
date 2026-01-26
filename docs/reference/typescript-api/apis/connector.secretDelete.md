@@ -1,9 +1,11 @@
 # Client.connector.secretDelete
 
+Deletes a connector secret.
+
 ## Method Signature
 
 ```typescript
-client.connector.secretDelete(this: That, params: T.ConnectorSecretDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.secretDelete(this: That, params: T.ConnectorSecretDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.secretDelete(this: That, params: T.ConnectorSecretDeleteRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorSecretDeleteRequest`](../types/ConnectorSecretDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSecretDeleteResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.security.clearCachedPrivileges
 
+Clear the privileges cache. Evict privileges from the native application privilege cache. The cache is also automatically cleared for applications that have their privileges updated.
+
 ## Method Signature
 
 ```typescript
-client.security.clearCachedPrivileges(this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any>
+client.security.clearCachedPrivileges(this: That, params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedPrivilegesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.clearCachedPrivileges(this: That, params: T.SecurityClearCachedP
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityClearCachedPrivilegesRequest`](../types/SecurityClearCachedPrivilegesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityClearCachedPrivilegesResponse>`
 
 ## See Also
 

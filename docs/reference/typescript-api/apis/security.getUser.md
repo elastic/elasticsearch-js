@@ -1,9 +1,11 @@
 # Client.security.getUser
 
+Get users. Get information about users in the native realm and built-in users.
+
 ## Method Signature
 
 ```typescript
-client.security.getUser(this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any>
+client.security.getUser(this: That, params?: T.SecurityGetUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.getUser(this: That, params?: T.SecurityGetUserRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityGetUserRequest`](../types/SecurityGetUserRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityGetUserResponse>`
 
 ## See Also
 

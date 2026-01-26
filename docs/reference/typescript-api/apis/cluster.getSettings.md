@@ -1,9 +1,11 @@
 # Client.cluster.getSettings
 
+Get cluster-wide settings. By default, it returns only settings that have been explicitly defined.
+
 ## Method Signature
 
 ```typescript
-client.cluster.getSettings(this: That, params?: T.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<any>
+client.cluster.getSettings(this: That, params?: T.ClusterGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetSettingsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cluster.getSettings(this: That, params?: T.ClusterGetSettingsRequest, opt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ClusterGetSettingsRequest`](../types/ClusterGetSettingsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClusterGetSettingsResponse>`
 
 ## See Also
 

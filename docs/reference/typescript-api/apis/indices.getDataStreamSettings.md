@@ -1,9 +1,11 @@
 # Client.indices.getDataStreamSettings
 
+Get data stream settings. Get setting information for one or more data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.getDataStreamSettings(this: That, params: T.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getDataStreamSettings(this: That, params: T.IndicesGetDataStreamSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamSettingsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getDataStreamSettings(this: That, params: T.IndicesGetDataStreamS
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetDataStreamSettingsRequest`](../types/IndicesGetDataStreamSettingsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetDataStreamSettingsResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ml.getModelSnapshotUpgradeStats
 
+Get anomaly detection job model snapshot upgrade usage info.
+
 ## Method Signature
 
 ```typescript
-client.ml.getModelSnapshotUpgradeStats(this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getModelSnapshotUpgradeStats(this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getModelSnapshotUpgradeStats(this: That, params: T.MlGetModelSnapshotU
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlGetModelSnapshotUpgradeStatsRequest`](../types/MlGetModelSnapshotUpgradeStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetModelSnapshotUpgradeStatsResponse>`
 
 ## See Also
 

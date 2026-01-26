@@ -1,9 +1,11 @@
 # Client.snapshot.clone
 
+Clone a snapshot. Clone part of all of a snapshot into another snapshot in the same repository.
+
 ## Method Signature
 
 ```typescript
-client.snapshot.clone(this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<any>
+client.snapshot.clone(this: That, params: T.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.snapshot.clone(this: That, params: T.SnapshotCloneRequest, options?: Tran
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SnapshotCloneRequest`](../types/SnapshotCloneRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SnapshotCloneResponse>`
 
 ## See Also
 

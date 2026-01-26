@@ -1,9 +1,11 @@
 # Client.indices.getMapping
 
+Get mapping definitions. For data streams, the API retrieves mappings for the stream’s backing indices.
+
 ## Method Signature
 
 ```typescript
-client.indices.getMapping(this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getMapping(this: That, params?: T.IndicesGetMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMappingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getMapping(this: That, params?: T.IndicesGetMappingRequest, optio
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesGetMappingRequest`](../types/IndicesGetMappingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetMappingResponse>`
 
 ## See Also
 

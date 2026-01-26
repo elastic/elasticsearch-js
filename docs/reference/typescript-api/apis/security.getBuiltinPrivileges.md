@@ -1,9 +1,11 @@
 # Client.security.getBuiltinPrivileges
 
+Get builtin privileges. Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+
 ## Method Signature
 
 ```typescript
-client.security.getBuiltinPrivileges(this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any>
+client.security.getBuiltinPrivileges(this: That, params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetBuiltinPrivilegesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.getBuiltinPrivileges(this: That, params?: T.SecurityGetBuiltinPr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityGetBuiltinPrivilegesRequest`](../types/SecurityGetBuiltinPrivilegesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityGetBuiltinPrivilegesResponse>`
 
 ## See Also
 

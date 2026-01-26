@@ -1,9 +1,11 @@
 # Client.ingest.deletePipeline
 
+Delete pipelines. Delete one or more ingest pipelines.
+
 ## Method Signature
 
 ```typescript
-client.ingest.deletePipeline(this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.deletePipeline(this: That, params: T.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.deletePipeline(this: That, params: T.IngestDeletePipelineRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IngestDeletePipelineRequest`](../types/IngestDeletePipelineRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestDeletePipelineResponse>`
 
 ## See Also
 

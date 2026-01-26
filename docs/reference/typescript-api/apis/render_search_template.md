@@ -1,9 +1,11 @@
 # Client.render_search_template
 
+Render a search template. Render a search template as a search request body.
+
 ## Method Signature
 
 ```typescript
-client.render_search_template(this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.render_search_template(this: That, params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.render_search_template(this: That, params?: T.RenderSearchTemplateRequest
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`RenderSearchTemplateRequest`](../types/RenderSearchTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.RenderSearchTemplateResponse>`
 
 ## See Also
 

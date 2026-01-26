@@ -1,9 +1,11 @@
 # Client.cat.plugins
 
+Get plugin information. Get a list of plugins running on each node of a cluster. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
+
 ## Method Signature
 
 ```typescript
-client.cat.plugins(this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.plugins(this: That, params?: T.CatPluginsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPluginsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.plugins(this: That, params?: T.CatPluginsRequest, options?: Transport
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatPluginsRequest`](../types/CatPluginsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatPluginsResponse>`
 
 ## See Also
 

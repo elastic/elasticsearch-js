@@ -1,9 +1,11 @@
 # Client.ilm.retry
 
+Retry a policy. Retry running the lifecycle policy for an index that is in the ERROR step. The API sets the policy back to the step where the error occurred and runs the step. Use the explain lifecycle state API to determine whether an index is in the ERROR step.
+
 ## Method Signature
 
 ```typescript
-client.ilm.retry(this: That, params: T.IlmRetryRequest, options?: TransportRequestOptions): Promise<any>
+client.ilm.retry(this: That, params: T.IlmRetryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmRetryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ilm.retry(this: That, params: T.IlmRetryRequest, options?: TransportReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IlmRetryRequest`](../types/IlmRetryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IlmRetryResponse>`
 
 ## See Also
 

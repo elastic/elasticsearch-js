@@ -1,9 +1,11 @@
 # Client.indices.createDataStream
 
+Create a data stream. You must have a matching index template with data stream enabled.
+
 ## Method Signature
 
 ```typescript
-client.indices.createDataStream(this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.createDataStream(this: That, params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateDataStreamResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.createDataStream(this: That, params: T.IndicesCreateDataStreamReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesCreateDataStreamRequest`](../types/IndicesCreateDataStreamRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesCreateDataStreamResponse>`
 
 ## See Also
 

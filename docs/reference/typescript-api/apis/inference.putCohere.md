@@ -1,9 +1,11 @@
 # Client.inference.putCohere
 
+Create a Cohere inference endpoint. Create an inference endpoint to perform an inference task with the `cohere` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putCohere(this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putCohere(this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCohereResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putCohere(this: That, params: T.InferencePutCohereRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutCohereRequest`](../types/InferencePutCohereRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutCohereResponse>`
 
 ## See Also
 

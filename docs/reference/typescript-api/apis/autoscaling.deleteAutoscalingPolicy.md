@@ -1,9 +1,11 @@
 # Client.autoscaling.deleteAutoscalingPolicy
 
+Delete an autoscaling policy. NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
 ## Method Signature
 
 ```typescript
-client.autoscaling.deleteAutoscalingPolicy(this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<any>
+client.autoscaling.deleteAutoscalingPolicy(this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AutoscalingDeleteAutoscalingPolicyResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.autoscaling.deleteAutoscalingPolicy(this: That, params: T.AutoscalingDele
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`AutoscalingDeleteAutoscalingPolicyRequest`](../types/AutoscalingDeleteAutoscalingPolicyRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.AutoscalingDeleteAutoscalingPolicyResponse>`
 
 ## See Also
 

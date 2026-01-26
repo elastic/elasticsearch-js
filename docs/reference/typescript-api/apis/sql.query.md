@@ -1,9 +1,11 @@
 # Client.sql.query
 
+Get SQL search results. Run an SQL request.
+
 ## Method Signature
 
 ```typescript
-client.sql.query(this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptions): Promise<any>
+client.sql.query(this: That, params?: T.SqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlQueryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.sql.query(this: That, params?: T.SqlQueryRequest, options?: TransportRequ
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SqlQueryRequest`](../types/SqlQueryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SqlQueryResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ml.putCalendar
 
+Create a calendar.
+
 ## Method Signature
 
 ```typescript
-client.ml.putCalendar(this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.putCalendar(this: That, params: T.MlPutCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.putCalendar(this: That, params: T.MlPutCalendarRequest, options?: Tran
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPutCalendarRequest`](../types/MlPutCalendarRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPutCalendarResponse>`
 
 ## See Also
 

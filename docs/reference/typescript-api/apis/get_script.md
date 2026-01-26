@@ -1,9 +1,11 @@
 # Client.get_script
 
+Get a script or search template. Retrieves a stored script or search template.
+
 ## Method Signature
 
 ```typescript
-client.get_script(this: That, params: T.GetScriptRequest, options?: TransportRequestOptions): Promise<any>
+client.get_script(this: That, params: T.GetScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.get_script(this: That, params: T.GetScriptRequest, options?: TransportReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`GetScriptRequest`](../types/GetScriptRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.GetScriptResponse>`
 
 ## See Also
 

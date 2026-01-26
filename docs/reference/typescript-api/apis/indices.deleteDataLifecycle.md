@@ -1,9 +1,11 @@
 # Client.indices.deleteDataLifecycle
 
+Delete data stream lifecycles. Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
+
 ## Method Signature
 
 ```typescript
-client.indices.deleteDataLifecycle(this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.deleteDataLifecycle(this: That, params: T.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.deleteDataLifecycle(this: That, params: T.IndicesDeleteDataLifecy
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesDeleteDataLifecycleRequest`](../types/IndicesDeleteDataLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDeleteDataLifecycleResponse>`
 
 ## See Also
 

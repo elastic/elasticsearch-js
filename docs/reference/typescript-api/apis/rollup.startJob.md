@@ -1,9 +1,11 @@
 # Client.rollup.startJob
 
+Start rollup jobs. If you try to start a job that does not exist, an exception occurs. If you try to start a job that is already started, nothing happens.
+
 ## Method Signature
 
 ```typescript
-client.rollup.startJob(this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any>
+client.rollup.startJob(this: That, params: T.RollupStartJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStartJobResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.rollup.startJob(this: That, params: T.RollupStartJobRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`RollupStartJobRequest`](../types/RollupStartJobRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.RollupStartJobResponse>`
 
 ## See Also
 

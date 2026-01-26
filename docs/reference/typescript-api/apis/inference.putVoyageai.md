@@ -1,9 +1,11 @@
 # Client.inference.putVoyageai
 
+Create a VoyageAI inference endpoint. Create an inference endpoint to perform an inference task with the `voyageai` service. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+
 ## Method Signature
 
 ```typescript
-client.inference.putVoyageai(this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putVoyageai(this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutVoyageaiResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putVoyageai(this: That, params: T.InferencePutVoyageaiRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutVoyageaiRequest`](../types/InferencePutVoyageaiRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutVoyageaiResponse>`
 
 ## See Also
 

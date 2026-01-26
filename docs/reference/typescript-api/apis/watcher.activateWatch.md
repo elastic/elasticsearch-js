@@ -1,9 +1,11 @@
 # Client.watcher.activateWatch
 
+Activate a watch. A watch can be either active or inactive.
+
 ## Method Signature
 
 ```typescript
-client.watcher.activateWatch(this: That, params: T.WatcherActivateWatchRequest, options?: TransportRequestOptions): Promise<any>
+client.watcher.activateWatch(this: That, params: T.WatcherActivateWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherActivateWatchResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.watcher.activateWatch(this: That, params: T.WatcherActivateWatchRequest, 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`WatcherActivateWatchRequest`](../types/WatcherActivateWatchRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.WatcherActivateWatchResponse>`
 
 ## See Also
 

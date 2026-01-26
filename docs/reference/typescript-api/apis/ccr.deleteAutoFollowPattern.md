@@ -1,9 +1,11 @@
 # Client.ccr.deleteAutoFollowPattern
 
+Delete auto-follow patterns. Delete a collection of cross-cluster replication auto-follow patterns.
+
 ## Method Signature
 
 ```typescript
-client.ccr.deleteAutoFollowPattern(this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any>
+client.ccr.deleteAutoFollowPattern(this: That, params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrDeleteAutoFollowPatternResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ccr.deleteAutoFollowPattern(this: That, params: T.CcrDeleteAutoFollowPatt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`CcrDeleteAutoFollowPatternRequest`](../types/CcrDeleteAutoFollowPatternRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CcrDeleteAutoFollowPatternResponse>`
 
 ## See Also
 

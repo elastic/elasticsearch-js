@@ -1,9 +1,11 @@
 # Client.license.getTrialStatus
 
+Get the trial status.
+
 ## Method Signature
 
 ```typescript
-client.license.getTrialStatus(this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): Promise<any>
+client.license.getTrialStatus(this: That, params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetTrialStatusResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.license.getTrialStatus(this: That, params?: T.LicenseGetTrialStatusReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`LicenseGetTrialStatusRequest`](../types/LicenseGetTrialStatusRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.LicenseGetTrialStatusResponse>`
 
 ## See Also
 

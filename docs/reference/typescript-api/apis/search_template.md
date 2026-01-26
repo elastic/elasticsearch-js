@@ -1,9 +1,11 @@
 # Client.search_template
 
+Run a search with a search template.
+
 ## Method Signature
 
 ```typescript
-client.search_template(this: That, params?: T.SearchTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.search_template(this: That, params?: T.SearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchTemplateResponse<TDocument>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_template(this: That, params?: T.SearchTemplateRequest, options?: T
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SearchTemplateRequest`](../types/SearchTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchTemplateResponse<TDocument>>`
 
 ## See Also
 

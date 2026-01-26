@@ -1,9 +1,11 @@
 # Client.search_application.search
 
+Run a search application search. Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template. Unspecified template parameters are assigned their default values if applicable.
+
 ## Method Signature
 
 ```typescript
-client.search_application.search(this: That, params: T.SearchApplicationSearchRequest, options?: TransportRequestOptions): Promise<any>
+client.search_application.search(this: That, params: T.SearchApplicationSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationSearchResponse<TDocument, TAggregations>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.search_application.search(this: That, params: T.SearchApplicationSearchRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchApplicationSearchRequest`](../types/SearchApplicationSearchRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchApplicationSearchResponse<TDocument, TAggregations>>`
 
 ## See Also
 

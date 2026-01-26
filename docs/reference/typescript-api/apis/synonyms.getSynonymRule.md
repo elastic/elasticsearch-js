@@ -1,9 +1,11 @@
 # Client.synonyms.getSynonymRule
 
+Get a synonym rule. Get a synonym rule from a synonym set.
+
 ## Method Signature
 
 ```typescript
-client.synonyms.getSynonymRule(this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptions): Promise<any>
+client.synonyms.getSynonymRule(this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymRuleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.synonyms.getSynonymRule(this: That, params: T.SynonymsGetSynonymRuleReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SynonymsGetSynonymRuleRequest`](../types/SynonymsGetSynonymRuleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SynonymsGetSynonymRuleResponse>`
 
 ## See Also
 

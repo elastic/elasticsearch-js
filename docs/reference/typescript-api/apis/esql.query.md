@@ -1,9 +1,11 @@
 # Client.esql.query
 
+Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query language) query.
+
 ## Method Signature
 
 ```typescript
-client.esql.query(this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.query(this: That, params: T.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.query(this: That, params: T.EsqlQueryRequest, options?: TransportReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EsqlQueryRequest`](../types/EsqlQueryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlQueryResponse>`
 
 ## See Also
 

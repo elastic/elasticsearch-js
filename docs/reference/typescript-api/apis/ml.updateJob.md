@@ -1,9 +1,11 @@
 # Client.ml.updateJob
 
+Update an anomaly detection job. Updates certain properties of an anomaly detection job.
+
 ## Method Signature
 
 ```typescript
-client.ml.updateJob(this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.updateJob(this: That, params: T.MlUpdateJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateJobResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.updateJob(this: That, params: T.MlUpdateJobRequest, options?: Transpor
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlUpdateJobRequest`](../types/MlUpdateJobRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlUpdateJobResponse>`
 
 ## See Also
 

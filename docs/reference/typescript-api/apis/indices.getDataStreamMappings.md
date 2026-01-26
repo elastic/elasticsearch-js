@@ -1,9 +1,11 @@
 # Client.indices.getDataStreamMappings
 
+Get data stream mappings. Get mapping information for one or more data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.getDataStreamMappings(this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getDataStreamMappings(this: That, params: T.IndicesGetDataStreamMappingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamMappingsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getDataStreamMappings(this: That, params: T.IndicesGetDataStreamM
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetDataStreamMappingsRequest`](../types/IndicesGetDataStreamMappingsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetDataStreamMappingsResponse>`
 
 ## See Also
 

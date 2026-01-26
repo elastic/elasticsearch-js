@@ -1,9 +1,11 @@
 # Client.snapshot.deleteRepository
 
+Delete snapshot repositories. When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots. The snapshots themselves are left untouched and in place.
+
 ## Method Signature
 
 ```typescript
-client.snapshot.deleteRepository(this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any>
+client.snapshot.deleteRepository(this: That, params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.snapshot.deleteRepository(this: That, params: T.SnapshotDeleteRepositoryR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SnapshotDeleteRepositoryRequest`](../types/SnapshotDeleteRepositoryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SnapshotDeleteRepositoryResponse>`
 
 ## See Also
 

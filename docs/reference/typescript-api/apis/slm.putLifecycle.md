@@ -1,9 +1,11 @@
 # Client.slm.putLifecycle
 
+Create or update a policy. Create or update a snapshot lifecycle policy. If the policy already exists, this request increments the policy version. Only the latest version of a policy is stored.
+
 ## Method Signature
 
 ```typescript
-client.slm.putLifecycle(this: That, params: T.SlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any>
+client.slm.putLifecycle(this: That, params: T.SlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmPutLifecycleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.slm.putLifecycle(this: That, params: T.SlmPutLifecycleRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SlmPutLifecycleRequest`](../types/SlmPutLifecycleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SlmPutLifecycleResponse>`
 
 ## See Also
 

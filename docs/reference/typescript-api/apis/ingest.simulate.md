@@ -1,9 +1,11 @@
 # Client.ingest.simulate
 
+Simulate a pipeline. Run an ingest pipeline against a set of provided documents. You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
+
 ## Method Signature
 
 ```typescript
-client.ingest.simulate(this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.simulate(this: That, params: T.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.simulate(this: That, params: T.IngestSimulateRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IngestSimulateRequest`](../types/IngestSimulateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestSimulateResponse>`
 
 ## See Also
 

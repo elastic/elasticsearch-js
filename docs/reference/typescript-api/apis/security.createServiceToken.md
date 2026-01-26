@@ -1,9 +1,11 @@
 # Client.security.createServiceToken
 
+Create a service account token. Create a service accounts token for access without requiring basic authentication. NOTE: Service account tokens never expire. You must actively delete them if they are no longer needed.
+
 ## Method Signature
 
 ```typescript
-client.security.createServiceToken(this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any>
+client.security.createServiceToken(this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.createServiceToken(this: That, params: T.SecurityCreateServiceTo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityCreateServiceTokenRequest`](../types/SecurityCreateServiceTokenRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityCreateServiceTokenResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ingest.putIpLocationDatabase
 
+Create or update an IP geolocation database configuration.
+
 ## Method Signature
 
 ```typescript
-client.ingest.putIpLocationDatabase(this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.putIpLocationDatabase(this: That, params: T.IngestPutIpLocationDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutIpLocationDatabaseResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.putIpLocationDatabase(this: That, params: T.IngestPutIpLocationDat
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IngestPutIpLocationDatabaseRequest`](../types/IngestPutIpLocationDatabaseRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestPutIpLocationDatabaseResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ccr.resumeFollow
 
+Resume a follower. Resume a cross-cluster replication follower index that was paused. The follower index could have been paused with the pause follower API. Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks. When this API returns, the follower index will resume fetching operations from the leader index.
+
 ## Method Signature
 
 ```typescript
-client.ccr.resumeFollow(this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<any>
+client.ccr.resumeFollow(this: That, params: T.CcrResumeFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeFollowResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ccr.resumeFollow(this: That, params: T.CcrResumeFollowRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`CcrResumeFollowRequest`](../types/CcrResumeFollowRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CcrResumeFollowResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.ml.deleteCalendarJob
 
+Delete anomaly jobs from a calendar.
+
 ## Method Signature
 
 ```typescript
-client.ml.deleteCalendarJob(this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.deleteCalendarJob(this: That, params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarJobResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.deleteCalendarJob(this: That, params: T.MlDeleteCalendarJobRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlDeleteCalendarJobRequest`](../types/MlDeleteCalendarJobRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlDeleteCalendarJobResponse>`
 
 ## See Also
 

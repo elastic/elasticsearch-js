@@ -1,9 +1,11 @@
 # Client.cat.pendingTasks
 
+Get pending task information. Get information about cluster-level changes that have not yet taken effect. IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
+
 ## Method Signature
 
 ```typescript
-client.cat.pendingTasks(this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptions): Promise<any>
+client.cat.pendingTasks(this: That, params?: T.CatPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPendingTasksResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cat.pendingTasks(this: That, params?: T.CatPendingTasksRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`CatPendingTasksRequest`](../types/CatPendingTasksRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CatPendingTasksResponse>`
 
 ## See Also
 

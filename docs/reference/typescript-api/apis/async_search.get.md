@@ -1,9 +1,11 @@
 # Client.async_search.get
 
+Get async search results. Retrieve the results of a previously submitted asynchronous search request. If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
+
 ## Method Signature
 
 ```typescript
-client.async_search.get(this: That, params: T.AsyncSearchGetRequest, options?: TransportRequestOptions): Promise<any>
+client.async_search.get(this: That, params: T.AsyncSearchGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchGetResponse<TDocument, TAggregations>>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.async_search.get(this: That, params: T.AsyncSearchGetRequest, options?: T
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`AsyncSearchGetRequest`](../types/AsyncSearchGetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.AsyncSearchGetResponse<TDocument, TAggregations>>`
 
 ## See Also
 

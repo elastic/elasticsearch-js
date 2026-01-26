@@ -1,9 +1,11 @@
 # Client.snapshot.verifyRepository
 
+Verify a snapshot repository. Check for common misconfigurations in a snapshot repository.
+
 ## Method Signature
 
 ```typescript
-client.snapshot.verifyRepository(this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any>
+client.snapshot.verifyRepository(this: That, params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.snapshot.verifyRepository(this: That, params: T.SnapshotVerifyRepositoryR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SnapshotVerifyRepositoryRequest`](../types/SnapshotVerifyRepositoryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SnapshotVerifyRepositoryResponse>`
 
 ## See Also
 

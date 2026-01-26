@@ -1,9 +1,11 @@
 # Client.searchable_snapshots.mount
 
+Mount a snapshot. Mount a snapshot as a searchable snapshot index. Do not use this API for snapshots managed by index lifecycle management (ILM). Manually mounting ILM-managed snapshots can interfere with ILM processes.
+
 ## Method Signature
 
 ```typescript
-client.searchable_snapshots.mount(this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): Promise<any>
+client.searchable_snapshots.mount(this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsMountResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.searchable_snapshots.mount(this: That, params: T.SearchableSnapshotsMount
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SearchableSnapshotsMountRequest`](../types/SearchableSnapshotsMountRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SearchableSnapshotsMountResponse>`
 
 ## See Also
 

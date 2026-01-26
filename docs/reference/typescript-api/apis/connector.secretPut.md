@@ -1,9 +1,11 @@
 # Client.connector.secretPut
 
+Creates or updates a secret for a Connector.
+
 ## Method Signature
 
 ```typescript
-client.connector.secretPut(this: That, params: T.ConnectorSecretPutRequest, options?: TransportRequestOptions): Promise<any>
+client.connector.secretPut(this: That, params: T.ConnectorSecretPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSecretPutResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.connector.secretPut(this: That, params: T.ConnectorSecretPutRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ConnectorSecretPutRequest`](../types/ConnectorSecretPutRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ConnectorSecretPutResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.xpack.usage
 
+Get usage information. Get information about the features that are currently enabled and available under the current license. The API also provides some usage statistics.
+
 ## Method Signature
 
 ```typescript
-client.xpack.usage(this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptions): Promise<any>
+client.xpack.usage(this: That, params?: T.XpackUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackUsageResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.xpack.usage(this: That, params?: T.XpackUsageRequest, options?: Transport
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`XpackUsageRequest`](../types/XpackUsageRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.XpackUsageResponse>`
 
 ## See Also
 

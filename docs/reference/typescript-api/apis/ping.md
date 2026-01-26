@@ -1,9 +1,11 @@
 # Client.ping
 
+Ping the cluster. Get information about whether the cluster is running.
+
 ## Method Signature
 
 ```typescript
-client.ping(this: That, params?: T.PingRequest, options?: TransportRequestOptions): Promise<any>
+client.ping(this: That, params?: T.PingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ping(this: That, params?: T.PingRequest, options?: TransportRequestOption
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`PingRequest`](../types/PingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.PingResponse>`
 
 ## See Also
 

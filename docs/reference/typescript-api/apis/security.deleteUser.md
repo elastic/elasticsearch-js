@@ -1,9 +1,11 @@
 # Client.security.deleteUser
 
+Delete users. Delete users from the native realm.
+
 ## Method Signature
 
 ```typescript
-client.security.deleteUser(this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any>
+client.security.deleteUser(this: That, params: T.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteUserResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.deleteUser(this: That, params: T.SecurityDeleteUserRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityDeleteUserRequest`](../types/SecurityDeleteUserRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityDeleteUserResponse>`
 
 ## See Also
 

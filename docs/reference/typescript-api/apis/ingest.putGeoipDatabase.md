@@ -1,9 +1,11 @@
 # Client.ingest.putGeoipDatabase
 
+Create or update a GeoIP database configuration. Refer to the create or update IP geolocation database configuration API.
+
 ## Method Signature
 
 ```typescript
-client.ingest.putGeoipDatabase(this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptions): Promise<any>
+client.ingest.putGeoipDatabase(this: That, params: T.IngestPutGeoipDatabaseRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutGeoipDatabaseResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ingest.putGeoipDatabase(this: That, params: T.IngestPutGeoipDatabaseReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IngestPutGeoipDatabaseRequest`](../types/IngestPutGeoipDatabaseRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IngestPutGeoipDatabaseResponse>`
 
 ## See Also
 

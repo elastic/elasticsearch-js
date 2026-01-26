@@ -1,9 +1,11 @@
 # Client.inference.putAlibabacloud
 
+Create an AlibabaCloud AI Search inference endpoint. Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
+
 ## Method Signature
 
 ```typescript
-client.inference.putAlibabacloud(this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putAlibabacloud(this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAlibabacloudResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putAlibabacloud(this: That, params: T.InferencePutAlibabacloudR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutAlibabacloudRequest`](../types/InferencePutAlibabacloudRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutAlibabacloudResponse>`
 
 ## See Also
 

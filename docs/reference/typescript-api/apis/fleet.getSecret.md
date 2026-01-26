@@ -1,9 +1,11 @@
 # Client.fleet.getSecret
 
+Retrieves a secret stored by Fleet.
+
 ## Method Signature
 
 ```typescript
-client.fleet.getSecret(this: That, params: T.FleetGetSecretRequest, options?: TransportRequestOptions): Promise<any>
+client.fleet.getSecret(this: That, params: T.FleetGetSecretRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetGetSecretResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.fleet.getSecret(this: That, params: T.FleetGetSecretRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`FleetGetSecretRequest`](../types/FleetGetSecretRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.FleetGetSecretResponse>`
 
 ## See Also
 

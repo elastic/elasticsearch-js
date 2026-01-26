@@ -1,9 +1,11 @@
 # Client.clear_scroll
 
+Clear a scrolling search. Clear the search context and results for a scrolling search.
+
 ## Method Signature
 
 ```typescript
-client.clear_scroll(this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptions): Promise<any>
+client.clear_scroll(this: That, params?: T.ClearScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClearScrollResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.clear_scroll(this: That, params?: T.ClearScrollRequest, options?: Transpo
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`ClearScrollRequest`](../types/ClearScrollRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClearScrollResponse>`
 
 ## See Also
 

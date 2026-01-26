@@ -1,9 +1,11 @@
 # Client.ml.getCategories
 
+Get anomaly detection job results for categories.
+
 ## Method Signature
 
 ```typescript
-client.ml.getCategories(this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getCategories(this: That, params: T.MlGetCategoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCategoriesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getCategories(this: That, params: T.MlGetCategoriesRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlGetCategoriesRequest`](../types/MlGetCategoriesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetCategoriesResponse>`
 
 ## See Also
 

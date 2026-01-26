@@ -1,9 +1,11 @@
 # Client.nodes.getRepositoriesMeteringInfo
 
+Get cluster repositories metering. Get repositories metering information for a cluster. This API exposes monotonically non-decreasing counters and it is expected that clients would durably store the information needed to compute aggregations over a period of time. Additionally, the information exposed by this API is volatile, meaning that it will not be present after node restarts.
+
 ## Method Signature
 
 ```typescript
-client.nodes.getRepositoriesMeteringInfo(this: That, params: T.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptions): Promise<any>
+client.nodes.getRepositoriesMeteringInfo(this: That, params: T.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesGetRepositoriesMeteringInfoResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.nodes.getRepositoriesMeteringInfo(this: That, params: T.NodesGetRepositor
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`NodesGetRepositoriesMeteringInfoRequest`](../types/NodesGetRepositoriesMeteringInfoRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.NodesGetRepositoriesMeteringInfoResponse>`
 
 ## See Also
 

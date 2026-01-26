@@ -1,9 +1,11 @@
 # Client.inference.delete
 
+Delete an inference endpoint. This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
+
 ## Method Signature
 
 ```typescript
-client.inference.delete(this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.delete(this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.delete(this: That, params: T.InferenceDeleteRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferenceDeleteRequest`](../types/InferenceDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferenceDeleteResponse>`
 
 ## See Also
 

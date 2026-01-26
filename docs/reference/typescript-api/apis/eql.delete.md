@@ -1,9 +1,11 @@
 # Client.eql.delete
 
+Delete an async EQL search. Delete an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
+
 ## Method Signature
 
 ```typescript
-client.eql.delete(this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptions): Promise<any>
+client.eql.delete(this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.eql.delete(this: That, params: T.EqlDeleteRequest, options?: TransportReq
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EqlDeleteRequest`](../types/EqlDeleteRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EqlDeleteResponse>`
 
 ## See Also
 

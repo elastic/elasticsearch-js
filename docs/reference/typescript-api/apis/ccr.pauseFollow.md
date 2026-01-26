@@ -1,9 +1,11 @@
 # Client.ccr.pauseFollow
 
+Pause a follower. Pause a cross-cluster replication follower index. The follower index will not fetch any additional operations from the leader index. You can resume following with the resume follower API. You can pause and resume a follower index to change the configuration of the following task.
+
 ## Method Signature
 
 ```typescript
-client.ccr.pauseFollow(this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<any>
+client.ccr.pauseFollow(this: That, params: T.CcrPauseFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseFollowResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ccr.pauseFollow(this: That, params: T.CcrPauseFollowRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`CcrPauseFollowRequest`](../types/CcrPauseFollowRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.CcrPauseFollowResponse>`
 
 ## See Also
 

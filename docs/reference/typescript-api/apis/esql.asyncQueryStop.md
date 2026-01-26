@@ -1,9 +1,11 @@
 # Client.esql.asyncQueryStop
 
+Stop async ES|QL query. This API interrupts the query execution and returns the results so far. If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
+
 ## Method Signature
 
 ```typescript
-client.esql.asyncQueryStop(this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptions): Promise<any>
+client.esql.asyncQueryStop(this: That, params: T.EsqlAsyncQueryStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlAsyncQueryStopResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.esql.asyncQueryStop(this: That, params: T.EsqlAsyncQueryStopRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`EsqlAsyncQueryStopRequest`](../types/EsqlAsyncQueryStopRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.EsqlAsyncQueryStopResponse>`
 
 ## See Also
 

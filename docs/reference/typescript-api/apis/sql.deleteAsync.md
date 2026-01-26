@@ -1,9 +1,11 @@
 # Client.sql.deleteAsync
 
+Delete an async SQL search. Delete an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it. If the Elasticsearch security features are enabled, only the following users can use this API to delete a search: * Users with the `cancel_task` cluster privilege. * The user who first submitted the search.
+
 ## Method Signature
 
 ```typescript
-client.sql.deleteAsync(this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptions): Promise<any>
+client.sql.deleteAsync(this: That, params: T.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlDeleteAsyncResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.sql.deleteAsync(this: That, params: T.SqlDeleteAsyncRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SqlDeleteAsyncRequest`](../types/SqlDeleteAsyncRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SqlDeleteAsyncResponse>`
 
 ## See Also
 

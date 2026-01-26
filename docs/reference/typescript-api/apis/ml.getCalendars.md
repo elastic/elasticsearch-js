@@ -1,9 +1,11 @@
 # Client.ml.getCalendars
 
+Get calendar configuration info.
+
 ## Method Signature
 
 ```typescript
-client.ml.getCalendars(this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getCalendars(this: That, params?: T.MlGetCalendarsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getCalendars(this: That, params?: T.MlGetCalendarsRequest, options?: T
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetCalendarsRequest`](../types/MlGetCalendarsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetCalendarsResponse>`
 
 ## See Also
 

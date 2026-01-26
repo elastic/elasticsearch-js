@@ -1,9 +1,11 @@
 # Client.security.enableUser
 
+Enable users. Enable users in the native realm. By default, when you create users, they are enabled.
+
 ## Method Signature
 
 ```typescript
-client.security.enableUser(this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any>
+client.security.enableUser(this: That, params: T.SecurityEnableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.enableUser(this: That, params: T.SecurityEnableUserRequest, opti
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityEnableUserRequest`](../types/SecurityEnableUserRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityEnableUserResponse>`
 
 ## See Also
 

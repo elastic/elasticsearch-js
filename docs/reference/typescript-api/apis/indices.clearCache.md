@@ -1,9 +1,11 @@
 # Client.indices.clearCache
 
+Clear the cache. Clear the cache of one or more indices. For data streams, the API clears the caches of the stream's backing indices. By default, the clear cache API clears all caches. To clear only specific caches, use the `fielddata`, `query`, or `request` parameters. To clear the cache only of specific fields, use the `fields` parameter.
+
 ## Method Signature
 
 ```typescript
-client.indices.clearCache(this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.clearCache(this: That, params?: T.IndicesClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesClearCacheResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.clearCache(this: That, params?: T.IndicesClearCacheRequest, optio
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesClearCacheRequest`](../types/IndicesClearCacheRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesClearCacheResponse>`
 
 ## See Also
 

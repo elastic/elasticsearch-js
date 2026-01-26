@@ -1,9 +1,11 @@
 # Client.streams.logsDisable
 
+Disable logs stream. Turn off the logs stream feature for this cluster.
+
 ## Method Signature
 
 ```typescript
-client.streams.logsDisable(this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<any>
+client.streams.logsDisable(this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsDisableResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.streams.logsDisable(this: That, params?: T.StreamsLogsDisableRequest, opt
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`StreamsLogsDisableRequest`](../types/StreamsLogsDisableRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.StreamsLogsDisableResponse>`
 
 ## See Also
 

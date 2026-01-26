@@ -1,9 +1,11 @@
 # Client.ml.getDataFrameAnalytics
 
+Get data frame analytics job configuration info. You can get information for multiple data frame analytics jobs in a single API request by using a comma-separated list of data frame analytics jobs or a wildcard expression.
+
 ## Method Signature
 
 ```typescript
-client.ml.getDataFrameAnalytics(this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.getDataFrameAnalytics(this: That, params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.getDataFrameAnalytics(this: That, params?: T.MlGetDataFrameAnalyticsRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`MlGetDataFrameAnalyticsRequest`](../types/MlGetDataFrameAnalyticsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlGetDataFrameAnalyticsResponse>`
 
 ## See Also
 

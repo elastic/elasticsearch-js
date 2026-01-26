@@ -1,9 +1,11 @@
 # Client.get_script_context
 
+Get script contexts. Get a list of supported script contexts and their methods.
+
 ## Method Signature
 
 ```typescript
-client.get_script_context(this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptions): Promise<any>
+client.get_script_context(this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.get_script_context(this: That, params?: T.GetScriptContextRequest, option
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`GetScriptContextRequest`](../types/GetScriptContextRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.GetScriptContextResponse>`
 
 ## See Also
 

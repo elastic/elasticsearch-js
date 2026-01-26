@@ -1,9 +1,11 @@
 # Client.security.getServiceAccounts
 
+Get service accounts. Get a list of service accounts that match the provided path parameters. NOTE: Currently, only the `elastic/fleet-server` service account is available.
+
 ## Method Signature
 
 ```typescript
-client.security.getServiceAccounts(this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any>
+client.security.getServiceAccounts(this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.getServiceAccounts(this: That, params?: T.SecurityGetServiceAcco
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecurityGetServiceAccountsRequest`](../types/SecurityGetServiceAccountsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityGetServiceAccountsResponse>`
 
 ## See Also
 

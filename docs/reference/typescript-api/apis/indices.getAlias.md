@@ -1,9 +1,11 @@
 # Client.indices.getAlias
 
+Get aliases. Retrieves information for one or more data stream or index aliases.
+
 ## Method Signature
 
 ```typescript
-client.indices.getAlias(this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getAlias(this: That, params?: T.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getAlias(this: That, params?: T.IndicesGetAliasRequest, options?:
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesGetAliasRequest`](../types/IndicesGetAliasRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetAliasResponse>`
 
 ## See Also
 

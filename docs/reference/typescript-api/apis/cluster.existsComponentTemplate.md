@@ -1,9 +1,11 @@
 # Client.cluster.existsComponentTemplate
 
+Check component templates. Returns information about whether a particular component template exists.
+
 ## Method Signature
 
 ```typescript
-client.cluster.existsComponentTemplate(this: That, params: T.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.cluster.existsComponentTemplate(this: That, params: T.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterExistsComponentTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.cluster.existsComponentTemplate(this: That, params: T.ClusterExistsCompon
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`ClusterExistsComponentTemplateRequest`](../types/ClusterExistsComponentTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.ClusterExistsComponentTemplateResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.security.suggestUserProfiles
 
+Suggest a user profile. Get suggestions for user profiles that match specified search criteria. NOTE: The user profile feature is designed only for use by Kibana and Elastic's Observability, Enterprise Search, and Elastic Security solutions. Individual users and external applications should not call this API directly. Elastic reserves the right to change or remove this feature in future releases without prior notice.
+
 ## Method Signature
 
 ```typescript
-client.security.suggestUserProfiles(this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<any>
+client.security.suggestUserProfiles(this: That, params?: T.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySuggestUserProfilesResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.suggestUserProfiles(this: That, params?: T.SecuritySuggestUserPr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SecuritySuggestUserProfilesRequest`](../types/SecuritySuggestUserProfilesRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecuritySuggestUserProfilesResponse>`
 
 ## See Also
 

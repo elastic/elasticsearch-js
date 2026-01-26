@@ -1,9 +1,11 @@
 # Client.indices.existsIndexTemplate
 
+Check index templates. Check whether index templates exist.
+
 ## Method Signature
 
 ```typescript
-client.indices.existsIndexTemplate(this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.existsIndexTemplate(this: That, params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsIndexTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.existsIndexTemplate(this: That, params: T.IndicesExistsIndexTempl
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesExistsIndexTemplateRequest`](../types/IndicesExistsIndexTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesExistsIndexTemplateResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.indices.dataStreamsStats
 
+Get data stream stats. Get statistics for one or more data streams.
+
 ## Method Signature
 
 ```typescript
-client.indices.dataStreamsStats(this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.dataStreamsStats(this: That, params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDataStreamsStatsResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.dataStreamsStats(this: That, params?: T.IndicesDataStreamsStatsRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesDataStreamsStatsRequest`](../types/IndicesDataStreamsStatsRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesDataStreamsStatsResponse>`
 
 ## See Also
 

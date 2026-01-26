@@ -1,9 +1,11 @@
 # Client.ml.putFilter
 
+Create a filter. A filter contains a list of strings. It can be used by one or more anomaly detection jobs. Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
+
 ## Method Signature
 
 ```typescript
-client.ml.putFilter(this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.putFilter(this: That, params: T.MlPutFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutFilterResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.putFilter(this: That, params: T.MlPutFilterRequest, options?: Transpor
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlPutFilterRequest`](../types/MlPutFilterRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlPutFilterResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.sql.clearCursor
 
+Clear an SQL search cursor.
+
 ## Method Signature
 
 ```typescript
-client.sql.clearCursor(this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptions): Promise<any>
+client.sql.clearCursor(this: That, params: T.SqlClearCursorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlClearCursorResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.sql.clearCursor(this: That, params: T.SqlClearCursorRequest, options?: Tr
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SqlClearCursorRequest`](../types/SqlClearCursorRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SqlClearCursorResponse>`
 
 ## See Also
 

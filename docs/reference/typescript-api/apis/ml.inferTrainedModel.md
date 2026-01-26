@@ -1,9 +1,11 @@
 # Client.ml.inferTrainedModel
 
+Evaluate a trained model.
+
 ## Method Signature
 
 ```typescript
-client.ml.inferTrainedModel(this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<any>
+client.ml.inferTrainedModel(this: That, params: T.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.ml.inferTrainedModel(this: That, params: T.MlInferTrainedModelRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`MlInferTrainedModelRequest`](../types/MlInferTrainedModelRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.MlInferTrainedModelResponse>`
 
 ## See Also
 

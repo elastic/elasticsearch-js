@@ -1,9 +1,11 @@
 # Client.snapshot.getRepository
 
+Get snapshot repository information.
+
 ## Method Signature
 
 ```typescript
-client.snapshot.getRepository(this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any>
+client.snapshot.getRepository(this: That, params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.snapshot.getRepository(this: That, params?: T.SnapshotGetRepositoryReques
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`SnapshotGetRepositoryRequest`](../types/SnapshotGetRepositoryRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SnapshotGetRepositoryResponse>`
 
 ## See Also
 

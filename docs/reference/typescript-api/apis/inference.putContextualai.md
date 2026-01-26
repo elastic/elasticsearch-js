@@ -1,9 +1,11 @@
 # Client.inference.putContextualai
 
+Create an Contextual AI inference endpoint. Create an inference endpoint to perform an inference task with the `contexualai` service. To review the available `rerank` models, refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-model>.
+
 ## Method Signature
 
 ```typescript
-client.inference.putContextualai(this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.putContextualai(this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutContextualaiResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.putContextualai(this: That, params: T.InferencePutContextualaiR
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferencePutContextualaiRequest`](../types/InferencePutContextualaiRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferencePutContextualaiResponse>`
 
 ## See Also
 

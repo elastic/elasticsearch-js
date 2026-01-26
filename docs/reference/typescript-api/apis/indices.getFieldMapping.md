@@ -1,9 +1,11 @@
 # Client.indices.getFieldMapping
 
+Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
+
 ## Method Signature
 
 ```typescript
-client.indices.getFieldMapping(this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getFieldMapping(this: That, params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getFieldMapping(this: That, params: T.IndicesGetFieldMappingReque
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetFieldMappingRequest`](../types/IndicesGetFieldMappingRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetFieldMappingResponse>`
 
 ## See Also
 

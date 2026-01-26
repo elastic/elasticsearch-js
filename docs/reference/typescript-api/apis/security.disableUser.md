@@ -1,9 +1,11 @@
 # Client.security.disableUser
 
+Disable users. Disable users in the native realm. By default, when you create users, they are enabled. You can use this API to revoke a user's access to Elasticsearch.
+
 ## Method Signature
 
 ```typescript
-client.security.disableUser(this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any>
+client.security.disableUser(this: That, params: T.SecurityDisableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.security.disableUser(this: That, params: T.SecurityDisableUserRequest, op
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`SecurityDisableUserRequest`](../types/SecurityDisableUserRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.SecurityDisableUserResponse>`
 
 ## See Also
 

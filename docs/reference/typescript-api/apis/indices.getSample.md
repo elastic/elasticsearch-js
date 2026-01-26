@@ -1,9 +1,11 @@
 # Client.indices.getSample
 
+Request for a random sample of raw documents ingested into the given index or data stream.
+
 ## Method Signature
 
 ```typescript
-client.indices.getSample(this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getSample(this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getSample(this: That, params: T.IndicesGetSampleRequest, options?
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`IndicesGetSampleRequest`](../types/IndicesGetSampleRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetSampleResponse>`
 
 ## See Also
 

@@ -1,9 +1,11 @@
 # Client.query_rules.deleteRuleset
 
+Delete a query ruleset. Remove a query ruleset and its associated data. This is a destructive action that is not recoverable.
+
 ## Method Signature
 
 ```typescript
-client.query_rules.deleteRuleset(this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptions): Promise<any>
+client.query_rules.deleteRuleset(this: That, params: T.QueryRulesDeleteRulesetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesDeleteRulesetResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.query_rules.deleteRuleset(this: That, params: T.QueryRulesDeleteRulesetRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`QueryRulesDeleteRulesetRequest`](../types/QueryRulesDeleteRulesetRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.QueryRulesDeleteRulesetResponse>`
 
 ## See Also
 

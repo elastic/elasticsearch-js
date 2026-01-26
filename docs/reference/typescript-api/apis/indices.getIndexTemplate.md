@@ -1,9 +1,11 @@
 # Client.indices.getIndexTemplate
 
+Get index templates. Get information about one or more index templates.
+
 ## Method Signature
 
 ```typescript
-client.indices.getIndexTemplate(this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<any>
+client.indices.getIndexTemplate(this: That, params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetIndexTemplateResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.indices.getIndexTemplate(this: That, params?: T.IndicesGetIndexTemplateRe
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params?` | [`IndicesGetIndexTemplateRequest`](../types/IndicesGetIndexTemplateRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.IndicesGetIndexTemplateResponse>`
 
 ## See Also
 

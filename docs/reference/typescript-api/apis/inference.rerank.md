@@ -1,9 +1,11 @@
 # Client.inference.rerank
 
+Perform reranking inference on the service.
+
 ## Method Signature
 
 ```typescript
-client.inference.rerank(this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptions): Promise<any>
+client.inference.rerank(this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
 ```
 
 ### Parameters
@@ -12,11 +14,11 @@ client.inference.rerank(this: That, params: T.InferenceRerankRequest, options?: 
 |-----------|------|-------------|
 | `this` | `That` | - |
 | `params` | [`InferenceRerankRequest`](../types/InferenceRerankRequest.md) | - |
-| `options?` | `TransportRequestOptions` | - |
+| `options?` | `TransportRequestOptionsWithOutMeta` | - |
 
 ### Returns
 
-`Promise<any>`
+`Promise<T.InferenceRerankResponse>`
 
 ## See Also
 
