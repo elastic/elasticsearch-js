@@ -18810,7 +18810,7 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
   is_running: boolean
 }
 
-export type EsqlESQLParam = FieldValue | FieldValue[]
+export type EsqlESQLParams = EsqlSingleOrMultiValue[] | EsqlNamedValue[]
 
 export interface EsqlESQLView {
   /** The name of the ES|QL view */
@@ -18873,6 +18873,10 @@ export interface EsqlEsqlShardInfo {
   skipped?: integer
   failed?: integer
 }
+
+export type EsqlNamedValue = Partial<Record<string, EsqlSingleOrMultiValue>>
+
+export type EsqlSingleOrMultiValue = FieldValue | FieldValue[]
 
 interface EsqlTableValuesContainerExclusiveProps {
   integer?: EsqlTableValuesIntegerValue[]
@@ -19108,7 +19112,7 @@ export interface EsqlQueryRequest extends RequestBase {
   filter?: QueryDslQueryContainer
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: EsqlESQLParam[]
+  params?: EsqlESQLParams
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -23600,17 +23604,17 @@ export interface InferenceAmazonBedrockServiceSettings {
     * Supported providers include:
     *
     * * `amazontitan` - available for `text_embedding` and `completion` task types
-    * * `anthropic` - available for `completion` task type only
-    * * `ai21labs` - available for `completion` task type only
-    * * `cohere` - available for `text_embedding` and `completion` task types
-    * * `meta` - available for `completion` task type only
-    * * `mistral` - available for `completion` task type only */
+    * * `anthropic` - available for `chat_completion` and `completion` task types
+    * * `ai21labs` - available for `chat_completion` and `completion` task types
+    * * `cohere` - available for `chat_completion`, `completion` and `text_embedding` task types
+    * * `meta` - available for `chat_completion` and `completion` task types
+    * * `mistral` - available for `chat_completion` and `completion` task types */
   provider?: string
   /** The region that your model or ARN is deployed in.
     * The list of available regions per model can be found in the Amazon Bedrock documentation. */
   region: string
-  /** This setting helps to minimize the number of rate limit errors returned from Watsonx.
-    * By default, the `watsonxai` service sets the number of requests allowed per minute to 120. */
+  /** This setting helps to minimize the number of rate limit errors returned from Amazon Bedrock.
+    * By default, the `amazonbedrock` service sets the number of requests allowed per minute to 240. */
   rate_limit?: InferenceRateLimitSetting
   /** A valid AWS secret key that is paired with the `access_key`.
     * For informationg about creating and managing access and secret keys, refer to the AWS documentation. */
@@ -23620,23 +23624,23 @@ export interface InferenceAmazonBedrockServiceSettings {
 export type InferenceAmazonBedrockServiceType = 'amazonbedrock'
 
 export interface InferenceAmazonBedrockTaskSettings {
-  /** For a `completion` task, it sets the maximum number for the output tokens to be generated. */
+  /** For `chat_completion` and `completion` tasks, it sets the maximum number for the output tokens to be generated. */
   max_new_tokens?: integer
-  /** For a `completion` task, it is a number between 0.0 and 1.0 that controls the apparent creativity of the results.
+  /** For `chat_completion` and `completion` tasks, it is a number between 0.0 and 1.0 that controls the apparent creativity of the results.
     * At temperature 0.0 the model is most deterministic, at temperature 1.0 most random.
     * It should not be used if `top_p` or `top_k` is specified. */
   temperature?: float
-  /** For a `completion` task, it limits samples to the top-K most likely words, balancing coherence and variability.
+  /** For `chat_completion` and `completion` tasks, it limits samples to the top-K most likely words, balancing coherence and variability.
     * It is only available for anthropic, cohere, and mistral providers.
     * It is an alternative to `temperature`; it should not be used if `temperature` is specified. */
   top_k?: float
-  /** For a `completion` task, it is a number in the range of 0.0 to 1.0, to eliminate low-probability tokens.
+  /** For `chat_completion` and `completion` tasks, it is a number in the range of 0.0 to 1.0, to eliminate low-probability tokens.
     * Top-p uses nucleus sampling to select top tokens whose sum of likelihoods does not exceed a certain value, ensuring both variety and coherence.
     * It is an alternative to `temperature`; it should not be used if `temperature` is specified. */
   top_p?: float
 }
 
-export type InferenceAmazonBedrockTaskType = 'completion' | 'text_embedding'
+export type InferenceAmazonBedrockTaskType = 'chat_completion' | 'completion' | 'text_embedding'
 
 export type InferenceAmazonSageMakerApi = 'openai' | 'elastic'
 
@@ -24227,6 +24231,14 @@ export interface InferenceDeleteInferenceEndpointResult extends AcknowledgedResp
 
 export type InferenceDenseByteVector = byte[]
 
+export interface InferenceDenseEmbeddingByteResult {
+  embedding: InferenceDenseByteVector
+}
+
+export interface InferenceDenseEmbeddingResult {
+  embedding: InferenceDenseVector
+}
+
 export type InferenceDenseVector = float[]
 
 export interface InferenceElasticsearchServiceSettings {
@@ -24304,6 +24316,33 @@ export interface InferenceElserServiceSettings {
 export type InferenceElserServiceType = 'elser'
 
 export type InferenceElserTaskType = 'sparse_embedding'
+
+export type InferenceEmbeddingContentFormat = 'text' | 'base64'
+
+export type InferenceEmbeddingContentInput = InferenceEmbeddingContentObject | InferenceEmbeddingContentObject[]
+
+export interface InferenceEmbeddingContentObject {
+  /** The type of input to embed. */
+  type: InferenceEmbeddingContentType
+  /** The format of the input. For the `text` type this defaults to `text`. For the `image` type, this defaults to `base64`. */
+  format?: InferenceEmbeddingContentFormat
+  /** The value of the input to embed. */
+  value: string
+}
+
+export type InferenceEmbeddingContentType = 'text' | 'image'
+
+interface InferenceEmbeddingInferenceResultExclusiveProps {
+  embeddings_bytes?: InferenceDenseEmbeddingByteResult[]
+  embeddings_bits?: InferenceDenseEmbeddingByteResult[]
+  embeddings?: InferenceDenseEmbeddingResult[]
+}
+
+export type InferenceEmbeddingInferenceResult = ExactlyOne<InferenceEmbeddingInferenceResultExclusiveProps>
+
+export type InferenceEmbeddingInput = InferenceEmbeddingStringInput | InferenceEmbeddingContentInput
+
+export type InferenceEmbeddingStringInput = string | string[]
 
 export type InferenceGoogleAiServiceType = 'googleaistudio'
 
@@ -24501,7 +24540,7 @@ export interface InferenceInferenceChunkingSettings {
 
 export interface InferenceInferenceEndpoint {
   /** The chunking configuration object.
-    * Applies only to the `sparse_embedding` and `text_embedding` task types.
+    * Applies only to the `embedding`, `sparse_embedding` and `text_embedding` task types.
     * Not applicable to the `rerank`, `completion`, or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The service type */
@@ -24695,9 +24734,12 @@ export interface InferenceInferenceEndpointInfoWatsonx extends InferenceInferenc
 }
 
 interface InferenceInferenceResultExclusiveProps {
-  text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
-  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
-  text_embedding?: InferenceTextEmbeddingResult[]
+  embeddings_bytes?: InferenceDenseEmbeddingByteResult[]
+  embeddings_bits?: InferenceDenseEmbeddingByteResult[]
+  embeddings?: InferenceDenseEmbeddingResult[]
+  text_embedding_bytes?: InferenceDenseEmbeddingByteResult[]
+  text_embedding_bits?: InferenceDenseEmbeddingByteResult[]
+  text_embedding?: InferenceDenseEmbeddingResult[]
   sparse_embedding?: InferenceSparseEmbeddingResult[]
   completion?: InferenceCompletionResult[]
   rerank?: InferenceRankedDocument[]
@@ -24718,7 +24760,7 @@ export interface InferenceJinaAIServiceSettings {
   /** This setting helps to minimize the number of rate limit errors returned from JinaAI.
     * By default, the `jinaai` service sets the number of requests allowed per minute to 2000 for all task types. */
   rate_limit?: InferenceRateLimitSetting
-  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm.
+  /** For an `embedding` or `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm.
     * The default values varies with the embedding type.
     * For example, a float embedding type uses a `dot_product` similarity measure by default. */
   similarity?: InferenceJinaAISimilarityType
@@ -24731,6 +24773,11 @@ export interface InferenceJinaAIServiceSettings {
     * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `bit`).
     * Use `float` for the default float embeddings. */
   element_type?: InferenceJinaAIElementType
+  /** For the `embedding` task, whether the model supports multimodal inputs. If true, requests sent to the Jina model
+    * will use the multimodal request format (a list of objects). If false, requests sent to the model will use the same
+    * format as the `text_embedding` task (a list of strings). Setting this to `false` allows the `embedding` task to be
+    * used with models that do not support multimodal requests. */
+  multimodal_model?: boolean
 }
 
 export type InferenceJinaAIServiceType = 'jinaai'
@@ -24740,18 +24787,18 @@ export type InferenceJinaAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 export interface InferenceJinaAITaskSettings {
   /** For a `rerank` task, return the doc text within the results. */
   return_documents?: boolean
-  /** For a `text_embedding` task, the task passed to the model.
+  /** For an `embedding` or `text_embedding` task, the task passed to the model.
     * Valid values are:
     *
-    * * `classification`: Use it for embeddings passed through a text classifier.
+    * * `classification`: Use it for embeddings passed through a classifier.
     * * `clustering`: Use it for the embeddings run through a clustering algorithm.
     * * `ingest`: Use it for storing document embeddings in a vector database.
     * * `search`: Use it for storing embeddings of search queries run against a vector database to find relevant documents. */
-  task?: InferenceJinaAITextEmbeddingTask
-  /** For a `text_embedding` task, controls when text is split into chunks.
+  input_type?: InferenceJinaAITextEmbeddingTask
+  /** For an `embedding` or `text_embedding` task, controls when text is split into chunks.
     * When set to `true`, a request from Elasticsearch contains only chunks related to a single document. Instead of batching chunks across documents, Elasticsearch sends them in separate requests. This ensures that chunk embeddings retain context from the entire document, improving semantic quality.
     *
-    * If a document exceeds the model's context limits, late chunking is automatically disabled for that document only and standard chunking is used instead.
+    * If a document exceeds the model's context limits, or if the document contains non-text inputs (relevant when using the multimodal `embedding` task), late chunking is automatically disabled for that document only and standard chunking is used instead.
     *
     * If not specified, defaults to `false`. */
   late_chunking?: boolean
@@ -24761,7 +24808,7 @@ export interface InferenceJinaAITaskSettings {
   top_n?: integer
 }
 
-export type InferenceJinaAITaskType = 'rerank' | 'text_embedding'
+export type InferenceJinaAITaskType = 'embedding' | 'rerank' | 'text_embedding'
 
 export type InferenceJinaAITextEmbeddingTask = 'classification' | 'clustering' | 'ingest' | 'search'
 
@@ -25011,6 +25058,7 @@ export interface InferenceRateLimitSetting {
     * By default, the number of requests allowed per minute is set by each service as follows:
     *
     * * `alibabacloud-ai-search` service: `1000`
+    * * `amazonbedrock` service: `240`
     * * `anthropic` service: `50`
     * * `azureaistudio` service: `240`
     * * `azureopenai` service and task type `text_embedding`: `1440`
@@ -25090,6 +25138,64 @@ export interface InferenceRequestChatCompletion {
   top_p?: float
 }
 
+export interface InferenceRequestEmbedding {
+  /** Inference input.
+    * Either a string, an array of strings, a `content` object, or an array of `content` objects.
+    *
+    * string example:
+    * ```
+    * "input": "Some text"
+    * ```
+    * string array example:
+    * ```
+    * "input": ["Some text", "Some more text"]
+    * ```
+    * `content` object example:
+    * ```
+    * "input": {
+    *     "content": {
+    *       "type": "image",
+    *       "format": "base64",
+    *       "value": "data:image/jpg;base64,..."
+    *     }
+    *   }
+    * ```
+    * `content` object array example:
+    * ```
+    * "input": [
+    *   {
+    *     "content": {
+    *       "type": "text",
+    *       "format": "text",
+    *       "value": "Some text to generate an embedding"
+    *     }
+    *   },
+    *   {
+    *     "content": {
+    *       "type": "image",
+    *       "format": "base64",
+    *       "value": "data:image/jpg;base64,..."
+    *     }
+    *   }
+    * ]
+    * ``` */
+  input: InferenceEmbeddingInput
+  /** The input data type for the embedding model. Possible values include:
+    * * `SEARCH`
+    * * `INGEST`
+    * * `CLASSIFICATION`
+    * * `CLUSTERING`
+    *
+    * Not all models support all values. Unsupported values will trigger a validation exception.
+    * Accepted values depend on the configured inference service, refer to the relevant service-specific documentation for more info.
+    *
+    * > info
+    * > The `input_type` parameter specified on the root level of the request body will take precedence over the `input_type` parameter specified in `task_settings`. */
+  input_type?: string
+  /** Task settings for the individual inference request. These settings are specific to the <task_type> you specified and override the task settings specified when initializing the service. */
+  task_settings?: InferenceTaskSettings
+}
+
 export interface InferenceRerankedInferenceResult {
   rerank: InferenceRankedDocument[]
 }
@@ -25110,13 +25216,13 @@ export type InferenceSparseVector = Record<string, float>
 
 export type InferenceTaskSettings = any
 
-export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion'
+export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion' | 'embedding'
 
 export type InferenceTaskTypeAi21 = 'completion' | 'chat_completion'
 
 export type InferenceTaskTypeAlibabaCloudAI = 'text_embedding' | 'rerank' | 'completion' | 'sparse_embedding'
 
-export type InferenceTaskTypeAmazonBedrock = 'text_embedding' | 'completion'
+export type InferenceTaskTypeAmazonBedrock = 'chat_completion' | 'completion' | 'text_embedding'
 
 export type InferenceTaskTypeAmazonSageMaker = 'text_embedding' | 'completion' | 'chat_completion' | 'sparse_embedding' | 'rerank'
 
@@ -25146,7 +25252,7 @@ export type InferenceTaskTypeGroq = 'chat_completion'
 
 export type InferenceTaskTypeHuggingFace = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
-export type InferenceTaskTypeJinaAi = 'text_embedding' | 'rerank'
+export type InferenceTaskTypeJinaAi = 'embedding' | 'text_embedding' | 'rerank'
 
 export type InferenceTaskTypeLlama = 'text_embedding' | 'chat_completion' | 'completion'
 
@@ -25162,21 +25268,13 @@ export type InferenceTaskTypeVoyageAI = 'text_embedding' | 'rerank'
 
 export type InferenceTaskTypeWatsonx = 'text_embedding' | 'chat_completion' | 'completion'
 
-export interface InferenceTextEmbeddingByteResult {
-  embedding: InferenceDenseByteVector
-}
-
 interface InferenceTextEmbeddingInferenceResultExclusiveProps {
-  text_embedding_bytes?: InferenceTextEmbeddingByteResult[]
-  text_embedding_bits?: InferenceTextEmbeddingByteResult[]
-  text_embedding?: InferenceTextEmbeddingResult[]
+  text_embedding_bytes?: InferenceDenseEmbeddingByteResult[]
+  text_embedding_bits?: InferenceDenseEmbeddingByteResult[]
+  text_embedding?: InferenceDenseEmbeddingResult[]
 }
 
 export type InferenceTextEmbeddingInferenceResult = ExactlyOne<InferenceTextEmbeddingInferenceResultExclusiveProps>
-
-export interface InferenceTextEmbeddingResult {
-  embedding: InferenceDenseVector
-}
 
 export interface InferenceThinkingConfig {
   /** Indicates the desired thinking budget in tokens. */
@@ -25316,6 +25414,20 @@ export interface InferenceDeleteRequest extends RequestBase {
 
 export type InferenceDeleteResponse = InferenceDeleteInferenceEndpointResult
 
+export interface InferenceEmbeddingRequest extends RequestBase {
+  /** The inference Id */
+  inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  embedding?: InferenceRequestEmbedding
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, embedding?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, embedding?: never }
+}
+
+export type InferenceEmbeddingResponse = InferenceEmbeddingInferenceResult
+
 export interface InferenceGetRequest extends RequestBase {
   /** The task type */
   task_type?: InferenceTaskType
@@ -25347,7 +25459,7 @@ export interface InferenceInferenceRequest extends RequestBase {
     * > info
     * > Inference endpoints for the `completion` task type currently only support a single string as input. */
   input: string | string[]
-  /** Specifies the input data type for the text embedding model. The `input_type` parameter only applies to Inference Endpoints with the `text_embedding` task type. Possible values include:
+  /** Specifies the input data type for the embedding model. The `input_type` parameter only applies to Inference Endpoints with the `embedding` or `text_embedding` task type. Possible values include:
     * * `SEARCH`
     * * `INGEST`
     * * `CLASSIFICATION`
@@ -25439,7 +25551,7 @@ export interface InferencePutAmazonbedrockRequest extends RequestBase {
   timeout?: Duration
   /** The chunking configuration object.
     * Applies only to the `text_embedding` task type.
-    * Not applicable to the `completion` task type. */
+    * Not applicable to the `chat_completion` and `completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `amazonbedrock`. */
   service: InferenceAmazonBedrockServiceType
@@ -25804,7 +25916,7 @@ export interface InferencePutJinaaiRequest extends RequestBase {
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
   /** The chunking configuration object.
-    * Applies only to the `text_embedding` task type.
+    * Applies only to the `embedding` and text_embedding` task types.
     * Not applicable to the `rerank` task type. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `jinaai`. */
@@ -33764,8 +33876,7 @@ export interface ProjectTagsProjectTags {
 }
 
 export interface ProjectTagsRequest extends RequestBase {
-  /** A Lucene query using project metadata tags used to filter which projects are returned in the response, such as _alias:_origin or _alias:*pr*.
-    * @remarks This property is only supported on Elastic Cloud Serverless. */
+  /** A Lucene query using project metadata tags used to filter which projects are returned in the response, such as _alias:_origin or _alias:*pr*. */
   project_routing?: string
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { project_routing?: never }
