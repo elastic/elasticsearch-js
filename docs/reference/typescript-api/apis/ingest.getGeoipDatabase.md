@@ -11,7 +11,7 @@ client.ingest.getGeoipDatabase(this: That, params?: T.IngestGetGeoipDatabaseRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IngestGetGeoipDatabaseRequest` | - |
+| `params?` | [`IngestGetGeoipDatabaseRequest`](../types/IngestGetGeoipDatabaseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

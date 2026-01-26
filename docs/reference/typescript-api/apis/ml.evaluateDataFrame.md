@@ -11,7 +11,7 @@ client.ml.evaluateDataFrame(this: That, params: T.MlEvaluateDataFrameRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlEvaluateDataFrameRequest` | - |
+| `params` | [`MlEvaluateDataFrameRequest`](../types/MlEvaluateDataFrameRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

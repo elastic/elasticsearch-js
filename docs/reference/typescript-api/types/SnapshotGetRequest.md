@@ -42,7 +42,7 @@ Note that the wildcard pattern `*` matches all snapshots created by an SLM polic
 To include snapshots that were not created by an SLM policy, you can use the special pattern `_none` that will match all snapshots without an SLM policy. |
 | `sort?` | [`SnapshotSnapshotSort`](SnapshotSnapshotSort.md) | The sort order for the result.
 The default behavior is sorting by snapshot start time stamp. |
-| `state?` | `SnapshotSnapshotState | SnapshotSnapshotState[]` | Only return snapshots with a state found in the given comma-separated list of snapshot states.
+| `state?` | `SnapshotSnapshotState | SnapshotSnapshotState`[] | Only return snapshots with a state found in the given comma-separated list of snapshot states.
 The default is all snapshot states. |
 | `verbose?` | `boolean` | If `true`, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted.
 

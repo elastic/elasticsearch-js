@@ -11,7 +11,7 @@ client.query_rules.listRulesets(this: That, params?: T.QueryRulesListRulesetsReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.QueryRulesListRulesetsRequest` | - |
+| `params?` | [`QueryRulesListRulesetsRequest`](../types/QueryRulesListRulesetsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

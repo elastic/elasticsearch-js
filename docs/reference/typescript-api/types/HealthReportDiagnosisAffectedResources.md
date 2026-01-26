@@ -8,9 +8,9 @@
 |----------|------|-------------|
 | `indices?` | [`Indices`](Indices.md) | - |
 | `nodes?` | [`HealthReportIndicatorNode`](HealthReportIndicatorNode.md)[] | - |
-| `slm_policies?` | `string[]` | - |
-| `feature_states?` | `string[]` | - |
-| `snapshot_repositories?` | `string[]` | - |
+| `slm_policies?` | `string`[] | - |
+| `feature_states?` | `string`[] | - |
+| `snapshot_repositories?` | `string`[] | - |
 
 ## See Also
 

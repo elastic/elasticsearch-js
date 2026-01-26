@@ -11,7 +11,7 @@ client.security.queryApiKeys(this: That, params?: T.SecurityQueryApiKeysRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityQueryApiKeysRequest` | - |
+| `params?` | [`SecurityQueryApiKeysRequest`](../types/SecurityQueryApiKeysRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

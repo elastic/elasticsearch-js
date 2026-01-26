@@ -11,7 +11,7 @@ client.ilm.moveToStep(this: That, params: T.IlmMoveToStepRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IlmMoveToStepRequest` | - |
+| `params` | [`IlmMoveToStepRequest`](../types/IlmMoveToStepRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

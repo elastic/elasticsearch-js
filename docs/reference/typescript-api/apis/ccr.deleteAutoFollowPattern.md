@@ -11,7 +11,7 @@ client.ccr.deleteAutoFollowPattern(this: That, params: T.CcrDeleteAutoFollowPatt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrDeleteAutoFollowPatternRequest` | - |
+| `params` | [`CcrDeleteAutoFollowPatternRequest`](../types/CcrDeleteAutoFollowPatternRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

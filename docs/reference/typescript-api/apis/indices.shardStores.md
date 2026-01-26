@@ -11,7 +11,7 @@ client.indices.shardStores(this: That, params?: T.IndicesShardStoresRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesShardStoresRequest` | - |
+| `params?` | [`IndicesShardStoresRequest`](../types/IndicesShardStoresRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.inference.putGooglevertexai(this: That, params: T.InferencePutGoogleverte
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutGooglevertexaiRequest` | - |
+| `params` | [`InferencePutGooglevertexaiRequest`](../types/InferencePutGooglevertexaiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

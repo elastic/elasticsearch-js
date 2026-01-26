@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `at` | `string[]` | - |
+| `at` | `string`[] | - |
 | `int` | [`WatcherMonth`](WatcherMonth.md)[] | - |
 | `on` | [`integer`](integer.md)[] | - |
 

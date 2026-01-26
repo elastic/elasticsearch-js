@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `field` | [`Field`](Field.md) | The field to get the date from. |
-| `formats` | `string[]` | An array of the expected date formats.
+| `formats` | `string`[] | An array of the expected date formats.
 Can be a java time pattern or one of the following formats: ISO8601, UNIX, UNIX_MS, or TAI64N. |
 | `locale?` | `string` | The locale to use when parsing the date, relevant when parsing month names or week days.
 Supports template snippets. |

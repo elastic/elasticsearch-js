@@ -11,7 +11,7 @@ client.ml.putTrainedModelDefinitionPart(this: That, params: T.MlPutTrainedModelD
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutTrainedModelDefinitionPartRequest` | - |
+| `params` | [`MlPutTrainedModelDefinitionPartRequest`](../types/MlPutTrainedModelDefinitionPartRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

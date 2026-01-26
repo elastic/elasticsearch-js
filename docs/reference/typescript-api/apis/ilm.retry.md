@@ -11,7 +11,7 @@ client.ilm.retry(this: That, params: T.IlmRetryRequest, options?: TransportReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IlmRetryRequest` | - |
+| `params` | [`IlmRetryRequest`](../types/IlmRetryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

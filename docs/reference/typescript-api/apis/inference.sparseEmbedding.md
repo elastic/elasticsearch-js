@@ -11,7 +11,7 @@ client.inference.sparseEmbedding(this: That, params: T.InferenceSparseEmbeddingR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceSparseEmbeddingRequest` | - |
+| `params` | [`InferenceSparseEmbeddingRequest`](../types/InferenceSparseEmbeddingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

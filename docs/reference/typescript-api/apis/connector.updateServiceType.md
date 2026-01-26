@@ -11,7 +11,7 @@ client.connector.updateServiceType(this: That, params: T.ConnectorUpdateServiceT
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateServiceTypeRequest` | - |
+| `params` | [`ConnectorUpdateServiceTypeRequest`](../types/ConnectorUpdateServiceTypeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.clone(this: That, params: T.IndicesCloneRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesCloneRequest` | - |
+| `params` | [`IndicesCloneRequest`](../types/IndicesCloneRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

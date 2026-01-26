@@ -11,7 +11,7 @@ client.inference.chatCompletionUnified(this: That, params: T.InferenceChatComple
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceChatCompletionUnifiedRequest` | - |
+| `params` | [`InferenceChatCompletionUnifiedRequest`](../types/InferenceChatCompletionUnifiedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

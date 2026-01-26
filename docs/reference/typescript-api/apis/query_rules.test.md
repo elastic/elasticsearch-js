@@ -11,7 +11,7 @@ client.query_rules.test(this: That, params: T.QueryRulesTestRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.QueryRulesTestRequest` | - |
+| `params` | [`QueryRulesTestRequest`](../types/QueryRulesTestRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -16,7 +16,7 @@
 received before the timeout expires, the request fails and returns an error. |
 | `cause?` | `string` | User defined reason for creating or updating the index template |
 | `aliases?` | `Record<IndexName, IndicesAlias>` | Aliases for the index. |
-| `index_patterns?` | `string | string[]` | Array of wildcard expressions used to match the names
+| `index_patterns?` | `string | string`[] | Array of wildcard expressions used to match the names
 of indices during creation. |
 | `mappings?` | [`MappingTypeMapping`](MappingTypeMapping.md) | Mapping for fields in the index. |
 | `order?` | [`integer`](integer.md) | Order in which Elasticsearch applies this template if index

@@ -11,7 +11,7 @@ client.ml.deleteJob(this: That, params: T.MlDeleteJobRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteJobRequest` | - |
+| `params` | [`MlDeleteJobRequest`](../types/MlDeleteJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

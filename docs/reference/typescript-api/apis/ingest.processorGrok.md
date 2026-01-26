@@ -11,7 +11,7 @@ client.ingest.processorGrok(this: That, params?: T.IngestProcessorGrokRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IngestProcessorGrokRequest` | - |
+| `params?` | [`IngestProcessorGrokRequest`](../types/IngestProcessorGrokRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

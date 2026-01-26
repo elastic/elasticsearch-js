@@ -11,7 +11,7 @@ client.ml.clearTrainedModelDeploymentCache(this: That, params: T.MlClearTrainedM
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlClearTrainedModelDeploymentCacheRequest` | - |
+| `params` | [`MlClearTrainedModelDeploymentCacheRequest`](../types/MlClearTrainedModelDeploymentCacheRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

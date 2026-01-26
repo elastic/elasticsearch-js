@@ -11,7 +11,7 @@ client.ml.getOverallBuckets(this: That, params: T.MlGetOverallBucketsRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetOverallBucketsRequest` | - |
+| `params` | [`MlGetOverallBucketsRequest`](../types/MlGetOverallBucketsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

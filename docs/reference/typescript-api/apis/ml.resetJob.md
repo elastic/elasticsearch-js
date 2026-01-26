@@ -11,7 +11,7 @@ client.ml.resetJob(this: That, params: T.MlResetJobRequest, options?: TransportR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlResetJobRequest` | - |
+| `params` | [`MlResetJobRequest`](../types/MlResetJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

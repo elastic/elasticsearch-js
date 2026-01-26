@@ -11,7 +11,7 @@ client.ml.openJob(this: That, params: T.MlOpenJobRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlOpenJobRequest` | - |
+| `params` | [`MlOpenJobRequest`](../types/MlOpenJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.simulate.ingest(this: That, params: T.SimulateIngestRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SimulateIngestRequest` | - |
+| `params` | [`SimulateIngestRequest`](../types/SimulateIngestRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

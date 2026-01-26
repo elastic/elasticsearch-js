@@ -9,8 +9,8 @@
 | `compress?` | `boolean` | - |
 | `compress_threshold?` | `string` | - |
 | `enabled?` | `boolean` | - |
-| `excludes?` | `string[]` | - |
-| `includes?` | `string[]` | - |
+| `excludes?` | `string`[] | - |
+| `includes?` | `string`[] | - |
 | `mode?` | [`MappingSourceFieldMode`](MappingSourceFieldMode.md) | - |
 
 ## See Also

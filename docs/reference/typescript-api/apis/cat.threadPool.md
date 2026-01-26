@@ -11,7 +11,7 @@ client.cat.threadPool(this: That, params?: T.CatThreadPoolRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatThreadPoolRequest` | - |
+| `params?` | [`CatThreadPoolRequest`](../types/CatThreadPoolRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

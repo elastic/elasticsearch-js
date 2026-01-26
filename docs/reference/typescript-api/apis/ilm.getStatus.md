@@ -11,7 +11,7 @@ client.ilm.getStatus(this: That, params?: T.IlmGetStatusRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IlmGetStatusRequest` | - |
+| `params?` | [`IlmGetStatusRequest`](../types/IlmGetStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

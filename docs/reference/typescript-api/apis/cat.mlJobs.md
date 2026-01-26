@@ -11,7 +11,7 @@ client.cat.mlJobs(this: That, params?: T.CatMlJobsRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatMlJobsRequest` | - |
+| `params?` | [`CatMlJobsRequest`](../types/CatMlJobsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

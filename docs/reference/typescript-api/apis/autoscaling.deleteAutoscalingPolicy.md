@@ -11,7 +11,7 @@ client.autoscaling.deleteAutoscalingPolicy(this: That, params: T.AutoscalingDele
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.AutoscalingDeleteAutoscalingPolicyRequest` | - |
+| `params` | [`AutoscalingDeleteAutoscalingPolicyRequest`](../types/AutoscalingDeleteAutoscalingPolicyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

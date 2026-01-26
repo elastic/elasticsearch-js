@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `index?` | [`IndicesIndexSettings`](IndicesIndexSettings.md) | - |
 | `mode?` | `string` | - |
-| `routing_path?` | `string | string[]` | - |
+| `routing_path?` | `string | string`[] | - |
 | `soft_deletes?` | [`IndicesSoftDeletes`](IndicesSoftDeletes.md) | - |
 | `sort?` | [`IndicesIndexSegmentSort`](IndicesIndexSegmentSort.md) | - |
 | `number_of_shards?` | `integer | string` | - |

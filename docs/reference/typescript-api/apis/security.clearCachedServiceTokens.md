@@ -11,7 +11,7 @@ client.security.clearCachedServiceTokens(this: That, params: T.SecurityClearCach
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityClearCachedServiceTokensRequest` | - |
+| `params` | [`SecurityClearCachedServiceTokensRequest`](../types/SecurityClearCachedServiceTokensRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

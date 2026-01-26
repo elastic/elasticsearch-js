@@ -11,7 +11,7 @@ client.close_point_in_time(this: That, params: T.ClosePointInTimeRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ClosePointInTimeRequest` | - |
+| `params` | [`ClosePointInTimeRequest`](../types/ClosePointInTimeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

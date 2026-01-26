@@ -11,7 +11,7 @@ client.cat.pendingTasks(this: That, params?: T.CatPendingTasksRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatPendingTasksRequest` | - |
+| `params?` | [`CatPendingTasksRequest`](../types/CatPendingTasksRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

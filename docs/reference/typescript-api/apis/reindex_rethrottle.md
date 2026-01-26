@@ -11,7 +11,7 @@ client.reindex_rethrottle(this: That, params: T.ReindexRethrottleRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ReindexRethrottleRequest` | - |
+| `params` | [`ReindexRethrottleRequest`](../types/ReindexRethrottleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

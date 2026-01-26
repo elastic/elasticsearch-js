@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `bound_address` | `string[]` | - |
+| `bound_address` | `string`[] | - |
 | `publish_address` | `string` | - |
 | `profiles` | `Record<string, string>` | - |
 

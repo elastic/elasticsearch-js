@@ -11,7 +11,7 @@ client.indices.dataStreamsStats(this: That, params?: T.IndicesDataStreamsStatsRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesDataStreamsStatsRequest` | - |
+| `params?` | [`IndicesDataStreamsStatsRequest`](../types/IndicesDataStreamsStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

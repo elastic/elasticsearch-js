@@ -11,7 +11,7 @@ client.slm.executeRetention(this: That, params?: T.SlmExecuteRetentionRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SlmExecuteRetentionRequest` | - |
+| `params?` | [`SlmExecuteRetentionRequest`](../types/SlmExecuteRetentionRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -14,7 +14,7 @@ It does not necessarily mean that the remote cluster is down or unavailable, jus
 | `num_nodes_connected` | [`long`](long.md) | The number of connected nodes in the remote cluster when sniff mode is configured. |
 | `initial_connect_timeout` | [`Duration`](Duration.md) | The initial connect timeout for remote cluster connections. |
 | `skip_unavailable` | `boolean` | If `true`, cross-cluster search skips the remote cluster when its nodes are unavailable during the search and ignores errors returned by the remote cluster. |
-| `seeds` | `string[]` | The initial seed transport addresses of the remote cluster when sniff mode is configured. |
+| `seeds` | `string`[] | The initial seed transport addresses of the remote cluster when sniff mode is configured. |
 
 ## See Also
 

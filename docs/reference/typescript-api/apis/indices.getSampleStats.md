@@ -11,7 +11,7 @@ client.indices.getSampleStats(this: That, params: T.IndicesGetSampleStatsRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetSampleStatsRequest` | - |
+| `params` | [`IndicesGetSampleStatsRequest`](../types/IndicesGetSampleStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

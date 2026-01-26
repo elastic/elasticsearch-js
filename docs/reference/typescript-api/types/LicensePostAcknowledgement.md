@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `license` | `string[]` | - |
+| `license` | `string`[] | - |
 | `message` | `string` | - |
 
 ## See Also

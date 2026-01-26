@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `index` | `string` | - |
-| `reloaded_analyzers` | `string[]` | - |
-| `reloaded_node_ids` | `string[]` | - |
+| `reloaded_analyzers` | `string`[] | - |
+| `reloaded_node_ids` | `string`[] | - |
 
 ## See Also
 

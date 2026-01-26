@@ -16,7 +16,7 @@
 | `nbest_cost?` | [`integer`](integer.md) | - |
 | `nbest_examples?` | `string` | - |
 | `user_dictionary?` | `string` | - |
-| `user_dictionary_rules?` | `string[]` | - |
+| `user_dictionary_rules?` | `string`[] | - |
 | `discard_compound_token?` | `boolean` | - |
 
 ## See Also

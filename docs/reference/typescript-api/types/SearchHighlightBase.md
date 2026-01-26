@@ -40,9 +40,9 @@ Each highlighter applies its own logic to compute relevancy scores. |
 Prevents the `fvh` highlighter from analyzing too many phrases and consuming too much memory.
 When using `matched_fields`, `phrase_limit` phrases per matched field are considered. Raising the limit increases query time and consumes more memory.
 Only supported by the `fvh` highlighter. |
-| `post_tags?` | `string[]` | Use in conjunction with `pre_tags` to define the HTML tags to use for the highlighted text.
+| `post_tags?` | `string`[] | Use in conjunction with `pre_tags` to define the HTML tags to use for the highlighted text.
 By default, highlighted text is wrapped in `<em>` and `</em>` tags. |
-| `pre_tags?` | `string[]` | Use in conjunction with `post_tags` to define the HTML tags to use for the highlighted text.
+| `pre_tags?` | `string`[] | Use in conjunction with `post_tags` to define the HTML tags to use for the highlighted text.
 By default, highlighted text is wrapped in `<em>` and `</em>` tags. |
 | `require_field_match?` | `boolean` | By default, only fields that contains a query match are highlighted.
 Set to `false` to highlight all fields. |

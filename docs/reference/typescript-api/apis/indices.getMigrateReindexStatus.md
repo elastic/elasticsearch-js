@@ -11,7 +11,7 @@ client.indices.getMigrateReindexStatus(this: That, params: T.IndicesGetMigrateRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetMigrateReindexStatusRequest` | - |
+| `params` | [`IndicesGetMigrateReindexStatusRequest`](../types/IndicesGetMigrateReindexStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

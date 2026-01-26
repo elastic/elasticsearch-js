@@ -11,7 +11,7 @@ client.ilm.putLifecycle(this: That, params: T.IlmPutLifecycleRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IlmPutLifecycleRequest` | - |
+| `params` | [`IlmPutLifecycleRequest`](../types/IlmPutLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.security.clearCachedRealms(this: That, params: T.SecurityClearCachedRealm
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityClearCachedRealmsRequest` | - |
+| `params` | [`SecurityClearCachedRealmsRequest`](../types/SecurityClearCachedRealmsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

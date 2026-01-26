@@ -11,7 +11,7 @@ client.ingest.putPipeline(this: That, params: T.IngestPutPipelineRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IngestPutPipelineRequest` | - |
+| `params` | [`IngestPutPipelineRequest`](../types/IngestPutPipelineRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

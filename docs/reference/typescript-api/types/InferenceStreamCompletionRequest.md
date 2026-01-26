@@ -12,7 +12,7 @@
 |----------|------|-------------|
 | `inference_id` | [`Id`](Id.md) | The unique identifier for the inference endpoint. |
 | `timeout?` | [`Duration`](Duration.md) | The amount of time to wait for the inference request to complete. |
-| `input` | `string | string[]` | The text on which you want to perform the inference task.
+| `input` | `string | string`[] | The text on which you want to perform the inference task.
 It can be a single string or an array.
 
 NOTE: Inference endpoints for the completion task type currently only support a single string as input. |

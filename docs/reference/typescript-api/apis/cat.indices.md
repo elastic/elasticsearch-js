@@ -11,7 +11,7 @@ client.cat.indices(this: That, params?: T.CatIndicesRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatIndicesRequest` | - |
+| `params?` | [`CatIndicesRequest`](../types/CatIndicesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

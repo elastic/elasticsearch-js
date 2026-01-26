@@ -11,7 +11,7 @@ client.watcher.queryWatches(this: That, params?: T.WatcherQueryWatchesRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.WatcherQueryWatchesRequest` | - |
+| `params?` | [`WatcherQueryWatchesRequest`](../types/WatcherQueryWatchesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

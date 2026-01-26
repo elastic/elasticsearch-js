@@ -11,7 +11,7 @@ client.security.enableUser(this: That, params: T.SecurityEnableUserRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityEnableUserRequest` | - |
+| `params` | [`SecurityEnableUserRequest`](../types/SecurityEnableUserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.updateAliases(this: That, params?: T.IndicesUpdateAliasesRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesUpdateAliasesRequest` | - |
+| `params?` | [`IndicesUpdateAliasesRequest`](../types/IndicesUpdateAliasesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

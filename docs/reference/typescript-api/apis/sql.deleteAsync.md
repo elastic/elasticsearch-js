@@ -11,7 +11,7 @@ client.sql.deleteAsync(this: That, params: T.SqlDeleteAsyncRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SqlDeleteAsyncRequest` | - |
+| `params` | [`SqlDeleteAsyncRequest`](../types/SqlDeleteAsyncRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

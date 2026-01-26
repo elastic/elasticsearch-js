@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `retriever` | [`RetrieverContainer`](RetrieverContainer.md) | Inner retriever. |
-| `ids?` | `string[]` | - |
+| `ids?` | `string`[] | - |
 | `docs?` | [`SpecifiedDocument`](SpecifiedDocument.md)[] | - |
 | `rank_window_size?` | [`integer`](integer.md) | - |
 

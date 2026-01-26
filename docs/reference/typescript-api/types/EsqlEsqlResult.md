@@ -10,7 +10,7 @@
 | `is_partial?` | `boolean` | - |
 | `all_columns?` | [`EsqlEsqlColumnInfo`](EsqlEsqlColumnInfo.md)[] | - |
 | `columns` | [`EsqlEsqlColumnInfo`](EsqlEsqlColumnInfo.md)[] | - |
-| `values` | `FieldValue[][]` | - |
+| `values` | [`FieldValue`](FieldValue.md)[][] | - |
 | `_clusters?` | [`EsqlEsqlClusterInfo`](EsqlEsqlClusterInfo.md) | Cross-cluster search information. Present if `include_ccs_metadata` was `true` in the request
 and a cross-cluster search was performed. |
 | `profile?` | `any` | Profiling information. Present if `profile` was `true` in the request.

@@ -11,7 +11,7 @@ client.ml.deleteForecast(this: That, params: T.MlDeleteForecastRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteForecastRequest` | - |
+| `params` | [`MlDeleteForecastRequest`](../types/MlDeleteForecastRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

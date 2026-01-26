@@ -11,7 +11,7 @@ client.security.updateUserProfileData(this: That, params: T.SecurityUpdateUserPr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityUpdateUserProfileDataRequest` | - |
+| `params` | [`SecurityUpdateUserProfileDataRequest`](../types/SecurityUpdateUserProfileDataRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

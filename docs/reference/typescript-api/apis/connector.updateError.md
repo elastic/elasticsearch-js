@@ -11,7 +11,7 @@ client.connector.updateError(this: That, params: T.ConnectorUpdateErrorRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateErrorRequest` | - |
+| `params` | [`ConnectorUpdateErrorRequest`](../types/ConnectorUpdateErrorRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

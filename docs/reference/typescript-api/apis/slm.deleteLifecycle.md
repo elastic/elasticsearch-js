@@ -11,7 +11,7 @@ client.slm.deleteLifecycle(this: That, params: T.SlmDeleteLifecycleRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SlmDeleteLifecycleRequest` | - |
+| `params` | [`SlmDeleteLifecycleRequest`](../types/SlmDeleteLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.explain(this: That, params: T.ExplainRequest, options?: TransportRequestO
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ExplainRequest` | - |
+| `params` | [`ExplainRequest`](../types/ExplainRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

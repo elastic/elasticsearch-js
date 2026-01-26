@@ -11,7 +11,7 @@ client.transform.setUpgradeMode(this: That, params?: T.TransformSetUpgradeModeRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.TransformSetUpgradeModeRequest` | - |
+| `params?` | [`TransformSetUpgradeModeRequest`](../types/TransformSetUpgradeModeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

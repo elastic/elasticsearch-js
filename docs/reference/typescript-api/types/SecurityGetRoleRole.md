@@ -12,7 +12,7 @@
 | `remote_cluster?` | [`SecurityRemoteClusterPrivileges`](SecurityRemoteClusterPrivileges.md)[] | - |
 | `metadata` | [`Metadata`](Metadata.md) | - |
 | `description?` | `string` | - |
-| `run_as?` | `string[]` | - |
+| `run_as?` | `string`[] | - |
 | `transient_metadata?` | `Record<string, any>` | - |
 | `applications` | [`SecurityApplicationPrivileges`](SecurityApplicationPrivileges.md)[] | - |
 | `role_templates?` | [`SecurityRoleTemplate`](SecurityRoleTemplate.md)[] | - |

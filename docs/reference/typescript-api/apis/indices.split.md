@@ -11,7 +11,7 @@ client.indices.split(this: That, params: T.IndicesSplitRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesSplitRequest` | - |
+| `params` | [`IndicesSplitRequest`](../types/IndicesSplitRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

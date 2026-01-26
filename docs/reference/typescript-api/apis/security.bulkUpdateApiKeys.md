@@ -11,7 +11,7 @@ client.security.bulkUpdateApiKeys(this: That, params: T.SecurityBulkUpdateApiKey
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityBulkUpdateApiKeysRequest` | - |
+| `params` | [`SecurityBulkUpdateApiKeysRequest`](../types/SecurityBulkUpdateApiKeysRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.sql.clearCursor(this: That, params: T.SqlClearCursorRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SqlClearCursorRequest` | - |
+| `params` | [`SqlClearCursorRequest`](../types/SqlClearCursorRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

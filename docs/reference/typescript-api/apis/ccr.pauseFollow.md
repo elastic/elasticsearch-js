@@ -11,7 +11,7 @@ client.ccr.pauseFollow(this: That, params: T.CcrPauseFollowRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrPauseFollowRequest` | - |
+| `params` | [`CcrPauseFollowRequest`](../types/CcrPauseFollowRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

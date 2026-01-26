@@ -11,7 +11,7 @@ client.inference.putGoogleaistudio(this: That, params: T.InferencePutGoogleaistu
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutGoogleaistudioRequest` | - |
+| `params` | [`InferencePutGoogleaistudioRequest`](../types/InferencePutGoogleaistudioRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

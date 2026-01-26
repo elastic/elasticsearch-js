@@ -11,7 +11,7 @@ client.security.authenticate(this: That, params?: T.SecurityAuthenticateRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityAuthenticateRequest` | - |
+| `params?` | [`SecurityAuthenticateRequest`](../types/SecurityAuthenticateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

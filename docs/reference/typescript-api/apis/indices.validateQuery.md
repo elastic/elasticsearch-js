@@ -11,7 +11,7 @@ client.indices.validateQuery(this: That, params?: T.IndicesValidateQueryRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesValidateQueryRequest` | - |
+| `params?` | [`IndicesValidateQueryRequest`](../types/IndicesValidateQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

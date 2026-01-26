@@ -11,7 +11,7 @@ client.cat.mlDataFrameAnalytics(this: That, params?: T.CatMlDataFrameAnalyticsRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatMlDataFrameAnalyticsRequest` | - |
+| `params?` | [`CatMlDataFrameAnalyticsRequest`](../types/CatMlDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `ids` | [`Id`](Id.md)[] | - |
-| `messages` | `string[]` | - |
+| `messages` | `string`[] | - |
 
 ## See Also
 

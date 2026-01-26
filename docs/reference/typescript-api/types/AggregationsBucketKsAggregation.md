@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `alternative?` | `string[]` | A list of string values indicating which K-S test alternative to calculate. The valid values
+| `alternative?` | `string`[] | A list of string values indicating which K-S test alternative to calculate. The valid values
 are: "greater", "less", "two_sided". This parameter is key for determining the K-S statistic used
 when calculating the K-S test. Default value is all possible alternative hypotheses. |
 | `fractions?` | [`double`](double.md)[] | A list of doubles indicating the distribution of the samples with which to compare to the `buckets_path` results.

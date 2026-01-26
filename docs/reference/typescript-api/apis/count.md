@@ -11,7 +11,7 @@ client.count(this: That, params?: T.CountRequest, options?: TransportRequestOpti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CountRequest` | - |
+| `params?` | [`CountRequest`](../types/CountRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

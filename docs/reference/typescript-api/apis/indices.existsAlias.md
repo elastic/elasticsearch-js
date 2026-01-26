@@ -11,7 +11,7 @@ client.indices.existsAlias(this: That, params: T.IndicesExistsAliasRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesExistsAliasRequest` | - |
+| `params` | [`IndicesExistsAliasRequest`](../types/IndicesExistsAliasRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

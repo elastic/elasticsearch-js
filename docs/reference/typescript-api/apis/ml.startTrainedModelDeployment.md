@@ -11,7 +11,7 @@ client.ml.startTrainedModelDeployment(this: That, params: T.MlStartTrainedModelD
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlStartTrainedModelDeploymentRequest` | - |
+| `params` | [`MlStartTrainedModelDeploymentRequest`](../types/MlStartTrainedModelDeploymentRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

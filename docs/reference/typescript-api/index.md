@@ -4,11 +4,10 @@ Complete TypeScript API reference for the Elasticsearch JavaScript client.
 
 ## Navigation
 
-- [Client](./client.md)
-- [API Methods](#api-methods)
-- [Type Definitions](./types/)
-- [Helpers](./helpers.md)
-- [Transport](./transport.md)
+- [Client](./client.md) - Client class and constructor options
+- [Helpers](./helpers.md) - Helper utilities
+- [Transport](./transport.md) - Transport layer
+- [Type Definitions](./types/) - TypeScript types
 
 ## API Methods
 

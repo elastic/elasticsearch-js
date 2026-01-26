@@ -11,7 +11,7 @@ client.capabilities(this: That, params?: T.CapabilitiesRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CapabilitiesRequest` | - |
+| `params?` | [`CapabilitiesRequest`](../types/CapabilitiesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

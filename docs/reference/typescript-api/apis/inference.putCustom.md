@@ -11,7 +11,7 @@ client.inference.putCustom(this: That, params: T.InferencePutCustomRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutCustomRequest` | - |
+| `params` | [`InferencePutCustomRequest`](../types/InferencePutCustomRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

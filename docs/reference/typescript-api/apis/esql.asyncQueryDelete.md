@@ -11,7 +11,7 @@ client.esql.asyncQueryDelete(this: That, params: T.EsqlAsyncQueryDeleteRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EsqlAsyncQueryDeleteRequest` | - |
+| `params` | [`EsqlAsyncQueryDeleteRequest`](../types/EsqlAsyncQueryDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

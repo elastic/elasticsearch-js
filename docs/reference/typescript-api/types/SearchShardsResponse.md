@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `nodes` | `Record<NodeId, SearchShardsSearchShardsNodeAttributes>` | - |
-| `shards` | `NodeShard[][]` | - |
+| `shards` | [`NodeShard`](NodeShard.md)[][] | - |
 | `indices` | `Record<IndexName, SearchShardsShardStoreIndex>` | - |
 
 ## See Also

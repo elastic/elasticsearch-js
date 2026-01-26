@@ -11,7 +11,7 @@ client.security.queryUser(this: That, params?: T.SecurityQueryUserRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityQueryUserRequest` | - |
+| `params?` | [`SecurityQueryUserRequest`](../types/SecurityQueryUserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

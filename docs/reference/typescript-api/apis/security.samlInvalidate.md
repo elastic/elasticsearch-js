@@ -11,7 +11,7 @@ client.security.samlInvalidate(this: That, params: T.SecuritySamlInvalidateReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecuritySamlInvalidateRequest` | - |
+| `params` | [`SecuritySamlInvalidateRequest`](../types/SecuritySamlInvalidateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

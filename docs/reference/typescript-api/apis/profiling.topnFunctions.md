@@ -11,7 +11,7 @@ client.profiling.topnFunctions(this: That, params: T.ProfilingTopnFunctionsReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ProfilingTopnFunctionsRequest` | - |
+| `params` | [`ProfilingTopnFunctionsRequest`](../types/ProfilingTopnFunctionsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

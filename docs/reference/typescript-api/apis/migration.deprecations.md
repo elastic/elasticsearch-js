@@ -11,7 +11,7 @@ client.migration.deprecations(this: That, params?: T.MigrationDeprecationsReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MigrationDeprecationsRequest` | - |
+| `params?` | [`MigrationDeprecationsRequest`](../types/MigrationDeprecationsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

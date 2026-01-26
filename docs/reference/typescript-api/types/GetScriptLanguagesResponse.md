@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `language_contexts` | [`GetScriptLanguagesLanguageContext`](GetScriptLanguagesLanguageContext.md)[] | - |
-| `types_allowed` | `string[]` | - |
+| `types_allowed` | `string`[] | - |
 
 ## See Also
 

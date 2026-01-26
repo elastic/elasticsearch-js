@@ -24,7 +24,7 @@ behavior is also affected by the cluster-wide
 | `analysis` | [`MlDataframeAnalysisContainer`](MlDataframeAnalysisContainer.md) | The analysis configuration, which contains the information necessary to
 perform one of the following types of analysis: classification, outlier
 detection, or regression. |
-| `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string[]` | Specifies `includes` and/or `excludes` patterns to select which fields
+| `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string`[] | Specifies `includes` and/or `excludes` patterns to select which fields
 will be included in the analysis. The patterns specified in `excludes`
 are applied last, therefore `excludes` takes precedence. In other words,
 if the same field is specified in both `includes` and `excludes`, then

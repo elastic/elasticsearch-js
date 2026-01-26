@@ -15,7 +15,7 @@
 | `timeout?` | [`Duration`](Duration.md) | The amount of time to wait for the inference request to complete. |
 | `query?` | `string` | The query input, which is required only for the `rerank` task.
 It is not required for other tasks. |
-| `input` | `string | string[]` | The text on which you want to perform the inference task.
+| `input` | `string | string`[] | The text on which you want to perform the inference task.
 It can be a single string or an array.
 
 > info

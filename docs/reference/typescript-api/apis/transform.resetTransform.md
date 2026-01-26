@@ -11,7 +11,7 @@ client.transform.resetTransform(this: That, params: T.TransformResetTransformReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformResetTransformRequest` | - |
+| `params` | [`TransformResetTransformRequest`](../types/TransformResetTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

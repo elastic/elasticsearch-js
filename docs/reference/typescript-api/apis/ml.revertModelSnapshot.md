@@ -11,7 +11,7 @@ client.ml.revertModelSnapshot(this: That, params: T.MlRevertModelSnapshotRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlRevertModelSnapshotRequest` | - |
+| `params` | [`MlRevertModelSnapshotRequest`](../types/MlRevertModelSnapshotRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

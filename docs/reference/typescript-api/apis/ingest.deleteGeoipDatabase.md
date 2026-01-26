@@ -11,7 +11,7 @@ client.ingest.deleteGeoipDatabase(this: That, params: T.IngestDeleteGeoipDatabas
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IngestDeleteGeoipDatabaseRequest` | - |
+| `params` | [`IngestDeleteGeoipDatabaseRequest`](../types/IngestDeleteGeoipDatabaseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.nodes.hotThreads(this: That, params?: T.NodesHotThreadsRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.NodesHotThreadsRequest` | - |
+| `params?` | [`NodesHotThreadsRequest`](../types/NodesHotThreadsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

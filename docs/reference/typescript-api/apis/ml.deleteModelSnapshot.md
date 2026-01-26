@@ -11,7 +11,7 @@ client.ml.deleteModelSnapshot(this: That, params: T.MlDeleteModelSnapshotRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteModelSnapshotRequest` | - |
+| `params` | [`MlDeleteModelSnapshotRequest`](../types/MlDeleteModelSnapshotRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

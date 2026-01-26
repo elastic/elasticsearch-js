@@ -11,7 +11,7 @@ client.cat.snapshots(this: That, params?: T.CatSnapshotsRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatSnapshotsRequest` | - |
+| `params?` | [`CatSnapshotsRequest`](../types/CatSnapshotsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

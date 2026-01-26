@@ -11,7 +11,7 @@ client.indices.promoteDataStream(this: That, params: T.IndicesPromoteDataStreamR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesPromoteDataStreamRequest` | - |
+| `params` | [`IndicesPromoteDataStreamRequest`](../types/IndicesPromoteDataStreamRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

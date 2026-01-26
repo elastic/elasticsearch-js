@@ -11,7 +11,7 @@ client.eql.search(this: That, params: T.EqlSearchRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EqlSearchRequest` | - |
+| `params` | [`EqlSearchRequest`](../types/EqlSearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

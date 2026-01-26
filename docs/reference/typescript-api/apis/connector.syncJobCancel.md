@@ -11,7 +11,7 @@ client.connector.syncJobCancel(this: That, params: T.ConnectorSyncJobCancelReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobCancelRequest` | - |
+| `params` | [`ConnectorSyncJobCancelRequest`](../types/ConnectorSyncJobCancelRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

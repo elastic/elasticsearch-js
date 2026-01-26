@@ -11,7 +11,7 @@ client.update_by_query_rethrottle(this: That, params: T.UpdateByQueryRethrottleR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.UpdateByQueryRethrottleRequest` | - |
+| `params` | [`UpdateByQueryRethrottleRequest`](../types/UpdateByQueryRethrottleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

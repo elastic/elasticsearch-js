@@ -11,7 +11,7 @@ client.indices.createDataStream(this: That, params: T.IndicesCreateDataStreamReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesCreateDataStreamRequest` | - |
+| `params` | [`IndicesCreateDataStreamRequest`](../types/IndicesCreateDataStreamRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.inference.putAlibabacloud(this: That, params: T.InferencePutAlibabacloudR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAlibabacloudRequest` | - |
+| `params` | [`InferencePutAlibabacloudRequest`](../types/InferencePutAlibabacloudRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

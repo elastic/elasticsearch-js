@@ -11,7 +11,7 @@ client.ml.getRecords(this: That, params: T.MlGetRecordsRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetRecordsRequest` | - |
+| `params` | [`MlGetRecordsRequest`](../types/MlGetRecordsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

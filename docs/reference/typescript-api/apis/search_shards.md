@@ -11,7 +11,7 @@ client.search_shards(this: That, params?: T.SearchShardsRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SearchShardsRequest` | - |
+| `params?` | [`SearchShardsRequest`](../types/SearchShardsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

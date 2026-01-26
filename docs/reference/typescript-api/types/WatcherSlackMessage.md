@@ -11,7 +11,7 @@
 | `from` | `string` | - |
 | `icon?` | `string` | - |
 | `text` | `string` | - |
-| `to` | `string[]` | - |
+| `to` | `string`[] | - |
 
 ## See Also
 

@@ -27,7 +27,7 @@
 | `string_hashing_collectors_used?` | [`integer`](integer.md) | - |
 | `numeric_collectors_used?` | [`integer`](integer.md) | - |
 | `empty_collectors_used?` | [`integer`](integer.md) | - |
-| `deferred_aggregators?` | `string[]` | - |
+| `deferred_aggregators?` | `string`[] | - |
 | `segments_with_doc_count_field?` | [`integer`](integer.md) | - |
 | `segments_with_deleted_docs?` | [`integer`](integer.md) | - |
 | `filters?` | [`SearchAggregationProfileDelegateDebugFilter`](SearchAggregationProfileDelegateDebugFilter.md)[] | - |

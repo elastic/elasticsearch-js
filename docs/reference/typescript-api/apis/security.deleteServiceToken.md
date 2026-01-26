@@ -11,7 +11,7 @@ client.security.deleteServiceToken(this: That, params: T.SecurityDeleteServiceTo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDeleteServiceTokenRequest` | - |
+| `params` | [`SecurityDeleteServiceTokenRequest`](../types/SecurityDeleteServiceTokenRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

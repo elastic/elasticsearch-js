@@ -11,7 +11,7 @@ client.security.getApiKey(this: That, params?: T.SecurityGetApiKeyRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetApiKeyRequest` | - |
+| `params?` | [`SecurityGetApiKeyRequest`](../types/SecurityGetApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

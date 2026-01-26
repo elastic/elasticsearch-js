@@ -13,7 +13,7 @@
 | `num_candidates?` | [`integer`](integer.md) | The number of nearest neighbor candidates to consider per shard |
 | `visit_percentage?` | [`float`](float.md) | The percentage of vectors to explore per shard while doing knn search with bbq_disk |
 | `boost?` | [`float`](float.md) | Boost value to apply to kNN scores |
-| `filter?` | `QueryDslQueryContainer | QueryDslQueryContainer[]` | Filters for the kNN search query |
+| `filter?` | `QueryDslQueryContainer | QueryDslQueryContainer`[] | Filters for the kNN search query |
 | `similarity?` | [`float`](float.md) | The minimum similarity for a vector to be considered a match |
 | `inner_hits?` | [`SearchInnerHits`](SearchInnerHits.md) | If defined, each search hit will contain inner hits. |
 | `rescore_vector?` | [`RescoreVector`](RescoreVector.md) | Apply oversampling and rescoring to quantized vectors |

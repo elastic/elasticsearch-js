@@ -11,7 +11,7 @@ client.ml.getDatafeedStats(this: That, params?: T.MlGetDatafeedStatsRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetDatafeedStatsRequest` | - |
+| `params?` | [`MlGetDatafeedStatsRequest`](../types/MlGetDatafeedStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

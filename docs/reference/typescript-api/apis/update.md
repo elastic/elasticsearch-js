@@ -11,7 +11,7 @@ client.update(this: That, params: T.UpdateRequest<TDocument, TPartialDocument>, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.UpdateRequest<TDocument, TPartialDocument>` | - |
+| `params` | [`UpdateRequest`](../types/UpdateRequest.md)<TDocument, TPartialDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

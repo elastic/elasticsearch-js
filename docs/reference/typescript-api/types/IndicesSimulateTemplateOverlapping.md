@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | [`Name`](Name.md) | - |
-| `index_patterns` | `string[]` | - |
+| `index_patterns` | `string`[] | - |
 
 ## See Also
 

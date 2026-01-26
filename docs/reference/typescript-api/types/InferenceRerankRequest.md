@@ -13,7 +13,7 @@
 | `inference_id` | [`Id`](Id.md) | The unique identifier for the inference endpoint. |
 | `timeout?` | [`Duration`](Duration.md) | The amount of time to wait for the inference request to complete. |
 | `query` | `string` | Query input. |
-| `input` | `string[]` | The documents to rank. |
+| `input` | `string`[] | The documents to rank. |
 | `return_documents?` | `boolean` | Include the document text in the response. |
 | `top_n?` | [`integer`](integer.md) | Limit the response to the top N documents. |
 | `task_settings?` | [`InferenceTaskSettings`](InferenceTaskSettings.md) | Task settings for the individual inference request.

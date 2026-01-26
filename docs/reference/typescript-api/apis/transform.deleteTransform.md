@@ -11,7 +11,7 @@ client.transform.deleteTransform(this: That, params: T.TransformDeleteTransformR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformDeleteTransformRequest` | - |
+| `params` | [`TransformDeleteTransformRequest`](../types/TransformDeleteTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

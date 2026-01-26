@@ -11,7 +11,7 @@ client.search_template(this: That, params?: T.SearchTemplateRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SearchTemplateRequest` | - |
+| `params?` | [`SearchTemplateRequest`](../types/SearchTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

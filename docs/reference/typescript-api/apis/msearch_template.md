@@ -11,7 +11,7 @@ client.msearch_template(this: That, params: T.MsearchTemplateRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MsearchTemplateRequest` | - |
+| `params` | [`MsearchTemplateRequest`](../types/MsearchTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `condition` | [`WatcherConditionContainer`](WatcherConditionContainer.md) | - |
 | `input` | [`WatcherInputContainer`](WatcherInputContainer.md) | - |
-| `messages` | `string[]` | - |
+| `messages` | `string`[] | - |
 | `metadata?` | [`Metadata`](Metadata.md) | - |
 | `node` | `string` | - |
 | `result` | [`WatcherExecutionResult`](WatcherExecutionResult.md) | - |

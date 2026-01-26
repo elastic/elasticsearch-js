@@ -11,7 +11,7 @@ client.ml.postCalendarEvents(this: That, params: T.MlPostCalendarEventsRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPostCalendarEventsRequest` | - |
+| `params` | [`MlPostCalendarEventsRequest`](../types/MlPostCalendarEventsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

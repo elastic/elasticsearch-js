@@ -11,7 +11,7 @@ client.profiling.status(this: That, params?: T.ProfilingStatusRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ProfilingStatusRequest` | - |
+| `params?` | [`ProfilingStatusRequest`](../types/ProfilingStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

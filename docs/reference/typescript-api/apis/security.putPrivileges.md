@@ -11,7 +11,7 @@ client.security.putPrivileges(this: That, params: T.SecurityPutPrivilegesRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityPutPrivilegesRequest` | - |
+| `params` | [`SecurityPutPrivilegesRequest`](../types/SecurityPutPrivilegesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

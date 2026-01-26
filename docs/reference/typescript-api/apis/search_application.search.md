@@ -11,7 +11,7 @@ client.search_application.search(this: That, params: T.SearchApplicationSearchRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationSearchRequest` | - |
+| `params` | [`SearchApplicationSearchRequest`](../types/SearchApplicationSearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.delete(this: That, params: T.DeleteRequest, options?: TransportRequestOpt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.DeleteRequest` | - |
+| `params` | [`DeleteRequest`](../types/DeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

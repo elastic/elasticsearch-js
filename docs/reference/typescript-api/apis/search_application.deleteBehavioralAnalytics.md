@@ -11,7 +11,7 @@ client.search_application.deleteBehavioralAnalytics(this: That, params: T.Search
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationDeleteBehavioralAnalyticsRequest` | - |
+| `params` | [`SearchApplicationDeleteBehavioralAnalyticsRequest`](../types/SearchApplicationDeleteBehavioralAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

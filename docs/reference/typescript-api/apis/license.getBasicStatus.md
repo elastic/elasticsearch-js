@@ -11,7 +11,7 @@ client.license.getBasicStatus(this: That, params?: T.LicenseGetBasicStatusReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicenseGetBasicStatusRequest` | - |
+| `params?` | [`LicenseGetBasicStatusRequest`](../types/LicenseGetBasicStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

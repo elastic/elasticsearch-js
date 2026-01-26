@@ -11,7 +11,7 @@ client.security.getRoleMapping(this: That, params?: T.SecurityGetRoleMappingRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetRoleMappingRequest` | - |
+| `params?` | [`SecurityGetRoleMappingRequest`](../types/SecurityGetRoleMappingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

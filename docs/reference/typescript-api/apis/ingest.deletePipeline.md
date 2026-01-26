@@ -11,7 +11,7 @@ client.ingest.deletePipeline(this: That, params: T.IngestDeletePipelineRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IngestDeletePipelineRequest` | - |
+| `params` | [`IngestDeletePipelineRequest`](../types/IngestDeletePipelineRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.scripts_painless_execute(this: That, params?: T.ScriptsPainlessExecuteReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ScriptsPainlessExecuteRequest` | - |
+| `params?` | [`ScriptsPainlessExecuteRequest`](../types/ScriptsPainlessExecuteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

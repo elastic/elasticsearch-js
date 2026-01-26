@@ -21,7 +21,7 @@ Sets a predefined list of separators in the saved chunking settings based on the
 Values can be `markdown` or `plaintext`.
 
 Using this parameter is an alternative to manually specifying a custom `separators` list. |
-| `separators?` | `string[]` | Only applicable to the `recursive` strategy and required when using it.
+| `separators?` | `string`[] | Only applicable to the `recursive` strategy and required when using it.
 
 A list of strings used as possible split points when chunking text.
 

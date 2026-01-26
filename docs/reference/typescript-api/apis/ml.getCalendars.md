@@ -11,7 +11,7 @@ client.ml.getCalendars(this: That, params?: T.MlGetCalendarsRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetCalendarsRequest` | - |
+| `params?` | [`MlGetCalendarsRequest`](../types/MlGetCalendarsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

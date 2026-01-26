@@ -11,7 +11,7 @@ client.esql.asyncQuery(this: That, params: T.EsqlAsyncQueryRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EsqlAsyncQueryRequest` | - |
+| `params` | [`EsqlAsyncQueryRequest`](../types/EsqlAsyncQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

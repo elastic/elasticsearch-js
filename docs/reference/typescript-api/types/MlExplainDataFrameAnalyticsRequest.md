@@ -30,7 +30,7 @@ greater than that setting. |
 threads may decrease the time necessary to complete the analysis at the
 cost of using more CPU. Note that the process may use additional threads
 for operational functionality other than the analysis itself. |
-| `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string[]` | Specify includes and/or excludes patterns to select which fields will be
+| `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string`[] | Specify includes and/or excludes patterns to select which fields will be
 included in the analysis. The patterns specified in excludes are applied
 last, therefore excludes takes precedence. In other words, if the same
 field is specified in both includes and excludes, then the field will not

@@ -12,7 +12,7 @@
 | `full_name?` | `Name | null` | - |
 | `lookup_realm` | [`SecurityRealmInfo`](SecurityRealmInfo.md) | - |
 | `metadata` | [`Metadata`](Metadata.md) | - |
-| `roles` | `string[]` | - |
+| `roles` | `string`[] | - |
 | `username` | [`Username`](Username.md) | - |
 | `enabled` | `boolean` | - |
 | `authentication_type` | `string` | - |

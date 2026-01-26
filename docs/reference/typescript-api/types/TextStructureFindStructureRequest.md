@@ -10,7 +10,7 @@
 It must be a character set that is supported by the JVM that Elasticsearch uses.
 For example, `UTF-8`, `UTF-16LE`, `windows-1252`, or `EUC-JP`.
 If this parameter is not specified, the structure finder chooses an appropriate character set. |
-| `column_names?` | `string | string[]` | If you have set format to `delimited`, you can specify the column names in a comma-separated list.
+| `column_names?` | `string | string`[] | If you have set format to `delimited`, you can specify the column names in a comma-separated list.
 If this parameter is not specified, the structure finder uses the column names from the header row of the text.
 If the text does not have a header role, columns are named "column1", "column2", "column3", for example. |
 | `delimiter?` | `string` | If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.
@@ -99,7 +99,7 @@ If this parameter is not specified, the structure finder chooses the best format
 
 If the special value `null` is specified the structure finder will not look for a primary timestamp in the text.
 When the format is semi-structured text this will result in the structure finder treating the text as single-line messages. |
-| `text_files?` | `TJsonDocument[]` | - |
+| `text_files?` | `TJsonDocument`[] | - |
 | `body?` | `string | { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }` | All values in `querystring` will be added to the request querystring. |
 

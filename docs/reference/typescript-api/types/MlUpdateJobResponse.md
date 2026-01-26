@@ -17,7 +17,7 @@
 | `data_description` | [`MlDataDescription`](MlDataDescription.md) | - |
 | `datafeed_config?` | [`MlDatafeed`](MlDatafeed.md) | - |
 | `description?` | `string` | - |
-| `groups?` | `string[]` | - |
+| `groups?` | `string`[] | - |
 | `job_id` | [`Id`](Id.md) | - |
 | `job_type` | `string` | - |
 | `job_version` | [`VersionString`](VersionString.md) | - |

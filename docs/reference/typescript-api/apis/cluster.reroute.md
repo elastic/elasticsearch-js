@@ -11,7 +11,7 @@ client.cluster.reroute(this: That, params?: T.ClusterRerouteRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterRerouteRequest` | - |
+| `params?` | [`ClusterRerouteRequest`](../types/ClusterRerouteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

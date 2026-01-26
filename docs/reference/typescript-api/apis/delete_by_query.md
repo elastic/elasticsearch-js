@@ -11,7 +11,7 @@ client.delete_by_query(this: That, params: T.DeleteByQueryRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.DeleteByQueryRequest` | - |
+| `params` | [`DeleteByQueryRequest`](../types/DeleteByQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

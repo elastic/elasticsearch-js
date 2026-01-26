@@ -11,7 +11,7 @@ client.security.createCrossClusterApiKey(this: That, params: T.SecurityCreateCro
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityCreateCrossClusterApiKeyRequest` | - |
+| `params` | [`SecurityCreateCrossClusterApiKeyRequest`](../types/SecurityCreateCrossClusterApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

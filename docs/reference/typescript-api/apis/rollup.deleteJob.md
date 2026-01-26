@@ -11,7 +11,7 @@ client.rollup.deleteJob(this: That, params: T.RollupDeleteJobRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RollupDeleteJobRequest` | - |
+| `params` | [`RollupDeleteJobRequest`](../types/RollupDeleteJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

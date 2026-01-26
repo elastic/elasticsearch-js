@@ -11,7 +11,7 @@ client.ml.deleteExpiredData(this: That, params?: T.MlDeleteExpiredDataRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlDeleteExpiredDataRequest` | - |
+| `params?` | [`MlDeleteExpiredDataRequest`](../types/MlDeleteExpiredDataRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

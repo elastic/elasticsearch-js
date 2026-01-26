@@ -11,7 +11,7 @@ client.ml.putTrainedModelAlias(this: That, params: T.MlPutTrainedModelAliasReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutTrainedModelAliasRequest` | - |
+| `params` | [`MlPutTrainedModelAliasRequest`](../types/MlPutTrainedModelAliasRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

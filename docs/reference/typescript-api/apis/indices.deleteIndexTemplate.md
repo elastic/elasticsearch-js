@@ -11,7 +11,7 @@ client.indices.deleteIndexTemplate(this: That, params: T.IndicesDeleteIndexTempl
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDeleteIndexTemplateRequest` | - |
+| `params` | [`IndicesDeleteIndexTemplateRequest`](../types/IndicesDeleteIndexTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

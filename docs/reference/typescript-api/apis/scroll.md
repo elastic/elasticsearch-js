@@ -11,7 +11,7 @@ client.scroll(this: That, params: T.ScrollRequest, options?: TransportRequestOpt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ScrollRequest` | - |
+| `params` | [`ScrollRequest`](../types/ScrollRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.security.invalidateApiKey(this: That, params?: T.SecurityInvalidateApiKey
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityInvalidateApiKeyRequest` | - |
+| `params?` | [`SecurityInvalidateApiKeyRequest`](../types/SecurityInvalidateApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

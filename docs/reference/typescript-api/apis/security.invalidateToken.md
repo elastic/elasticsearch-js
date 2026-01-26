@@ -11,7 +11,7 @@ client.security.invalidateToken(this: That, params?: T.SecurityInvalidateTokenRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityInvalidateTokenRequest` | - |
+| `params?` | [`SecurityInvalidateTokenRequest`](../types/SecurityInvalidateTokenRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.snapshot.createRepository(this: That, params: T.SnapshotCreateRepositoryR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotCreateRepositoryRequest` | - |
+| `params` | [`SnapshotCreateRepositoryRequest`](../types/SnapshotCreateRepositoryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

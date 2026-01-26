@@ -11,7 +11,7 @@ client.shutdown.getNode(this: That, params?: T.ShutdownGetNodeRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ShutdownGetNodeRequest` | - |
+| `params?` | [`ShutdownGetNodeRequest`](../types/ShutdownGetNodeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

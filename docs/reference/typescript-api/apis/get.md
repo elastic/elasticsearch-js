@@ -11,7 +11,7 @@ client.get(this: That, params: T.GetRequest, options?: TransportRequestOptions):
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.GetRequest` | - |
+| `params` | [`GetRequest`](../types/GetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

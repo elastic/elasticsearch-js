@@ -11,7 +11,7 @@ client.license.post(this: That, params?: T.LicensePostRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicensePostRequest` | - |
+| `params?` | [`LicensePostRequest`](../types/LicensePostRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

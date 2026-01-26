@@ -11,7 +11,7 @@ client.rank_eval(this: That, params: T.RankEvalRequest, options?: TransportReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RankEvalRequest` | - |
+| `params` | [`RankEvalRequest`](../types/RankEvalRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

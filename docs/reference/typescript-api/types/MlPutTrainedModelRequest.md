@@ -39,7 +39,7 @@ The format of the string must match the platform identifiers used by Elasticsear
 so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
 or `windows-x86_64`. For portable models (those that work independent of processor
 architecture or OS features), leave this field unset. |
-| `tags?` | `string[]` | An array of tags to organize the model. |
+| `tags?` | `string`[] | An array of tags to organize the model. |
 | `prefix_strings?` | [`MlTrainedModelPrefixStrings`](MlTrainedModelPrefixStrings.md) | Optional prefix strings applied at inference |
 | `body?` | `string | { [key: string]: any } & { model_id?: never, defer_definition_decompression?: never, wait_for_completion?: never, compressed_definition?: never, definition?: never, description?: never, inference_config?: never, input?: never, metadata?: never, model_type?: never, model_size_bytes?: never, platform_architecture?: never, tags?: never, prefix_strings?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { model_id?: never, defer_definition_decompression?: never, wait_for_completion?: never, compressed_definition?: never, definition?: never, description?: never, inference_config?: never, input?: never, metadata?: never, model_type?: never, model_size_bytes?: never, platform_architecture?: never, tags?: never, prefix_strings?: never }` | All values in `querystring` will be added to the request querystring. |

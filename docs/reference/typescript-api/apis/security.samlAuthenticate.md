@@ -11,7 +11,7 @@ client.security.samlAuthenticate(this: That, params: T.SecuritySamlAuthenticateR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecuritySamlAuthenticateRequest` | - |
+| `params` | [`SecuritySamlAuthenticateRequest`](../types/SecuritySamlAuthenticateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

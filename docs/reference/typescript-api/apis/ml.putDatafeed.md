@@ -11,7 +11,7 @@ client.ml.putDatafeed(this: That, params: T.MlPutDatafeedRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutDatafeedRequest` | - |
+| `params` | [`MlPutDatafeedRequest`](../types/MlPutDatafeedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

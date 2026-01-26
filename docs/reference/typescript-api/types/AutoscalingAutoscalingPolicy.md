@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `roles` | `string[]` | - |
+| `roles` | `string`[] | - |
 | `deciders` | `Record<string, any>` | Decider settings. |
 
 ## See Also

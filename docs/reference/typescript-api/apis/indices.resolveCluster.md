@@ -11,7 +11,7 @@ client.indices.resolveCluster(this: That, params?: T.IndicesResolveClusterReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesResolveClusterRequest` | - |
+| `params?` | [`IndicesResolveClusterRequest`](../types/IndicesResolveClusterRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

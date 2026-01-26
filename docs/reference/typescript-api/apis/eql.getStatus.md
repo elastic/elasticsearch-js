@@ -11,7 +11,7 @@ client.eql.getStatus(this: That, params: T.EqlGetStatusRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EqlGetStatusRequest` | - |
+| `params` | [`EqlGetStatusRequest`](../types/EqlGetStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

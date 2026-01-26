@@ -10,9 +10,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `actions?` | `string[]` | The task action names, which are used to limit the response. |
+| `actions?` | `string`[] | The task action names, which are used to limit the response. |
 | `detailed?` | `boolean` | If `true`, the response includes detailed information about shard recoveries. |
-| `nodes?` | `string[]` | Unique node identifiers, which are used to limit the response. |
+| `nodes?` | `string`[] | Unique node identifiers, which are used to limit the response. |
 | `parent_task_id?` | `string` | The parent task identifier, which is used to limit the response. |
 | `h?` | [`CatCatTasksColumns`](CatCatTasksColumns.md) | A comma-separated list of columns names to display. It supports simple wildcards. |
 | `s?` | [`Names`](Names.md) | List of columns that determine how the table should be sorted.

@@ -11,7 +11,7 @@ client.security.updateCrossClusterApiKey(this: That, params: T.SecurityUpdateCro
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityUpdateCrossClusterApiKeyRequest` | - |
+| `params` | [`SecurityUpdateCrossClusterApiKeyRequest`](../types/SecurityUpdateCrossClusterApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

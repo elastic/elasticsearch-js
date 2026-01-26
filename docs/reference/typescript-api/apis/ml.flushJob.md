@@ -11,7 +11,7 @@ client.ml.flushJob(this: That, params: T.MlFlushJobRequest, options?: TransportR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlFlushJobRequest` | - |
+| `params` | [`MlFlushJobRequest`](../types/MlFlushJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

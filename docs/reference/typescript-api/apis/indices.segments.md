@@ -11,7 +11,7 @@ client.indices.segments(this: That, params?: T.IndicesSegmentsRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesSegmentsRequest` | - |
+| `params?` | [`IndicesSegmentsRequest`](../types/IndicesSegmentsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

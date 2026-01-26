@@ -11,7 +11,7 @@ client.security.samlLogout(this: That, params: T.SecuritySamlLogoutRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecuritySamlLogoutRequest` | - |
+| `params` | [`SecuritySamlLogoutRequest`](../types/SecuritySamlLogoutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

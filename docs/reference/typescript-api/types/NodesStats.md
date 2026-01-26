@@ -12,7 +12,7 @@
 | `host?` | [`Host`](Host.md) | Network host for the node, based on the network host setting. |
 | `http?` | [`NodesHttp`](NodesHttp.md) | HTTP connection information. |
 | `ingest?` | [`NodesIngest`](NodesIngest.md) | Statistics about ingest preprocessing. |
-| `ip?` | `Ip | Ip[]` | IP address and port for the node. |
+| `ip?` | `Ip | Ip`[] | IP address and port for the node. |
 | `jvm?` | [`NodesJvm`](NodesJvm.md) | JVM stats, memory pool information, garbage collection, buffer pools, number of loaded/unloaded classes. |
 | `name?` | [`Name`](Name.md) | Human-readable identifier for the node.
 Based on the node name setting. |

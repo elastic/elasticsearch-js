@@ -11,7 +11,7 @@ client.ml.putFilter(this: That, params: T.MlPutFilterRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutFilterRequest` | - |
+| `params` | [`MlPutFilterRequest`](../types/MlPutFilterRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

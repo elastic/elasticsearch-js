@@ -11,7 +11,7 @@ client.indices.existsTemplate(this: That, params: T.IndicesExistsTemplateRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesExistsTemplateRequest` | - |
+| `params` | [`IndicesExistsTemplateRequest`](../types/IndicesExistsTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `document?` | `any` | The source of the document being percolated. |
-| `documents?` | `any[]` | An array of sources of the documents being percolated. |
+| `documents?` | `any`[] | An array of sources of the documents being percolated. |
 | `field` | [`Field`](Field.md) | Field that holds the indexed queries. The field must use the `percolator` mapping type. |
 | `id?` | [`Id`](Id.md) | The ID of a stored document to percolate. |
 | `index?` | [`IndexName`](IndexName.md) | The index of a stored document to percolate. |

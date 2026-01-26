@@ -11,7 +11,7 @@ client.security.deleteRole(this: That, params: T.SecurityDeleteRoleRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDeleteRoleRequest` | - |
+| `params` | [`SecurityDeleteRoleRequest`](../types/SecurityDeleteRoleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

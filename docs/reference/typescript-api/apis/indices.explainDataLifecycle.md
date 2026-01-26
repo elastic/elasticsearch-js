@@ -11,7 +11,7 @@ client.indices.explainDataLifecycle(this: That, params: T.IndicesExplainDataLife
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesExplainDataLifecycleRequest` | - |
+| `params` | [`IndicesExplainDataLifecycleRequest`](../types/IndicesExplainDataLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.security.putRoleMapping(this: That, params: T.SecurityPutRoleMappingReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityPutRoleMappingRequest` | - |
+| `params` | [`SecurityPutRoleMappingRequest`](../types/SecurityPutRoleMappingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

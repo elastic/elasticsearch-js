@@ -11,7 +11,7 @@ client.slm.stop(this: That, params?: T.SlmStopRequest, options?: TransportReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SlmStopRequest` | - |
+| `params?` | [`SlmStopRequest`](../types/SlmStopRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

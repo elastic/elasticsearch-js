@@ -11,7 +11,7 @@ client.xpack.usage(this: That, params?: T.XpackUsageRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.XpackUsageRequest` | - |
+| `params?` | [`XpackUsageRequest`](../types/XpackUsageRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

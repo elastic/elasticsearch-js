@@ -11,7 +11,7 @@ client.cat.nodeattrs(this: That, params?: T.CatNodeattrsRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatNodeattrsRequest` | - |
+| `params?` | [`CatNodeattrsRequest`](../types/CatNodeattrsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

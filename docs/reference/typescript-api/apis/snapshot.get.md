@@ -11,7 +11,7 @@ client.snapshot.get(this: That, params: T.SnapshotGetRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotGetRequest` | - |
+| `params` | [`SnapshotGetRequest`](../types/SnapshotGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

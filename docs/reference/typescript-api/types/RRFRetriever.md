@@ -14,7 +14,7 @@
 | `rank_constant?` | [`integer`](integer.md) | This value determines how much influence documents in individual result sets per query have over the final ranked result set. |
 | `rank_window_size?` | [`integer`](integer.md) | This value determines the size of the individual result sets per query. |
 | `query?` | `string` | - |
-| `fields?` | `string[]` | - |
+| `fields?` | `string`[] | - |
 
 ## See Also
 

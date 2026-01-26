@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `category_id` | [`ulong`](ulong.md) | A unique identifier for the category. category_id is unique at the job level, even when per-partition categorization is enabled. |
-| `examples` | `string[]` | A list of examples of actual values that matched the category. |
+| `examples` | `string`[] | A list of examples of actual values that matched the category. |
 | `grok_pattern?` | [`GrokPattern`](GrokPattern.md) | [experimental] A Grok pattern that could be used in Logstash or an ingest pipeline to extract fields from messages that match the category. This field is experimental and may be changed or removed in a future release. The Grok patterns that are found are not optimal, but are often a good starting point for manual tweaking. |
 | `job_id` | [`Id`](Id.md) | Identifier for the anomaly detection job. |
 | `max_matching_length` | [`ulong`](ulong.md) | The maximum length of the fields that matched the category. The value is increased by 10% to enable matching for similar fields that have not been analyzed. |

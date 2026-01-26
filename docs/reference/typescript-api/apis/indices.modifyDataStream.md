@@ -11,7 +11,7 @@ client.indices.modifyDataStream(this: That, params: T.IndicesModifyDataStreamReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesModifyDataStreamRequest` | - |
+| `params` | [`IndicesModifyDataStreamRequest`](../types/IndicesModifyDataStreamRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

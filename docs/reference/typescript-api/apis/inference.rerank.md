@@ -11,7 +11,7 @@ client.inference.rerank(this: That, params: T.InferenceRerankRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceRerankRequest` | - |
+| `params` | [`InferenceRerankRequest`](../types/InferenceRerankRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

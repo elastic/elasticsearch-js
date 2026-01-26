@@ -11,7 +11,7 @@ client.security.suggestUserProfiles(this: That, params?: T.SecuritySuggestUserPr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecuritySuggestUserProfilesRequest` | - |
+| `params?` | [`SecuritySuggestUserProfilesRequest`](../types/SecuritySuggestUserProfilesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

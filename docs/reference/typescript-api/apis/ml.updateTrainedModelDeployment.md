@@ -11,7 +11,7 @@ client.ml.updateTrainedModelDeployment(this: That, params: T.MlUpdateTrainedMode
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpdateTrainedModelDeploymentRequest` | - |
+| `params` | [`MlUpdateTrainedModelDeploymentRequest`](../types/MlUpdateTrainedModelDeploymentRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

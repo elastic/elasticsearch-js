@@ -11,7 +11,7 @@ client.slm.getStats(this: That, params?: T.SlmGetStatsRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SlmGetStatsRequest` | - |
+| `params?` | [`SlmGetStatsRequest`](../types/SlmGetStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.putAlias(this: That, params: T.IndicesPutAliasRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesPutAliasRequest` | - |
+| `params` | [`IndicesPutAliasRequest`](../types/IndicesPutAliasRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

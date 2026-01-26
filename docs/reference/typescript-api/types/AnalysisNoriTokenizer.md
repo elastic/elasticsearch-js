@@ -14,7 +14,7 @@
 | `decompound_mode?` | [`AnalysisNoriDecompoundMode`](AnalysisNoriDecompoundMode.md) | - |
 | `discard_punctuation?` | `boolean` | - |
 | `user_dictionary?` | `string` | - |
-| `user_dictionary_rules?` | `string[]` | - |
+| `user_dictionary_rules?` | `string`[] | - |
 
 ## See Also
 

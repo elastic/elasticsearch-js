@@ -11,7 +11,7 @@ client.ml.getFilters(this: That, params?: T.MlGetFiltersRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetFiltersRequest` | - |
+| `params?` | [`MlGetFiltersRequest`](../types/MlGetFiltersRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

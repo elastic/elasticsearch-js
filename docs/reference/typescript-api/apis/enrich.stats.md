@@ -11,7 +11,7 @@ client.enrich.stats(this: That, params?: T.EnrichStatsRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.EnrichStatsRequest` | - |
+| `params?` | [`EnrichStatsRequest`](../types/EnrichStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

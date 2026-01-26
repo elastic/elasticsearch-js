@@ -11,7 +11,7 @@ client.indices.deleteSampleConfiguration(this: That, params: T.IndicesDeleteSamp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDeleteSampleConfigurationRequest` | - |
+| `params` | [`IndicesDeleteSampleConfigurationRequest`](../types/IndicesDeleteSampleConfigurationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

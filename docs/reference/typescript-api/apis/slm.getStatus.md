@@ -11,7 +11,7 @@ client.slm.getStatus(this: That, params?: T.SlmGetStatusRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SlmGetStatusRequest` | - |
+| `params?` | [`SlmGetStatusRequest`](../types/SlmGetStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

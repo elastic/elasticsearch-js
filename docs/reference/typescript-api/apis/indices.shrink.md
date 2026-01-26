@@ -11,7 +11,7 @@ client.indices.shrink(this: That, params: T.IndicesShrinkRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesShrinkRequest` | - |
+| `params` | [`IndicesShrinkRequest`](../types/IndicesShrinkRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

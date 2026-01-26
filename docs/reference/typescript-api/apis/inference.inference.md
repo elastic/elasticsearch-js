@@ -11,7 +11,7 @@ client.inference.inference(this: That, params: T.InferenceInferenceRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceInferenceRequest` | - |
+| `params` | [`InferenceInferenceRequest`](../types/InferenceInferenceRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

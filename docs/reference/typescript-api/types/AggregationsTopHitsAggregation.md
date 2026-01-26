@@ -10,9 +10,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | Fields for which to return doc values. |
+| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)`[] | Fields for which to return doc values. |
 | `explain?` | `boolean` | If `true`, returns detailed information about score computation as part of a hit. |
-| `fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns values for field names
+| `fields?` | `(QueryDslFieldAndFormat | Field)`[] | Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response. |
 | `from?` | [`integer`](integer.md) | Starting document offset. |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in the search results. |

@@ -11,7 +11,7 @@ client.synonyms.deleteSynonym(this: That, params: T.SynonymsDeleteSynonymRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SynonymsDeleteSynonymRequest` | - |
+| `params` | [`SynonymsDeleteSynonymRequest`](../types/SynonymsDeleteSynonymRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

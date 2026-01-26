@@ -11,7 +11,7 @@ client.cat.repositories(this: That, params?: T.CatRepositoriesRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatRepositoriesRequest` | - |
+| `params?` | [`CatRepositoriesRequest`](../types/CatRepositoriesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

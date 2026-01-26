@@ -11,7 +11,7 @@ client.snapshot.deleteRepository(this: That, params: T.SnapshotDeleteRepositoryR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotDeleteRepositoryRequest` | - |
+| `params` | [`SnapshotDeleteRepositoryRequest`](../types/SnapshotDeleteRepositoryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

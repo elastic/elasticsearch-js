@@ -11,7 +11,7 @@ client.rollup.rollupSearch(this: That, params: T.RollupRollupSearchRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RollupRollupSearchRequest` | - |
+| `params` | [`RollupRollupSearchRequest`](../types/RollupRollupSearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.putDataFrameAnalytics(this: That, params: T.MlPutDataFrameAnalyticsReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutDataFrameAnalyticsRequest` | - |
+| `params` | [`MlPutDataFrameAnalyticsRequest`](../types/MlPutDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

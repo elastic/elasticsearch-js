@@ -11,7 +11,7 @@ client.update_by_query(this: That, params: T.UpdateByQueryRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.UpdateByQueryRequest` | - |
+| `params` | [`UpdateByQueryRequest`](../types/UpdateByQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

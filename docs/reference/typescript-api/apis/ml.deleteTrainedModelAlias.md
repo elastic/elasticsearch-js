@@ -11,7 +11,7 @@ client.ml.deleteTrainedModelAlias(this: That, params: T.MlDeleteTrainedModelAlia
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteTrainedModelAliasRequest` | - |
+| `params` | [`MlDeleteTrainedModelAliasRequest`](../types/MlDeleteTrainedModelAliasRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

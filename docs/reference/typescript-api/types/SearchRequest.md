@@ -106,13 +106,13 @@ To page through more hits, use the `search_after` parameter. |
 | `track_total_hits?` | [`SearchTrackHits`](SearchTrackHits.md) | Number of hits matching the query to count accurately.
 If `true`, the exact number of hits is returned at the cost of some performance.
 If `false`, the  response does not include the total number of hits matching the query. |
-| `indices_boost?` | `Partial<Record<IndexName, double>>[]` | Boost the `_score` of documents from specified indices.
+| `indices_boost?` | `Partial<Record<IndexName, double>>`[] | Boost the `_score` of documents from specified indices.
 The boost value is the factor by which scores are multiplied.
 A boost value greater than `1.0` increases the score.
 A boost value between `0` and `1.0` decreases the score. |
-| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | An array of wildcard (`*`) field patterns.
+| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)`[] | An array of wildcard (`*`) field patterns.
 The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. |
-| `knn?` | `KnnSearch | KnnSearch[]` | The approximate kNN search to run. |
+| `knn?` | `KnnSearch | KnnSearch`[] | The approximate kNN search to run. |
 | `rank?` | [`RankContainer`](RankContainer.md) | The Reciprocal Rank Fusion (RRF) to use. |
 | `min_score?` | [`double`](double.md) | The minimum `_score` for matching documents.
 Documents with a lower `_score` are not included in search results and results collected by aggregations. |
@@ -122,7 +122,7 @@ A post filter has no impact on the aggregation results. |
 | `profile?` | `boolean` | Set to `true` to return detailed timing information about the execution of individual components in a search request.
 NOTE: This is a debugging tool and adds significant overhead to search execution. |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | The search definition using the Query DSL. |
-| `rescore?` | `SearchRescore | SearchRescore[]` | Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases. |
+| `rescore?` | `SearchRescore | SearchRescore`[] | Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases. |
 | `retriever?` | [`RetrieverContainer`](RetrieverContainer.md) | A retriever is a specification to describe top documents returned from a search.
 A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`. |
 | `script_fields?` | `Record<string, ScriptField>` | Retrieve a script evaluation (based on different fields) for each hit. |
@@ -136,7 +136,7 @@ To page through more hits, use the `search_after` property. |
 These fields are returned in the `hits._source` property of the search response.
 If the `stored_fields` property is specified, the `_source` property defaults to `false`.
 Otherwise, it defaults to `true`. |
-| `fields?` | `(QueryDslFieldAndFormat | Field)[]` | An array of wildcard (`*`) field patterns.
+| `fields?` | `(QueryDslFieldAndFormat | Field)`[] | An array of wildcard (`*`) field patterns.
 The request returns values for field names matching these patterns in the `hits.fields` property of the response. |
 | `suggest?` | [`SearchSuggester`](SearchSuggester.md) | Defines a suggester that provides similar looking terms based on a provided text. |
 | `terminate_after?` | [`long`](long.md) | The maximum number of documents to collect for each shard.
@@ -163,7 +163,7 @@ You can pass `_source: true` to return both source fields and stored fields in t
 If you provide a PIT, you cannot specify an `<index>` in the request path. |
 | `runtime_mappings?` | [`MappingRuntimeFields`](MappingRuntimeFields.md) | One or more runtime fields in the search request.
 These fields take precedence over mapped fields with the same name. |
-| `stats?` | `string[]` | The stats groups to associate with the search.
+| `stats?` | `string`[] | The stats groups to associate with the search.
 Each group maintains a statistics aggregation for its associated searches.
 You can retrieve these stats using the indices stats API. |
 | `project_routing?` | [`ProjectRouting`](ProjectRouting.md) | Specifies a subset of projects to target for the search using project

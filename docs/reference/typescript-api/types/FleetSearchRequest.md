@@ -57,15 +57,15 @@ search_after parameter. |
 number of hits is returned at the cost of some performance. If false, the
 response does not include the total number of hits matching the query.
 Defaults to 10,000 hits. |
-| `indices_boost?` | `Partial<Record<IndexName, double>>[]` | Boosts the _score of documents from specified indices. |
-| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns doc values for field
+| `indices_boost?` | `Partial<Record<IndexName, double>>`[] | Boosts the _score of documents from specified indices. |
+| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)`[] | Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response. |
 | `min_score?` | [`double`](double.md) | Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations. |
 | `post_filter?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 | `profile?` | `boolean` | - |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | Defines the search definition using the Query DSL. |
-| `rescore?` | `SearchRescore | SearchRescore[]` | - |
+| `rescore?` | `SearchRescore | SearchRescore`[] | - |
 | `script_fields?` | `Record<string, ScriptField>` | Retrieve a script evaluation (based on different fields) for each hit. |
 | `search_after?` | [`SortResults`](SortResults.md) | - |
 | `size?` | [`integer`](integer.md) | The number of hits to return. By default, you cannot page through more
@@ -75,7 +75,7 @@ hits, use the search_after parameter. |
 | `sort?` | [`Sort`](Sort.md) | - |
 | `_source?` | [`SearchSourceConfig`](SearchSourceConfig.md) | Indicates which source fields are returned for matching documents. These
 fields are returned in the hits._source property of the search response. |
-| `fields?` | `(QueryDslFieldAndFormat | Field)[]` | Array of wildcard (*) patterns. The request returns values for field names
+| `fields?` | `(QueryDslFieldAndFormat | Field)`[] | Array of wildcard (*) patterns. The request returns values for field names
 matching these patterns in the hits.fields property of the response. |
 | `suggest?` | [`SearchSuggester`](SearchSuggester.md) | - |
 | `terminate_after?` | [`long`](long.md) | Maximum number of documents to collect for each shard. If a query reaches this
@@ -96,7 +96,7 @@ and stored fields in the search response. |
 cannot specify an <index> in the request path. |
 | `runtime_mappings?` | [`MappingRuntimeFields`](MappingRuntimeFields.md) | Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name. |
-| `stats?` | `string[]` | Stats groups to associate with the search. Each group maintains a statistics
+| `stats?` | `string`[] | Stats groups to associate with the search. Each group maintains a statistics
 aggregation for its associated searches. You can retrieve these stats using
 the indices stats API. |
 | `body?` | `string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }` | All values in `body` will be added to the request body. |

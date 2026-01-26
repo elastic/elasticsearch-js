@@ -11,7 +11,7 @@ client.inference.update(this: That, params: T.InferenceUpdateRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceUpdateRequest` | - |
+| `params` | [`InferenceUpdateRequest`](../types/InferenceUpdateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

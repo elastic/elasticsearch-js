@@ -11,7 +11,7 @@ client.inference.textEmbedding(this: That, params: T.InferenceTextEmbeddingReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceTextEmbeddingRequest` | - |
+| `params` | [`InferenceTextEmbeddingRequest`](../types/InferenceTextEmbeddingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

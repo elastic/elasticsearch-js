@@ -11,7 +11,7 @@ client.watcher.stop(this: That, params?: T.WatcherStopRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.WatcherStopRequest` | - |
+| `params?` | [`WatcherStopRequest`](../types/WatcherStopRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

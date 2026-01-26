@@ -11,7 +11,7 @@ client.indices.open(this: That, params: T.IndicesOpenRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesOpenRequest` | - |
+| `params` | [`IndicesOpenRequest`](../types/IndicesOpenRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

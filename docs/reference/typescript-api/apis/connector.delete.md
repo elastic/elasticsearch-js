@@ -11,7 +11,7 @@ client.connector.delete(this: That, params: T.ConnectorDeleteRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorDeleteRequest` | - |
+| `params` | [`ConnectorDeleteRequest`](../types/ConnectorDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

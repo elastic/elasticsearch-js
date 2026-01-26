@@ -11,7 +11,7 @@ client.index(this: That, params: T.IndexRequest<TDocument>, options?: TransportR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndexRequest<TDocument>` | - |
+| `params` | [`IndexRequest`](../types/IndexRequest.md)<TDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

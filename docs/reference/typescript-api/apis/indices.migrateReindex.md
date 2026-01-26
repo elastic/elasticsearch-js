@@ -11,7 +11,7 @@ client.indices.migrateReindex(this: That, params: T.IndicesMigrateReindexRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesMigrateReindexRequest` | - |
+| `params` | [`IndicesMigrateReindexRequest`](../types/IndicesMigrateReindexRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

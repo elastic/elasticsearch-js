@@ -11,7 +11,7 @@ client.security.getServiceCredentials(this: That, params: T.SecurityGetServiceCr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityGetServiceCredentialsRequest` | - |
+| `params` | [`SecurityGetServiceCredentialsRequest`](../types/SecurityGetServiceCredentialsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

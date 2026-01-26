@@ -11,7 +11,7 @@ client.indices.resolveIndex(this: That, params: T.IndicesResolveIndexRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesResolveIndexRequest` | - |
+| `params` | [`IndicesResolveIndexRequest`](../types/IndicesResolveIndexRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

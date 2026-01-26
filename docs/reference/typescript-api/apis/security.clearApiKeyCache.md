@@ -11,7 +11,7 @@ client.security.clearApiKeyCache(this: That, params: T.SecurityClearApiKeyCacheR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityClearApiKeyCacheRequest` | - |
+| `params` | [`SecurityClearApiKeyCacheRequest`](../types/SecurityClearApiKeyCacheRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

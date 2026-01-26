@@ -11,7 +11,7 @@ client.indices.getMapping(this: That, params?: T.IndicesGetMappingRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesGetMappingRequest` | - |
+| `params?` | [`IndicesGetMappingRequest`](../types/IndicesGetMappingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

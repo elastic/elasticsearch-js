@@ -11,7 +11,7 @@ client.security.delegatePki(this: That, params: T.SecurityDelegatePkiRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDelegatePkiRequest` | - |
+| `params` | [`SecurityDelegatePkiRequest`](../types/SecurityDelegatePkiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

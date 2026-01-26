@@ -11,7 +11,7 @@ client.cat.fielddata(this: That, params?: T.CatFielddataRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatFielddataRequest` | - |
+| `params?` | [`CatFielddataRequest`](../types/CatFielddataRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

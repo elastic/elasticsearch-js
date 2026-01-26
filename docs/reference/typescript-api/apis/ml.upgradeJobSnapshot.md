@@ -11,7 +11,7 @@ client.ml.upgradeJobSnapshot(this: That, params: T.MlUpgradeJobSnapshotRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpgradeJobSnapshotRequest` | - |
+| `params` | [`MlUpgradeJobSnapshotRequest`](../types/MlUpgradeJobSnapshotRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.inference.putNvidia(this: That, params: T.InferencePutNvidiaRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutNvidiaRequest` | - |
+| `params` | [`InferencePutNvidiaRequest`](../types/InferencePutNvidiaRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

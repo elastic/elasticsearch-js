@@ -11,7 +11,7 @@ client.ml.info(this: That, params?: T.MlInfoRequest, options?: TransportRequestO
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlInfoRequest` | - |
+| `params?` | [`MlInfoRequest`](../types/MlInfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

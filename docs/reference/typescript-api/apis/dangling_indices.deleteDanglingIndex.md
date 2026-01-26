@@ -11,7 +11,7 @@ client.dangling_indices.deleteDanglingIndex(this: That, params: T.DanglingIndice
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.DanglingIndicesDeleteDanglingIndexRequest` | - |
+| `params` | [`DanglingIndicesDeleteDanglingIndexRequest`](../types/DanglingIndicesDeleteDanglingIndexRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

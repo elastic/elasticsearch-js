@@ -11,7 +11,7 @@ client.connector.syncJobClaim(this: That, params: T.ConnectorSyncJobClaimRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobClaimRequest` | - |
+| `params` | [`ConnectorSyncJobClaimRequest`](../types/ConnectorSyncJobClaimRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

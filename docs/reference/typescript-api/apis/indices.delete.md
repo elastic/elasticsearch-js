@@ -11,7 +11,7 @@ client.indices.delete(this: That, params: T.IndicesDeleteRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDeleteRequest` | - |
+| `params` | [`IndicesDeleteRequest`](../types/IndicesDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

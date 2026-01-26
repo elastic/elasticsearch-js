@@ -11,7 +11,7 @@ client.indices.stats(this: That, params?: T.IndicesStatsRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesStatsRequest` | - |
+| `params?` | [`IndicesStatsRequest`](../types/IndicesStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

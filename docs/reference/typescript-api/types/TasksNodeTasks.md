@@ -10,7 +10,7 @@
 | `transport_address?` | [`TransportAddress`](TransportAddress.md) | - |
 | `host?` | [`Host`](Host.md) | - |
 | `ip?` | [`Ip`](Ip.md) | - |
-| `roles?` | `string[]` | - |
+| `roles?` | `string`[] | - |
 | `attributes?` | `Record<string, string>` | - |
 | `tasks` | `Record<TaskId, TasksTaskInfo>` | - |
 

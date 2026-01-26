@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `pipelines` | `string[]` | - |
+| `pipelines` | `string`[] | - |
 
 ## See Also
 

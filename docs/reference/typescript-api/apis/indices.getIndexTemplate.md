@@ -11,7 +11,7 @@ client.indices.getIndexTemplate(this: That, params?: T.IndicesGetIndexTemplateRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesGetIndexTemplateRequest` | - |
+| `params?` | [`IndicesGetIndexTemplateRequest`](../types/IndicesGetIndexTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

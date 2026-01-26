@@ -11,7 +11,7 @@ client.eql.get(this: That, params: T.EqlGetRequest, options?: TransportRequestOp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EqlGetRequest` | - |
+| `params` | [`EqlGetRequest`](../types/EqlGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

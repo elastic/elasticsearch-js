@@ -19,7 +19,7 @@
 | `null_value?` | `string` | - |
 | `similarity?` | `string` | - |
 | `split_queries_on_whitespace?` | `boolean` | - |
-| `time_series_dimensions?` | `string[]` | - |
+| `time_series_dimensions?` | `string`[] | - |
 | `type` | `'flattened'` | - |
 
 ## See Also

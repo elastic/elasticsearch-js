@@ -11,7 +11,7 @@ client.connector.updateFilteringValidation(this: That, params: T.ConnectorUpdate
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateFilteringValidationRequest` | - |
+| `params` | [`ConnectorUpdateFilteringValidationRequest`](../types/ConnectorUpdateFilteringValidationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.inference.putAnthropic(this: That, params: T.InferencePutAnthropicRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAnthropicRequest` | - |
+| `params` | [`InferencePutAnthropicRequest`](../types/InferencePutAnthropicRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

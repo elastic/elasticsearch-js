@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `total_repositories?` | [`long`](long.md) | - |
 | `corrupted_repositories?` | [`long`](long.md) | - |
-| `corrupted?` | `string[]` | - |
+| `corrupted?` | `string`[] | - |
 
 ## See Also
 

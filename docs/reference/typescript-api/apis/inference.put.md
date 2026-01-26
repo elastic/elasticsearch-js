@@ -11,7 +11,7 @@ client.inference.put(this: That, params: T.InferencePutRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutRequest` | - |
+| `params` | [`InferencePutRequest`](../types/InferencePutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

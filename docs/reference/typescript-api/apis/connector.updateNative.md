@@ -11,7 +11,7 @@ client.connector.updateNative(this: That, params: T.ConnectorUpdateNativeRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateNativeRequest` | - |
+| `params` | [`ConnectorUpdateNativeRequest`](../types/ConnectorUpdateNativeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

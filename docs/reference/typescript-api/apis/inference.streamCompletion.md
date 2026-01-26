@@ -11,7 +11,7 @@ client.inference.streamCompletion(this: That, params: T.InferenceStreamCompletio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceStreamCompletionRequest` | - |
+| `params` | [`InferenceStreamCompletionRequest`](../types/InferenceStreamCompletionRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

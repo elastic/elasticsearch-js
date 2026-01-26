@@ -11,7 +11,7 @@ client.async_search.get(this: That, params: T.AsyncSearchGetRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.AsyncSearchGetRequest` | - |
+| `params` | [`AsyncSearchGetRequest`](../types/AsyncSearchGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

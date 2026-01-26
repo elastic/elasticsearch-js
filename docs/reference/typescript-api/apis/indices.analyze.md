@@ -11,7 +11,7 @@ client.indices.analyze(this: That, params?: T.IndicesAnalyzeRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesAnalyzeRequest` | - |
+| `params?` | [`IndicesAnalyzeRequest`](../types/IndicesAnalyzeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

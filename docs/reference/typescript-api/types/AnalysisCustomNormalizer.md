@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'custom'` | - |
-| `char_filter?` | `string[]` | - |
-| `filter?` | `string[]` | - |
+| `char_filter?` | `string`[] | - |
+| `filter?` | `string`[] | - |
 
 ## See Also
 

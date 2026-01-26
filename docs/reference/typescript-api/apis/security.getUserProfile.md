@@ -11,7 +11,7 @@ client.security.getUserProfile(this: That, params: T.SecurityGetUserProfileReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityGetUserProfileRequest` | - |
+| `params` | [`SecurityGetUserProfileRequest`](../types/SecurityGetUserProfileRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

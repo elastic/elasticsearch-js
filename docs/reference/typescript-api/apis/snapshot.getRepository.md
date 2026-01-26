@@ -11,7 +11,7 @@ client.snapshot.getRepository(this: That, params?: T.SnapshotGetRepositoryReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SnapshotGetRepositoryRequest` | - |
+| `params?` | [`SnapshotGetRepositoryRequest`](../types/SnapshotGetRepositoryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

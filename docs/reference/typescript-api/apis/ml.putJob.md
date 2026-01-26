@@ -11,7 +11,7 @@ client.ml.putJob(this: That, params: T.MlPutJobRequest, options?: TransportReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutJobRequest` | - |
+| `params` | [`MlPutJobRequest`](../types/MlPutJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.async_search.status(this: That, params: T.AsyncSearchStatusRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.AsyncSearchStatusRequest` | - |
+| `params` | [`AsyncSearchStatusRequest`](../types/AsyncSearchStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

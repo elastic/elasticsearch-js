@@ -11,7 +11,7 @@ client.ml.inferTrainedModel(this: That, params: T.MlInferTrainedModelRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlInferTrainedModelRequest` | - |
+| `params` | [`MlInferTrainedModelRequest`](../types/MlInferTrainedModelRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

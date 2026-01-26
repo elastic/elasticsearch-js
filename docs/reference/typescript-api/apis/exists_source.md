@@ -11,7 +11,7 @@ client.exists_source(this: That, params: T.ExistsSourceRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ExistsSourceRequest` | - |
+| `params` | [`ExistsSourceRequest`](../types/ExistsSourceRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.project.getManyRouting(this: That, params?: T.ProjectGetManyRoutingReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ProjectGetManyRoutingRequest` | - |
+| `params?` | [`ProjectGetManyRoutingRequest`](../types/ProjectGetManyRoutingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

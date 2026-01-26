@@ -11,7 +11,7 @@ client.cat.mlDatafeeds(this: That, params?: T.CatMlDatafeedsRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatMlDatafeedsRequest` | - |
+| `params?` | [`CatMlDatafeedsRequest`](../types/CatMlDatafeedsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

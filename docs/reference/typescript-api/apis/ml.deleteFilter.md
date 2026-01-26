@@ -11,7 +11,7 @@ client.ml.deleteFilter(this: That, params: T.MlDeleteFilterRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteFilterRequest` | - |
+| `params` | [`MlDeleteFilterRequest`](../types/MlDeleteFilterRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

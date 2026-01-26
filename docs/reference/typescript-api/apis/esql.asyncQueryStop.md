@@ -11,7 +11,7 @@ client.esql.asyncQueryStop(this: That, params: T.EsqlAsyncQueryStopRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EsqlAsyncQueryStopRequest` | - |
+| `params` | [`EsqlAsyncQueryStopRequest`](../types/EsqlAsyncQueryStopRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

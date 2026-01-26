@@ -11,7 +11,7 @@ client.license.get(this: That, params?: T.LicenseGetRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicenseGetRequest` | - |
+| `params?` | [`LicenseGetRequest`](../types/LicenseGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

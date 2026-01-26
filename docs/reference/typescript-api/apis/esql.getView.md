@@ -11,7 +11,7 @@ client.esql.getView(this: That, params?: T.EsqlGetViewRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.EsqlGetViewRequest` | - |
+| `params?` | [`EsqlGetViewRequest`](../types/EsqlGetViewRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

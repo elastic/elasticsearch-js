@@ -11,7 +11,7 @@ client.security.enrollNode(this: That, params?: T.SecurityEnrollNodeRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityEnrollNodeRequest` | - |
+| `params?` | [`SecurityEnrollNodeRequest`](../types/SecurityEnrollNodeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

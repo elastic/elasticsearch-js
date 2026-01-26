@@ -11,7 +11,7 @@ client.security.getServiceAccounts(this: That, params?: T.SecurityGetServiceAcco
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetServiceAccountsRequest` | - |
+| `params?` | [`SecurityGetServiceAccountsRequest`](../types/SecurityGetServiceAccountsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

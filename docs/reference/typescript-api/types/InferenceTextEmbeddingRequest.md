@@ -12,7 +12,7 @@
 |----------|------|-------------|
 | `inference_id` | [`Id`](Id.md) | The inference Id |
 | `timeout?` | [`Duration`](Duration.md) | Specifies the amount of time to wait for the inference request to complete. |
-| `input` | `string | string[]` | Inference input.
+| `input` | `string | string`[] | Inference input.
 Either a string or an array of strings. |
 | `input_type?` | `string` | The input data type for the text embedding model. Possible values include:
 * `SEARCH`

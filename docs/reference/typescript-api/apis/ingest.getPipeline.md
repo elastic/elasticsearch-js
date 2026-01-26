@@ -11,7 +11,7 @@ client.ingest.getPipeline(this: That, params?: T.IngestGetPipelineRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IngestGetPipelineRequest` | - |
+| `params?` | [`IngestGetPipelineRequest`](../types/IngestGetPipelineRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

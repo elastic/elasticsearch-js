@@ -11,7 +11,7 @@ client.inference.putAmazonbedrock(this: That, params: T.InferencePutAmazonbedroc
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAmazonbedrockRequest` | - |
+| `params` | [`InferencePutAmazonbedrockRequest`](../types/InferencePutAmazonbedrockRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

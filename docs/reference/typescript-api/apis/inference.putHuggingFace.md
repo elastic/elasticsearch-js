@@ -11,7 +11,7 @@ client.inference.putHuggingFace(this: That, params: T.InferencePutHuggingFaceReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutHuggingFaceRequest` | - |
+| `params` | [`InferencePutHuggingFaceRequest`](../types/InferencePutHuggingFaceRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

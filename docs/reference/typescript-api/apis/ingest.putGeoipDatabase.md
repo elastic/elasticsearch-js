@@ -11,7 +11,7 @@ client.ingest.putGeoipDatabase(this: That, params: T.IngestPutGeoipDatabaseReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IngestPutGeoipDatabaseRequest` | - |
+| `params` | [`IngestPutGeoipDatabaseRequest`](../types/IngestPutGeoipDatabaseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

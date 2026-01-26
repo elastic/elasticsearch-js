@@ -11,7 +11,7 @@ client.indices.getSettings(this: That, params?: T.IndicesGetSettingsRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesGetSettingsRequest` | - |
+| `params?` | [`IndicesGetSettingsRequest`](../types/IndicesGetSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.migration.postFeatureUpgrade(this: That, params?: T.MigrationPostFeatureU
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MigrationPostFeatureUpgradeRequest` | - |
+| `params?` | [`MigrationPostFeatureUpgradeRequest`](../types/MigrationPostFeatureUpgradeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

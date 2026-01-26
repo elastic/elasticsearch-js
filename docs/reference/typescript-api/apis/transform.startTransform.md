@@ -11,7 +11,7 @@ client.transform.startTransform(this: That, params: T.TransformStartTransformReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformStartTransformRequest` | - |
+| `params` | [`TransformStartTransformRequest`](../types/TransformStartTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

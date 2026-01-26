@@ -11,7 +11,7 @@ client.indices.cancelMigrateReindex(this: That, params: T.IndicesCancelMigrateRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesCancelMigrateReindexRequest` | - |
+| `params` | [`IndicesCancelMigrateReindexRequest`](../types/IndicesCancelMigrateReindexRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

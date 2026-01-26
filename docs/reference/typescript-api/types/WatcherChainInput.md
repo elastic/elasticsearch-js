@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `inputs` | `Partial<Record<string, WatcherInputContainer>>[]` | - |
+| `inputs` | `Partial<Record<string, WatcherInputContainer>>`[] | - |
 
 ## See Also
 

@@ -11,7 +11,7 @@ client.watcher.stats(this: That, params?: T.WatcherStatsRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.WatcherStatsRequest` | - |
+| `params?` | [`WatcherStatsRequest`](../types/WatcherStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

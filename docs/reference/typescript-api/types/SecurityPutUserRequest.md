@@ -29,7 +29,7 @@ This must be produced using the same hashing algorithm as has been configured fo
 For more details, see the explanation of the `xpack.security.authc.password_hashing.algorithm` setting in the user cache and password hash algorithm documentation.
 Using this parameter allows the client to pre-hash the password for performance and/or confidentiality reasons.
 The `password` parameter and the `password_hash` parameter cannot be used in the same request. |
-| `roles?` | `string[]` | A set of roles the user has.
+| `roles?` | `string`[] | A set of roles the user has.
 The roles determine the user's access permissions.
 To create a user without any roles, specify an empty list (`[]`). |
 | `enabled?` | `boolean` | Specifies whether the user is enabled. |

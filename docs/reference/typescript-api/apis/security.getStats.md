@@ -11,7 +11,7 @@ client.security.getStats(this: That, params?: T.SecurityGetStatsRequest, options
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetStatsRequest` | - |
+| `params?` | [`SecurityGetStatsRequest`](../types/SecurityGetStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

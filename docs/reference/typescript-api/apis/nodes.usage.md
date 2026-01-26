@@ -11,7 +11,7 @@ client.nodes.usage(this: That, params?: T.NodesUsageRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.NodesUsageRequest` | - |
+| `params?` | [`NodesUsageRequest`](../types/NodesUsageRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.security.oidcPrepareAuthentication(this: That, params?: T.SecurityOidcPre
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityOidcPrepareAuthenticationRequest` | - |
+| `params?` | [`SecurityOidcPrepareAuthenticationRequest`](../types/SecurityOidcPrepareAuthenticationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

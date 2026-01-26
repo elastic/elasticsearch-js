@@ -11,7 +11,7 @@ client.streams.status(this: That, params?: T.StreamsStatusRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.StreamsStatusRequest` | - |
+| `params?` | [`StreamsStatusRequest`](../types/StreamsStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.getDataFrameAnalytics(this: That, params?: T.MlGetDataFrameAnalyticsRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetDataFrameAnalyticsRequest` | - |
+| `params?` | [`MlGetDataFrameAnalyticsRequest`](../types/MlGetDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

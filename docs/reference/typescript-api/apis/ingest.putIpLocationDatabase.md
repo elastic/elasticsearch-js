@@ -11,7 +11,7 @@ client.ingest.putIpLocationDatabase(this: That, params: T.IngestPutIpLocationDat
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IngestPutIpLocationDatabaseRequest` | - |
+| `params` | [`IngestPutIpLocationDatabaseRequest`](../types/IngestPutIpLocationDatabaseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

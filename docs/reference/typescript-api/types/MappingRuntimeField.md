@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `fields?` | `Record<string, MappingCompositeSubField>` | For type `composite` |
-| `fetch_fields?` | `(MappingRuntimeFieldFetchFields | Field)[]` | For type `lookup` |
+| `fetch_fields?` | `(MappingRuntimeFieldFetchFields | Field)`[] | For type `lookup` |
 | `format?` | `string` | A custom format for `date` type runtime fields. |
 | `input_field?` | [`Field`](Field.md) | For type `lookup` |
 | `target_field?` | [`Field`](Field.md) | For type `lookup` |

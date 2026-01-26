@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `enabled` | `boolean` | - |
 | `metadata` | [`Metadata`](Metadata.md) | - |
-| `roles?` | `string[]` | - |
+| `roles?` | `string`[] | - |
 | `role_templates?` | [`SecurityRoleTemplate`](SecurityRoleTemplate.md)[] | - |
 | `rules` | [`SecurityRoleMappingRule`](SecurityRoleMappingRule.md) | - |
 

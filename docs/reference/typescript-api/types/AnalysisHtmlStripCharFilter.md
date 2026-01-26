@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'html_strip'` | - |
-| `escaped_tags?` | `string[]` | - |
+| `escaped_tags?` | `string`[] | - |
 
 ## See Also
 

@@ -11,7 +11,7 @@ client.nodes.getRepositoriesMeteringInfo(this: That, params: T.NodesGetRepositor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.NodesGetRepositoriesMeteringInfoRequest` | - |
+| `params` | [`NodesGetRepositoriesMeteringInfoRequest`](../types/NodesGetRepositoriesMeteringInfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

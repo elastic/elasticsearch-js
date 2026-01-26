@@ -11,7 +11,7 @@ client.cat.templates(this: That, params?: T.CatTemplatesRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatTemplatesRequest` | - |
+| `params?` | [`CatTemplatesRequest`](../types/CatTemplatesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

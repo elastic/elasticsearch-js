@@ -11,7 +11,7 @@ client.ml.stopDataFrameAnalytics(this: That, params: T.MlStopDataFrameAnalyticsR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlStopDataFrameAnalyticsRequest` | - |
+| `params` | [`MlStopDataFrameAnalyticsRequest`](../types/MlStopDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.getBuckets(this: That, params: T.MlGetBucketsRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetBucketsRequest` | - |
+| `params` | [`MlGetBucketsRequest`](../types/MlGetBucketsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

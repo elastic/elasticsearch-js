@@ -11,7 +11,7 @@ client.inference.putOpenshiftAi(this: That, params: T.InferencePutOpenshiftAiReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutOpenshiftAiRequest` | - |
+| `params` | [`InferencePutOpenshiftAiRequest`](../types/InferencePutOpenshiftAiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

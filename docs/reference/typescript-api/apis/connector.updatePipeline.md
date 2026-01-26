@@ -11,7 +11,7 @@ client.connector.updatePipeline(this: That, params: T.ConnectorUpdatePipelineReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdatePipelineRequest` | - |
+| `params` | [`ConnectorUpdatePipelineRequest`](../types/ConnectorUpdatePipelineRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

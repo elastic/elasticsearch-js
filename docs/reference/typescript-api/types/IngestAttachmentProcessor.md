@@ -15,7 +15,7 @@
 | `indexed_chars?` | [`long`](long.md) | The number of chars being used for extraction to prevent huge fields.
 Use `-1` for no limit. |
 | `indexed_chars_field?` | [`Field`](Field.md) | Field name from which you can overwrite the number of chars being used for extraction. |
-| `properties?` | `string[]` | Array of properties to select to be stored.
+| `properties?` | `string`[] | Array of properties to select to be stored.
 Can be `content`, `title`, `name`, `author`, `keywords`, `date`, `content_type`, `content_length`, `language`. |
 | `target_field?` | [`Field`](Field.md) | The field that will hold the attachment information. |
 | `remove_binary?` | `boolean` | If true, the binary field will be removed from the document |

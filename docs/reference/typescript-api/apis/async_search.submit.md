@@ -11,7 +11,7 @@ client.async_search.submit(this: That, params?: T.AsyncSearchSubmitRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.AsyncSearchSubmitRequest` | - |
+| `params?` | [`AsyncSearchSubmitRequest`](../types/AsyncSearchSubmitRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

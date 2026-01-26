@@ -11,7 +11,7 @@ client.connector.secretDelete(this: That, params: T.ConnectorSecretDeleteRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSecretDeleteRequest` | - |
+| `params` | [`ConnectorSecretDeleteRequest`](../types/ConnectorSecretDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

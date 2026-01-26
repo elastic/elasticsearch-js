@@ -11,7 +11,7 @@ client.transform.previewTransform(this: That, params?: T.TransformPreviewTransfo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.TransformPreviewTransformRequest` | - |
+| `params?` | [`TransformPreviewTransformRequest`](../types/TransformPreviewTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

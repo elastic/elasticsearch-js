@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `sort` | `(FieldValue | null)[]` | - |
+| `sort` | `(FieldValue | null)`[] | - |
 | `metrics` | `Record<string, FieldValue | null>` | - |
 
 ## See Also

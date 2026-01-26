@@ -11,7 +11,7 @@ client.get_script_context(this: That, params?: T.GetScriptContextRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.GetScriptContextRequest` | - |
+| `params?` | [`GetScriptContextRequest`](../types/GetScriptContextRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

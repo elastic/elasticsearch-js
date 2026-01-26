@@ -11,7 +11,7 @@ client.security.grantApiKey(this: That, params: T.SecurityGrantApiKeyRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityGrantApiKeyRequest` | - |
+| `params` | [`SecurityGrantApiKeyRequest`](../types/SecurityGrantApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

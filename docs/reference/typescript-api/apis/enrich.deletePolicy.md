@@ -11,7 +11,7 @@ client.enrich.deletePolicy(this: That, params: T.EnrichDeletePolicyRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EnrichDeletePolicyRequest` | - |
+| `params` | [`EnrichDeletePolicyRequest`](../types/EnrichDeletePolicyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

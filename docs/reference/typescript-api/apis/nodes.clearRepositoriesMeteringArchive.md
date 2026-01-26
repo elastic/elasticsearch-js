@@ -11,7 +11,7 @@ client.nodes.clearRepositoriesMeteringArchive(this: That, params: T.NodesClearRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.NodesClearRepositoriesMeteringArchiveRequest` | - |
+| `params` | [`NodesClearRepositoriesMeteringArchiveRequest`](../types/NodesClearRepositoriesMeteringArchiveRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `filtered_text` | `string[]` | - |
+| `filtered_text` | `string`[] | - |
 | `name` | `string` | - |
 
 ## See Also

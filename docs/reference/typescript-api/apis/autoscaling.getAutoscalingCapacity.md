@@ -11,7 +11,7 @@ client.autoscaling.getAutoscalingCapacity(this: That, params?: T.AutoscalingGetA
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.AutoscalingGetAutoscalingCapacityRequest` | - |
+| `params?` | [`AutoscalingGetAutoscalingCapacityRequest`](../types/AutoscalingGetAutoscalingCapacityRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

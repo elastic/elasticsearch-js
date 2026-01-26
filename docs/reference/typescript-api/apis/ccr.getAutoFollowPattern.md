@@ -11,7 +11,7 @@ client.ccr.getAutoFollowPattern(this: That, params?: T.CcrGetAutoFollowPatternRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CcrGetAutoFollowPatternRequest` | - |
+| `params?` | [`CcrGetAutoFollowPatternRequest`](../types/CcrGetAutoFollowPatternRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

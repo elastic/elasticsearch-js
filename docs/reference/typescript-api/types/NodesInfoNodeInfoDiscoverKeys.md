@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `seed_hosts?` | `string[] | string` | - |
 | `type?` | `string` | - |
-| `seed_providers?` | `string[]` | - |
+| `seed_providers?` | `string`[] | - |
 
 ## See Also
 

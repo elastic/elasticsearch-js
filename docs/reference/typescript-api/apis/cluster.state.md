@@ -11,7 +11,7 @@ client.cluster.state(this: That, params?: T.ClusterStateRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterStateRequest` | - |
+| `params?` | [`ClusterStateRequest`](../types/ClusterStateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

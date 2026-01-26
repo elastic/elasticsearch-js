@@ -11,7 +11,7 @@ client.tasks.cancel(this: That, params?: T.TasksCancelRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.TasksCancelRequest` | - |
+| `params?` | [`TasksCancelRequest`](../types/TasksCancelRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

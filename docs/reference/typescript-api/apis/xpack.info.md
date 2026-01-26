@@ -11,7 +11,7 @@ client.xpack.info(this: That, params?: T.XpackInfoRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.XpackInfoRequest` | - |
+| `params?` | [`XpackInfoRequest`](../types/XpackInfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

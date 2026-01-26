@@ -11,7 +11,7 @@ client.sql.query(this: That, params?: T.SqlQueryRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SqlQueryRequest` | - |
+| `params?` | [`SqlQueryRequest`](../types/SqlQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

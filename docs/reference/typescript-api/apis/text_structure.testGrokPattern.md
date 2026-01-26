@@ -11,7 +11,7 @@ client.text_structure.testGrokPattern(this: That, params: T.TextStructureTestGro
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TextStructureTestGrokPatternRequest` | - |
+| `params` | [`TextStructureTestGrokPatternRequest`](../types/TextStructureTestGrokPatternRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

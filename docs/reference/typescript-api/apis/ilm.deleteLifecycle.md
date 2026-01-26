@@ -11,7 +11,7 @@ client.ilm.deleteLifecycle(this: That, params: T.IlmDeleteLifecycleRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IlmDeleteLifecycleRequest` | - |
+| `params` | [`IlmDeleteLifecycleRequest`](../types/IlmDeleteLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

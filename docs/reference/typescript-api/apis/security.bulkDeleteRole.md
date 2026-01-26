@@ -11,7 +11,7 @@ client.security.bulkDeleteRole(this: That, params: T.SecurityBulkDeleteRoleReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityBulkDeleteRoleRequest` | - |
+| `params` | [`SecurityBulkDeleteRoleRequest`](../types/SecurityBulkDeleteRoleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

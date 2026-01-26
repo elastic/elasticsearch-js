@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `actions?` | `string | string[]` | A comma-separated list or wildcard expression of actions used to limit the request.
+| `actions?` | `string | string`[] | A comma-separated list or wildcard expression of actions used to limit the request.
 For example, you can use `cluser:*` to retrieve all cluster-related tasks. |
 | `detailed?` | `boolean` | If `true`, the response includes detailed information about the running tasks.
 This information is useful to distinguish tasks from each other but is more costly to run. |

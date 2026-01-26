@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'mapping'` | - |
-| `mappings?` | `string[]` | - |
+| `mappings?` | `string`[] | - |
 | `mappings_path?` | `string` | - |
 
 ## See Also

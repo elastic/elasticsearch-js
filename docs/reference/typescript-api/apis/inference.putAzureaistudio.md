@@ -11,7 +11,7 @@ client.inference.putAzureaistudio(this: That, params: T.InferencePutAzureaistudi
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAzureaistudioRequest` | - |
+| `params` | [`InferencePutAzureaistudioRequest`](../types/InferencePutAzureaistudioRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

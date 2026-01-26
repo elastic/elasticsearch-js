@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `outputs?` | `string[]` | - |
+| `outputs?` | `string`[] | - |
 
 ## See Also
 

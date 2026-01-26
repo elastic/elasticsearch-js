@@ -11,7 +11,7 @@ client.indices.flush(this: That, params?: T.IndicesFlushRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesFlushRequest` | - |
+| `params?` | [`IndicesFlushRequest`](../types/IndicesFlushRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

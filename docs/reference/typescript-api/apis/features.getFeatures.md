@@ -11,7 +11,7 @@ client.features.getFeatures(this: That, params?: T.FeaturesGetFeaturesRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.FeaturesGetFeaturesRequest` | - |
+| `params?` | [`FeaturesGetFeaturesRequest`](../types/FeaturesGetFeaturesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

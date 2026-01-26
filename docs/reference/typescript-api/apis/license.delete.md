@@ -11,7 +11,7 @@ client.license.delete(this: That, params?: T.LicenseDeleteRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicenseDeleteRequest` | - |
+| `params?` | [`LicenseDeleteRequest`](../types/LicenseDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

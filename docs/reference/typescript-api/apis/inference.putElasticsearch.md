@@ -11,7 +11,7 @@ client.inference.putElasticsearch(this: That, params: T.InferencePutElasticsearc
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutElasticsearchRequest` | - |
+| `params` | [`InferencePutElasticsearchRequest`](../types/InferencePutElasticsearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

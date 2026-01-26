@@ -15,7 +15,7 @@
 | `inner_hits?` | `Record<string, SearchInnerHitsResult>` | - |
 | `matched_queries?` | `string[] | Record<string, double>` | - |
 | `_nested?` | [`SearchNestedIdentity`](SearchNestedIdentity.md) | - |
-| `_ignored?` | `string[]` | - |
+| `_ignored?` | `string`[] | - |
 | `ignored_field_values?` | `Record<string, any[]>` | - |
 | `_shard?` | `string` | - |
 | `_node?` | `string` | - |

@@ -11,7 +11,7 @@ client.eql.delete(this: That, params: T.EqlDeleteRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EqlDeleteRequest` | - |
+| `params` | [`EqlDeleteRequest`](../types/EqlDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

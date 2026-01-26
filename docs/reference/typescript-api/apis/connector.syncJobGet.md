@@ -11,7 +11,7 @@ client.connector.syncJobGet(this: That, params: T.ConnectorSyncJobGetRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobGetRequest` | - |
+| `params` | [`ConnectorSyncJobGetRequest`](../types/ConnectorSyncJobGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

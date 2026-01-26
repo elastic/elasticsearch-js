@@ -11,7 +11,7 @@ client.searchable_snapshots.stats(this: That, params?: T.SearchableSnapshotsStat
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SearchableSnapshotsStatsRequest` | - |
+| `params?` | [`SearchableSnapshotsStatsRequest`](../types/SearchableSnapshotsStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

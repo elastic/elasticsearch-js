@@ -11,7 +11,7 @@ client.field_caps(this: That, params?: T.FieldCapsRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.FieldCapsRequest` | - |
+| `params?` | [`FieldCapsRequest`](../types/FieldCapsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

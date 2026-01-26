@@ -11,7 +11,7 @@ client.connector.updateFiltering(this: That, params: T.ConnectorUpdateFilteringR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateFilteringRequest` | - |
+| `params` | [`ConnectorUpdateFilteringRequest`](../types/ConnectorUpdateFilteringRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.cat.circuitBreaker(this: That, params?: T.CatCircuitBreakerRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatCircuitBreakerRequest` | - |
+| `params?` | [`CatCircuitBreakerRequest`](../types/CatCircuitBreakerRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

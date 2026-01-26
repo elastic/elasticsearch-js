@@ -11,7 +11,7 @@ client.transform.upgradeTransforms(this: That, params?: T.TransformUpgradeTransf
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.TransformUpgradeTransformsRequest` | - |
+| `params?` | [`TransformUpgradeTransformsRequest`](../types/TransformUpgradeTransformsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

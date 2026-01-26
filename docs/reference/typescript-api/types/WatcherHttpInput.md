@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `extract?` | `string[]` | - |
+| `extract?` | `string`[] | - |
 | `request?` | [`WatcherHttpInputRequestDefinition`](WatcherHttpInputRequestDefinition.md) | - |
 | `response_content_type?` | [`WatcherResponseContentType`](WatcherResponseContentType.md) | - |
 

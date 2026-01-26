@@ -11,7 +11,7 @@ client.ping(this: That, params?: T.PingRequest, options?: TransportRequestOption
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.PingRequest` | - |
+| `params?` | [`PingRequest`](../types/PingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

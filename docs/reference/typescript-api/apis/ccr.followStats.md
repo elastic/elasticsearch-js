@@ -11,7 +11,7 @@ client.ccr.followStats(this: That, params: T.CcrFollowStatsRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrFollowStatsRequest` | - |
+| `params` | [`CcrFollowStatsRequest`](../types/CcrFollowStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

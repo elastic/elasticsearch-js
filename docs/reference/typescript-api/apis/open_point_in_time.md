@@ -11,7 +11,7 @@ client.open_point_in_time(this: That, params: T.OpenPointInTimeRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.OpenPointInTimeRequest` | - |
+| `params` | [`OpenPointInTimeRequest`](../types/OpenPointInTimeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.connector.updateStatus(this: That, params: T.ConnectorUpdateStatusRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateStatusRequest` | - |
+| `params` | [`ConnectorUpdateStatusRequest`](../types/ConnectorUpdateStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.search_mvt(this: That, params: T.SearchMvtRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchMvtRequest` | - |
+| `params` | [`SearchMvtRequest`](../types/SearchMvtRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ccr.pauseAutoFollowPattern(this: That, params: T.CcrPauseAutoFollowPatter
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrPauseAutoFollowPatternRequest` | - |
+| `params` | [`CcrPauseAutoFollowPatternRequest`](../types/CcrPauseAutoFollowPatternRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

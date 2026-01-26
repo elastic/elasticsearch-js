@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `data_streams` | `string[]` | - |
+| `data_streams` | `string`[] | - |
 | `duration?` | [`Duration`](Duration.md) | - |
 | `duration_in_millis?` | [`DurationValue`](DurationValue.md)<UnitMillis> | - |
 | `end_time?` | [`DateTime`](DateTime.md) | - |

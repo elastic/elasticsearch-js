@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `string` | Always `"LineString"` |
-| `coordinates` | `double[][]` | Array of `[lon, lat]` coordinates |
+| `coordinates` | [`double`](double.md)[][] | Array of `[lon, lat]` coordinates |
 
 ## See Also
 

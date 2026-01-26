@@ -11,7 +11,7 @@ client.watcher.deleteWatch(this: That, params: T.WatcherDeleteWatchRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.WatcherDeleteWatchRequest` | - |
+| `params` | [`WatcherDeleteWatchRequest`](../types/WatcherDeleteWatchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

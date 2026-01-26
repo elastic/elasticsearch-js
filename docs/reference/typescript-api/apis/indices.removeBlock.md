@@ -11,7 +11,7 @@ client.indices.removeBlock(this: That, params: T.IndicesRemoveBlockRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesRemoveBlockRequest` | - |
+| `params` | [`IndicesRemoveBlockRequest`](../types/IndicesRemoveBlockRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

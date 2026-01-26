@@ -37,7 +37,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 The default is `1`, which waits for each primary shard to be active. |
 | `require_alias?` | `boolean` | If `true`, the request's actions must target an index alias. |
 | `require_data_stream?` | `boolean` | If `true`, the request's actions must target a data stream (existing or to be created). |
-| `operations?` | `(BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]` | - |
+| `operations?` | `(BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)`[] | - |
 | `body?` | `string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }` | All values in `querystring` will be added to the request querystring. |
 

@@ -11,7 +11,7 @@ client.cluster.allocationExplain(this: That, params?: T.ClusterAllocationExplain
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterAllocationExplainRequest` | - |
+| `params?` | [`ClusterAllocationExplainRequest`](../types/ClusterAllocationExplainRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

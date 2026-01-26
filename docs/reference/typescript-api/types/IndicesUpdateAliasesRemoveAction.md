@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `alias?` | [`IndexAlias`](IndexAlias.md) | Alias for the action.
 Index alias names support date math. |
-| `aliases?` | `IndexAlias | IndexAlias[]` | Aliases for the action.
+| `aliases?` | `IndexAlias | IndexAlias`[] | Aliases for the action.
 Index alias names support date math. |
 | `index?` | [`IndexName`](IndexName.md) | Data stream or index for the action.
 Supports wildcards (`*`). |

@@ -11,7 +11,7 @@ client.logstash.deletePipeline(this: That, params: T.LogstashDeletePipelineReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.LogstashDeletePipelineRequest` | - |
+| `params` | [`LogstashDeletePipelineRequest`](../types/LogstashDeletePipelineRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

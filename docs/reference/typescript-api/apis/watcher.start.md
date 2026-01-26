@@ -11,7 +11,7 @@ client.watcher.start(this: That, params?: T.WatcherStartRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.WatcherStartRequest` | - |
+| `params?` | [`WatcherStartRequest`](../types/WatcherStartRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

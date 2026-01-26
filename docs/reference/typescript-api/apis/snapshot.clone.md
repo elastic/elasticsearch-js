@@ -11,7 +11,7 @@ client.snapshot.clone(this: That, params: T.SnapshotCloneRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotCloneRequest` | - |
+| `params` | [`SnapshotCloneRequest`](../types/SnapshotCloneRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.project.deleteRouting(this: That, params: T.ProjectDeleteRoutingRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ProjectDeleteRoutingRequest` | - |
+| `params` | [`ProjectDeleteRoutingRequest`](../types/ProjectDeleteRoutingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

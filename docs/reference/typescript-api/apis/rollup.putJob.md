@@ -11,7 +11,7 @@ client.rollup.putJob(this: That, params: T.RollupPutJobRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RollupPutJobRequest` | - |
+| `params` | [`RollupPutJobRequest`](../types/RollupPutJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

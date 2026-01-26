@@ -11,7 +11,7 @@ client.security.clearCachedRoles(this: That, params: T.SecurityClearCachedRolesR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityClearCachedRolesRequest` | - |
+| `params` | [`SecurityClearCachedRolesRequest`](../types/SecurityClearCachedRolesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

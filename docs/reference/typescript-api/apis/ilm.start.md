@@ -11,7 +11,7 @@ client.ilm.start(this: That, params?: T.IlmStartRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IlmStartRequest` | - |
+| `params?` | [`IlmStartRequest`](../types/IlmStartRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

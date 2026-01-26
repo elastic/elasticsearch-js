@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `options` | `SearchPhraseSuggestOption | SearchPhraseSuggestOption[]` | - |
+| `options` | `SearchPhraseSuggestOption | SearchPhraseSuggestOption`[] | - |
 
 ## See Also
 

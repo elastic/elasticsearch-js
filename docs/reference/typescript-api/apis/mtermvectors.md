@@ -11,7 +11,7 @@ client.mtermvectors(this: That, params?: T.MtermvectorsRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MtermvectorsRequest` | - |
+| `params?` | [`MtermvectorsRequest`](../types/MtermvectorsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -15,7 +15,7 @@ If specified, the `analyzer` or field parameter overrides this value.
 If no index is specified or the index does not have a default analyzer, the analyze API uses the standard analyzer. |
 | `analyzer?` | `string` | The name of the analyzer that should be applied to the provided `text`.
 This could be a built-in analyzer, or an analyzer that’s been configured in the index. |
-| `attributes?` | `string[]` | Array of token attributes used to filter the output of the `explain` parameter. |
+| `attributes?` | `string`[] | Array of token attributes used to filter the output of the `explain` parameter. |
 | `char_filter?` | [`AnalysisCharFilter`](AnalysisCharFilter.md)[] | Array of character filters used to preprocess characters before the tokenizer. |
 | `explain?` | `boolean` | If `true`, the response includes token attributes and additional details. |
 | `field?` | [`Field`](Field.md) | Field used to derive the analyzer.

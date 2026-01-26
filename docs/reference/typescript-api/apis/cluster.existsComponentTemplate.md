@@ -11,7 +11,7 @@ client.cluster.existsComponentTemplate(this: That, params: T.ClusterExistsCompon
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ClusterExistsComponentTemplateRequest` | - |
+| `params` | [`ClusterExistsComponentTemplateRequest`](../types/ClusterExistsComponentTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

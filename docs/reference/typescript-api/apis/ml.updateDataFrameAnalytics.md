@@ -11,7 +11,7 @@ client.ml.updateDataFrameAnalytics(this: That, params: T.MlUpdateDataFrameAnalyt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpdateDataFrameAnalyticsRequest` | - |
+| `params` | [`MlUpdateDataFrameAnalyticsRequest`](../types/MlUpdateDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

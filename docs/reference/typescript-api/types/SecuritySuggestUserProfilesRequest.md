@@ -13,7 +13,7 @@
 | `name?` | `string` | A query string used to match name-related fields in user profile documents.
 Name-related fields are the user's `username`, `full_name`, and `email`. |
 | `size?` | [`long`](long.md) | The number of profiles to return. |
-| `data?` | `string | string[]` | A comma-separated list of filters for the `data` field of the profile document.
+| `data?` | `string | string`[] | A comma-separated list of filters for the `data` field of the profile document.
 To return all content use `data=*`.
 To return a subset of content, use `data=<key>` to retrieve content nested under the specified `<key>`.
 By default, the API returns no `data` content.

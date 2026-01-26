@@ -11,7 +11,7 @@ client.ingest.deleteIpLocationDatabase(this: That, params: T.IngestDeleteIpLocat
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IngestDeleteIpLocationDatabaseRequest` | - |
+| `params` | [`IngestDeleteIpLocationDatabaseRequest`](../types/IngestDeleteIpLocationDatabaseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

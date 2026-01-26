@@ -11,7 +11,7 @@ client.ml.deleteTrainedModel(this: That, params: T.MlDeleteTrainedModelRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteTrainedModelRequest` | - |
+| `params` | [`MlDeleteTrainedModelRequest`](../types/MlDeleteTrainedModelRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

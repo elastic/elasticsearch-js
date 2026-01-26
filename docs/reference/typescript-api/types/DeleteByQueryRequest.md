@@ -49,7 +49,7 @@ It defaults to no timeout. |
 | `search_type?` | [`SearchType`](SearchType.md) | The type of the search operation.
 Available options include `query_then_fetch` and `dfs_query_then_fetch`. |
 | `slices?` | [`Slices`](Slices.md) | The number of slices this task should be divided into. |
-| `stats?` | `string[]` | The specific `tag` of the request for logging and statistical purposes. |
+| `stats?` | `string`[] | The specific `tag` of the request for logging and statistical purposes. |
 | `terminate_after?` | [`long`](long.md) | The maximum number of documents to collect for each shard.
 If a query reaches this limit, Elasticsearch terminates the query early.
 Elasticsearch collects documents before sorting.

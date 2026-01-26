@@ -33,7 +33,7 @@ If `false`, Elasticsearch only stores async searches that don't finish before th
 | `page_timeout?` | [`Duration`](Duration.md) | The minimum retention period for the scroll cursor.
 After this time period, a pagination request might fail because the scroll cursor is no longer available.
 Subsequent scroll requests prolong the lifetime of the scroll cursor by the duration of `page_timeout` in the scroll request. |
-| `params?` | `any[]` | The values for parameters in the query. |
+| `params?` | `any`[] | The values for parameters in the query. |
 | `query?` | `string` | The SQL query to run. |
 | `project_routing?` | [`ProjectRouting`](ProjectRouting.md) | Specifies a subset of projects to target using project
 metadata tags in a subset of Lucene query syntax.

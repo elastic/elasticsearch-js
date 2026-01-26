@@ -11,7 +11,7 @@ client.ml.putTrainedModelVocabulary(this: That, params: T.MlPutTrainedModelVocab
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutTrainedModelVocabularyRequest` | - |
+| `params` | [`MlPutTrainedModelVocabularyRequest`](../types/MlPutTrainedModelVocabularyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

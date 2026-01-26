@@ -11,7 +11,7 @@ client.cluster.pendingTasks(this: That, params?: T.ClusterPendingTasksRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterPendingTasksRequest` | - |
+| `params?` | [`ClusterPendingTasksRequest`](../types/ClusterPendingTasksRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.security.getUserPrivileges(this: That, params?: T.SecurityGetUserPrivileg
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetUserPrivilegesRequest` | - |
+| `params?` | [`SecurityGetUserPrivilegesRequest`](../types/SecurityGetUserPrivilegesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

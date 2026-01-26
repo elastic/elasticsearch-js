@@ -11,7 +11,7 @@ client.cat.allocation(this: That, params?: T.CatAllocationRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatAllocationRequest` | - |
+| `params?` | [`CatAllocationRequest`](../types/CatAllocationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

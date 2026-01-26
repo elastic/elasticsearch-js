@@ -11,7 +11,7 @@ client.ccr.forgetFollower(this: That, params: T.CcrForgetFollowerRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrForgetFollowerRequest` | - |
+| `params` | [`CcrForgetFollowerRequest`](../types/CcrForgetFollowerRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

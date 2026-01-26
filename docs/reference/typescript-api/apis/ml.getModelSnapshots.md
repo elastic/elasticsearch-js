@@ -11,7 +11,7 @@ client.ml.getModelSnapshots(this: That, params: T.MlGetModelSnapshotsRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetModelSnapshotsRequest` | - |
+| `params` | [`MlGetModelSnapshotsRequest`](../types/MlGetModelSnapshotsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

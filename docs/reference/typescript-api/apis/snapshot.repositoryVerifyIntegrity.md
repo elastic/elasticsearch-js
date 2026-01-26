@@ -11,7 +11,7 @@ client.snapshot.repositoryVerifyIntegrity(this: That, params: T.SnapshotReposito
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotRepositoryVerifyIntegrityRequest` | - |
+| `params` | [`SnapshotRepositoryVerifyIntegrityRequest`](../types/SnapshotRepositoryVerifyIntegrityRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

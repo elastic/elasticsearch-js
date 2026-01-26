@@ -21,7 +21,7 @@ To indicate that the request should never timeout, set it to `-1`. |
 If no `renamed_index` is specified, this name will also be used to create the new index. |
 | `renamed_index?` | [`IndexName`](IndexName.md) | The name of the index that will be created. |
 | `index_settings?` | `Record<string, any>` | The settings that should be added to the index when it is mounted. |
-| `ignore_index_settings?` | `string[]` | The names of settings that should be removed from the index when it is mounted. |
+| `ignore_index_settings?` | `string`[] | The names of settings that should be removed from the index when it is mounted. |
 | `body?` | `string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, storage?: never, index?: never, renamed_index?: never, index_settings?: never, ignore_index_settings?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, storage?: never, index?: never, renamed_index?: never, index_settings?: never, ignore_index_settings?: never }` | All values in `querystring` will be added to the request querystring. |
 

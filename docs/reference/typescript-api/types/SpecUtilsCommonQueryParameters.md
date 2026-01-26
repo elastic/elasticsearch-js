@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `error_trace?` | `boolean` | When set to `true` Elasticsearch will include the full stack trace of errors
 when they occur. |
-| `filter_path?` | `string | string[]` | Comma-separated list of filters in dot notation which reduce the response
+| `filter_path?` | `string | string`[] | Comma-separated list of filters in dot notation which reduce the response
 returned by Elasticsearch. |
 | `human?` | `boolean` | When set to `true` will return statistics in a format suitable for humans.
 For example `"exists_time": "1h"` for humans and

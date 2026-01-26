@@ -11,7 +11,7 @@ client.cat.recovery(this: That, params?: T.CatRecoveryRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatRecoveryRequest` | - |
+| `params?` | [`CatRecoveryRequest`](../types/CatRecoveryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

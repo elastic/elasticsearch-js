@@ -11,7 +11,7 @@ client.inference.putAi21(this: That, params: T.InferencePutAi21Request, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAi21Request` | - |
+| `params` | [`InferencePutAi21Request`](../types/InferencePutAi21Request.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

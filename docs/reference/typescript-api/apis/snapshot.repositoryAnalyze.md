@@ -11,7 +11,7 @@ client.snapshot.repositoryAnalyze(this: That, params: T.SnapshotRepositoryAnalyz
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotRepositoryAnalyzeRequest` | - |
+| `params` | [`SnapshotRepositoryAnalyzeRequest`](../types/SnapshotRepositoryAnalyzeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

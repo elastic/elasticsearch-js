@@ -11,7 +11,7 @@ client.streams.logsDisable(this: That, params?: T.StreamsLogsDisableRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.StreamsLogsDisableRequest` | - |
+| `params?` | [`StreamsLogsDisableRequest`](../types/StreamsLogsDisableRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

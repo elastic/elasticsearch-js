@@ -11,7 +11,7 @@ client.cluster.stats(this: That, params?: T.ClusterStatsRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterStatsRequest` | - |
+| `params?` | [`ClusterStatsRequest`](../types/ClusterStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'kuromoji_part_of_speech'` | - |
-| `stoptags` | `string[]` | - |
+| `stoptags` | `string`[] | - |
 
 ## See Also
 

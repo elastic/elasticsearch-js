@@ -9,7 +9,7 @@
 | `node_id` | [`Id`](Id.md) | - |
 | `path` | `string` | - |
 | `total` | [`long`](long.md) | - |
-| `shards` | `string[]` | - |
+| `shards` | `string`[] | - |
 
 ## See Also
 

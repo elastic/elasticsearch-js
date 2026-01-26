@@ -11,7 +11,7 @@ client.ccr.stats(this: That, params?: T.CcrStatsRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CcrStatsRequest` | - |
+| `params?` | [`CcrStatsRequest`](../types/CcrStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

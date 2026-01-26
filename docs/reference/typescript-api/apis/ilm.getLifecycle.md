@@ -11,7 +11,7 @@ client.ilm.getLifecycle(this: That, params?: T.IlmGetLifecycleRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IlmGetLifecycleRequest` | - |
+| `params?` | [`IlmGetLifecycleRequest`](../types/IlmGetLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

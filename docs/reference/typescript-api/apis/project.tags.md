@@ -11,7 +11,7 @@ client.project.tags(this: That, params?: T.ProjectTagsRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ProjectTagsRequest` | - |
+| `params?` | [`ProjectTagsRequest`](../types/ProjectTagsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

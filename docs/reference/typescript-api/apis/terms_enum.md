@@ -11,7 +11,7 @@ client.terms_enum(this: That, params: T.TermsEnumRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TermsEnumRequest` | - |
+| `params` | [`TermsEnumRequest`](../types/TermsEnumRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

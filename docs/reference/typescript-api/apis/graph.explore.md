@@ -11,7 +11,7 @@ client.graph.explore(this: That, params: T.GraphExploreRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.GraphExploreRequest` | - |
+| `params` | [`GraphExploreRequest`](../types/GraphExploreRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

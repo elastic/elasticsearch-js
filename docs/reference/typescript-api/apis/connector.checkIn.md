@@ -11,7 +11,7 @@ client.connector.checkIn(this: That, params: T.ConnectorCheckInRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorCheckInRequest` | - |
+| `params` | [`ConnectorCheckInRequest`](../types/ConnectorCheckInRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

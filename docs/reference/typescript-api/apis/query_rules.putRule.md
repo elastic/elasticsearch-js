@@ -11,7 +11,7 @@ client.query_rules.putRule(this: That, params: T.QueryRulesPutRuleRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.QueryRulesPutRuleRequest` | - |
+| `params` | [`QueryRulesPutRuleRequest`](../types/QueryRulesPutRuleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

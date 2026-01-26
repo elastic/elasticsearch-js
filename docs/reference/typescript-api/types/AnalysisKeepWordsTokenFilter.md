@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'keep'` | - |
-| `keep_words?` | `string[]` | List of words to keep. Only tokens that match words in this list are included in the output.
+| `keep_words?` | `string`[] | List of words to keep. Only tokens that match words in this list are included in the output.
 Either this parameter or `keep_words_path` must be specified. |
 | `keep_words_case?` | `boolean` | If `true`, lowercase all keep words. Defaults to `false`. |
 | `keep_words_path?` | `string` | Path to a file that contains a list of words to keep. Only tokens that match words in this list are included in the output.

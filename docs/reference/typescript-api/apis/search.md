@@ -11,7 +11,7 @@ client.search(this: That, params?: T.SearchRequest, options?: TransportRequestOp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SearchRequest` | - |
+| `params?` | [`SearchRequest`](../types/SearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

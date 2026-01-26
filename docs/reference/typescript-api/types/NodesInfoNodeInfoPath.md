@@ -8,8 +8,8 @@
 |----------|------|-------------|
 | `logs?` | `string` | - |
 | `home?` | `string` | - |
-| `repo?` | `string[]` | - |
-| `data?` | `string | string[]` | - |
+| `repo?` | `string`[] | - |
+| `data?` | `string | string`[] | - |
 
 ## See Also
 

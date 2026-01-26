@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `at` | `string[]` | - |
+| `at` | `string`[] | - |
 | `on` | [`WatcherDay`](WatcherDay.md)[] | - |
 
 ## See Also

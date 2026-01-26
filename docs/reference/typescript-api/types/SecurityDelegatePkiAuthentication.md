@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `username` | `string` | - |
-| `roles` | `string[]` | - |
+| `roles` | `string`[] | - |
 | `full_name` | `string | null` | - |
 | `email` | `string | null` | - |
 | `token?` | `Record<string, string>` | - |

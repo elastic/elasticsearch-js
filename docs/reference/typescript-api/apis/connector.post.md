@@ -11,7 +11,7 @@ client.connector.post(this: That, params?: T.ConnectorPostRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ConnectorPostRequest` | - |
+| `params?` | [`ConnectorPostRequest`](../types/ConnectorPostRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

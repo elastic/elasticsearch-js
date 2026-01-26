@@ -11,7 +11,7 @@ client.security.getRole(this: That, params?: T.SecurityGetRoleRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetRoleRequest` | - |
+| `params?` | [`SecurityGetRoleRequest`](../types/SecurityGetRoleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

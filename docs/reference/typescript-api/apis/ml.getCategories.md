@@ -11,7 +11,7 @@ client.ml.getCategories(this: That, params: T.MlGetCategoriesRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetCategoriesRequest` | - |
+| `params` | [`MlGetCategoriesRequest`](../types/MlGetCategoriesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

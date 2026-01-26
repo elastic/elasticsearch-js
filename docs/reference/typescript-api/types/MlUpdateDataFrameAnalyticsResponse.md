@@ -9,7 +9,7 @@
 | `authorization?` | [`MlDataframeAnalyticsAuthorization`](MlDataframeAnalyticsAuthorization.md) | - |
 | `allow_lazy_start` | `boolean` | - |
 | `analysis` | [`MlDataframeAnalysisContainer`](MlDataframeAnalysisContainer.md) | - |
-| `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string[]` | - |
+| `analyzed_fields?` | `MlDataframeAnalysisAnalyzedFields | string`[] | - |
 | `create_time` | [`long`](long.md) | - |
 | `description?` | `string` | - |
 | `dest` | [`MlDataframeAnalyticsDestination`](MlDataframeAnalyticsDestination.md) | - |

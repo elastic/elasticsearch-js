@@ -10,7 +10,7 @@
 | `ephemeral_id?` | `string` | - |
 | `external_id?` | `string` | - |
 | `name` | [`Name`](Name.md) | - |
-| `roles` | `string[]` | - |
+| `roles` | `string`[] | - |
 | `transport_address` | [`TransportAddress`](TransportAddress.md) | - |
 
 ## See Also

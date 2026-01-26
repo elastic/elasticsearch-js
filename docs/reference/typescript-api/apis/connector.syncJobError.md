@@ -11,7 +11,7 @@ client.connector.syncJobError(this: That, params: T.ConnectorSyncJobErrorRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobErrorRequest` | - |
+| `params` | [`ConnectorSyncJobErrorRequest`](../types/ConnectorSyncJobErrorRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

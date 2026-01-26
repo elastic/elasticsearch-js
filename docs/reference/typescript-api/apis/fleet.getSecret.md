@@ -11,7 +11,7 @@ client.fleet.getSecret(this: That, params: T.FleetGetSecretRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.FleetGetSecretRequest` | - |
+| `params` | [`FleetGetSecretRequest`](../types/FleetGetSecretRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

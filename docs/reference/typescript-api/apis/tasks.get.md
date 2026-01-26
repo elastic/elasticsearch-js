@@ -11,7 +11,7 @@ client.tasks.get(this: That, params: T.TasksGetRequest, options?: TransportReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TasksGetRequest` | - |
+| `params` | [`TasksGetRequest`](../types/TasksGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

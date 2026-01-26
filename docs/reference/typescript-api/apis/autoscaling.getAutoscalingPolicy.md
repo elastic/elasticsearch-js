@@ -11,7 +11,7 @@ client.autoscaling.getAutoscalingPolicy(this: That, params: T.AutoscalingGetAuto
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.AutoscalingGetAutoscalingPolicyRequest` | - |
+| `params` | [`AutoscalingGetAutoscalingPolicyRequest`](../types/AutoscalingGetAutoscalingPolicyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

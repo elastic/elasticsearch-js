@@ -11,7 +11,7 @@ client.cat.shards(this: That, params?: T.CatShardsRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatShardsRequest` | - |
+| `params?` | [`CatShardsRequest`](../types/CatShardsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `bound_address` | `string[]` | - |
+| `bound_address` | `string`[] | - |
 | `max_content_length?` | [`ByteSize`](ByteSize.md) | - |
 | `max_content_length_in_bytes` | [`long`](long.md) | - |
 | `publish_address` | `string` | - |

@@ -11,7 +11,7 @@ client.enrich.putPolicy(this: That, params: T.EnrichPutPolicyRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EnrichPutPolicyRequest` | - |
+| `params` | [`EnrichPutPolicyRequest`](../types/EnrichPutPolicyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

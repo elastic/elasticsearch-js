@@ -11,7 +11,7 @@ client.indices.getAllSampleConfiguration(this: That, params?: T.IndicesGetAllSam
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesGetAllSampleConfigurationRequest` | - |
+| `params?` | [`IndicesGetAllSampleConfigurationRequest`](../types/IndicesGetAllSampleConfigurationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

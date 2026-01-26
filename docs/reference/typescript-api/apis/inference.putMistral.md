@@ -11,7 +11,7 @@ client.inference.putMistral(this: That, params: T.InferencePutMistralRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutMistralRequest` | - |
+| `params` | [`InferencePutMistralRequest`](../types/InferencePutMistralRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

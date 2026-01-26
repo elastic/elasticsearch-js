@@ -11,7 +11,7 @@ client.cat.transforms(this: That, params?: T.CatTransformsRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatTransformsRequest` | - |
+| `params?` | [`CatTransformsRequest`](../types/CatTransformsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ccr.resumeAutoFollowPattern(this: That, params: T.CcrResumeAutoFollowPatt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrResumeAutoFollowPatternRequest` | - |
+| `params` | [`CcrResumeAutoFollowPatternRequest`](../types/CcrResumeAutoFollowPatternRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

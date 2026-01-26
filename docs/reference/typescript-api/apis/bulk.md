@@ -11,7 +11,7 @@ client.bulk(this: That, params: T.BulkRequest<TDocument, TPartialDocument>, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.BulkRequest<TDocument, TPartialDocument>` | - |
+| `params` | [`BulkRequest`](../types/BulkRequest.md)<TDocument, TPartialDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

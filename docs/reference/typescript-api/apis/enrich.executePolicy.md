@@ -11,7 +11,7 @@ client.enrich.executePolicy(this: That, params: T.EnrichExecutePolicyRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EnrichExecutePolicyRequest` | - |
+| `params` | [`EnrichExecutePolicyRequest`](../types/EnrichExecutePolicyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

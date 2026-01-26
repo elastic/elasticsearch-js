@@ -11,7 +11,7 @@ Useful when a search request contains multiple inner hits. |
 | `size?` | [`integer`](integer.md) | The maximum number of hits to return per `inner_hits`. |
 | `from?` | [`integer`](integer.md) | Inner hit starting document offset. |
 | `collapse?` | [`SearchFieldCollapse`](SearchFieldCollapse.md) | - |
-| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | - |
+| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)`[] | - |
 | `explain?` | `boolean` | - |
 | `highlight?` | [`SearchHighlight`](SearchHighlight.md) | - |
 | `ignore_unmapped?` | `boolean` | - |

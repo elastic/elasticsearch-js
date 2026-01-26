@@ -11,7 +11,7 @@ client.ml.deleteDataFrameAnalytics(this: That, params: T.MlDeleteDataFrameAnalyt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteDataFrameAnalyticsRequest` | - |
+| `params` | [`MlDeleteDataFrameAnalyticsRequest`](../types/MlDeleteDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

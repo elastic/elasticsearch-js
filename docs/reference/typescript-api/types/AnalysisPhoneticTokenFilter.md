@@ -12,7 +12,7 @@
 |----------|------|-------------|
 | `type` | `'phonetic'` | - |
 | `encoder` | [`AnalysisPhoneticEncoder`](AnalysisPhoneticEncoder.md) | - |
-| `languageset?` | `AnalysisPhoneticLanguage | AnalysisPhoneticLanguage[]` | - |
+| `languageset?` | `AnalysisPhoneticLanguage | AnalysisPhoneticLanguage`[] | - |
 | `max_code_len?` | [`integer`](integer.md) | - |
 | `name_type?` | [`AnalysisPhoneticNameType`](AnalysisPhoneticNameType.md) | - |
 | `replace?` | `boolean` | - |

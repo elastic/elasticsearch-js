@@ -11,7 +11,7 @@ client.connector.updateIndexName(this: That, params: T.ConnectorUpdateIndexNameR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateIndexNameRequest` | - |
+| `params` | [`ConnectorUpdateIndexNameRequest`](../types/ConnectorUpdateIndexNameRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.startDatafeed(this: That, params: T.MlStartDatafeedRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlStartDatafeedRequest` | - |
+| `params` | [`MlStartDatafeedRequest`](../types/MlStartDatafeedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

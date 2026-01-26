@@ -11,7 +11,7 @@ client.cat.aliases(this: That, params?: T.CatAliasesRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatAliasesRequest` | - |
+| `params?` | [`CatAliasesRequest`](../types/CatAliasesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

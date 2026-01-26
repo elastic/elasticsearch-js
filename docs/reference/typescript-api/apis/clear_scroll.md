@@ -11,7 +11,7 @@ client.clear_scroll(this: That, params?: T.ClearScrollRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClearScrollRequest` | - |
+| `params?` | [`ClearScrollRequest`](../types/ClearScrollRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

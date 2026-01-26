@@ -11,7 +11,7 @@ client.async_search.delete(this: That, params: T.AsyncSearchDeleteRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.AsyncSearchDeleteRequest` | - |
+| `params` | [`AsyncSearchDeleteRequest`](../types/AsyncSearchDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

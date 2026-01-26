@@ -12,7 +12,7 @@
 | `doc_max` | [`long`](long.md) | - |
 | `doc_total` | [`long`](long.md) | - |
 | `index_count` | [`long`](long.md) | - |
-| `lang` | `string[]` | - |
+| `lang` | `string`[] | - |
 | `lines_max` | [`long`](long.md) | - |
 | `lines_total` | [`long`](long.md) | - |
 | `name` | [`Field`](Field.md) | - |

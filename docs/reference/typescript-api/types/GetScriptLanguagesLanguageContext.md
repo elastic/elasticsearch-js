@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `contexts` | `string[]` | - |
+| `contexts` | `string`[] | - |
 | `language` | [`ScriptLanguage`](ScriptLanguage.md) | - |
 
 ## See Also

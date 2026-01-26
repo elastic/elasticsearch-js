@@ -7,7 +7,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `generated_dest_index` | [`IndicesIndexState`](IndicesIndexState.md) | - |
-| `preview` | `TTransform[]` | - |
+| `preview` | `TTransform`[] | - |
 
 ## See Also
 

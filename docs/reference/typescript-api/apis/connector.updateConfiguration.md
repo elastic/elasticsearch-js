@@ -11,7 +11,7 @@ client.connector.updateConfiguration(this: That, params: T.ConnectorUpdateConfig
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateConfigurationRequest` | - |
+| `params` | [`ConnectorUpdateConfigurationRequest`](../types/ConnectorUpdateConfigurationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

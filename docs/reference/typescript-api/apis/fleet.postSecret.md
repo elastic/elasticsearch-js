@@ -11,7 +11,7 @@ client.fleet.postSecret(this: That, params: T.FleetPostSecretRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.FleetPostSecretRequest` | - |
+| `params` | [`FleetPostSecretRequest`](../types/FleetPostSecretRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

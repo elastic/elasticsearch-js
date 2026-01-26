@@ -11,7 +11,7 @@ client.info(this: That, params?: T.InfoRequest, options?: TransportRequestOption
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.InfoRequest` | - |
+| `params?` | [`InfoRequest`](../types/InfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

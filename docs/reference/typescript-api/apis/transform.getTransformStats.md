@@ -11,7 +11,7 @@ client.transform.getTransformStats(this: That, params: T.TransformGetTransformSt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformGetTransformStatsRequest` | - |
+| `params` | [`TransformGetTransformStatsRequest`](../types/TransformGetTransformStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

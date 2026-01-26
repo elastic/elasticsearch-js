@@ -11,7 +11,7 @@ client.connector.updateScheduling(this: That, params: T.ConnectorUpdateSchedulin
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateSchedulingRequest` | - |
+| `params` | [`ConnectorUpdateSchedulingRequest`](../types/ConnectorUpdateSchedulingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

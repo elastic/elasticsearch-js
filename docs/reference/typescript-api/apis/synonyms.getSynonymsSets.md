@@ -11,7 +11,7 @@ client.synonyms.getSynonymsSets(this: That, params?: T.SynonymsGetSynonymsSetsRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SynonymsGetSynonymsSetsRequest` | - |
+| `params?` | [`SynonymsGetSynonymsSetsRequest`](../types/SynonymsGetSynonymsSetsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

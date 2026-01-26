@@ -11,7 +11,7 @@ client.security.enrollKibana(this: That, params?: T.SecurityEnrollKibanaRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityEnrollKibanaRequest` | - |
+| `params?` | [`SecurityEnrollKibanaRequest`](../types/SecurityEnrollKibanaRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

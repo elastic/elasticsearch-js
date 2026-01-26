@@ -20,7 +20,7 @@ If no response is received before the timeout expires, the request fails and ret
 If `false`, the request returns a response when the snapshot initializes. |
 | `expand_wildcards?` | [`ExpandWildcards`](ExpandWildcards.md) | Determines how wildcard patterns in the `indices` parameter match data streams and indices.
 It supports comma-separated values such as `open,hidden`. |
-| `feature_states?` | `string[]` | The feature states to include in the snapshot.
+| `feature_states?` | `string`[] | The feature states to include in the snapshot.
 Each feature state includes one or more system indices containing related data.
 You can view a list of eligible features using the get features API.
 

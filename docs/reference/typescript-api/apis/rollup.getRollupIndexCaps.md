@@ -11,7 +11,7 @@ client.rollup.getRollupIndexCaps(this: That, params: T.RollupGetRollupIndexCapsR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RollupGetRollupIndexCapsRequest` | - |
+| `params` | [`RollupGetRollupIndexCapsRequest`](../types/RollupGetRollupIndexCapsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

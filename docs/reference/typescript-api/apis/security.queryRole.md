@@ -11,7 +11,7 @@ client.security.queryRole(this: That, params?: T.SecurityQueryRoleRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityQueryRoleRequest` | - |
+| `params?` | [`SecurityQueryRoleRequest`](../types/SecurityQueryRoleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

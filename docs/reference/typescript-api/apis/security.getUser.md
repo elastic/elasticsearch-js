@@ -11,7 +11,7 @@ client.security.getUser(this: That, params?: T.SecurityGetUserRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetUserRequest` | - |
+| `params?` | [`SecurityGetUserRequest`](../types/SecurityGetUserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

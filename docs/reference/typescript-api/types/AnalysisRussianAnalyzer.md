@@ -9,7 +9,7 @@
 | `type` | `'russian'` | - |
 | `stopwords?` | [`AnalysisStopWords`](AnalysisStopWords.md) | - |
 | `stopwords_path?` | `string` | - |
-| `stem_exclusion?` | `string[]` | - |
+| `stem_exclusion?` | `string`[] | - |
 
 ## See Also
 

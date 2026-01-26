@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `extract?` | `string[]` | - |
+| `extract?` | `string`[] | - |
 | `request` | [`WatcherSearchInputRequestDefinition`](WatcherSearchInputRequestDefinition.md) | - |
 | `timeout?` | [`Duration`](Duration.md) | - |
 

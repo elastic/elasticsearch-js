@@ -15,7 +15,7 @@ use `_all` or to perform the operation on all indices. |
 | `routing?` | [`Routing`](Routing.md) | A comma-separated list of specific routing values. |
 | `_source?` | [`SearchSourceConfig`](SearchSourceConfig.md) | Indicates which source fields are returned for matching documents. These
 fields are returned in the `hits._source` property of the search response. |
-| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)[]` | The request returns doc values for field names matching these patterns
+| `docvalue_fields?` | `(QueryDslFieldAndFormat | Field)`[] | The request returns doc values for field names matching these patterns
 in the `hits.fields` property of the response.
 It accepts wildcard (`*`) patterns. |
 | `stored_fields?` | [`Fields`](Fields.md) | A list of stored fields to return as part of a hit. If no fields are specified,
@@ -25,7 +25,7 @@ and stored fields in the search response. |
 | `fields?` | [`Fields`](Fields.md) | The request returns values for field names matching these patterns
 in the `hits.fields` property of the response.
 It accepts wildcard (`*`) patterns. |
-| `filter?` | `QueryDslQueryContainer | QueryDslQueryContainer[]` | A query to filter the documents that can match. The kNN search will return the top
+| `filter?` | `QueryDslQueryContainer | QueryDslQueryContainer`[] | A query to filter the documents that can match. The kNN search will return the top
 `k` documents that also match this filter. The value can be a single query or a
 list of queries. If `filter` isn't provided, all documents are allowed to match. |
 | `knn` | [`KnnSearchKnnSearchQuery`](KnnSearchKnnSearchQuery.md) | The kNN query to run. |

@@ -11,7 +11,7 @@ client.logstash.getPipeline(this: That, params?: T.LogstashGetPipelineRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LogstashGetPipelineRequest` | - |
+| `params?` | [`LogstashGetPipelineRequest`](../types/LogstashGetPipelineRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

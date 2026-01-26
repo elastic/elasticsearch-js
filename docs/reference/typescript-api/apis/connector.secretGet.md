@@ -11,7 +11,7 @@ client.connector.secretGet(this: That, params: T.ConnectorSecretGetRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSecretGetRequest` | - |
+| `params` | [`ConnectorSecretGetRequest`](../types/ConnectorSecretGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

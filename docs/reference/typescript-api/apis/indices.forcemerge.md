@@ -11,7 +11,7 @@ client.indices.forcemerge(this: That, params?: T.IndicesForcemergeRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesForcemergeRequest` | - |
+| `params?` | [`IndicesForcemergeRequest`](../types/IndicesForcemergeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

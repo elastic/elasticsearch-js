@@ -11,7 +11,7 @@ client.shutdown.putNode(this: That, params: T.ShutdownPutNodeRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ShutdownPutNodeRequest` | - |
+| `params` | [`ShutdownPutNodeRequest`](../types/ShutdownPutNodeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

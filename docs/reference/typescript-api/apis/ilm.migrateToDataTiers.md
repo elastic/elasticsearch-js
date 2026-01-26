@@ -11,7 +11,7 @@ client.ilm.migrateToDataTiers(this: That, params?: T.IlmMigrateToDataTiersReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IlmMigrateToDataTiersRequest` | - |
+| `params?` | [`IlmMigrateToDataTiersRequest`](../types/IlmMigrateToDataTiersRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

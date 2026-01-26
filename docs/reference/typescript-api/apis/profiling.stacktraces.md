@@ -11,7 +11,7 @@ client.profiling.stacktraces(this: That, params: T.ProfilingStacktracesRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ProfilingStacktracesRequest` | - |
+| `params` | [`ProfilingStacktracesRequest`](../types/ProfilingStacktracesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

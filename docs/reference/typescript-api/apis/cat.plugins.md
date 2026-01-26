@@ -11,7 +11,7 @@ client.cat.plugins(this: That, params?: T.CatPluginsRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatPluginsRequest` | - |
+| `params?` | [`CatPluginsRequest`](../types/CatPluginsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

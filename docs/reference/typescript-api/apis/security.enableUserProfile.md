@@ -11,7 +11,7 @@ client.security.enableUserProfile(this: That, params: T.SecurityEnableUserProfil
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityEnableUserProfileRequest` | - |
+| `params` | [`SecurityEnableUserProfileRequest`](../types/SecurityEnableUserProfileRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

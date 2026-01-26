@@ -11,7 +11,7 @@ client.synonyms.putSynonym(this: That, params: T.SynonymsPutSynonymRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SynonymsPutSynonymRequest` | - |
+| `params` | [`SynonymsPutSynonymRequest`](../types/SynonymsPutSynonymRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

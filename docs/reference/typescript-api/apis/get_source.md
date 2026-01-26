@@ -11,7 +11,7 @@ client.get_source(this: That, params: T.GetSourceRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.GetSourceRequest` | - |
+| `params` | [`GetSourceRequest`](../types/GetSourceRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

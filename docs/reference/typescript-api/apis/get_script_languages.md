@@ -11,7 +11,7 @@ client.get_script_languages(this: That, params?: T.GetScriptLanguagesRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.GetScriptLanguagesRequest` | - |
+| `params?` | [`GetScriptLanguagesRequest`](../types/GetScriptLanguagesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

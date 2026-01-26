@@ -11,7 +11,7 @@ client.inference.putOpenai(this: That, params: T.InferencePutOpenaiRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutOpenaiRequest` | - |
+| `params` | [`InferencePutOpenaiRequest`](../types/InferencePutOpenaiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

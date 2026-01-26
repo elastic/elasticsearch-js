@@ -11,7 +11,7 @@ client.transform.putTransform(this: That, params: T.TransformPutTransformRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformPutTransformRequest` | - |
+| `params` | [`TransformPutTransformRequest`](../types/TransformPutTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

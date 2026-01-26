@@ -11,7 +11,7 @@ client.security.deleteUser(this: That, params: T.SecurityDeleteUserRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDeleteUserRequest` | - |
+| `params` | [`SecurityDeleteUserRequest`](../types/SecurityDeleteUserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

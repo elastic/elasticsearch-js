@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `model_id` | [`Id`](Id.md) | Identifier for the trained model. |
 | `model_type?` | [`MlTrainedModelType`](MlTrainedModelType.md) | The model type |
-| `tags` | `string[]` | A comma delimited string of tags. A trained model can have many tags, or none. |
+| `tags` | `string`[] | A comma delimited string of tags. A trained model can have many tags, or none. |
 | `version?` | [`VersionString`](VersionString.md) | The Elasticsearch version number in which the trained model was created. |
 | `compressed_definition?` | `string` | - |
 | `created_by?` | `string` | Information on the creator of the trained model. |

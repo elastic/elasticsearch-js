@@ -11,7 +11,7 @@ client.search_application.delete(this: That, params: T.SearchApplicationDeleteRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationDeleteRequest` | - |
+| `params` | [`SearchApplicationDeleteRequest`](../types/SearchApplicationDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

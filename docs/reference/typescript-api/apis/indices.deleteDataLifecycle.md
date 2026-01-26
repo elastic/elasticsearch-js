@@ -11,7 +11,7 @@ client.indices.deleteDataLifecycle(this: That, params: T.IndicesDeleteDataLifecy
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDeleteDataLifecycleRequest` | - |
+| `params` | [`IndicesDeleteDataLifecycleRequest`](../types/IndicesDeleteDataLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

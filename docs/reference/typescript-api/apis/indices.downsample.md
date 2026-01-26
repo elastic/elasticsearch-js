@@ -11,7 +11,7 @@ client.indices.downsample(this: That, params: T.IndicesDownsampleRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDownsampleRequest` | - |
+| `params` | [`IndicesDownsampleRequest`](../types/IndicesDownsampleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

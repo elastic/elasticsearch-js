@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `date_formats?` | `string[]` | An array of the expected date formats for parsing dates / timestamps in the document being preprocessed.
+| `date_formats?` | `string`[] | An array of the expected date formats for parsing dates / timestamps in the document being preprocessed.
 Can be a java time pattern or one of the following formats: ISO8601, UNIX, UNIX_MS, or TAI64N. |
 | `date_rounding` | `string` | How to round the date when formatting the date into the index name. Valid values are:
 `y` (year), `M` (month), `w` (week), `d` (day), `h` (hour), `m` (minute) and `s` (second).

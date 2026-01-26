@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `actions` | `string[]` | - |
+| `actions` | `string`[] | - |
 | `application?` | `string` | - |
 | `name?` | [`Name`](Name.md) | - |
 | `metadata?` | [`Metadata`](Metadata.md) | - |

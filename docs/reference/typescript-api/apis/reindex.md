@@ -11,7 +11,7 @@ client.reindex(this: That, params: T.ReindexRequest, options?: TransportRequestO
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ReindexRequest` | - |
+| `params` | [`ReindexRequest`](../types/ReindexRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

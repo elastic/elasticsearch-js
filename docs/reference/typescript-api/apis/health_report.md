@@ -11,7 +11,7 @@ client.health_report(this: That, params?: T.HealthReportRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.HealthReportRequest` | - |
+| `params?` | [`HealthReportRequest`](../types/HealthReportRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

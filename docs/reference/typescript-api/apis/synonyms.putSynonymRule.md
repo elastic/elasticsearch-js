@@ -11,7 +11,7 @@ client.synonyms.putSynonymRule(this: That, params: T.SynonymsPutSynonymRuleReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SynonymsPutSynonymRuleRequest` | - |
+| `params` | [`SynonymsPutSynonymRuleRequest`](../types/SynonymsPutSynonymRuleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

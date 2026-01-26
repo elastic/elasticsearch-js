@@ -11,7 +11,7 @@ client.synonyms.getSynonymRule(this: That, params: T.SynonymsGetSynonymRuleReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SynonymsGetSynonymRuleRequest` | - |
+| `params` | [`SynonymsGetSynonymRuleRequest`](../types/SynonymsGetSynonymRuleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

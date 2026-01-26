@@ -11,7 +11,7 @@ client.security.deletePrivileges(this: That, params: T.SecurityDeletePrivilegesR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDeletePrivilegesRequest` | - |
+| `params` | [`SecurityDeletePrivilegesRequest`](../types/SecurityDeletePrivilegesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

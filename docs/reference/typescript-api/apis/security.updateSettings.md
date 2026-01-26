@@ -11,7 +11,7 @@ client.security.updateSettings(this: That, params?: T.SecurityUpdateSettingsRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityUpdateSettingsRequest` | - |
+| `params?` | [`SecurityUpdateSettingsRequest`](../types/SecurityUpdateSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

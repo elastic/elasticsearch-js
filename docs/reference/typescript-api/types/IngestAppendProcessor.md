@@ -12,7 +12,7 @@
 |----------|------|-------------|
 | `field` | [`Field`](Field.md) | The field to be appended to.
 Supports template snippets. |
-| `value?` | `any | any[]` | The value to be appended. Supports template snippets. May specify only one of `value` or `copy_from`. |
+| `value?` | `any | any`[] | The value to be appended. Supports template snippets. May specify only one of `value` or `copy_from`. |
 | `media_type?` | `string` | The media type for encoding `value`.
 Applies only when value is a template snippet.
 Must be one of `application/json`, `text/plain`, or `application/x-www-form-urlencoded`. |

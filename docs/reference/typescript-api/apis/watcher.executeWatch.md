@@ -11,7 +11,7 @@ client.watcher.executeWatch(this: That, params?: T.WatcherExecuteWatchRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.WatcherExecuteWatchRequest` | - |
+| `params?` | [`WatcherExecuteWatchRequest`](../types/WatcherExecuteWatchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

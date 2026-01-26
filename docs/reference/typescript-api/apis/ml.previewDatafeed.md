@@ -11,7 +11,7 @@ client.ml.previewDatafeed(this: That, params?: T.MlPreviewDatafeedRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlPreviewDatafeedRequest` | - |
+| `params?` | [`MlPreviewDatafeedRequest`](../types/MlPreviewDatafeedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.deleteCalendarEvent(this: That, params: T.MlDeleteCalendarEventRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteCalendarEventRequest` | - |
+| `params` | [`MlDeleteCalendarEventRequest`](../types/MlDeleteCalendarEventRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

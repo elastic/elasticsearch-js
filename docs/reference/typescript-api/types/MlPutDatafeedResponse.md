@@ -12,7 +12,7 @@
 | `delayed_data_check_config?` | [`MlDelayedDataCheckConfig`](MlDelayedDataCheckConfig.md) | - |
 | `datafeed_id` | [`Id`](Id.md) | - |
 | `frequency?` | [`Duration`](Duration.md) | - |
-| `indices` | `string[]` | - |
+| `indices` | `string`[] | - |
 | `job_id` | [`Id`](Id.md) | - |
 | `indices_options?` | [`IndicesOptions`](IndicesOptions.md) | - |
 | `max_empty_searches?` | [`integer`](integer.md) | - |

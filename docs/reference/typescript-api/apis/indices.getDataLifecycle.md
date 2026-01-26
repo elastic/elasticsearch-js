@@ -11,7 +11,7 @@ client.indices.getDataLifecycle(this: That, params: T.IndicesGetDataLifecycleReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetDataLifecycleRequest` | - |
+| `params` | [`IndicesGetDataLifecycleRequest`](../types/IndicesGetDataLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

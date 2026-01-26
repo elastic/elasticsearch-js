@@ -11,7 +11,7 @@ client.indices.fieldUsageStats(this: That, params: T.IndicesFieldUsageStatsReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesFieldUsageStatsRequest` | - |
+| `params` | [`IndicesFieldUsageStatsRequest`](../types/IndicesFieldUsageStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

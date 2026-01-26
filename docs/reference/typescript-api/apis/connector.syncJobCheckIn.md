@@ -11,7 +11,7 @@ client.connector.syncJobCheckIn(this: That, params: T.ConnectorSyncJobCheckInReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobCheckInRequest` | - |
+| `params` | [`ConnectorSyncJobCheckInRequest`](../types/ConnectorSyncJobCheckInRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

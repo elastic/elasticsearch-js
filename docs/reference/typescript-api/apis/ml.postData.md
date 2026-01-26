@@ -11,7 +11,7 @@ client.ml.postData(this: That, params: T.MlPostDataRequest<TData>, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPostDataRequest<TData>` | - |
+| `params` | [`MlPostDataRequest`](../types/MlPostDataRequest.md)<TData> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

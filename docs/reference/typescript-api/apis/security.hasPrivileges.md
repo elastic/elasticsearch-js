@@ -11,7 +11,7 @@ client.security.hasPrivileges(this: That, params?: T.SecurityHasPrivilegesReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityHasPrivilegesRequest` | - |
+| `params?` | [`SecurityHasPrivilegesRequest`](../types/SecurityHasPrivilegesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

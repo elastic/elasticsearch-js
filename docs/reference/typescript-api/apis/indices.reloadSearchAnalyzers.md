@@ -11,7 +11,7 @@ client.indices.reloadSearchAnalyzers(this: That, params: T.IndicesReloadSearchAn
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesReloadSearchAnalyzersRequest` | - |
+| `params` | [`IndicesReloadSearchAnalyzersRequest`](../types/IndicesReloadSearchAnalyzersRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

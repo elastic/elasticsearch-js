@@ -11,7 +11,7 @@ client.security.disableUser(this: That, params: T.SecurityDisableUserRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDisableUserRequest` | - |
+| `params` | [`SecurityDisableUserRequest`](../types/SecurityDisableUserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

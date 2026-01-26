@@ -12,7 +12,7 @@ This property cannot be used at the same time as `categorization_filters`.
 The categorization analyzer specifies how the `categorization_field` is interpreted by the categorization process. |
 | `categorization_field_name?` | [`Field`](Field.md) | If this property is specified, the values of the specified field will be categorized.
 The resulting categories must be used in a detector by setting `by_field_name`, `over_field_name`, or `partition_field_name` to the keyword `mlcategory`. |
-| `categorization_filters?` | `string[]` | If `categorization_field_name` is specified, you can also define optional filters.
+| `categorization_filters?` | `string`[] | If `categorization_field_name` is specified, you can also define optional filters.
 This property expects an array of regular expressions.
 The expressions are used to filter out matching sequences from the categorization field values. |
 | `detectors` | [`MlDetectorRead`](MlDetectorRead.md)[] | An array of detector configuration objects.

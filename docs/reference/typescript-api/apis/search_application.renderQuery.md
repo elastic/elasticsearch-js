@@ -11,7 +11,7 @@ client.search_application.renderQuery(this: That, params: T.SearchApplicationRen
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationRenderQueryRequest` | - |
+| `params` | [`SearchApplicationRenderQueryRequest`](../types/SearchApplicationRenderQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

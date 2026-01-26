@@ -11,7 +11,7 @@ client.security.getSettings(this: That, params?: T.SecurityGetSettingsRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetSettingsRequest` | - |
+| `params?` | [`SecurityGetSettingsRequest`](../types/SecurityGetSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

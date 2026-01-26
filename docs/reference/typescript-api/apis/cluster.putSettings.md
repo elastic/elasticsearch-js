@@ -11,7 +11,7 @@ client.cluster.putSettings(this: That, params?: T.ClusterPutSettingsRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterPutSettingsRequest` | - |
+| `params?` | [`ClusterPutSettingsRequest`](../types/ClusterPutSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

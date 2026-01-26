@@ -11,7 +11,7 @@ client.ml.deleteDatafeed(this: That, params: T.MlDeleteDatafeedRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlDeleteDatafeedRequest` | - |
+| `params` | [`MlDeleteDatafeedRequest`](../types/MlDeleteDatafeedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

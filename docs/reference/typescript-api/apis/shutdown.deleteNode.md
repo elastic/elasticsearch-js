@@ -11,7 +11,7 @@ client.shutdown.deleteNode(this: That, params: T.ShutdownDeleteNodeRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ShutdownDeleteNodeRequest` | - |
+| `params` | [`ShutdownDeleteNodeRequest`](../types/ShutdownDeleteNodeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

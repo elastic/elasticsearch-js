@@ -11,7 +11,7 @@ client.cat.master(this: That, params?: T.CatMasterRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatMasterRequest` | - |
+| `params?` | [`CatMasterRequest`](../types/CatMasterRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

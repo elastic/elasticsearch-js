@@ -11,7 +11,7 @@ client.security.changePassword(this: That, params?: T.SecurityChangePasswordRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityChangePasswordRequest` | - |
+| `params?` | [`SecurityChangePasswordRequest`](../types/SecurityChangePasswordRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

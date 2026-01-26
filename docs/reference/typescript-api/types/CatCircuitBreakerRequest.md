@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `circuit_breaker_patterns?` | `string | string[]` | A comma-separated list of regular-expressions to filter the circuit breakers in the output |
+| `circuit_breaker_patterns?` | `string | string`[] | A comma-separated list of regular-expressions to filter the circuit breakers in the output |
 | `h?` | [`CatCatCircuitBreakerColumns`](CatCatCircuitBreakerColumns.md) | A comma-separated list of columns names to display. It supports simple wildcards. |
 | `s?` | [`Names`](Names.md) | List of columns that determine how the table should be sorted.
 Sorting defaults to ascending and can be changed by setting `:asc`

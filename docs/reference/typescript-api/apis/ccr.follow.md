@@ -11,7 +11,7 @@ client.ccr.follow(this: That, params: T.CcrFollowRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrFollowRequest` | - |
+| `params` | [`CcrFollowRequest`](../types/CcrFollowRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

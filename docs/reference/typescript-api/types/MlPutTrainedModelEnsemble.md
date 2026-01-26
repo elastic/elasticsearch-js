@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `aggregate_output?` | [`MlPutTrainedModelAggregateOutput`](MlPutTrainedModelAggregateOutput.md) | - |
-| `classification_labels?` | `string[]` | - |
-| `feature_names?` | `string[]` | - |
+| `classification_labels?` | `string`[] | - |
+| `feature_names?` | `string`[] | - |
 | `target_type?` | `string` | - |
 | `trained_models` | [`MlPutTrainedModelTrainedModel`](MlPutTrainedModelTrainedModel.md)[] | - |
 

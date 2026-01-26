@@ -11,7 +11,7 @@ client.inference.completion(this: That, params: T.InferenceCompletionRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceCompletionRequest` | - |
+| `params` | [`InferenceCompletionRequest`](../types/InferenceCompletionRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

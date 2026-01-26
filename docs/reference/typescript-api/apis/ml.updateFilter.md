@@ -11,7 +11,7 @@ client.ml.updateFilter(this: That, params: T.MlUpdateFilterRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpdateFilterRequest` | - |
+| `params` | [`MlUpdateFilterRequest`](../types/MlUpdateFilterRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

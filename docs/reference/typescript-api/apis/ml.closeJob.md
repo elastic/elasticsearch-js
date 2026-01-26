@@ -11,7 +11,7 @@ client.ml.closeJob(this: That, params: T.MlCloseJobRequest, options?: TransportR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlCloseJobRequest` | - |
+| `params` | [`MlCloseJobRequest`](../types/MlCloseJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

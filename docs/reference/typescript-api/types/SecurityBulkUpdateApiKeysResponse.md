@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `errors?` | [`SecurityBulkError`](SecurityBulkError.md) | - |
-| `noops` | `string[]` | - |
-| `updated` | `string[]` | - |
+| `noops` | `string`[] | - |
+| `updated` | `string`[] | - |
 
 ## See Also
 

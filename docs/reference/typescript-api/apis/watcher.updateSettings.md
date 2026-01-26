@@ -11,7 +11,7 @@ client.watcher.updateSettings(this: That, params?: T.WatcherUpdateSettingsReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.WatcherUpdateSettingsRequest` | - |
+| `params?` | [`WatcherUpdateSettingsRequest`](../types/WatcherUpdateSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

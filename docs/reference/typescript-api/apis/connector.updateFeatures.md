@@ -11,7 +11,7 @@ client.connector.updateFeatures(this: That, params: T.ConnectorUpdateFeaturesReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateFeaturesRequest` | - |
+| `params` | [`ConnectorUpdateFeaturesRequest`](../types/ConnectorUpdateFeaturesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

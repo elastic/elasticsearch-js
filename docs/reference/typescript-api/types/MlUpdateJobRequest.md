@@ -34,7 +34,7 @@ changes to take effect. |
 | `custom_settings?` | `Record<string, any>` | Advanced configuration option. Contains custom meta data about the job.
 For example, it can contain custom URL information as shown in Adding
 custom URLs to machine learning results. |
-| `categorization_filters?` | `string[]` | - |
+| `categorization_filters?` | `string`[] | - |
 | `description?` | `string` | A description of the job. |
 | `model_plot_config?` | [`MlModelPlotConfig`](MlModelPlotConfig.md) | - |
 | `model_prune_window?` | [`Duration`](Duration.md) | - |
@@ -57,7 +57,7 @@ bucket result. If this property has a non-null value, once per day at
 00:30 (server time), results that are the specified number of days older
 than the latest bucket result are deleted from Elasticsearch. The default
 value is null, which means all results are retained. |
-| `groups?` | `string[]` | A list of job groups. A job can belong to no groups or many. |
+| `groups?` | `string`[] | A list of job groups. A job can belong to no groups or many. |
 | `detectors?` | [`MlDetectorUpdate`](MlDetectorUpdate.md)[] | An array of detector update objects. |
 | `per_partition_categorization?` | [`MlPerPartitionCategorization`](MlPerPartitionCategorization.md) | Settings related to how categorization interacts with partition fields. |
 | `body?` | `string | { [key: string]: any } & { job_id?: never, allow_lazy_open?: never, analysis_limits?: never, background_persist_interval?: never, custom_settings?: never, categorization_filters?: never, description?: never, model_plot_config?: never, model_prune_window?: never, daily_model_snapshot_retention_after_days?: never, model_snapshot_retention_days?: never, renormalization_window_days?: never, results_retention_days?: never, groups?: never, detectors?: never, per_partition_categorization?: never }` | All values in `body` will be added to the request body. |

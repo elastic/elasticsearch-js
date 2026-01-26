@@ -11,7 +11,7 @@ client.connector.secretPost(this: That, params?: T.ConnectorSecretPostRequest, o
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ConnectorSecretPostRequest` | - |
+| `params?` | [`ConnectorSecretPostRequest`](../types/ConnectorSecretPostRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

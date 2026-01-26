@@ -7,9 +7,9 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `field?` | [`Fields`](Fields.md) | - |
-| `order?` | `IndicesSegmentSortOrder | IndicesSegmentSortOrder[]` | - |
-| `mode?` | `IndicesSegmentSortMode | IndicesSegmentSortMode[]` | - |
-| `missing?` | `IndicesSegmentSortMissing | IndicesSegmentSortMissing[]` | - |
+| `order?` | `IndicesSegmentSortOrder | IndicesSegmentSortOrder`[] | - |
+| `mode?` | `IndicesSegmentSortMode | IndicesSegmentSortMode`[] | - |
+| `missing?` | `IndicesSegmentSortMissing | IndicesSegmentSortMissing`[] | - |
 
 ## See Also
 

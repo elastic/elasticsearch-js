@@ -12,7 +12,7 @@
 |----------|------|-------------|
 | `name?` | [`Name`](Name.md) | Name of component template to retrieve. Wildcard (`*`) expressions are supported. |
 | `flat_settings?` | `boolean` | If `true`, returns settings in flat format. |
-| `settings_filter?` | `string | string[]` | Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys |
+| `settings_filter?` | `string | string`[] | Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys |
 | `include_defaults?` | `boolean` | Return all default configurations for the component template |
 | `local?` | `boolean` | If `true`, the request retrieves information from the local node only.
 If `false`, information is retrieved from the master node. |

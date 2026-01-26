@@ -11,8 +11,8 @@
 | `field_stats` | `Record<Field, TextStructureFieldStat>` | - |
 | `format` | [`TextStructureFormatType`](TextStructureFormatType.md) | - |
 | `grok_pattern?` | [`GrokPattern`](GrokPattern.md) | - |
-| `java_timestamp_formats?` | `string[]` | - |
-| `joda_timestamp_formats?` | `string[]` | - |
+| `java_timestamp_formats?` | `string`[] | - |
+| `joda_timestamp_formats?` | `string`[] | - |
 | `ingest_pipeline` | [`IngestPipelineConfig`](IngestPipelineConfig.md) | - |
 | `mappings` | [`MappingTypeMapping`](MappingTypeMapping.md) | - |
 | `multiline_start_pattern?` | `string` | - |

@@ -11,7 +11,7 @@ client.indices.getAlias(this: That, params?: T.IndicesGetAliasRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesGetAliasRequest` | - |
+| `params?` | [`IndicesGetAliasRequest`](../types/IndicesGetAliasRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

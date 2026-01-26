@@ -23,14 +23,14 @@ For other text formats, messages can span several lines. |
 | `need_client_timezone` | `boolean` | If a timestamp format is detected that does not include a timezone, `need_client_timezone` is `true`.
 The server that parses the text must therefore be told the correct timezone by the client. |
 | `num_lines_analyzed` | [`integer`](integer.md) | The number of lines of the text that were analyzed. |
-| `column_names?` | `string[]` | If `format` is `delimited`, the `column_names` field lists the column names in the order they appear in the sample. |
-| `explanation?` | `string[]` | - |
+| `column_names?` | `string`[] | If `format` is `delimited`, the `column_names` field lists the column names in the order they appear in the sample. |
+| `explanation?` | `string`[] | - |
 | `grok_pattern?` | [`GrokPattern`](GrokPattern.md) | - |
 | `multiline_start_pattern?` | `string` | - |
 | `exclude_lines_pattern?` | `string` | - |
-| `java_timestamp_formats?` | `string[]` | The Java time formats recognized in the time fields.
+| `java_timestamp_formats?` | `string`[] | The Java time formats recognized in the time fields.
 Elasticsearch mappings and ingest pipelines use this format. |
-| `joda_timestamp_formats?` | `string[]` | Information that is used to tell Logstash how to parse timestamps. |
+| `joda_timestamp_formats?` | `string`[] | Information that is used to tell Logstash how to parse timestamps. |
 | `timestamp_field?` | [`Field`](Field.md) | The field considered most likely to be the primary timestamp of each document. |
 | `should_trim_fields?` | `boolean` | - |
 | `ingest_pipeline` | [`IngestPipelineConfig`](IngestPipelineConfig.md) | - |

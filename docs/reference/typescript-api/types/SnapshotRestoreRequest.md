@@ -20,12 +20,12 @@ The operation is complete when it finishes all attempts to recover primary shard
 This applies even if one or more of the recovery attempts fail.
 
 If `false`, the request returns a response when the restore operation initializes. |
-| `feature_states?` | `string[]` | The feature states to restore.
+| `feature_states?` | `string`[] | The feature states to restore.
 If `include_global_state` is `true`, the request restores all feature states in the snapshot by default.
 If `include_global_state` is `false`, the request restores no feature states by default.
 Note that specifying an empty array will result in the default behavior.
 To restore no feature states, regardless of the `include_global_state` value, specify an array containing only the value `none` (`["none"]`). |
-| `ignore_index_settings?` | `string[]` | The index settings to not restore from the snapshot.
+| `ignore_index_settings?` | `string`[] | The index settings to not restore from the snapshot.
 You can't use this option to ignore `index.number_of_shards`.
 
 For data streams, this option applies only to restored backing indices.

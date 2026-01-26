@@ -11,7 +11,7 @@ client.indices.addBlock(this: That, params: T.IndicesAddBlockRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesAddBlockRequest` | - |
+| `params` | [`IndicesAddBlockRequest`](../types/IndicesAddBlockRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

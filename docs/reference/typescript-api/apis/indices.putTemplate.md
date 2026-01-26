@@ -11,7 +11,7 @@ client.indices.putTemplate(this: That, params: T.IndicesPutTemplateRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesPutTemplateRequest` | - |
+| `params` | [`IndicesPutTemplateRequest`](../types/IndicesPutTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

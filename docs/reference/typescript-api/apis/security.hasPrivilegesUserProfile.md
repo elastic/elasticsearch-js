@@ -11,7 +11,7 @@ client.security.hasPrivilegesUserProfile(this: That, params: T.SecurityHasPrivil
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityHasPrivilegesUserProfileRequest` | - |
+| `params` | [`SecurityHasPrivilegesUserProfileRequest`](../types/SecurityHasPrivilegesUserProfileRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

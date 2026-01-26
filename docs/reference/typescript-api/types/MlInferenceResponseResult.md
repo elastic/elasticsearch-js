@@ -9,7 +9,7 @@
 | `entities?` | [`MlTrainedModelEntities`](MlTrainedModelEntities.md)[] | If the model is trained for named entity recognition (NER) tasks, the response contains the recognized entities. |
 | `is_truncated?` | `boolean` | Indicates whether the input text was truncated to meet the model's maximum sequence length limit. This property
 is present only when it is true. |
-| `predicted_value?` | `MlPredictedValue | MlPredictedValue[]` | If the model is trained for a text classification or zero shot classification task, the response is the
+| `predicted_value?` | `MlPredictedValue | MlPredictedValue`[] | If the model is trained for a text classification or zero shot classification task, the response is the
 predicted class.
 For named entity recognition (NER) tasks, it contains the annotated text output.
 For fill mask tasks, it contains the top prediction for replacing the mask token.

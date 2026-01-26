@@ -11,7 +11,7 @@ client.security.clearCachedPrivileges(this: That, params: T.SecurityClearCachedP
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityClearCachedPrivilegesRequest` | - |
+| `params` | [`SecurityClearCachedPrivilegesRequest`](../types/SecurityClearCachedPrivilegesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

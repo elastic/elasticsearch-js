@@ -11,7 +11,7 @@ client.cluster.deleteComponentTemplate(this: That, params: T.ClusterDeleteCompon
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ClusterDeleteComponentTemplateRequest` | - |
+| `params` | [`ClusterDeleteComponentTemplateRequest`](../types/ClusterDeleteComponentTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

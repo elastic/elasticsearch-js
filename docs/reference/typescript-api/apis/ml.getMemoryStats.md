@@ -11,7 +11,7 @@ client.ml.getMemoryStats(this: That, params?: T.MlGetMemoryStatsRequest, options
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetMemoryStatsRequest` | - |
+| `params?` | [`MlGetMemoryStatsRequest`](../types/MlGetMemoryStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

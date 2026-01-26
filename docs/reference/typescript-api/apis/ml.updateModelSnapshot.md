@@ -11,7 +11,7 @@ client.ml.updateModelSnapshot(this: That, params: T.MlUpdateModelSnapshotRequest
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpdateModelSnapshotRequest` | - |
+| `params` | [`MlUpdateModelSnapshotRequest`](../types/MlUpdateModelSnapshotRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

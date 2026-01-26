@@ -11,7 +11,7 @@ client.connector.updateActiveFiltering(this: That, params: T.ConnectorUpdateActi
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateActiveFilteringRequest` | - |
+| `params` | [`ConnectorUpdateActiveFilteringRequest`](../types/ConnectorUpdateActiveFilteringRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

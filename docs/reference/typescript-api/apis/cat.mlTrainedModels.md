@@ -11,7 +11,7 @@ client.cat.mlTrainedModels(this: That, params?: T.CatMlTrainedModelsRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatMlTrainedModelsRequest` | - |
+| `params?` | [`CatMlTrainedModelsRequest`](../types/CatMlTrainedModelsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

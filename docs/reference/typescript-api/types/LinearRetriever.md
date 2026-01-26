@@ -13,7 +13,7 @@
 | `retrievers?` | [`InnerRetriever`](InnerRetriever.md)[] | Inner retrievers. |
 | `rank_window_size?` | [`integer`](integer.md) | - |
 | `query?` | `string` | - |
-| `fields?` | `string[]` | - |
+| `fields?` | `string`[] | - |
 | `normalizer?` | [`ScoreNormalizer`](ScoreNormalizer.md) | - |
 
 ## See Also

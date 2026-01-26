@@ -11,7 +11,7 @@ client.security.samlPrepareAuthentication(this: That, params?: T.SecuritySamlPre
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecuritySamlPrepareAuthenticationRequest` | - |
+| `params?` | [`SecuritySamlPrepareAuthenticationRequest`](../types/SecuritySamlPrepareAuthenticationRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

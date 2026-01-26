@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `retriever` | [`RetrieverContainer`](RetrieverContainer.md) | Inner retriever. |
-| `rescore` | `SearchRescore | SearchRescore[]` | - |
+| `rescore` | `SearchRescore | SearchRescore`[] | - |
 
 ## See Also
 

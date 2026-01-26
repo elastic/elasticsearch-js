@@ -20,7 +20,7 @@ If the key has been invalidated, it has a value of `true`. Otherwise, it is `fal
 | `metadata` | [`Metadata`](Metadata.md) | Metadata of the API key |
 | `role_descriptors?` | `Record<string, SecurityRoleDescriptor>` | The role descriptors assigned to this API key when it was created or last updated.
 An empty role descriptor means the API key inherits the owner user’s permissions. |
-| `limited_by?` | `Record<string, SecurityRoleDescriptor>[]` | The owner user’s permissions associated with the API key.
+| `limited_by?` | `Record<string, SecurityRoleDescriptor>`[] | The owner user’s permissions associated with the API key.
 It is a point-in-time snapshot captured at creation and subsequent updates.
 An API key’s effective permissions are an intersection of its assigned privileges and the owner user’s permissions. |
 | `access?` | [`SecurityAccess`](SecurityAccess.md) | The access granted to cross-cluster API keys.

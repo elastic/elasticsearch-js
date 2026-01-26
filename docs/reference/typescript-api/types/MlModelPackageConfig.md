@@ -18,7 +18,7 @@
 | `prefix_strings?` | [`MlTrainedModelPrefixStrings`](MlTrainedModelPrefixStrings.md) | - |
 | `size?` | [`ByteSize`](ByteSize.md) | - |
 | `sha256?` | `string` | - |
-| `tags?` | `string[]` | - |
+| `tags?` | `string`[] | - |
 | `vocabulary_file?` | `string` | - |
 
 ## See Also

@@ -11,7 +11,7 @@ client.indices.getFieldMapping(this: That, params: T.IndicesGetFieldMappingReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetFieldMappingRequest` | - |
+| `params` | [`IndicesGetFieldMappingRequest`](../types/IndicesGetFieldMappingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

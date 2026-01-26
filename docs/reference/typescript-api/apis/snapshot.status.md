@@ -11,7 +11,7 @@ client.snapshot.status(this: That, params?: T.SnapshotStatusRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SnapshotStatusRequest` | - |
+| `params?` | [`SnapshotStatusRequest`](../types/SnapshotStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

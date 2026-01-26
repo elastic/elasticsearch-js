@@ -11,7 +11,7 @@ client.nodes.info(this: That, params?: T.NodesInfoRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.NodesInfoRequest` | - |
+| `params?` | [`NodesInfoRequest`](../types/NodesInfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

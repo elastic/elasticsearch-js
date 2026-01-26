@@ -11,7 +11,7 @@ client.transform.getNodeStats(this: That, params?: T.TransformGetNodeStatsReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.TransformGetNodeStatsRequest` | - |
+| `params?` | [`TransformGetNodeStatsRequest`](../types/TransformGetNodeStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

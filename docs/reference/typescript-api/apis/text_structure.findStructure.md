@@ -11,7 +11,7 @@ client.text_structure.findStructure(this: That, params: T.TextStructureFindStruc
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TextStructureFindStructureRequest<TJsonDocument>` | - |
+| `params` | [`TextStructureFindStructureRequest`](../types/TextStructureFindStructureRequest.md)<TJsonDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

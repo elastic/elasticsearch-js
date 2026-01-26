@@ -11,7 +11,7 @@ client.ingest.geoIpStats(this: That, params?: T.IngestGeoIpStatsRequest, options
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IngestGeoIpStatsRequest` | - |
+| `params?` | [`IngestGeoIpStatsRequest`](../types/IngestGeoIpStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

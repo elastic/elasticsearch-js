@@ -11,7 +11,7 @@ client.mget(this: That, params?: T.MgetRequest, options?: TransportRequestOption
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MgetRequest` | - |
+| `params?` | [`MgetRequest`](../types/MgetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

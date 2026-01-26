@@ -11,7 +11,7 @@ client.search_application.putBehavioralAnalytics(this: That, params: T.SearchApp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationPutBehavioralAnalyticsRequest` | - |
+| `params` | [`SearchApplicationPutBehavioralAnalyticsRequest`](../types/SearchApplicationPutBehavioralAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

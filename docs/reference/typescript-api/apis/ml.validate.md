@@ -11,7 +11,7 @@ client.ml.validate(this: That, params?: T.MlValidateRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlValidateRequest` | - |
+| `params?` | [`MlValidateRequest`](../types/MlValidateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

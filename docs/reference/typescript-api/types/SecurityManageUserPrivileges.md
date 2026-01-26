@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `applications` | `string[]` | - |
+| `applications` | `string`[] | - |
 
 ## See Also
 

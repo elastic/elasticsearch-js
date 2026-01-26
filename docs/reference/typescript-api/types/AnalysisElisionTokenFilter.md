@@ -11,7 +11,7 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `type` | `'elision'` | - |
-| `articles?` | `string[]` | List of elisions to remove.
+| `articles?` | `string`[] | List of elisions to remove.
 To be removed, the elision must be at the beginning of a token and be immediately followed by an apostrophe. Both the elision and apostrophe are removed.
 For custom `elision` filters, either this parameter or `articles_path` must be specified. |
 | `articles_path?` | `string` | Path to a file that contains a list of elisions to remove.

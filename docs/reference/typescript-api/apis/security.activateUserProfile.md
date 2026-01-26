@@ -11,7 +11,7 @@ client.security.activateUserProfile(this: That, params: T.SecurityActivateUserPr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityActivateUserProfileRequest` | - |
+| `params` | [`SecurityActivateUserProfileRequest`](../types/SecurityActivateUserProfileRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

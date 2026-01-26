@@ -11,7 +11,7 @@ client.snapshot.restore(this: That, params: T.SnapshotRestoreRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotRestoreRequest` | - |
+| `params` | [`SnapshotRestoreRequest`](../types/SnapshotRestoreRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

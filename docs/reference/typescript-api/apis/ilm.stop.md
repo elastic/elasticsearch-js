@@ -11,7 +11,7 @@ client.ilm.stop(this: That, params?: T.IlmStopRequest, options?: TransportReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IlmStopRequest` | - |
+| `params?` | [`IlmStopRequest`](../types/IlmStopRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.connector.lastSync(this: That, params: T.ConnectorLastSyncRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorLastSyncRequest` | - |
+| `params` | [`ConnectorLastSyncRequest`](../types/ConnectorLastSyncRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

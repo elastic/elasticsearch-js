@@ -11,7 +11,7 @@ client.security.oidcAuthenticate(this: That, params: T.SecurityOidcAuthenticateR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityOidcAuthenticateRequest` | - |
+| `params` | [`SecurityOidcAuthenticateRequest`](../types/SecurityOidcAuthenticateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.putDataLifecycle(this: That, params: T.IndicesPutDataLifecycleReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesPutDataLifecycleRequest` | - |
+| `params` | [`IndicesPutDataLifecycleRequest`](../types/IndicesPutDataLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.getDataStreamMappings(this: That, params: T.IndicesGetDataStreamM
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetDataStreamMappingsRequest` | - |
+| `params` | [`IndicesGetDataStreamMappingsRequest`](../types/IndicesGetDataStreamMappingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.simulateIndexTemplate(this: That, params: T.IndicesSimulateIndexT
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesSimulateIndexTemplateRequest` | - |
+| `params` | [`IndicesSimulateIndexTemplateRequest`](../types/IndicesSimulateIndexTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

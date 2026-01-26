@@ -11,7 +11,7 @@ client.get_script(this: That, params: T.GetScriptRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.GetScriptRequest` | - |
+| `params` | [`GetScriptRequest`](../types/GetScriptRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

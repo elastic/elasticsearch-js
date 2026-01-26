@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `_index` | [`IndexName`](IndexName.md) | The name of the index the document belongs to. |
 | `fields?` | `Record<string, any>` | If the `stored_fields` parameter is set to `true` and `found` is `true`, it contains the document fields stored in the index. |
-| `_ignored?` | `string[]` | - |
+| `_ignored?` | `string`[] | - |
 | `found` | `boolean` | Indicates whether the document exists. |
 | `_id` | [`Id`](Id.md) | The unique identifier for the document. |
 | `_primary_term?` | [`long`](long.md) | The primary term assigned to the document for the indexing operation. |

@@ -11,7 +11,7 @@ client.inference.putDeepseek(this: That, params: T.InferencePutDeepseekRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutDeepseekRequest` | - |
+| `params` | [`InferencePutDeepseekRequest`](../types/InferencePutDeepseekRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

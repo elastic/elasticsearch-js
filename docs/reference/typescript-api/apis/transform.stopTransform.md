@@ -11,7 +11,7 @@ client.transform.stopTransform(this: That, params: T.TransformStopTransformReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformStopTransformRequest` | - |
+| `params` | [`TransformStopTransformRequest`](../types/TransformStopTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

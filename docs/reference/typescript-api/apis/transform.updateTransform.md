@@ -11,7 +11,7 @@ client.transform.updateTransform(this: That, params: T.TransformUpdateTransformR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformUpdateTransformRequest` | - |
+| `params` | [`TransformUpdateTransformRequest`](../types/TransformUpdateTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

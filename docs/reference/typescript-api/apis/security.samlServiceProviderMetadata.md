@@ -11,7 +11,7 @@ client.security.samlServiceProviderMetadata(this: That, params: T.SecuritySamlSe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecuritySamlServiceProviderMetadataRequest` | - |
+| `params` | [`SecuritySamlServiceProviderMetadataRequest`](../types/SecuritySamlServiceProviderMetadataRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

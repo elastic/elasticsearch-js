@@ -11,7 +11,7 @@ client.indices.exists(this: That, params: T.IndicesExistsRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesExistsRequest` | - |
+| `params` | [`IndicesExistsRequest`](../types/IndicesExistsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `nodes` | `string[]` | - |
+| `nodes` | `string`[] | - |
 
 ## See Also
 

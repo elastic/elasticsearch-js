@@ -11,7 +11,7 @@ client.msearch(this: That, params: T.MsearchRequest, options?: TransportRequestO
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MsearchRequest` | - |
+| `params` | [`MsearchRequest`](../types/MsearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

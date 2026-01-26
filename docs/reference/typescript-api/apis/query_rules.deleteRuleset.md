@@ -11,7 +11,7 @@ client.query_rules.deleteRuleset(this: That, params: T.QueryRulesDeleteRulesetRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.QueryRulesDeleteRulesetRequest` | - |
+| `params` | [`QueryRulesDeleteRulesetRequest`](../types/QueryRulesDeleteRulesetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

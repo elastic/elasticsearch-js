@@ -11,7 +11,7 @@ client.connector.list(this: That, params?: T.ConnectorListRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ConnectorListRequest` | - |
+| `params?` | [`ConnectorListRequest`](../types/ConnectorListRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

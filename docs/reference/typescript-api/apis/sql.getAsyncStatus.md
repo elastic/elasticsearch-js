@@ -11,7 +11,7 @@ client.sql.getAsyncStatus(this: That, params: T.SqlGetAsyncStatusRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SqlGetAsyncStatusRequest` | - |
+| `params` | [`SqlGetAsyncStatusRequest`](../types/SqlGetAsyncStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.license.postStartTrial(this: That, params?: T.LicensePostStartTrialReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicensePostStartTrialRequest` | - |
+| `params?` | [`LicensePostStartTrialRequest`](../types/LicensePostStartTrialRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

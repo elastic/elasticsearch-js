@@ -19,7 +19,7 @@ such as `open,hidden`. |
 | `fielddata_fields?` | [`Fields`](Fields.md) | Comma-separated list or wildcard expressions of fields to include in fielddata statistics. |
 | `fields?` | [`Fields`](Fields.md) | Comma-separated list or wildcard expressions of fields to include in the statistics. |
 | `forbid_closed_indices?` | `boolean` | If true, statistics are not collected from closed indices. |
-| `groups?` | `string | string[]` | Comma-separated list of search groups to include in the search statistics. |
+| `groups?` | `string | string`[] | Comma-separated list of search groups to include in the search statistics. |
 | `include_segment_file_sizes?` | `boolean` | If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). |
 | `include_unloaded_segments?` | `boolean` | If true, the response includes information from segments that are not loaded into memory. |
 | `level?` | [`Level`](Level.md) | Indicates whether statistics are aggregated at the cluster, indices, or shards level. |

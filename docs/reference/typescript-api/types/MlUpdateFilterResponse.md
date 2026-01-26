@@ -8,7 +8,7 @@
 |----------|------|-------------|
 | `description` | `string` | - |
 | `filter_id` | [`Id`](Id.md) | - |
-| `items` | `string[]` | - |
+| `items` | `string`[] | - |
 
 ## See Also
 

@@ -11,7 +11,7 @@ client.slm.start(this: That, params?: T.SlmStartRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SlmStartRequest` | - |
+| `params?` | [`SlmStartRequest`](../types/SlmStartRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

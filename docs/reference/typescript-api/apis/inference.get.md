@@ -11,7 +11,7 @@ client.inference.get(this: That, params?: T.InferenceGetRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.InferenceGetRequest` | - |
+| `params?` | [`InferenceGetRequest`](../types/InferenceGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

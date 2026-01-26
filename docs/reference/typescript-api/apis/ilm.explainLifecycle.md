@@ -11,7 +11,7 @@ client.ilm.explainLifecycle(this: That, params: T.IlmExplainLifecycleRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IlmExplainLifecycleRequest` | - |
+| `params` | [`IlmExplainLifecycleRequest`](../types/IlmExplainLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

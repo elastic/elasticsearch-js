@@ -11,7 +11,7 @@ client.termvectors(this: That, params: T.TermvectorsRequest<TDocument>, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TermvectorsRequest<TDocument>` | - |
+| `params` | [`TermvectorsRequest`](../types/TermvectorsRequest.md)<TDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

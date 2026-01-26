@@ -20,7 +20,7 @@
 | `include_segment_file_sizes?` | `boolean` | If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). |
 | `level?` | [`NodeStatsLevel`](NodeStatsLevel.md) | Indicates whether statistics are aggregated at the node, indices, or shards level. |
 | `timeout?` | [`Duration`](Duration.md) | Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. |
-| `types?` | `string[]` | A comma-separated list of document types for the indexing index metric. |
+| `types?` | `string`[] | A comma-separated list of document types for the indexing index metric. |
 | `include_unloaded_segments?` | `boolean` | If `true`, the response includes information from segments that are not loaded into memory. |
 | `body?` | `string | { [key: string]: any } & { node_id?: never, metric?: never, index_metric?: never, completion_fields?: never, fielddata_fields?: never, fields?: never, groups?: never, include_segment_file_sizes?: never, level?: never, timeout?: never, types?: never, include_unloaded_segments?: never }` | All values in `body` will be added to the request body. |
 | `querystring?` | `{ [key: string]: any } & { node_id?: never, metric?: never, index_metric?: never, completion_fields?: never, fielddata_fields?: never, fields?: never, groups?: never, include_segment_file_sizes?: never, level?: never, timeout?: never, types?: never, include_unloaded_segments?: never }` | All values in `querystring` will be added to the request querystring. |

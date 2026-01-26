@@ -11,7 +11,7 @@ client.indices.diskUsage(this: That, params: T.IndicesDiskUsageRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDiskUsageRequest` | - |
+| `params` | [`IndicesDiskUsageRequest`](../types/IndicesDiskUsageRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

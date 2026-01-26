@@ -34,9 +34,9 @@ either the bucket span for short bucket spans, or, for longer bucket spans, a se
 span. When `frequency` is shorter than the bucket span, interim results for the last (partial) bucket are
 written then eventually overwritten by the full bucket results. If the datafeed uses aggregations, this value
 must be divisible by the interval of the date histogram aggregation. |
-| `indices?` | `string[]` | An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine
+| `indices?` | `string`[] | An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine
 learning nodes must have the `remote_cluster_client` role. |
-| `indexes?` | `string[]` | An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine
+| `indexes?` | `string`[] | An array of index names. Wildcards are supported. If any of the indices are in remote clusters, the machine
 learning nodes must have the `remote_cluster_client` role. |
 | `indices_options?` | [`IndicesOptions`](IndicesOptions.md) | Specifies index expansion options that are used during search. |
 | `job_id?` | [`Id`](Id.md) | - |

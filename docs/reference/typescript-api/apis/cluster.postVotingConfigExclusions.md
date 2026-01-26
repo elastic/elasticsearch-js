@@ -11,7 +11,7 @@ client.cluster.postVotingConfigExclusions(this: That, params?: T.ClusterPostVoti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterPostVotingConfigExclusionsRequest` | - |
+| `params?` | [`ClusterPostVotingConfigExclusionsRequest`](../types/ClusterPostVotingConfigExclusionsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

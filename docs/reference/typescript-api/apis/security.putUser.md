@@ -11,7 +11,7 @@ client.security.putUser(this: That, params: T.SecurityPutUserRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityPutUserRequest` | - |
+| `params` | [`SecurityPutUserRequest`](../types/SecurityPutUserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.stopDatafeed(this: That, params: T.MlStopDatafeedRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlStopDatafeedRequest` | - |
+| `params` | [`MlStopDatafeedRequest`](../types/MlStopDatafeedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

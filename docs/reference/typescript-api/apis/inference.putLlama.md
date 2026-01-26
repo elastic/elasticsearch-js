@@ -11,7 +11,7 @@ client.inference.putLlama(this: That, params: T.InferencePutLlamaRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutLlamaRequest` | - |
+| `params` | [`InferencePutLlamaRequest`](../types/InferencePutLlamaRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

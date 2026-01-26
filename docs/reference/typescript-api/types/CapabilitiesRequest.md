@@ -12,8 +12,8 @@
 |----------|------|-------------|
 | `method?` | [`CapabilitiesRestMethod`](CapabilitiesRestMethod.md) | REST method to check |
 | `path?` | `string` | API path to check |
-| `parameters?` | `string | string[]` | Comma-separated list of API parameters to check |
-| `capabilities?` | `string | string[]` | Comma-separated list of arbitrary API capabilities to check |
+| `parameters?` | `string | string`[] | Comma-separated list of API parameters to check |
+| `capabilities?` | `string | string`[] | Comma-separated list of arbitrary API capabilities to check |
 | `local_only?` | `boolean` | True if only the node being called should be considered |
 | `timeout?` | [`Duration`](Duration.md) | Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error. |

@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `at` | `string[]` | - |
+| `at` | `string`[] | - |
 | `on` | [`integer`](integer.md)[] | - |
 
 ## See Also

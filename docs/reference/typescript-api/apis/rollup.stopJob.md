@@ -11,7 +11,7 @@ client.rollup.stopJob(this: That, params: T.RollupStopJobRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RollupStopJobRequest` | - |
+| `params` | [`RollupStopJobRequest`](../types/RollupStopJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

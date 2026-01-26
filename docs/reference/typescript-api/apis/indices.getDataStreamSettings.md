@@ -11,7 +11,7 @@ client.indices.getDataStreamSettings(this: That, params: T.IndicesGetDataStreamS
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetDataStreamSettingsRequest` | - |
+| `params` | [`IndicesGetDataStreamSettingsRequest`](../types/IndicesGetDataStreamSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

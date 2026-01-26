@@ -11,7 +11,7 @@ client.security.createApiKey(this: That, params?: T.SecurityCreateApiKeyRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityCreateApiKeyRequest` | - |
+| `params?` | [`SecurityCreateApiKeyRequest`](../types/SecurityCreateApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

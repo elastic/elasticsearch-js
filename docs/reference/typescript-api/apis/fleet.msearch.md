@@ -11,7 +11,7 @@ client.fleet.msearch(this: That, params: T.FleetMsearchRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.FleetMsearchRequest` | - |
+| `params` | [`FleetMsearchRequest`](../types/FleetMsearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `x509_certificate_chain` | `string[]` | The X509Certificate chain, which is represented as an ordered string array.
+| `x509_certificate_chain` | `string`[] | The X509Certificate chain, which is represented as an ordered string array.
 Each string in the array is a base64-encoded (Section 4 of RFC4648 - not base64url-encoded) of the certificate's DER encoding.
 
 The first element is the target certificate that contains the subject distinguished name that is requesting access.

@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `column_names?` | `string | string[]` | If `format` is set to `delimited`, you can specify the column names in a comma-separated list.
+| `column_names?` | `string | string`[] | If `format` is set to `delimited`, you can specify the column names in a comma-separated list.
 If this parameter is not specified, the structure finder uses the column names from the header row of the text.
 If the text does not have a header row, columns are named "column1", "column2", "column3", for example. |
 | `delimiter?` | `string` | If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.

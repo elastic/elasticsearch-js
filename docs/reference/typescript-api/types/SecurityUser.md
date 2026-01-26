@@ -9,7 +9,7 @@
 | `email?` | `string | null` | - |
 | `full_name?` | `Name | null` | - |
 | `metadata` | [`Metadata`](Metadata.md) | - |
-| `roles` | `string[]` | - |
+| `roles` | `string`[] | - |
 | `username` | [`Username`](Username.md) | - |
 | `enabled` | `boolean` | - |
 | `profile_uid?` | [`SecurityUserProfileId`](SecurityUserProfileId.md) | - |

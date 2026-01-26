@@ -9,7 +9,7 @@
 | `classname` | `string` | - |
 | `description` | `string` | - |
 | `elasticsearch_version` | [`VersionString`](VersionString.md) | - |
-| `extended_plugins` | `string[]` | - |
+| `extended_plugins` | `string`[] | - |
 | `has_native_controller` | `boolean` | - |
 | `java_version` | [`VersionString`](VersionString.md) | - |
 | `name` | [`Name`](Name.md) | - |

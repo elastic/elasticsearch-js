@@ -11,7 +11,7 @@ client.connector.put(this: That, params?: T.ConnectorPutRequest, options?: Trans
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ConnectorPutRequest` | - |
+| `params?` | [`ConnectorPutRequest`](../types/ConnectorPutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

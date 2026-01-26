@@ -11,7 +11,7 @@ client.ml.stopTrainedModelDeployment(this: That, params: T.MlStopTrainedModelDep
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlStopTrainedModelDeploymentRequest` | - |
+| `params` | [`MlStopTrainedModelDeploymentRequest`](../types/MlStopTrainedModelDeploymentRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.ml.getTrainedModels(this: That, params?: T.MlGetTrainedModelsRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetTrainedModelsRequest` | - |
+| `params?` | [`MlGetTrainedModelsRequest`](../types/MlGetTrainedModelsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

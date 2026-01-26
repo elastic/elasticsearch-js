@@ -11,7 +11,7 @@ client.ml.previewDataFrameAnalytics(this: That, params?: T.MlPreviewDataFrameAna
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlPreviewDataFrameAnalyticsRequest` | - |
+| `params?` | [`MlPreviewDataFrameAnalyticsRequest`](../types/MlPreviewDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

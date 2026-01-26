@@ -11,7 +11,7 @@ client.connector.syncJobPost(this: That, params: T.ConnectorSyncJobPostRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobPostRequest` | - |
+| `params` | [`ConnectorSyncJobPostRequest`](../types/ConnectorSyncJobPostRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

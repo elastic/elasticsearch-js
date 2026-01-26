@@ -11,7 +11,7 @@ client.cluster.putComponentTemplate(this: That, params: T.ClusterPutComponentTem
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ClusterPutComponentTemplateRequest` | - |
+| `params` | [`ClusterPutComponentTemplateRequest`](../types/ClusterPutComponentTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

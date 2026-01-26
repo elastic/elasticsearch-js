@@ -11,7 +11,7 @@ client.inference.delete(this: That, params: T.InferenceDeleteRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferenceDeleteRequest` | - |
+| `params` | [`InferenceDeleteRequest`](../types/InferenceDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.connector.secretPut(this: That, params: T.ConnectorSecretPutRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSecretPutRequest` | - |
+| `params` | [`ConnectorSecretPutRequest`](../types/ConnectorSecretPutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

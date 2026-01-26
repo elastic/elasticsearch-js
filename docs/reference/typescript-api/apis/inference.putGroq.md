@@ -11,7 +11,7 @@ client.inference.putGroq(this: That, params: T.InferencePutGroqRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutGroqRequest` | - |
+| `params` | [`InferencePutGroqRequest`](../types/InferencePutGroqRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

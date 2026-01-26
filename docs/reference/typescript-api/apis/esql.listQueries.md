@@ -11,7 +11,7 @@ client.esql.listQueries(this: That, params?: T.EsqlListQueriesRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.EsqlListQueriesRequest` | - |
+| `params?` | [`EsqlListQueriesRequest`](../types/EsqlListQueriesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

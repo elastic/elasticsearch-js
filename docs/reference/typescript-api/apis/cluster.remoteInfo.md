@@ -11,7 +11,7 @@ client.cluster.remoteInfo(this: That, params?: T.ClusterRemoteInfoRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterRemoteInfoRequest` | - |
+| `params?` | [`ClusterRemoteInfoRequest`](../types/ClusterRemoteInfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.security.createServiceToken(this: That, params: T.SecurityCreateServiceTo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityCreateServiceTokenRequest` | - |
+| `params` | [`SecurityCreateServiceTokenRequest`](../types/SecurityCreateServiceTokenRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

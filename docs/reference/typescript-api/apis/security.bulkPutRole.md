@@ -11,7 +11,7 @@ client.security.bulkPutRole(this: That, params: T.SecurityBulkPutRoleRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityBulkPutRoleRequest` | - |
+| `params` | [`SecurityBulkPutRoleRequest`](../types/SecurityBulkPutRoleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

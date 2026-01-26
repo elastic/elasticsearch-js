@@ -11,7 +11,7 @@ client.indices.get(this: That, params: T.IndicesGetRequest, options?: TransportR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesGetRequest` | - |
+| `params` | [`IndicesGetRequest`](../types/IndicesGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

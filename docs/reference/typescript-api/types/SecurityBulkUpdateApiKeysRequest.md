@@ -13,7 +13,7 @@
 | `expiration?` | [`Duration`](Duration.md) | Expiration time for the API keys.
 By default, API keys never expire.
 This property can be omitted to leave the value unchanged. |
-| `ids` | `string | string[]` | The API key identifiers. |
+| `ids` | `string | string`[] | The API key identifiers. |
 | `metadata?` | [`Metadata`](Metadata.md) | Arbitrary nested metadata to associate with the API keys.
 Within the `metadata` object, top-level keys beginning with an underscore (`_`) are reserved for system usage.
 Any information specified with this parameter fully replaces metadata previously associated with the API key. |

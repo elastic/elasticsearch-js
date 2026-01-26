@@ -11,7 +11,7 @@ client.connector.syncJobUpdateStats(this: That, params: T.ConnectorSyncJobUpdate
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorSyncJobUpdateStatsRequest` | - |
+| `params` | [`ConnectorSyncJobUpdateStatsRequest`](../types/ConnectorSyncJobUpdateStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

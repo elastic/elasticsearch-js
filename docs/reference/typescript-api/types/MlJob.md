@@ -36,7 +36,7 @@ It is only reported when `true`. |
 | `description?` | `string` | A description of the job. |
 | `finished_time?` | [`DateTime`](DateTime.md) | If the job closed or failed, this is the time the job finished, otherwise it is `null`.
 This property is informational; you cannot change its value. |
-| `groups?` | `string[]` | A list of job groups.
+| `groups?` | `string`[] | A list of job groups.
 A job can belong to no groups or many. |
 | `job_id` | [`Id`](Id.md) | Identifier for the anomaly detection job.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.

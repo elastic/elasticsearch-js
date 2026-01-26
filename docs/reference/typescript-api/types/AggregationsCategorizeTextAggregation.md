@@ -15,7 +15,7 @@ values will use more memory and create narrower categories. Max allowed value is
 | `similarity_threshold?` | [`integer`](integer.md) | The minimum percentage of tokens that must match for text to be added to the category bucket. Must
 be between 1 and 100. The larger the value the narrower the categories. Larger values will increase memory
 usage and create narrower categories. |
-| `categorization_filters?` | `string[]` | This property expects an array of regular expressions. The expressions are used to filter out matching
+| `categorization_filters?` | `string`[] | This property expects an array of regular expressions. The expressions are used to filter out matching
 sequences from the categorization field values. You can use this functionality to fine tune the categorization
 by excluding sequences from consideration when categories are defined. For example, you can exclude SQL
 statements that appear in your log files. This property cannot be used at the same time as categorization_analyzer.

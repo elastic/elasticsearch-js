@@ -6,9 +6,9 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `char_filter?` | `string[]` | - |
+| `char_filter?` | `string`[] | - |
 | `tokenizer?` | `string` | - |
-| `filter?` | `string[]` | - |
+| `filter?` | `string`[] | - |
 
 ## See Also
 

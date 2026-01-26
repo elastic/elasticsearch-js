@@ -7,15 +7,15 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `id?` | [`Id`](Id.md) | - |
-| `bcc?` | `string | string[]` | - |
+| `bcc?` | `string | string`[] | - |
 | `body?` | [`WatcherEmailBody`](WatcherEmailBody.md) | - |
-| `cc?` | `string | string[]` | - |
+| `cc?` | `string | string`[] | - |
 | `from?` | `string` | - |
 | `priority?` | [`WatcherEmailPriority`](WatcherEmailPriority.md) | - |
-| `reply_to?` | `string | string[]` | - |
+| `reply_to?` | `string | string`[] | - |
 | `sent_date?` | [`DateTime`](DateTime.md) | - |
 | `subject` | `string` | - |
-| `to` | `string | string[]` | - |
+| `to` | `string | string`[] | - |
 | `attachments?` | `Record<string, WatcherEmailAttachmentContainer>` | - |
 
 ## See Also

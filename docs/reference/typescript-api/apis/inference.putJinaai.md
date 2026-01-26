@@ -11,7 +11,7 @@ client.inference.putJinaai(this: That, params: T.InferencePutJinaaiRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutJinaaiRequest` | - |
+| `params` | [`InferencePutJinaaiRequest`](../types/InferencePutJinaaiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

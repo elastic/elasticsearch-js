@@ -11,7 +11,7 @@ client.ml.updateDatafeed(this: That, params: T.MlUpdateDatafeedRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpdateDatafeedRequest` | - |
+| `params` | [`MlUpdateDatafeedRequest`](../types/MlUpdateDatafeedRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

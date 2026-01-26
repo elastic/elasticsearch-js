@@ -11,7 +11,7 @@ client.connector.updateApiKeyId(this: That, params: T.ConnectorUpdateApiKeyIdReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateApiKeyIdRequest` | - |
+| `params` | [`ConnectorUpdateApiKeyIdRequest`](../types/ConnectorUpdateApiKeyIdRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

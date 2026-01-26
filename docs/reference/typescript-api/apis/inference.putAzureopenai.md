@@ -11,7 +11,7 @@ client.inference.putAzureopenai(this: That, params: T.InferencePutAzureopenaiReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAzureopenaiRequest` | - |
+| `params` | [`InferencePutAzureopenaiRequest`](../types/InferencePutAzureopenaiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

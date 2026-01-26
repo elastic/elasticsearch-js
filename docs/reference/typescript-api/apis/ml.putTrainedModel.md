@@ -11,7 +11,7 @@ client.ml.putTrainedModel(this: That, params: T.MlPutTrainedModelRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutTrainedModelRequest` | - |
+| `params` | [`MlPutTrainedModelRequest`](../types/MlPutTrainedModelRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

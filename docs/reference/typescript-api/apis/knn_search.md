@@ -11,7 +11,7 @@ client.knn_search(this: That, params: T.KnnSearchRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.KnnSearchRequest` | - |
+| `params` | [`KnnSearchRequest`](../types/KnnSearchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

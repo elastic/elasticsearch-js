@@ -11,7 +11,7 @@ client.slm.putLifecycle(this: That, params: T.SlmPutLifecycleRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SlmPutLifecycleRequest` | - |
+| `params` | [`SlmPutLifecycleRequest`](../types/SlmPutLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

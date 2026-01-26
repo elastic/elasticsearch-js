@@ -11,7 +11,7 @@ client.text_structure.findFieldStructure(this: That, params: T.TextStructureFind
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TextStructureFindFieldStructureRequest` | - |
+| `params` | [`TextStructureFindFieldStructureRequest`](../types/TextStructureFindFieldStructureRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.rollup.startJob(this: That, params: T.RollupStartJobRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.RollupStartJobRequest` | - |
+| `params` | [`RollupStartJobRequest`](../types/RollupStartJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

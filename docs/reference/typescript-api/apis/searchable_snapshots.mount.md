@@ -11,7 +11,7 @@ client.searchable_snapshots.mount(this: That, params: T.SearchableSnapshotsMount
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchableSnapshotsMountRequest` | - |
+| `params` | [`SearchableSnapshotsMountRequest`](../types/SearchableSnapshotsMountRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

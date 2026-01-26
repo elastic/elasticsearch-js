@@ -11,7 +11,7 @@ client.fleet.globalCheckpoints(this: That, params: T.FleetGlobalCheckpointsReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.FleetGlobalCheckpointsRequest` | - |
+| `params` | [`FleetGlobalCheckpointsRequest`](../types/FleetGlobalCheckpointsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

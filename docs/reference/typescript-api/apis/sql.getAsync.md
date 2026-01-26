@@ -11,7 +11,7 @@ client.sql.getAsync(this: That, params: T.SqlGetAsyncRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SqlGetAsyncRequest` | - |
+| `params` | [`SqlGetAsyncRequest`](../types/SqlGetAsyncRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

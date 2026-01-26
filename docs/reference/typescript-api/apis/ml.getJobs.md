@@ -11,7 +11,7 @@ client.ml.getJobs(this: That, params?: T.MlGetJobsRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlGetJobsRequest` | - |
+| `params?` | [`MlGetJobsRequest`](../types/MlGetJobsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

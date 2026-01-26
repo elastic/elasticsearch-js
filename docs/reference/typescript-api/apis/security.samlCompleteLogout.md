@@ -11,7 +11,7 @@ client.security.samlCompleteLogout(this: That, params: T.SecuritySamlCompleteLog
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecuritySamlCompleteLogoutRequest` | - |
+| `params` | [`SecuritySamlCompleteLogoutRequest`](../types/SecuritySamlCompleteLogoutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

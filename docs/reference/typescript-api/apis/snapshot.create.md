@@ -11,7 +11,7 @@ client.snapshot.create(this: That, params: T.SnapshotCreateRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotCreateRequest` | - |
+| `params` | [`SnapshotCreateRequest`](../types/SnapshotCreateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

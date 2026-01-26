@@ -11,7 +11,7 @@ client.search_application.put(this: That, params: T.SearchApplicationPutRequest,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationPutRequest` | - |
+| `params` | [`SearchApplicationPutRequest`](../types/SearchApplicationPutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

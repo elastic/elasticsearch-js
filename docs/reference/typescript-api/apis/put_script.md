@@ -11,7 +11,7 @@ client.put_script(this: That, params: T.PutScriptRequest, options?: TransportReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.PutScriptRequest` | - |
+| `params` | [`PutScriptRequest`](../types/PutScriptRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

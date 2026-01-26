@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `actions` | `string[]` | - |
+| `actions` | `string`[] | - |
 | `all` | [`WatcherSimulatedActions`](WatcherSimulatedActions.md) | - |
 | `use_all` | `boolean` | - |
 

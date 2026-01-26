@@ -11,7 +11,7 @@ client.ccr.resumeFollow(this: That, params: T.CcrResumeFollowRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrResumeFollowRequest` | - |
+| `params` | [`CcrResumeFollowRequest`](../types/CcrResumeFollowRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

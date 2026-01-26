@@ -11,7 +11,7 @@ client.indices.rollover(this: That, params: T.IndicesRolloverRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesRolloverRequest` | - |
+| `params` | [`IndicesRolloverRequest`](../types/IndicesRolloverRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

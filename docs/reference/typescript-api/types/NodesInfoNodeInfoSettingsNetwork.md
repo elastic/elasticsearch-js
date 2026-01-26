@@ -6,7 +6,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `host?` | `Host | Host[]` | - |
+| `host?` | `Host | Host`[] | - |
 
 ## See Also
 

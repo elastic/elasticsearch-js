@@ -11,7 +11,7 @@ client.nodes.stats(this: That, params?: T.NodesStatsRequest, options?: Transport
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.NodesStatsRequest` | - |
+| `params?` | [`NodesStatsRequest`](../types/NodesStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

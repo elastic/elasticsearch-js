@@ -11,7 +11,7 @@ client.indices.close(this: That, params: T.IndicesCloseRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesCloseRequest` | - |
+| `params` | [`IndicesCloseRequest`](../types/IndicesCloseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

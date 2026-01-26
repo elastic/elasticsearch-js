@@ -11,7 +11,7 @@ client.monitoring.bulk(this: That, params: T.MonitoringBulkRequest<TDocument, TP
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MonitoringBulkRequest<TDocument, TPartialDocument>` | - |
+| `params` | [`MonitoringBulkRequest`](../types/MonitoringBulkRequest.md)<TDocument, TPartialDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

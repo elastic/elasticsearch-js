@@ -11,7 +11,7 @@ client.migration.getFeatureUpgradeStatus(this: That, params?: T.MigrationGetFeat
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MigrationGetFeatureUpgradeStatusRequest` | - |
+| `params?` | [`MigrationGetFeatureUpgradeStatusRequest`](../types/MigrationGetFeatureUpgradeStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

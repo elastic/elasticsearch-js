@@ -11,7 +11,7 @@ client.cat.tasks(this: That, params?: T.CatTasksRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatTasksRequest` | - |
+| `params?` | [`CatTasksRequest`](../types/CatTasksRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

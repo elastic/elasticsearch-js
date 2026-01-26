@@ -11,7 +11,7 @@ client.ml.getModelSnapshotUpgradeStats(this: That, params: T.MlGetModelSnapshotU
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetModelSnapshotUpgradeStatsRequest` | - |
+| `params` | [`MlGetModelSnapshotUpgradeStatsRequest`](../types/MlGetModelSnapshotUpgradeStatsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

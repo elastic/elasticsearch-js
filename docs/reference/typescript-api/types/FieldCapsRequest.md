@@ -17,8 +17,8 @@ targeting `foo*,bar*` returns an error if an index starts with foo but no index 
 | `expand_wildcards?` | [`ExpandWildcards`](ExpandWildcards.md) | The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. |
 | `ignore_unavailable?` | `boolean` | If `true`, missing or closed indices are not included in the response. |
 | `include_unmapped?` | `boolean` | If true, unmapped fields are included in the response. |
-| `filters?` | `string | string[]` | A comma-separated list of filters to apply to the response. |
-| `types?` | `string[]` | A comma-separated list of field types to include.
+| `filters?` | `string | string`[] | A comma-separated list of filters to apply to the response. |
+| `types?` | `string`[] | A comma-separated list of field types to include.
 Any fields that do not match one of these types will be excluded from the results.
 It defaults to empty, meaning that all field types are returned. |
 | `include_empty_fields?` | `boolean` | If false, empty fields are not included in the response. |

@@ -11,7 +11,7 @@ client.rollup.getJobs(this: That, params?: T.RollupGetJobsRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.RollupGetJobsRequest` | - |
+| `params?` | [`RollupGetJobsRequest`](../types/RollupGetJobsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

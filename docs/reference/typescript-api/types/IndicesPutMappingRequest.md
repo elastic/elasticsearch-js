@@ -25,10 +25,10 @@ If no response is received before the timeout expires, the request fails and ret
 | `write_index_only?` | `boolean` | If `true`, the mappings are applied only to the current write index for the target. |
 | `date_detection?` | `boolean` | Controls whether dynamic date detection is enabled. |
 | `dynamic?` | [`MappingDynamicMapping`](MappingDynamicMapping.md) | Controls whether new fields are added dynamically. |
-| `dynamic_date_formats?` | `string[]` | If date detection is enabled then new string fields are checked
+| `dynamic_date_formats?` | `string`[] | If date detection is enabled then new string fields are checked
 against 'dynamic_date_formats' and if the value matches then
 a new date field is added instead of string. |
-| `dynamic_templates?` | `Partial<Record<string, MappingDynamicTemplate>>[]` | Specify dynamic templates for the mapping. |
+| `dynamic_templates?` | `Partial<Record<string, MappingDynamicTemplate>>`[] | Specify dynamic templates for the mapping. |
 | `_field_names?` | [`MappingFieldNamesField`](MappingFieldNamesField.md) | Control whether field names are enabled for the index. |
 | `_meta?` | [`Metadata`](Metadata.md) | A mapping type can have custom meta data associated with it. These are
 not used at all by Elasticsearch, but can be used to store

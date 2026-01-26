@@ -11,7 +11,7 @@ client.delete_by_query_rethrottle(this: That, params: T.DeleteByQueryRethrottleR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.DeleteByQueryRethrottleRequest` | - |
+| `params` | [`DeleteByQueryRethrottleRequest`](../types/DeleteByQueryRethrottleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

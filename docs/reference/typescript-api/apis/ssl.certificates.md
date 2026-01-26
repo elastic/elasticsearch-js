@@ -11,7 +11,7 @@ client.ssl.certificates(this: That, params?: T.SslCertificatesRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SslCertificatesRequest` | - |
+| `params?` | [`SslCertificatesRequest`](../types/SslCertificatesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

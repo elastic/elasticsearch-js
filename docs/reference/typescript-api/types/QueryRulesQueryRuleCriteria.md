@@ -21,7 +21,7 @@
 | `metadata?` | `string` | The metadata field to match against.
 This metadata will be used to match against `match_criteria` sent in the rule.
 It is required for all criteria types except `always`. |
-| `values?` | `any[]` | The values to match against the `metadata` field.
+| `values?` | `any`[] | The values to match against the `metadata` field.
 Only one value must match for the criteria to be met.
 It is required for all criteria types except `always`. |
 

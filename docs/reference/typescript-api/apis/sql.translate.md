@@ -11,7 +11,7 @@ client.sql.translate(this: That, params: T.SqlTranslateRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SqlTranslateRequest` | - |
+| `params` | [`SqlTranslateRequest`](../types/SqlTranslateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

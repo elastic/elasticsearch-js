@@ -11,7 +11,7 @@ client.cat.nodes(this: That, params?: T.CatNodesRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatNodesRequest` | - |
+| `params?` | [`CatNodesRequest`](../types/CatNodesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

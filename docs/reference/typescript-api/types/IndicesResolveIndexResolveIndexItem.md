@@ -7,8 +7,8 @@
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | [`Name`](Name.md) | - |
-| `aliases?` | `string[]` | - |
-| `attributes` | `string[]` | - |
+| `aliases?` | `string`[] | - |
+| `attributes` | `string`[] | - |
 | `data_stream?` | [`DataStreamName`](DataStreamName.md) | - |
 | `mode?` | [`IndicesIndexMode`](IndicesIndexMode.md) | - |
 

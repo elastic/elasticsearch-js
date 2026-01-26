@@ -11,7 +11,7 @@ client.nodes.reloadSecureSettings(this: That, params?: T.NodesReloadSecureSettin
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.NodesReloadSecureSettingsRequest` | - |
+| `params?` | [`NodesReloadSecureSettingsRequest`](../types/NodesReloadSecureSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -18,7 +18,7 @@
 | `sensitive` | `boolean` | - |
 | `tooltip?` | `string | null` | - |
 | `type?` | [`ConnectorConnectorFieldType`](ConnectorConnectorFieldType.md) | - |
-| `ui_restrictions?` | `string[]` | - |
+| `ui_restrictions?` | `string`[] | - |
 | `validations?` | [`ConnectorValidation`](ConnectorValidation.md)[] | - |
 | `value` | `any` | - |
 

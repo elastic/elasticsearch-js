@@ -11,7 +11,7 @@ client.indices.deleteAlias(this: That, params: T.IndicesDeleteAliasRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDeleteAliasRequest` | - |
+| `params` | [`IndicesDeleteAliasRequest`](../types/IndicesDeleteAliasRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

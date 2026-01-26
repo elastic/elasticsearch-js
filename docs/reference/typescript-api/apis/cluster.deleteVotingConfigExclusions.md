@@ -11,7 +11,7 @@ client.cluster.deleteVotingConfigExclusions(this: That, params?: T.ClusterDelete
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterDeleteVotingConfigExclusionsRequest` | - |
+| `params?` | [`ClusterDeleteVotingConfigExclusionsRequest`](../types/ClusterDeleteVotingConfigExclusionsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

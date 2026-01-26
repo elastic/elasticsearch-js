@@ -11,7 +11,7 @@ client.indices.putMapping(this: That, params: T.IndicesPutMappingRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesPutMappingRequest` | - |
+| `params` | [`IndicesPutMappingRequest`](../types/IndicesPutMappingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

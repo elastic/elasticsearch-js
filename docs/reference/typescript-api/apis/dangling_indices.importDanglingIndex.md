@@ -11,7 +11,7 @@ client.dangling_indices.importDanglingIndex(this: That, params: T.DanglingIndice
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.DanglingIndicesImportDanglingIndexRequest` | - |
+| `params` | [`DanglingIndicesImportDanglingIndexRequest`](../types/DanglingIndicesImportDanglingIndexRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

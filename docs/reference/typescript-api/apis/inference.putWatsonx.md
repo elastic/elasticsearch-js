@@ -11,7 +11,7 @@ client.inference.putWatsonx(this: That, params: T.InferencePutWatsonxRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutWatsonxRequest` | - |
+| `params` | [`InferencePutWatsonxRequest`](../types/InferencePutWatsonxRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

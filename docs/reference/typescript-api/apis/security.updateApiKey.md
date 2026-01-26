@@ -11,7 +11,7 @@ client.security.updateApiKey(this: That, params: T.SecurityUpdateApiKeyRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityUpdateApiKeyRequest` | - |
+| `params` | [`SecurityUpdateApiKeyRequest`](../types/SecurityUpdateApiKeyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.inference.putAmazonsagemaker(this: That, params: T.InferencePutAmazonsage
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutAmazonsagemakerRequest` | - |
+| `params` | [`InferencePutAmazonsagemakerRequest`](../types/InferencePutAmazonsagemakerRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

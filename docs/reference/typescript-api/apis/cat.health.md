@@ -11,7 +11,7 @@ client.cat.health(this: That, params?: T.CatHealthRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatHealthRequest` | - |
+| `params?` | [`CatHealthRequest`](../types/CatHealthRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

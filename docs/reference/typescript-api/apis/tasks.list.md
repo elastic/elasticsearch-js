@@ -11,7 +11,7 @@ client.tasks.list(this: That, params?: T.TasksListRequest, options?: TransportRe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.TasksListRequest` | - |
+| `params?` | [`TasksListRequest`](../types/TasksListRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

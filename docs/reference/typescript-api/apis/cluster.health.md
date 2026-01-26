@@ -11,7 +11,7 @@ client.cluster.health(this: That, params?: T.ClusterHealthRequest, options?: Tra
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterHealthRequest` | - |
+| `params?` | [`ClusterHealthRequest`](../types/ClusterHealthRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

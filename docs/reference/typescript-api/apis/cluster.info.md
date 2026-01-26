@@ -11,7 +11,7 @@ client.cluster.info(this: That, params: T.ClusterInfoRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ClusterInfoRequest` | - |
+| `params` | [`ClusterInfoRequest`](../types/ClusterInfoRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.createFrom(this: That, params: T.IndicesCreateFromRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesCreateFromRequest` | - |
+| `params` | [`IndicesCreateFromRequest`](../types/IndicesCreateFromRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

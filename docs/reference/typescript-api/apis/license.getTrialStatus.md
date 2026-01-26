@@ -11,7 +11,7 @@ client.license.getTrialStatus(this: That, params?: T.LicenseGetTrialStatusReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicenseGetTrialStatusRequest` | - |
+| `params?` | [`LicenseGetTrialStatusRequest`](../types/LicenseGetTrialStatusRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

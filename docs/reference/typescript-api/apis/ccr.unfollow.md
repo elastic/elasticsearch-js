@@ -11,7 +11,7 @@ client.ccr.unfollow(this: That, params: T.CcrUnfollowRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CcrUnfollowRequest` | - |
+| `params` | [`CcrUnfollowRequest`](../types/CcrUnfollowRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

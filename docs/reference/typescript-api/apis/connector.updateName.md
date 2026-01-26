@@ -11,7 +11,7 @@ client.connector.updateName(this: That, params: T.ConnectorUpdateNameRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorUpdateNameRequest` | - |
+| `params` | [`ConnectorUpdateNameRequest`](../types/ConnectorUpdateNameRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

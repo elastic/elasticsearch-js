@@ -13,7 +13,7 @@
 | `source_ip?` | [`Field`](Field.md) | Field containing the source IP address. |
 | `destination_ip?` | [`Field`](Field.md) | Field containing the destination IP address. |
 | `target_field?` | [`Field`](Field.md) | Output field for the network direction. |
-| `internal_networks?` | `string[]` | List of internal networks. Supports IPv4 and IPv6 addresses and ranges in
+| `internal_networks?` | `string`[] | List of internal networks. Supports IPv4 and IPv6 addresses and ranges in
 CIDR notation. Also supports the named ranges listed below. These may be
 constructed with template snippets. Must specify only one of
 internal_networks or internal_networks_field. |

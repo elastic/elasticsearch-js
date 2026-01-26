@@ -11,7 +11,7 @@ client.ml.explainDataFrameAnalytics(this: That, params?: T.MlExplainDataFrameAna
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlExplainDataFrameAnalyticsRequest` | - |
+| `params?` | [`MlExplainDataFrameAnalyticsRequest`](../types/MlExplainDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

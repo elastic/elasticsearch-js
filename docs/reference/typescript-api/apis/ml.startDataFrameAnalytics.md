@@ -11,7 +11,7 @@ client.ml.startDataFrameAnalytics(this: That, params: T.MlStartDataFrameAnalytic
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlStartDataFrameAnalyticsRequest` | - |
+| `params` | [`MlStartDataFrameAnalyticsRequest`](../types/MlStartDataFrameAnalyticsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.deleteDataStream(this: That, params: T.IndicesDeleteDataStreamReq
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesDeleteDataStreamRequest` | - |
+| `params` | [`IndicesDeleteDataStreamRequest`](../types/IndicesDeleteDataStreamRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

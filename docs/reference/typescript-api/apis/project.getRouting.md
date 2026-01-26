@@ -11,7 +11,7 @@ client.project.getRouting(this: That, params: T.ProjectGetRoutingRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ProjectGetRoutingRequest` | - |
+| `params` | [`ProjectGetRoutingRequest`](../types/ProjectGetRoutingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

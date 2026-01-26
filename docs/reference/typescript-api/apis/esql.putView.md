@@ -11,7 +11,7 @@ client.esql.putView(this: That, params: T.EsqlPutViewRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EsqlPutViewRequest` | - |
+| `params` | [`EsqlPutViewRequest`](../types/EsqlPutViewRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

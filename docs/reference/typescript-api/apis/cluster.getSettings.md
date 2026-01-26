@@ -11,7 +11,7 @@ client.cluster.getSettings(this: That, params?: T.ClusterGetSettingsRequest, opt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterGetSettingsRequest` | - |
+| `params?` | [`ClusterGetSettingsRequest`](../types/ClusterGetSettingsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

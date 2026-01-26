@@ -11,7 +11,7 @@ client.ml.setUpgradeMode(this: That, params?: T.MlSetUpgradeModeRequest, options
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlSetUpgradeModeRequest` | - |
+| `params?` | [`MlSetUpgradeModeRequest`](../types/MlSetUpgradeModeRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

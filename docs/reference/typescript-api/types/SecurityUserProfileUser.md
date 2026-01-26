@@ -10,7 +10,7 @@
 | `full_name?` | `Name | null` | - |
 | `realm_name` | [`Name`](Name.md) | - |
 | `realm_domain?` | [`Name`](Name.md) | - |
-| `roles` | `string[]` | - |
+| `roles` | `string`[] | - |
 | `username` | [`Username`](Username.md) | - |
 
 ## See Also

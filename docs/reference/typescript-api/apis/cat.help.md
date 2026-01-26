@@ -11,7 +11,7 @@ client.cat.help(this: That, params?: T.CatHelpRequest, options?: TransportReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatHelpRequest` | - |
+| `params?` | [`CatHelpRequest`](../types/CatHelpRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

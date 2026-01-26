@@ -11,7 +11,7 @@ client.ingest.getIpLocationDatabase(this: That, params?: T.IngestGetIpLocationDa
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IngestGetIpLocationDatabaseRequest` | - |
+| `params?` | [`IngestGetIpLocationDatabaseRequest`](../types/IngestGetIpLocationDatabaseRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

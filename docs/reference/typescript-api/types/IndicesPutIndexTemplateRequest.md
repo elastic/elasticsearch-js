@@ -39,7 +39,7 @@ To unset the metadata, replace the template without specifying it. |
 | `allow_auto_create?` | `boolean` | This setting overrides the value of the `action.auto_create_index` cluster setting.
 If set to `true` in a template, then indices can be automatically created using that template even if auto-creation of indices is disabled via `actions.auto_create_index`.
 If set to `false`, then indices or data streams matching the template must always be explicitly created, and may never be automatically created. |
-| `ignore_missing_component_templates?` | `string[]` | The configuration option ignore_missing_component_templates can be used when an index template
+| `ignore_missing_component_templates?` | `string`[] | The configuration option ignore_missing_component_templates can be used when an index template
 references a component template that might not exist |
 | `deprecated?` | `boolean` | Marks this index template as deprecated. When creating or updating a non-deprecated index template
 that uses deprecated components, Elasticsearch will emit a deprecation warning. |

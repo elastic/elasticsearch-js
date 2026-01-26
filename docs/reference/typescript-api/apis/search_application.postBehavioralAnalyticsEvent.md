@@ -11,7 +11,7 @@ client.search_application.postBehavioralAnalyticsEvent(this: That, params: T.Sea
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SearchApplicationPostBehavioralAnalyticsEventRequest` | - |
+| `params` | [`SearchApplicationPostBehavioralAnalyticsEventRequest`](../types/SearchApplicationPostBehavioralAnalyticsEventRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

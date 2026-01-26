@@ -11,7 +11,7 @@ client.delete_script(this: That, params: T.DeleteScriptRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.DeleteScriptRequest` | - |
+| `params` | [`DeleteScriptRequest`](../types/DeleteScriptRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

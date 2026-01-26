@@ -11,7 +11,7 @@ client.license.postStartBasic(this: That, params?: T.LicensePostStartBasicReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.LicensePostStartBasicRequest` | - |
+| `params?` | [`LicensePostStartBasicRequest`](../types/LicensePostStartBasicRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

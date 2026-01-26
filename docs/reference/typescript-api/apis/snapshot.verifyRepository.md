@@ -11,7 +11,7 @@ client.snapshot.verifyRepository(this: That, params: T.SnapshotVerifyRepositoryR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotVerifyRepositoryRequest` | - |
+| `params` | [`SnapshotVerifyRepositoryRequest`](../types/SnapshotVerifyRepositoryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

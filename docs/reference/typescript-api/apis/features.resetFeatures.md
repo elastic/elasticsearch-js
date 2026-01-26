@@ -11,7 +11,7 @@ client.features.resetFeatures(this: That, params?: T.FeaturesResetFeaturesReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.FeaturesResetFeaturesRequest` | - |
+| `params?` | [`FeaturesResetFeaturesRequest`](../types/FeaturesResetFeaturesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

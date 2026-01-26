@@ -9,8 +9,8 @@
 | `all_field?` | [`MappingAllField`](MappingAllField.md) | - |
 | `date_detection?` | `boolean` | - |
 | `dynamic?` | [`MappingDynamicMapping`](MappingDynamicMapping.md) | - |
-| `dynamic_date_formats?` | `string[]` | - |
-| `dynamic_templates?` | `Partial<Record<string, MappingDynamicTemplate>>[]` | - |
+| `dynamic_date_formats?` | `string`[] | - |
+| `dynamic_templates?` | `Partial<Record<string, MappingDynamicTemplate>>`[] | - |
 | `_field_names?` | [`MappingFieldNamesField`](MappingFieldNamesField.md) | - |
 | `index_field?` | [`MappingIndexField`](MappingIndexField.md) | - |
 | `_meta?` | [`Metadata`](Metadata.md) | - |

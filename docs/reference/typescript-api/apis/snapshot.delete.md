@@ -11,7 +11,7 @@ client.snapshot.delete(this: That, params: T.SnapshotDeleteRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotDeleteRequest` | - |
+| `params` | [`SnapshotDeleteRequest`](../types/SnapshotDeleteRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

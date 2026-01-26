@@ -11,7 +11,7 @@ client.slm.getLifecycle(this: That, params?: T.SlmGetLifecycleRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SlmGetLifecycleRequest` | - |
+| `params?` | [`SlmGetLifecycleRequest`](../types/SlmGetLifecycleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

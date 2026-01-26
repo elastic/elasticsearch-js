@@ -9,7 +9,7 @@
 | `type` | `'nori'` | - |
 | `version?` | [`VersionString`](VersionString.md) | - |
 | `decompound_mode?` | [`AnalysisNoriDecompoundMode`](AnalysisNoriDecompoundMode.md) | - |
-| `stoptags?` | `string[]` | - |
+| `stoptags?` | `string`[] | - |
 | `user_dictionary?` | `string` | - |
 
 ## See Also

@@ -11,7 +11,7 @@ client.inference.putVoyageai(this: That, params: T.InferencePutVoyageaiRequest, 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutVoyageaiRequest` | - |
+| `params` | [`InferencePutVoyageaiRequest`](../types/InferencePutVoyageaiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

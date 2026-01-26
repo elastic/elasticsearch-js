@@ -11,7 +11,7 @@ client.inference.putContextualai(this: That, params: T.InferencePutContextualaiR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutContextualaiRequest` | - |
+| `params` | [`InferencePutContextualaiRequest`](../types/InferencePutContextualaiRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

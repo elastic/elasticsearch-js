@@ -11,7 +11,7 @@ client.esql.getQuery(this: That, params: T.EsqlGetQueryRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EsqlGetQueryRequest` | - |
+| `params` | [`EsqlGetQueryRequest`](../types/EsqlGetQueryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

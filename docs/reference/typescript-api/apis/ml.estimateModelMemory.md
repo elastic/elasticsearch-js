@@ -11,7 +11,7 @@ client.ml.estimateModelMemory(this: That, params?: T.MlEstimateModelMemoryReques
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.MlEstimateModelMemoryRequest` | - |
+| `params?` | [`MlEstimateModelMemoryRequest`](../types/MlEstimateModelMemoryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.profiling.flamegraph(this: That, params: T.ProfilingFlamegraphRequest, op
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ProfilingFlamegraphRequest` | - |
+| `params` | [`ProfilingFlamegraphRequest`](../types/ProfilingFlamegraphRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

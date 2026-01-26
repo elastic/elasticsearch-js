@@ -11,7 +11,7 @@ client.indices.clearCache(this: That, params?: T.IndicesClearCacheRequest, optio
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesClearCacheRequest` | - |
+| `params?` | [`IndicesClearCacheRequest`](../types/IndicesClearCacheRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

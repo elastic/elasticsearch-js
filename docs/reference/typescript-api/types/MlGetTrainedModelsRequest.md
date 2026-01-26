@@ -32,7 +32,7 @@ be retrieved and then added to another cluster. |
 | `include?` | [`MlInclude`](MlInclude.md) | A comma delimited string of optional fields to include in the response
 body. |
 | `size?` | [`integer`](integer.md) | Specifies the maximum number of models to obtain. |
-| `tags?` | `string | string[]` | A comma delimited string of tags. A trained model can have many tags, or
+| `tags?` | `string | string`[] | A comma delimited string of tags. A trained model can have many tags, or
 none. When supplied, only trained models that contain all the supplied
 tags are returned. |
 | `body?` | `string | { [key: string]: any } & { model_id?: never, allow_no_match?: never, decompress_definition?: never, exclude_generated?: never, from?: never, include?: never, size?: never, tags?: never }` | All values in `body` will be added to the request body. |

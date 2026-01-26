@@ -11,7 +11,7 @@ client.transform.scheduleNowTransform(this: That, params: T.TransformScheduleNow
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TransformScheduleNowTransformRequest` | - |
+| `params` | [`TransformScheduleNowTransformRequest`](../types/TransformScheduleNowTransformRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

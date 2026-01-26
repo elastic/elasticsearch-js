@@ -11,7 +11,7 @@ client.fleet.deleteSecret(this: That, params: T.FleetDeleteSecretRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.FleetDeleteSecretRequest` | - |
+| `params` | [`FleetDeleteSecretRequest`](../types/FleetDeleteSecretRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

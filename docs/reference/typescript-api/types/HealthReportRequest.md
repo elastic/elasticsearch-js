@@ -10,7 +10,7 @@
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `feature?` | `string | string[]` | A feature of the cluster, as returned by the top-level health report API. |
+| `feature?` | `string | string`[] | A feature of the cluster, as returned by the top-level health report API. |
 | `timeout?` | [`Duration`](Duration.md) | Explicit operation timeout. |
 | `verbose?` | `boolean` | Opt-in for more information about the health of the system. |
 | `size?` | [`integer`](integer.md) | Limit the number of affected resources the health report API returns. |

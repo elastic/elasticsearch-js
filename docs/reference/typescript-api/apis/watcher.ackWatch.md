@@ -11,7 +11,7 @@ client.watcher.ackWatch(this: That, params: T.WatcherAckWatchRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.WatcherAckWatchRequest` | - |
+| `params` | [`WatcherAckWatchRequest`](../types/WatcherAckWatchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

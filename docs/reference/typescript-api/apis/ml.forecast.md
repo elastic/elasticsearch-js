@@ -11,7 +11,7 @@ client.ml.forecast(this: That, params: T.MlForecastRequest, options?: TransportR
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlForecastRequest` | - |
+| `params` | [`MlForecastRequest`](../types/MlForecastRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

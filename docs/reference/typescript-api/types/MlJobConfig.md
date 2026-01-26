@@ -26,7 +26,7 @@ Note that when configure a datafeed, these properties are automatically set. |
 | `datafeed_config?` | [`MlDatafeedConfig`](MlDatafeedConfig.md) | The datafeed, which retrieves data from Elasticsearch for analysis by the job.
 You can associate only one datafeed with each anomaly detection job. |
 | `description?` | `string` | A description of the job. |
-| `groups?` | `string[]` | A list of job groups. A job can belong to no groups or many. |
+| `groups?` | `string`[] | A list of job groups. A job can belong to no groups or many. |
 | `job_id?` | [`Id`](Id.md) | Identifier for the anomaly detection job.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters. |

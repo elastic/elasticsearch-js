@@ -11,7 +11,7 @@ client.text_structure.findMessageStructure(this: That, params: T.TextStructureFi
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.TextStructureFindMessageStructureRequest` | - |
+| `params` | [`TextStructureFindMessageStructureRequest`](../types/TextStructureFindMessageStructureRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

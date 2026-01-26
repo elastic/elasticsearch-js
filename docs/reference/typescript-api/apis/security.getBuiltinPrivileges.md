@@ -11,7 +11,7 @@ client.security.getBuiltinPrivileges(this: That, params?: T.SecurityGetBuiltinPr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetBuiltinPrivilegesRequest` | - |
+| `params?` | [`SecurityGetBuiltinPrivilegesRequest`](../types/SecurityGetBuiltinPrivilegesRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

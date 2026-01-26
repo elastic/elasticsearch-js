@@ -11,7 +11,7 @@ client.ml.getInfluencers(this: That, params: T.MlGetInfluencersRequest, options?
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlGetInfluencersRequest` | - |
+| `params` | [`MlGetInfluencersRequest`](../types/MlGetInfluencersRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

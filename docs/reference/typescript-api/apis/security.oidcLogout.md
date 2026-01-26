@@ -11,7 +11,7 @@ client.security.oidcLogout(this: That, params: T.SecurityOidcLogoutRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityOidcLogoutRequest` | - |
+| `params` | [`SecurityOidcLogoutRequest`](../types/SecurityOidcLogoutRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

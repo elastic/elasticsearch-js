@@ -11,7 +11,7 @@ client.cat.segments(this: That, params?: T.CatSegmentsRequest, options?: Transpo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatSegmentsRequest` | - |
+| `params?` | [`CatSegmentsRequest`](../types/CatSegmentsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -9,7 +9,7 @@
 | `aggregations?` | `Record<string, AggregationsAggregationContainer>` | - |
 | `size?` | [`long`](long.md) | - |
 | `_source?` | [`SearchSourceConfig`](SearchSourceConfig.md) | - |
-| `fields?` | `(QueryDslFieldAndFormat | Field)[]` | - |
+| `fields?` | `(QueryDslFieldAndFormat | Field)`[] | - |
 | `query?` | [`QueryDslQueryContainer`](QueryDslQueryContainer.md) | - |
 | `sort?` | [`Sort`](Sort.md) | - |
 | `track_total_hits?` | [`SearchTrackHits`](SearchTrackHits.md) | - |

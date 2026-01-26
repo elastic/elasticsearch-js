@@ -11,7 +11,7 @@ client.esql.deleteView(this: That, params: T.EsqlDeleteViewRequest, options?: Tr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.EsqlDeleteViewRequest` | - |
+| `params` | [`EsqlDeleteViewRequest`](../types/EsqlDeleteViewRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

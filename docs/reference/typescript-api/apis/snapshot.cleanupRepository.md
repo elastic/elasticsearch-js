@@ -11,7 +11,7 @@ client.snapshot.cleanupRepository(this: That, params: T.SnapshotCleanupRepositor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SnapshotCleanupRepositoryRequest` | - |
+| `params` | [`SnapshotCleanupRepositoryRequest`](../types/SnapshotCleanupRepositoryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

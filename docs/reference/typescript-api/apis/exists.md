@@ -11,7 +11,7 @@ client.exists(this: That, params: T.ExistsRequest, options?: TransportRequestOpt
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ExistsRequest` | - |
+| `params` | [`ExistsRequest`](../types/ExistsRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

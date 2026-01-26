@@ -11,7 +11,7 @@ client.security.getToken(this: That, params?: T.SecurityGetTokenRequest, options
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SecurityGetTokenRequest` | - |
+| `params?` | [`SecurityGetTokenRequest`](../types/SecurityGetTokenRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.cat.count(this: That, params?: T.CatCountRequest, options?: TransportRequ
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.CatCountRequest` | - |
+| `params?` | [`CatCountRequest`](../types/CatCountRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

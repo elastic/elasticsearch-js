@@ -11,7 +11,7 @@ client.watcher.deactivateWatch(this: That, params: T.WatcherDeactivateWatchReque
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.WatcherDeactivateWatchRequest` | - |
+| `params` | [`WatcherDeactivateWatchRequest`](../types/WatcherDeactivateWatchRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

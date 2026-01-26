@@ -19,7 +19,7 @@ Supports comma-separated values, such as `open,hidden`. |
 | `allow_no_indices?` | `boolean` | If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. |
-| `mode?` | `IndicesIndexMode | IndicesIndexMode[]` | Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter. |
+| `mode?` | `IndicesIndexMode | IndicesIndexMode`[] | Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter. |
 | `project_routing?` | [`ProjectRouting`](ProjectRouting.md) | Specifies a subset of projects to target using project
 metadata tags in a subset of Lucene query syntax.
 Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).

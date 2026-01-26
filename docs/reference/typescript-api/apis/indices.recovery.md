@@ -11,7 +11,7 @@ client.indices.recovery(this: That, params?: T.IndicesRecoveryRequest, options?:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesRecoveryRequest` | - |
+| `params?` | [`IndicesRecoveryRequest`](../types/IndicesRecoveryRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

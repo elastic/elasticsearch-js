@@ -11,7 +11,7 @@ client.ilm.removePolicy(this: That, params: T.IlmRemovePolicyRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IlmRemovePolicyRequest` | - |
+| `params` | [`IlmRemovePolicyRequest`](../types/IlmRemovePolicyRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

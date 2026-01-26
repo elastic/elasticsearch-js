@@ -11,7 +11,7 @@ client.ml.putCalendar(this: That, params: T.MlPutCalendarRequest, options?: Tran
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlPutCalendarRequest` | - |
+| `params` | [`MlPutCalendarRequest`](../types/MlPutCalendarRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

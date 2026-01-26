@@ -19,7 +19,7 @@ Defaults to deactivated (0). |
 | `fields?` | [`Field`](Field.md)[] | A list of fields to fetch and analyze the text from.
 Defaults to the `index.query.default_field` index setting, which has a default value of `*`. |
 | `include?` | `boolean` | Specifies whether the input documents should also be included in the search results returned. |
-| `like` | `QueryDslLike | QueryDslLike[]` | Specifies free form text and/or a single or multiple documents for which you want to find similar documents. |
+| `like` | `QueryDslLike | QueryDslLike`[] | Specifies free form text and/or a single or multiple documents for which you want to find similar documents. |
 | `max_doc_freq?` | [`integer`](integer.md) | The maximum document frequency above which the terms are ignored from the input document. |
 | `max_query_terms?` | [`integer`](integer.md) | The maximum number of query terms that can be selected. |
 | `max_word_length?` | [`integer`](integer.md) | The maximum word length above which the terms are ignored.
@@ -31,7 +31,7 @@ Defaults to unbounded (`0`). |
 | `routing?` | [`Routing`](Routing.md) | - |
 | `stop_words?` | [`AnalysisStopWords`](AnalysisStopWords.md) | An array of stop words.
 Any word in this set is ignored. |
-| `unlike?` | `QueryDslLike | QueryDslLike[]` | Used in combination with `like` to exclude documents that match a set of terms. |
+| `unlike?` | `QueryDslLike | QueryDslLike`[] | Used in combination with `like` to exclude documents that match a set of terms. |
 | `version?` | [`VersionNumber`](VersionNumber.md) | - |
 | `version_type?` | [`VersionType`](VersionType.md) | - |
 

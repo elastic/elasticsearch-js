@@ -11,7 +11,7 @@ client.security.putRole(this: That, params: T.SecurityPutRoleRequest, options?: 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityPutRoleRequest` | - |
+| `params` | [`SecurityPutRoleRequest`](../types/SecurityPutRoleRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

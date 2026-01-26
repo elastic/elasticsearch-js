@@ -11,7 +11,7 @@ client.cluster.getComponentTemplate(this: That, params?: T.ClusterGetComponentTe
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.ClusterGetComponentTemplateRequest` | - |
+| `params?` | [`ClusterGetComponentTemplateRequest`](../types/ClusterGetComponentTemplateRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

@@ -11,7 +11,7 @@ client.indices.refresh(this: That, params?: T.IndicesRefreshRequest, options?: T
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.IndicesRefreshRequest` | - |
+| `params?` | [`IndicesRefreshRequest`](../types/IndicesRefreshRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

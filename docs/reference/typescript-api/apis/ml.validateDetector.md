@@ -11,7 +11,7 @@ client.ml.validateDetector(this: That, params: T.MlValidateDetectorRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlValidateDetectorRequest` | - |
+| `params` | [`MlValidateDetectorRequest`](../types/MlValidateDetectorRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

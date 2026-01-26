@@ -11,7 +11,7 @@ client.indices.migrateToDataStream(this: That, params: T.IndicesMigrateToDataStr
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.IndicesMigrateToDataStreamRequest` | - |
+| `params` | [`IndicesMigrateToDataStreamRequest`](../types/IndicesMigrateToDataStreamRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

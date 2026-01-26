@@ -11,7 +11,7 @@ client.searchable_snapshots.clearCache(this: That, params?: T.SearchableSnapshot
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params?` | `T.SearchableSnapshotsClearCacheRequest` | - |
+| `params?` | [`SearchableSnapshotsClearCacheRequest`](../types/SearchableSnapshotsClearCacheRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

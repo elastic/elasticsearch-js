@@ -11,7 +11,7 @@ client.security.deleteRoleMapping(this: That, params: T.SecurityDeleteRoleMappin
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.SecurityDeleteRoleMappingRequest` | - |
+| `params` | [`SecurityDeleteRoleMappingRequest`](../types/SecurityDeleteRoleMappingRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

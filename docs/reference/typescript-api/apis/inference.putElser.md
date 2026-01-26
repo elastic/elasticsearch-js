@@ -11,7 +11,7 @@ client.inference.putElser(this: That, params: T.InferencePutElserRequest, option
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutElserRequest` | - |
+| `params` | [`InferencePutElserRequest`](../types/InferencePutElserRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

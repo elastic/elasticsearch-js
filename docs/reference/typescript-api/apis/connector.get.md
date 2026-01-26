@@ -11,7 +11,7 @@ client.connector.get(this: That, params: T.ConnectorGetRequest, options?: Transp
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.ConnectorGetRequest` | - |
+| `params` | [`ConnectorGetRequest`](../types/ConnectorGetRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

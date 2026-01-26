@@ -11,7 +11,7 @@ client.create(this: That, params: T.CreateRequest<TDocument>, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.CreateRequest<TDocument>` | - |
+| `params` | [`CreateRequest`](../types/CreateRequest.md)<TDocument> | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

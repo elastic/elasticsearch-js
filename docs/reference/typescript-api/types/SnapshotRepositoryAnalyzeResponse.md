@@ -14,7 +14,7 @@
 | `delete_elapsed_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | The time it took to delete all the blobs in the container, in nanoseconds. |
 | `details` | [`SnapshotRepositoryAnalyzeDetailsInfo`](SnapshotRepositoryAnalyzeDetailsInfo.md) | A description of every read and write operation performed during the test. |
 | `early_read_node_count` | [`integer`](integer.md) | The limit on the number of nodes on which early read operations were performed after writing each blob. |
-| `issues_detected` | `string[]` | A list of correctness issues detected, which is empty if the API succeeded.
+| `issues_detected` | `string`[] | A list of correctness issues detected, which is empty if the API succeeded.
 It is included to emphasize that a successful response does not guarantee correct behaviour in future. |
 | `listing_elapsed` | [`Duration`](Duration.md) | The time it took to retrieve a list of all the blobs in the container. |
 | `listing_elapsed_nanos` | [`DurationValue`](DurationValue.md)<UnitNanos> | The time it took to retrieve a list of all the blobs in the container, in nanoseconds. |

@@ -11,7 +11,7 @@ client.ml.updateJob(this: That, params: T.MlUpdateJobRequest, options?: Transpor
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.MlUpdateJobRequest` | - |
+| `params` | [`MlUpdateJobRequest`](../types/MlUpdateJobRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns

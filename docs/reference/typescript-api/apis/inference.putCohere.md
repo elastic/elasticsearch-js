@@ -11,7 +11,7 @@ client.inference.putCohere(this: That, params: T.InferencePutCohereRequest, opti
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `this` | `That` | - |
-| `params` | `T.InferencePutCohereRequest` | - |
+| `params` | [`InferencePutCohereRequest`](../types/InferencePutCohereRequest.md) | - |
 | `options?` | `TransportRequestOptions` | - |
 
 ### Returns
