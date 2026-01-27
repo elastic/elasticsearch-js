@@ -4783,7 +4783,7 @@ client.esql.query({ query })
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`locale` (Optional, string)**
-- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[]>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -7744,9 +7744,25 @@ client.inference.delete({ inference_id })
 
 #### Request (object) [_request_inference.delete]
 - **`inference_id` (string)**: The inference identifier.
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type
 - **`dry_run` (Optional, boolean)**: When true, checks the semantic_text fields and inference processors that reference the endpoint and returns them in a list, but does not delete the endpoint.
 - **`force` (Optional, boolean)**: When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
+
+## client.inference.embedding [_inference.embedding]
+Perform dense embedding inference on the service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+
+```ts
+client.inference.embedding({ inference_id })
+```
+
+### Arguments [_arguments_inference.embedding]
+
+#### Request (object) [_request_inference.embedding]
+- **`inference_id` (string)**: The inference Id
+- **`embedding` (Optional, { input, input_type, task_settings })**
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.get [_inference.get]
 Get an inference endpoint.
@@ -7762,7 +7778,7 @@ client.inference.get({ ... })
 ### Arguments [_arguments_inference.get]
 
 #### Request (object) [_request_inference.get]
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type
 - **`inference_id` (Optional, string)**: The inference Id
 
 ## client.inference.inference [_inference.inference]
@@ -7792,10 +7808,10 @@ It can be a single string or an array.
 
 > info
 > Inference endpoints for the `completion` task type currently only support a single string as input.
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The type of inference task that the model performs.
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The type of inference task that the model performs.
 - **`query` (Optional, string)**: The query input, which is required only for the `rerank` task.
 It is not required for other tasks.
-- **`input_type` (Optional, string)**: Specifies the input data type for the text embedding model. The `input_type` parameter only applies to Inference Endpoints with the `text_embedding` task type. Possible values include:
+- **`input_type` (Optional, string)**: Specifies the input data type for the embedding model. The `input_type` parameter only applies to Inference Endpoints with the `embedding` or `text_embedding` task type. Possible values include:
 * `SEARCH`
 * `INGEST`
 * `CLASSIFICATION`
@@ -7819,7 +7835,7 @@ However, if you do not plan to use the inference APIs to use these models or if 
 The following integrations are available through the inference API. You can find the available task types next to the integration name:
 * AI21 (`chat_completion`, `completion`)
 * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
-* Amazon Bedrock (`completion`, `text_embedding`)
+* Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`)
 * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Anthropic (`completion`)
 * Azure AI Studio (`completion`, `rerank`, `text_embedding`)
@@ -7832,7 +7848,7 @@ The following integrations are available through the inference API. You can find
 * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * Groq (`chat_completion`)
 * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`)
-* JinaAI (`rerank`, `text_embedding`)
+* JinaAI (`embedding`, `rerank`, `text_embedding`)
 * Llama (`chat_completion`, `completion`, `text_embedding`)
 * Mistral (`chat_completion`, `completion`, `text_embedding`)
 * Nvidia (`chat_completion`, `completion`, `text_embedding`, `rerank`)
@@ -7851,7 +7867,7 @@ client.inference.put({ inference_id })
 
 #### Request (object) [_request_inference.put]
 - **`inference_id` (string)**: The inference Id
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type. Refer to the integration list in the API description for the available task types.
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type. Refer to the integration list in the API description for the available task types.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -7917,13 +7933,13 @@ client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, servi
 ### Arguments [_arguments_inference.put_amazonbedrock]
 
 #### Request (object) [_request_inference.put_amazonbedrock]
-- **`task_type` (Enum("completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("chat_completion" \| "completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`amazonbedrock_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("amazonbedrock"))**: The type of service supported for the specified task type. In this case, `amazonbedrock`.
 - **`service_settings` ({ access_key, model, provider, region, rate_limit, secret_key })**: Settings used to install the inference model. These settings are specific to the `amazonbedrock` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
-Not applicable to the `completion` task type.
+Not applicable to the `chat_completion` and `completion` task types.
 - **`task_settings` (Optional, { max_new_tokens, temperature, top_k, top_p })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
@@ -8379,7 +8395,7 @@ Create an JinaAI inference endpoint.
 Create an inference endpoint to perform an inference task with the `jinaai` service.
 
 To review the available `rerank` models, refer to <https://jina.ai/reranker>.
-To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>.
+To review the available `embedding` and `text_embedding` models, refer to <https://jina.ai/embeddings/>.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-jinaai)
 
@@ -8390,14 +8406,14 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 ### Arguments [_arguments_inference.put_jinaai]
 
 #### Request (object) [_request_inference.put_jinaai]
-- **`task_type` (Enum("rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("embedding" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`jinaai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
-- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, element_type })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
+- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, element_type, multimodal_model })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
-Applies only to the `text_embedding` task type.
+Applies only to the `embedding` and text_embedding` task types.
 Not applicable to the `rerank` task type.
-- **`task_settings` (Optional, { return_documents, task, late_chunking, top_n })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { return_documents, input_type, late_chunking, top_n })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8694,7 +8710,7 @@ client.inference.update({ inference_id })
 
 #### Request (object) [_request_inference.update]
 - **`inference_id` (string)**: The unique identifier of the inference endpoint.
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The type of inference task that the model performs.
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The type of inference task that the model performs.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
 
 ## client.ingest.deleteGeoipDatabase [_ingest.delete_geoip_database]
