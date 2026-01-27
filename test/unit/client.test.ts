@@ -271,6 +271,50 @@ test('Override authentication per request', async t => {
   )
 })
 
+test('Child client auth should not affect sibling children', async t => {
+
+  const requests: { label: string, auth: string | undefined }[] = []
+
+  const Connection = connection.buildMockConnection({
+    onRequest(opts) {
+      return {
+        statusCode: 200,
+        body: { hello: 'world' }
+      }
+    }
+  })
+
+  const root = new Client({
+    node: 'http://localhost:9200',
+    Connection,
+  })
+
+  const childA = root.child({
+    auth: { username: 'userA', password: 'passA' }
+  })
+
+  const childB = root.child({
+    auth: { username: 'userB', password: 'passB' }
+  })
+
+  const childC = root.child({
+    auth: { username: 'userC', password: 'passC' }
+  })
+
+  const expectedA = 'Basic ' + Buffer.from('userA:passA').toString('base64')
+  const expectedB = 'Basic ' + Buffer.from('userB:passB').toString('base64')
+  const expectedC = 'Basic ' + Buffer.from('userC:passC').toString('base64')
+
+  t.equal(childA.transport[symbols.kHeaders].authorization, expectedA, 'childA should have its own auth')
+  t.equal(childB.transport[symbols.kHeaders].authorization, expectedB, 'childB should have its own auth')
+  t.equal(childC.transport[symbols.kHeaders].authorization, expectedC, 'childC should have its own auth')
+
+  // Parent should not have any auth
+  t.equal(root.transport[symbols.kHeaders].authorization, undefined, 'parent should have no auth')
+
+  t.end()
+})
+
 test('Custom headers per request', async t => {
   t.plan(1)
 

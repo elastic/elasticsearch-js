@@ -454,6 +454,12 @@ export default class Client extends API {
     // Merge the new options with the initial ones
     // @ts-expect-error kChild symbol is for internal use only
     const options: ClientOptions = Object.assign({}, this[kInitialOptions], opts)
+
+    // Clone headers to avoid mutating the parent's headers objectwhen prepareHeaders adds authorization
+    if (options.headers != null) {
+      options.headers = { ...options.headers }
+    }
+
     // Pass to the child client the parent instances that cannot be overridden
     // @ts-expect-error kInitialOptions symbol is for internal use only
     options[kChild] = {
