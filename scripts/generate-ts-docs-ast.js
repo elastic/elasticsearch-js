@@ -135,12 +135,12 @@ function isPrimitive (type) {
 // Helper: Convert type to markdown link
 function typeToLink (typeStr, context = 'types') {
   // Handle T.TypeName format (namespace imports from api/types)
-  const namespaceMatch = typeStr.match(/^T\.(\w+)/)
+  const namespaceMatch = typeStr.match(/\bT\.(\w+)/)
   if (namespaceMatch) {
     const actualType = namespaceMatch[1]
     if (allTypes.has(actualType)) {
       const prefix = context === 'apis' ? '../types/' : ''
-      return typeStr.replace(/T\.(\w+)/, `[\`$1\`](${prefix}$1.md)`)
+      return typeStr.replace(/T\.(\w+)/, `[$1](${prefix}$1.md)`)
     }
   }
 
@@ -153,23 +153,23 @@ function typeToLink (typeStr, context = 'types') {
 
   // Skip primitives
   if (isPrimitive(typeStr)) {
-    return `\`${typeStr}\``
+    return `${typeStr}`
   }
 
   // Simple type that exists
   if (allTypes.has(typeStr)) {
     const prefix = context === 'apis' ? '../types/' : ''
-    return `[\`${typeStr}\`](${prefix}${typeStr}.md)`
+    return `[${typeStr}](${prefix}${typeStr}.md)`
   }
 
   // Handle generics - try to link the base type
   const genericMatch = typeStr.match(/^(\w+)</)
   if (genericMatch && allTypes.has(genericMatch[1])) {
     const prefix = context === 'apis' ? '../types/' : ''
-    return typeStr.replace(genericMatch[1], `[\`${genericMatch[1]}\`](${prefix}${genericMatch[1]}.md)`)
+    return typeStr.replace(genericMatch[1], `[${genericMatch[1]}](${prefix}${genericMatch[1]}.md)`)
   }
 
-  return `\`${typeStr}\``
+  return `${typeStr}`
 }
 
 console.log('📚 Extracting types...')
@@ -471,11 +471,12 @@ apis.forEach(api => {
     content += `${api.comment}\n\n`
   }
 
-  content += '## Method Signature\n\n'
+  content += '## Method signature\n\n'
   content += '```typescript\n'
   content += `client.${methodName}(`
   if (api.params && api.params.length > 0) {
-    content += api.params.map(p => `${p.name}${p.optional ? '?' : ''}: ${p.type}`).join(', ')
+    const params = api.params.filter(p => !(p.name === 'this' && p.type === 'That'))
+    content += params.map(p => `${p.name}${p.optional ? '?' : ''}: ${p.type}`).join(', ')
   }
   content += `): ${api.returnType}\n`
   content += '```\n\n'
@@ -485,8 +486,9 @@ apis.forEach(api => {
     content += '| Parameter | Type | Description |\n'
     content += '|-----------|------|-------------|\n'
     api.params.forEach(param => {
+      if (param.name === 'this' && param.type === 'That') return
       const typeLink = typeToLink(param.type, 'apis')
-      const desc = param.description ?? '-'
+      const desc = param.description ?? '&nbsp;'
       content += `| \`${param.name}${param.optional ? '?' : ''}\` | ${typeLink} | ${desc} |\n`
     })
     content += '\n'
@@ -533,8 +535,8 @@ types.forEach(type => {
 
       type.properties.forEach(prop => {
         const typeLink = typeToLink(prop.type, 'types')
-        const desc = prop.comment ?? '-'
-        content += `| \`${prop.name}${prop.optional ? '?' : ''}\` | ${typeLink} | ${desc} |\n`
+        const desc = prop.comment ?? '&nbsp;'
+        content += `| ${prop.name}${prop.optional ? '?' : ''} | ${typeLink} | ${desc} |\n`
       })
       content += '\n'
     }
@@ -554,7 +556,7 @@ types.forEach(type => {
       content += '| Member | Value |\n'
       content += '|--------|-------|\n'
       type.members.forEach(member => {
-        content += `| \`${member.name}\` | ${member.value ?? '-'} |\n`
+        content += `| ${member.name} | ${member.value ?? '&nbsp;'} |\n`
       })
       content += '\n'
     }
@@ -596,8 +598,8 @@ if (helpers.length > 0) {
       helpersContent += '| Parameter | Type | Description |\n'
       helpersContent += '|-----------|------|-------------|\n'
       helper.params.forEach(param => {
-        const desc = param.description ?? '-'
-        helpersContent += `| \`${param.name}${param.optional ? '?' : ''}\` | \`${param.type}\` | ${desc} |\n`
+        const desc = param.description ?? '&nbsp;'
+        helpersContent += `| ${param.name}${param.optional ? '?' : ''} | ${param.type} | ${desc} |\n`
       })
       helpersContent += '\n'
     }
@@ -623,8 +625,8 @@ clientContent += '```\n\n'
 
 if (clientOptions.length > 0) {
   clientContent += '### ClientOptions\n\n'
-  clientContent += '| Option | Type | Description |\n'
-  clientContent += '|--------|------|-------------|\n'
+  // clientContent += '| Option | Type | Description |\n'
+  // clientContent += '|--------|------|-------------|\n'
 
   clientOptions.forEach(opt => {
     // Special handling for Transport option to link to transport.md
@@ -632,10 +634,10 @@ if (clientOptions.length > 0) {
     if (opt.name === 'Transport') {
       typeLink = '[`Transport`](./transport.md)'
     } else {
-      typeLink = `\`${opt.type}\``
+      typeLink = `${opt.type}`
     }
-    const desc = opt.comment ?? '-'
-    clientContent += `| \`${opt.name}${opt.optional ? '?' : ''}\` | ${typeLink} | ${desc} |\n`
+    const desc = opt.comment ?? '&nbsp;'
+    clientContent += `| ${opt.name}${opt.optional ? '?' : ''} | ${typeLink} | ${desc} |\n`
   })
   clientContent += '\n'
 }
@@ -697,7 +699,7 @@ const sortedApis = apis.slice().sort((a, b) => a.fullName.localeCompare(b.fullNa
 
 sortedApis.forEach(api => {
   const fileName = api.isNamespace ? `${api.namespace}.${api.methodName}.md` : `${api.methodName}.md`
-  indexContent += `- [\`client.${api.fullName}()\`](apis/${fileName})\n`
+  indexContent += `- [client.${api.fullName}()](apis/${fileName})\n`
 })
 
 fs.writeFileSync(indexPath, indexContent)
