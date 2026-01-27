@@ -309,7 +309,6 @@ test('Child client auth should not affect sibling children', async t => {
   t.equal(childB.transport[symbols.kHeaders].authorization, expectedB, 'childB should have its own auth')
   t.equal(childC.transport[symbols.kHeaders].authorization, expectedC, 'childC should have its own auth')
 
-  // Parent should not have any auth
   t.equal(root.transport[symbols.kHeaders].authorization, undefined, 'parent should have no auth')
 
   t.end()
