@@ -1,7 +1,11 @@
 {
   "name": "esm",
   "version": "1.0.0",
+  "type": "module",
   "dependencies": {
     "@elastic/elasticsearch": "file:../.."
+  },
+  "devDependencies": {
+    "tap": "^21.5.0"
   }
 }
