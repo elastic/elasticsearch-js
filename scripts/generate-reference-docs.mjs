@@ -19,7 +19,15 @@ const program = ts.createProgram({
     path.join(SRC_DIR, 'api/index.ts'),
     path.join(SRC_DIR, 'api/types.ts'),
     path.join(SRC_DIR, 'helpers.ts'),
-    path.join(SRC_DIR, 'node_modules/@elastic/transport/index.js')
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/Transport.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/connection/BaseConnection.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/connection/HttpConnection.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/connection/UndiciConnection.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/pool/BaseConnectionPool.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/pool/ClusterConnectionPool.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/pool/CloudConnectionPool.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/pool/WeightedConnectionPool.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/Serializer.d.ts')
   ],
   options: {
     target: ts.ScriptTarget.ES2019,
@@ -215,3 +223,284 @@ if (clientFile) {
     }
   })
 }
+
+// Extract all types from types.ts
+const allTypes = new Map()
+const typesFile = program.getSourceFile(path.join(SRC_DIR, 'api/types.ts'))
+
+if (typesFile) {
+  ts.forEachChild(typesFile, node => {
+    // Interface declarations
+    if (ts.isInterfaceDeclaration(node) && node.name) {
+      const typeName = node.name.text
+      const comment = getJSDoc(node)
+      const properties = []
+      const extendsTypes = []
+
+      // Get heritage clauses (extends)
+      if (node.heritageClauses) {
+        node.heritageClauses.forEach(clause => {
+          if (clause.token === ts.SyntaxKind.ExtendsKeyword) {
+            clause.types.forEach(type => {
+              extendsTypes.push(type.expression.getText(typesFile))
+            })
+          }
+        })
+      }
+
+      // Get properties
+      node.members.forEach(member => {
+        if (ts.isPropertySignature(member) && member.name) {
+          const propName = member.name.getText(typesFile)
+          const propType = member.type ? member.type.getText(typesFile).replace(/\s+/g, ' ') : 'any'
+          const optional = !!member.questionToken
+          const propComment = getJSDoc(member)
+
+          properties.push({
+            name: propName,
+            type: propType,
+            optional,
+            comment: propComment
+          })
+        }
+      })
+
+      allTypes.set(typeName, {
+        kind: 'interface',
+        name: typeName,
+        comment,
+        properties,
+        extends: extendsTypes
+      })
+    }
+
+    // Type aliases
+    if (ts.isTypeAliasDeclaration(node) && node.name) {
+      const typeName = node.name.text
+      const comment = getJSDoc(node)
+      const typeDefinition = node.type.getText(typesFile).replace(/\s+/g, ' ')
+
+      allTypes.set(typeName, {
+        kind: 'type',
+        name: typeName,
+        comment,
+        definition: typeDefinition
+      })
+    }
+
+    // Enums
+    if (ts.isEnumDeclaration(node) && node.name) {
+      const enumName = node.name.text
+      const comment = getJSDoc(node)
+      const members = []
+
+      node.members.forEach(member => {
+        const memberName = member.name.getText(typesFile)
+        const memberValue = member.initializer ? member.initializer.getText(typesFile) : undefined
+        const memberComment = getJSDoc(member)
+
+        members.push({
+          name: memberName,
+          value: memberValue,
+          comment: memberComment
+        })
+      })
+
+      allTypes.set(enumName, {
+        kind: 'enum',
+        name: enumName,
+        comment,
+        members
+      })
+    }
+  })
+}
+
+// Extract Client.helpers functions
+const helperFunctions = []
+const helpersFile = program.getSourceFile(path.join(SRC_DIR, 'helpers.ts'))
+
+if (helpersFile) {
+  // Find the Helpers class
+  ts.forEachChild(helpersFile, node => {
+    if (ts.isClassDeclaration(node) && node.name && node.name.text === 'Helpers') {
+      node.members.forEach(member => {
+        if (ts.isMethodDeclaration(member) && member.name) {
+          const methodName = member.name.getText(helpersFile)
+          if (methodName === 'constructor') return
+
+          const comment = getJSDoc(member)
+          const paramDocs = getParamDocs(member)
+          const params = []
+
+          member.parameters.forEach(param => {
+            if (!param.name) return
+            const paramName = param.name.getText(helpersFile)
+            const paramType = param.type ? param.type.getText(helpersFile).replace(/\s+/g, ' ') : 'any'
+            const optional = !!param.questionToken
+
+            params.push({
+              name: paramName,
+              type: paramType,
+              optional,
+              description: paramDocs[paramName] ?? ''
+            })
+          })
+
+          const returnType = member.type ? member.type.getText(helpersFile).replace(/\s+/g, ' ') : 'any'
+
+          helperFunctions.push({
+            name: methodName,
+            comment,
+            params,
+            returnType
+          })
+        }
+      })
+    }
+  })
+}
+
+// Extract Transport class and related classes
+const transportClasses = new Map()
+
+// Load transport classes from individual files
+const transportFiles = [
+  'lib/Transport.d.ts',
+  'lib/connection/BaseConnection.d.ts',
+  'lib/connection/HttpConnection.d.ts',
+  'lib/connection/UndiciConnection.d.ts',
+  'lib/pool/BaseConnectionPool.d.ts',
+  'lib/pool/ClusterConnectionPool.d.ts',
+  'lib/pool/CloudConnectionPool.d.ts',
+  'lib/pool/WeightedConnectionPool.d.ts',
+  'lib/Serializer.d.ts'
+]
+
+transportFiles.forEach(file => {
+  const transportPath = path.join(SRC_DIR, '../node_modules/@elastic/transport', file)
+  
+  if (!fs.existsSync(transportPath)) {
+    return
+  }
+
+  const transportFile = program.getSourceFile(transportPath)
+
+  if (transportFile) {
+    ts.forEachChild(transportFile, node => {
+      // Find class declarations
+      if (ts.isClassDeclaration(node) && node.name) {
+        const className = node.name.text
+
+        const comment = getJSDoc(node)
+        const properties = []
+        const methods = []
+        const constructorParams = []
+
+        node.members.forEach(member => {
+          // Properties
+          if (ts.isPropertyDeclaration(member) && member.name) {
+            const propName = member.name.getText(transportFile)
+            const propType = member.type ? member.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
+            const propComment = getJSDoc(member)
+            const isPrivate = member.modifiers?.some(m => m.kind === ts.SyntaxKind.PrivateKeyword)
+            
+            // Skip private properties
+            if (isPrivate) return
+
+            properties.push({
+              name: propName,
+              type: propType,
+              comment: propComment
+            })
+          }
+
+          // Methods
+          if (ts.isMethodDeclaration(member) && member.name) {
+            const methodName = member.name.getText(transportFile)
+            const methodComment = getJSDoc(member)
+            const paramDocs = getParamDocs(member)
+            const params = []
+            const isPrivate = member.modifiers?.some(m => m.kind === ts.SyntaxKind.PrivateKeyword)
+            
+            // Skip private methods
+            if (isPrivate) return
+
+            member.parameters.forEach(param => {
+              if (!param.name) return
+              const paramName = param.name.getText(transportFile)
+              const paramType = param.type ? param.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
+              const optional = !!param.questionToken
+
+              params.push({
+                name: paramName,
+                type: paramType,
+                optional,
+                description: paramDocs[paramName] ?? ''
+              })
+            })
+
+            const returnType = member.type ? member.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
+
+            methods.push({
+              name: methodName,
+              comment: methodComment,
+              params,
+              returnType
+            })
+          }
+
+          // Constructor
+          if (ts.isConstructorDeclaration(member)) {
+            const paramDocs = getParamDocs(member)
+
+            member.parameters.forEach(param => {
+              if (!param.name) return
+              const paramName = param.name.getText(transportFile)
+              const paramType = param.type ? param.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
+              const optional = !!param.questionToken
+
+              constructorParams.push({
+                name: paramName,
+                type: paramType,
+                optional,
+                description: paramDocs[paramName] ?? ''
+              })
+            })
+          }
+        })
+
+        transportClasses.set(className, {
+          name: className,
+          comment,
+          constructorParams,
+          properties,
+          methods
+        })
+      }
+    })
+  }
+})
+
+// Build the final DOM structure
+const dom = {
+  client: {
+    options: clientOptions
+  },
+  apis: Object.fromEntries(apiMap),
+  types: Object.fromEntries(allTypes),
+  helpers: helperFunctions,
+  transport: Object.fromEntries(transportClasses)
+}
+
+// Write to dom.json
+const outputPath = path.join(__dirname, '../dom.json')
+fs.writeFileSync(outputPath, JSON.stringify(dom, null, 2))
+
+console.log(`DOM written to ${outputPath}`)
+console.log(`Stats:`)
+console.log(`  - APIs: ${apiMap.size}`)
+console.log(`  - Types: ${allTypes.size}`)
+console.log(`  - Client options: ${clientOptions.length}`)
+console.log(`  - Helper functions: ${helperFunctions.length}`)
+console.log(`  - Transport classes: ${transportClasses.size}`)
