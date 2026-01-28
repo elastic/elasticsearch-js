@@ -11,7 +11,7 @@ correct='/*
 the_exit=0
 
 check_file() {
-  if $(diff <(head -n4 "$1") <(echo "$correct") &>/dev/null); then
+  if $(diff <(grep -v '^#!' "$1" | head -n4) <(echo "$correct") &>/dev/null); then
     echo "Correct: $1"
   else
     echo "Incorrect: $1"

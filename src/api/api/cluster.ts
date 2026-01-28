@@ -21,7 +21,7 @@ import {
   TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
-import { kAcceptedParams } from '../../client'
+import { kAcceptedParams } from '../../symbols'
 
 interface That {
   transport: Transport

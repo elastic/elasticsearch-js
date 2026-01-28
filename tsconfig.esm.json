@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "es2022",
+    "outDir": "esm",
+    "declaration": true,
+    "declarationMap": true
+  }
+}

@@ -3,18 +3,32 @@
   "version": "9.2.0",
   "versionCanary": "9.2.0-canary.0",
   "description": "The official Elasticsearch client for Node.js",
+  "type": "commonjs",
   "main": "./index.js",
   "types": "index.d.ts",
   "exports": {
-    "require": "./index.js",
-    "import": "./index.js",
-    "types": "./index.d.ts"
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./lib/*": {
+      "import": "./esm/*.js",
+      "require": "./lib/*.js",
+      "types": "./lib/*.d.ts"
+    },
+    "./*": {
+      "import": "./esm/*.js",
+      "require": "./lib/*.js",
+      "types": "./lib/*.d.ts"
+    }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && tap",
+    "test": "npm run build && npm run lint && tap && cd test/esm/ && npm install && npx tap test-import.mjs",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
-    "test:esm": "npm run build && cd test/esm/ && npm install && node test-import.mjs",
+    "test:esm": "npm run build && cd test/esm/ && npm install && npx tap test-import.mjs",
     "test:coverage-100": "npm run build && tap --coverage --100",
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
@@ -25,8 +39,12 @@
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
     "license-header": "./scripts/check-spdx",
     "prebuild": "npm run clean-build && npm run lint",
-    "build": "tsc && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
-    "clean-build": "rimraf ./lib && mkdir lib",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:esm-fix && npm run build:esm-package",
+    "build:cjs": "tsc && rm -f lib/package.json lib/index.js lib/index.d.ts",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:esm-fix": "tsc-esm-fix --target=esm && node scripts/fix-esm-require.js",
+    "build:esm-package": "node -e \"require('fs').writeFileSync('esm/package.json', JSON.stringify({type:'module'}, null, 2))\"",
+    "clean-build": "rimraf ./lib && mkdir lib && rimraf ./esm && mkdir esm",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -87,7 +105,8 @@
     "tap": "21.1.3",
     "ts-node": "10.9.2",
     "ts-standard": "12.0.2",
-    "typescript": "5.9.2",
+    "tsc-esm-fix": "3.1.2",
+    "typescript": "5.9.3",
     "workq": "3.0.0",
     "xmlbuilder2": "3.1.1",
     "zx": "8.8.0"
