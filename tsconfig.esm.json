@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "es2022",
-    "outDir": "lib/esm",
+    "outDir": "esm",
     "declaration": true,
     "declarationMap": true
   }

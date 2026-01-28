@@ -4,9 +4,10 @@
  */
 
 import { test } from 'tap'
-import { Client, errors, Transport, SniffingTransport } from '../../../'
 
 test('CommonJS imports work correctly', async (t) => {
+  const { Client, errors, Transport, SniffingTransport } = require('../../')
+
   t.equal(typeof Client, 'function', 'Client should be a function')
   t.equal(typeof errors, 'object', 'errors should be an object')
   t.equal(typeof Transport, 'function', 'Transport should be a function')

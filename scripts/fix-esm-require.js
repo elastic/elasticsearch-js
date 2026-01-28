@@ -8,8 +8,8 @@ const fs = require('fs')
 const path = require('path')
 
 // Fix the package.json require in client.js for ESM
-const clientPath = path.join(__dirname, '..', 'lib', 'esm', 'client.js')
-const helpersPath = path.join(__dirname, '..', 'lib', 'esm', 'helpers.js')
+const clientPath = path.join(__dirname, '..', 'esm', 'client.js')
+const helpersPath = path.join(__dirname, '..', 'esm', 'helpers.js')
 
 // Fix client.js
 if (fs.existsSync(clientPath)) {
@@ -30,12 +30,6 @@ if (fs.existsSync(clientPath)) {
 
       content = beforeImport + "import { createRequire } from 'node:module';\nconst require = createRequire(import.meta.url);\n" + afterImport
     }
-
-    // Fix the path to package.json - from lib/esm, it's ../../package.json
-    content = content.replace(
-      /require\(['"]\.\.\/package\.json['"]\)/g,
-      "require('../../package.json')"
-    )
 
     fs.writeFileSync(clientPath, content, 'utf8')
     console.log(`Fixed package.json loading in ${clientPath}`)
