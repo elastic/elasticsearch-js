@@ -27,7 +27,8 @@
     "prebuild": "npm run clean-build && npm run lint",
     "build": "tsc && rm lib/package.json && mv lib/src/* lib/ && rm -rf lib/src",
     "clean-build": "rimraf ./lib && mkdir lib",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs:generate": "node scripts/generate-ts-docs-ast.js"
   },
   "keywords": [
     "elasticsearch",

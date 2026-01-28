@@ -73,3 +73,6 @@ yaml-rest-tests
 generated-tests
 schema
 base64-data
+
+# Generated TypeScript reference documentation
+docs/reference/typescript-api/
