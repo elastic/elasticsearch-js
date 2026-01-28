@@ -3,26 +3,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const { join } = require('path')
-const stream = require('stream')
-const { promisify } = require('util')
-const { createWriteStream, promises } = require('fs')
-const { rimraf } = require('rimraf')
-const fetch = require('node-fetch')
-const crossZip = require('cross-zip')
-const ora = require('ora')
+import { join, dirname } from 'path'
+import { pipeline } from 'stream/promises'
+import { createWriteStream, promises } from 'fs'
+import { fileURLToPath } from 'url'
+import { rimraf } from 'rimraf'
+import crossZip from 'cross-zip'
+import { promisify } from 'util'
+import ora from 'ora'
 
 const { mkdir, cp } = promises
-const pipeline = promisify(stream.pipeline)
 const unzip = promisify(crossZip.unzip)
 
-const testYamlFolder = join(__dirname, '..', 'yaml-rest-tests')
-const zipFile = join(__dirname, '..', 'elasticsearch-clients-tests.zip')
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const schemaFolder = join(__dirname, '..', 'schema')
-const schemaJson = join(schemaFolder, 'schema.json')
+export const testYamlFolder = join(__dirname, '..', 'yaml-rest-tests')
+export const zipFile = join(__dirname, '..', 'elasticsearch-clients-tests.zip')
+export const schemaFolder = join(__dirname, '..', 'schema')
+export const schemaJson = join(schemaFolder, 'schema.json')
 
-async function downloadArtifacts (localTests, version = 'main') {
+export default async function downloadArtifacts (localTests, version = 'main') {
   const log = ora('Checking out spec and test').start()
 
   const { GITHUB_TOKEN } = process.env
@@ -84,21 +84,16 @@ async function downloadArtifacts (localTests, version = 'main') {
   log.succeed('Done')
 }
 
-async function main () {
-  await downloadArtifacts()
-}
-
-if (require.main === module) {
+// Run if this is the main module
+const isMain = import.meta.url === `file://${process.argv[1]}`
+if (isMain) {
   process.on('unhandledRejection', function (err) {
     console.error(err)
     process.exit(1)
   })
 
-  main().catch(t => {
+  downloadArtifacts().catch(t => {
     console.log(t)
     process.exit(2)
   })
 }
-
-module.exports = downloadArtifacts
-module.exports.locations = { testYamlFolder, zipFile, schemaJson }

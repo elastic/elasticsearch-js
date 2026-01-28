@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.2.1 [elasticsearch-javascript-client-9.2.1-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.2.1-fixes]
+
+- **Fix child client auth header mutation:** When creating child clients with different `auth` options, the authorization header from the first child was incorrectly shared with sibling children. This has been fixed by cloning the headers object before mutation.
+
 ## 9.2.0 [elasticsearch-javascript-client-9.2.0-release-notes]
 
 ### Features and enhancements [elasticsearch-javascript-client-9.2.0-features-enhancements]

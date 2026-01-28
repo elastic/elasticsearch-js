@@ -16,11 +16,19 @@ const fs = require('node:fs')
 const path = require('node:path')
 const globby = require('globby')
 const semver = require('semver')
-const downloadArtifacts = require('../../scripts/download-artifacts')
 
 const buildTests = require('./test-builder')
 
-const yamlFolder = downloadArtifacts.locations.testYamlFolder
+let downloadArtifacts
+let yamlFolder
+
+async function loadDownloadArtifacts () {
+  if (!downloadArtifacts) {
+    const mod = await import('../../scripts/download-artifacts.mjs')
+    downloadArtifacts = mod.default
+    yamlFolder = mod.testYamlFolder
+  }
+}
 
 const getAllFiles = async dir => {
   const files = await globby(dir, {
@@ -32,6 +40,7 @@ const getAllFiles = async dir => {
 }
 
 async function doTestBuilder (version, clientOptions) {
+  await loadDownloadArtifacts()
   await downloadArtifacts(undefined, version)
   const files = await getAllFiles(yamlFolder)
   await buildTests(files, clientOptions)

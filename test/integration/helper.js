@@ -6,7 +6,6 @@
 'use strict'
 
 const assert = require('node:assert')
-const fetch = require('node-fetch')
 
 function runInParallel (client, operation, options, clientOptions) {
   if (options.length === 0) return Promise.resolve()

@@ -73,10 +73,10 @@ export default class Project {
       },
       'project.tags': {
         path: [],
-        body: [],
-        query: [
+        body: [
           'project_routing'
-        ]
+        ],
+        query: []
       }
     }
   }
@@ -324,7 +324,9 @@ export default class Project {
   async tags (this: That, params?: T.ProjectTagsRequest, options?: TransportRequestOptions): Promise<T.ProjectTagsResponse>
   async tags (this: That, params?: T.ProjectTagsRequest, options?: TransportRequestOptions): Promise<any> {
     const {
-      path: acceptedPath
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
     } = this[kAcceptedParams]['project.tags']
 
     const userQuery = params?.querystring
@@ -342,11 +344,21 @@ export default class Project {
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
       }
     }
 
