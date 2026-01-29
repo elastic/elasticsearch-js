@@ -25,10 +25,10 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && tap && cd test/esm/ && npm install && npx tap test-import.mjs",
+    "test": "npm run build && npm run lint && tap",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
-    "test:esm": "npm run build && cd test/esm/ && npm install && npx tap test-import.mjs",
+    "test:esm": "npm run build:esm && tap test/esm/test-import.mjs",
     "test:coverage-100": "npm run build && tap --coverage --100",
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
@@ -39,9 +39,9 @@
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
     "license-header": "./scripts/check-spdx",
     "prebuild": "npm run clean-build && npm run lint",
-    "build": "npm run build:cjs && npm run build:esm && npm run build:esm-fix && npm run build:esm-package",
+    "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc && rm -f lib/package.json lib/index.js lib/index.d.ts",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:esm": "tsc -p tsconfig.esm.json && npm run build:esm-fix && npm run build:esm-package",
     "build:esm-fix": "tsc-esm-fix --target=esm && node scripts/fix-esm-require.js",
     "build:esm-package": "node -e \"require('fs').writeFileSync('esm/package.json', JSON.stringify({type:'module'}, null, 2))\"",
     "clean-build": "rimraf ./lib && mkdir lib && rimraf ./esm && mkdir esm",
@@ -114,9 +114,16 @@
     "tslib": "^2.4.0"
   },
   "tap": {
-    "disable-coverage": true,
     "files": [
-      "test/unit/{*,**/*}.test.ts"
-    ]
+      "test/unit/",
+      "test/esm/"
+    ],
+    "coverage-exclude": [
+      "*/api/**"
+    ],
+    "statements": 96,
+    "branches": 90,
+    "lines": 96,
+    "functions": 88
   }
 }
