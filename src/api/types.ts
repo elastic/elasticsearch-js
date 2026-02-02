@@ -24322,6 +24322,11 @@ export type InferenceEmbeddingContentFormat = 'text' | 'base64'
 export type InferenceEmbeddingContentInput = InferenceEmbeddingContentObject | InferenceEmbeddingContentObject[]
 
 export interface InferenceEmbeddingContentObject {
+  /** An object containing the input data for the model to embed */
+  content: InferenceEmbeddingContentObjectContents
+}
+
+export interface InferenceEmbeddingContentObjectContents {
   /** The type of input to embed. */
   type: InferenceEmbeddingContentType
   /** The format of the input. For the `text` type this defaults to `text`. For the `image` type, this defaults to `base64`. */
