@@ -23603,8 +23603,8 @@ export interface InferenceAmazonBedrockServiceSettings {
   /** The region that your model or ARN is deployed in.
     * The list of available regions per model can be found in the Amazon Bedrock documentation. */
   region: string
-  /** This setting helps to minimize the number of rate limit errors returned from Watsonx.
-    * By default, the `watsonxai` service sets the number of requests allowed per minute to 120. */
+  /** This setting helps to minimize the number of rate limit errors returned from Amazon Bedrock.
+    * By default, the `amazonbedrock` service sets the number of requests allowed per minute to 240. */
   rate_limit?: InferenceRateLimitSetting
   /** A valid AWS secret key that is paired with the `access_key`.
     * For informationg about creating and managing access and secret keys, refer to the AWS documentation. */
