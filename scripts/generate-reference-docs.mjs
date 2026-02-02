@@ -39,15 +39,6 @@ const program = ts.createProgram({
 
 const checker = program.getTypeChecker()
 
-// const allTypes = {}
-//
-// const clientFile = program.getSourceFile(path.join(SRC_DIR, 'client.ts'))
-// ts.forEachChild(clientFile, node => {
-//   if (node.name?.text != null) {
-//     allTypes[node.name.text]
-//   }
-// })
-
 const apiMap = new Map()
 const apiDir = path.join(SRC_DIR, 'api/api')
 
@@ -151,8 +142,6 @@ if (fs.existsSync(apiDir)) {
     })
   })
 }
-
-// console.log(apiMap)
 
 function getJSDoc (node) {
   const docs = ts.getJSDocCommentsAndTags(node)
@@ -379,7 +368,7 @@ const transportFiles = [
 
 transportFiles.forEach(file => {
   const transportPath = path.join(SRC_DIR, '../node_modules/@elastic/transport', file)
-  
+
   if (!fs.existsSync(transportPath)) {
     return
   }
@@ -390,7 +379,10 @@ transportFiles.forEach(file => {
     ts.forEachChild(transportFile, node => {
       // Find class declarations
       if (ts.isClassDeclaration(node) && node.name) {
-        const className = node.name.text
+        let className = node.name.text
+        if (className === 'Connection' && transportPath.includes('UndiciConnection.d.ts')) {
+          className = 'UndiciConnection'
+        }
 
         const comment = getJSDoc(node)
         const properties = []
@@ -404,7 +396,7 @@ transportFiles.forEach(file => {
             const propType = member.type ? member.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
             const propComment = getJSDoc(member)
             const isPrivate = member.modifiers?.some(m => m.kind === ts.SyntaxKind.PrivateKeyword)
-            
+
             // Skip private properties
             if (isPrivate) return
 
@@ -422,7 +414,7 @@ transportFiles.forEach(file => {
             const paramDocs = getParamDocs(member)
             const params = []
             const isPrivate = member.modifiers?.some(m => m.kind === ts.SyntaxKind.PrivateKeyword)
-            
+
             // Skip private methods
             if (isPrivate) return
 
@@ -460,9 +452,19 @@ transportFiles.forEach(file => {
               const paramType = param.type ? param.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
               const optional = !!param.questionToken
 
+              const type = checker.getTypeFromTypeNode(param.type)
+              const params = type.getApparentProperties().map(p => {
+                return {
+                  name: p.escapedName,
+                }
+              })
+
               constructorParams.push({
                 name: paramName,
-                type: paramType,
+                type: {
+                  name: paramType,
+                  params
+                },
                 optional,
                 description: paramDocs[paramName] ?? ''
               })
