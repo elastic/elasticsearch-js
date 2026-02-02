@@ -21,6 +21,8 @@ jobs:
           && contains(github.event.label.name, 'backport')
         )
       )
+    permissions:
+      id-token: write
     steps:
       - name: Fetch ephemeral GitHub token
         id: fetch-token
