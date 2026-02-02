@@ -107,7 +107,7 @@ jobs:
           persist-credentials: false
 
       - name: Use Bun
-        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
+        uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2
 
       - name: Install
         run: |
