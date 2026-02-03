@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && tap",
+    "test": "npm run build && npm run lint && tap --coverage",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
     "test:esm": "npm run build:esm && tap test/esm/test-import.mjs",
@@ -121,10 +121,12 @@
       "test/unit/",
       "test/esm/"
     ],
-    "statements": 96,
-    "branches": 90,
-    "lines": 96,
-    "functions": 88
+    "coverage": {
+      "statements": 96,
+      "branches": 90,
+      "lines": 96,
+      "functions": 88
+    }
   },
   "nyc": {
     "exclude": [
