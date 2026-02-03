@@ -20,6 +20,19 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.3.0 [elasticsearch-javascript-client-9.3.0-release-notes]
+
+### Features and enhancements [elasticsearch-javascript-client-9.3.0-features-enhancements]
+
+- **Compatibility with Elasticsearch 9.3:** All changes and additions to Elasticsearch APIs for its 9.3 release are reflected in this release.
+- **Improved support for ESM imports:** the client now supports ESM imports, which means that you can import it directly from the `elasticsearch` package without having to use a bundler like Webpack or Rollup.
+
+## 9.2.1 [elasticsearch-javascript-client-9.2.1-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.2.1-fixes]
+
+- **Fix child client auth header mutation:** When creating child clients with different `auth` options, the authorization header from the first child was incorrectly shared with sibling children. This has been fixed by cloning the headers object before mutation.
+
 ## 9.2.0 [elasticsearch-javascript-client-9.2.0-release-notes]
 
 ### Features and enhancements [elasticsearch-javascript-client-9.2.0-features-enhancements]
