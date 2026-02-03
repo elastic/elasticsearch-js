@@ -20,6 +20,7 @@ const program = ts.createProgram({
     path.join(SRC_DIR, 'api/types.ts'),
     path.join(SRC_DIR, 'helpers.ts'),
     path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/Transport.d.ts'),
+    path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/types.d.ts'),
     path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/connection/BaseConnection.d.ts'),
     path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/connection/HttpConnection.d.ts'),
     path.join(SRC_DIR, '../node_modules/@elastic/transport/lib/connection/UndiciConnection.d.ts'),
@@ -180,6 +181,94 @@ function getParamDocs (node) {
     }
   })
   return paramDocs
+}
+
+// Recursively extract detailed type information for a type
+function extractTypeInfo (type, depth = 0) {
+  // Limit recursion depth to avoid infinite loops
+  if (depth > 5) {
+    return { kind: 'primitive', name: 'any' }
+  }
+
+  // Handle primitive types
+  if (type.isStringLiteral()) {
+    return { kind: 'primitive', name: `"${type.value}"` }
+  }
+  if (type.isNumberLiteral()) {
+    return { kind: 'primitive', name: type.value.toString() }
+  }
+  if (type.flags & ts.TypeFlags.String) {
+    return { kind: 'primitive', name: 'string' }
+  }
+  if (type.flags & ts.TypeFlags.Number) {
+    return { kind: 'primitive', name: 'number' }
+  }
+  if (type.flags & ts.TypeFlags.Boolean) {
+    return { kind: 'primitive', name: 'boolean' }
+  }
+  if (type.flags & ts.TypeFlags.Undefined) {
+    return { kind: 'primitive', name: 'undefined' }
+  }
+  if (type.flags & ts.TypeFlags.Null) {
+    return { kind: 'primitive', name: 'null' }
+  }
+  if (type.flags & ts.TypeFlags.Void) {
+    return { kind: 'primitive', name: 'void' }
+  }
+  if (type.flags & ts.TypeFlags.Any) {
+    return { kind: 'primitive', name: 'any' }
+  }
+
+  // Handle union types
+  if (type.isUnion()) {
+    return {
+      kind: 'union',
+      types: type.types.map(t => extractTypeInfo(t, depth + 1))
+    }
+  }
+
+  // Handle array types
+  if (checker.isArrayType(type)) {
+    const typeArgs = checker.getTypeArguments(type)
+    return {
+      kind: 'array',
+      elementType: typeArgs.length > 0 ? extractTypeInfo(typeArgs[0], depth + 1) : { kind: 'primitive', name: 'any' }
+    }
+  }
+
+  // Handle object/interface types
+  const props = type.getProperties()
+  if (props.length > 0) {
+    const properties = props.map(prop => {
+      const propType = checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration)
+      const propDecl = prop.valueDeclaration
+      const optional = propDecl && ts.isPropertySignature(propDecl) && !!propDecl.questionToken
+      
+      return {
+        name: prop.getName(),
+        type: extractTypeInfo(propType, depth + 1),
+        optional,
+        comment: prop.getDocumentationComment(checker).map(c => c.text).join('')
+      }
+    })
+
+    // Get the type name if available
+    const symbol = type.getSymbol()
+    const typeName = symbol ? symbol.getName() : 'Object'
+
+    return {
+      kind: 'interface',
+      name: typeName,
+      properties
+    }
+  }
+
+  // Fallback: try to get the type as a string
+  const typeString = checker.typeToString(type)
+  return {
+    kind: 'reference',
+    name: typeString
+  }
 }
 
 const clientOptions = []
@@ -356,6 +445,7 @@ const transportClasses = new Map()
 // Load transport classes from individual files
 const transportFiles = [
   'lib/Transport.d.ts',
+  'lib/types.d.ts',
   'lib/connection/BaseConnection.d.ts',
   'lib/connection/HttpConnection.d.ts',
   'lib/connection/UndiciConnection.d.ts',
@@ -449,22 +539,20 @@ transportFiles.forEach(file => {
             member.parameters.forEach(param => {
               if (!param.name) return
               const paramName = param.name.getText(transportFile)
-              const paramType = param.type ? param.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
+              const paramTypeString = param.type ? param.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
               const optional = !!param.questionToken
 
-              const type = checker.getTypeFromTypeNode(param.type)
-              const params = type.getApparentProperties().map(p => {
-                return {
-                  name: p.escapedName,
-                }
-              })
+              // Extract detailed type information recursively
+              let typeInfo = { kind: 'primitive', name: 'any' }
+              if (param.type) {
+                const type = checker.getTypeFromTypeNode(param.type)
+                typeInfo = extractTypeInfo(type)
+              }
 
               constructorParams.push({
                 name: paramName,
-                type: {
-                  name: paramType,
-                  params
-                },
+                type: typeInfo,
+                typeString: paramTypeString,
                 optional,
                 description: paramDocs[paramName] ?? ''
               })
@@ -484,6 +572,107 @@ transportFiles.forEach(file => {
   }
 })
 
+// Extract transport types (interfaces, type aliases, enums) from @elastic/transport
+const transportTypes = new Map()
+
+transportFiles.forEach(file => {
+  const transportPath = path.join(SRC_DIR, '../node_modules/@elastic/transport', file)
+
+  if (!fs.existsSync(transportPath)) {
+    return
+  }
+
+  const transportFile = program.getSourceFile(transportPath)
+
+  if (transportFile) {
+    ts.forEachChild(transportFile, node => {
+      // Interface declarations
+      if (ts.isInterfaceDeclaration(node) && node.name) {
+        const typeName = node.name.text
+        const comment = getJSDoc(node)
+        const properties = []
+        const extendsTypes = []
+
+        // Get heritage clauses (extends)
+        if (node.heritageClauses) {
+          node.heritageClauses.forEach(clause => {
+            if (clause.token === ts.SyntaxKind.ExtendsKeyword) {
+              clause.types.forEach(type => {
+                extendsTypes.push(type.expression.getText(transportFile))
+              })
+            }
+          })
+        }
+
+        // Get properties
+        node.members.forEach(member => {
+          if (ts.isPropertySignature(member) && member.name) {
+            const propName = member.name.getText(transportFile)
+            const propType = member.type ? member.type.getText(transportFile).replace(/\s+/g, ' ') : 'any'
+            const optional = !!member.questionToken
+            const propComment = getJSDoc(member)
+
+            properties.push({
+              name: propName,
+              type: propType,
+              optional,
+              comment: propComment
+            })
+          }
+        })
+
+        transportTypes.set(typeName, {
+          kind: 'interface',
+          name: typeName,
+          comment,
+          properties,
+          extends: extendsTypes
+        })
+      }
+
+      // Type aliases
+      if (ts.isTypeAliasDeclaration(node) && node.name) {
+        const typeName = node.name.text
+        const comment = getJSDoc(node)
+        const typeDefinition = node.type.getText(transportFile).replace(/\s+/g, ' ')
+
+        transportTypes.set(typeName, {
+          kind: 'type',
+          name: typeName,
+          comment,
+          definition: typeDefinition
+        })
+      }
+
+      // Enums
+      if (ts.isEnumDeclaration(node) && node.name) {
+        const enumName = node.name.text
+        const comment = getJSDoc(node)
+        const members = []
+
+        node.members.forEach(member => {
+          const memberName = member.name.getText(transportFile)
+          const memberValue = member.initializer ? member.initializer.getText(transportFile) : undefined
+          const memberComment = getJSDoc(member)
+
+          members.push({
+            name: memberName,
+            value: memberValue,
+            comment: memberComment
+          })
+        })
+
+        transportTypes.set(enumName, {
+          kind: 'enum',
+          name: enumName,
+          comment,
+          members
+        })
+      }
+    })
+  }
+})
+
 // Build the final DOM structure
 const dom = {
   client: {
@@ -492,7 +681,10 @@ const dom = {
   apis: Object.fromEntries(apiMap),
   types: Object.fromEntries(allTypes),
   helpers: helperFunctions,
-  transport: Object.fromEntries(transportClasses)
+  transport: {
+    classes: Object.fromEntries(transportClasses),
+    types: Object.fromEntries(transportTypes)
+  }
 }
 
 // Write to dom.json
@@ -506,3 +698,4 @@ console.log(`  - Types: ${allTypes.size}`)
 console.log(`  - Client options: ${clientOptions.length}`)
 console.log(`  - Helper functions: ${helperFunctions.length}`)
 console.log(`  - Transport classes: ${transportClasses.size}`)
+console.log(`  - Transport types: ${transportTypes.size}`)
