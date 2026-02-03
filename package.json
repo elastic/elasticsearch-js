@@ -115,5 +115,5 @@
     "@elastic/transport": "^9.2.0",
     "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
-  },
+  }
 }
