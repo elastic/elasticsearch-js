@@ -121,9 +121,11 @@
       "test/unit/",
       "test/esm/"
     ],
-    "coverage-exclude": [
-      "*/api/**"
-    ],
+    "coverage": {
+      "exclude": [
+        "*/api/**"
+      ]
+    },
     "statements": 96,
     "branches": 90,
     "lines": 96,
