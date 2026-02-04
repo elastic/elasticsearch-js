@@ -43,6 +43,7 @@ jobs:
     if: github.event_name == 'push' && needs.paths-filter.outputs.src == 'true'
     runs-on: ubuntu-latest
     permissions:
+      actions: write
       contents: write
       id-token: write
     steps:
@@ -58,7 +59,6 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24.x"
-          registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: |
           npm install -g npm
@@ -96,7 +96,6 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24.x"
-          registry-url: "https://registry.npmjs.org"
       - run: npm install -g npm
       - run: npm install
       - run: npm test
