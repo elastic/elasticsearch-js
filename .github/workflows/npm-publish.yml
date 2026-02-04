@@ -64,7 +64,9 @@ jobs:
           npm install -g npm
           npm install
       - name: Run tests
-        run: npm test
+        run: |
+          env | wc -c
+          npm test
       # if tests pass, publish unstable
       - name: publish unstable build
         run: |
