@@ -63,7 +63,7 @@ test/bundlers/**/bundle.js
 test/bundlers/parcel-test/.parcel-cache
 
 lib
-esm
+esm/
 junit-output
 bun.lockb
 test-results

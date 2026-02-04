@@ -25,10 +25,10 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && tap --plugin=!@tapjs/processinfo",
+    "test": "npm run build && npm run lint && tap",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
-    "test:esm": "npm run build:esm && tap test/esm/test-import.mjs",
+    "test:esm": "npm run build:esm && tap test/esm/",
     "test:coverage-100": "npm run build && tap --coverage --100",
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
@@ -112,5 +112,18 @@
     "@elastic/transport": "^9.2.0",
     "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
+  },
+  "tap": {
+    "files": [
+      "test/unit/",
+      "test/esm/"
+    ],
+    "coverage-exclude": [
+      "**/api/**"
+    ],
+    "statements": 96,
+    "branches": 90,
+    "lines": 96,
+    "functions": 88
   }
 }
