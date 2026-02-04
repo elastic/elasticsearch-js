@@ -51,6 +51,8 @@ jobs:
 
       - name: npm test
         shell: bash
+        env:
+          _TAPJS_PROCESSINFO_EXCLUDE_: ".*"
         run: |
           env | wc -c
           npx tap debug
