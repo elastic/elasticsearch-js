@@ -53,7 +53,8 @@ jobs:
         shell: bash
         run: |
           env | wc -c
-          npx tap debug
+          npx tap --show-config
+          npx tap plugin list
           if [ "$CODE_CHANGED" = "true" ]; then
            npm test;
           else

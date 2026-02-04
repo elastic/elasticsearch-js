@@ -112,19 +112,5 @@
     "@elastic/transport": "^9.2.0",
     "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
-  },
-  "tap": {
-    "jobs": 1,
-    "files": [
-      "test/unit/",
-      "test/esm/"
-    ],
-    "coverage-exclude": [
-      "**/api/**"
-    ],
-    "statements": 96,
-    "branches": 90,
-    "lines": 96,
-    "functions": 88
   }
 }
