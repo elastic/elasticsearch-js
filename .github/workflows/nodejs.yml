@@ -52,7 +52,13 @@ jobs:
       - name: npm test
         shell: bash
         run: |
-          [ "$CODE_CHANGED" = "true" ] && npm test || exit 0
+          env | wc -c
+          npx tap debug
+          if [ "$CODE_CHANGED" = "true" ]; then
+           npm test;
+          else
+            exit 0;
+          fi
 
   license:
     name: License check
