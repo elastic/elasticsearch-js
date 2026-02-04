@@ -8,3 +8,5 @@ branches: 90
 lines: 96
 functions: 88
 jobs: 1
+plugin:
+  - "!@tapjs/processinfo"
