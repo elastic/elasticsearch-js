@@ -66,6 +66,7 @@ jobs:
       - name: Run tests
         run: |
           env | wc -c
+          npx tap debug
           npm test
       # if tests pass, publish unstable
       - name: publish unstable build
