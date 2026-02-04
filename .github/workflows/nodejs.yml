@@ -58,7 +58,7 @@ jobs:
           npx tap debug
           npx tap plugin list
           if [ "$CODE_CHANGED" = "true" ]; then
-           npm test;
+            npm test;
           else
             exit 0;
           fi

@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && c8 --include='lib/**' --exclude='**/api/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=88 tap",
+    "test": "npm run build && npm run lint && c8 --include='src/**' --exclude='**/api/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=88 tap",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
     "test:esm": "npm run build:esm && tap test/esm/",
