@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && tap --plugin=!@tapjs/processinfo",
+    "test": "npm run build && npm run lint && tap build && tap",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
     "test:esm": "npm run build:esm && tap test/esm/test-import.mjs",
