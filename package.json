@@ -25,7 +25,15 @@
     }
   },
   "scripts": {
+<<<<<<< HEAD
     "test": "npm run build && npm run lint && tap --plugin=!@tapjs/processinfo",
+=======
+<<<<<<< Updated upstream
+    "test": "npm run build && npm run lint && tap",
+=======
+    "test": "npm run build && npm run lint && tap build && tap",
+>>>>>>> Stashed changes
+>>>>>>> 27d6d3a9c (rebuild tap)
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
     "test:esm": "npm run build:esm && tap test/esm/test-import.mjs",
