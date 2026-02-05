@@ -64,6 +64,8 @@ jobs:
           npm install -g npm
           npm install
       - name: Run tests
+        env:
+          _TAPJS_PROCESSINFO_EXCLUDE_: ".*"
         run: npm test
       # if tests pass, publish unstable
       - name: publish unstable build
@@ -98,7 +100,10 @@ jobs:
           node-version: "24.x"
       - run: npm install -g npm
       - run: npm install
-      - run: npm test
+      - name: Run tests
+        env:
+          _TAPJS_PROCESSINFO_EXCLUDE_: ".*"
+        run: npm test
       - name: npm publish
         run: |
           version=$(jq -r .version package.json)

@@ -51,8 +51,14 @@ jobs:
 
       - name: npm test
         shell: bash
+        env:
+          _TAPJS_PROCESSINFO_EXCLUDE_: ".*"
         run: |
-          [ "$CODE_CHANGED" = "true" ] && npm test || exit 0
+          if [ "$CODE_CHANGED" = "true" ]; then
+            npm test;
+          else
+            exit 0;
+          fi
 
   license:
     name: License check
