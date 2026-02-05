@@ -54,9 +54,6 @@ jobs:
         env:
           _TAPJS_PROCESSINFO_EXCLUDE_: ".*"
         run: |
-          env | wc -c
-          npx tap debug
-          npx tap plugin list
           if [ "$CODE_CHANGED" = "true" ]; then
             npm test;
           else

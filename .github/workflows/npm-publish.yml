@@ -66,10 +66,7 @@ jobs:
       - name: Run tests
         env:
           _TAPJS_PROCESSINFO_EXCLUDE_: ".*"
-        run: |
-          env | wc -c
-          npx tap debug
-          npm test
+        run: npm test
       # if tests pass, publish unstable
       - name: publish unstable build
         run: |
