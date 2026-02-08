@@ -1009,9 +1009,8 @@ export default class Helpers {
 
         params.format = 'arrow'
 
-        // @ts-expect-error response is a Readable when asStream is true
-        const response: Readable = await client.esql.query(params, reqOptions)
-        return await AsyncRecordBatchStreamReader.from(Readable.from(response))
+        const response = await client.esql.query(params, reqOptions) as unknown as Readable
+        return await AsyncRecordBatchStreamReader.from(response)
       }
     }
 
