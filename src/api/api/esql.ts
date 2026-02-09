@@ -41,6 +41,7 @@ export default class Esql {
         body: [
           'columnar',
           'filter',
+          'time_zone',
           'locale',
           'params',
           'profile',
@@ -127,6 +128,7 @@ export default class Esql {
         body: [
           'columnar',
           'filter',
+          'time_zone',
           'locale',
           'params',
           'profile',
@@ -198,6 +200,7 @@ export default class Esql {
       acceptedParams: [
         'columnar',
         'filter',
+        'time_zone',
         'locale',
         'params',
         'profile',
@@ -677,6 +680,7 @@ export default class Esql {
       acceptedParams: [
         'columnar',
         'filter',
+        'time_zone',
         'locale',
         'params',
         'profile',

@@ -4457,6 +4457,7 @@ export interface KnnSearch {
   inner_hits?: SearchInnerHits
   /** Apply oversampling and rescoring to quantized vectors */
   rescore_vector?: RescoreVector
+  _name?: string
 }
 
 export interface LatLonGeoLocation {
@@ -18918,6 +18919,10 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
   filter?: QueryDslQueryContainer
+  /** Sets the default timezone of the query.
+    * @experimental */
+  time_zone?: string
+  /** Returns results (especially dates) formatted per the conventions of the locale. */
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
   params?: FieldValue[]
@@ -18954,9 +18959,9 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
     * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
   keep_on_completion?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
+  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
+  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
@@ -19110,6 +19115,10 @@ export interface EsqlQueryRequest extends RequestBase {
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
   filter?: QueryDslQueryContainer
+  /** Sets the default timezone of the query.
+    * @experimental */
+  time_zone?: string
+  /** Returns results (especially dates) formatted per the conventions of the locale. */
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
   params?: EsqlESQLParams
@@ -19133,9 +19142,9 @@ export interface EsqlQueryRequest extends RequestBase {
     * This is similar to `include_ccs_metadata`, but it also returns metadata when the query is not CCS/CPS */
   include_execution_metadata?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
+  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
+  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
 }
 
 export type EsqlQueryResponse = EsqlEsqlResult
@@ -26956,7 +26965,7 @@ interface IngestProcessorContainerExclusiveProps {
   /** Joins each element of an array into a single string using a separator character between each element.
     * Throws an error when the field is not an array. */
   join?: IngestJoinProcessor
-  /** Converts a JSON string into a structured JSON object. */
+  /** Parses a string containing JSON data into a structured object, string, or other value. */
   json?: IngestJsonProcessor
   /** This processor helps automatically parse messages (or specific event fields) which are of the `foo=bar` variety. */
   kv?: IngestKeyValueProcessor
@@ -33730,9 +33739,14 @@ export interface NodesStatsResponseBase extends NodesNodesResponseBase {
 }
 
 export interface NodesUsageNodeUsage {
+  /** The total number of times each REST endpoint has been called on this node since the last restart.
+    *  Note that the REST endpoint names are not considered stable. */
   rest_actions: Record<string, integer>
+  /** The timestamp for when the collection of these statistics started. */
   since: EpochTime<UnitMillis>
+  /** The timestamp for when these statistics were collected. */
   timestamp: EpochTime<UnitMillis>
+  /** The total number of times search aggregations have been called on this node since the last restart. */
   aggregations: Record<string, any>
 }
 
