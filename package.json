@@ -112,7 +112,7 @@
     "zx": "8.8.5"
   },
   "dependencies": {
-    "@elastic/transport": "^9.3.2",
+    "@elastic/transport": "^9.3.3",
     "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
   }
