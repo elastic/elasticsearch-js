@@ -4450,6 +4450,7 @@ export interface KnnSearch {
   inner_hits?: SearchInnerHits
   /** Apply oversampling and rescoring to quantized vectors */
   rescore_vector?: RescoreVector
+  _name?: string
 }
 
 export interface LatLonGeoLocation {
@@ -23871,11 +23872,13 @@ export interface InferenceElasticsearchServiceSettings {
     * - `chunk`: Splits long documents into smaller parts (chunks) before inference.
     *
     * When `long_document_strategy` is set to `chunk`, Elasticsearch splits each document into smaller parts but still returns a single score per document.
-    * That score reflects the highest relevance score among all chunks. */
+    * That score reflects the highest relevance score among all chunks.
+    * @experimental */
   long_document_strategy?: string
   /** Only for the `rerank` task type.
     * Limits the number of chunks per document that are sent for inference when chunking is enabled.
-    * If not set, all chunks generated for the document are processed. */
+    * If not set, all chunks generated for the document are processed.
+    * @experimental */
   max_chunks_per_doc?: integer
 }
 
