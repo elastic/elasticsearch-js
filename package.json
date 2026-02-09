@@ -1,7 +1,7 @@
 {
   "name": "@elastic/elasticsearch",
-  "version": "9.3.0",
-  "versionCanary": "9.3.0-canary.0",
+  "version": "9.3.1",
+  "versionCanary": "9.3.1-canary.0",
   "description": "The official Elasticsearch client for Node.js",
   "type": "commonjs",
   "main": "./index.js",
@@ -28,6 +28,7 @@
     "test": "npm run build && npm run lint && c8 --exclude='**/api/**' --exclude='**/test/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=88 tap --disable-coverage",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
+    "test:bundler": "npm run build && cd test/bundlers/repro && npm install file:../../.. && npx esbuild@0.24 --bundle --platform=node repro.mjs --outfile=bundled.js && node bundled.js",
     "test:esm": "npm run build:esm && tap test/esm/",
     "test:coverage-100": "npm run build && tap --coverage --100",
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
@@ -38,7 +39,8 @@
     "lint:fix": "ts-standard --fix src",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
     "license-header": "./scripts/check-spdx",
-    "prebuild": "npm run clean-build && npm run lint",
+    "generate-version": "node scripts/generate-version.js",
+    "prebuild": "npm run clean-build && npm run generate-version && npm run lint",
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc && rm -f lib/package.json lib/index.js lib/index.d.ts",
     "build:esm": "tsc -p tsconfig.esm.json && npm run build:esm-fix && npm run build:esm-package",
@@ -113,7 +115,7 @@
     "zx": "8.8.0"
   },
   "dependencies": {
-    "@elastic/transport": "^9.3.2",
+    "@elastic/transport": "^9.3.3",
     "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
   }

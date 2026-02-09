@@ -20,6 +20,13 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.3.1 [elasticsearch-javascript-client-9.3.1-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.3.1-fixes]
+
+- **Improved ESM compatibility:** Ensure `estypes` is exported for ESM-based projects, and that ESM modules work correctly for JavaScript bundlers.
+- **Improved compatibility with Elasticsearch 9.3:** improvements and corrections have been made to the Elasticsearch specification for 9.3 that are reflected here.
+
 ## 9.3.0 [elasticsearch-javascript-client-9.3.0-release-notes]
 
 ### Features and enhancements [elasticsearch-javascript-client-9.3.0-features-enhancements]
