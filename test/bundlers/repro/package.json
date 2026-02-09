@@ -1,0 +1,11 @@
+{
+  "name": "repro",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal repro for ESM bundling regression",
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "dependencies": {
+    "@elastic/elasticsearch": "file:../../.."
+  }
+}
