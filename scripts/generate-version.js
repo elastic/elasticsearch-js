@@ -2,11 +2,6 @@
 /*
  * Copyright Elasticsearch B.V. and contributors
  * SPDX-License-Identifier: Apache-2.0
- *
- * Generates src/version.generated.ts with client and transport versions at build time.
- * This avoids createRequire(import.meta.url) + require('../package.json') in ESM,
- * which breaks bundlers (Bun, Rolldown, etc.) because they cannot resolve the path
- * relative to the bundled output.
  */
 
 const fs = require('fs')
