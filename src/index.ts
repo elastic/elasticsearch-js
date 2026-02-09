@@ -54,3 +54,5 @@ export type {
   ApiKeyAuth,
   BearerAuth
 } from '@elastic/transport'
+
+export * as estypes from './api/types'
