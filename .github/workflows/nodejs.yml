@@ -123,3 +123,32 @@ jobs:
         shell: bash
         run: |
           [ "$CODE_CHANGED" = "true" ] && bun run test:esm || exit 0
+
+  test-bundler:
+    name: Test ESM bundle (Bun/Rolldown compatibility)
+    runs-on: ubuntu-latest
+    needs: paths-filter
+    env:
+      CODE_CHANGED: ${{ needs.paths-filter.outputs.src-only }}
+
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.x
+
+      - name: Install
+        run: npm install
+
+      - name: Bundler test (esbuild bundle + run)
+        shell: bash
+        run: |
+          if [ "$CODE_CHANGED" = "true" ]; then
+            npm run test:bundler;
+          else
+            exit 0;
+          fi
