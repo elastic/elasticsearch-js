@@ -2552,6 +2552,7 @@ export interface KnnSearch {
   similarity?: float
   inner_hits?: SearchInnerHits
   rescore_vector?: RescoreVector
+  _name?: string
 }
 
 export interface LatLonGeoLocation {
