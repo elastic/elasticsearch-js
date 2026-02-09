@@ -18,14 +18,16 @@ import {
   UndiciConnection,
   WeightedConnectionPool,
   errors,
-  events
+  events,
+  estypes
 } from '../../esm/index.js'
 
 test('ESM imports work correctly', t => {
-  t.plan(4)
+  t.plan(5)
   t.equal(typeof Client, 'function', 'Client should be a function')
   t.equal(typeof errors, 'object', 'errors should be an object')
   t.equal(typeof SniffingTransport, 'function', 'SniffingTransport should be a function')
+  t.equal(typeof estypes, 'object', 'estypes should be an object')
 
   const client = new Client({
     node: 'http://localhost:9200',
