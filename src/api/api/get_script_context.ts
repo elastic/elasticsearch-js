@@ -36,7 +36,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Get script contexts. Get a list of supported script contexts and their methods.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-context | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get-script-context | Elasticsearch API documentation}
   */
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>

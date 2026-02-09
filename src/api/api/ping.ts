@@ -36,7 +36,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Ping the cluster. Get information about whether the cluster is running.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cluster | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-cluster | Elasticsearch API documentation}
   */
 export default async function PingApi (this: That, params?: T.PingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PingResponse>
 export default async function PingApi (this: That, params?: T.PingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.PingResponse, unknown>>

@@ -49,7 +49,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Check for a document source. Check whether a document source exists in an index. For example: ``` HEAD my-index-000001/_source/1 ``` A document's source is not available if it is disabled in the mapping.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get | Elasticsearch API documentation}
   */
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsSourceResponse>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsSourceResponse, unknown>>

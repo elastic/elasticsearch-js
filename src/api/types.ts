@@ -4457,6 +4457,7 @@ export interface KnnSearch {
   inner_hits?: SearchInnerHits
   /** Apply oversampling and rescoring to quantized vectors */
   rescore_vector?: RescoreVector
+  _name?: string
 }
 
 export interface LatLonGeoLocation {
@@ -26811,7 +26812,7 @@ interface IngestProcessorContainerExclusiveProps {
   /** Joins each element of an array into a single string using a separator character between each element.
     * Throws an error when the field is not an array. */
   join?: IngestJoinProcessor
-  /** Converts a JSON string into a structured JSON object. */
+  /** Parses a string containing JSON data into a structured object, string, or other value. */
   json?: IngestJsonProcessor
   /** This processor helps automatically parse messages (or specific event fields) which are of the `foo=bar` variety. */
   kv?: IngestKeyValueProcessor

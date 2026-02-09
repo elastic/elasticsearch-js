@@ -101,7 +101,7 @@ export default class Eql {
 
   /**
     * Delete an async EQL search. Delete an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-delete | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-eql-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
   async delete (this: That, params: T.EqlDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlDeleteResponse, unknown>>
@@ -149,7 +149,7 @@ export default class Eql {
 
   /**
     * Get async EQL search results. Get the current status and available results for an async EQL search or a stored synchronous EQL search.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-get | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-eql-get | Elasticsearch API documentation}
     */
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetResponse<TEvent>, unknown>>
@@ -199,7 +199,7 @@ export default class Eql {
 
   /**
     * Get the async EQL status. Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-get-status | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-eql-get-status | Elasticsearch API documentation}
     */
   async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
   async getStatus (this: That, params: T.EqlGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetStatusResponse, unknown>>
@@ -247,7 +247,7 @@ export default class Eql {
 
   /**
     * Get EQL search results. Returns search results for an Event Query Language (EQL) query. EQL assumes each document in a data stream or index corresponds to an event.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-search | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-eql-search | Elasticsearch API documentation}
     */
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlSearchResponse<TEvent>>
   async search<TEvent = unknown> (this: That, params: T.EqlSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlSearchResponse<TEvent>, unknown>>
