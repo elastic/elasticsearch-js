@@ -49,7 +49,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-knn-search | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-knn-search | Elasticsearch API documentation}
   */
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.KnnSearchResponse<TDocument>, unknown>>

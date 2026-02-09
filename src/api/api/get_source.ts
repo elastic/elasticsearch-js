@@ -49,7 +49,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Get a document's source. Get the source of a document. For example: ``` GET my-index-000001/_source/1 ``` You can use the source filtering parameters to control which parts of the `_source` are returned: ``` GET my-index-000001/_source/1/?_source_includes=*.id&_source_excludes=entities ```
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get | Elasticsearch API documentation}
   */
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetSourceResponse<TDocument>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>

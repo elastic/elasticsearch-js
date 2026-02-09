@@ -107,7 +107,7 @@ export default class Synonyms {
 
   /**
     * Delete a synonym set. You can only delete a synonyms set that is not in use by any index analyzer. Synonyms sets can be used in synonym graph token filters and synonym token filters. These synonym filters can be used as part of search analyzers. Analyzers need to be loaded when an index is restored (such as when a node starts, or the index becomes open). Even if the analyzer is not used on any field mapping, it still needs to be loaded on the index recovery phase. If any analyzers cannot be loaded, the index becomes unavailable and the cluster status becomes red or yellow as index shards are not available. To prevent that, synonyms sets that are used in analyzers can't be deleted. A delete request in this case will return a 400 response code. To remove a synonyms set, you must first remove all indices that contain analyzers using it. You can migrate an index by creating a new index that does not contain the token filter with the synonyms set, and use the reindex API in order to copy over the index data. Once finished, you can delete the index. When the synonyms set is not used in analyzers, you will be able to delete it.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-delete-synonym | Elasticsearch API documentation}
     */
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsDeleteSynonymResponse>
   async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymResponse, unknown>>
@@ -155,7 +155,7 @@ export default class Synonyms {
 
   /**
     * Delete a synonym rule. Delete a synonym rule from a synonym set.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym-rule | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-delete-synonym-rule | Elasticsearch API documentation}
     */
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsDeleteSynonymRuleResponse>
   async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymRuleResponse, unknown>>
@@ -206,7 +206,7 @@ export default class Synonyms {
 
   /**
     * Get a synonym set.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-get-synonym | Elasticsearch API documentation}
     */
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymResponse>
   async getSynonym (this: That, params: T.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymResponse, unknown>>
@@ -256,7 +256,7 @@ export default class Synonyms {
 
   /**
     * Get a synonym rule. Get a synonym rule from a synonym set.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym-rule | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-get-synonym-rule | Elasticsearch API documentation}
     */
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymRuleResponse>
   async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymRuleResponse, unknown>>
@@ -306,7 +306,7 @@ export default class Synonyms {
 
   /**
     * Get all synonym sets. Get a summary of all defined synonym sets.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-get-synonym | Elasticsearch API documentation}
     */
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymsSetsResponse>
   async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymsSetsResponse, unknown>>
@@ -353,7 +353,7 @@ export default class Synonyms {
 
   /**
     * Create or update a synonym set. Synonyms sets are limited to a maximum of 10,000 synonym rules per set. If you need to manage more synonym rules, you can create multiple synonym sets. When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices. This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set. For practical examples of how to create or update a synonyms set, refer to the External documentation.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-put-synonym | Elasticsearch API documentation}
     */
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymResponse>
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymResponse, unknown>>
@@ -415,7 +415,7 @@ export default class Synonyms {
 
   /**
     * Create or update a synonym rule. Create or update a synonym rule in a synonym set. If any of the synonym rules included is invalid, the API returns an error. When you update a synonym rule, all analyzers using the synonyms set will be reloaded automatically to reflect the new rule.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym-rule | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-put-synonym-rule | Elasticsearch API documentation}
     */
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymRuleResponse>
   async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymRuleResponse, unknown>>
