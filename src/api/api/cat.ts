@@ -473,7 +473,7 @@ export default class Cat {
 
   /**
     * Get circuit breakers statistics. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-circuit-breaker | Elasticsearch API documentation}
     */
   async circuitBreaker (this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCircuitBreakerResponse>
   async circuitBreaker (this: That, params?: T.CatCircuitBreakerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCircuitBreakerResponse, unknown>>
