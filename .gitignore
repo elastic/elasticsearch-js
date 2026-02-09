@@ -60,10 +60,12 @@ test/benchmarks/macro/fixtures/*
 .cache
 
 test/bundlers/**/bundle.js
+test/bundlers/**/bundled.js
 test/bundlers/parcel-test/.parcel-cache
 
 lib
 esm/
+src/version.generated.ts
 junit-output
 bun.lockb
 test-results

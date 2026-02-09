@@ -37,23 +37,19 @@ import SniffingTransport from './sniffingTransport'
 import Helpers from './helpers'
 import API from './api'
 import { kAcceptedParams } from './symbols'
-
-/* eslint-disable @typescript-eslint/no-var-requires */
-const packageJson = require('../package.json')
-const transportPackageJson = require('@elastic/transport/package.json')
-/* eslint-enable @typescript-eslint/no-var-requires */
+import { clientVersion as rawClientVersion, transportVersion as rawTransportVersion } from './version.generated'
 
 const kChild = Symbol('elasticsearchjs-child')
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 export { kAcceptedParams }
 
-let clientVersion: string = packageJson.version
+let clientVersion: string = rawClientVersion
 /* istanbul ignore next */
 if (clientVersion.includes('-')) {
   // clean prerelease
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
-let transportVersion: string = transportPackageJson.version // eslint-disable-line
+let transportVersion: string = rawTransportVersion
 /* istanbul ignore next */
 if (transportVersion.includes('-')) {
   // clean prerelease
