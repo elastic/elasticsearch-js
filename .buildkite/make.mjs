@@ -92,6 +92,7 @@ async function codegen (args) {
   const version = args[0].toString()
 
   const clientGeneratorPath = join(import.meta.url, '..', '..', 'elastic-client-generator-js')
+  await $`echo ${clientGeneratorPath}`
   const isGeneratorCloned = await $`[[ -d ${clientGeneratorPath} ]]`.exitCode === 0
   assert(isGeneratorCloned, 'You must clone the elastic-client-generator-js first')
 
