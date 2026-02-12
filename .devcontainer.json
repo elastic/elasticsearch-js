@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.base.schema.json",
+  "name": "elasticsearch-js",
+  "build": {
+    "dockerfile": ".buildkite/Dockerfile",
+    "context": "."
+  },
+  "containerEnv": {
+    "GH_TOKEN": "${localEnv:GITHUB_TOKEN}"
+  },
+  "postCreateCommand": "just install",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/guiyomh/features/just:0": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  }
+}

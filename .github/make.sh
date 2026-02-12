@@ -39,6 +39,8 @@ codegen_folder=".buildkite/output"
 OUTPUT_DIR="$repo/${output_folder}"
 NODE_VERSION=22
 WORKFLOW=${WORKFLOW-staging}
+HAS_JUST=0
+type just > /dev/null && HAS_JUST=1
 mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
@@ -47,10 +49,15 @@ echo -e "\033[34;1mINFO:\033[0m OUTPUT_DIR ${OUTPUT_DIR}\033[0m"
 
 case $CMD in
 clean)
-  echo -e "\033[36;1mTARGET: clean workspace $output_folder\033[0m"
-  rm -rf "$output_folder"
-  echo -e "\033[32;1mdone.\033[0m"
-  exit 0
+  if [ "$HAS_JUST" = "1" ]; then
+    just clean
+    exit 0
+  else
+    echo -e "\033[36;1mTARGET: clean workspace $output_folder\033[0m"
+    rm -rf "$output_folder"
+    echo -e "\033[32;1mdone.\033[0m"
+    exit 0
+  fi
   ;;
 assemble)
   if [ -v $VERSION ]; then
