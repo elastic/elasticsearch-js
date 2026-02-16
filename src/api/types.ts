@@ -6495,13 +6495,22 @@ export interface AggregationsMultiBucketBase {
   doc_count: long
 }
 
-export interface AggregationsMultiTermLookup {
-  /** A fields from which to retrieve terms. */
-  field: Field
+interface AggregationsMultiTermLookupCommonProps {
   /** The value to apply to documents that do not have a value.
     * By default, documents without a value are ignored. */
   missing?: AggregationsMissing
 }
+
+interface AggregationsMultiTermLookupExclusiveProps {
+  /** A field from which to retrieve terms.
+    * It is required if `script` is not provided. */
+  field?: Field
+  /** A script to calculate terms to aggregate on.
+    * It is required if `field` is not provided. */
+  script?: Script | ScriptSource
+}
+
+export type AggregationsMultiTermLookup = AggregationsMultiTermLookupCommonProps & ExactlyOne<AggregationsMultiTermLookupExclusiveProps>
 
 export interface AggregationsMultiTermsAggregate extends AggregationsTermsAggregateBase<AggregationsMultiTermsBucket> {
 }
@@ -33586,9 +33595,14 @@ export interface NodesStatsResponseBase extends NodesNodesResponseBase {
 }
 
 export interface NodesUsageNodeUsage {
+  /** The total number of times each REST endpoint has been called on this node since the last restart.
+    *  Note that the REST endpoint names are not considered stable. */
   rest_actions: Record<string, integer>
+  /** The timestamp for when the collection of these statistics started. */
   since: EpochTime<UnitMillis>
+  /** The timestamp for when these statistics were collected. */
   timestamp: EpochTime<UnitMillis>
+  /** The total number of times search aggregations have been called on this node since the last restart. */
   aggregations: Record<string, any>
 }
 
