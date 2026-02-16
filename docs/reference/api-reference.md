@@ -2374,6 +2374,8 @@ The document count only includes live documents, not deleted documents which hav
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the count API.
 
+NOTE: Starting in Elasticsearch 9.3.0, this endpoint also supports the `POST` method. This is primarily intended for project routing in serverless environments.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count)
 
 ```ts
@@ -14806,6 +14808,67 @@ client.ssl.certificates()
 ```
 
 
+## client.streams.logsDisable [_streams.logs_disable]
+Disable a named stream.
+
+Turn off the named stream feature for this cluster.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.streams.logsDisable({ name })
+```
+
+### Arguments [_arguments_streams.logs_disable]
+
+#### Request (object) [_request_streams.logs_disable]
+- **`name` (Enum("logs" \| "logs.otel" \| "logs.ecs"))**: The stream type to disable.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.streams.logsEnable [_streams.logs_enable]
+Enable a named stream.
+
+Turn on the named stream feature for this cluster.
+
+NOTE: To protect existing data, this feature can be turned on only if the cluster does not have
+existing indices or data streams that match the pattern `<name>|<name>.*` for the enabled stream
+type name. If those indices or data streams exist, a `409 - Conflict` response and error is
+returned.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.streams.logsEnable({ name })
+```
+
+### Arguments [_arguments_streams.logs_enable]
+
+#### Request (object) [_request_streams.logs_enable]
+- **`name` (Enum("logs" \| "logs.otel" \| "logs.ecs"))**: The stream type to enable.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+
+## client.streams.status [_streams.status]
+Get the status of streams.
+
+Get the current status for all types of streams.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.streams.status({ ... })
+```
+
+### Arguments [_arguments_streams.status]
+
+#### Request (object) [_request_streams.status]
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+
 ## client.synonyms.deleteSynonym [_synonyms.delete_synonym]
 Delete a synonym set.
 
@@ -15157,6 +15220,10 @@ If your delimited text format does not use quoting, a workaround is to set this 
 - **`should_trim_fields` (Optional, boolean)**: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
 Otherwise, the default value is `false`.
+- **`should_parse_recursively` (Optional, boolean)**: If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+Anything beyond that depth is parsed as an `object` type field.
+For formats other than `ndjson`, this parameter is ignored.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires, it will be stopped.
 - **`timestamp_field` (Optional, string)**: The name of the field that contains the primary timestamp of each record in the text.
@@ -15264,6 +15331,10 @@ If your delimited text format does not use quoting, a workaround is to set this 
 - **`should_trim_fields` (Optional, boolean)**: If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
 Otherwise, the default value is `false`.
+- **`should_parse_recursively` (Optional, boolean)**: If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+Anything beyond that depth is parsed as an `object` type field.
+For formats other than `ndjson`, this parameter is ignored.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires, it will be stopped.
 - **`timestamp_field` (Optional, string)**: The name of the field that contains the primary timestamp of each record in the text.
@@ -15387,6 +15458,10 @@ If your delimited text format does not use quoting, a workaround is to set this 
 - **`should_trim_fields` (Optional, boolean)**: If you have set `format` to `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
 If this parameter is not specified and the delimiter is pipe (`|`), the default value is `true`.
 Otherwise, the default value is `false`.
+- **`should_parse_recursively` (Optional, boolean)**: If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+Anything beyond that depth is parsed as an `object` type field.
+For formats other than `ndjson`, this parameter is ignored.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum amount of time that the structure analysis can take.
 If the analysis is still running when the timeout expires then it will be stopped.
 - **`timestamp_field` (Optional, string)**: The name of the field that contains the primary timestamp of each record in the text.

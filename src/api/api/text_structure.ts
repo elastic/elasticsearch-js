@@ -51,6 +51,7 @@ export default class TextStructure {
           'index',
           'quote',
           'should_trim_fields',
+          'should_parse_recursively',
           'timeout',
           'timestamp_field',
           'timestamp_format'
@@ -70,6 +71,7 @@ export default class TextStructure {
           'grok_pattern',
           'quote',
           'should_trim_fields',
+          'should_parse_recursively',
           'timeout',
           'timestamp_field',
           'timestamp_format'
@@ -93,6 +95,7 @@ export default class TextStructure {
           'lines_to_sample',
           'quote',
           'should_trim_fields',
+          'should_parse_recursively',
           'timeout',
           'timestamp_field',
           'timestamp_format'
@@ -161,6 +164,7 @@ export default class TextStructure {
         'index',
         'quote',
         'should_trim_fields',
+        'should_parse_recursively',
         'timeout',
         'timestamp_field',
         'timestamp_format'
@@ -229,6 +233,7 @@ export default class TextStructure {
         'grok_pattern',
         'quote',
         'should_trim_fields',
+        'should_parse_recursively',
         'timeout',
         'timestamp_field',
         'timestamp_format'
@@ -291,6 +296,7 @@ export default class TextStructure {
         'lines_to_sample',
         'quote',
         'should_trim_fields',
+        'should_parse_recursively',
         'timeout',
         'timestamp_field',
         'timestamp_format'

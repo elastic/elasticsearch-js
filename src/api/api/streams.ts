@@ -35,7 +35,9 @@ export default class Streams {
     this.transport = transport
     this[kAcceptedParams] = {
       'streams.logs_disable': {
-        path: [],
+        path: [
+          'name'
+        ],
         body: [],
         query: [
           'master_timeout',
@@ -43,7 +45,9 @@ export default class Streams {
         ]
       },
       'streams.logs_enable': {
-        path: [],
+        path: [
+          'name'
+        ],
         body: [],
         query: [
           'master_timeout',
@@ -61,13 +65,13 @@ export default class Streams {
   }
 
   /**
-    * Disable logs stream. Turn off the logs stream feature for this cluster.
+    * Disable a named stream. Turn off the named stream feature for this cluster.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
-  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsDisableResponse>
-  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsLogsDisableResponse, unknown>>
-  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<T.StreamsLogsDisableResponse>
-  async logsDisable (this: That, params?: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<any> {
+  async logsDisable (this: That, params: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsDisableResponse>
+  async logsDisable (this: That, params: T.StreamsLogsDisableRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsLogsDisableResponse, unknown>>
+  async logsDisable (this: That, params: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<T.StreamsLogsDisableResponse>
+  async logsDisable (this: That, params: T.StreamsLogsDisableRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['streams.logs_disable']
@@ -85,7 +89,6 @@ export default class Streams {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
@@ -96,10 +99,14 @@ export default class Streams {
     }
 
     const method = 'POST'
-    const path = '/_streams/logs/_disable'
+    const path = `/_streams/${encodeURIComponent(params.name.toString())}/_disable`
     const meta: TransportRequestMetadata = {
       name: 'streams.logs_disable',
+      pathParts: {
+        name: params.name
+      },
       acceptedParams: [
+        'name',
         'master_timeout',
         'timeout'
       ]
@@ -108,13 +115,13 @@ export default class Streams {
   }
 
   /**
-    * Enable logs stream. Turn on the logs stream feature for this cluster. NOTE: To protect existing data, this feature can be turned on only if the cluster does not have existing indices or data streams that match the pattern `logs|logs.*`. If those indices or data streams exist, a `409 - Conflict` response and error is returned.
+    * Enable a named stream. Turn on the named stream feature for this cluster. NOTE: To protect existing data, this feature can be turned on only if the cluster does not have existing indices or data streams that match the pattern `<name>|<name>.*` for the enabled stream type name. If those indices or data streams exist, a `409 - Conflict` response and error is returned.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
-  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsEnableResponse>
-  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsLogsEnableResponse, unknown>>
-  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptions): Promise<T.StreamsLogsEnableResponse>
-  async logsEnable (this: That, params?: T.StreamsLogsEnableRequest, options?: TransportRequestOptions): Promise<any> {
+  async logsEnable (this: That, params: T.StreamsLogsEnableRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.StreamsLogsEnableResponse>
+  async logsEnable (this: That, params: T.StreamsLogsEnableRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.StreamsLogsEnableResponse, unknown>>
+  async logsEnable (this: That, params: T.StreamsLogsEnableRequest, options?: TransportRequestOptions): Promise<T.StreamsLogsEnableResponse>
+  async logsEnable (this: That, params: T.StreamsLogsEnableRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath
     } = this[kAcceptedParams]['streams.logs_enable']
@@ -132,7 +139,6 @@ export default class Streams {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
@@ -143,10 +149,14 @@ export default class Streams {
     }
 
     const method = 'POST'
-    const path = '/_streams/logs/_enable'
+    const path = `/_streams/${encodeURIComponent(params.name.toString())}/_enable`
     const meta: TransportRequestMetadata = {
       name: 'streams.logs_enable',
+      pathParts: {
+        name: params.name
+      },
       acceptedParams: [
+        'name',
         'master_timeout',
         'timeout'
       ]
