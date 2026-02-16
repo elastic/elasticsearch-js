@@ -6447,13 +6447,22 @@ export interface AggregationsMultiBucketBase {
   doc_count: long
 }
 
-export interface AggregationsMultiTermLookup {
-  /** A fields from which to retrieve terms. */
-  field: Field
+interface AggregationsMultiTermLookupCommonProps {
   /** The value to apply to documents that do not have a value.
     * By default, documents without a value are ignored. */
   missing?: AggregationsMissing
 }
+
+interface AggregationsMultiTermLookupExclusiveProps {
+  /** A field from which to retrieve terms.
+    * It is required if `script` is not provided. */
+  field?: Field
+  /** A script to calculate terms to aggregate on.
+    * It is required if `field` is not provided. */
+  script?: Script | ScriptSource
+}
+
+export type AggregationsMultiTermLookup = AggregationsMultiTermLookupCommonProps & ExactlyOne<AggregationsMultiTermLookupExclusiveProps>
 
 export interface AggregationsMultiTermsAggregate extends AggregationsTermsAggregateBase<AggregationsMultiTermsBucket> {
 }
