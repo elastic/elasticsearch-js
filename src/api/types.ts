@@ -6494,13 +6494,22 @@ export interface AggregationsMultiBucketBase {
   doc_count: long
 }
 
-export interface AggregationsMultiTermLookup {
-  /** A fields from which to retrieve terms. */
-  field: Field
+interface AggregationsMultiTermLookupCommonProps {
   /** The value to apply to documents that do not have a value.
     * By default, documents without a value are ignored. */
   missing?: AggregationsMissing
 }
+
+interface AggregationsMultiTermLookupExclusiveProps {
+  /** A field from which to retrieve terms.
+    * It is required if `script` is not provided. */
+  field?: Field
+  /** A script to calculate terms to aggregate on.
+    * It is required if `field` is not provided. */
+  script?: Script | ScriptSource
+}
+
+export type AggregationsMultiTermLookup = AggregationsMultiTermLookupCommonProps & ExactlyOne<AggregationsMultiTermLookupExclusiveProps>
 
 export interface AggregationsMultiTermsAggregate extends AggregationsTermsAggregateBase<AggregationsMultiTermsBucket> {
 }
@@ -9356,6 +9365,9 @@ export type QueryDslFunctionBoostMode = 'multiply' | 'replace' | 'sum' | 'avg' |
 interface QueryDslFunctionScoreContainerCommonProps {
   filter?: QueryDslQueryContainer
   weight?: double
+  /** A name to identify which function matched and influenced the score.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  _name?: string
 }
 
 interface QueryDslFunctionScoreContainerExclusiveProps {
@@ -38756,7 +38768,11 @@ export interface SslCertificatesRequest extends RequestBase {
 
 export type SslCertificatesResponse = SslCertificatesCertificateInformation[]
 
+export type StreamsStreamType = 'logs' | 'logs.otel' | 'logs.ecs'
+
 export interface StreamsLogsDisableRequest extends RequestBase {
+  /** The stream type to disable. */
+  name: StreamsStreamType
   /** The period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
@@ -38764,14 +38780,16 @@ export interface StreamsLogsDisableRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type StreamsLogsDisableResponse = AcknowledgedResponseBase
 
 export interface StreamsLogsEnableRequest extends RequestBase {
+  /** The stream type to enable. */
+  name: StreamsStreamType
   /** The period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
@@ -38779,17 +38797,12 @@ export interface StreamsLogsEnableRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { master_timeout?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
 }
 
 export type StreamsLogsEnableResponse = AcknowledgedResponseBase
-
-export interface StreamsStatusLogsStatus {
-  /** If true, the logs stream feature is enabled. */
-  enabled: boolean
-}
 
 export interface StreamsStatusRequest extends RequestBase {
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -38801,7 +38814,14 @@ export interface StreamsStatusRequest extends RequestBase {
 }
 
 export interface StreamsStatusResponse {
-  logs: StreamsStatusLogsStatus
+  logs: StreamsStatusStreamStatus
+  'logs.otel': StreamsStatusStreamStatus
+  'logs.ecs': StreamsStatusStreamStatus
+}
+
+export interface StreamsStatusStreamStatus {
+  /** If true, the stream feature is enabled. */
+  enabled: boolean
 }
 
 export interface SynonymsSynonymRule {
@@ -39145,6 +39165,11 @@ export interface TextStructureFindFieldStructureRequest extends RequestBase {
     * If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
     * Otherwise, the default value is `false`. */
   should_trim_fields?: boolean
+  /** If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+    * The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+    * Anything beyond that depth is parsed as an `object` type field.
+    * For formats other than `ndjson`, this parameter is ignored. */
+  should_parse_recursively?: boolean
   /** The maximum amount of time that the structure analysis can take.
     * If the analysis is still running when the timeout expires, it will be stopped. */
   timeout?: Duration
@@ -39195,9 +39220,9 @@ export interface TextStructureFindFieldStructureRequest extends RequestBase {
     * When the format is semi-structured text, this will result in the structure finder treating the text as single-line messages. */
   timestamp_format?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { column_names?: never, delimiter?: never, documents_to_sample?: never, ecs_compatibility?: never, explain?: never, field?: never, format?: never, grok_pattern?: never, index?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never }
+  body?: string | { [key: string]: any } & { column_names?: never, delimiter?: never, documents_to_sample?: never, ecs_compatibility?: never, explain?: never, field?: never, format?: never, grok_pattern?: never, index?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { column_names?: never, delimiter?: never, documents_to_sample?: never, ecs_compatibility?: never, explain?: never, field?: never, format?: never, grok_pattern?: never, index?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never }
+  querystring?: { [key: string]: any } & { column_names?: never, delimiter?: never, documents_to_sample?: never, ecs_compatibility?: never, explain?: never, field?: never, format?: never, grok_pattern?: never, index?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never }
 }
 
 export interface TextStructureFindFieldStructureResponse {
@@ -39255,6 +39280,11 @@ export interface TextStructureFindMessageStructureRequest extends RequestBase {
     * If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
     * Otherwise, the default value is `false`. */
   should_trim_fields?: boolean
+  /** If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+    * The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+    * Anything beyond that depth is parsed as an `object` type field.
+    * For formats other than `ndjson`, this parameter is ignored. */
+  should_parse_recursively?: boolean
   /** The maximum amount of time that the structure analysis can take.
     * If the analysis is still running when the timeout expires, it will be stopped. */
   timeout?: Duration
@@ -39307,9 +39337,9 @@ export interface TextStructureFindMessageStructureRequest extends RequestBase {
   /** The list of messages you want to analyze. */
   messages: string[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, messages?: never }
+  body?: string | { [key: string]: any } & { column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, messages?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, messages?: never }
+  querystring?: { [key: string]: any } & { column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, messages?: never }
 }
 
 export interface TextStructureFindMessageStructureResponse {
@@ -39391,6 +39421,11 @@ export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
     * If this parameter is not specified and the delimiter is pipe (`|`), the default value is `true`.
     * Otherwise, the default value is `false`. */
   should_trim_fields?: boolean
+  /** If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+    * The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+    * Anything beyond that depth is parsed as an `object` type field.
+    * For formats other than `ndjson`, this parameter is ignored. */
+  should_parse_recursively?: boolean
   /** The maximum amount of time that the structure analysis can take.
     * If the analysis is still running when the timeout expires then it will be stopped. */
   timeout?: Duration
@@ -39443,9 +39478,9 @@ export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   timestamp_format?: string
   text_files?: TJsonDocument[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
+  body?: string | { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
+  querystring?: { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
 }
 
 export interface TextStructureFindStructureResponse {
