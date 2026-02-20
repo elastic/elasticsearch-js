@@ -50,7 +50,8 @@ export default class Esql {
           'include_execution_metadata',
           'wait_for_completion_timeout',
           'keep_alive',
-          'keep_on_completion'
+          'keep_on_completion',
+          'project_routing'
         ],
         query: [
           'allow_partial_results',
@@ -133,7 +134,8 @@ export default class Esql {
           'query',
           'tables',
           'include_ccs_metadata',
-          'include_execution_metadata'
+          'include_execution_metadata',
+          'project_routing'
         ],
         query: [
           'format',
@@ -208,6 +210,7 @@ export default class Esql {
         'wait_for_completion_timeout',
         'keep_alive',
         'keep_on_completion',
+        'project_routing',
         'allow_partial_results',
         'delimiter',
         'drop_null_columns',
@@ -684,6 +687,7 @@ export default class Esql {
         'tables',
         'include_ccs_metadata',
         'include_execution_metadata',
+        'project_routing',
         'format',
         'delimiter',
         'drop_null_columns',
