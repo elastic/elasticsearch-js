@@ -4652,6 +4652,14 @@ When this period expires, the query and its results are deleted, even if the que
 If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value.
 - **`keep_on_completion` (Optional, boolean)**: Indicates whether the query and its results are stored in the cluster.
 If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter.
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 - **`allow_partial_results` (Optional, boolean)**: If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
 If `false`, the query will fail if there are any failures.
 
@@ -4801,6 +4809,14 @@ count.
 object with information about the clusters that participated in the search along with info such as shards
 count.
 This is similar to `include_ccs_metadata`, but it also returns metadata when the query is not CCS/CPS
+- **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project
+metadata tags in a subset of Lucene query syntax.
+Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+Examples:
+ _alias:my-project
+ _alias:_origin
+ _alias:*pr*
+Supported in serverless only.
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
 
 `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
@@ -6598,16 +6614,16 @@ Wildcard patterns that match both data streams and indices return an error.
 If the alias doesn’t exist, the request creates it.
 Index alias names support date math.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query used to limit documents the alias can access.
-- **`index_routing` (Optional, string \| string[])**: Value used to route indexing operations to a specific shard.
+- **`index_routing` (Optional, string)**: Value used to route indexing operations to a specific shard.
 If specified, this overwrites the `routing` value for indexing operations.
 Data stream aliases don’t support this parameter.
 - **`is_write_index` (Optional, boolean)**: If `true`, sets the write index or data stream for the alias.
 If an alias points to multiple indices or data streams and `is_write_index` isn’t set, the alias rejects write requests.
 If an index alias points to one index and `is_write_index` isn’t set, the index automatically acts as the write index.
 Data stream aliases don’t automatically set a write data stream, even if the alias points to one data stream.
-- **`routing` (Optional, string \| string[])**: Value used to route indexing and search operations to a specific shard.
+- **`routing` (Optional, string)**: Value used to route indexing and search operations to a specific shard.
 Data stream aliases don’t support this parameter.
-- **`search_routing` (Optional, string \| string[])**: Value used to route search operations to a specific shard.
+- **`search_routing` (Optional, string)**: Value used to route search operations to a specific shard.
 If specified, this overwrites the `routing` value for search operations.
 Data stream aliases don’t support this parameter.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
@@ -7432,6 +7448,8 @@ For example an index with 8 primary shards can be shrunk into 4, 2 or 1 primary 
 If the number of shards in the index is a prime number it can only be shrunk into a single primary shard
  Before shrinking, a (primary or replica) copy of every shard in the index must be present on the same node.
 
+IMPORTANT: If the source index already has one primary shard, configuring the shrink operation with 'index.number_of_shards: 1' will cause the request to fail. An index with one primary shard cannot be shrunk further.
+
 The current write index on a data stream cannot be shrunk. In order to shrink the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be shrunk.
 
 A shrink operation:
@@ -7782,8 +7800,9 @@ client.inference.get({ ... })
 ### Arguments [_arguments_inference.get]
 
 #### Request (object) [_request_inference.get]
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type
-- **`inference_id` (Optional, string)**: The inference Id
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type of the endpoint to return
+- **`inference_id` (Optional, string)**: The inference Id of the endpoint to return. Using `_all` or `*` will return all endpoints with the specified
+`task_type` if one is specified, or all endpoints for all task types if no `task_type` is specified
 
 ## client.inference.inference [_inference.inference]
 Perform inference on the service.
