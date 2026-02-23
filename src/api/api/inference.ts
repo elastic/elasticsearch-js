@@ -810,6 +810,9 @@ export default class Inference {
     } else if (params.inference_id != null) {
       method = 'GET'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
+    } else if (params.task_type != null) {
+      method = 'GET'
+      path = `/_inference/${encodeURIComponent(params.task_type.toString())}/_all`
     } else {
       method = 'GET'
       path = '/_inference'

@@ -36,8 +36,8 @@ export interface BulkOperationBase {
   _id?: Id
   /** The name of the index or index alias to perform the action on. */
   _index?: IndexName
-  /** A custom value used to route operations to a specific shard. */
-  routing?: Routing
+  /** A custom value used to route operations to a specific shard, or multiple comma separated values. */
+  routing?: string
   if_primary_term?: long
   if_seq_no?: SequenceNumber
   version?: VersionNumber
@@ -1845,7 +1845,7 @@ export interface ReindexDestination {
     * If it is `keep`, the routing on the bulk request sent for each match is set to the routing on the match.
     * If it is `discard`, the routing on the bulk request sent for each match is set to `null`.
     * If it is `=value`, the routing on the bulk request sent for each match is set to all value specified after the equals sign (`=`). */
-  routing?: Routing
+  routing?: string
   /** The versioning to use for the indexing operation. */
   version_type?: VersionType
 }
@@ -2478,7 +2478,7 @@ export interface SearchCompletionSuggestOption<TDocument = unknown> {
   fields?: Record<string, any>
   _id?: string
   _index?: IndexName
-  _routing?: Routing
+  _routing?: string
   _score?: double
   _source?: TDocument
   text: string
@@ -9343,7 +9343,7 @@ export interface QueryDslFieldLookup {
   /** Name of the field. */
   path?: Field
   /** Custom routing value. */
-  routing?: Routing
+  routing?: string
 }
 
 export type QueryDslFieldValueFactorModifier = 'none' | 'log' | 'log1p' | 'log2p' | 'ln' | 'ln1p' | 'ln2p' | 'square' | 'sqrt' | 'reciprocal'
@@ -9834,7 +9834,7 @@ export interface QueryDslMoreLikeThisQuery extends QueryDslQueryBase {
   min_term_freq?: integer
   /** The minimum word length below which the terms are ignored. */
   min_word_length?: integer
-  routing?: Routing
+  routing?: string
   /** An array of stop words.
     * Any word in this set is ignored. */
   stop_words?: AnalysisStopWords
@@ -9932,7 +9932,7 @@ export interface QueryDslPercolateQuery extends QueryDslQueryBase {
   /** Preference used to fetch document to percolate. */
   preference?: string
   /** Routing used to fetch document to percolate. */
-  routing?: Routing
+  routing?: string
   /** The expected version of a stored document to percolate. */
   version?: VersionNumber
 }
@@ -10475,7 +10475,7 @@ export interface QueryDslTermsLookup {
   index: IndexName
   id: Id
   path: Field
-  routing?: Routing
+  routing?: string
 }
 
 export interface QueryDslTermsQueryKeys extends QueryDslQueryBase {
@@ -18931,8 +18931,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
   filter?: QueryDslQueryContainer
-  /** Sets the default timezone of the query.
-    * @experimental */
+  /** Sets the default timezone of the query. */
   time_zone?: string
   /** Returns results (especially dates) formatted per the conventions of the locale. */
   locale?: string
@@ -18970,10 +18969,19 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   /** Indicates whether the query and its results are stored in the cluster.
     * If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter. */
   keep_on_completion?: boolean
+  /** Specifies a subset of projects to target using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
+  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never }
+  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, project_routing?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
@@ -19127,8 +19135,7 @@ export interface EsqlQueryRequest extends RequestBase {
   columnar?: boolean
   /** Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on. */
   filter?: QueryDslQueryContainer
-  /** Sets the default timezone of the query.
-    * @experimental */
+  /** Sets the default timezone of the query. */
   time_zone?: string
   /** Returns results (especially dates) formatted per the conventions of the locale. */
   locale?: string
@@ -19153,10 +19160,19 @@ export interface EsqlQueryRequest extends RequestBase {
     * count.
     * This is similar to `include_ccs_metadata`, but it also returns metadata when the query is not CCS/CPS */
   include_execution_metadata?: boolean
+  /** Specifies a subset of projects to target using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
+  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never }
+  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, project_routing?: never }
 }
 
 export type EsqlQueryResponse = EsqlEsqlResult
@@ -19889,17 +19905,17 @@ export interface IndicesAlias {
   filter?: QueryDslQueryContainer
   /** Value used to route indexing operations to a specific shard.
     * If specified, this overwrites the `routing` value for indexing operations. */
-  index_routing?: Routing
+  index_routing?: string
   /** If `true`, the alias is hidden.
     * All indices for the alias must have the same `is_hidden` value. */
   is_hidden?: boolean
   /** If `true`, the index is the write index for the alias. */
   is_write_index?: boolean
   /** Value used to route indexing and search operations to a specific shard. */
-  routing?: Routing
+  routing?: string
   /** Value used to route search operations to a specific shard.
     * If specified, this overwrites the `routing` value for search operations. */
-  search_routing?: Routing
+  search_routing?: string
 }
 
 export interface IndicesAliasDefinition {
@@ -22105,7 +22121,7 @@ export interface IndicesPutAliasRequest extends RequestBase {
   /** Value used to route indexing operations to a specific shard.
     * If specified, this overwrites the `routing` value for indexing operations.
     * Data stream aliases don’t support this parameter. */
-  index_routing?: Routing
+  index_routing?: string
   /** If `true`, sets the write index or data stream for the alias.
     * If an alias points to multiple indices or data streams and `is_write_index` isn’t set, the alias rejects write requests.
     * If an index alias points to one index and `is_write_index` isn’t set, the index automatically acts as the write index.
@@ -22113,11 +22129,11 @@ export interface IndicesPutAliasRequest extends RequestBase {
   is_write_index?: boolean
   /** Value used to route indexing and search operations to a specific shard.
     * Data stream aliases don’t support this parameter. */
-  routing?: Routing
+  routing?: string
   /** Value used to route search operations to a specific shard.
     * If specified, this overwrites the `routing` value for search operations.
     * Data stream aliases don’t support this parameter. */
-  search_routing?: Routing
+  search_routing?: string
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, name?: never, master_timeout?: never, timeout?: never, filter?: never, index_routing?: never, is_write_index?: never, routing?: never, search_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -23411,18 +23427,18 @@ export interface IndicesUpdateAliasesAddAction {
   /** Value used to route indexing operations to a specific shard.
     * If specified, this overwrites the `routing` value for indexing operations.
     * Data stream aliases don’t support this parameter. */
-  index_routing?: Routing
+  index_routing?: string
   /** If `true`, the alias is hidden. */
   is_hidden?: boolean
   /** If `true`, sets the write index or data stream for the alias. */
   is_write_index?: boolean
   /** Value used to route indexing and search operations to a specific shard.
     * Data stream aliases don’t support this parameter. */
-  routing?: Routing
+  routing?: string
   /** Value used to route search operations to a specific shard.
     * If specified, this overwrites the `routing` value for search operations.
     * Data stream aliases don’t support this parameter. */
-  search_routing?: Routing
+  search_routing?: string
   /** If `true`, the alias must exist to perform the action. */
   must_exist?: boolean
 }
@@ -25455,9 +25471,10 @@ export interface InferenceEmbeddingRequest extends RequestBase {
 export type InferenceEmbeddingResponse = InferenceEmbeddingInferenceResult
 
 export interface InferenceGetRequest extends RequestBase {
-  /** The task type */
+  /** The task type of the endpoint to return */
   task_type?: InferenceTaskType
-  /** The inference Id */
+  /** The inference Id of the endpoint to return. Using `_all` or `*` will return all endpoints with the specified
+    * `task_type` if one is specified, or all endpoints for all task types if no `task_type` is specified */
   inference_id?: Id
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never }
