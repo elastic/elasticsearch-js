@@ -24774,9 +24774,10 @@ export interface InferenceDeleteRequest extends RequestBase {
 export type InferenceDeleteResponse = InferenceDeleteInferenceEndpointResult
 
 export interface InferenceGetRequest extends RequestBase {
-  /** The task type */
+  /** The task type of the endpoint to return */
   task_type?: InferenceTaskType
-  /** The inference Id */
+  /** The inference Id of the endpoint to return. Using `_all` or `*` will return all endpoints with the specified
+    * `task_type` if one is specified, or all endpoints for all task types if no `task_type` is specified */
   inference_id?: Id
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never }

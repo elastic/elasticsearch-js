@@ -7718,8 +7718,9 @@ client.inference.get({ ... })
 ### Arguments [_arguments_inference.get]
 
 #### Request (object) [_request_inference.get]
-- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type
-- **`inference_id` (Optional, string)**: The inference Id
+- **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion"))**: The task type of the endpoint to return
+- **`inference_id` (Optional, string)**: The inference Id of the endpoint to return. Using `_all` or `*` will return all endpoints with the specified
+`task_type` if one is specified, or all endpoints for all task types if no `task_type` is specified
 
 ## client.inference.inference [_inference.inference]
 Perform inference on the service.
