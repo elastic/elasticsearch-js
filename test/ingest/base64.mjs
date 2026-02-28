@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { readFile } from "node:fs/promises"
-import { existsSync, createWriteStream, mkdirSync } from "node:fs"
-import { Readable } from "node:stream"
-import { finished } from "node:stream/promises"
+import { readFile } from 'node:fs/promises'
+import { existsSync, createWriteStream, mkdirSync } from 'node:fs'
+import { Readable } from 'node:stream'
+import { finished } from 'node:stream/promises'
 import inly from 'inly'
 import { Client } from '../../index.js'
 import { Serializer } from '@elastic/transport'
@@ -20,32 +20,32 @@ const client = new Client({
   compression: false
 })
 
-const indexName = "b64-test"
+const indexName = 'b64-test'
 
 const indexSettings = {
   index: indexName,
   wait_for_active_shards: 'all',
   mappings: {
     properties: {
-      docid: { type: "keyword" },
+      docid: { type: 'keyword' },
       emb: {
         dims: 1536,
         index: true,
-        index_options: { type: "flat" },
-        similarity: "cosine",
-        type: "dense_vector"
+        index_options: { type: 'flat' },
+        similarity: 'cosine',
+        type: 'dense_vector'
       },
       text: {
         fields: {
           keyword: {
             ignore_above: 256,
-            type: "keyword"
+            type: 'keyword'
           }
         },
-        type: "text"
+        type: 'text'
       },
       title: {
-        type: "text"
+        type: 'text'
       }
     }
   }
@@ -91,7 +91,7 @@ async function fetchDataSet () {
 /**
  * Loops over an array until a certain number of records has be yielded
  */
-function* loopDataSet (data) {
+function * loopDataSet (data) {
   let count = 0
   while (true) {
     for (const item of data) {

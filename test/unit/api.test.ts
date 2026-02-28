@@ -172,7 +172,7 @@ test('Api request metadata', t => {
   t.test('name', async t => {
     class TestTransport extends Transport {
       // @ts-expect-error
-      async request(params, options) {
+      async request (params, options) {
         t.equal(params.meta.name, 'synonyms.put_synonym_rule')
         return super.request(params, options)
       }
@@ -194,13 +194,13 @@ test('Api request metadata', t => {
       Connection
     })
     // @ts-expect-error
-    await client.synonyms.putSynonymRule({ set_id: "foo", rule_id: "bar" })
+    await client.synonyms.putSynonymRule({ set_id: 'foo', rule_id: 'bar' })
   })
 
   t.test('pathParts', async t => {
     class TestTransport extends Transport {
       // @ts-expect-error
-      async request(params, options) {
+      async request (params, options) {
         t.strictSame(params.meta.pathParts, {
           set_id: 'foo',
           rule_id: 'bar'
@@ -225,13 +225,13 @@ test('Api request metadata', t => {
       Connection
     })
     // @ts-expect-error
-    await client.synonyms.putSynonymRule({ set_id: "foo", rule_id: "bar" })
+    await client.synonyms.putSynonymRule({ set_id: 'foo', rule_id: 'bar' })
   })
 
   t.test('acceptedParams', async t => {
     class TestTransport extends Transport {
       // @ts-expect-error
-      async request(params, options) {
+      async request (params, options) {
         t.strictSame(params.meta.acceptedParams, [
           'set_id',
           'rule_id',
@@ -258,7 +258,7 @@ test('Api request metadata', t => {
       Connection
     })
     // @ts-expect-error
-    await client.synonyms.putSynonymRule({ set_id: "foo", rule_id: "bar" })
+    await client.synonyms.putSynonymRule({ set_id: 'foo', rule_id: 'bar' })
   })
 
   t.end()

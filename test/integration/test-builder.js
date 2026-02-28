@@ -151,7 +151,7 @@ async function build (yamlFiles, clientOptions) {
     code += "import { Client } from '@elastic/elasticsearch'\n\n"
 
     const requires = tests.find(test => test.requires != null)
-    let skip = new Set()
+    const skip = new Set()
     if (requires != null) {
       const { serverless = true, stack = true } = requires.requires
       if (!serverless) skip.add('process.env.TEST_ES_SERVERLESS === "1"')
@@ -214,46 +214,59 @@ async function build (yamlFiles, clientOptions) {
         case 'do':
           code += buildDo(action.do)
           break
-        case 'set':
+        case 'set': {
           const setResult = buildSet(action.set, vars)
           vars.add(setResult.varName)
           code += setResult.code
           break
-        case 'transform_and_set':
+        }
+        case 'transform_and_set':{
           code += buildTransformAndSet(action.transform_and_set)
           break
-        case 'match':
+        }
+        case 'match':{
           code += buildMatch(action.match)
           break
-        case 'lt':
+        }
+        case 'lt':{
           code += buildLt(action.lt)
           break
-        case 'lte':
+        }
+        case 'lte':{
           code += buildLte(action.lte)
           break
-        case 'gt':
+        }
+        case 'gt':{
           code += buildGt(action.gt)
           break
-        case 'gte':
+        }
+        case 'gte':{
           code += buildGte(action.gte)
           break
-        case 'length':
+        }
+        case 'length':{
           code += buildLength(action.length)
           break
-        case 'is_true':
+        }
+        case 'is_true':{
           code += buildIsTrue(action.is_true)
           break
-        case 'is_false':
+        }
+        case 'is_false':{
           code += buildIsFalse(action.is_false)
           break
-        case 'contains':
+        }
+        case 'contains':{
           code += buildContains(action.contains)
           break
-        case 'exists':
+        }
+        case 'exists':{
           code += buildExists(action.exists)
           break
-        case 'skip':
+        }
+        case 'skip':{
           break
+        }
         default:
           console.warn(`Action not supported: ${key}`)
           break
@@ -278,7 +291,7 @@ function buildDo (action) {
   return code
 }
 
-function buildRequest(action) {
+function buildRequest (action) {
   let code = ''
 
   const options = { meta: true }
@@ -314,7 +327,7 @@ function buildSet (action, vars) {
   if (vars.has(varName)) {
     code = `${varName} = ${lookup}\n`
   } else {
-    code =`let ${varName} = ${lookup}\n`
+    code = `let ${varName} = ${lookup}\n`
   }
   return { code, varName }
 }
@@ -325,7 +338,7 @@ function buildTransformAndSet (action) {
 
 function buildMatch (action) {
   const key = Object.keys(action)[0]
-  let lookup = buildLookup(key)
+  const lookup = buildLookup(key)
   const val = buildValLiteral(action[key])
   return `t.match(${lookup}, ${val})\n`
 }
@@ -366,21 +379,21 @@ function buildLength (action) {
   let code = ''
   code += `if (typeof ${lookup} === 'object' && !Array.isArray(${lookup})) {\n`
   code += `  t.equal(Object.keys(${lookup}).length, ${val})\n`
-  code += `} else {\n`
+  code += '} else {\n'
   code += `  t.equal(${lookup}.length, ${val})\n`
-  code += `}\n`
+  code += '}\n'
   return code
 }
 
 function buildIsTrue (action) {
-  let lookup = `${buildLookup(action)}`
+  const lookup = `${buildLookup(action)}`
   let errMessage = `\`${action} should be truthy. found: '\$\{JSON.stringify(${lookup})\}'\``
   if (lookup.includes('JSON.stringify')) errMessage = `\`${action} should be truthy. found: '\$\{${lookup}\}'\``
   return `t.ok(${lookup} === "true" || (Boolean(${lookup}) && ${lookup} !== "false"), ${errMessage})\n`
 }
 
 function buildIsFalse (action) {
-  let lookup = `${buildLookup(action)}`
+  const lookup = `${buildLookup(action)}`
   let errMessage = `\`${action} should be falsy. found: '\$\{JSON.stringify(${lookup})\}'\``
   if (lookup.includes('JSON.stringify')) errMessage = `\`${action} should be falsy. found: '\$\{${lookup}\}'\``
   return `t.ok(${lookup} === "false" || !Boolean(${lookup}), ${errMessage})\n`
@@ -403,7 +416,7 @@ function buildApiParams (params) {
     return 'undefined'
   } else {
     const out = {}
-    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => out[k] = params[k])
+    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => { out[k] = params[k] })
     return buildValLiteral(out)
   }
 }
@@ -477,7 +490,7 @@ function cleanObject (obj) {
   return obj
 }
 
-function isPlainObject(obj) {
+function isPlainObject (obj) {
   return typeof obj === 'object' && !Array.isArray(obj) && obj != null
 }
 
