@@ -7,11 +7,11 @@ import { test } from 'tap'
 import { Client, errors } from '../../../'
 import { connection } from '../../utils'
 
-let clientVersion: string = require('../../../package.json').version // eslint-disable-line
+let clientVersion: string = require('../../../package.json').version
 if (clientVersion.includes('-')) {
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
-let transportVersion: string = require('@elastic/transport/package.json').version // eslint-disable-line
+let transportVersion: string = require('@elastic/transport/package.json').version
 if (transportVersion.includes('-')) {
   transportVersion = transportVersion.slice(0, transportVersion.indexOf('-')) + 'p'
 }
@@ -263,7 +263,7 @@ test('Scroll search (retry throws later)', async t => {
   })
 
   try {
-    for await (const result of scrollSearch) { // eslint-disable-line
+    for await (const result of scrollSearch) {
       // @ts-expect-error
       t.equal(result.body.count, count)
     }

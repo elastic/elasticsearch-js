@@ -254,14 +254,14 @@ test('ES|QL helper', t => {
     })
 
     t.test('multi-batch support', async t => {
-      const intType = new arrow.Uint32
-      const floatType = new arrow.Float32
+      const intType = new arrow.Uint32()
+      const floatType = new arrow.Float32()
       const schema = new arrow.Schema([
         arrow.Field.new('id', intType),
         arrow.Field.new('val', floatType)
       ])
 
-      function getBatch(ids: number[], vals: number[]) {
+      function getBatch (ids: number[], vals: number[]) {
         const id = arrow.makeData({ type: intType, data: ids })
         const val = arrow.makeData({ type: floatType, data: vals })
         return new arrow.RecordBatch({ id, val })
