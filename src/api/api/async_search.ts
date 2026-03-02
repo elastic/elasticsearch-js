@@ -51,7 +51,8 @@ export default class AsyncSearch {
         query: [
           'keep_alive',
           'typed_keys',
-          'wait_for_completion_timeout'
+          'wait_for_completion_timeout',
+          'return_intermediate_results'
         ]
       },
       'async_search.status': {
@@ -245,7 +246,8 @@ export default class AsyncSearch {
         'id',
         'keep_alive',
         'typed_keys',
-        'wait_for_completion_timeout'
+        'wait_for_completion_timeout',
+        'return_intermediate_results'
       ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

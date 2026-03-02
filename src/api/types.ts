@@ -4480,6 +4480,17 @@ export interface LinearRetriever extends RetrieverBase {
   normalizer?: ScoreNormalizer
 }
 
+export interface LookupQueryVectorBuilder {
+  /** The ID of the document to fetch the vector from */
+  id: string
+  /** The name of the index to fetch the document from */
+  index: string
+  /** The name of the field containing the vector */
+  path: string
+  /** The routing value to use when fetching the document */
+  routing?: string
+}
+
 export type MapboxVectorTiles = ArrayBuffer
 
 export interface MergesStats {
@@ -4626,6 +4637,9 @@ export type QueryVector = float[]
 
 interface QueryVectorBuilderExclusiveProps {
   text_embedding?: TextEmbedding
+  /** Lookup a vector from an existing document.
+    * Must reference a dense_vector field and a single value. */
+  lookup?: LookupQueryVectorBuilder
 }
 
 export type QueryVectorBuilder = ExactlyOne<QueryVectorBuilderExclusiveProps>
@@ -5058,6 +5072,7 @@ export interface TextEmbedding {
   /** Model ID is required for all dense_vector fields but
     * may be inferred for semantic_text fields */
   model_id?: string
+  /** The text to be converted into a vector by the specified model */
   model_text: string
 }
 
@@ -10640,10 +10655,18 @@ export interface AsyncSearchGetRequest extends RequestBase {
     * Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires.
     * By default no timeout is set meaning that the currently available results will be returned without any additional wait. */
   wait_for_completion_timeout?: Duration
+  /** Specifies whether the response should contain intermediate results if the query is still running when the wait_for_completion_timeout
+    * expires or if no wait_for_completion_timeout is specified.
+    * If true and the search is still running, the search response
+    * will include any hits and partial aggregations that are available.
+    * If false and the search is still running, the search response will not include any hits (but possibly include
+    * total hits) nor will include any partial aggregations.
+    * When not specified, the intermediate results are returned for running queries. */
+  return_intermediate_results?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, keep_alive?: never, typed_keys?: never, wait_for_completion_timeout?: never }
+  body?: string | { [key: string]: any } & { id?: never, keep_alive?: never, typed_keys?: never, wait_for_completion_timeout?: never, return_intermediate_results?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, keep_alive?: never, typed_keys?: never, wait_for_completion_timeout?: never }
+  querystring?: { [key: string]: any } & { id?: never, keep_alive?: never, typed_keys?: never, wait_for_completion_timeout?: never, return_intermediate_results?: never }
 }
 
 export type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
@@ -34693,8 +34716,9 @@ export interface SearchableSnapshotsMountRequest extends RequestBase {
   master_timeout?: Duration
   /** If true, the request blocks until the operation is complete. */
   wait_for_completion?: boolean
-  /** The mount option for the searchable snapshot index. */
-  storage?: string
+  /** The mount option for the searchable snapshot index.
+    * For further information on mount options, refer to: [Mount options](https://www.elastic.co/docs/deploy-manage/tools/snapshot-and-restore/searchable-snapshots#searchable-snapshot-mount-storage-options) */
+  storage?: SearchableSnapshotsMountStorageOption
   /** The name of the index contained in the snapshot whose data is to be mounted.
     * If no `renamed_index` is specified, this name will also be used to create the new index. */
   index: IndexName
@@ -34713,6 +34737,8 @@ export interface SearchableSnapshotsMountRequest extends RequestBase {
 export interface SearchableSnapshotsMountResponse {
   snapshot: SearchableSnapshotsMountMountedSnapshot
 }
+
+export type SearchableSnapshotsMountStorageOption = 'full_copy' | 'shared_cache'
 
 export interface SearchableSnapshotsStatsRequest extends RequestBase {
   /** A comma-separated list of data streams and indices to retrieve statistics for. */
@@ -34812,7 +34838,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_esql' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_esql' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_esql' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_esql' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | 'read_project_routing' | 'manage_project_routing' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -38069,7 +38095,7 @@ export interface SnapshotGetRequest extends RequestBase {
   /** Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. */
   offset?: integer
   /** The maximum number of snapshots to return.
-    * The default is 0, which means to return all that match the request without limit. */
+    * The default is -1, which means to return all that match the request without limit. */
   size?: integer
   /** Filter snapshots by a comma-separated list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
     *
@@ -41032,6 +41058,8 @@ export interface XpackInfoFeatures {
   /** @remarks This property is not supported on Elastic Cloud Serverless. */
   esql: XpackInfoFeature
   graph: XpackInfoFeature
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  gpu_vector_indexing: XpackInfoFeature
   ilm: XpackInfoFeature
   logstash: XpackInfoFeature
   logsdb: XpackInfoFeature
@@ -41210,6 +41238,26 @@ export interface XpackUsageFeatureToggle {
 
 export interface XpackUsageFlattened extends XpackUsageBase {
   field_count: integer
+}
+
+export interface XpackUsageGpuNodeStats {
+  /** GPU device type (e.g., "NVIDIA L4", "NVIDIA A100"). */
+  type: string
+  /** GPU memory in bytes. */
+  memory_in_bytes: long
+  /** Whether GPU vector indexing is enabled on this node. */
+  enabled: boolean
+  /** Number of GPU index builds performed on this node. */
+  index_build_count: long
+}
+
+export interface XpackUsageGpuVectorIndexing extends XpackUsageBase {
+  /** Total GPU index builds across the cluster. */
+  index_build_count: long
+  /** Count of data nodes with GPU support. */
+  nodes_with_gpu: integer
+  /** Per-node GPU details including type, memory, enabled status, and build count. */
+  nodes: XpackUsageGpuNodeStats[]
 }
 
 export interface XpackUsageHealthStatistics extends XpackUsageBase {
@@ -41396,6 +41444,8 @@ export interface XpackUsageResponse {
   eql: XpackUsageEql
   flattened?: XpackUsageFlattened
   graph: XpackUsageBase
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  gpu_vector_indexing?: XpackUsageGpuVectorIndexing
   health_api?: XpackUsageHealthStatistics
   ilm: XpackUsageIlm
   logstash: XpackUsageBase

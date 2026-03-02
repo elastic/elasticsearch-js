@@ -2111,6 +2111,13 @@ If the search is completed, its saved results are deleted.
 - **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: Specifies to wait for the search to be completed up until the provided timeout.
 Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires.
 By default no timeout is set meaning that the currently available results will be returned without any additional wait.
+- **`return_intermediate_results` (Optional, boolean)**: Specifies whether the response should contain intermediate results if the query is still running when the wait_for_completion_timeout
+expires or if no wait_for_completion_timeout is specified.
+If true and the search is still running, the search response
+will include any hits and partial aggregations that are available.
+If false and the search is still running, the search response will not include any hits (but possibly include
+total hits) nor will include any partial aggregations.
+When not specified, the intermediate results are returned for running queries.
 
 ## client.asyncSearch.status [_async_search.status]
 Get the async search status.
@@ -9163,10 +9170,16 @@ Pipeline IDs must begin with a letter or underscore and contain only letters, un
 ## client.migration.deprecations [_migration.deprecations]
 Get deprecation information.
 
-Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+Returns information about deprecated features which are in use in the cluster.
+The reported features include cluster, node, and index level settings that will be removed or changed in the next major version.
+You must address the reported issues before upgrading to the next major version.
+However, no action is required when upgrading within the current major version.
+Deprecated features remain fully supported and will continue to work in the current version, and when upgrading to a newer minor or patch release in the same major version.
+Use this API to review your usage of these features and migrate away from them at your own pace, before upgrading to a new major version.
 
-TIP: This APIs is designed for indirect use by the Upgrade Assistant.
-You are strongly recommended to use the Upgrade Assistant.
+> info
+> This API is designed for indirect use by the [Upgrade Assistant](https://www.elastic.co/docs/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant).
+> We recommend learning about deprecated features using the Upgrade Assistant rather than calling this API directly.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations)
 
@@ -11978,7 +11991,8 @@ If no `renamed_index` is specified, this name will also be used to create the ne
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 - **`wait_for_completion` (Optional, boolean)**: If true, the request blocks until the operation is complete.
-- **`storage` (Optional, string)**: The mount option for the searchable snapshot index.
+- **`storage` (Optional, Enum("full_copy" \| "shared_cache"))**: The mount option for the searchable snapshot index.
+For further information on mount options, refer to: [Mount options](https://www.elastic.co/docs/deploy-manage/tools/snapshot-and-restore/searchable-snapshots#searchable-snapshot-mount-storage-options)
 
 ## client.searchableSnapshots.stats [_searchable_snapshots.stats]
 Get searchable snapshot statistics.
@@ -12964,7 +12978,7 @@ client.security.hasPrivileges({ ... })
 #### Request (object) [_request_security.has_privileges]
 - **`user` (Optional, string)**: Username
 - **`application` (Optional, { application, privileges, resources }[])**
-- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets")[])**: A list of the cluster privileges that you want to check.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of the cluster privileges that you want to check.
 - **`index` (Optional, { names, privileges, allow_restricted_indices }[])**
 
 ## client.security.hasPrivilegesUserProfile [_security.has_privileges_user_profile]
@@ -13190,7 +13204,7 @@ client.security.putRole({ name })
 #### Request (object) [_request_security.put_role]
 - **`name` (string)**: The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role.
 - **`applications` (Optional, { application, privileges, resources }[])**: A list of application privilege entries.
-- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
 - **`global` (Optional, Record<string, User-defined value>)**: An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
 - **`indices` (Optional, { field_security, names, privileges, query, allow_restricted_indices }[])**: A list of indices permissions entries.
 - **`remote_indices` (Optional, { clusters, field_security, names, privileges, query, allow_restricted_indices }[])**: A list of remote indices permissions entries.
@@ -14241,7 +14255,7 @@ Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order.
 - **`offset` (Optional, number)**: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
 - **`size` (Optional, number)**: The maximum number of snapshots to return.
-The default is 0, which means to return all that match the request without limit.
+The default is -1, which means to return all that match the request without limit.
 - **`slm_policy_filter` (Optional, string)**: Filter snapshots by a list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
 
 You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
