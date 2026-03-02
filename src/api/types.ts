@@ -25265,7 +25265,7 @@ export interface InferenceWatsonxServiceSettings {
 
 export type InferenceWatsonxServiceType = 'watsonxai'
 
-export type InferenceWatsonxTaskType = 'text_embedding' | 'chat_completion' | 'completion'
+export type InferenceWatsonxTaskType = 'text_embedding' | 'rerank' | 'chat_completion' | 'completion'
 
 export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
   /** The inference Id */
@@ -25989,7 +25989,7 @@ export interface InferencePutWatsonxRequest extends RequestBase {
   timeout?: Duration
   /** The chunking configuration object.
     * Applies only to the `text_embedding` task type.
-    * Not applicable to the `completion` or `chat_completion` task types. */
+    * Not applicable to the `rerank`, `completion` or `chat_completion` task types. */
   chunking_settings?: InferenceInferenceChunkingSettings
   /** The type of service supported for the specified task type. In this case, `watsonxai`. */
   service: InferenceWatsonxServiceType
@@ -37855,7 +37855,7 @@ export interface SnapshotGetRequest extends RequestBase {
   /** Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. */
   offset?: integer
   /** The maximum number of snapshots to return.
-    * The default is 0, which means to return all that match the request without limit. */
+    * The default is -1, which means to return all that match the request without limit. */
   size?: integer
   /** Filter snapshots by a comma-separated list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
     *
@@ -40795,6 +40795,8 @@ export interface XpackInfoFeatures {
   /** @remarks This property is not supported on Elastic Cloud Serverless. */
   esql: XpackInfoFeature
   graph: XpackInfoFeature
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  gpu_vector_indexing: XpackInfoFeature
   ilm: XpackInfoFeature
   logstash: XpackInfoFeature
   logsdb: XpackInfoFeature
@@ -40973,6 +40975,26 @@ export interface XpackUsageFeatureToggle {
 
 export interface XpackUsageFlattened extends XpackUsageBase {
   field_count: integer
+}
+
+export interface XpackUsageGpuNodeStats {
+  /** GPU device type (e.g., "NVIDIA L4", "NVIDIA A100"). */
+  type: string
+  /** GPU memory in bytes. */
+  memory_in_bytes: long
+  /** Whether GPU vector indexing is enabled on this node. */
+  enabled: boolean
+  /** Number of GPU index builds performed on this node. */
+  index_build_count: long
+}
+
+export interface XpackUsageGpuVectorIndexing extends XpackUsageBase {
+  /** Total GPU index builds across the cluster. */
+  index_build_count: long
+  /** Count of data nodes with GPU support. */
+  nodes_with_gpu: integer
+  /** Per-node GPU details including type, memory, enabled status, and build count. */
+  nodes: XpackUsageGpuNodeStats[]
 }
 
 export interface XpackUsageHealthStatistics extends XpackUsageBase {
@@ -41159,6 +41181,8 @@ export interface XpackUsageResponse {
   eql: XpackUsageEql
   flattened?: XpackUsageFlattened
   graph: XpackUsageBase
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  gpu_vector_indexing?: XpackUsageGpuVectorIndexing
   health_api?: XpackUsageHealthStatistics
   ilm: XpackUsageIlm
   logstash: XpackUsageBase
