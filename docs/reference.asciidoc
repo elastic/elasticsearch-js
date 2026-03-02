@@ -7140,6 +7140,8 @@ If no response is received before the timeout expires, the request fails and ret
 ==== put_data_stream_settings
 Update data stream settings.
 
+NOTE: Available in 8.19. Not available in earlier versions.
+
 This API can be used to override settings on specific data streams. These overrides will take precedence over what
 is specified in the template that the data stream matches. To prevent your data stream from getting into an invalid state,
 only certain settings are allowed. If possible, the setting change is applied to all
@@ -14995,7 +14997,7 @@ Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order.
 ** *`offset` (Optional, number)*: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
 ** *`size` (Optional, number)*: The maximum number of snapshots to return.
-The default is 0, which means to return all that match the request without limit.
+The default is -1, which means to return all that match the request without limit.
 ** *`slm_policy_filter` (Optional, string)*: Filter snapshots by a list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
 
 You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
