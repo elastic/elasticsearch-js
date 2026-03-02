@@ -1092,7 +1092,7 @@ export interface ReindexSource {
   size?: integer
   slice?: SlicedScroll
   sort?: Sort
-  _source?: Fields
+  _source?: SearchSourceConfig
   runtime_mappings?: MappingRuntimeFields
 }
 
