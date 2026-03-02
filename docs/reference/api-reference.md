@@ -7442,6 +7442,8 @@ For example an index with 8 primary shards can be shrunk into 4, 2 or 1 primary 
 If the number of shards in the index is a prime number it can only be shrunk into a single primary shard
  Before shrinking, a (primary or replica) copy of every shard in the index must be present on the same node.
 
+IMPORTANT: If the source index already has one primary shard, configuring the shrink operation with 'index.number_of_shards: 1' will cause the request to fail. An index with one primary shard cannot be shrunk further.
+
 The current write index on a data stream cannot be shrunk. In order to shrink the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be shrunk.
 
 A shrink operation:
@@ -7854,7 +7856,7 @@ The following integrations are available through the inference API. You can find
 * OpenAI (`chat_completion`, `completion`, `text_embedding`)
 * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * VoyageAI (`rerank`, `text_embedding`)
-* Watsonx inference integration (`text_embedding`)
+* Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put)
 
@@ -8587,13 +8589,13 @@ client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_
 ### Arguments [_arguments_inference.put_watsonx]
 
 #### Request (object) [_request_inference.put_watsonx]
-- **`task_type` (Enum("text_embedding" \| "chat_completion" \| "completion"))**: The type of the inference task that the model will perform.
+- **`task_type` (Enum("text_embedding" \| "rerank" \| "chat_completion" \| "completion"))**: The type of the inference task that the model will perform.
 - **`watsonx_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("watsonxai"))**: The type of service supported for the specified task type. In this case, `watsonxai`.
 - **`service_settings` ({ api_key, api_version, model_id, project_id, rate_limit, url })**: Settings used to install the inference model. These settings are specific to the `watsonxai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
-Not applicable to the `completion` or `chat_completion` task types.
+Not applicable to the `rerank`, `completion` or `chat_completion` task types.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.rerank [_inference.rerank]
@@ -14217,7 +14219,7 @@ Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order.
 - **`offset` (Optional, number)**: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
 - **`size` (Optional, number)**: The maximum number of snapshots to return.
-The default is 0, which means to return all that match the request without limit.
+The default is -1, which means to return all that match the request without limit.
 - **`slm_policy_filter` (Optional, string)**: Filter snapshots by a list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
 
 You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
