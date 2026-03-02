@@ -7384,6 +7384,8 @@ For example an index with 8 primary shards can be shrunk into 4, 2 or 1 primary 
 If the number of shards in the index is a prime number it can only be shrunk into a single primary shard
  Before shrinking, a (primary or replica) copy of every shard in the index must be present on the same node.
 
+IMPORTANT: If the source index already has one primary shard, configuring the shrink operation with 'index.number_of_shards: 1' will cause the request to fail. An index with one primary shard cannot be shrunk further.
+
 The current write index on a data stream cannot be shrunk. In order to shrink the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be shrunk.
 
 A shrink operation:
@@ -9002,10 +9004,16 @@ Pipeline IDs must begin with a letter or underscore and contain only letters, un
 ## client.migration.deprecations [_migration.deprecations]
 Get deprecation information.
 
-Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+Returns information about deprecated features which are in use in the cluster.
+The reported features include cluster, node, and index level settings that will be removed or changed in the next major version.
+You must address the reported issues before upgrading to the next major version.
+However, no action is required when upgrading within the current major version.
+Deprecated features remain fully supported and will continue to work in the current version, and when upgrading to a newer minor or patch release in the same major version.
+Use this API to review your usage of these features and migrate away from them at your own pace, before upgrading to a new major version.
 
-TIP: This APIs is designed for indirect use by the Upgrade Assistant.
-You are strongly recommended to use the Upgrade Assistant.
+> info
+> This API is designed for indirect use by the [Upgrade Assistant](https://www.elastic.co/docs/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant).
+> We recommend learning about deprecated features using the Upgrade Assistant rather than calling this API directly.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations)
 
@@ -14070,7 +14078,7 @@ Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order.
 - **`offset` (Optional, number)**: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
 - **`size` (Optional, number)**: The maximum number of snapshots to return.
-The default is 0, which means to return all that match the request without limit.
+The default is -1, which means to return all that match the request without limit.
 - **`slm_policy_filter` (Optional, string)**: Filter snapshots by a list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
 
 You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
