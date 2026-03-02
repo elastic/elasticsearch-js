@@ -37175,7 +37175,7 @@ export interface SnapshotGetRequest extends RequestBase {
   /** Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. */
   offset?: integer
   /** The maximum number of snapshots to return.
-    * The default is 0, which means to return all that match the request without limit. */
+    * The default is -1, which means to return all that match the request without limit. */
   size?: integer
   /** Filter snapshots by a comma-separated list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
     *
