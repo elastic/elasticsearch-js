@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.3.3 [elasticsearch-javascript-client-9.3.3-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.3.3-fixes]
+
+- **Categorized `acceptedParams` in transport request metadata:** The `acceptedParams` field on `TransportRequestMetadata` has been changed from a flat `string[]` to a `{ path, body, query }` object, allowing consumers to determine whether a parameter should be injected as a body or query parameter. This fixes an issue where `project_routing` was incorrectly injected into the body of `_msearch` requests when it should be a query parameter.
+
 ## 9.3.2 [elasticsearch-javascript-client-9.3.2-release-notes]
 
 ### Fixes [elasticsearch-javascript-client-9.3.2-fixes]
