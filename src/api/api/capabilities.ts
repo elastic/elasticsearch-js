@@ -80,14 +80,11 @@ export default async function CapabilitiesApi (this: That, params?: T.Capabiliti
   const path = '/_capabilities'
   const meta: TransportRequestMetadata = {
     name: 'capabilities',
-    acceptedParams: [
-      'method',
-      'path',
-      'parameters',
-      'capabilities',
-      'local_only',
-      'timeout'
-    ]
+    acceptedParams: {
+      path: [],
+      body: [],
+      query: ['method', 'path', 'parameters', 'capabilities', 'local_only', 'timeout']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -193,9 +193,11 @@ export default class AsyncSearch {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -241,12 +243,11 @@ export default class AsyncSearch {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'keep_alive',
-        'typed_keys',
-        'wait_for_completion_timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['keep_alive', 'typed_keys', 'wait_for_completion_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -292,10 +293,11 @@ export default class AsyncSearch {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'keep_alive'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['keep_alive']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -365,86 +367,11 @@ export default class AsyncSearch {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'aggregations',
-        'aggs',
-        'collapse',
-        'explain',
-        'ext',
-        'from',
-        'highlight',
-        'track_total_hits',
-        'indices_boost',
-        'docvalue_fields',
-        'knn',
-        'min_score',
-        'post_filter',
-        'profile',
-        'query',
-        'rescore',
-        'script_fields',
-        'search_after',
-        'size',
-        'slice',
-        'sort',
-        '_source',
-        'fields',
-        'suggest',
-        'terminate_after',
-        'timeout',
-        'track_scores',
-        'version',
-        'seq_no_primary_term',
-        'stored_fields',
-        'pit',
-        'runtime_mappings',
-        'stats',
-        'project_routing',
-        'wait_for_completion_timeout',
-        'keep_alive',
-        'keep_on_completion',
-        'allow_no_indices',
-        'allow_partial_search_results',
-        'analyzer',
-        'analyze_wildcard',
-        'batched_reduce_size',
-        'ccs_minimize_roundtrips',
-        'default_operator',
-        'df',
-        'docvalue_fields',
-        'expand_wildcards',
-        'explain',
-        'ignore_throttled',
-        'ignore_unavailable',
-        'lenient',
-        'max_concurrent_shard_requests',
-        'preference',
-        'request_cache',
-        'routing',
-        'search_type',
-        'stats',
-        'stored_fields',
-        'suggest_field',
-        'suggest_mode',
-        'suggest_size',
-        'suggest_text',
-        'terminate_after',
-        'timeout',
-        'track_total_hits',
-        'track_scores',
-        'typed_keys',
-        'rest_total_hits_as_int',
-        'version',
-        '_source',
-        '_source_excludes',
-        '_source_includes',
-        'seq_no_primary_term',
-        'q',
-        'size',
-        'from',
-        'sort'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'knn', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats', 'project_routing'],
+        query: ['wait_for_completion_timeout', 'keep_alive', 'keep_on_completion', 'allow_no_indices', 'allow_partial_search_results', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'preference', 'request_cache', 'routing', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

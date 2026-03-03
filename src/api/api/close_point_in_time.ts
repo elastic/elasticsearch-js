@@ -88,9 +88,11 @@ export default async function ClosePointInTimeApi (this: That, params: T.ClosePo
   const path = '/_pit'
   const meta: TransportRequestMetadata = {
     name: 'close_point_in_time',
-    acceptedParams: [
-      'id'
-    ]
+    acceptedParams: {
+      path: [],
+      body: ['id'],
+      query: []
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }
