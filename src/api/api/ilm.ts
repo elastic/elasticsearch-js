@@ -179,11 +179,11 @@ export default class Ilm {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'policy',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -229,12 +229,11 @@ export default class Ilm {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'only_errors',
-        'only_managed',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['only_errors', 'only_managed', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -288,11 +287,11 @@ export default class Ilm {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'policy',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -336,8 +335,11 @@ export default class Ilm {
     const path = '/_ilm/status'
     const meta: TransportRequestMetadata = {
       name: 'ilm.get_status',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -393,12 +395,11 @@ export default class Ilm {
     const path = '/_ilm/migrate_to_data_tiers'
     const meta: TransportRequestMetadata = {
       name: 'ilm.migrate_to_data_tiers',
-      acceptedParams: [
-        'legacy_template_to_delete',
-        'node_attribute',
-        'dry_run',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['legacy_template_to_delete', 'node_attribute'],
+        query: ['dry_run', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -456,11 +457,11 @@ export default class Ilm {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'current_step',
-        'next_step'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['current_step', 'next_step'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -518,12 +519,11 @@ export default class Ilm {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'policy',
-        'policy',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy'],
+        body: ['policy'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -569,9 +569,11 @@ export default class Ilm {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -617,9 +619,11 @@ export default class Ilm {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -663,10 +667,11 @@ export default class Ilm {
     const path = '/_ilm/start'
     const meta: TransportRequestMetadata = {
       name: 'ilm.start',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -710,10 +715,11 @@ export default class Ilm {
     const path = '/_ilm/stop'
     const meta: TransportRequestMetadata = {
       name: 'ilm.stop',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -200,11 +200,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -250,11 +250,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -300,11 +300,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -348,8 +348,11 @@ export default class Ingest {
     const path = '/_ingest/geoip/stats'
     const meta: TransportRequestMetadata = {
       name: 'ingest.geo_ip_stats',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -403,9 +406,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -459,9 +464,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -515,11 +522,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'master_timeout',
-        'summary'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['master_timeout', 'summary']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -563,8 +570,11 @@ export default class Ingest {
     const path = '/_ingest/processor/grok'
     const meta: TransportRequestMetadata = {
       name: 'ingest.processor_grok',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -622,13 +632,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'name',
-        'maxmind',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['name', 'maxmind'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -676,12 +684,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'configuration',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['configuration'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -739,19 +746,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        '_meta',
-        'description',
-        'on_failure',
-        'processors',
-        'version',
-        'deprecated',
-        'field_access_pattern',
-        'master_timeout',
-        'timeout',
-        'if_version'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['_meta', 'description', 'on_failure', 'processors', 'version', 'deprecated', 'field_access_pattern'],
+        query: ['master_timeout', 'timeout', 'if_version']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -816,12 +815,11 @@ export default class Ingest {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'docs',
-        'pipeline',
-        'verbose'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['docs', 'pipeline'],
+        query: ['verbose']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

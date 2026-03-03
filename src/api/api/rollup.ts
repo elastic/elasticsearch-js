@@ -156,9 +156,11 @@ export default class Rollup {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -212,9 +214,11 @@ export default class Rollup {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -268,9 +272,11 @@ export default class Rollup {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -316,9 +322,11 @@ export default class Rollup {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -376,17 +384,11 @@ export default class Rollup {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'cron',
-        'groups',
-        'index_pattern',
-        'metrics',
-        'page_size',
-        'rollup_index',
-        'timeout',
-        'headers'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index', 'timeout', 'headers'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -444,15 +446,11 @@ export default class Rollup {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'aggregations',
-        'aggs',
-        'query',
-        'size',
-        'rest_total_hits_as_int',
-        'typed_keys'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['aggregations', 'aggs', 'query', 'size'],
+        query: ['rest_total_hits_as_int', 'typed_keys']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -498,9 +496,11 @@ export default class Rollup {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -546,11 +546,11 @@ export default class Rollup {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

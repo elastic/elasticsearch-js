@@ -103,9 +103,11 @@ export default class Migration {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -149,8 +151,11 @@ export default class Migration {
     const path = '/_migration/system_features'
     const meta: TransportRequestMetadata = {
       name: 'migration.get_feature_upgrade_status',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -194,8 +199,11 @@ export default class Migration {
     const path = '/_migration/system_features'
     const meta: TransportRequestMetadata = {
       name: 'migration.post_feature_upgrade',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -103,9 +103,11 @@ export default class Logstash {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -159,9 +161,11 @@ export default class Logstash {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -209,10 +213,11 @@ export default class Logstash {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'pipeline'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['pipeline'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
