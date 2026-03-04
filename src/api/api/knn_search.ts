@@ -100,16 +100,11 @@ export default async function KnnSearchApi<TDocument = unknown> (this: That, par
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      '_source',
-      'docvalue_fields',
-      'stored_fields',
-      'fields',
-      'filter',
-      'knn',
-      'routing'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['_source', 'docvalue_fields', 'stored_fields', 'fields', 'filter', 'knn'],
+      query: ['routing']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

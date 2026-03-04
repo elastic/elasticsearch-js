@@ -140,9 +140,11 @@ export default class Eql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -188,11 +190,11 @@ export default class Eql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'keep_alive',
-        'wait_for_completion_timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['keep_alive', 'wait_for_completion_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -238,9 +240,11 @@ export default class Eql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -298,36 +302,11 @@ export default class Eql {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'project_routing',
-        'query',
-        'case_sensitive',
-        'event_category_field',
-        'tiebreaker_field',
-        'timestamp_field',
-        'fetch_size',
-        'filter',
-        'keep_alive',
-        'keep_on_completion',
-        'wait_for_completion_timeout',
-        'allow_partial_search_results',
-        'allow_partial_sequence_results',
-        'size',
-        'fields',
-        'result_position',
-        'runtime_mappings',
-        'max_samples_per_key',
-        'allow_no_indices',
-        'allow_partial_search_results',
-        'allow_partial_sequence_results',
-        'expand_wildcards',
-        'ccs_minimize_roundtrips',
-        'ignore_unavailable',
-        'keep_alive',
-        'keep_on_completion',
-        'wait_for_completion_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['project_routing', 'query', 'case_sensitive', 'event_category_field', 'tiebreaker_field', 'timestamp_field', 'fetch_size', 'filter', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout', 'allow_partial_search_results', 'allow_partial_sequence_results', 'size', 'fields', 'result_position', 'runtime_mappings', 'max_samples_per_key'],
+        query: ['allow_no_indices', 'allow_partial_search_results', 'allow_partial_sequence_results', 'expand_wildcards', 'ccs_minimize_roundtrips', 'ignore_unavailable', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
