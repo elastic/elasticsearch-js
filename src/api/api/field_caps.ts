@@ -113,21 +113,11 @@ export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequ
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'fields',
-      'index_filter',
-      'runtime_mappings',
-      'project_routing',
-      'allow_no_indices',
-      'expand_wildcards',
-      'fields',
-      'ignore_unavailable',
-      'include_unmapped',
-      'filters',
-      'types',
-      'include_empty_fields'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['fields', 'index_filter', 'runtime_mappings', 'project_routing'],
+      query: ['allow_no_indices', 'expand_wildcards', 'fields', 'ignore_unavailable', 'include_unmapped', 'filters', 'types', 'include_empty_fields']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

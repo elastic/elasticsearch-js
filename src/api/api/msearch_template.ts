@@ -97,16 +97,11 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'search_templates',
-      'ccs_minimize_roundtrips',
-      'max_concurrent_searches',
-      'project_routing',
-      'search_type',
-      'rest_total_hits_as_int',
-      'typed_keys'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['search_templates'],
+      query: ['ccs_minimize_roundtrips', 'max_concurrent_searches', 'project_routing', 'search_type', 'rest_total_hits_as_int', 'typed_keys']
+    }
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

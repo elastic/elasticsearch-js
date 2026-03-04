@@ -120,9 +120,11 @@ export default class Project {
     const path = '/_project_routing'
     const meta: TransportRequestMetadata = {
       name: 'project.create_many_routing',
-      acceptedParams: [
-        'expressions'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['expressions'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -169,10 +171,11 @@ export default class Project {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expressions'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['expressions'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -217,9 +220,11 @@ export default class Project {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -262,8 +267,11 @@ export default class Project {
     const path = '/_project_routing'
     const meta: TransportRequestMetadata = {
       name: 'project.get_many_routing',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -308,9 +316,11 @@ export default class Project {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -366,9 +376,11 @@ export default class Project {
     const path = '/_project/tags'
     const meta: TransportRequestMetadata = {
       name: 'project.tags',
-      acceptedParams: [
-        'project_routing'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['project_routing'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

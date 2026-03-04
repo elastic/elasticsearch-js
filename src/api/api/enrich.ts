@@ -128,10 +128,11 @@ export default class Enrich {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -177,11 +178,11 @@ export default class Enrich {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -235,10 +236,11 @@ export default class Enrich {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -296,13 +298,11 @@ export default class Enrich {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'geo_match',
-        'match',
-        'range',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['geo_match', 'match', 'range'],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -346,9 +346,11 @@ export default class Enrich {
     const path = '/_enrich/_stats'
     const meta: TransportRequestMetadata = {
       name: 'enrich.stats',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

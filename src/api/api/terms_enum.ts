@@ -99,16 +99,11 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'field',
-      'size',
-      'timeout',
-      'case_insensitive',
-      'index_filter',
-      'string',
-      'search_after'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after'],
+      query: []
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

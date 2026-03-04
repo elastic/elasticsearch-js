@@ -199,26 +199,11 @@ export default class Esql {
     const path = '/_query/async'
     const meta: TransportRequestMetadata = {
       name: 'esql.async_query',
-      acceptedParams: [
-        'columnar',
-        'filter',
-        'time_zone',
-        'locale',
-        'params',
-        'profile',
-        'query',
-        'tables',
-        'include_ccs_metadata',
-        'include_execution_metadata',
-        'wait_for_completion_timeout',
-        'keep_alive',
-        'keep_on_completion',
-        'project_routing',
-        'allow_partial_results',
-        'delimiter',
-        'drop_null_columns',
-        'format'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'wait_for_completion_timeout', 'keep_alive', 'keep_on_completion', 'project_routing'],
+        query: ['allow_partial_results', 'delimiter', 'drop_null_columns', 'format']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -264,9 +249,11 @@ export default class Esql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -312,13 +299,11 @@ export default class Esql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'drop_null_columns',
-        'format',
-        'keep_alive',
-        'wait_for_completion_timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['drop_null_columns', 'format', 'keep_alive', 'wait_for_completion_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -364,10 +349,11 @@ export default class Esql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'drop_null_columns'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['drop_null_columns']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -413,9 +399,11 @@ export default class Esql {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -461,9 +449,11 @@ export default class Esql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -517,9 +507,11 @@ export default class Esql {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -563,8 +555,11 @@ export default class Esql {
     const path = '/_query/queries'
     const meta: TransportRequestMetadata = {
       name: 'esql.list_queries',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -622,10 +617,11 @@ export default class Esql {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'query'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['query'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -680,23 +676,11 @@ export default class Esql {
     const path = '/_query'
     const meta: TransportRequestMetadata = {
       name: 'esql.query',
-      acceptedParams: [
-        'columnar',
-        'filter',
-        'time_zone',
-        'locale',
-        'params',
-        'profile',
-        'query',
-        'tables',
-        'include_ccs_metadata',
-        'include_execution_metadata',
-        'project_routing',
-        'format',
-        'delimiter',
-        'drop_null_columns',
-        'allow_partial_results'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'project_routing'],
+        query: ['format', 'delimiter', 'drop_null_columns', 'allow_partial_results']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
