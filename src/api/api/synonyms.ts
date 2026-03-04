@@ -146,9 +146,11 @@ export default class Synonyms {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -195,11 +197,11 @@ export default class Synonyms {
         set_id: params.set_id,
         rule_id: params.rule_id
       },
-      acceptedParams: [
-        'set_id',
-        'rule_id',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['set_id', 'rule_id'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -245,11 +247,11 @@ export default class Synonyms {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -296,10 +298,11 @@ export default class Synonyms {
         set_id: params.set_id,
         rule_id: params.rule_id
       },
-      acceptedParams: [
-        'set_id',
-        'rule_id'
-      ]
+      acceptedParams: {
+        path: ['set_id', 'rule_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -343,10 +346,11 @@ export default class Synonyms {
     const path = '/_synonyms'
     const meta: TransportRequestMetadata = {
       name: 'synonyms.get_synonyms_sets',
-      acceptedParams: [
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -404,11 +408,11 @@ export default class Synonyms {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'synonyms_set',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['synonyms_set'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -467,12 +471,11 @@ export default class Synonyms {
         set_id: params.set_id,
         rule_id: params.rule_id
       },
-      acceptedParams: [
-        'set_id',
-        'rule_id',
-        'synonyms',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['set_id', 'rule_id'],
+        body: ['synonyms'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

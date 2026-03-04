@@ -83,9 +83,11 @@ export default class Project {
     const path = '/_project/tags'
     const meta: TransportRequestMetadata = {
       name: 'project.tags',
-      acceptedParams: [
-        'project_routing'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['project_routing']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

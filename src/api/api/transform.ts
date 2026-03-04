@@ -237,12 +237,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'force',
-        'delete_dest_index',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['force', 'delete_dest_index', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -286,8 +285,11 @@ export default class Transform {
     const path = '/_transform/_node_stats'
     const meta: TransportRequestMetadata = {
       name: 'transform.get_node_stats',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -341,13 +343,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'allow_no_match',
-        'from',
-        'size',
-        'exclude_generated'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['allow_no_match', 'from', 'size', 'exclude_generated']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -393,13 +393,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'allow_no_match',
-        'from',
-        'size',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['allow_no_match', 'from', 'size', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -465,19 +463,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'dest',
-        'description',
-        'frequency',
-        'pivot',
-        'source',
-        'settings',
-        'sync',
-        'retention_policy',
-        'latest',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: ['dest', 'description', 'frequency', 'pivot', 'source', 'settings', 'sync', 'retention_policy', 'latest'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -535,21 +525,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'dest',
-        'description',
-        'frequency',
-        'latest',
-        '_meta',
-        'pivot',
-        'retention_policy',
-        'settings',
-        'source',
-        'sync',
-        'defer_validation',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: ['dest', 'description', 'frequency', 'latest', '_meta', 'pivot', 'retention_policy', 'settings', 'source', 'sync'],
+        query: ['defer_validation', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -595,11 +575,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'force',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['force', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -645,10 +625,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -692,10 +673,11 @@ export default class Transform {
     const path = '/_transform/set_upgrade_mode'
     const meta: TransportRequestMetadata = {
       name: 'transform.set_upgrade_mode',
-      acceptedParams: [
-        'enabled',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['enabled', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -741,11 +723,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'timeout',
-        'from'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['timeout', 'from']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -791,14 +773,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'allow_no_match',
-        'force',
-        'timeout',
-        'wait_for_checkpoint',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['allow_no_match', 'force', 'timeout', 'wait_for_checkpoint', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -856,19 +835,11 @@ export default class Transform {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'dest',
-        'description',
-        'frequency',
-        '_meta',
-        'source',
-        'settings',
-        'sync',
-        'retention_policy',
-        'defer_validation',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: ['dest', 'description', 'frequency', '_meta', 'source', 'settings', 'sync', 'retention_policy'],
+        query: ['defer_validation', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -912,10 +883,11 @@ export default class Transform {
     const path = '/_transform/_upgrade'
     const meta: TransportRequestMetadata = {
       name: 'transform.upgrade_transforms',
-      acceptedParams: [
-        'dry_run',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['dry_run', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

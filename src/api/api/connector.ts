@@ -405,9 +405,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -453,11 +455,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'delete_sync_jobs',
-        'hard'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: [],
+        query: ['delete_sync_jobs', 'hard']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -503,10 +505,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'include_deleted'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: [],
+        query: ['include_deleted']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -564,21 +567,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'last_access_control_sync_error',
-        'last_access_control_sync_scheduled_at',
-        'last_access_control_sync_status',
-        'last_deleted_document_count',
-        'last_incremental_sync_scheduled_at',
-        'last_indexed_document_count',
-        'last_seen',
-        'last_sync_error',
-        'last_sync_scheduled_at',
-        'last_sync_status',
-        'last_synced',
-        'sync_cursor'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['last_access_control_sync_error', 'last_access_control_sync_scheduled_at', 'last_access_control_sync_status', 'last_deleted_document_count', 'last_incremental_sync_scheduled_at', 'last_indexed_document_count', 'last_seen', 'last_sync_error', 'last_sync_scheduled_at', 'last_sync_status', 'last_synced', 'sync_cursor'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -622,15 +615,11 @@ export default class Connector {
     const path = '/_connector'
     const meta: TransportRequestMetadata = {
       name: 'connector.list',
-      acceptedParams: [
-        'from',
-        'size',
-        'index_name',
-        'connector_name',
-        'service_type',
-        'include_deleted',
-        'query'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['from', 'size', 'index_name', 'connector_name', 'service_type', 'include_deleted', 'query']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -686,14 +675,11 @@ export default class Connector {
     const path = '/_connector'
     const meta: TransportRequestMetadata = {
       name: 'connector.post',
-      acceptedParams: [
-        'description',
-        'index_name',
-        'is_native',
-        'language',
-        'name',
-        'service_type'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['description', 'index_name', 'is_native', 'language', 'name', 'service_type'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -759,15 +745,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'description',
-        'index_name',
-        'is_native',
-        'language',
-        'name',
-        'service_type'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['description', 'index_name', 'is_native', 'language', 'name', 'service_type'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -812,9 +794,11 @@ export default class Connector {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -859,9 +843,11 @@ export default class Connector {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -916,9 +902,11 @@ export default class Connector {
     const path = '/_connector/_secret'
     const meta: TransportRequestMetadata = {
       name: 'connector.secret_post',
-      acceptedParams: [
-        'value'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['value'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -975,10 +963,11 @@ export default class Connector {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'value'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['value'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1024,9 +1013,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1072,9 +1063,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1132,11 +1125,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id',
-        'sync_cursor',
-        'worker_hostname'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: ['sync_cursor', 'worker_hostname'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1182,9 +1175,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1242,10 +1237,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id',
-        'error'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: ['error'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1291,9 +1287,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1337,13 +1335,11 @@ export default class Connector {
     const path = '/_connector/_sync_job'
     const meta: TransportRequestMetadata = {
       name: 'connector.sync_job_list',
-      acceptedParams: [
-        'from',
-        'size',
-        'status',
-        'connector_id',
-        'job_type'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['from', 'size', 'status', 'connector_id', 'job_type']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1398,11 +1394,11 @@ export default class Connector {
     const path = '/_connector/_sync_job'
     const meta: TransportRequestMetadata = {
       name: 'connector.sync_job_post',
-      acceptedParams: [
-        'id',
-        'job_type',
-        'trigger_method'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['id', 'job_type', 'trigger_method'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1460,15 +1456,11 @@ export default class Connector {
       pathParts: {
         connector_sync_job_id: params.connector_sync_job_id
       },
-      acceptedParams: [
-        'connector_sync_job_id',
-        'deleted_document_count',
-        'indexed_document_count',
-        'indexed_document_volume',
-        'last_seen',
-        'metadata',
-        'total_document_count'
-      ]
+      acceptedParams: {
+        path: ['connector_sync_job_id'],
+        body: ['deleted_document_count', 'indexed_document_count', 'indexed_document_volume', 'last_seen', 'metadata', 'total_document_count'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1514,9 +1506,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1574,11 +1568,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'api_key_id',
-        'api_key_secret_id'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['api_key_id', 'api_key_secret_id'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1636,11 +1630,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'configuration',
-        'values'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['configuration', 'values'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1698,10 +1692,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'error'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['error'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1759,10 +1754,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'features'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['features'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1820,12 +1816,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'filtering',
-        'rules',
-        'advanced_snippet'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['filtering', 'rules', 'advanced_snippet'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1883,10 +1878,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'validation'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['validation'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1944,10 +1940,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'index_name'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['index_name'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2005,11 +2002,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'name',
-        'description'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['name', 'description'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2067,10 +2064,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'is_native'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['is_native'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2128,10 +2126,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'pipeline'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['pipeline'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2189,10 +2188,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'scheduling'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['scheduling'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2250,10 +2250,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'service_type'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['service_type'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2311,10 +2312,11 @@ export default class Connector {
       pathParts: {
         connector_id: params.connector_id
       },
-      acceptedParams: [
-        'connector_id',
-        'status'
-      ]
+      acceptedParams: {
+        path: ['connector_id'],
+        body: ['status'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
