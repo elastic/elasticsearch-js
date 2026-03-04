@@ -121,13 +121,11 @@ export default class Tasks {
       pathParts: {
         task_id: params.task_id
       },
-      acceptedParams: [
-        'task_id',
-        'actions',
-        'nodes',
-        'parent_task_id',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['task_id'],
+        body: [],
+        query: ['actions', 'nodes', 'parent_task_id', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -173,11 +171,11 @@ export default class Tasks {
       pathParts: {
         task_id: params.task_id
       },
-      acceptedParams: [
-        'task_id',
-        'timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['task_id'],
+        body: [],
+        query: ['timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -221,15 +219,11 @@ export default class Tasks {
     const path = '/_tasks'
     const meta: TransportRequestMetadata = {
       name: 'tasks.list',
-      acceptedParams: [
-        'actions',
-        'detailed',
-        'group_by',
-        'nodes',
-        'parent_task_id',
-        'timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['actions', 'detailed', 'group_by', 'nodes', 'parent_task_id', 'timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

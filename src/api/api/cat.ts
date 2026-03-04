@@ -400,13 +400,11 @@ export default class Cat {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'h',
-        's',
-        'expand_wildcards',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['h', 's', 'expand_wildcards', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -460,13 +458,11 @@ export default class Cat {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -520,13 +516,11 @@ export default class Cat {
       pathParts: {
         circuit_breaker_patterns: params.circuit_breaker_patterns
       },
-      acceptedParams: [
-        'circuit_breaker_patterns',
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['circuit_breaker_patterns'],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -580,13 +574,11 @@ export default class Cat {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -652,12 +644,11 @@ export default class Cat {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'project_routing',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['project_routing'],
+        query: ['h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -711,12 +702,11 @@ export default class Cat {
       pathParts: {
         fields: params.fields
       },
-      acceptedParams: [
-        'fields',
-        'fields',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['fields'],
+        body: [],
+        query: ['fields', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -760,11 +750,11 @@ export default class Cat {
     const path = '/_cat/health'
     const meta: TransportRequestMetadata = {
       name: 'cat.health',
-      acceptedParams: [
-        'ts',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['ts', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -808,8 +798,11 @@ export default class Cat {
     const path = '/_cat'
     const meta: TransportRequestMetadata = {
       name: 'cat.help',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -863,16 +856,11 @@ export default class Cat {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'expand_wildcards',
-        'health',
-        'include_unloaded_segments',
-        'pri',
-        'master_timeout',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['expand_wildcards', 'health', 'include_unloaded_segments', 'pri', 'master_timeout', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -916,12 +904,11 @@ export default class Cat {
     const path = '/_cat/master'
     const meta: TransportRequestMetadata = {
       name: 'cat.master',
-      acceptedParams: [
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -975,12 +962,11 @@ export default class Cat {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'allow_no_match',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['allow_no_match', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1034,12 +1020,11 @@ export default class Cat {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'allow_no_match',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: [],
+        query: ['allow_no_match', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1093,12 +1078,11 @@ export default class Cat {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_no_match',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: [],
+        query: ['allow_no_match', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1152,14 +1136,11 @@ export default class Cat {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'allow_no_match',
-        'h',
-        's',
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: [],
+        query: ['allow_no_match', 'h', 's', 'from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1203,12 +1184,11 @@ export default class Cat {
     const path = '/_cat/nodeattrs'
     const meta: TransportRequestMetadata = {
       name: 'cat.nodeattrs',
-      acceptedParams: [
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1252,13 +1232,11 @@ export default class Cat {
     const path = '/_cat/nodes'
     const meta: TransportRequestMetadata = {
       name: 'cat.nodes',
-      acceptedParams: [
-        'full_id',
-        'include_unloaded_segments',
-        'h',
-        's',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['full_id', 'include_unloaded_segments', 'h', 's', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1302,12 +1280,11 @@ export default class Cat {
     const path = '/_cat/pending_tasks'
     const meta: TransportRequestMetadata = {
       name: 'cat.pending_tasks',
-      acceptedParams: [
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1351,13 +1328,11 @@ export default class Cat {
     const path = '/_cat/plugins'
     const meta: TransportRequestMetadata = {
       name: 'cat.plugins',
-      acceptedParams: [
-        'h',
-        's',
-        'include_bootstrap',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['h', 's', 'include_bootstrap', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1411,14 +1386,11 @@ export default class Cat {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'active_only',
-        'detailed',
-        'index',
-        'h',
-        's'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['active_only', 'detailed', 'index', 'h', 's']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1462,12 +1434,11 @@ export default class Cat {
     const path = '/_cat/repositories'
     const meta: TransportRequestMetadata = {
       name: 'cat.repositories',
-      acceptedParams: [
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1521,18 +1492,11 @@ export default class Cat {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'h',
-        's',
-        'local',
-        'master_timeout',
-        'expand_wildcards',
-        'allow_no_indices',
-        'ignore_throttled',
-        'ignore_unavailable',
-        'allow_closed'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout', 'expand_wildcards', 'allow_no_indices', 'ignore_throttled', 'ignore_unavailable', 'allow_closed']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1586,12 +1550,11 @@ export default class Cat {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'h',
-        's',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['h', 's', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1645,13 +1608,11 @@ export default class Cat {
       pathParts: {
         repository: params.repository
       },
-      acceptedParams: [
-        'repository',
-        'ignore_unavailable',
-        'h',
-        's',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['ignore_unavailable', 'h', 's', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1695,16 +1656,11 @@ export default class Cat {
     const path = '/_cat/tasks'
     const meta: TransportRequestMetadata = {
       name: 'cat.tasks',
-      acceptedParams: [
-        'actions',
-        'detailed',
-        'nodes',
-        'parent_task_id',
-        'h',
-        's',
-        'timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['actions', 'detailed', 'nodes', 'parent_task_id', 'h', 's', 'timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1758,13 +1714,11 @@ export default class Cat {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1818,13 +1772,11 @@ export default class Cat {
       pathParts: {
         thread_pool_patterns: params.thread_pool_patterns
       },
-      acceptedParams: [
-        'thread_pool_patterns',
-        'h',
-        's',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['thread_pool_patterns'],
+        body: [],
+        query: ['h', 's', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1878,14 +1830,11 @@ export default class Cat {
       pathParts: {
         transform_id: params.transform_id
       },
-      acceptedParams: [
-        'transform_id',
-        'allow_no_match',
-        'from',
-        'h',
-        's',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['transform_id'],
+        body: [],
+        query: ['allow_no_match', 'from', 'h', 's', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -79,10 +79,11 @@ export default async function UpdateByQueryRethrottleApi (this: That, params: T.
     pathParts: {
       task_id: params.task_id
     },
-    acceptedParams: [
-      'task_id',
-      'requests_per_second'
-    ]
+    acceptedParams: {
+      path: ['task_id'],
+      body: [],
+      query: ['requests_per_second']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

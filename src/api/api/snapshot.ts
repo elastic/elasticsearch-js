@@ -268,11 +268,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -332,13 +332,11 @@ export default class Snapshot {
         snapshot: params.snapshot,
         target_snapshot: params.target_snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'target_snapshot',
-        'indices',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot', 'target_snapshot'],
+        body: ['indices'],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -397,19 +395,11 @@ export default class Snapshot {
         repository: params.repository,
         snapshot: params.snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'expand_wildcards',
-        'feature_states',
-        'ignore_unavailable',
-        'include_global_state',
-        'indices',
-        'metadata',
-        'partial',
-        'master_timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot'],
+        body: ['expand_wildcards', 'feature_states', 'ignore_unavailable', 'include_global_state', 'indices', 'metadata', 'partial'],
+        query: ['master_timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -457,13 +447,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'repository',
-        'master_timeout',
-        'timeout',
-        'verify'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: ['repository'],
+        query: ['master_timeout', 'timeout', 'verify']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -510,12 +498,11 @@ export default class Snapshot {
         repository: params.repository,
         snapshot: params.snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'master_timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot'],
+        body: [],
+        query: ['master_timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -561,11 +548,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -612,24 +599,11 @@ export default class Snapshot {
         repository: params.repository,
         snapshot: params.snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'after',
-        'from_sort_value',
-        'ignore_unavailable',
-        'index_details',
-        'index_names',
-        'include_repository',
-        'master_timeout',
-        'order',
-        'offset',
-        'size',
-        'slm_policy_filter',
-        'sort',
-        'state',
-        'verbose'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot'],
+        body: [],
+        query: ['after', 'from_sort_value', 'ignore_unavailable', 'index_details', 'index_names', 'include_repository', 'master_timeout', 'order', 'offset', 'size', 'slm_policy_filter', 'sort', 'state', 'verbose']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -683,11 +657,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -733,21 +707,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'blob_count',
-        'concurrency',
-        'detailed',
-        'early_read_node_count',
-        'max_blob_size',
-        'max_total_data_size',
-        'rare_action_probability',
-        'rarely_abort_writes',
-        'read_node_count',
-        'register_operation_count',
-        'seed',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['blob_count', 'concurrency', 'detailed', 'early_read_node_count', 'max_blob_size', 'max_total_data_size', 'rare_action_probability', 'rarely_abort_writes', 'read_node_count', 'register_operation_count', 'seed', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -793,17 +757,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'blob_thread_pool_concurrency',
-        'index_snapshot_verification_concurrency',
-        'index_verification_concurrency',
-        'max_bytes_per_sec',
-        'max_failed_shard_snapshots',
-        'meta_thread_pool_concurrency',
-        'snapshot_verification_concurrency',
-        'verify_blob_contents'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['blob_thread_pool_concurrency', 'index_snapshot_verification_concurrency', 'index_verification_concurrency', 'max_bytes_per_sec', 'max_failed_shard_snapshots', 'meta_thread_pool_concurrency', 'snapshot_verification_concurrency', 'verify_blob_contents']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -862,22 +820,11 @@ export default class Snapshot {
         repository: params.repository,
         snapshot: params.snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'feature_states',
-        'ignore_index_settings',
-        'ignore_unavailable',
-        'include_aliases',
-        'include_global_state',
-        'index_settings',
-        'indices',
-        'partial',
-        'rename_pattern',
-        'rename_replacement',
-        'master_timeout',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot'],
+        body: ['feature_states', 'ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement'],
+        query: ['master_timeout', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -935,12 +882,11 @@ export default class Snapshot {
         repository: params.repository,
         snapshot: params.snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'ignore_unavailable',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot'],
+        body: [],
+        query: ['ignore_unavailable', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -986,11 +932,11 @@ export default class Snapshot {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'repository',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['repository'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

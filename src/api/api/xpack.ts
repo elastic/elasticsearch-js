@@ -92,11 +92,11 @@ export default class Xpack {
     const path = '/_xpack'
     const meta: TransportRequestMetadata = {
       name: 'xpack.info',
-      acceptedParams: [
-        'categories',
-        'accept_enterprise',
-        'human'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['categories', 'accept_enterprise', 'human']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -140,9 +140,11 @@ export default class Xpack {
     const path = '/_xpack/usage'
     const meta: TransportRequestMetadata = {
       name: 'xpack.usage',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
