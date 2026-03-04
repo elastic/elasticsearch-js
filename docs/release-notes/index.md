@@ -19,6 +19,19 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Features and enhancements [elasticsearch-javascript-client-next-features-enhancements]
 
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
+% \*
+
+## 9.3.3 [elasticsearch-javascript-client-9.3.3-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.3.3-fixes]
+
+- **Categorized `acceptedParams` in transport metadata:** `acceptedParams` now provides `path`, `body`, and `query` categorization so consumers can determine where to inject parameters like `project_routing`.
+
+## 9.0.4
+
+### Fixes [elasticsearch-javascript-client-9.0.4-fixes]
+
+- **Propagate telemetry disabling option to transport:** an upcoming version of `@elastic/transport` will include the `x-elastic-client-meta` HTTP header that is used to capture some basic client telemetry. This change ensures the client's `enableMetaHeader` setting, which disables collecting this telemetry, is propagated to the transport.
 
 ## 9.0.3
 
