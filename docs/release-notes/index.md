@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.3.4 [elasticsearch-javascript-client-9.3.4-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.3.4-fixes]
+
+- Pins transport 9.3.5 for client v9.3.4+.
+
 ## 9.3.3 [elasticsearch-javascript-client-9.3.3-release-notes]
 
 ### Fixes [elasticsearch-javascript-client-9.3.3-fixes]
