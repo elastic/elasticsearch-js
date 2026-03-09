@@ -1024,9 +1024,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1084,15 +1086,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_no_match',
-        'force',
-        'timeout',
-        'allow_no_match',
-        'force',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['allow_no_match', 'force', 'timeout'],
+        query: ['allow_no_match', 'force', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1138,9 +1136,11 @@ export default class Ml {
       pathParts: {
         calendar_id: params.calendar_id
       },
-      acceptedParams: [
-        'calendar_id'
-      ]
+      acceptedParams: {
+        path: ['calendar_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1187,10 +1187,11 @@ export default class Ml {
         calendar_id: params.calendar_id,
         event_id: params.event_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'event_id'
-      ]
+      acceptedParams: {
+        path: ['calendar_id', 'event_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1237,10 +1238,11 @@ export default class Ml {
         calendar_id: params.calendar_id,
         job_id: params.job_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'job_id'
-      ]
+      acceptedParams: {
+        path: ['calendar_id', 'job_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1286,11 +1288,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'force',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['force', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1336,10 +1338,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'force'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: [],
+        query: ['force']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1405,13 +1408,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'requests_per_second',
-        'timeout',
-        'requests_per_second',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['requests_per_second', 'timeout'],
+        query: ['requests_per_second', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1457,9 +1458,11 @@ export default class Ml {
       pathParts: {
         filter_id: params.filter_id
       },
-      acceptedParams: [
-        'filter_id'
-      ]
+      acceptedParams: {
+        path: ['filter_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1513,12 +1516,11 @@ export default class Ml {
         job_id: params.job_id,
         forecast_id: params.forecast_id
       },
-      acceptedParams: [
-        'job_id',
-        'forecast_id',
-        'allow_no_forecasts',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'forecast_id'],
+        body: [],
+        query: ['allow_no_forecasts', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1564,12 +1566,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'force',
-        'delete_user_annotations',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: [],
+        query: ['force', 'delete_user_annotations', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1616,10 +1617,11 @@ export default class Ml {
         job_id: params.job_id,
         snapshot_id: params.snapshot_id
       },
-      acceptedParams: [
-        'job_id',
-        'snapshot_id'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'snapshot_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1665,11 +1667,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'force',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: [],
+        query: ['force', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1716,10 +1718,11 @@ export default class Ml {
         model_alias: params.model_alias,
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_alias',
-        'model_id'
-      ]
+      acceptedParams: {
+        path: ['model_alias', 'model_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1775,11 +1778,11 @@ export default class Ml {
     const path = '/_ml/anomaly_detectors/_estimate_model_memory'
     const meta: TransportRequestMetadata = {
       name: 'ml.estimate_model_memory',
-      acceptedParams: [
-        'analysis_config',
-        'max_bucket_cardinality',
-        'overall_cardinality'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['analysis_config', 'max_bucket_cardinality', 'overall_cardinality'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1834,11 +1837,11 @@ export default class Ml {
     const path = '/_ml/data_frame/_evaluate'
     const meta: TransportRequestMetadata = {
       name: 'ml.evaluate_data_frame',
-      acceptedParams: [
-        'evaluation',
-        'index',
-        'query'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['evaluation', 'index', 'query'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1904,17 +1907,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'source',
-        'dest',
-        'analysis',
-        'description',
-        'model_memory_limit',
-        'max_num_threads',
-        'analyzed_fields',
-        'allow_lazy_start'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['source', 'dest', 'analysis', 'description', 'model_memory_limit', 'max_num_threads', 'analyzed_fields', 'allow_lazy_start'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1972,19 +1969,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'advance_time',
-        'calc_interim',
-        'end',
-        'skip_time',
-        'start',
-        'advance_time',
-        'calc_interim',
-        'end',
-        'skip_time',
-        'start'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['advance_time', 'calc_interim', 'end', 'skip_time', 'start'],
+        query: ['advance_time', 'calc_interim', 'end', 'skip_time', 'start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2042,15 +2031,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'duration',
-        'expires_in',
-        'max_model_memory',
-        'duration',
-        'expires_in',
-        'max_model_memory'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['duration', 'expires_in', 'max_model_memory'],
+        query: ['duration', 'expires_in', 'max_model_memory']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2116,27 +2101,11 @@ export default class Ml {
         job_id: params.job_id,
         timestamp: params.timestamp
       },
-      acceptedParams: [
-        'job_id',
-        'timestamp',
-        'anomaly_score',
-        'desc',
-        'end',
-        'exclude_interim',
-        'expand',
-        'page',
-        'sort',
-        'start',
-        'anomaly_score',
-        'desc',
-        'end',
-        'exclude_interim',
-        'expand',
-        'from',
-        'size',
-        'sort',
-        'start'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'timestamp'],
+        body: ['anomaly_score', 'desc', 'end', 'exclude_interim', 'expand', 'page', 'sort', 'start'],
+        query: ['anomaly_score', 'desc', 'end', 'exclude_interim', 'expand', 'from', 'size', 'sort', 'start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2182,14 +2151,11 @@ export default class Ml {
       pathParts: {
         calendar_id: params.calendar_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'end',
-        'from',
-        'job_id',
-        'size',
-        'start'
-      ]
+      acceptedParams: {
+        path: ['calendar_id'],
+        body: [],
+        query: ['end', 'from', 'job_id', 'size', 'start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2255,12 +2221,11 @@ export default class Ml {
       pathParts: {
         calendar_id: params.calendar_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'page',
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['calendar_id'],
+        body: ['page'],
+        query: ['from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2326,14 +2291,11 @@ export default class Ml {
         job_id: params.job_id,
         category_id: params.category_id
       },
-      acceptedParams: [
-        'job_id',
-        'category_id',
-        'page',
-        'from',
-        'partition_field_value',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'category_id'],
+        body: ['page'],
+        query: ['from', 'partition_field_value', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2387,13 +2349,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'allow_no_match',
-        'from',
-        'size',
-        'exclude_generated'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['allow_no_match', 'from', 'size', 'exclude_generated']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2447,13 +2407,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'allow_no_match',
-        'from',
-        'size',
-        'verbose'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['allow_no_match', 'from', 'size', 'verbose']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2507,10 +2465,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'allow_no_match'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: [],
+        query: ['allow_no_match']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2564,11 +2523,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'allow_no_match',
-        'exclude_generated'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: [],
+        query: ['allow_no_match', 'exclude_generated']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2622,11 +2581,11 @@ export default class Ml {
       pathParts: {
         filter_id: params.filter_id
       },
-      acceptedParams: [
-        'filter_id',
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['filter_id'],
+        body: [],
+        query: ['from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2684,18 +2643,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'page',
-        'desc',
-        'end',
-        'exclude_interim',
-        'influencer_score',
-        'from',
-        'size',
-        'sort',
-        'start'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['page'],
+        query: ['desc', 'end', 'exclude_interim', 'influencer_score', 'from', 'size', 'sort', 'start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2749,10 +2701,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_no_match'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: [],
+        query: ['allow_no_match']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2806,11 +2759,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_no_match',
-        'exclude_generated'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: [],
+        query: ['allow_no_match', 'exclude_generated']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2864,11 +2817,11 @@ export default class Ml {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2915,11 +2868,11 @@ export default class Ml {
         job_id: params.job_id,
         snapshot_id: params.snapshot_id
       },
-      acceptedParams: [
-        'job_id',
-        'snapshot_id',
-        'allow_no_match'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'snapshot_id'],
+        body: [],
+        query: ['allow_no_match']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2985,21 +2938,11 @@ export default class Ml {
         job_id: params.job_id,
         snapshot_id: params.snapshot_id
       },
-      acceptedParams: [
-        'job_id',
-        'snapshot_id',
-        'desc',
-        'end',
-        'page',
-        'sort',
-        'start',
-        'desc',
-        'end',
-        'from',
-        'size',
-        'sort',
-        'start'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'snapshot_id'],
+        body: ['desc', 'end', 'page', 'sort', 'start'],
+        query: ['desc', 'end', 'from', 'size', 'sort', 'start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3057,23 +3000,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_no_match',
-        'bucket_span',
-        'end',
-        'exclude_interim',
-        'overall_score',
-        'start',
-        'top_n',
-        'allow_no_match',
-        'bucket_span',
-        'end',
-        'exclude_interim',
-        'overall_score',
-        'start',
-        'top_n'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['allow_no_match', 'bucket_span', 'end', 'exclude_interim', 'overall_score', 'start', 'top_n'],
+        query: ['allow_no_match', 'bucket_span', 'end', 'exclude_interim', 'overall_score', 'start', 'top_n']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3131,24 +3062,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'desc',
-        'end',
-        'exclude_interim',
-        'page',
-        'record_score',
-        'sort',
-        'start',
-        'desc',
-        'end',
-        'exclude_interim',
-        'from',
-        'record_score',
-        'size',
-        'sort',
-        'start'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['desc', 'end', 'exclude_interim', 'page', 'record_score', 'sort', 'start'],
+        query: ['desc', 'end', 'exclude_interim', 'from', 'record_score', 'size', 'sort', 'start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3202,16 +3120,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'allow_no_match',
-        'decompress_definition',
-        'exclude_generated',
-        'from',
-        'include',
-        'size',
-        'tags'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: [],
+        query: ['allow_no_match', 'decompress_definition', 'exclude_generated', 'from', 'include', 'size', 'tags']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3265,12 +3178,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'allow_no_match',
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: [],
+        query: ['allow_no_match', 'from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3328,12 +3240,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'docs',
-        'inference_config',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: ['docs', 'inference_config'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3377,8 +3288,11 @@ export default class Ml {
     const path = '/_ml/info'
     const meta: TransportRequestMetadata = {
       name: 'ml.info',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3436,11 +3350,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['timeout'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3498,10 +3412,11 @@ export default class Ml {
       pathParts: {
         calendar_id: params.calendar_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'events'
-      ]
+      acceptedParams: {
+        path: ['calendar_id'],
+        body: ['events'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3549,12 +3464,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'data',
-        'reset_end',
-        'reset_start'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['data'],
+        query: ['reset_end', 'reset_start']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3620,10 +3534,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'config'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['config'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3689,13 +3604,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'datafeed_config',
-        'job_config',
-        'start',
-        'end'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: ['datafeed_config', 'job_config'],
+        query: ['start', 'end']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3753,11 +3666,11 @@ export default class Ml {
       pathParts: {
         calendar_id: params.calendar_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'job_ids',
-        'description'
-      ]
+      acceptedParams: {
+        path: ['calendar_id'],
+        body: ['job_ids', 'description'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3804,10 +3717,11 @@ export default class Ml {
         calendar_id: params.calendar_id,
         job_id: params.job_id
       },
-      acceptedParams: [
-        'calendar_id',
-        'job_id'
-      ]
+      acceptedParams: {
+        path: ['calendar_id', 'job_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3865,20 +3779,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'allow_lazy_start',
-        'analysis',
-        'analyzed_fields',
-        'description',
-        'dest',
-        'max_num_threads',
-        '_meta',
-        'model_memory_limit',
-        'source',
-        'headers',
-        'version'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', '_meta', 'model_memory_limit', 'source', 'headers', 'version'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3936,29 +3841,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'aggregations',
-        'aggs',
-        'chunking_config',
-        'delayed_data_check_config',
-        'frequency',
-        'indices',
-        'indexes',
-        'indices_options',
-        'job_id',
-        'max_empty_searches',
-        'query',
-        'query_delay',
-        'runtime_mappings',
-        'script_fields',
-        'scroll_size',
-        'headers',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_throttled',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers'],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4016,11 +3903,11 @@ export default class Ml {
       pathParts: {
         filter_id: params.filter_id
       },
-      acceptedParams: [
-        'filter_id',
-        'description',
-        'items'
-      ]
+      acceptedParams: {
+        path: ['filter_id'],
+        body: ['description', 'items'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4078,29 +3965,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_lazy_open',
-        'analysis_config',
-        'analysis_limits',
-        'background_persist_interval',
-        'custom_settings',
-        'daily_model_snapshot_retention_after_days',
-        'data_description',
-        'datafeed_config',
-        'description',
-        'job_id',
-        'groups',
-        'model_plot_config',
-        'model_snapshot_retention_days',
-        'renormalization_window_days',
-        'results_index_name',
-        'results_retention_days',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_throttled',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'job_id', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days'],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4158,22 +4027,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'compressed_definition',
-        'definition',
-        'description',
-        'inference_config',
-        'input',
-        'metadata',
-        'model_type',
-        'model_size_bytes',
-        'platform_architecture',
-        'tags',
-        'prefix_strings',
-        'defer_definition_decompression',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'model_size_bytes', 'platform_architecture', 'tags', 'prefix_strings'],
+        query: ['defer_definition_decompression', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4220,11 +4078,11 @@ export default class Ml {
         model_alias: params.model_alias,
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_alias',
-        'model_id',
-        'reassign'
-      ]
+      acceptedParams: {
+        path: ['model_alias', 'model_id'],
+        body: [],
+        query: ['reassign']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4283,13 +4141,11 @@ export default class Ml {
         model_id: params.model_id,
         part: params.part
       },
-      acceptedParams: [
-        'model_id',
-        'part',
-        'definition',
-        'total_definition_length',
-        'total_parts'
-      ]
+      acceptedParams: {
+        path: ['model_id', 'part'],
+        body: ['definition', 'total_definition_length', 'total_parts'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4347,12 +4203,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'vocabulary',
-        'merges',
-        'scores'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: ['vocabulary', 'merges', 'scores'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4398,11 +4253,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'wait_for_completion',
-        'delete_user_annotations'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: [],
+        query: ['wait_for_completion', 'delete_user_annotations']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4461,12 +4316,11 @@ export default class Ml {
         job_id: params.job_id,
         snapshot_id: params.snapshot_id
       },
-      acceptedParams: [
-        'job_id',
-        'snapshot_id',
-        'delete_intervening_results',
-        'delete_intervening_results'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'snapshot_id'],
+        body: ['delete_intervening_results'],
+        query: ['delete_intervening_results']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4510,10 +4364,11 @@ export default class Ml {
     const path = '/_ml/set_upgrade_mode'
     const meta: TransportRequestMetadata = {
       name: 'ml.set_upgrade_mode',
-      acceptedParams: [
-        'enabled',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['enabled', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4571,12 +4426,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'id',
-        'timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['id', 'timeout'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4634,15 +4488,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'end',
-        'start',
-        'timeout',
-        'end',
-        'start',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: ['end', 'start', 'timeout'],
+        query: ['end', 'start', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4700,18 +4550,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'adaptive_allocations',
-        'cache_size',
-        'deployment_id',
-        'number_of_allocations',
-        'priority',
-        'queue_capacity',
-        'threads_per_allocation',
-        'timeout',
-        'wait_for'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: ['adaptive_allocations'],
+        query: ['cache_size', 'deployment_id', 'number_of_allocations', 'priority', 'queue_capacity', 'threads_per_allocation', 'timeout', 'wait_for']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4769,16 +4612,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'id',
-        'allow_no_match',
-        'force',
-        'timeout',
-        'allow_no_match',
-        'force',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['id', 'allow_no_match', 'force', 'timeout'],
+        query: ['allow_no_match', 'force', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4836,15 +4674,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'allow_no_match',
-        'force',
-        'timeout',
-        'allow_no_match',
-        'force',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: ['allow_no_match', 'force', 'timeout'],
+        query: ['allow_no_match', 'force', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4902,14 +4736,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'id',
-        'allow_no_match',
-        'force',
-        'allow_no_match',
-        'force'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: ['id', 'allow_no_match', 'force'],
+        query: ['allow_no_match', 'force']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4967,13 +4798,11 @@ export default class Ml {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'description',
-        'model_memory_limit',
-        'max_num_threads',
-        'allow_lazy_start'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['description', 'model_memory_limit', 'max_num_threads', 'allow_lazy_start'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5031,27 +4860,11 @@ export default class Ml {
       pathParts: {
         datafeed_id: params.datafeed_id
       },
-      acceptedParams: [
-        'datafeed_id',
-        'aggregations',
-        'chunking_config',
-        'delayed_data_check_config',
-        'frequency',
-        'indices',
-        'indexes',
-        'indices_options',
-        'job_id',
-        'max_empty_searches',
-        'query',
-        'query_delay',
-        'runtime_mappings',
-        'script_fields',
-        'scroll_size',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_throttled',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['datafeed_id'],
+        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size'],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5109,12 +4922,11 @@ export default class Ml {
       pathParts: {
         filter_id: params.filter_id
       },
-      acceptedParams: [
-        'filter_id',
-        'add_items',
-        'description',
-        'remove_items'
-      ]
+      acceptedParams: {
+        path: ['filter_id'],
+        body: ['add_items', 'description', 'remove_items'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5172,24 +4984,11 @@ export default class Ml {
       pathParts: {
         job_id: params.job_id
       },
-      acceptedParams: [
-        'job_id',
-        'allow_lazy_open',
-        'analysis_limits',
-        'background_persist_interval',
-        'custom_settings',
-        'categorization_filters',
-        'description',
-        'model_plot_config',
-        'model_prune_window',
-        'daily_model_snapshot_retention_after_days',
-        'model_snapshot_retention_days',
-        'renormalization_window_days',
-        'results_retention_days',
-        'groups',
-        'detectors',
-        'per_partition_categorization'
-      ]
+      acceptedParams: {
+        path: ['job_id'],
+        body: ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'model_prune_window', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5248,12 +5047,11 @@ export default class Ml {
         job_id: params.job_id,
         snapshot_id: params.snapshot_id
       },
-      acceptedParams: [
-        'job_id',
-        'snapshot_id',
-        'description',
-        'retain'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'snapshot_id'],
+        body: ['description', 'retain'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5311,12 +5109,11 @@ export default class Ml {
       pathParts: {
         model_id: params.model_id
       },
-      acceptedParams: [
-        'model_id',
-        'number_of_allocations',
-        'adaptive_allocations',
-        'number_of_allocations'
-      ]
+      acceptedParams: {
+        path: ['model_id'],
+        body: ['number_of_allocations', 'adaptive_allocations'],
+        query: ['number_of_allocations']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5363,12 +5160,11 @@ export default class Ml {
         job_id: params.job_id,
         snapshot_id: params.snapshot_id
       },
-      acceptedParams: [
-        'job_id',
-        'snapshot_id',
-        'wait_for_completion',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['job_id', 'snapshot_id'],
+        body: [],
+        query: ['wait_for_completion', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5424,17 +5220,11 @@ export default class Ml {
     const path = '/_ml/anomaly_detectors/_validate'
     const meta: TransportRequestMetadata = {
       name: 'ml.validate',
-      acceptedParams: [
-        'job_id',
-        'analysis_config',
-        'analysis_limits',
-        'data_description',
-        'description',
-        'model_plot',
-        'model_snapshot_id',
-        'model_snapshot_retention_days',
-        'results_index_name'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_id', 'model_snapshot_retention_days', 'results_index_name'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5479,9 +5269,11 @@ export default class Ml {
     const path = '/_ml/anomaly_detectors/_validate/detector'
     const meta: TransportRequestMetadata = {
       name: 'ml.validate_detector',
-      acceptedParams: [
-        'detector'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['detector'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

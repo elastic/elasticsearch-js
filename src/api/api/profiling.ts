@@ -109,9 +109,11 @@ export default class Profiling {
     const path = '/_profiling/flamegraph'
     const meta: TransportRequestMetadata = {
       name: 'profiling.flamegraph',
-      acceptedParams: [
-        'conditions'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['conditions'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -156,9 +158,11 @@ export default class Profiling {
     const path = '/_profiling/stacktraces'
     const meta: TransportRequestMetadata = {
       name: 'profiling.stacktraces',
-      acceptedParams: [
-        'conditions'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['conditions'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -202,11 +206,11 @@ export default class Profiling {
     const path = '/_profiling/status'
     const meta: TransportRequestMetadata = {
       name: 'profiling.status',
-      acceptedParams: [
-        'master_timeout',
-        'timeout',
-        'wait_for_resources_created'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout', 'wait_for_resources_created']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -251,9 +255,11 @@ export default class Profiling {
     const path = '/_profiling/topn/functions'
     const meta: TransportRequestMetadata = {
       name: 'profiling.topn_functions',
-      acceptedParams: [
-        'conditions'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['conditions'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

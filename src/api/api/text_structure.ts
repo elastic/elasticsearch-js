@@ -149,22 +149,11 @@ export default class TextStructure {
     const path = '/_text_structure/find_field_structure'
     const meta: TransportRequestMetadata = {
       name: 'text_structure.find_field_structure',
-      acceptedParams: [
-        'column_names',
-        'delimiter',
-        'documents_to_sample',
-        'ecs_compatibility',
-        'explain',
-        'field',
-        'format',
-        'grok_pattern',
-        'index',
-        'quote',
-        'should_trim_fields',
-        'timeout',
-        'timestamp_field',
-        'timestamp_format'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['column_names', 'delimiter', 'documents_to_sample', 'ecs_compatibility', 'explain', 'field', 'format', 'grok_pattern', 'index', 'quote', 'should_trim_fields', 'timeout', 'timestamp_field', 'timestamp_format']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -219,20 +208,11 @@ export default class TextStructure {
     const path = '/_text_structure/find_message_structure'
     const meta: TransportRequestMetadata = {
       name: 'text_structure.find_message_structure',
-      acceptedParams: [
-        'messages',
-        'column_names',
-        'delimiter',
-        'ecs_compatibility',
-        'explain',
-        'format',
-        'grok_pattern',
-        'quote',
-        'should_trim_fields',
-        'timeout',
-        'timestamp_field',
-        'timestamp_format'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['messages'],
+        query: ['column_names', 'delimiter', 'ecs_compatibility', 'explain', 'format', 'grok_pattern', 'quote', 'should_trim_fields', 'timeout', 'timestamp_field', 'timestamp_format']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -277,24 +257,11 @@ export default class TextStructure {
     const path = '/_text_structure/find_structure'
     const meta: TransportRequestMetadata = {
       name: 'text_structure.find_structure',
-      acceptedParams: [
-        'text_files',
-        'charset',
-        'column_names',
-        'delimiter',
-        'ecs_compatibility',
-        'explain',
-        'format',
-        'grok_pattern',
-        'has_header_row',
-        'line_merge_size_limit',
-        'lines_to_sample',
-        'quote',
-        'should_trim_fields',
-        'timeout',
-        'timestamp_field',
-        'timestamp_format'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['text_files'],
+        query: ['charset', 'column_names', 'delimiter', 'ecs_compatibility', 'explain', 'format', 'grok_pattern', 'has_header_row', 'line_merge_size_limit', 'lines_to_sample', 'quote', 'should_trim_fields', 'timeout', 'timestamp_field', 'timestamp_format']
+      }
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
@@ -349,11 +316,11 @@ export default class TextStructure {
     const path = '/_text_structure/test_grok_pattern'
     const meta: TransportRequestMetadata = {
       name: 'text_structure.test_grok_pattern',
-      acceptedParams: [
-        'grok_pattern',
-        'text',
-        'ecs_compatibility'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['grok_pattern', 'text'],
+        query: ['ecs_compatibility']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -99,10 +99,11 @@ export default class Streams {
     const path = '/_streams/logs/_disable'
     const meta: TransportRequestMetadata = {
       name: 'streams.logs_disable',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -146,10 +147,11 @@ export default class Streams {
     const path = '/_streams/logs/_enable'
     const meta: TransportRequestMetadata = {
       name: 'streams.logs_enable',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -193,9 +195,11 @@ export default class Streams {
     const path = '/_streams/status'
     const meta: TransportRequestMetadata = {
       name: 'streams.status',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

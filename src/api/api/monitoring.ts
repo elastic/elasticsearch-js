@@ -90,12 +90,11 @@ export default class Monitoring {
     const path = '/_monitoring/bulk'
     const meta: TransportRequestMetadata = {
       name: 'monitoring.bulk',
-      acceptedParams: [
-        'operations',
-        'system_id',
-        'system_api_version',
-        'interval'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['operations'],
+        query: ['system_id', 'system_api_version', 'interval']
+      }
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }

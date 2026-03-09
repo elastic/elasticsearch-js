@@ -134,10 +134,11 @@ export default class License {
     const path = '/_license'
     const meta: TransportRequestMetadata = {
       name: 'license.delete',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -181,10 +182,11 @@ export default class License {
     const path = '/_license'
     const meta: TransportRequestMetadata = {
       name: 'license.get',
-      acceptedParams: [
-        'accept_enterprise',
-        'local'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['accept_enterprise', 'local']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -228,8 +230,11 @@ export default class License {
     const path = '/_license/basic_status'
     const meta: TransportRequestMetadata = {
       name: 'license.get_basic_status',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -273,8 +278,11 @@ export default class License {
     const path = '/_license/trial_status'
     const meta: TransportRequestMetadata = {
       name: 'license.get_trial_status',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -330,13 +338,11 @@ export default class License {
     const path = '/_license'
     const meta: TransportRequestMetadata = {
       name: 'license.post',
-      acceptedParams: [
-        'license',
-        'licenses',
-        'acknowledge',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['license', 'licenses'],
+        query: ['acknowledge', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -380,11 +386,11 @@ export default class License {
     const path = '/_license/start_basic'
     const meta: TransportRequestMetadata = {
       name: 'license.post_start_basic',
-      acceptedParams: [
-        'acknowledge',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['acknowledge', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -428,11 +434,11 @@ export default class License {
     const path = '/_license/start_trial'
     const meta: TransportRequestMetadata = {
       name: 'license.post_start_trial',
-      acceptedParams: [
-        'acknowledge',
-        'type',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['acknowledge', 'type', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
