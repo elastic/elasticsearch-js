@@ -73,8 +73,11 @@ export default async function InfoApi (this: That, params?: T.InfoRequest, optio
   const path = '/'
   const meta: TransportRequestMetadata = {
     name: 'info',
-    acceptedParams: [
-    ]
+    acceptedParams: {
+      path: [],
+      body: [],
+      query: []
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

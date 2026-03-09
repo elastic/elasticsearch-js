@@ -719,12 +719,11 @@ export default class Security {
     const path = '/_security/profile/_activate'
     const meta: TransportRequestMetadata = {
       name: 'security.activate_user_profile',
-      acceptedParams: [
-        'access_token',
-        'grant_type',
-        'password',
-        'username'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['access_token', 'grant_type', 'password', 'username'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -768,8 +767,11 @@ export default class Security {
     const path = '/_security/_authenticate'
     const meta: TransportRequestMetadata = {
       name: 'security.authenticate',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -824,10 +826,11 @@ export default class Security {
     const path = '/_security/role'
     const meta: TransportRequestMetadata = {
       name: 'security.bulk_delete_role',
-      acceptedParams: [
-        'names',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['names'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -882,10 +885,11 @@ export default class Security {
     const path = '/_security/role'
     const meta: TransportRequestMetadata = {
       name: 'security.bulk_put_role',
-      acceptedParams: [
-        'roles',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['roles'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -940,12 +944,11 @@ export default class Security {
     const path = '/_security/api_key/_bulk_update'
     const meta: TransportRequestMetadata = {
       name: 'security.bulk_update_api_keys',
-      acceptedParams: [
-        'expiration',
-        'ids',
-        'metadata',
-        'role_descriptors'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['expiration', 'ids', 'metadata', 'role_descriptors'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1011,12 +1014,11 @@ export default class Security {
       pathParts: {
         username: params.username
       },
-      acceptedParams: [
-        'username',
-        'password',
-        'password_hash',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['username'],
+        body: ['password', 'password_hash'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1062,9 +1064,11 @@ export default class Security {
       pathParts: {
         ids: params.ids
       },
-      acceptedParams: [
-        'ids'
-      ]
+      acceptedParams: {
+        path: ['ids'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1110,9 +1114,11 @@ export default class Security {
       pathParts: {
         application: params.application
       },
-      acceptedParams: [
-        'application'
-      ]
+      acceptedParams: {
+        path: ['application'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1158,10 +1164,11 @@ export default class Security {
       pathParts: {
         realms: params.realms
       },
-      acceptedParams: [
-        'realms',
-        'usernames'
-      ]
+      acceptedParams: {
+        path: ['realms'],
+        body: [],
+        query: ['usernames']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1207,9 +1214,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1257,11 +1266,11 @@ export default class Security {
         service: params.service,
         name: params.name
       },
-      acceptedParams: [
-        'namespace',
-        'service',
-        'name'
-      ]
+      acceptedParams: {
+        path: ['namespace', 'service', 'name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1317,13 +1326,11 @@ export default class Security {
     const path = '/_security/api_key'
     const meta: TransportRequestMetadata = {
       name: 'security.create_api_key',
-      acceptedParams: [
-        'expiration',
-        'name',
-        'role_descriptors',
-        'metadata',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['expiration', 'name', 'role_descriptors', 'metadata'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1378,12 +1385,11 @@ export default class Security {
     const path = '/_security/cross_cluster/api_key'
     const meta: TransportRequestMetadata = {
       name: 'security.create_cross_cluster_api_key',
-      acceptedParams: [
-        'access',
-        'expiration',
-        'metadata',
-        'name'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['access', 'expiration', 'metadata', 'name'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1438,12 +1444,11 @@ export default class Security {
         service: params.service,
         name: params.name
       },
-      acceptedParams: [
-        'namespace',
-        'service',
-        'name',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['namespace', 'service', 'name'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1498,9 +1503,11 @@ export default class Security {
     const path = '/_security/delegate_pki'
     const meta: TransportRequestMetadata = {
       name: 'security.delegate_pki',
-      acceptedParams: [
-        'x509_certificate_chain'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['x509_certificate_chain'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1547,11 +1554,11 @@ export default class Security {
         application: params.application,
         name: params.name
       },
-      acceptedParams: [
-        'application',
-        'name',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['application', 'name'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1597,10 +1604,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1646,10 +1654,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1697,12 +1706,11 @@ export default class Security {
         service: params.service,
         name: params.name
       },
-      acceptedParams: [
-        'namespace',
-        'service',
-        'name',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['namespace', 'service', 'name'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1748,10 +1756,11 @@ export default class Security {
       pathParts: {
         username: params.username
       },
-      acceptedParams: [
-        'username',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['username'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1797,10 +1806,11 @@ export default class Security {
       pathParts: {
         username: params.username
       },
-      acceptedParams: [
-        'username',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['username'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1846,10 +1856,11 @@ export default class Security {
       pathParts: {
         uid: params.uid
       },
-      acceptedParams: [
-        'uid',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['uid'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1895,10 +1906,11 @@ export default class Security {
       pathParts: {
         username: params.username
       },
-      acceptedParams: [
-        'username',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['username'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1944,10 +1956,11 @@ export default class Security {
       pathParts: {
         uid: params.uid
       },
-      acceptedParams: [
-        'uid',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['uid'],
+        body: [],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1991,8 +2004,11 @@ export default class Security {
     const path = '/_security/enroll/kibana'
     const meta: TransportRequestMetadata = {
       name: 'security.enroll_kibana',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2036,8 +2052,11 @@ export default class Security {
     const path = '/_security/enroll/node'
     const meta: TransportRequestMetadata = {
       name: 'security.enroll_node',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2081,16 +2100,11 @@ export default class Security {
     const path = '/_security/api_key'
     const meta: TransportRequestMetadata = {
       name: 'security.get_api_key',
-      acceptedParams: [
-        'id',
-        'name',
-        'owner',
-        'realm_name',
-        'username',
-        'with_limited_by',
-        'active_only',
-        'with_profile_uid'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['id', 'name', 'owner', 'realm_name', 'username', 'with_limited_by', 'active_only', 'with_profile_uid']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2134,8 +2148,11 @@ export default class Security {
     const path = '/_security/privilege/_builtin'
     const meta: TransportRequestMetadata = {
       name: 'security.get_builtin_privileges',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2193,10 +2210,11 @@ export default class Security {
         application: params.application,
         name: params.name
       },
-      acceptedParams: [
-        'application',
-        'name'
-      ]
+      acceptedParams: {
+        path: ['application', 'name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2250,9 +2268,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2306,9 +2326,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2366,10 +2388,11 @@ export default class Security {
         namespace: params.namespace,
         service: params.service
       },
-      acceptedParams: [
-        'namespace',
-        'service'
-      ]
+      acceptedParams: {
+        path: ['namespace', 'service'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2416,10 +2439,11 @@ export default class Security {
         namespace: params.namespace,
         service: params.service
       },
-      acceptedParams: [
-        'namespace',
-        'service'
-      ]
+      acceptedParams: {
+        path: ['namespace', 'service'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2463,9 +2487,11 @@ export default class Security {
     const path = '/_security/settings'
     const meta: TransportRequestMetadata = {
       name: 'security.get_settings',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2509,8 +2535,11 @@ export default class Security {
     const path = '/_security/stats'
     const meta: TransportRequestMetadata = {
       name: 'security.get_stats',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2566,14 +2595,11 @@ export default class Security {
     const path = '/_security/oauth2/token'
     const meta: TransportRequestMetadata = {
       name: 'security.get_token',
-      acceptedParams: [
-        'grant_type',
-        'scope',
-        'password',
-        'kerberos_ticket',
-        'refresh_token',
-        'username'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2627,10 +2653,11 @@ export default class Security {
       pathParts: {
         username: params.username
       },
-      acceptedParams: [
-        'username',
-        'with_profile_uid'
-      ]
+      acceptedParams: {
+        path: ['username'],
+        body: [],
+        query: ['with_profile_uid']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2674,8 +2701,11 @@ export default class Security {
     const path = '/_security/user/_privileges'
     const meta: TransportRequestMetadata = {
       name: 'security.get_user_privileges',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2721,10 +2751,11 @@ export default class Security {
       pathParts: {
         uid: params.uid
       },
-      acceptedParams: [
-        'uid',
-        'data'
-      ]
+      acceptedParams: {
+        path: ['uid'],
+        body: [],
+        query: ['data']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2779,15 +2810,11 @@ export default class Security {
     const path = '/_security/api_key/grant'
     const meta: TransportRequestMetadata = {
       name: 'security.grant_api_key',
-      acceptedParams: [
-        'api_key',
-        'grant_type',
-        'access_token',
-        'username',
-        'password',
-        'run_as',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['api_key', 'grant_type', 'access_token', 'username', 'password', 'run_as'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2853,12 +2880,11 @@ export default class Security {
       pathParts: {
         user: params.user
       },
-      acceptedParams: [
-        'user',
-        'application',
-        'cluster',
-        'index'
-      ]
+      acceptedParams: {
+        path: ['user'],
+        body: ['application', 'cluster', 'index'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2913,10 +2939,11 @@ export default class Security {
     const path = '/_security/profile/_has_privileges'
     const meta: TransportRequestMetadata = {
       name: 'security.has_privileges_user_profile',
-      acceptedParams: [
-        'uids',
-        'privileges'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['uids', 'privileges'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2972,14 +2999,11 @@ export default class Security {
     const path = '/_security/api_key'
     const meta: TransportRequestMetadata = {
       name: 'security.invalidate_api_key',
-      acceptedParams: [
-        'id',
-        'ids',
-        'name',
-        'owner',
-        'realm_name',
-        'username'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['id', 'ids', 'name', 'owner', 'realm_name', 'username'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3035,12 +3059,11 @@ export default class Security {
     const path = '/_security/oauth2/token'
     const meta: TransportRequestMetadata = {
       name: 'security.invalidate_token',
-      acceptedParams: [
-        'token',
-        'refresh_token',
-        'realm_name',
-        'username'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['token', 'refresh_token', 'realm_name', 'username'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3095,12 +3118,11 @@ export default class Security {
     const path = '/_security/oidc/authenticate'
     const meta: TransportRequestMetadata = {
       name: 'security.oidc_authenticate',
-      acceptedParams: [
-        'nonce',
-        'realm',
-        'redirect_uri',
-        'state'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['nonce', 'realm', 'redirect_uri', 'state'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3155,10 +3177,11 @@ export default class Security {
     const path = '/_security/oidc/logout'
     const meta: TransportRequestMetadata = {
       name: 'security.oidc_logout',
-      acceptedParams: [
-        'token',
-        'refresh_token'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['token', 'refresh_token'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3214,13 +3237,11 @@ export default class Security {
     const path = '/_security/oidc/prepare'
     const meta: TransportRequestMetadata = {
       name: 'security.oidc_prepare_authentication',
-      acceptedParams: [
-        'iss',
-        'login_hint',
-        'nonce',
-        'realm',
-        'state'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['iss', 'login_hint', 'nonce', 'realm', 'state'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3265,10 +3286,11 @@ export default class Security {
     const path = '/_security/privilege'
     const meta: TransportRequestMetadata = {
       name: 'security.put_privileges',
-      acceptedParams: [
-        'privileges',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['privileges'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3326,20 +3348,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'applications',
-        'cluster',
-        'global',
-        'indices',
-        'remote_indices',
-        'remote_cluster',
-        'metadata',
-        'run_as',
-        'description',
-        'transient_metadata',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['applications', 'cluster', 'global', 'indices', 'remote_indices', 'remote_cluster', 'metadata', 'run_as', 'description', 'transient_metadata'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3397,16 +3410,11 @@ export default class Security {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'enabled',
-        'metadata',
-        'roles',
-        'role_templates',
-        'rules',
-        'run_as',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['enabled', 'metadata', 'roles', 'role_templates', 'rules', 'run_as'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3464,18 +3472,11 @@ export default class Security {
       pathParts: {
         username: params.username
       },
-      acceptedParams: [
-        'username',
-        'username',
-        'email',
-        'full_name',
-        'metadata',
-        'password',
-        'password_hash',
-        'roles',
-        'enabled',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['username'],
+        body: ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled'],
+        query: ['refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3531,18 +3532,11 @@ export default class Security {
     const path = '/_security/_query/api_key'
     const meta: TransportRequestMetadata = {
       name: 'security.query_api_keys',
-      acceptedParams: [
-        'aggregations',
-        'aggs',
-        'query',
-        'from',
-        'sort',
-        'size',
-        'search_after',
-        'with_limited_by',
-        'with_profile_uid',
-        'typed_keys'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['aggregations', 'aggs', 'query', 'from', 'sort', 'size', 'search_after'],
+        query: ['with_limited_by', 'with_profile_uid', 'typed_keys']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3598,13 +3592,11 @@ export default class Security {
     const path = '/_security/_query/role'
     const meta: TransportRequestMetadata = {
       name: 'security.query_role',
-      acceptedParams: [
-        'query',
-        'from',
-        'sort',
-        'size',
-        'search_after'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['query', 'from', 'sort', 'size', 'search_after'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3660,14 +3652,11 @@ export default class Security {
     const path = '/_security/_query/user'
     const meta: TransportRequestMetadata = {
       name: 'security.query_user',
-      acceptedParams: [
-        'query',
-        'from',
-        'sort',
-        'size',
-        'search_after',
-        'with_profile_uid'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['query', 'from', 'sort', 'size', 'search_after'],
+        query: ['with_profile_uid']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3722,11 +3711,11 @@ export default class Security {
     const path = '/_security/saml/authenticate'
     const meta: TransportRequestMetadata = {
       name: 'security.saml_authenticate',
-      acceptedParams: [
-        'content',
-        'ids',
-        'realm'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['content', 'ids', 'realm'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3781,12 +3770,11 @@ export default class Security {
     const path = '/_security/saml/complete_logout'
     const meta: TransportRequestMetadata = {
       name: 'security.saml_complete_logout',
-      acceptedParams: [
-        'realm',
-        'ids',
-        'query_string',
-        'content'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['realm', 'ids', 'query_string', 'content'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3841,11 +3829,11 @@ export default class Security {
     const path = '/_security/saml/invalidate'
     const meta: TransportRequestMetadata = {
       name: 'security.saml_invalidate',
-      acceptedParams: [
-        'acs',
-        'query_string',
-        'realm'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['acs', 'query_string', 'realm'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3900,10 +3888,11 @@ export default class Security {
     const path = '/_security/saml/logout'
     const meta: TransportRequestMetadata = {
       name: 'security.saml_logout',
-      acceptedParams: [
-        'token',
-        'refresh_token'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['token', 'refresh_token'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3959,11 +3948,11 @@ export default class Security {
     const path = '/_security/saml/prepare'
     const meta: TransportRequestMetadata = {
       name: 'security.saml_prepare_authentication',
-      acceptedParams: [
-        'acs',
-        'realm',
-        'relay_state'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['acs', 'realm', 'relay_state'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4009,9 +3998,11 @@ export default class Security {
       pathParts: {
         realm_name: params.realm_name
       },
-      acceptedParams: [
-        'realm_name'
-      ]
+      acceptedParams: {
+        path: ['realm_name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4067,13 +4058,11 @@ export default class Security {
     const path = '/_security/profile/_suggest'
     const meta: TransportRequestMetadata = {
       name: 'security.suggest_user_profiles',
-      acceptedParams: [
-        'name',
-        'size',
-        'data',
-        'hint',
-        'data'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['name', 'size', 'data', 'hint'],
+        query: ['data']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4131,12 +4120,11 @@ export default class Security {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'role_descriptors',
-        'metadata',
-        'expiration'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['role_descriptors', 'metadata', 'expiration'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4194,12 +4182,11 @@ export default class Security {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'access',
-        'expiration',
-        'metadata'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['access', 'expiration', 'metadata'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4255,13 +4242,11 @@ export default class Security {
     const path = '/_security/settings'
     const meta: TransportRequestMetadata = {
       name: 'security.update_settings',
-      acceptedParams: [
-        'security',
-        'security-profile',
-        'security-tokens',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['security', 'security-profile', 'security-tokens'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4319,14 +4304,11 @@ export default class Security {
       pathParts: {
         uid: params.uid
       },
-      acceptedParams: [
-        'uid',
-        'labels',
-        'data',
-        'if_seq_no',
-        'if_primary_term',
-        'refresh'
-      ]
+      acceptedParams: {
+        path: ['uid'],
+        body: ['labels', 'data'],
+        query: ['if_seq_no', 'if_primary_term', 'refresh']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

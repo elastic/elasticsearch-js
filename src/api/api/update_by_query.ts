@@ -129,45 +129,11 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'max_docs',
-      'query',
-      'script',
-      'slice',
-      'conflicts',
-      'allow_no_indices',
-      'analyzer',
-      'analyze_wildcard',
-      'conflicts',
-      'default_operator',
-      'df',
-      'expand_wildcards',
-      'from',
-      'ignore_unavailable',
-      'lenient',
-      'max_docs',
-      'pipeline',
-      'preference',
-      'q',
-      'refresh',
-      'request_cache',
-      'requests_per_second',
-      'routing',
-      'scroll',
-      'scroll_size',
-      'search_timeout',
-      'search_type',
-      'slices',
-      'sort',
-      'stats',
-      'terminate_after',
-      'timeout',
-      'version',
-      'version_type',
-      'wait_for_active_shards',
-      'wait_for_completion'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['max_docs', 'query', 'script', 'slice', 'conflicts'],
+      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'conflicts', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'max_docs', 'pipeline', 'preference', 'q', 'refresh', 'request_cache', 'requests_per_second', 'routing', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'slices', 'sort', 'stats', 'terminate_after', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'wait_for_completion']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }
