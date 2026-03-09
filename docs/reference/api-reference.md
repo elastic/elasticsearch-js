@@ -2487,6 +2487,10 @@ Use this request to get the following information for each index in a cluster:
 These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents.
 To get an accurate count of Elasticsearch documents, use the cat count or count APIs.
 
+NOTE: Storage metrics reported by this API reflect the post-compression size of the indices on disk. Because these values are calculated after Elasticsearch compresses the data and processes deletions, they are typically significantly smaller than the raw, uncompressed data volume ingested.
+
+IMPORTANT: For Elastic Cloud Serverless, ingest billing is based on the raw, uncompressed data volume, not the post-compression metrics reported here. To learn more, refer to [Elasticsearch billing dimensions](https://www.elastic.co/docs/deploy-manage/cloud-organization/billing/elasticsearch-billing-dimensions).
+
 CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use an index endpoint.
 
@@ -7874,6 +7878,7 @@ The following integrations are available through the inference API. You can find
 * DeepSeek (`chat_completion`, `completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
 * ELSER (`sparse_embedding`)
+* Fireworks AI (`chat_completion`, `completion`, `text_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
 * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * Groq (`chat_completion`)
@@ -8289,6 +8294,33 @@ client.inference.putElser({ task_type, elser_inference_id, service, service_sett
 - **`service_settings` ({ adaptive_allocations, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elser` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Note that for ELSER endpoints, the max_chunk_size may not exceed `300`.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putFireworksai [_inference.put_fireworksai]
+Create a Fireworks AI inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `fireworksai` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-fireworksai)
+
+```ts
+client.inference.putFireworksai({ task_type, fireworksai_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_fireworksai]
+
+#### Request (object) [_request_inference.put_fireworksai]
+- **`task_type` (Enum("chat_completion" \| "completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`fireworksai_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("fireworksai"))**: The type of service supported for the specified task type. In this case, `fireworksai`.
+- **`service_settings` ({ api_key, model_id, url, dimensions, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `fireworksai` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
+- **`task_settings` (Optional, { user, headers })**: Settings to configure the inference task.
+Applies only to the `completion` or `chat_completion` task types.
+Not applicable to the `text_embedding` task type.
+These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGoogleaistudio [_inference.put_googleaistudio]

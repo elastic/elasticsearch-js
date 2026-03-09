@@ -20504,27 +20504,6 @@ export interface IndicesRetentionLease {
   period: Duration
 }
 
-export interface IndicesSamplingConfiguration {
-  /** The fraction of documents to sample between 0 and 1. */
-  rate: double
-  /** The maximum number of documents to sample. */
-  max_samples: integer
-  /** The maximum total size of sampled documents. */
-  max_size?: ByteSize
-  /** The maximum total size of sampled documents in bytes. */
-  max_size_in_bytes: long
-  /** The duration for which the sampled documents should be retained. */
-  time_to_live?: Duration
-  /** The duration for which the sampled documents should be retained, in milliseconds. */
-  time_to_live_in_millis: long
-  /** An optional condition script that sampled documents must satisfy. */
-  if?: string
-  /** The time when the sampling configuration was created. */
-  creation_time?: DateTime
-  /** The time when the sampling configuration was created, in milliseconds since epoch. */
-  creation_time_in_millis: long
-}
-
 export type IndicesSamplingMethod = 'aggregate' | 'last_value'
 
 export interface IndicesSearchIdle {
@@ -21187,24 +21166,6 @@ export interface IndicesDeleteIndexTemplateRequest extends RequestBase {
 
 export type IndicesDeleteIndexTemplateResponse = AcknowledgedResponseBase
 
-export interface IndicesDeleteSampleConfigurationRequest extends RequestBase {
-  /** The name of the index. */
-  index: IndexName
-  /** Period to wait for a connection to the master node. If no response is
-    * received before the timeout expires, the request fails and returns an
-    * error. */
-  master_timeout?: Duration
-  /** Period to wait for a response.
-    * If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: Duration
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never }
-}
-
-export type IndicesDeleteSampleConfigurationResponse = AcknowledgedResponseBase
-
 export interface IndicesDeleteTemplateRequest extends RequestBase {
   /** The name of the legacy index template to delete.
     * Wildcard (`*`) expressions are supported. */
@@ -21584,26 +21545,6 @@ export interface IndicesGetAliasNotFoundAliasesKeys {
 export type IndicesGetAliasNotFoundAliases = IndicesGetAliasNotFoundAliasesKeys
 & { [property: string]: IndicesGetAliasIndexAliases | string | integer }
 
-export interface IndicesGetAllSampleConfigurationRequest extends RequestBase {
-  /** Period to wait for a connection to the master node. If no response is
-    * received before the timeout expires, the request fails and returns an
-    * error. */
-  master_timeout?: Duration
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { master_timeout?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { master_timeout?: never }
-}
-
-export interface IndicesGetAllSampleConfigurationResponse {
-  configurations: IndicesGetAllSampleConfigurationIndexSamplingConfiguration[]
-}
-
-export interface IndicesGetAllSampleConfigurationIndexSamplingConfiguration {
-  index: IndexName
-  configuration: IndicesSamplingConfiguration
-}
-
 export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
   lifecycle?: IndicesDataStreamLifecycleWithRollover
@@ -21881,70 +21822,6 @@ export interface IndicesGetMigrateReindexStatusStatusInProgress {
   index: string
   total_doc_count: long
   reindexed_doc_count: long
-}
-
-export interface IndicesGetSampleRequest extends RequestBase {
-  /** Single index or data stream name. Wildcards are not supported. */
-  index: IndexName
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never }
-}
-
-export interface IndicesGetSampleResponse {
-  sample: IndicesGetSampleRawDocument[]
-}
-
-export interface IndicesGetSampleRawDocument {
-  /** Name of the index for this raw document. */
-  index: string
-  /** The original raw source. */
-  source: Record<PropertyName, MappingProperty>
-}
-
-export interface IndicesGetSampleConfigurationRequest extends RequestBase {
-  /** The name of the index. */
-  index: IndexName
-  /** Period to wait for a connection to the master node. If no response is
-    * received before the timeout expires, the request fails and returns an
-    * error. */
-  master_timeout?: Duration
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never }
-}
-
-export interface IndicesGetSampleConfigurationResponse {
-  index: IndexName
-  configuration: IndicesSamplingConfiguration | null
-}
-
-export interface IndicesGetSampleStatsRequest extends RequestBase {
-  /** Single index or data stream name. Wildcards are not supported. */
-  index: IndexName
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never }
-}
-
-export interface IndicesGetSampleStatsResponse {
-  potential_samples: long
-  samples_rejected_for_max_samples_exceeded: long
-  samples_rejected_for_condition: long
-  samples_rejected_for_rate: long
-  samples_rejected_for_exception: long
-  samples_rejected_for_size: long
-  samples_accepted: long
-  time_sampling?: Duration
-  time_sampling_millis: DurationValue<UnitMillis>
-  time_evaluating_condition?: Duration
-  time_evaluating_condition_millis: DurationValue<UnitMillis>
-  time_compiling_condition?: Duration
-  time_compiling_condition_millis: DurationValue<UnitMillis>
-  last_exception?: string
 }
 
 export interface IndicesGetSettingsRequest extends RequestBase {
@@ -22452,36 +22329,6 @@ export interface IndicesPutMappingRequest extends RequestBase {
 }
 
 export type IndicesPutMappingResponse = IndicesResponseBase
-
-export interface IndicesPutSampleConfigurationRequest extends RequestBase {
-  /** The name of the index or data stream. */
-  index: IndexName
-  /** Period to wait for a connection to the master node. If no response is
-    * received before the timeout expires, the request fails and returns an
-    * error. */
-  master_timeout?: Duration
-  /** Period to wait for a response.
-    * If no response is received before the timeout expires, the request fails and returns an error. */
-  timeout?: Duration
-  /** The fraction of documents to sample. Must be greater than 0 and less than or equal to 1.
-    * Can be specified as a number or a string. */
-  rate: SpecUtilsStringified<double>
-  /** The maximum number of documents to sample. Must be greater than 0 and less than or equal to 10,000. */
-  max_samples?: integer
-  /** The maximum total size of sampled documents. Must be greater than 0 and less than or equal to 5GB. */
-  max_size?: ByteSize
-  /** The duration for which the sampled documents should be retained.
-    * Must be greater than 0 and less than or equal to 30 days. */
-  time_to_live?: Duration
-  /** An optional condition script that sampled documents must satisfy. */
-  if?: string
-  /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never, rate?: never, max_samples?: never, max_size?: never, time_to_live?: never, if?: never }
-  /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, master_timeout?: never, timeout?: never, rate?: never, max_samples?: never, max_size?: never, time_to_live?: never, if?: never }
-}
-
-export type IndicesPutSampleConfigurationResponse = AcknowledgedResponseBase
 
 export interface IndicesPutSettingsRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit
@@ -24410,6 +24257,52 @@ export type InferenceEmbeddingInput = InferenceEmbeddingStringInput | InferenceE
 
 export type InferenceEmbeddingStringInput = string | string[]
 
+export interface InferenceFireworksAIServiceSettings {
+  /** A valid API key for your Fireworks AI account.
+    * You can find or create your API keys in the Fireworks AI dashboard.
+    *
+    * IMPORTANT: You need to provide the API key only once, during the inference model creation.
+    * The get inference endpoint API does not retrieve your API key. */
+  api_key: string
+  /** The name of the model to use for the inference task.
+    * Refer to the Fireworks AI documentation for the list of available models for chat completion, completion, and text embedding.
+    * For text embedding, supported models include the Qwen3 embedding family (e.g. `fireworks/qwen3-embedding-8b`) and other models in the Fireworks model library. */
+  model_id: string
+  /** The URL endpoint to use for the requests.
+    * If not provided, the default Fireworks AI API endpoint is used. */
+  url?: string
+  /** For a `text_embedding` task, the number of dimensions the resulting output embeddings should have.
+    * Variable-length embeddings are supported via this parameter. */
+  dimensions?: integer
+  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. */
+  similarity?: InferenceFireworksAISimilarityType
+  /** This setting helps to minimize the number of rate limit errors returned from the Fireworks AI API.
+    * Rate limit grouping is per API key only.
+    * By default, the `fireworksai` service sets the number of requests allowed per minute to 6000. */
+  rate_limit?: InferenceRateLimitSetting
+}
+
+export type InferenceFireworksAIServiceType = 'fireworksai'
+
+export type InferenceFireworksAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
+
+export interface InferenceFireworksAITaskSettings {
+  /** For a `completion` or`chat_completion` task, specify the user issuing the request.
+    * This information can be used for abuse detection. */
+  user?: string
+  /** For a `completion` or`chat_completion` task. Specifies custom HTTP header parameters.
+    * For example:
+    * ```
+    * "headers":{
+    *   "Custom-Header": "Some-Value",
+    *   "Another-Custom-Header": "Another-Value"
+    * }
+    * ``` */
+  headers?: any
+}
+
+export type InferenceFireworksAITaskType = 'chat_completion' | 'completion' | 'text_embedding'
+
 export type InferenceGoogleAiServiceType = 'googleaistudio'
 
 export interface InferenceGoogleAiStudioServiceSettings {
@@ -24713,6 +24606,13 @@ export interface InferenceInferenceEndpointInfoElasticsearch extends InferenceIn
   inference_id: string
   /** The task type */
   task_type: InferenceTaskTypeElasticsearch
+}
+
+export interface InferenceInferenceEndpointInfoFireworksAI extends InferenceInferenceEndpoint {
+  /** The inference Id */
+  inference_id: string
+  /** The task type */
+  task_type: InferenceTaskTypeFireworksAI
 }
 
 export interface InferenceInferenceEndpointInfoGoogleAIStudio extends InferenceInferenceEndpoint {
@@ -25061,7 +24961,7 @@ export type InferenceOpenAIServiceType = 'openai'
 export type InferenceOpenAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceOpenAITaskSettings {
-  /** For a `completion` or `text_embedding` task, specify the user issuing the request.
+  /** For a `completion`, `chat_completion`, or `text_embedding` task, specify the user issuing the request.
     * This information can be used for abuse detection. */
   user?: string
   /** Specifies custom HTTP header parameters.
@@ -25132,6 +25032,7 @@ export interface InferenceRateLimitSetting {
     * * `cohere` service: `10000`
     * * `contextualai` service: `1000`
     * * `elastic` service and task type `chat_completion`: `240`
+    * * `fireworksai` service: `6000`
     * * `googleaistudio` service: `360`
     * * `googlevertexai` service: `30000`
     * * `hugging_face` service: `3000`
@@ -25309,6 +25210,8 @@ export type InferenceTaskTypeDeepSeek = 'completion' | 'chat_completion'
 export type InferenceTaskTypeELSER = 'sparse_embedding'
 
 export type InferenceTaskTypeElasticsearch = 'sparse_embedding' | 'text_embedding' | 'rerank'
+
+export type InferenceTaskTypeFireworksAI = 'chat_completion' | 'completion' | 'text_embedding'
 
 export type InferenceTaskTypeGoogleAIStudio = 'text_embedding' | 'completion'
 
@@ -25880,6 +25783,34 @@ export interface InferencePutElserRequest extends RequestBase {
 }
 
 export type InferencePutElserResponse = InferenceInferenceEndpointInfoELSER
+
+export interface InferencePutFireworksaiRequest extends RequestBase {
+  /** The type of the inference task that the model will perform. */
+  task_type: InferenceFireworksAITaskType
+  /** The unique identifier of the inference endpoint. */
+  fireworksai_inference_id: Id
+  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  timeout?: Duration
+  /** The chunking configuration object.
+    * Applies only to the `text_embedding` task type.
+    * Not applicable to the `completion` or `chat_completion` task types. */
+  chunking_settings?: InferenceInferenceChunkingSettings
+  /** The type of service supported for the specified task type. In this case, `fireworksai`. */
+  service: InferenceFireworksAIServiceType
+  /** Settings used to install the inference model. These settings are specific to the `fireworksai` service. */
+  service_settings: InferenceFireworksAIServiceSettings
+  /** Settings to configure the inference task.
+    * Applies only to the `completion` or `chat_completion` task types.
+    * Not applicable to the `text_embedding` task type.
+    * These settings are specific to the task type you specified. */
+  task_settings?: InferenceFireworksAITaskSettings
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_type?: never, fireworksai_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_type?: never, fireworksai_inference_id?: never, timeout?: never, chunking_settings?: never, service?: never, service_settings?: never, task_settings?: never }
+}
+
+export type InferencePutFireworksaiResponse = InferenceInferenceEndpointInfoFireworksAI
 
 export interface InferencePutGoogleaistudioRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
@@ -34021,7 +33952,7 @@ export interface QueryRulesQueryRuleCriteria {
   values?: any[]
 }
 
-export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
+export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 
 export type QueryRulesQueryRuleType = 'pinned' | 'exclude'
 
