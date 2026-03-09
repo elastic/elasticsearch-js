@@ -13635,7 +13635,8 @@ export type IndicesUpdateAliasesResponse = AcknowledgedResponseBase
 export interface IndicesValidateQueryIndicesValidationExplanation {
   error?: string
   explanation?: string
-  index: IndexName
+  index?: IndexName
+  shard?: integer
   valid: boolean
 }
 
