@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
+  <script>alert(document.domain)</script>
+  <rect width="400" height="100" fill="#f0f0f0" rx="8"/>
+  <text x="200" y="55" text-anchor="middle" font-family="Arial" font-size="14">
+    Client → Transport → Connection Pool → Elasticsearch
+  </text>
+</svg>
