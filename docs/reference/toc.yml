@@ -33,3 +33,4 @@ toc:
       - file: reindex_examples.md
   - file: client-helpers.md
   - file: timeout-best-practices.md
+  - file: architecture.md
