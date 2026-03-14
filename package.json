@@ -117,3 +117,10 @@
     "tslib": "^2.4.0"
   }
 }
+{
+  "name": "elastic-search-demo",
+  "version": "1.0.0",
+  "description": "Minimal demo scaffold for Elasticsearch full-text search",
+  "main": "app.js"
+}
+
