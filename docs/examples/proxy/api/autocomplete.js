@@ -87,3 +87,11 @@ module.exports = async (req, res) => {
     })
   }
 }
+// Minimal demo entry for Elasticsearch full-text search.
+// This file is only a sample scaffold created after exploration.
+// It should not be treated as the confirmed entry of an existing business project.
+
+const express = require('express');
+const dotenv = require('dotenv');
+const searchRouter = require('./src/routes/search');
+
