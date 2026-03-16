@@ -41,9 +41,7 @@ export default class SearchableSnapshots {
           'node_id'
         ],
         body: [],
-        query: [
-          'master_timeout'
-        ]
+        query: []
       },
       'searchable_snapshots.clear_cache': {
         path: [
@@ -137,7 +135,7 @@ export default class SearchableSnapshots {
       acceptedParams: {
         path: ['node_id'],
         body: [],
-        query: ['master_timeout']
+        query: []
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
