@@ -33,7 +33,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
     ],
     body: [],
     query: [
-      'requests_per_second'
+      'requests_per_second',
+      'group_by'
     ]
   }
 }
@@ -82,7 +83,7 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
     acceptedParams: {
       path: ['task_id'],
       body: [],
-      query: ['requests_per_second']
+      query: ['requests_per_second', 'group_by']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

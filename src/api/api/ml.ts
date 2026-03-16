@@ -3472,7 +3472,7 @@ export default class Ml {
         query: ['reset_end', 'reset_start']
       }
     }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
+    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
 
   /**
@@ -5233,7 +5233,6 @@ export default class Ml {
 
   /**
     * Validate an anomaly detection job.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch | Elasticsearch API documentation}
     */
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
   async validateDetector (this: That, params: T.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>

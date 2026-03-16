@@ -1370,7 +1370,7 @@ client.reindex({ dest, source })
 #### Request (object) [_request_reindex]
 
 - **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination you are copying to.
-- **`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source you are copying from.
+- **`source` ({ index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source you are copying from.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: Indicates whether to continue reindexing even when there are conflicts.
 - **`max_docs` (Optional, number)**: The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when reindexing.
@@ -1408,6 +1408,7 @@ client.reindexRethrottle({ task_id, requests_per_second })
 
 - **`task_id` (string)**: The task identifier, which can be found by using the tasks API.
 - **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+- **`group_by` (Optional, Enum("nodes" \| "parents" \| "none"))**
 
 ## client.renderSearchTemplate [_render_search_template]
 Render a search template.
@@ -1495,13 +1496,12 @@ To search a point in time (PIT) for an alias, you must have the `read` index pri
 
 When paging through a large number of documents, it can be helpful to split the search into multiple slices to consume them independently with the `slice` and `pit` properties.
 By default the splitting is done first on the shards, then locally on each shard.
-The local splitting partitions the shard into contiguous ranges based on Lucene document IDs.
 
 For instance if the number of shards is equal to 2 and you request 4 slices, the slices 0 and 2 are assigned to the first shard and the slices 1 and 3 are assigned to the second shard.
 
 IMPORTANT: The same point-in-time ID should be used for all slices.
 If different PIT IDs are used, slices can overlap and miss documents.
-This situation can occur because the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
+This situation can occur because, by default, the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search)
 
@@ -1748,7 +1748,7 @@ client.searchTemplate({ ... })
 - **`source` (Optional, string \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
+- **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
@@ -11973,7 +11973,6 @@ client.searchableSnapshots.cacheStats({ ... })
 
 #### Request (object) [_request_searchable_snapshots.cache_stats]
 - **`node_id` (Optional, string \| string[])**: The names of the nodes in the cluster to target.
-- **`master_timeout` (Optional, string \| -1 \| 0)**
 
 ## client.searchableSnapshots.clearCache [_searchable_snapshots.clear_cache]
 Clear the cache.
@@ -15718,7 +15717,7 @@ indexing. The minimum value is 1s and the maximum is 1h.
 - **`pivot` (Optional, { aggregations, group_by })**: The pivot method transforms the data by aggregating and grouping it.
 These objects define the group by fields and the aggregation to reduce
 the data.
-- **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
+- **`source` (Optional, { index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined
@@ -15765,7 +15764,7 @@ client.transform.putTransform({ transform_id, dest, source })
 - **`transform_id` (string)**: Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9),
 hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters.
 - **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination for the transform.
-- **`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
+- **`source` ({ index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
 - **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the transform is running continuously. Also
 determines the retry interval in the event of transient failures while the transform is searching or indexing.
@@ -15949,7 +15948,7 @@ transform is running continuously. Also determines the retry interval in
 the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
 - **`_meta` (Optional, Record<string, User-defined value>)**: Defines optional transform metadata.
-- **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
+- **`source` (Optional, { index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time } \| null)**: Defines a retention policy for the transform. Data that meets the defined
