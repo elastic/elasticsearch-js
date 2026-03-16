@@ -1659,7 +1659,6 @@ export interface SearchPhraseSuggester extends SearchSuggesterBase {
   separator?: string
   shard_size?: integer
   smoothing?: SearchSmoothingModelContainer
-  text?: string
   token_limit?: integer
 }
 
@@ -1819,7 +1818,6 @@ export interface SearchTermSuggester extends SearchSuggesterBase {
   sort?: SearchSuggestSort
   string_distance?: SearchStringDistance
   suggest_mode?: SuggestMode
-  text?: string
 }
 
 export interface SearchTotalHits {
@@ -19053,7 +19051,7 @@ export interface QueryRulesQueryRuleCriteria {
   values?: any[]
 }
 
-export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
+export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 
 export type QueryRulesQueryRuleType = 'pinned' | 'exclude'
 
