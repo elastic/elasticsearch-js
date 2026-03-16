@@ -1747,7 +1747,7 @@ client.searchTemplate({ ... })
 - **`profile` (Optional, boolean)**: If `true`, the query execution is profiled.
 - **`source` (Optional, string \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
 - **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
+- **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
@@ -11912,7 +11912,6 @@ client.searchableSnapshots.cacheStats({ ... })
 
 #### Request (object) [_request_searchable_snapshots.cache_stats]
 - **`node_id` (Optional, string \| string[])**: The names of the nodes in the cluster to target.
-- **`master_timeout` (Optional, string \| -1 \| 0)**
 
 ## client.searchableSnapshots.clearCache [_searchable_snapshots.clear_cache]
 Clear the cache.
