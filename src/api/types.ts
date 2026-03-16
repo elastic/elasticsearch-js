@@ -2890,8 +2890,6 @@ export interface SearchPhraseSuggester extends SearchSuggesterBase {
   /** The smoothing model used to balance weight between infrequent grams (grams (shingles) are not existing in the index) and frequent grams (appear at least once in the index).
     * The default model is Stupid Backoff. */
   smoothing?: SearchSmoothingModelContainer
-  /** The text/query to provide suggestions for. */
-  text?: string
   token_limit?: integer
 }
 
@@ -3226,9 +3224,6 @@ export interface SearchTermSuggester extends SearchSuggesterBase {
   string_distance?: SearchStringDistance
   /** Controls what suggestions are included or controls for what suggest text terms, suggestions should be suggested. */
   suggest_mode?: SuggestMode
-  /** The suggest text.
-    * Needs to be set globally or per suggestion. */
-  text?: string
 }
 
 export interface SearchTotalHits {
@@ -3425,7 +3420,7 @@ export interface SearchTemplateRequest extends RequestBase {
     * This behavior applies even if the request targets other open indices.
     * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
   allow_no_indices?: boolean
-  /** If `true`, network round-trips are minimized for cross-cluster search requests. */
+  /** Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution. */
   ccs_minimize_roundtrips?: boolean
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -33784,7 +33779,7 @@ export interface QueryRulesQueryRuleCriteria {
   values?: any[]
 }
 
-export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
+export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 
 export type QueryRulesQueryRuleType = 'pinned' | 'exclude'
 
@@ -34422,11 +34417,10 @@ export interface SearchableSnapshotsCacheStatsNode {
 export interface SearchableSnapshotsCacheStatsRequest extends RequestBase {
   /** The names of the nodes in the cluster to target. */
   node_id?: NodeIds
-  master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { node_id?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { node_id?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { node_id?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { node_id?: never }
 }
 
 export interface SearchableSnapshotsCacheStatsResponse {
