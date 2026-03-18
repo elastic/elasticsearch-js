@@ -103,6 +103,28 @@ To create a new instance of the Bulk helper, access it as shown in the example a
     })
     ```
 
+`onFlush`
+:   An optional callback that is invoked _after each flush_ (each batch sent to Elasticsearch). It receives a snapshot of the current cumulative stats.
+
+    ```js
+    const b = client.helpers.bulk({
+      onFlush (stats) {
+        console.log(`Flushed — total so far: ${stats.total}, successful: ${stats.successful}, failed: ${stats.failed}`)
+      }
+    })
+    ```
+
+    **Stats object:**
+
+    | Field        | Type      | Description                              |
+    |--------------|-----------|------------------------------------------|
+    | `total`      | `number`  | Total documents processed so far         |
+    | `successful` | `number`  | Documents successfully indexed so far    |
+    | `failed`     | `number`  | Documents dropped/failed so far          |
+    | `retry`      | `number`  | Total retry count so far                 |
+    | `bytes`      | `number`  | Total bytes sent so far                  |
+    | `aborted`    | `boolean` | Whether the bulk operation was aborted   |
+
 `flushBytes`
 :   The size of the bulk body in bytes to reach before to send it. Default of 5MB.
     *Default:* `5000000`

@@ -792,6 +792,126 @@ test('bulk index', t => {
       t.end()
     })
 
+    t.test('onFlush is called after each bulk flush', async t => {
+      const flushEvents: Array<{ total: number; successful: number; failed: number; retry: number; bytes: number; aborted: boolean }> = []
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        },
+        onFlush (stats) {
+          flushEvents.push({ ...stats })
+        }
+      })
+
+      t.ok(flushEvents.length > 0, 'onFlush should be called at least once')
+      for (const event of flushEvents) {
+        t.equal(typeof event.total, 'number')
+        t.equal(typeof event.successful, 'number')
+        t.equal(typeof event.failed, 'number')
+        t.equal(typeof event.bytes, 'number')
+        t.equal(typeof event.retry, 'number')
+        t.equal(typeof event.aborted, 'boolean')
+      }
+      t.end()
+    })
+
+    t.test('onFlush stats are cumulative across flushes', async t => {
+      const totals: number[] = []
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        },
+        onFlush ({ total }) {
+          totals.push(total)
+        }
+      })
+
+      for (let i = 1; i < totals.length; i++) {
+        t.ok(totals[i] >= totals[i - 1], 'total should be non-decreasing across flushes')
+      }
+      t.end()
+    })
+
+    t.test('bulk helper works fine without onFlush', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      const result = await client.helpers.bulk({
+        datasource: dataset.slice(),
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        }
+      })
+
+      t.equal(result.total, 3)
+    })
+
+    t.test('onFlush supports async callback', async t => {
+      let called = false
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.bulk({
+        datasource: dataset.slice(),
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        },
+        async onFlush (stats) {
+          await new Promise(resolve => setTimeout(resolve, 10))
+          called = true
+        }
+      })
+
+      t.ok(called, 'async onFlush should be awaited')
+    })
+
     t.end()
   })
 
