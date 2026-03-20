@@ -104,7 +104,7 @@ To create a new instance of the Bulk helper, access it as shown in the example a
     ```
 
 `onFlush`
-:   An optional callback that is invoked _after each flush_ (each batch sent to Elasticsearch). It receives a snapshot of the current cumulative stats.
+:   An optional callback that is invoked _after each flush_ (each batch sent to {{es}}). It receives a snapshot of the current cumulative stats.
 
     ```js
     const b = client.helpers.bulk({

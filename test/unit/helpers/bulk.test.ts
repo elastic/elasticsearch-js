@@ -818,20 +818,26 @@ test('bulk index', t => {
         }
       })
 
-      t.ok(flushEvents.length > 0, 'onFlush should be called at least once')
-      for (const event of flushEvents) {
-        t.equal(typeof event.total, 'number')
-        t.equal(typeof event.successful, 'number')
-        t.equal(typeof event.failed, 'number')
-        t.equal(typeof event.bytes, 'number')
-        t.equal(typeof event.retry, 'number')
-        t.equal(typeof event.aborted, 'boolean')
-      }
+      t.equal(flushEvents.length, 3, 'onFlush should be called exactly 3 times (once per item)')
+      t.equal(flushEvents[0].total, 1)
+      t.equal(flushEvents[0].successful, 1)
+      t.equal(flushEvents[0].failed, 0)
+      t.equal(flushEvents[0].retry, 0)
+
+      t.equal(flushEvents[1].total, 2)
+      t.equal(flushEvents[1].successful, 2)
+      t.equal(flushEvents[1].failed, 0)
+      t.equal(flushEvents[1].retry, 0)
+
+      t.equal(flushEvents[2].total, 3)
+      t.equal(flushEvents[2].successful, 3)
+      t.equal(flushEvents[2].failed, 0)
+      t.equal(flushEvents[2].retry, 0)
       t.end()
     })
 
     t.test('onFlush stats are cumulative across flushes', async t => {
-      const totals: number[] = []
+      const flushStats: Array<{ total: number; successful: number; failed: number }> = []
 
       const MockConnection = connection.buildMockConnection({
         onRequest () {
@@ -851,37 +857,23 @@ test('bulk index', t => {
         onDocument (doc) {
           return { index: { _index: 'test' } }
         },
-        onFlush ({ total }) {
-          totals.push(total)
+        onFlush (stats) {
+          flushStats.push({ total: stats.total, successful: stats.successful, failed: stats.failed })
         }
       })
 
-      for (let i = 1; i < totals.length; i++) {
-        t.ok(totals[i] >= totals[i - 1], 'total should be non-decreasing across flushes')
-      }
+      t.equal(flushStats[0].total, 1, 'first flush: total = 1')
+      t.equal(flushStats[0].successful, 1, 'first flush: successful = 1')
+      t.equal(flushStats[0].failed, 0, 'first flush: failed = 0')
+
+      t.equal(flushStats[1].total, 2, 'second flush: total = 2')
+      t.equal(flushStats[1].successful, 2, 'second flush: successful = 2')
+      t.equal(flushStats[1].failed, 0, 'second flush: failed = 0')
+
+      t.equal(flushStats[2].total, 3, 'third flush: total = 3')
+      t.equal(flushStats[2].successful, 3, 'third flush: successful = 3')
+      t.equal(flushStats[2].failed, 0, 'third flush: failed = 0')
       t.end()
-    })
-
-    t.test('bulk helper works fine without onFlush', async t => {
-      const MockConnection = connection.buildMockConnection({
-        onRequest () {
-          return { body: { errors: false, items: [{}] } }
-        }
-      })
-
-      const client = new Client({
-        node: 'http://localhost:9200',
-        Connection: MockConnection
-      })
-
-      const result = await client.helpers.bulk({
-        datasource: dataset.slice(),
-        onDocument (doc) {
-          return { index: { _index: 'test' } }
-        }
-      })
-
-      t.equal(result.total, 3)
     })
 
     t.test('onFlush supports async callback', async t => {
