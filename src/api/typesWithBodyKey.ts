@@ -15857,13 +15857,13 @@ export interface MlAnalysisConfig {
 
 export interface MlAnalysisConfigRead {
   bucket_span: Duration
+  detectors: MlDetectorRead[]
+  influencers: Field[]
   categorization_analyzer?: MlCategorizationAnalyzer
   categorization_field_name?: Field
   categorization_filters?: string[]
-  detectors: MlDetectorRead[]
-  influencers: Field[]
-  model_prune_window?: Duration
   latency?: Duration
+  model_prune_window?: Duration
   multivariate_by_fields?: boolean
   per_partition_categorization?: MlPerPartitionCategorization
   summary_count_field_name?: Field
@@ -16413,13 +16413,13 @@ export interface MlDetector {
 }
 
 export interface MlDetectorRead {
+  function: string
   by_field_name?: Field
   custom_rules?: MlDetectionRule[]
   detector_description?: string
   detector_index?: integer
   exclude_frequent?: MlExcludeFrequent
   field_name?: Field
-  function: string
   over_field_name?: Field
   partition_field_name?: Field
   use_null?: boolean
@@ -20090,6 +20090,14 @@ export interface SecurityIndicesPrivileges {
   allow_restricted_indices?: boolean
 }
 
+export interface SecurityIndicesPrivilegesBase {
+  field_security?: SecurityFieldSecurity
+  names: IndexName[]
+  privileges: SecurityIndexPrivilege[]
+  query?: SecurityIndicesPrivilegesQuery
+  allow_restricted_indices?: boolean
+}
+
 export type SecurityIndicesPrivilegesQuery = string | QueryDslQueryContainer | SecurityRoleTemplateQuery
 
 export interface SecurityManageUserPrivileges {
@@ -20118,12 +20126,12 @@ export interface SecurityRemoteIndicesPrivileges {
 }
 
 export interface SecurityRemoteUserIndicesPrivileges {
+  clusters: string[]
   field_security?: SecurityFieldSecurity[]
-  names: IndexName | IndexName[]
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery[]
   allow_restricted_indices: boolean
-  clusters: string[]
 }
 
 export interface SecurityReplicationAccess {
@@ -20225,6 +20233,14 @@ export interface SecurityUser {
 }
 
 export interface SecurityUserIndicesPrivileges {
+  field_security?: SecurityFieldSecurity[]
+  names: IndexName[]
+  privileges: SecurityIndexPrivilege[]
+  query?: SecurityIndicesPrivilegesQuery[]
+  allow_restricted_indices: boolean
+}
+
+export interface SecurityUserIndicesPrivilegesBase {
   field_security?: SecurityFieldSecurity[]
   names: IndexName[]
   privileges: SecurityIndexPrivilege[]
