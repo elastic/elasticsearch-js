@@ -6804,7 +6804,7 @@ client.indices.putIndexTemplate({ name })
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
-- **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
+- **`data_stream` (Optional, { hidden, allow_custom_routing, failure_store })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
 Data streams require a matching index template with a `data_stream` object.
 - **`priority` (Optional, number)**: Priority to determine index template precedence when a new data stream or index is created.
@@ -7543,7 +7543,7 @@ If set to `false`, then indices or data streams matching the template must alway
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
-- **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
+- **`data_stream` (Optional, { hidden, allow_custom_routing, failure_store })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
 Data streams require a matching index template with a `data_stream` object.
 - **`priority` (Optional, number)**: Priority to determine index template precedence when a new data stream or index is created.
@@ -7734,7 +7734,7 @@ client.inference.chatCompletionUnified({ inference_id })
 
 #### Request (object) [_request_inference.chat_completion_unified]
 - **`inference_id` (string)**: The inference Id
-- **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })**
+- **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, reasoning, stop, temperature, tool_choice, tools, top_p })**
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.completion [_inference.completion]
@@ -9095,7 +9095,8 @@ client.license.post({ ... })
 #### Request (object) [_request_license.post]
 - **`license` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid })**
 - **`licenses` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid }[])**: A sequence of one or more JSON documents containing the license information.
-- **`acknowledge` (Optional, boolean)**: Specifies whether you acknowledge the license changes.
+- **`acknowledge` (Optional, boolean)**: To update a license, you must accept the acknowledge messages and set this parameter to `true`.
+In particular, if you are upgrading or downgrading a license, you must acknowlege the feature changes.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -9120,7 +9121,7 @@ client.license.postStartBasic({ ... })
 ### Arguments [_arguments_license.post_start_basic]
 
 #### Request (object) [_request_license.post_start_basic]
-- **`acknowledge` (Optional, boolean)**: Whether the user has acknowledged acknowledge messages
+- **`acknowledge` (Optional, boolean)**: To start a basic license, you must accept the acknowledge messages and set this parameter to `true`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -9143,7 +9144,7 @@ client.license.postStartTrial({ ... })
 ### Arguments [_arguments_license.post_start_trial]
 
 #### Request (object) [_request_license.post_start_trial]
-- **`acknowledge` (Optional, boolean)**: Whether the user has acknowledged acknowledge messages
+- **`acknowledge` (Optional, boolean)**: To start a trial, you must accept the acknowledge messages and set this parameter to `true`.
 - **`type` (Optional, string)**: The type of trial license to generate
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
@@ -15037,7 +15038,6 @@ client.synonyms.getSynonymsSets({ ... })
 Create or update a synonym set.
 
 Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
-If you need to manage more synonym rules, you can create multiple synonym sets.
 
 When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
 This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.

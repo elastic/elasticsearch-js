@@ -8471,15 +8471,18 @@ export interface MappingByteNumberProperty extends MappingNumberPropertyBase {
 }
 
 export interface MappingChunkRescorerChunkingSettings {
-  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
-    *
-    *  * If `strategy` is set to `recursive`, you must also specify:
-    *
-    * - `max_chunk_size`
-    * - either `separators` or`separator_group`
-    *
-    * Learn more about different chunking strategies in the linked documentation. */
-  strategy?: string
+  /** The maximum size of a chunk in words.
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
+  max_chunk_size: integer
+  /** The number of overlapping words for chunks.
+    * It is applicable only to a `word` chunking strategy.
+    * This value cannot be higher than half the `max_chunk_size` value. */
+  overlap?: integer
+  /** The number of overlapping sentences for chunks.
+    * It is applicable only for a `sentence` chunking strategy.
+    * It can be either `1` or `0`. */
+  sentence_overlap?: integer
   /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
@@ -8497,18 +8500,15 @@ export interface MappingChunkRescorerChunkingSettings {
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
   separators?: string[]
-  /** The maximum size of a chunk in words.
-    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
-    * This value should not exceed the window size for the associated model. */
-  max_chunk_size: integer
-  /** The number of overlapping words for chunks.
-    * It is applicable only to a `word` chunking strategy.
-    * This value cannot be higher than half the `max_chunk_size` value. */
-  overlap?: integer
-  /** The number of overlapping sentences for chunks.
-    * It is applicable only for a `sentence` chunking strategy.
-    * It can be either `1` or `0`. */
-  sentence_overlap?: integer
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
+  strategy?: string
 }
 
 export interface MappingChunkingSettings {
@@ -8521,6 +8521,18 @@ export interface MappingChunkingSettings {
     *
     * Learn more about different chunking strategies in the linked documentation. */
   strategy: string
+  /** The maximum size of a chunk in words.
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
+  max_chunk_size: integer
+  /** The number of overlapping words for chunks.
+    * It is applicable only to a `word` chunking strategy.
+    * This value cannot be higher than half the `max_chunk_size` value. */
+  overlap?: integer
+  /** The number of overlapping sentences for chunks.
+    * It is applicable only for a `sentence` chunking strategy.
+    * It can be either `1` or `0`. */
+  sentence_overlap?: integer
   /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
@@ -8538,18 +8550,6 @@ export interface MappingChunkingSettings {
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
   separators?: string[]
-  /** The maximum size of a chunk in words.
-    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
-    * This value should not exceed the window size for the associated model. */
-  max_chunk_size: integer
-  /** The number of overlapping words for chunks.
-    * It is applicable only to a `word` chunking strategy.
-    * This value cannot be higher than half the `max_chunk_size` value. */
-  overlap?: integer
-  /** The number of overlapping sentences for chunks.
-    * It is applicable only for a `sentence` chunking strategy.
-    * It can be either `1` or `0`. */
-  sentence_overlap?: integer
 }
 
 export interface MappingCompletionProperty extends MappingDocValuesPropertyBase {
@@ -16423,11 +16423,26 @@ export type CcrUnfollowResponse = AcknowledgedResponseBase
 
 export interface ClusterComponentTemplate {
   name: Name
-  component_template: ClusterComponentTemplateNode
+  component_template: ClusterComponentTemplateNodeWithRollover
 }
 
 export interface ClusterComponentTemplateNode {
   template: ClusterComponentTemplateSummary
+  version?: VersionNumber
+  _meta?: Metadata
+  deprecated?: boolean
+  /** Date and time when the component template was created. Only returned if the `human` query parameter is `true`. */
+  created_date?: DateTime
+  /** Date and time when the component template was created, in milliseconds since the epoch. */
+  created_date_millis?: EpochTime<UnitMillis>
+  /** Date and time when the component template was last modified. Only returned if the `human` query parameter is `true`. */
+  modified_date?: DateTime
+  /** Date and time when the component template was last modified, in milliseconds since the epoch. */
+  modified_date_millis?: EpochTime<UnitMillis>
+}
+
+export interface ClusterComponentTemplateNodeWithRollover {
+  template: ClusterComponentTemplateSummaryRes
   version?: VersionNumber
   _meta?: Metadata
   deprecated?: boolean
@@ -16447,7 +16462,17 @@ export interface ClusterComponentTemplateSummary {
   settings?: Record<IndexName, IndicesIndexSettings>
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
+  lifecycle?: IndicesDataStreamLifecycle
+  data_stream_options?: IndicesDataStreamOptions
+}
+
+export interface ClusterComponentTemplateSummaryRes {
   lifecycle?: IndicesDataStreamLifecycleWithRollover
+  _meta?: Metadata
+  version?: VersionNumber
+  settings?: Record<IndexName, IndicesIndexSettings>
+  mappings?: MappingTypeMapping
+  aliases?: Record<string, IndicesAliasDefinition>
   data_stream_options?: IndicesDataStreamOptions
 }
 
@@ -20076,6 +20101,8 @@ export interface IndicesDataStreamLifecycle {
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
+  /** Only available with feature flag dlm_searchable_snapshots. */
+  frozen_after?: Duration
 }
 
 export interface IndicesDataStreamLifecycleRolloverConditions {
@@ -20115,6 +20142,7 @@ export interface IndicesDataStreamTimestampField {
 export interface IndicesDataStreamVisibility {
   hidden?: boolean
   allow_custom_routing?: boolean
+  failure_store?: boolean
 }
 
 export interface IndicesDownsampleConfig {
@@ -20398,8 +20426,64 @@ export interface IndicesIndexTemplateSummary {
   mappings?: MappingTypeMapping
   /** Configuration options for the index. */
   settings?: IndicesIndexSettings
-  lifecycle?: IndicesDataStreamLifecycleWithRollover
+  lifecycle?: IndicesDataStreamLifecycle
   data_stream_options?: IndicesDataStreamOptions
+}
+
+export interface IndicesIndexTemplateSummaryWithRollover {
+  lifecycle?: IndicesDataStreamLifecycleWithRollover
+  /** Aliases to add.
+    * If the index template includes a `data_stream` object, these are data stream aliases.
+    * Otherwise, these are index aliases.
+    * Data stream aliases ignore the `index_routing`, `routing`, and `search_routing` options. */
+  aliases?: Record<IndexName, IndicesAlias>
+  /** Mapping for fields in the index.
+    * If specified, this mapping can include field names, field data types, and mapping parameters. */
+  mappings?: MappingTypeMapping
+  /** Configuration options for the index. */
+  settings?: IndicesIndexSettings
+  data_stream_options?: IndicesDataStreamOptions
+}
+
+export interface IndicesIndexTemplateWithRollover {
+  /** Template to be applied.
+    * It may optionally include an `aliases`, `mappings`, or `settings` configuration. */
+  template?: IndicesIndexTemplateSummaryWithRollover
+  /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
+  index_patterns: Names
+  /** An ordered list of component template names.
+    * Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence. */
+  composed_of: Name[]
+  /** Version number used to manage index templates externally.
+    * This number is not automatically generated by Elasticsearch. */
+  version?: VersionNumber
+  /** Priority to determine index template precedence when a new data stream or index is created.
+    * The index template with the highest priority is chosen.
+    * If no priority is specified the template is treated as though it is of priority 0 (lowest priority).
+    * This number is not automatically generated by Elasticsearch. */
+  priority?: long
+  /** Optional user metadata about the index template. May have any contents.
+    * This map is not automatically generated by Elasticsearch. */
+  _meta?: Metadata
+  allow_auto_create?: boolean
+  /** If this object is included, the template is used to create data streams and their backing indices.
+    * Supports an empty object.
+    * Data streams require a matching index template with a `data_stream` object. */
+  data_stream?: IndicesIndexTemplateDataStreamConfiguration
+  /** Marks this index template as deprecated.
+    * When creating or updating a non-deprecated index template that uses deprecated components,
+    * Elasticsearch will emit a deprecation warning. */
+  deprecated?: boolean
+  /** A list of component template names that are allowed to be absent. */
+  ignore_missing_component_templates?: Names
+  /** Date and time when the index template was created. Only returned if the `human` query parameter is `true`. */
+  created_date?: DateTime
+  /** Date and time when the index template was created, in milliseconds since the epoch. */
+  created_date_millis?: EpochTime<UnitMillis>
+  /** Date and time when the index template was last modified. Only returned if the `human` query parameter is `true`. */
+  modified_date?: DateTime
+  /** Date and time when the index template was last modified, in milliseconds since the epoch. */
+  modified_date_millis?: EpochTime<UnitMillis>
 }
 
 export interface IndicesIndexVersioning {
@@ -21750,7 +21834,7 @@ export interface IndicesGetFieldMappingTypeFieldMappings {
 
 export interface IndicesGetIndexTemplateIndexTemplateItem {
   name: Name
-  index_template: IndicesIndexTemplate
+  index_template: IndicesIndexTemplateWithRollover
 }
 
 export interface IndicesGetIndexTemplateRequest extends RequestBase {
@@ -23743,6 +23827,16 @@ export interface InferenceAzureOpenAITaskSettings {
 
 export type InferenceAzureOpenAITaskType = 'completion' | 'chat_completion' | 'text_embedding'
 
+export interface InferenceBaseReasoningDetail {
+  /** The format of the reasoning detail. */
+  format?: string
+  /** The identifier of the reasoning detail. */
+  id?: string
+  /** The index of the reasoning detail,
+    * which indicates its position in the sequence of reasoning details generated by the model. */
+  index?: integer
+}
+
 export type InferenceCohereEmbeddingType = 'binary' | 'bit' | 'byte' | 'float' | 'int8'
 
 export type InferenceCohereInputType = 'classification' | 'clustering' | 'ingest' | 'search'
@@ -23852,11 +23946,18 @@ export interface InferenceCompletionToolFunction {
 export type InferenceCompletionToolType = string | InferenceCompletionToolChoice
 
 export interface InferenceContentObject {
-  /** The text content. */
+  /** The type of content. Must be one of `text`, `image_url` or `file`. Not all services/models support content
+    * types other than "text" */
+  type: InferenceContentType
+  /** The text content. Only applicable for the `text` type */
   text: string
-  /** The type of content. */
-  type: string
+  /** The image content. Only applicable for the `image_url` type */
+  image_url: InferenceImageUrl
+  /** The file content. Only applicable for the `file` type */
+  file: InferenceFileContent
 }
+
+export type InferenceContentType = 'text' | 'image_url' | 'file'
 
 export interface InferenceContextualAIServiceSettings {
   /** A valid API key for your Contexutual AI account.
@@ -24272,6 +24373,20 @@ export type InferenceEmbeddingInput = InferenceEmbeddingStringInput | InferenceE
 
 export type InferenceEmbeddingStringInput = string | string[]
 
+export interface InferenceEncryptedReasoningDetail extends InferenceBaseReasoningDetail {
+  type: 'reasoning.encrypted'
+  /** The encrypted reasoning data generated by the model,
+    * which may be redacted or protected based on the model's configuration and the nature of the reasoning information. */
+  data: string
+}
+
+export interface InferenceFileContent {
+  /** The base64 encoded file data */
+  file_data: string
+  /** The name of the file */
+  filename: string
+}
+
 export interface InferenceFireworksAIServiceSettings {
   /** A valid API key for your Fireworks AI account.
     * You can find or create your API keys in the Fireworks AI dashboard.
@@ -24470,6 +24585,15 @@ export interface InferenceHuggingFaceTaskSettings {
 }
 
 export type InferenceHuggingFaceTaskType = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
+
+export interface InferenceImageUrl {
+  /** The base64 encoded image data as a data URI */
+  url: string
+  /** Specifies the detail level of the image */
+  detail?: InferenceImageUrlDetail
+}
+
+export type InferenceImageUrlDetail = 'auto' | 'low' | 'high'
 
 export interface InferenceInferenceChunkingSettings {
   /** The maximum size of a chunk in words.
@@ -24830,13 +24954,42 @@ export interface InferenceMessage {
     * }
     * ```
     *
-    * Object example:
+    * Text example:
     * ```
     * {
     *   "content": [
     *       {
     *        "text": "Some text",
     *        "type": "text"
+    *       }
+    *    ]
+    * }
+    * ```
+    *
+    * Image example:
+    * ```
+    * {
+    *   "content": [
+    *       {
+    *        "image_url": {
+    *          "url": "data:image/jpg;base64,..."
+    *        },
+    *        "type": "image_url"
+    *       }
+    *    ]
+    * }
+    * ```
+    *
+    * File example:
+    * ```
+    * {
+    *   "content": [
+    *       {
+    *        "file": {
+    *          "file_data": "data:application/pdf;base64,...",
+    *          "filename": "somePDF"
+    *        },
+    *        "type": "file"
     *       }
     *    ]
     * }
@@ -24863,6 +25016,12 @@ export interface InferenceMessage {
     * }
     * ``` */
   tool_calls?: InferenceToolCall[]
+  /** Only for `assistant` role messages. The reasoning details generated by the model as plaintext.
+    * Currently supported only for `elastic` provider. */
+  reasoning?: string
+  /** Only for `assistant` role messages. The reasoning details generated by the model as structured data.
+    * Currently supported only for `elastic` provider. */
+  reasoning_details?: InferenceReasoningDetail[]
 }
 
 export type InferenceMessageContent = string | InferenceContentObject[]
@@ -25062,6 +25221,32 @@ export interface InferenceRateLimitSetting {
   requests_per_minute?: integer
 }
 
+export interface InferenceReasoning {
+  /** The level of effort the model should put into reasoning.
+    * This is a hint that guides the model in how much effort to put into reasoning,
+    * with `xhigh` being the most effort and `none` being no effort. */
+  effort?: InferenceReasoningEffort
+  /** Whether to enable reasoning with default settings.
+    * This is a shortcut for enabling reasoning without having to specify the other parameters.
+    * If `enabled` is set to `true`, then reasoning at the `medium` effort level is enabled.
+    * Ignored if `effort` is specified,
+    * in which case that parameter will control the reasoning process instead. */
+  enabled?: boolean
+  /** Whether to exclude reasoning information from the response.
+    * If `true`, the response will not include any reasoning details. */
+  exclude?: boolean
+  /** The level of detail included in the reasoning summary returned in the response.
+    * This is a hint on how much detail to include in the summary of the reasoning that is returned in the response,
+    * with `auto` being the default level of detail, `concise` being less detail, and `detailed` being more detail. */
+  summary?: InferenceReasoningSummary
+}
+
+export type InferenceReasoningDetail = InferenceEncryptedReasoningDetail | InferenceSummaryReasoningDetail | InferenceTextReasoningDetail
+
+export type InferenceReasoningEffort = 'xhigh' | 'high' | 'medium' | 'low' | 'minimal' | 'none'
+
+export type InferenceReasoningSummary = 'auto' | 'concise' | 'detailed'
+
 export interface InferenceRequestChatCompletion {
   /** A list of objects representing the conversation.
     * Requests should generally only add new messages from the user (role `user`).
@@ -25071,6 +25256,39 @@ export interface InferenceRequestChatCompletion {
   model?: string
   /** The upper bound limit for the number of tokens that can be generated for a completion request. */
   max_completion_tokens?: long
+  /** The reasoning configuration for the completion request.
+    * This controls the model's reasoning process in one of two ways:
+    *
+    * * By specifying the model’s reasoning effort level with the `effort` field.
+    * * By enabling reasoning with default settings by setting `enabled` field to `true`.
+    *
+    * It also includes optional settings to control:
+    *
+    * * The level of detail in the summary returned in the response with the `summary` field.
+    * * Whether reasoning details are included in the response at all with the `exclude` field.
+    *
+    * Example (effort):
+    * ```
+    * {
+    *    "reasoning": {
+    *        "effort": "high",
+    *        "summary": "concise",
+    *        "exclude": false
+    *    }
+    * }
+    * ```
+    * Example (enabled):
+    * ```
+    * {
+    *    "reasoning": {
+    *        "enabled": true,
+    *        "summary": "concise",
+    *        "exclude": false
+    *    }
+    * }
+    * ```
+    * Currently supported only for `elastic` provider. */
+  reasoning?: InferenceReasoning
   /** A sequence of strings to control when the model should stop generating additional tokens. */
   stop?: string[]
   /** The sampling temperature to use. */
@@ -25196,6 +25414,13 @@ export interface InferenceSparseEmbeddingResult {
 
 export type InferenceSparseVector = Record<string, float>
 
+export interface InferenceSummaryReasoningDetail extends InferenceBaseReasoningDetail {
+  type: 'reasoning.summary'
+  /** The summary of the reasoning process generated by the model,
+    * which provides an overview of the key points and conclusions reached during the reasoning process. */
+  summary: string
+}
+
 export type InferenceTaskSettings = any
 
 export type InferenceTaskType = 'sparse_embedding' | 'text_embedding' | 'rerank' | 'completion' | 'chat_completion' | 'embedding'
@@ -25259,6 +25484,16 @@ interface InferenceTextEmbeddingInferenceResultExclusiveProps {
 }
 
 export type InferenceTextEmbeddingInferenceResult = ExactlyOne<InferenceTextEmbeddingInferenceResultExclusiveProps>
+
+export interface InferenceTextReasoningDetail extends InferenceBaseReasoningDetail {
+  type: 'reasoning.text'
+  /** The signature of the reasoning text,
+    * which can be used to verify the authenticity and integrity of the reasoning information provided by the model. */
+  signature?: string
+  /** The plaintext reasoning generated by the model,
+    * which provides a detailed explanation of the model's reasoning process in human-readable form. */
+  text?: string
+}
 
 export interface InferenceThinkingConfig {
   /** Indicates the desired thinking budget in tokens. */
@@ -27548,17 +27783,29 @@ export interface LicenseDeleteRequest extends RequestBase {
 export type LicenseDeleteResponse = AcknowledgedResponseBase
 
 export interface LicenseGetLicenseInformation {
+  /** The date and time the license expires in ISO 8601 format. */
   expiry_date?: DateTime
+  /** The date and time the license expires in milliseconds since the Unix epoch. */
   expiry_date_in_millis?: EpochTime<UnitMillis>
+  /** The date and time the license was issued in ISO 8601 format. */
   issue_date: DateTime
+  /** The date and time the license was issued in milliseconds since the Unix epoch. */
   issue_date_in_millis: EpochTime<UnitMillis>
+  /** The name of the customer or organization that received the license. */
   issued_to: string
+  /** The name of the organization that issued the license. */
   issuer: string
+  /** The maximum number of nodes the license allows. */
   max_nodes: long | null
+  /** The maximum number of resource units the license allows (for enterprise licenses only). */
   max_resource_units?: integer | null
+  /** The status of the license. For example,active, valid, invalid, or expired. */
   status: LicenseLicenseStatus
+  /** The type of the license. For example, trial, basic, gold, platinum, or enterprise. */
   type: LicenseLicenseType
+  /** The unique identifier of the license. */
   uid: Uuid
+  /** The date and time the license was started in milliseconds since the Unix epoch. */
   start_date_in_millis: EpochTime<UnitMillis>
 }
 
@@ -27608,7 +27855,8 @@ export interface LicensePostAcknowledgement {
 }
 
 export interface LicensePostRequest extends RequestBase {
-  /** Specifies whether you acknowledge the license changes. */
+  /** To update a license, you must accept the acknowledge messages and set this parameter to `true`.
+    * In particular, if you are upgrading or downgrading a license, you must acknowlege the feature changes. */
   acknowledge?: boolean
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -27630,7 +27878,7 @@ export interface LicensePostResponse {
 }
 
 export interface LicensePostStartBasicRequest extends RequestBase {
-  /** Whether the user has acknowledged acknowledge messages */
+  /** To start a basic license, you must accept the acknowledge messages and set this parameter to `true`. */
   acknowledge?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -27651,7 +27899,7 @@ export interface LicensePostStartBasicResponse {
 }
 
 export interface LicensePostStartTrialRequest extends RequestBase {
-  /** Whether the user has acknowledged acknowledge messages */
+  /** To start a trial, you must accept the acknowledge messages and set this parameter to `true`. */
   acknowledge?: boolean
   /** The type of trial license to generate */
   type?: string
@@ -27870,50 +28118,28 @@ export interface MlAnalysisConfig {
 }
 
 export interface MlAnalysisConfigRead {
-  /** The size of the interval that the analysis is aggregated into, typically between `5m` and `1h`. */
+  /** The size of the interval that the analysis is aggregated into, typically between `5m` and `1h`. This value should be either a whole number of days or equate to a
+    * whole number of buckets in one day. If the anomaly detection job uses a datafeed with aggregations, this value must also be divisible by the interval of the date histogram aggregation. */
   bucket_span: Duration
-  /** If `categorization_field_name` is specified, you can also define the analyzer that is used to interpret the categorization field.
-    * This property cannot be used at the same time as `categorization_filters`.
-    * The categorization analyzer specifies how the `categorization_field` is interpreted by the categorization process. */
-  categorization_analyzer?: MlCategorizationAnalyzer
-  /** If this property is specified, the values of the specified field will be categorized.
-    * The resulting categories must be used in a detector by setting `by_field_name`, `over_field_name`, or `partition_field_name` to the keyword `mlcategory`. */
-  categorization_field_name?: Field
-  /** If `categorization_field_name` is specified, you can also define optional filters.
-    * This property expects an array of regular expressions.
-    * The expressions are used to filter out matching sequences from the categorization field values. */
-  categorization_filters?: string[]
-  /** An array of detector configuration objects.
-    * Detector configuration objects specify which data fields a job analyzes.
-    * They also specify which analytical functions are used.
-    * You can specify multiple detectors for a job. */
+  /** Detector configuration objects specify which data fields a job analyzes. They also specify which analytical functions are used. You can specify multiple detectors for a job. If the detectors array does not contain at least one detector, no analysis can occur and an error is returned. */
   detectors: MlDetectorRead[]
-  /** A comma separated list of influencer field names.
-    * Typically these can be the by, over, or partition fields that are used in the detector configuration.
-    * You might also want to use a field name that is not specifically named in a detector, but is available as part of the input data.
-    * When you use multiple detectors, the use of influencers is recommended as it aggregates results for each influencer entity. */
+  /** A comma separated list of influencer field names. Typically these can be the by, over, or partition fields that are used in the detector configuration. You might also want to use a field name that is not specifically named in a detector, but is available as part of the input data. When you use multiple detectors, the use of influencers is recommended as it aggregates results for each influencer entity. */
   influencers: Field[]
-  /** Advanced configuration option.
-    * Affects the pruning of models that have not been updated for the given time duration.
-    * The value must be set to a multiple of the `bucket_span`.
-    * If set too low, important information may be removed from the model.
-    * Typically, set to `30d` or longer.
-    * If not set, model pruning only occurs if the model memory status reaches the soft limit or the hard limit.
-    * For jobs created in 8.1 and later, the default value is the greater of `30d` or 20 times `bucket_span`. */
-  model_prune_window?: Duration
-  /** The size of the window in which to expect data that is out of time order.
-    * Defaults to no latency.
-    * If you specify a non-zero value, it must be greater than or equal to one second. */
+  /** If `categorization_field_name` is specified, you can also define the analyzer that is used to interpret the categorization field. This property cannot be used at the same time as `categorization_filters`. The categorization analyzer specifies how the `categorization_field` is interpreted by the categorization process. The `categorization_analyzer` field can be specified either as a string or as an object. If it is a string, it must refer to a built-in analyzer or one added by another plugin. */
+  categorization_analyzer?: MlCategorizationAnalyzer
+  /** If this property is specified, the values of the specified field will be categorized. The resulting categories must be used in a detector by setting `by_field_name`, `over_field_name`, or `partition_field_name` to the keyword `mlcategory`. */
+  categorization_field_name?: Field
+  /** If `categorization_field_name` is specified, you can also define optional filters. This property expects an array of regular expressions. The expressions are used to filter out matching sequences from the categorization field values. You can use this functionality to fine tune the categorization by excluding sequences from consideration when categories are defined. For example, you can exclude SQL statements that appear in your log files. This property cannot be used at the same time as `categorization_analyzer`. If you only want to define simple regular expression filters that are applied prior to tokenization, setting this property is the easiest method. If you also want to customize the tokenizer or post-tokenization filtering, use the `categorization_analyzer` property instead and include the filters as pattern_replace character filters. The effect is exactly the same. */
+  categorization_filters?: string[]
+  /** The size of the window in which to expect data that is out of time order. If you specify a non-zero value, it must be greater than or equal to one second. NOTE: Latency is applicable only when you send data by using the post data API. */
   latency?: Duration
-  /** This functionality is reserved for internal use.
-    * It is not supported for use in customer environments and is not subject to the support SLA of official GA features.
-    * If set to `true`, the analysis will automatically find correlations between metrics for a given by field value and report anomalies when those correlations cease to hold. */
+  /** Advanced configuration option. Affects the pruning of models that have not been updated for the given time duration. The value must be set to a multiple of the `bucket_span`. If set too low, important information may be removed from the model. For jobs created in 8.1 and later, the default value is the greater of `30d` or 20 times `bucket_span`. */
+  model_prune_window?: Duration
+  /** This functionality is reserved for internal use. It is not supported for use in customer environments and is not subject to the support SLA of official GA features. If set to `true`, the analysis will automatically find correlations between metrics for a given by field value and report anomalies when those correlations cease to hold. For example, suppose CPU and memory usage on host A is usually highly correlated with the same metrics on host B. Perhaps this correlation occurs because they are running a load-balanced application. If you enable this property, anomalies will be reported when, for example, CPU usage on host A is high and the value of CPU usage on host B is low. That is to say, you’ll see an anomaly when the CPU of host A is unusual given the CPU of host B. To use the `multivariate_by_fields` property, you must also specify `by_field_name` in your detector. */
   multivariate_by_fields?: boolean
   /** Settings related to how categorization interacts with partition fields. */
   per_partition_categorization?: MlPerPartitionCategorization
-  /** If this property is specified, the data that is fed to the job is expected to be pre-summarized.
-    * This property value is the name of the field that contains the count of raw data points that have been summarized.
-    * The same `summary_count_field_name` applies to all detectors in the job. */
+  /** If this property is specified, the data that is fed to the job is expected to be pre-summarized. This property value is the name of the field that contains the count of raw data points that have been summarized. The same `summary_count_field_name` applies to all detectors in the job. NOTE: The `summary_count_field_name` property cannot be used with the `metric` function. */
   summary_count_field_name?: Field
 }
 
@@ -28769,36 +28995,23 @@ export interface MlDetector {
 }
 
 export interface MlDetectorRead {
-  /** The field used to split the data.
-    * In particular, this property is used for analyzing the splits with respect to their own history.
-    * It is used for finding unusual values in the context of the split. */
+  /** The analysis function that is used. For example, `count`, `rare`, `mean`, `min`, `max`, or `sum`. */
+  function: string
+  /** The field used to split the data. In particular, this property is used for analyzing the splits with respect to their own history. It is used for finding unusual values in the context of the split. */
   by_field_name?: Field
-  /** An array of custom rule objects, which enable you to customize the way detectors operate.
-    * For example, a rule may dictate to the detector conditions under which results should be skipped.
-    * Kibana refers to custom rules as job rules. */
+  /** Custom rules enable you to customize the way detectors operate. For example, a rule may dictate conditions under which results should be skipped. Kibana refers to custom rules as job rules. */
   custom_rules?: MlDetectionRule[]
   /** A description of the detector. */
   detector_description?: string
-  /** A unique identifier for the detector.
-    * This identifier is based on the order of the detectors in the `analysis_config`, starting at zero. */
+  /** A unique identifier for the detector. This identifier is based on the order of the detectors in the `analysis_config`, starting at zero. If you specify a value for this property, it is ignored. */
   detector_index?: integer
-  /** Contains one of the following values: `all`, `none`, `by`, or `over`.
-    * If set, frequent entities are excluded from influencing the anomaly results.
-    * Entities can be considered frequent over time or frequent in a population.
-    * If you are working with both over and by fields, then you can set `exclude_frequent` to all for both fields, or to `by` or `over` for those specific fields. */
+  /** If set, frequent entities are excluded from influencing the anomaly results. Entities can be considered frequent over time or frequent in a population. If you are working with both over and by fields, you can set `exclude_frequent` to `all` for both fields, or to `by` or `over` for those specific fields. */
   exclude_frequent?: MlExcludeFrequent
-  /** The field that the detector uses in the function.
-    * If you use an event rate function such as `count` or `rare`, do not specify this field. */
+  /** The field that the detector uses in the function. If you use an event rate function such as count or rare, do not specify this field. The `field_name` cannot contain double quotes or backslashes. */
   field_name?: Field
-  /** The analysis function that is used.
-    * For example, `count`, `rare`, `mean`, `min`, `max`, and `sum`. */
-  function: string
-  /** The field used to split the data.
-    * In particular, this property is used for analyzing the splits with respect to the history of all splits.
-    * It is used for finding unusual values in the population of all splits. */
+  /** The field used to split the data. In particular, this property is used for analyzing the splits with respect to the history of all splits. It is used for finding unusual values in the population of all splits. */
   over_field_name?: Field
-  /** The field used to segment the analysis.
-    * When you use this property, you have completely independent baselines for each value of this field. */
+  /** The field used to segment the analysis. When you use this property, you have completely independent baselines for each value of this field. */
   partition_field_name?: Field
   /** Defines whether a new series is used as the null series when there is no value for the by or partition fields. */
   use_null?: boolean
@@ -34806,9 +35019,23 @@ export interface SecurityGlobalPrivilege {
 
 export type SecurityGrantType = 'password' | 'access_token'
 
-export type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'cross_cluster_replication' | 'cross_cluster_replication_internal' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_data_stream_lifecycle' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'none' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write' | string
+export type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'create_view' | 'cross_cluster_replication' | 'cross_cluster_replication_internal' | 'delete' | 'delete_index' | 'delete_view' | 'index' | 'maintenance' | 'manage' | 'manage_data_stream_lifecycle' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'manage_view' | 'monitor' | 'none' | 'read' | 'read_cross_cluster' | 'read_view_metadata' | 'view_index_metadata' | 'write' | string
 
 export interface SecurityIndicesPrivileges {
+  /** The document fields that the owners of the role have read access to. */
+  field_security?: SecurityFieldSecurity
+  /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
+  names: IndexName | IndexName[]
+  /** The index level privileges that owners of the role have on the specified indices. */
+  privileges: SecurityIndexPrivilege[]
+  /** A search query that defines the documents the owners of the role have access to. A document within the specified indices must match this query for it to be accessible by the owners of the role. */
+  query?: SecurityIndicesPrivilegesQuery
+  /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  allow_restricted_indices?: boolean
+}
+
+export interface SecurityIndicesPrivilegesBase {
   /** The document fields that the owners of the role have read access to. */
   field_security?: SecurityFieldSecurity
   /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
@@ -34864,6 +35091,7 @@ export interface SecurityRemoteIndicesPrivileges {
 }
 
 export interface SecurityRemoteUserIndicesPrivileges {
+  clusters: string[]
   /** The document fields that the owners of the role have read access to. */
   field_security?: SecurityFieldSecurity[]
   /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
@@ -34874,7 +35102,6 @@ export interface SecurityRemoteUserIndicesPrivileges {
   query?: SecurityIndicesPrivilegesQuery[]
   /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
   allow_restricted_indices: boolean
-  clusters: string[]
 }
 
 export interface SecurityReplicationAccess {
@@ -34947,11 +35174,13 @@ export interface SecurityRoleDescriptorRead {
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
   metadata?: Metadata
-  /** A list of users that the API keys can impersonate. */
+  /** A list of users that the API keys can impersonate.
+    * NOTE: In Elastic Cloud Serverless, the run-as feature is disabled.
+    * For API compatibility, you can still specify an empty `run_as` field, but a non-empty list will be rejected. */
   run_as?: string[]
-  /** An optional description of the role descriptor. */
+  /** Optional description of the role descriptor */
   description?: string
-  /** A restriction for when the role descriptor is allowed to be effective. */
+  /** Restriction for when the role descriptor is allowed to be effective. */
   restriction?: SecurityRestriction
   transient_metadata?: Record<string, any>
 }
@@ -35034,6 +35263,19 @@ export interface SecurityUser {
 }
 
 export interface SecurityUserIndicesPrivileges {
+  /** The document fields that the owners of the role have read access to. */
+  field_security?: SecurityFieldSecurity[]
+  /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
+  names: IndexName | IndexName[]
+  /** The index level privileges that owners of the role have on the specified indices. */
+  privileges: SecurityIndexPrivilege[]
+  /** Search queries that define the documents the user has access to. A document within the specified indices must match these queries for it to be accessible by the owners of the role. */
+  query?: SecurityIndicesPrivilegesQuery[]
+  /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
+  allow_restricted_indices: boolean
+}
+
+export interface SecurityUserIndicesPrivilegesBase {
   /** The document fields that the owners of the role have read access to. */
   field_security?: SecurityFieldSecurity[]
   /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
@@ -38827,9 +39069,10 @@ export interface SynonymsSynonymRule {
 }
 
 export interface SynonymsSynonymRuleRead {
-  /** Synonym Rule identifier */
+  /** The identifier for the synonym rule.
+    * If you do not specify a synonym rule ID when you create a rule, an identifier is created automatically by Elasticsearch. */
   id: Id
-  /** Synonyms, in Solr format, that conform the synonym rule. */
+  /** The synonyms that conform the synonym rule in Solr format. */
   synonyms: SynonymsSynonymString
 }
 
