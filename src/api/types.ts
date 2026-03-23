@@ -8389,15 +8389,18 @@ export interface MappingByteNumberProperty extends MappingNumberPropertyBase {
 }
 
 export interface MappingChunkRescorerChunkingSettings {
-  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
-    *
-    *  * If `strategy` is set to `recursive`, you must also specify:
-    *
-    * - `max_chunk_size`
-    * - either `separators` or`separator_group`
-    *
-    * Learn more about different chunking strategies in the linked documentation. */
-  strategy?: string
+  /** The maximum size of a chunk in words.
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
+  max_chunk_size: integer
+  /** The number of overlapping words for chunks.
+    * It is applicable only to a `word` chunking strategy.
+    * This value cannot be higher than half the `max_chunk_size` value. */
+  overlap?: integer
+  /** The number of overlapping sentences for chunks.
+    * It is applicable only for a `sentence` chunking strategy.
+    * It can be either `1` or `0`. */
+  sentence_overlap?: integer
   /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
@@ -8415,18 +8418,15 @@ export interface MappingChunkRescorerChunkingSettings {
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
   separators?: string[]
-  /** The maximum size of a chunk in words.
-    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
-    * This value should not exceed the window size for the associated model. */
-  max_chunk_size: integer
-  /** The number of overlapping words for chunks.
-    * It is applicable only to a `word` chunking strategy.
-    * This value cannot be higher than half the `max_chunk_size` value. */
-  overlap?: integer
-  /** The number of overlapping sentences for chunks.
-    * It is applicable only for a `sentence` chunking strategy.
-    * It can be either `1` or `0`. */
-  sentence_overlap?: integer
+  /** The chunking strategy: `sentence`, `word`, `none` or `recursive`.
+    *
+    *  * If `strategy` is set to `recursive`, you must also specify:
+    *
+    * - `max_chunk_size`
+    * - either `separators` or`separator_group`
+    *
+    * Learn more about different chunking strategies in the linked documentation. */
+  strategy?: string
 }
 
 export interface MappingChunkingSettings {
@@ -8439,6 +8439,18 @@ export interface MappingChunkingSettings {
     *
     * Learn more about different chunking strategies in the linked documentation. */
   strategy: string
+  /** The maximum size of a chunk in words.
+    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
+    * This value should not exceed the window size for the associated model. */
+  max_chunk_size: integer
+  /** The number of overlapping words for chunks.
+    * It is applicable only to a `word` chunking strategy.
+    * This value cannot be higher than half the `max_chunk_size` value. */
+  overlap?: integer
+  /** The number of overlapping sentences for chunks.
+    * It is applicable only for a `sentence` chunking strategy.
+    * It can be either `1` or `0`. */
+  sentence_overlap?: integer
   /** Only applicable to the `recursive` strategy and required when using it.
     *
     * Sets a predefined list of separators in the saved chunking settings based on the selected text type.
@@ -8456,18 +8468,6 @@ export interface MappingChunkingSettings {
     * After splitting, it attempts to recombine smaller pieces into larger chunks that stay within
     * the `max_chunk_size` limit, to reduce the total number of chunks generated. */
   separators?: string[]
-  /** The maximum size of a chunk in words.
-    * This value cannot be lower than `20` (for `sentence` strategy) or `10` (for `word` strategy).
-    * This value should not exceed the window size for the associated model. */
-  max_chunk_size: integer
-  /** The number of overlapping words for chunks.
-    * It is applicable only to a `word` chunking strategy.
-    * This value cannot be higher than half the `max_chunk_size` value. */
-  overlap?: integer
-  /** The number of overlapping sentences for chunks.
-    * It is applicable only for a `sentence` chunking strategy.
-    * It can be either `1` or `0`. */
-  sentence_overlap?: integer
 }
 
 export interface MappingCompletionProperty extends MappingDocValuesPropertyBase {
@@ -27106,50 +27106,28 @@ export interface MlAnalysisConfig {
 }
 
 export interface MlAnalysisConfigRead {
-  /** The size of the interval that the analysis is aggregated into, typically between `5m` and `1h`. */
+  /** The size of the interval that the analysis is aggregated into, typically between `5m` and `1h`. This value should be either a whole number of days or equate to a
+    * whole number of buckets in one day. If the anomaly detection job uses a datafeed with aggregations, this value must also be divisible by the interval of the date histogram aggregation. */
   bucket_span: Duration
-  /** If `categorization_field_name` is specified, you can also define the analyzer that is used to interpret the categorization field.
-    * This property cannot be used at the same time as `categorization_filters`.
-    * The categorization analyzer specifies how the `categorization_field` is interpreted by the categorization process. */
-  categorization_analyzer?: MlCategorizationAnalyzer
-  /** If this property is specified, the values of the specified field will be categorized.
-    * The resulting categories must be used in a detector by setting `by_field_name`, `over_field_name`, or `partition_field_name` to the keyword `mlcategory`. */
-  categorization_field_name?: Field
-  /** If `categorization_field_name` is specified, you can also define optional filters.
-    * This property expects an array of regular expressions.
-    * The expressions are used to filter out matching sequences from the categorization field values. */
-  categorization_filters?: string[]
-  /** An array of detector configuration objects.
-    * Detector configuration objects specify which data fields a job analyzes.
-    * They also specify which analytical functions are used.
-    * You can specify multiple detectors for a job. */
+  /** Detector configuration objects specify which data fields a job analyzes. They also specify which analytical functions are used. You can specify multiple detectors for a job. If the detectors array does not contain at least one detector, no analysis can occur and an error is returned. */
   detectors: MlDetectorRead[]
-  /** A comma separated list of influencer field names.
-    * Typically these can be the by, over, or partition fields that are used in the detector configuration.
-    * You might also want to use a field name that is not specifically named in a detector, but is available as part of the input data.
-    * When you use multiple detectors, the use of influencers is recommended as it aggregates results for each influencer entity. */
+  /** A comma separated list of influencer field names. Typically these can be the by, over, or partition fields that are used in the detector configuration. You might also want to use a field name that is not specifically named in a detector, but is available as part of the input data. When you use multiple detectors, the use of influencers is recommended as it aggregates results for each influencer entity. */
   influencers: Field[]
-  /** Advanced configuration option.
-    * Affects the pruning of models that have not been updated for the given time duration.
-    * The value must be set to a multiple of the `bucket_span`.
-    * If set too low, important information may be removed from the model.
-    * Typically, set to `30d` or longer.
-    * If not set, model pruning only occurs if the model memory status reaches the soft limit or the hard limit.
-    * For jobs created in 8.1 and later, the default value is the greater of `30d` or 20 times `bucket_span`. */
-  model_prune_window?: Duration
-  /** The size of the window in which to expect data that is out of time order.
-    * Defaults to no latency.
-    * If you specify a non-zero value, it must be greater than or equal to one second. */
+  /** If `categorization_field_name` is specified, you can also define the analyzer that is used to interpret the categorization field. This property cannot be used at the same time as `categorization_filters`. The categorization analyzer specifies how the `categorization_field` is interpreted by the categorization process. The `categorization_analyzer` field can be specified either as a string or as an object. If it is a string, it must refer to a built-in analyzer or one added by another plugin. */
+  categorization_analyzer?: MlCategorizationAnalyzer
+  /** If this property is specified, the values of the specified field will be categorized. The resulting categories must be used in a detector by setting `by_field_name`, `over_field_name`, or `partition_field_name` to the keyword `mlcategory`. */
+  categorization_field_name?: Field
+  /** If `categorization_field_name` is specified, you can also define optional filters. This property expects an array of regular expressions. The expressions are used to filter out matching sequences from the categorization field values. You can use this functionality to fine tune the categorization by excluding sequences from consideration when categories are defined. For example, you can exclude SQL statements that appear in your log files. This property cannot be used at the same time as `categorization_analyzer`. If you only want to define simple regular expression filters that are applied prior to tokenization, setting this property is the easiest method. If you also want to customize the tokenizer or post-tokenization filtering, use the `categorization_analyzer` property instead and include the filters as pattern_replace character filters. The effect is exactly the same. */
+  categorization_filters?: string[]
+  /** The size of the window in which to expect data that is out of time order. If you specify a non-zero value, it must be greater than or equal to one second. NOTE: Latency is applicable only when you send data by using the post data API. */
   latency?: Duration
-  /** This functionality is reserved for internal use.
-    * It is not supported for use in customer environments and is not subject to the support SLA of official GA features.
-    * If set to `true`, the analysis will automatically find correlations between metrics for a given by field value and report anomalies when those correlations cease to hold. */
+  /** Advanced configuration option. Affects the pruning of models that have not been updated for the given time duration. The value must be set to a multiple of the `bucket_span`. If set too low, important information may be removed from the model. For jobs created in 8.1 and later, the default value is the greater of `30d` or 20 times `bucket_span`. */
+  model_prune_window?: Duration
+  /** This functionality is reserved for internal use. It is not supported for use in customer environments and is not subject to the support SLA of official GA features. If set to `true`, the analysis will automatically find correlations between metrics for a given by field value and report anomalies when those correlations cease to hold. For example, suppose CPU and memory usage on host A is usually highly correlated with the same metrics on host B. Perhaps this correlation occurs because they are running a load-balanced application. If you enable this property, anomalies will be reported when, for example, CPU usage on host A is high and the value of CPU usage on host B is low. That is to say, you’ll see an anomaly when the CPU of host A is unusual given the CPU of host B. To use the `multivariate_by_fields` property, you must also specify `by_field_name` in your detector. */
   multivariate_by_fields?: boolean
   /** Settings related to how categorization interacts with partition fields. */
   per_partition_categorization?: MlPerPartitionCategorization
-  /** If this property is specified, the data that is fed to the job is expected to be pre-summarized.
-    * This property value is the name of the field that contains the count of raw data points that have been summarized.
-    * The same `summary_count_field_name` applies to all detectors in the job. */
+  /** If this property is specified, the data that is fed to the job is expected to be pre-summarized. This property value is the name of the field that contains the count of raw data points that have been summarized. The same `summary_count_field_name` applies to all detectors in the job. NOTE: The `summary_count_field_name` property cannot be used with the `metric` function. */
   summary_count_field_name?: Field
 }
 
@@ -28005,36 +27983,23 @@ export interface MlDetector {
 }
 
 export interface MlDetectorRead {
-  /** The field used to split the data.
-    * In particular, this property is used for analyzing the splits with respect to their own history.
-    * It is used for finding unusual values in the context of the split. */
+  /** The analysis function that is used. For example, `count`, `rare`, `mean`, `min`, `max`, or `sum`. */
+  function: string
+  /** The field used to split the data. In particular, this property is used for analyzing the splits with respect to their own history. It is used for finding unusual values in the context of the split. */
   by_field_name?: Field
-  /** An array of custom rule objects, which enable you to customize the way detectors operate.
-    * For example, a rule may dictate to the detector conditions under which results should be skipped.
-    * Kibana refers to custom rules as job rules. */
+  /** Custom rules enable you to customize the way detectors operate. For example, a rule may dictate conditions under which results should be skipped. Kibana refers to custom rules as job rules. */
   custom_rules?: MlDetectionRule[]
   /** A description of the detector. */
   detector_description?: string
-  /** A unique identifier for the detector.
-    * This identifier is based on the order of the detectors in the `analysis_config`, starting at zero. */
+  /** A unique identifier for the detector. This identifier is based on the order of the detectors in the `analysis_config`, starting at zero. If you specify a value for this property, it is ignored. */
   detector_index?: integer
-  /** Contains one of the following values: `all`, `none`, `by`, or `over`.
-    * If set, frequent entities are excluded from influencing the anomaly results.
-    * Entities can be considered frequent over time or frequent in a population.
-    * If you are working with both over and by fields, then you can set `exclude_frequent` to all for both fields, or to `by` or `over` for those specific fields. */
+  /** If set, frequent entities are excluded from influencing the anomaly results. Entities can be considered frequent over time or frequent in a population. If you are working with both over and by fields, you can set `exclude_frequent` to `all` for both fields, or to `by` or `over` for those specific fields. */
   exclude_frequent?: MlExcludeFrequent
-  /** The field that the detector uses in the function.
-    * If you use an event rate function such as `count` or `rare`, do not specify this field. */
+  /** The field that the detector uses in the function. If you use an event rate function such as count or rare, do not specify this field. The `field_name` cannot contain double quotes or backslashes. */
   field_name?: Field
-  /** The analysis function that is used.
-    * For example, `count`, `rare`, `mean`, `min`, `max`, and `sum`. */
-  function: string
-  /** The field used to split the data.
-    * In particular, this property is used for analyzing the splits with respect to the history of all splits.
-    * It is used for finding unusual values in the population of all splits. */
+  /** The field used to split the data. In particular, this property is used for analyzing the splits with respect to the history of all splits. It is used for finding unusual values in the population of all splits. */
   over_field_name?: Field
-  /** The field used to segment the analysis.
-    * When you use this property, you have completely independent baselines for each value of this field. */
+  /** The field used to segment the analysis. When you use this property, you have completely independent baselines for each value of this field. */
   partition_field_name?: Field
   /** Defines whether a new series is used as the null series when there is no value for the by or partition fields. */
   use_null?: boolean
@@ -33959,6 +33924,20 @@ export interface SecurityIndicesPrivileges {
   allow_restricted_indices?: boolean
 }
 
+export interface SecurityIndicesPrivilegesBase {
+  /** The document fields that the owners of the role have read access to. */
+  field_security?: SecurityFieldSecurity
+  /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
+  names: IndexName | IndexName[]
+  /** The index level privileges that owners of the role have on the specified indices. */
+  privileges: SecurityIndexPrivilege[]
+  /** A search query that defines the documents the owners of the role have access to. A document within the specified indices must match this query for it to be accessible by the owners of the role. */
+  query?: SecurityIndicesPrivilegesQuery
+  /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  allow_restricted_indices?: boolean
+}
+
 export type SecurityIndicesPrivilegesQuery = string | QueryDslQueryContainer | SecurityRoleTemplateQuery
 
 export interface SecurityManageUserPrivileges {
@@ -34001,6 +33980,7 @@ export interface SecurityRemoteIndicesPrivileges {
 }
 
 export interface SecurityRemoteUserIndicesPrivileges {
+  clusters: string[]
   /** The document fields that the owners of the role have read access to. */
   field_security?: SecurityFieldSecurity[]
   /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
@@ -34011,7 +33991,6 @@ export interface SecurityRemoteUserIndicesPrivileges {
   query?: SecurityIndicesPrivilegesQuery[]
   /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
   allow_restricted_indices: boolean
-  clusters: string[]
 }
 
 export interface SecurityReplicationAccess {
@@ -34084,11 +34063,13 @@ export interface SecurityRoleDescriptorRead {
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
   metadata?: Metadata
-  /** A list of users that the API keys can impersonate. */
+  /** A list of users that the API keys can impersonate.
+    * NOTE: In Elastic Cloud Serverless, the run-as feature is disabled.
+    * For API compatibility, you can still specify an empty `run_as` field, but a non-empty list will be rejected. */
   run_as?: string[]
-  /** An optional description of the role descriptor. */
+  /** Optional description of the role descriptor */
   description?: string
-  /** A restriction for when the role descriptor is allowed to be effective. */
+  /** Restriction for when the role descriptor is allowed to be effective. */
   restriction?: SecurityRestriction
   transient_metadata?: Record<string, any>
 }
@@ -34171,6 +34152,19 @@ export interface SecurityUser {
 }
 
 export interface SecurityUserIndicesPrivileges {
+  /** The document fields that the owners of the role have read access to. */
+  field_security?: SecurityFieldSecurity[]
+  /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
+  names: IndexName | IndexName[]
+  /** The index level privileges that owners of the role have on the specified indices. */
+  privileges: SecurityIndexPrivilege[]
+  /** Search queries that define the documents the user has access to. A document within the specified indices must match these queries for it to be accessible by the owners of the role. */
+  query?: SecurityIndicesPrivilegesQuery[]
+  /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`. */
+  allow_restricted_indices: boolean
+}
+
+export interface SecurityUserIndicesPrivilegesBase {
   /** The document fields that the owners of the role have read access to. */
   field_security?: SecurityFieldSecurity[]
   /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
@@ -37943,9 +37937,10 @@ export interface SynonymsSynonymRule {
 }
 
 export interface SynonymsSynonymRuleRead {
-  /** Synonym Rule identifier */
+  /** The identifier for the synonym rule.
+    * If you do not specify a synonym rule ID when you create a rule, an identifier is created automatically by Elasticsearch. */
   id: Id
-  /** Synonyms, in Solr format, that conform the synonym rule. */
+  /** The synonyms that conform the synonym rule in Solr format. */
   synonyms: SynonymsSynonymString
 }
 
