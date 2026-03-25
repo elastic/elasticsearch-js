@@ -147,8 +147,8 @@ async function build (yamlFiles, clientOptions) {
       // null values
       .filter(Boolean)
 
-    let code = "import { test } from 'tap'\n"
-    code += "import { Client } from '@elastic/elasticsearch'\n\n"
+    let code = 'import { test } from \'tap\'\n'
+    code += 'import { Client } from \'@elastic/elasticsearch\'\n\n'
 
     const requires = tests.find(test => test.requires != null)
     const skip = new Set()
