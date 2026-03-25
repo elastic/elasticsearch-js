@@ -245,8 +245,13 @@ echo "Resolved: ${#RESOLVED_FILES[@]} file(s)"
 echo "Failed:   ${#FAILED_FILES[@]} file(s)"
 
 if [ ${#FAILED_FILES[@]} -gt 0 ]; then
-  failed_list=$(printf '  - `%s`\n' "${FAILED_FILES[@]}")
-  cleanup_on_failure "Could not resolve conflicts in the following files:\n${failed_list}"
+  failed_list=""
+  for f in "${FAILED_FILES[@]}"; do
+    failed_list="${failed_list}  - ${f}
+"
+  done
+  cleanup_on_failure "Could not resolve conflicts in the following files:
+${failed_list}"
 fi
 
 if [ ${#RESOLVED_FILES[@]} -eq 0 ]; then
@@ -266,20 +271,20 @@ git push --set-upstream "${REMOTE}" "${HEAD_BRANCH}"
 PR_TITLE=$(git log -1 --pretty=format:"%s")
 PR_TITLE="[${TARGET_BRANCH}] ${PR_TITLE}"
 
-resolved_list=$(printf '- `%s`\n' "${RESOLVED_FILES[@]}")
+resolved_list=""
+for f in "${RESOLVED_FILES[@]}"; do
+  resolved_list="${resolved_list}- ${f}
+"
+done
 
-PR_BODY=$(cat <<EOF
-Backport #${PR_NUMBER} to branch \`${TARGET_BRANCH}\`.
+PR_BODY="Backport #${PR_NUMBER} to branch ${TARGET_BRANCH}.
 
 ### AI-resolved conflicts
 
 This backport had merge conflicts that were automatically resolved using AI (Claude). The following files had conflicts that were resolved:
 
 ${resolved_list}
-
-> **Please review the conflict resolutions carefully before merging.**
-EOF
-)
+> **Please review the conflict resolutions carefully before merging.**"
 
 PR_URL=$(gh pr create \
   --base "${TARGET_BRANCH}" \
