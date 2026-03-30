@@ -137,7 +137,7 @@ export interface BulkResponseItem {
     * This property is returned only for successful operations. */
   _primary_term?: long
   /** The result of the operation.
-    * Successful values are `created`, `deleted`, and `updated`. */
+    * Possible values are `created`, `updated`, `deleted`, `noop`, and `not_found`. */
   result?: string
   /** The sequence number assigned to the document for the operation.
     * Sequence numbers are used to ensure an older version of a document doesn't overwrite a newer version. */
@@ -265,9 +265,12 @@ export interface CountRequest extends RequestBase {
     * It supports wildcards (`*`).
     * To search all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** The analyzer to use for the query string.
     * This parameter can be used only when the `q` query string parameter is specified. */
@@ -287,7 +290,9 @@ export interface CountRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded, or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
     * This parameter can be used only when the `q` query string parameter is specified. */
@@ -427,9 +432,12 @@ export interface DeleteByQueryRequest extends RequestBase {
     * It supports wildcards (`*`).
     * To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Analyzer to use for the query string.
     * This parameter can be used only when the `q` query string parameter is specified. */
@@ -451,7 +459,9 @@ export interface DeleteByQueryRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** Skips the specified number of documents. */
   from?: long
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
     * This parameter can be used only when the `q` query string parameter is specified. */
@@ -782,13 +792,18 @@ export interface FieldCapsFieldCapability {
 export interface FieldCapsRequest extends RequestBase {
   /** A comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all. */
   index?: Indices
-  /** If false, the request returns an error if any wildcard expression, index alias,
-    * or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request
-    * targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with bar. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `true`, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If true, unmapped fields are included in the response. */
   include_unmapped?: boolean
@@ -1424,8 +1439,17 @@ export interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = R
 }
 
 export interface MsearchMultisearchHeader {
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   index?: Indices
   preference?: string
@@ -1441,7 +1465,12 @@ export interface MsearchMultisearchHeader {
 export interface MsearchRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and index aliases to search. */
   index?: Indices
-  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
@@ -1449,7 +1478,9 @@ export interface MsearchRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If true, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Indicates whether hit.matched_queries should be rendered as a map that includes
     * the name of the matched query associated with its score (true)
@@ -1634,7 +1665,9 @@ export interface OpenPointInTimeRequest extends RequestBase {
   index: Indices
   /** Extend the length of time that the point in time persists. */
   keep_alive: Duration
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** The node or shard the operation should be performed on.
     * By default, it is random. */
@@ -1801,11 +1834,18 @@ export interface RankEvalRequest extends RequestBase {
     * Wildcard (`*`) expressions are supported.
     * To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
-  /** If `true`, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Search operation type */
   search_type?: SearchType
@@ -2121,9 +2161,12 @@ export interface SearchRequest extends RequestBase {
     * It supports wildcards (`*`).
     * To search all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** If `true` and there are shard request timeouts or shard failures, the request returns partial results.
     * If `false`, it returns an error with no partial results.
@@ -2153,7 +2196,9 @@ export interface SearchRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices will be ignored when frozen. */
   ignore_throttled?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, the response includes the score contribution from any named queries.
     *
@@ -3378,15 +3423,20 @@ export interface SearchShardsRequest extends RequestBase {
     * It supports wildcards (`*`).
     * To search all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
@@ -3436,9 +3486,12 @@ export interface SearchTemplateRequest extends RequestBase {
   /** A comma-separated list of data streams, indices, and aliases to search.
     * It supports wildcards (`*`). */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution. */
   ccs_minimize_roundtrips?: boolean
@@ -3448,7 +3501,9 @@ export interface SearchTemplateRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. */
   ignore_throttled?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** The node or shard the operation should be performed on.
     * It is random by default. */
@@ -3732,9 +3787,12 @@ export interface UpdateByQueryRequest extends RequestBase {
     * It supports wildcards (`*`).
     * To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** The analyzer to use for the query string.
     * This parameter can be used only when the `q` query string parameter is specified. */
@@ -3754,7 +3812,9 @@ export interface UpdateByQueryRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** Skips the specified number of documents. */
   from?: long
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
     * This parameter can be used only when the `q` query string parameter is specified. */
@@ -4372,15 +4432,20 @@ export interface IndexingStats {
 export type Indices = IndexName | IndexName[]
 
 export interface IndicesOptions {
-  /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only
-    * missing or closed indices. This behavior applies even if the request targets other open indices. For example,
-    * a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument
     * determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
     * such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If true, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
@@ -10723,8 +10788,12 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   keep_alive?: Duration
   /** If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`. */
   keep_on_completion?: boolean
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-    * (This includes `_all` string or when no indices have been specified) */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Indicate if an error should be returned if there is a partial search failure or timeout */
   allow_partial_search_results?: boolean
@@ -10745,7 +10814,9 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** Whether specified concrete, expanded or aliased indices should be ignored when throttled */
   ignore_throttled?: boolean
-  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Specify whether format-based query failures (such as providing text to a numeric field) should be ignored */
   lenient?: boolean
@@ -14528,13 +14599,18 @@ export interface CatSegmentsRequest extends CatCatRequestBase {
     * determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
     * such as open,hidden. */
   expand_wildcards?: ExpandWildcards
-  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
-    * missing or closed indices. This behavior applies even if the request targets other open indices. For example,
-    * a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If true, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
     * of throwing an exception if index pattern matches closed indices */
@@ -16689,12 +16765,13 @@ export interface ClusterGetComponentTemplateResponse {
 export interface ClusterGetSettingsRequest extends RequestBase {
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
-  /** If `true`, also returns default values for all other cluster settings, reflecting the values
-    * in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
-    * cluster do not all have the same values in their `elasticsearch.yml` config files then the
-    * values returned by this API may vary from invocation to invocation and may not reflect the
-    * values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
-    * fetch the settings for each individual node in your cluster. */
+  /** If `true`, also returns the values of all other cluster settings set in the
+    * `elasticsearch.yml` file on one of the nodes in your cluster, together with the default
+    * values of all other cluster settings on that node. The default value of each setting may
+    * depend on the values of other settings on that node. If the nodes in your cluster do not all
+    * have the same configuration then the values returned by this API may vary from invocation to
+    * invocation and may not reflect the values that Elasticsearch uses in all situations. Use the
+    * `GET _nodes/settings` API to fetch the settings for each individual node in your cluster. */
   include_defaults?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -17114,14 +17191,20 @@ export interface ClusterStateRequest extends RequestBase {
   metric?: ClusterStateClusterStateMetrics
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-    * (This includes `_all` string or when no indices have been specified) */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both */
   expand_wildcards?: ExpandWildcards
   /** Return settings in flat format */
   flat_settings?: boolean
-  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Return local information, do not retrieve the state from master node */
   local?: boolean
@@ -18813,14 +18896,20 @@ export interface EqlGetStatusResponse {
 export interface EqlSearchRequest extends RequestBase {
   /** Comma-separated list of index names to scope the operation */
   index: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-    * (This includes `_all` string or when no indices have been specified) */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
   /** Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution */
   ccs_minimize_roundtrips?: boolean
-  /** If true, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Specifies a subset of projects to target using project
     * metadata tags in a subset of Lucene query syntax.
@@ -18999,7 +19088,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   /** Returns results (especially dates) formatted per the conventions of the locale. */
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: FieldValue[]
+  params?: EsqlESQLParams
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -19329,7 +19418,12 @@ export interface FleetGlobalCheckpointsResponse {
 export interface FleetMsearchRequest extends RequestBase {
   /** A single target to search. If the target is an index alias, it must resolve to a single index. */
   index?: IndexName | IndexAlias
-  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. */
   ccs_minimize_roundtrips?: boolean
@@ -19337,7 +19431,9 @@ export interface FleetMsearchRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If true, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If true, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Maximum number of concurrent searches the multi search API can execute. */
   max_concurrent_searches?: integer
@@ -19385,6 +19481,12 @@ export interface FleetPostSecretResponse {
 export interface FleetSearchRequest extends RequestBase {
   /** A single target to search. If the target is an index alias, it must resolve to a single index. */
   index: IndexName | IndexAlias
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
@@ -19394,6 +19496,9 @@ export interface FleetSearchRequest extends RequestBase {
   df?: string
   expand_wildcards?: ExpandWildcards
   ignore_throttled?: boolean
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: integer
@@ -20778,15 +20883,20 @@ export interface IndicesAddBlockRequest extends RequestBase {
   index: Indices
   /** The block type to add to the index. */
   block: IndicesIndicesBlockOptions
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** The period to wait for the master node.
     * If the master node is not available before the timeout expires, the request fails and returns an error.
@@ -20910,8 +21020,12 @@ export interface IndicesClearCacheRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -20922,7 +21036,9 @@ export interface IndicesClearCacheRequest extends RequestBase {
   fielddata?: boolean
   /** Comma-separated list of field names used to limit the `fielddata` parameter. */
   fields?: Fields
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, clears the query cache. */
   query?: boolean
@@ -20978,14 +21094,20 @@ export interface IndicesCloseCloseShardResult {
 export interface IndicesCloseRequest extends RequestBase {
   /** Comma-separated list or wildcard expression of index names used to limit the request. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -21151,14 +21273,20 @@ export interface IndicesDeleteRequest extends RequestBase {
     * By default, this parameter does not support wildcards (`*`) or `_all`.
     * To use wildcards or `_all`, set the `action.destructive_requires_name` cluster setting to `false`. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -21287,9 +21415,12 @@ export interface IndicesDiskUsageRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit the request.
     * It’s recommended to execute this API with a single index (or the latest backing index of a data stream) as the API consumes resources significantly. */
   index: Indices
-  /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -21298,7 +21429,9 @@ export interface IndicesDiskUsageRequest extends RequestBase {
   /** If `true`, the API performs a flush before analysis.
     * If `false`, the response may not include uncommitted data. */
   flush?: boolean
-  /** If `true`, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Analyzing field disk usage is resource-intensive.
     * To use the API, this parameter must be set to `true`. */
@@ -21328,8 +21461,12 @@ export type IndicesDownsampleResponse = any
 export interface IndicesExistsRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases. Supports wildcards (`*`). */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -21337,7 +21474,9 @@ export interface IndicesExistsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
@@ -21357,14 +21496,20 @@ export interface IndicesExistsAliasRequest extends RequestBase {
   /** Comma-separated list of data streams or indices used to limit the request. Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, requests that include a missing data stream or index in the target indices or data streams return an error. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -21473,15 +21618,20 @@ export interface IndicesFieldUsageStatsInvertedIndex {
 export interface IndicesFieldUsageStatsRequest extends RequestBase {
   /** Comma-separated list or wildcard expression of index names used to limit the request. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `true`, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Comma-separated list or wildcard expressions of fields to include in the statistics. */
   fields?: Fields
@@ -21514,8 +21664,12 @@ export interface IndicesFlushRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To flush all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -21523,7 +21677,9 @@ export interface IndicesFlushRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, the request forces a flush even if there are no changes to commit to the index. */
   force?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, the flush operation blocks until execution when another flush operation is running.
     * If `false`, Elasticsearch returns an error if you request a flush when another flush operation is running. */
@@ -21539,14 +21695,20 @@ export type IndicesFlushResponse = ShardsOperationResponseBase
 export interface IndicesForcemergeRequest extends RequestBase {
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-    * (This includes `_all` string or when no indices have been specified) */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
   /** Specify whether the index should be flushed after performing the operation */
   flush?: boolean
-  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** The number of segments the index should be merged into (default: dynamic) */
   max_num_segments?: long
@@ -21576,9 +21738,12 @@ export interface IndicesGetRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and index aliases used to limit the request.
     * Wildcard expressions (*) are supported. */
   index: Indices
-  /** If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
-    * missing or closed indices. This behavior applies even if the request targets other open indices. For example,
-    * a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard expressions can match. If the request can target data streams, this argument
     * determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
@@ -21586,7 +21751,9 @@ export interface IndicesGetRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If true, returns settings in flat format. */
   flat_settings?: boolean
-  /** If false, requests that target a missing index return an error. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If true, return all default settings in the response. */
   include_defaults?: boolean
@@ -21613,14 +21780,20 @@ export interface IndicesGetAliasRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -21809,14 +21982,20 @@ export interface IndicesGetFieldMappingRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
@@ -21868,14 +22047,20 @@ export interface IndicesGetMappingRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, the request retrieves information from the local node only. */
   local?: boolean
@@ -21930,11 +22115,12 @@ export interface IndicesGetSettingsRequest extends RequestBase {
   index?: Indices
   /** Comma-separated list or wildcard expression of settings to retrieve. */
   name?: Names
-  /** If `false`, the request returns an error if any wildcard expression, index
-    * alias, or `_all` value targets only missing or closed indices. This
-    * behavior applies even if the request targets other open indices. For
-    * example, a request targeting `foo*,bar*` returns an error if an index
-    * starts with foo but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -21942,7 +22128,9 @@ export interface IndicesGetSettingsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, return all default settings in the response. */
   include_defaults?: boolean
@@ -22058,14 +22246,20 @@ export interface IndicesOpenRequest extends RequestBase {
     * To limit a request using `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to false.
     * You can update this setting in the `elasticsearch.yml` file or using the cluster update settings API. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -22374,14 +22568,20 @@ export interface IndicesPutMappingRequest extends RequestBase {
   /** A comma-separated list of index names the mapping should be added to (supports wildcards).
     * Use `_all` or omit to add the mapping on all indices. */
   index: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node.
     * If no response is received before the timeout expires, the request fails and returns an error. */
@@ -22434,11 +22634,12 @@ export interface IndicesPutSettingsRequest extends RequestBase {
     * the request. Supports wildcards (`*`). To target all data streams and
     * indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index
-    * alias, or `_all` value targets only missing or closed indices. This
-    * behavior applies even if the request targets other open indices. For
-    * example, a request targeting `foo*,bar*` returns an error if an index
-    * starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target
     * data streams, this argument determines whether wildcard expressions match
@@ -22447,7 +22648,9 @@ export interface IndicesPutSettingsRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, returns settings in flat format. */
   flat_settings?: boolean
-  /** If `true`, returns settings in flat format. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Period to wait for a connection to the master node. If no response is
     * received before the timeout expires, the request fails and returns an
@@ -22561,6 +22764,8 @@ export interface IndicesRecoveryRecoveryOrigin {
   index?: IndexName
 }
 
+export type IndicesRecoveryRecoveryStage = 'INIT' | 'INDEX' | 'VERIFY_INDEX' | 'TRANSLOG' | 'FINALIZE' | 'DONE'
+
 export interface IndicesRecoveryRecoveryStartStatus {
   check_index_time?: Duration
   check_index_time_in_millis: DurationValue<UnitMillis>
@@ -22572,6 +22777,8 @@ export interface IndicesRecoveryRecoveryStatus {
   shards: IndicesRecoveryShardRecovery[]
 }
 
+export type IndicesRecoveryRecoveryType = 'EMPTY_STORE' | 'EXISTING_STORE' | 'LOCAL_SHARDS' | 'PEER' | 'SNAPSHOT'
+
 export interface IndicesRecoveryRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit the request.
     * Supports wildcards (`*`).
@@ -22581,14 +22788,20 @@ export interface IndicesRecoveryRequest extends RequestBase {
   active_only?: boolean
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, active_only?: never, detailed?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
@@ -22603,7 +22816,8 @@ export interface IndicesRecoveryShardRecovery {
   index: IndicesRecoveryRecoveryIndexStatus
   primary: boolean
   source: IndicesRecoveryRecoveryOrigin
-  stage: string
+  /** The recovery stage. */
+  stage: IndicesRecoveryRecoveryStage
   start?: IndicesRecoveryRecoveryStartStatus
   start_time?: DateTime
   start_time_in_millis: EpochTime<UnitMillis>
@@ -22613,7 +22827,8 @@ export interface IndicesRecoveryShardRecovery {
   total_time?: Duration
   total_time_in_millis: DurationValue<UnitMillis>
   translog: IndicesRecoveryTranslogStatus
-  type: string
+  /** The recovery source type. */
+  type: IndicesRecoveryRecoveryType
   verify_index: IndicesRecoveryVerifyIndex
 }
 
@@ -22638,14 +22853,20 @@ export interface IndicesRefreshRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
@@ -22669,12 +22890,18 @@ export interface IndicesReloadSearchAnalyzersReloadResult {
 export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
   /** A comma-separated list of index names to reload analyzers for */
   index: Indices
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-    * (This includes `_all` string or when no indices have been specified) */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both. */
   expand_wildcards?: ExpandWildcards
-  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Changed resource to reload analyzers from if applicable */
   resource?: string
@@ -22700,15 +22927,20 @@ export interface IndicesRemoveBlockRequest extends RequestBase {
   index: Indices
   /** The block type to remove from the index. */
   block: IndicesIndicesBlockOptions
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** The type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * It supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** The period to wait for the master node.
     * If the master node is not available before the timeout expires, the request fails and returns an error.
@@ -22736,9 +22968,12 @@ export interface IndicesResolveClusterRequest extends RequestBase {
     * If no index expression is specified, information about all remote clusters configured on the local cluster
     * is returned without doing any index matching */
   name?: Names
-  /** If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing
-    * or closed indices. This behavior applies even if the request targets other open indices. For example, a request
-    * targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result.
     * NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
     * options to the `_resolve/cluster` API endpoint that takes no index expression. */
   allow_no_indices?: boolean
@@ -22752,7 +22987,9 @@ export interface IndicesResolveClusterRequest extends RequestBase {
     * NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
     * options to the `_resolve/cluster` API endpoint that takes no index expression. */
   ignore_throttled?: boolean
-  /** If false, the request returns an error if it targets a missing or closed index.
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored.
     * NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
     * options to the `_resolve/cluster` API endpoint that takes no index expression. */
   ignore_unavailable?: boolean
@@ -22796,11 +23033,16 @@ export interface IndicesResolveIndexRequest extends RequestBase {
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices.
-    * For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter. */
   mode?: IndicesIndexMode | IndicesIndexMode[]
@@ -22924,14 +23166,20 @@ export interface IndicesSegmentsRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match.
     * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
     * Supports comma-separated values, such as `open,hidden`. */
   expand_wildcards?: ExpandWildcards
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never }
@@ -22945,20 +23193,39 @@ export interface IndicesSegmentsResponse {
 }
 
 export interface IndicesSegmentsSegment {
+  /** Contains information about whether high compression was enabled and per-field vector formats. */
   attributes: Record<string, string>
+  /** If `true`, the segment is synced to disk. Segments that are synced can survive a hard reboot.
+    * If `false`, the data from uncommitted segments is also stored in the transaction log so that Elasticsearch is able to replay changes on the next start. */
   committed: boolean
+  /** If `true`, Lucene merged all files from the segment into a single file to save file descriptors. */
   compound: boolean
+  /** The number of deleted documents as reported by Lucene, which may be higher or lower than the number of delete operations you have performed.
+    * This number excludes deletes that were performed recently and do not yet belong to a segment.
+    * Deleted documents are cleaned up by the automatic merge process if it makes sense to do so.
+    * Also, Elasticsearch creates extra deleted documents to internally track the recent history of operations on a shard. */
   deleted_docs: long
+  /** Generation number, such as `0`. Elasticsearch increments this generation number for each segment written then uses this number to derive the segment name. */
   generation: integer
+  /** If `true`, the segment is searchable.
+    * If `false`, the segment has most likely been written to disk but needs a refresh to be searchable. */
   search: boolean
+  /** Disk space used by the segment, in bytes. */
   size_in_bytes: double
+  /** The number of documents as reported by Lucene.
+    * This excludes deleted documents and counts any nested documents separately from their parents.
+    * It also excludes documents which were indexed recently and do not yet belong to a segment. */
   num_docs: long
+  /** Version of Lucene used to write the segment. */
   version: VersionString
 }
 
 export interface IndicesSegmentsShardSegmentRouting {
+  /** The node ID of the node that holds the shard. */
   node: string
+  /** If `true`, the shard is a primary shard. */
   primary: boolean
+  /** The state of the shard, such as `STARTED` or `RELOCATING`. */
   state: string
 }
 
@@ -22976,14 +23243,19 @@ export interface IndicesShardStoresIndicesShardStores {
 export interface IndicesShardStoresRequest extends RequestBase {
   /** List of data streams, indices, and aliases used to limit the request. */
   index?: Indices
-  /** If false, the request returns an error if any wildcard expression, index alias, or _all
-    * value targets only missing or closed indices. This behavior applies even if the request
-    * targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams,
     * this argument determines whether wildcard expressions match hidden data streams. */
   expand_wildcards?: ExpandWildcards
-  /** If true, missing or closed indices are not included in the response. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** List of shard health statuses used to limit the request. */
   status?: IndicesShardStoresShardStoreStatus | IndicesShardStoresShardStoreStatus[]
@@ -22998,8 +23270,11 @@ export interface IndicesShardStoresResponse {
 }
 
 export interface IndicesShardStoresShardStoreKeys {
+  /** The status of the store copy, whether it is used as a primary, replica, or not used at all. */
   allocation: IndicesShardStoresShardStoreAllocation
+  /** The allocation ID of the store copy. */
   allocation_id?: Id
+  /** Any exception encountered while opening the shard index or from an earlier engine failure. */
   store_exception?: IndicesShardStoresShardStoreException
 }
 export type IndicesShardStoresShardStore = IndicesShardStoresShardStoreKeys
@@ -23236,7 +23511,7 @@ export interface IndicesStatsMappingStats {
 }
 
 export interface IndicesStatsRequest extends RequestBase {
-  /** Limit the information returned the specific metrics */
+  /** Comma-separated list of metrics used to limit the request. */
   metric?: CommonStatsFlags
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
@@ -23470,8 +23745,12 @@ export interface IndicesValidateQueryRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To search all data streams or indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-    * This behavior applies even if the request targets other open indices. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** If `true`, the validation is executed on all shards instead of one random shard per index. */
   all_shards?: boolean
@@ -23491,7 +23770,9 @@ export interface IndicesValidateQueryRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   /** If `true`, the response returns detailed information if an error has occurred. */
   explain?: boolean
-  /** If `false`, the request returns an error if it targets a missing or closed index. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. */
   lenient?: boolean
@@ -23791,21 +24072,35 @@ export type InferenceAzureAiStudioTaskType = 'completion' | 'rerank' | 'text_emb
 
 export interface InferenceAzureOpenAIServiceSettings {
   /** A valid API key for your Azure OpenAI account.
-    * You must specify either `api_key` or `entra_id`.
-    * If you do not provide either or you provide both, you will receive an error when you try to create your model.
     *
-    * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key. */
+    * IMPORTANT: You must specify either `api_key`, `entra_id`, or `client_secret`.
+    * If you do not provide one or you provide more than one of them, you will receive an error when you try to create your endpoint. */
   api_key?: string
   /** The Azure API version ID to use.
     * It is recommended to use the latest supported non-preview version. */
   api_version: string
+  /** For OAuth 2.0 authentication using the client credentials grant flow.
+    * The application ID that's assigned to your app.
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  client_id?: string
+  /** For OAuth 2.0 authentication using the client credentials grant flow.
+    * The application secret that you created in the Microsoft app registration portal for your app.
+    *
+    * IMPORTANT: You must specify either `api_key`, `entra_id`, or `client_secret`.
+    * If you do not provide one or you provide more than one of them, you will receive an error when you try to create your endpoint.
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  client_secret?: string
   /** The deployment name of your deployed models.
     * Your Azure OpenAI deployments can be found though the Azure OpenAI Studio portal that is linked to your subscription. */
   deployment_id: string
   /** A valid Microsoft Entra token.
-    * You must specify either `api_key` or `entra_id`.
-    * If you do not provide either or you provide both, you will receive an error when you try to create your model. */
+    *
+    * IMPORTANT: You must specify either `api_key`, `entra_id`, or `client_secret`.
+    * If you do not provide one or you provide more than one of them, you will receive an error when you try to create your endpoint. */
   entra_id?: string
   /** This setting helps to minimize the number of rate limit errors returned from Azure.
     * The `azureopenai` service sets a default number of requests allowed per minute depending on the task type.
@@ -23815,14 +24110,41 @@ export interface InferenceAzureOpenAIServiceSettings {
   /** The name of your Azure OpenAI resource.
     * You can find this from the list of resources in the Azure Portal for your subscription. */
   resource_name: string
+  /** For OAuth 2.0 authentication using the client credentials grant flow.
+    * The resource identifier (application ID URI) of the resource you want, suffixed with .default
+    * For example:
+    * ```
+    * "scopes": [
+    *   "https://cognitiveservices.azure.com/.default"
+    * ]
+    * ```
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  scopes?: string[]
+  /** For OAuth 2.0 authentication using the client credentials grant flow.
+    * The directory tenant the application plans to operate against.
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  tenant_id?: string
 }
 
 export type InferenceAzureOpenAIServiceType = 'azureopenai'
 
 export interface InferenceAzureOpenAITaskSettings {
-  /** For a `completion`, `chat_completion` or `text_embedding` task, specify the user issuing the request.
+  /** Specifies the user issuing the request.
     * This information can be used for abuse detection. */
   user?: string
+  /** Specifies custom HTTP header parameters.
+    * For example:
+    * ```
+    * "headers": {
+    *   "Custom-Header": "Some-Value",
+    *   "Another-Custom-Header": "Another-Value"
+    * }
+    * ``` */
+  headers?: Record<string, string>
 }
 
 export type InferenceAzureOpenAITaskType = 'completion' | 'chat_completion' | 'text_embedding'
@@ -24151,8 +24473,12 @@ export interface InferenceCustomResponseParams {
     *     "completion_result":"$.choices[*].message.content"
     *   }
     * } */
-  json_parser: any
+  json_parser: Record<string, string>
 }
+
+export type InferenceCustomServiceInputType = 'classification' | 'clustering' | 'ingest' | 'search'
+
+export type InferenceCustomServiceQueryParameter = string[]
 
 export interface InferenceCustomServiceSettings {
   /** Specifies the batch size used for the semantic_text field. If the field is not provided, the default is 10.
@@ -24162,12 +24488,12 @@ export interface InferenceCustomServiceSettings {
   /** Specifies the HTTP header parameters – such as `Authentication` or `Content-Type` – that are required to access the custom service.
     * For example:
     * ```
-    * "headers":{
+    * "headers": {
     *   "Authorization": "Bearer ${api_key}",
     *   "Content-Type": "application/json;charset=utf-8"
     * }
     * ``` */
-  headers?: any
+  headers?: Record<string, string>
   /** Specifies the input type translation values that are used to replace the `${input_type}` template in the request body.
     * For example:
     * ```
@@ -24186,7 +24512,7 @@ export interface InferenceCustomServiceSettings {
     * * `clustering`
     * * `ingest`
     * * `search` */
-  input_type?: any
+  input_type?: Record<InferenceCustomServiceInputType, string>
   /** Specifies the query parameters as a list of tuples. The arrays inside the `query_parameters` must have two items, a key and a value.
     * For example:
     * ```
@@ -24197,7 +24523,7 @@ export interface InferenceCustomServiceSettings {
     * ]
     * ```
     * If the base url is `https://www.elastic.co` it results in: `https://www.elastic.co?param_key=some_value&param_key=another_value&other_key=other_value`. */
-  query_parameters?: any
+  query_parameters?: InferenceCustomServiceQueryParameter[]
   /** The request configuration object. */
   request: InferenceCustomRequestParams
   /** The response configuration object. */
@@ -24209,12 +24535,14 @@ export interface InferenceCustomServiceSettings {
     *   "api_key":"<api_key>"
     * }
     * ``` */
-  secret_parameters: any
+  secret_parameters: Record<string, string>
   /** The URL endpoint to use for the requests. */
   url?: string
 }
 
 export type InferenceCustomServiceType = 'custom'
+
+export type InferenceCustomTaskParameter = string | integer | double | float | boolean
 
 export interface InferenceCustomTaskSettings {
   /** Specifies parameters that are required to run the custom service. The parameters depend on the model your custom service uses.
@@ -24227,7 +24555,7 @@ export interface InferenceCustomTaskSettings {
     *   }
     * }
     * ``` */
-  parameters?: any
+  parameters?: Record<string, InferenceCustomTaskParameter>
 }
 
 export type InferenceCustomTaskType = 'text_embedding' | 'sparse_embedding' | 'rerank' | 'completion'
@@ -24353,9 +24681,10 @@ export interface InferenceEmbeddingContentObject {
 export interface InferenceEmbeddingContentObjectContents {
   /** The type of input to embed. */
   type: InferenceEmbeddingContentType
-  /** The format of the input. For the `text` type this defaults to `text`. For the `image` type, this defaults to `base64`. */
+  /** The format of the input. For the `text` type this must be `text`. For the `image` type, this must be `base64`.
+    * If not specified, this will default to `text` for the `text` type and `base64` for the `image` type. */
   format?: InferenceEmbeddingContentFormat
-  /** The value of the input to embed. */
+  /** The value of the input to embed. For images, this must be a base64-encoded data URI, i.e. "data:content/type;base64,..." */
   value: string
 }
 
@@ -24423,12 +24752,12 @@ export interface InferenceFireworksAITaskSettings {
   /** For a `completion` or`chat_completion` task. Specifies custom HTTP header parameters.
     * For example:
     * ```
-    * "headers":{
+    * "headers": {
     *   "Custom-Header": "Some-Value",
     *   "Another-Custom-Header": "Another-Value"
     * }
     * ``` */
-  headers?: any
+  headers?: Record<string, string>
 }
 
 export type InferenceFireworksAITaskType = 'chat_completion' | 'completion' | 'text_embedding'
@@ -25135,18 +25464,18 @@ export type InferenceOpenAIServiceType = 'openai'
 export type InferenceOpenAISimilarityType = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceOpenAITaskSettings {
-  /** For a `completion`, `chat_completion`, or `text_embedding` task, specify the user issuing the request.
+  /** Specifies the user issuing the request.
     * This information can be used for abuse detection. */
   user?: string
   /** Specifies custom HTTP header parameters.
     * For example:
     * ```
-    * "headers":{
+    * "headers": {
     *   "Custom-Header": "Some-Value",
     *   "Another-Custom-Header": "Another-Value"
     * }
     * ``` */
-  headers?: any
+  headers?: Record<string, string>
 }
 
 export type InferenceOpenAITaskType = 'chat_completion' | 'completion' | 'text_embedding'
@@ -31667,15 +31996,21 @@ export interface MlPutDatafeedRequest extends RequestBase {
     * This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
     * It must start and end with alphanumeric characters. */
   datafeed_id: Id
-  /** If true, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the `_all`
-    * string or when no indices are specified. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
     * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If true, concrete, expanded, or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If true, unavailable indices (missing or closed) are ignored. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If set, the datafeed performs aggregation searches.
     * Support for aggregations is limited and should be used only with low cardinality data. */
@@ -31782,15 +32117,21 @@ export interface MlPutFilterResponse {
 export interface MlPutJobRequest extends RequestBase {
   /** The identifier for the anomaly detection job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. */
   job_id: Id
-  /** If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
-    * `_all` string or when no indices are specified. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
     * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If `true`, unavailable indices (missing or closed) are ignored. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** Advanced configuration option. Specifies whether this job can open when there is insufficient machine learning node capacity for it to be immediately assigned to a node. By default, if a machine learning node with capacity to run the job cannot immediately be found, the open anomaly detection jobs API returns an error. However, this is also subject to the cluster-wide `xpack.ml.max_lazy_ml_nodes` setting. If this option is set to true, the open anomaly detection jobs API does not return an error and the job waits in the opening state until sufficient machine learning node capacity is available. */
   allow_lazy_open?: boolean
@@ -32319,15 +32660,21 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
     * It must start and end with alphanumeric characters. */
   datafeed_id: Id
-  /** If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
-    * `_all` string or when no indices are specified. */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
   /** Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
     * whether wildcard expressions match hidden data streams. Supports comma-separated values. */
   expand_wildcards?: ExpandWildcards
   /** If `true`, concrete, expanded or aliased indices are ignored when frozen. */
   ignore_throttled?: boolean
-  /** If `true`, unavailable indices (missing or closed) are ignored. */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
     * with low cardinality data. */
@@ -34850,10 +35197,16 @@ export interface SearchableSnapshotsClearCacheRequest extends RequestBase {
   index?: Indices
   /** Whether to expand wildcard expression to concrete indices that are open, closed or both */
   expand_wildcards?: ExpandWildcards
-  /** Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-    * (This includes `_all` string or when no indices have been specified) */
+  /** A setting that does two separate checks on the index expression.
+    * If `false`, the request returns an error (1) if any wildcard expression
+    * (including `_all` and `*`) resolves to zero matching indices or (2) if the
+    * complete set of resolved indices, aliases or data streams is empty after all
+    * expressions are evaluated. If `true`, index expressions that resolve to no
+    * indices are allowed and the request returns an empty result. */
   allow_no_indices?: boolean
-  /** Whether specified concrete indices should be ignored when unavailable (missing or closed) */
+  /** If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+    * index, alias, or data stream that is missing, closed, or otherwise unavailable.
+    * If `true`, unavailable concrete targets are silently ignored. */
   ignore_unavailable?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, expand_wildcards?: never, allow_no_indices?: never, ignore_unavailable?: never }
@@ -39875,6 +40228,13 @@ export interface TransformSettings {
     * given index. The benefits and impact depend on the data being searched, the ingest rate into the source index, and
     * the amount of other consumers searching the same source index. */
   use_point_in_time?: boolean
+  /** Defines the number of retries on a recoverable failure before the transform task is marked as `failed`.
+    * The minimum value is `0` and the maximum is `100`, where `-1` indicates that the transform retries indefinitely.
+    * If unset, the cluster-level setting `num_transform_failure_retries` is used.
+    *
+    * This setting cannot be specified when `unattended` is `true`, because unattended transforms always retry
+    * indefinitely. */
+  num_failure_retries?: integer
   /** If `true`, the transform runs in unattended mode. In unattended mode, the transform retries indefinitely in case
     * of an error which means the transform never fails. Setting the number of retries other than infinite fails in
     * validation. */
