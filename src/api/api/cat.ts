@@ -511,7 +511,7 @@ export default class Cat {
   }
 
   /**
-    * Get a document count. Get quick access to a document count for a data stream, an index, or an entire cluster. The document count only includes live documents, not deleted documents which have not yet been removed by the merge process. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the count API.
+    * Get a document count. Get quick access to a document count for a data stream, an index, or an entire cluster. The document count only includes live documents, not deleted documents which have not yet been removed by the merge process. IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the count API. NOTE: Starting in Elasticsearch 9.3.0, this endpoint also supports the `POST` method. This is primarily intended for project routing in serverless environments.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count | Elasticsearch API documentation}
     */
   async count (this: That, params?: T.CatCountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCountResponse>
@@ -548,10 +548,10 @@ export default class Cat {
     let method = ''
     let path = ''
     if (params.index != null) {
-      method = 'GET'
+      method = body != null ? 'POST' : 'GET'
       path = `/_cat/count/${encodeURIComponent(params.index.toString())}`
     } else {
-      method = 'GET'
+      method = body != null ? 'POST' : 'GET'
       path = '/_cat/count'
     }
     const meta: TransportRequestMetadata = {
@@ -723,7 +723,7 @@ export default class Cat {
   }
 
   /**
-    * Get index information. Get high-level information about indices in a cluster, including backing indices for data streams. Use this request to get the following information for each index in a cluster: - shard count - document count - deleted document count - primary store size - total store size of all shards, including shard replicas These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents. To get an accurate count of Elasticsearch documents, use the cat count or count APIs. CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use an index endpoint.
+    * Get index information. Get high-level information about indices in a cluster, including backing indices for data streams. Use this request to get the following information for each index in a cluster: - shard count - document count - deleted document count - primary store size - total store size of all shards, including shard replicas These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents. To get an accurate count of Elasticsearch documents, use the cat count or count APIs. NOTE: Storage metrics reported by this API reflect the post-compression size of the indices on disk. Because these values are calculated after Elasticsearch compresses the data and processes deletions, they are typically significantly smaller than the raw, uncompressed data volume ingested. IMPORTANT: For Elastic Cloud Serverless, ingest billing is based on the raw, uncompressed data volume, not the post-compression metrics reported here. To learn more, refer to [Elasticsearch billing dimensions](https://www.elastic.co/docs/deploy-manage/cloud-organization/billing/elasticsearch-billing-dimensions). CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use an index endpoint.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-indices | Elasticsearch API documentation}
     */
   async indices (this: That, params?: T.CatIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatIndicesResponse>

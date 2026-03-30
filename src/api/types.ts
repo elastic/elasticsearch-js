@@ -137,7 +137,7 @@ export interface BulkResponseItem {
     * This property is returned only for successful operations. */
   _primary_term?: long
   /** The result of the operation.
-    * Successful values are `created`, `deleted`, and `updated`. */
+    * Possible values are `created`, `updated`, `deleted`, `noop`, and `not_found`. */
   result?: string
   /** The sequence number assigned to the document for the operation.
     * Sequence numbers are used to ensure an older version of a document doesn't overwrite a newer version. */
@@ -18635,7 +18635,7 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
   is_running: boolean
 }
 
-export type EsqlESQLParam = FieldValue | FieldValue[]
+export type EsqlESQLParams = EsqlSingleOrMultiValue[] | EsqlNamedValue[]
 
 export interface EsqlEsqlClusterDetails {
   status: EsqlEsqlClusterStatus
@@ -18692,6 +18692,10 @@ export interface EsqlEsqlShardInfo {
   failed?: integer
 }
 
+export type EsqlNamedValue = Partial<Record<string, EsqlSingleOrMultiValue>>
+
+export type EsqlSingleOrMultiValue = FieldValue | FieldValue[]
+
 interface EsqlTableValuesContainerExclusiveProps {
   integer?: EsqlTableValuesIntegerValue[]
   keyword?: EsqlTableValuesKeywordValue[]
@@ -18734,7 +18738,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   filter?: QueryDslQueryContainer
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: FieldValue[]
+  params?: EsqlESQLParams
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -18889,7 +18893,7 @@ export interface EsqlQueryRequest extends RequestBase {
   filter?: QueryDslQueryContainer
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: EsqlESQLParam[]
+  params?: EsqlESQLParams
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -38728,6 +38732,13 @@ export interface TransformSettings {
     * given index. The benefits and impact depend on the data being searched, the ingest rate into the source index, and
     * the amount of other consumers searching the same source index. */
   use_point_in_time?: boolean
+  /** Defines the number of retries on a recoverable failure before the transform task is marked as `failed`.
+    * The minimum value is `0` and the maximum is `100`, where `-1` indicates that the transform retries indefinitely.
+    * If unset, the cluster-level setting `num_transform_failure_retries` is used.
+    *
+    * This setting cannot be specified when `unattended` is `true`, because unattended transforms always retry
+    * indefinitely. */
+  num_failure_retries?: integer
   /** If `true`, the transform runs in unattended mode. In unattended mode, the transform retries indefinitely in case
     * of an error which means the transform never fails. Setting the number of retries other than infinite fails in
     * validation. */

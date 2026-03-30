@@ -2347,6 +2347,8 @@ The document count only includes live documents, not deleted documents which hav
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the count API.
 
+NOTE: Starting in Elasticsearch 9.3.0, this endpoint also supports the `POST` method. This is primarily intended for project routing in serverless environments.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count)
 
 ```ts
@@ -2450,6 +2452,10 @@ Use this request to get the following information for each index in a cluster:
 
 These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents.
 To get an accurate count of Elasticsearch documents, use the cat count or count APIs.
+
+NOTE: Storage metrics reported by this API reflect the post-compression size of the indices on disk. Because these values are calculated after Elasticsearch compresses the data and processes deletions, they are typically significantly smaller than the raw, uncompressed data volume ingested.
+
+IMPORTANT: For Elastic Cloud Serverless, ingest billing is based on the raw, uncompressed data volume, not the post-compression metrics reported here. To learn more, refer to [Elasticsearch billing dimensions](https://www.elastic.co/docs/deploy-manage/cloud-organization/billing/elasticsearch-billing-dimensions).
 
 CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use an index endpoint.
@@ -4598,7 +4604,7 @@ client.esql.asyncQuery({ query })
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`locale` (Optional, string)**
-- **`params` (Optional, number \| number \| string \| boolean \| null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[]>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -4752,7 +4758,7 @@ client.esql.query({ query })
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`locale` (Optional, string)**
-- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[]>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -15435,7 +15441,7 @@ indexing. The minimum value is 1s and the maximum is 1h.
 These objects define the group by fields and the aggregation to reduce
 the data.
 - **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
@@ -15492,7 +15498,7 @@ The minimum value is `1s` and the maximum is `1h`.
 and the aggregation to reduce the data.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the
 destination index.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`defer_validation` (Optional, boolean)**: When the transform is created, a series of validations occur to ensure its success. For example, there is a
 check for the existence of the source indices and a check that the destination index is not part of the source
@@ -15666,7 +15672,7 @@ the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
 - **`_meta` (Optional, Record<string, User-defined value>)**: Defines optional transform metadata.
 - **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time } \| null)**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
