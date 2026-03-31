@@ -137,7 +137,7 @@ export interface BulkResponseItem {
     * This property is returned only for successful operations. */
   _primary_term?: long
   /** The result of the operation.
-    * Successful values are `created`, `deleted`, and `updated`. */
+    * Possible values are `created`, `updated`, `deleted`, `noop`, and `not_found`. */
   result?: string
   /** The sequence number assigned to the document for the operation.
     * Sequence numbers are used to ensure an older version of a document doesn't overwrite a newer version. */
@@ -18809,7 +18809,7 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
   is_running: boolean
 }
 
-export type EsqlESQLParam = FieldValue | FieldValue[]
+export type EsqlESQLParams = EsqlSingleOrMultiValue[] | EsqlNamedValue[]
 
 export interface EsqlESQLView {
   /** The name of the ES|QL view */
@@ -18873,6 +18873,10 @@ export interface EsqlEsqlShardInfo {
   failed?: integer
 }
 
+export type EsqlNamedValue = Partial<Record<string, EsqlSingleOrMultiValue>>
+
+export type EsqlSingleOrMultiValue = FieldValue | FieldValue[]
+
 interface EsqlTableValuesContainerExclusiveProps {
   integer?: EsqlTableValuesIntegerValue[]
   keyword?: EsqlTableValuesKeywordValue[]
@@ -18915,7 +18919,7 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
   filter?: QueryDslQueryContainer
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: FieldValue[]
+  params?: EsqlESQLParams
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -19116,7 +19120,7 @@ export interface EsqlQueryRequest extends RequestBase {
   filter?: QueryDslQueryContainer
   locale?: string
   /** To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters. */
-  params?: EsqlESQLParam[]
+  params?: EsqlESQLParams
   /** If provided and `true` the response will include an extra `profile` object
     * with information on how the query was executed. This information is for human debugging
     * and its format can change at any time but it can give some insight into the performance
@@ -22568,6 +22572,8 @@ export interface IndicesRecoveryRecoveryOrigin {
   index?: IndexName
 }
 
+export type IndicesRecoveryRecoveryStage = 'INIT' | 'INDEX' | 'VERIFY_INDEX' | 'TRANSLOG' | 'FINALIZE' | 'DONE'
+
 export interface IndicesRecoveryRecoveryStartStatus {
   check_index_time?: Duration
   check_index_time_in_millis: DurationValue<UnitMillis>
@@ -22578,6 +22584,8 @@ export interface IndicesRecoveryRecoveryStartStatus {
 export interface IndicesRecoveryRecoveryStatus {
   shards: IndicesRecoveryShardRecovery[]
 }
+
+export type IndicesRecoveryRecoveryType = 'EMPTY_STORE' | 'EXISTING_STORE' | 'LOCAL_SHARDS' | 'PEER' | 'SNAPSHOT'
 
 export interface IndicesRecoveryRequest extends RequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit the request.
@@ -22610,7 +22618,8 @@ export interface IndicesRecoveryShardRecovery {
   index: IndicesRecoveryRecoveryIndexStatus
   primary: boolean
   source: IndicesRecoveryRecoveryOrigin
-  stage: string
+  /** The recovery stage. */
+  stage: IndicesRecoveryRecoveryStage
   start?: IndicesRecoveryRecoveryStartStatus
   start_time?: DateTime
   start_time_in_millis: EpochTime<UnitMillis>
@@ -22620,7 +22629,8 @@ export interface IndicesRecoveryShardRecovery {
   total_time?: Duration
   total_time_in_millis: DurationValue<UnitMillis>
   translog: IndicesRecoveryTranslogStatus
-  type: string
+  /** The recovery source type. */
+  type: IndicesRecoveryRecoveryType
   verify_index: IndicesRecoveryVerifyIndex
 }
 
@@ -22952,20 +22962,39 @@ export interface IndicesSegmentsResponse {
 }
 
 export interface IndicesSegmentsSegment {
+  /** Contains information about whether high compression was enabled and per-field vector formats. */
   attributes: Record<string, string>
+  /** If `true`, the segment is synced to disk. Segments that are synced can survive a hard reboot.
+    * If `false`, the data from uncommitted segments is also stored in the transaction log so that Elasticsearch is able to replay changes on the next start. */
   committed: boolean
+  /** If `true`, Lucene merged all files from the segment into a single file to save file descriptors. */
   compound: boolean
+  /** The number of deleted documents as reported by Lucene, which may be higher or lower than the number of delete operations you have performed.
+    * This number excludes deletes that were performed recently and do not yet belong to a segment.
+    * Deleted documents are cleaned up by the automatic merge process if it makes sense to do so.
+    * Also, Elasticsearch creates extra deleted documents to internally track the recent history of operations on a shard. */
   deleted_docs: long
+  /** Generation number, such as `0`. Elasticsearch increments this generation number for each segment written then uses this number to derive the segment name. */
   generation: integer
+  /** If `true`, the segment is searchable.
+    * If `false`, the segment has most likely been written to disk but needs a refresh to be searchable. */
   search: boolean
+  /** Disk space used by the segment, in bytes. */
   size_in_bytes: double
+  /** The number of documents as reported by Lucene.
+    * This excludes deleted documents and counts any nested documents separately from their parents.
+    * It also excludes documents which were indexed recently and do not yet belong to a segment. */
   num_docs: long
+  /** Version of Lucene used to write the segment. */
   version: VersionString
 }
 
 export interface IndicesSegmentsShardSegmentRouting {
+  /** The node ID of the node that holds the shard. */
   node: string
+  /** If `true`, the shard is a primary shard. */
   primary: boolean
+  /** The state of the shard, such as `STARTED` or `RELOCATING`. */
   state: string
 }
 
@@ -23005,8 +23034,11 @@ export interface IndicesShardStoresResponse {
 }
 
 export interface IndicesShardStoresShardStoreKeys {
+  /** The status of the store copy, whether it is used as a primary, replica, or not used at all. */
   allocation: IndicesShardStoresShardStoreAllocation
+  /** The allocation ID of the store copy. */
   allocation_id?: Id
+  /** Any exception encountered while opening the shard index or from an earlier engine failure. */
   store_exception?: IndicesShardStoresShardStoreException
 }
 export type IndicesShardStoresShardStore = IndicesShardStoresShardStoreKeys
@@ -23243,7 +23275,7 @@ export interface IndicesStatsMappingStats {
 }
 
 export interface IndicesStatsRequest extends RequestBase {
-  /** Limit the information returned the specific metrics */
+  /** Comma-separated list of metrics used to limit the request. */
   metric?: CommonStatsFlags
   /** A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices */
   index?: Indices
@@ -27420,17 +27452,29 @@ export interface LicenseDeleteRequest extends RequestBase {
 export type LicenseDeleteResponse = AcknowledgedResponseBase
 
 export interface LicenseGetLicenseInformation {
+  /** The date and time the license expires in ISO 8601 format. */
   expiry_date?: DateTime
+  /** The date and time the license expires in milliseconds since the Unix epoch. */
   expiry_date_in_millis?: EpochTime<UnitMillis>
+  /** The date and time the license was issued in ISO 8601 format. */
   issue_date: DateTime
+  /** The date and time the license was issued in milliseconds since the Unix epoch. */
   issue_date_in_millis: EpochTime<UnitMillis>
+  /** The name of the customer or organization that received the license. */
   issued_to: string
+  /** The name of the organization that issued the license. */
   issuer: string
+  /** The maximum number of nodes the license allows. */
   max_nodes: long | null
+  /** The maximum number of resource units the license allows (for enterprise licenses only). */
   max_resource_units?: integer | null
+  /** The status of the license. For example,active, valid, invalid, or expired. */
   status: LicenseLicenseStatus
+  /** The type of the license. For example, trial, basic, gold, platinum, or enterprise. */
   type: LicenseLicenseType
+  /** The unique identifier of the license. */
   uid: Uuid
+  /** The date and time the license was started in milliseconds since the Unix epoch. */
   start_date_in_millis: EpochTime<UnitMillis>
 }
 
@@ -27480,7 +27524,8 @@ export interface LicensePostAcknowledgement {
 }
 
 export interface LicensePostRequest extends RequestBase {
-  /** Specifies whether you acknowledge the license changes. */
+  /** To update a license, you must accept the acknowledge messages and set this parameter to `true`.
+    * In particular, if you are upgrading or downgrading a license, you must acknowlege the feature changes. */
   acknowledge?: boolean
   /** The period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -27502,7 +27547,7 @@ export interface LicensePostResponse {
 }
 
 export interface LicensePostStartBasicRequest extends RequestBase {
-  /** Whether the user has acknowledged acknowledge messages */
+  /** To start a basic license, you must accept the acknowledge messages and set this parameter to `true`. */
   acknowledge?: boolean
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
@@ -27523,7 +27568,7 @@ export interface LicensePostStartBasicResponse {
 }
 
 export interface LicensePostStartTrialRequest extends RequestBase {
-  /** Whether the user has acknowledged acknowledge messages */
+  /** To start a trial, you must accept the acknowledge messages and set this parameter to `true`. */
   acknowledge?: boolean
   /** The type of trial license to generate */
   type?: string
@@ -39408,6 +39453,13 @@ export interface TransformSettings {
     * given index. The benefits and impact depend on the data being searched, the ingest rate into the source index, and
     * the amount of other consumers searching the same source index. */
   use_point_in_time?: boolean
+  /** Defines the number of retries on a recoverable failure before the transform task is marked as `failed`.
+    * The minimum value is `0` and the maximum is `100`, where `-1` indicates that the transform retries indefinitely.
+    * If unset, the cluster-level setting `num_transform_failure_retries` is used.
+    *
+    * This setting cannot be specified when `unattended` is `true`, because unattended transforms always retry
+    * indefinitely. */
+  num_failure_retries?: integer
   /** If `true`, the transform runs in unattended mode. In unattended mode, the transform retries indefinitely in case
     * of an error which means the transform never fails. Setting the number of retries other than infinite fails in
     * validation. */
