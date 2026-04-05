@@ -153,9 +153,11 @@ export default class Sql {
     const path = '/_sql/close'
     const meta: TransportRequestMetadata = {
       name: 'sql.clear_cursor',
-      acceptedParams: [
-        'cursor'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['cursor'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -201,9 +203,11 @@ export default class Sql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -249,13 +253,11 @@ export default class Sql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'delimiter',
-        'format',
-        'keep_alive',
-        'wait_for_completion_timeout'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: ['delimiter', 'format', 'keep_alive', 'wait_for_completion_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -301,9 +303,11 @@ export default class Sql {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -359,27 +363,11 @@ export default class Sql {
     const path = '/_sql'
     const meta: TransportRequestMetadata = {
       name: 'sql.query',
-      acceptedParams: [
-        'allow_partial_search_results',
-        'catalog',
-        'columnar',
-        'cursor',
-        'fetch_size',
-        'field_multi_value_leniency',
-        'filter',
-        'index_using_frozen',
-        'keep_alive',
-        'keep_on_completion',
-        'page_timeout',
-        'params',
-        'query',
-        'project_routing',
-        'request_timeout',
-        'runtime_mappings',
-        'time_zone',
-        'wait_for_completion_timeout',
-        'format'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['allow_partial_search_results', 'catalog', 'columnar', 'cursor', 'fetch_size', 'field_multi_value_leniency', 'filter', 'index_using_frozen', 'keep_alive', 'keep_on_completion', 'page_timeout', 'params', 'query', 'project_routing', 'request_timeout', 'runtime_mappings', 'time_zone', 'wait_for_completion_timeout'],
+        query: ['format']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -434,12 +422,11 @@ export default class Sql {
     const path = '/_sql/translate'
     const meta: TransportRequestMetadata = {
       name: 'sql.translate',
-      acceptedParams: [
-        'fetch_size',
-        'filter',
-        'query',
-        'time_zone'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['fetch_size', 'filter', 'query', 'time_zone'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

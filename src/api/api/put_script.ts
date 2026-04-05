@@ -101,14 +101,11 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
       id: params.id,
       context: params.context
     },
-    acceptedParams: [
-      'id',
-      'context',
-      'script',
-      'context',
-      'master_timeout',
-      'timeout'
-    ]
+    acceptedParams: {
+      path: ['id', 'context'],
+      body: ['script'],
+      query: ['context', 'master_timeout', 'timeout']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

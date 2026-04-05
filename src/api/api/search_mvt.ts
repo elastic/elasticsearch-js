@@ -119,36 +119,11 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
       x: params.x,
       y: params.y
     },
-    acceptedParams: [
-      'index',
-      'field',
-      'zoom',
-      'x',
-      'y',
-      'aggs',
-      'buffer',
-      'exact_bounds',
-      'extent',
-      'fields',
-      'grid_agg',
-      'grid_precision',
-      'grid_type',
-      'query',
-      'runtime_mappings',
-      'size',
-      'sort',
-      'track_total_hits',
-      'with_labels',
-      'project_routing',
-      'exact_bounds',
-      'extent',
-      'grid_agg',
-      'grid_precision',
-      'grid_type',
-      'size',
-      'track_total_hits',
-      'with_labels'
-    ]
+    acceptedParams: {
+      path: ['index', 'field', 'zoom', 'x', 'y'],
+      body: ['aggs', 'buffer', 'exact_bounds', 'extent', 'fields', 'grid_agg', 'grid_precision', 'grid_type', 'query', 'runtime_mappings', 'size', 'sort', 'track_total_hits', 'with_labels', 'project_routing'],
+      query: ['exact_bounds', 'extent', 'grid_agg', 'grid_precision', 'grid_type', 'size', 'track_total_hits', 'with_labels']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

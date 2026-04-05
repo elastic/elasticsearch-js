@@ -85,9 +85,11 @@ export default class Features {
     const path = '/_features'
     const meta: TransportRequestMetadata = {
       name: 'features.get_features',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -131,9 +133,11 @@ export default class Features {
     const path = '/_features/_reset'
     const meta: TransportRequestMetadata = {
       name: 'features.reset_features',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

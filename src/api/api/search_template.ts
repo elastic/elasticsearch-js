@@ -115,28 +115,11 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'explain',
-      'id',
-      'params',
-      'profile',
-      'source',
-      'project_routing',
-      'allow_no_indices',
-      'ccs_minimize_roundtrips',
-      'expand_wildcards',
-      'explain',
-      'ignore_throttled',
-      'ignore_unavailable',
-      'preference',
-      'profile',
-      'routing',
-      'scroll',
-      'search_type',
-      'rest_total_hits_as_int',
-      'typed_keys'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['explain', 'id', 'params', 'profile', 'source', 'project_routing'],
+      query: ['allow_no_indices', 'ccs_minimize_roundtrips', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'preference', 'profile', 'routing', 'scroll', 'search_type', 'rest_total_hits_as_int', 'typed_keys']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

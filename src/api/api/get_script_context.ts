@@ -68,8 +68,11 @@ export default async function GetScriptContextApi (this: That, params?: T.GetScr
   const path = '/_script_context'
   const meta: TransportRequestMetadata = {
     name: 'get_script_context',
-    acceptedParams: [
-    ]
+    acceptedParams: {
+      path: [],
+      body: [],
+      query: []
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

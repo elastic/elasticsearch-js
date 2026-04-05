@@ -97,18 +97,11 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'index_filter',
-      'project_routing',
-      'keep_alive',
-      'ignore_unavailable',
-      'preference',
-      'routing',
-      'expand_wildcards',
-      'allow_partial_search_results',
-      'max_concurrent_shard_requests'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['index_filter', 'project_routing'],
+      query: ['keep_alive', 'ignore_unavailable', 'preference', 'routing', 'expand_wildcards', 'allow_partial_search_results', 'max_concurrent_shard_requests']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

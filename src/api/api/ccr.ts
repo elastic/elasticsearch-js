@@ -239,10 +239,11 @@ export default class Ccr {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -300,25 +301,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'data_stream_name',
-        'leader_index',
-        'max_outstanding_read_requests',
-        'max_outstanding_write_requests',
-        'max_read_request_operation_count',
-        'max_read_request_size',
-        'max_retry_delay',
-        'max_write_buffer_count',
-        'max_write_buffer_size',
-        'max_write_request_operation_count',
-        'max_write_request_size',
-        'read_poll_timeout',
-        'remote_cluster',
-        'settings',
-        'master_timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['data_stream_name', 'leader_index', 'max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout', 'remote_cluster', 'settings'],
+        query: ['master_timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -364,10 +351,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -413,10 +401,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -474,14 +463,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'follower_cluster',
-        'follower_index',
-        'follower_index_uuid',
-        'leader_remote_cluster',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['follower_cluster', 'follower_index', 'follower_index_uuid', 'leader_remote_cluster'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -535,10 +521,11 @@ export default class Ccr {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -584,10 +571,11 @@ export default class Ccr {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -633,10 +621,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -694,25 +683,11 @@ export default class Ccr {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'remote_cluster',
-        'follow_index_pattern',
-        'leader_index_patterns',
-        'leader_index_exclusion_patterns',
-        'max_outstanding_read_requests',
-        'settings',
-        'max_outstanding_write_requests',
-        'read_poll_timeout',
-        'max_read_request_operation_count',
-        'max_read_request_size',
-        'max_retry_delay',
-        'max_write_buffer_count',
-        'max_write_buffer_size',
-        'max_write_request_operation_count',
-        'max_write_request_size',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['remote_cluster', 'follow_index_pattern', 'leader_index_patterns', 'leader_index_exclusion_patterns', 'max_outstanding_read_requests', 'settings', 'max_outstanding_write_requests', 'read_poll_timeout', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size'],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -758,10 +733,11 @@ export default class Ccr {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -819,20 +795,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'max_outstanding_read_requests',
-        'max_outstanding_write_requests',
-        'max_read_request_operation_count',
-        'max_read_request_size',
-        'max_retry_delay',
-        'max_write_buffer_count',
-        'max_write_buffer_size',
-        'max_write_request_operation_count',
-        'max_write_request_size',
-        'read_poll_timeout',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout'],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -876,10 +843,11 @@ export default class Ccr {
     const path = '/_ccr/stats'
     const meta: TransportRequestMetadata = {
       name: 'ccr.stats',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -925,10 +893,11 @@ export default class Ccr {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

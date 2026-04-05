@@ -1,0 +1,325 @@
+---
+name: AI Backport Resolver
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  resolve-backport:
+    name: AI Backport Resolver
+    runs-on: ubuntu-latest
+    # Trigger only when tibdex/backport posts a failure comment on a PR.
+    # The comment is posted by github-actions[bot] or elastic-vault-github-plugin-prod
+    # and starts with "The backport to `<branch>` failed:".
+    if: >
+      github.event.issue.pull_request
+      && (
+        github.event.comment.user.login == 'github-actions[bot]'
+        || github.event.comment.user.login == 'elastic-vault-github-plugin-prod[bot]'
+      )
+      && startsWith(github.event.comment.body, 'The backport to')
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Parse backport failure comment
+        id: parse
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          base_branch=$(echo "${COMMENT_BODY}" | head -1 | sed -n 's/.*The backport to `\([^`]*\)` failed.*/\1/p')
+          if [ -z "${base_branch}" ]; then
+            echo "error: Could not parse target branch from comment"
+            exit 1
+          fi
+
+          commit_sha=$(echo "${COMMENT_BODY}" | grep -oP 'cherry-pick -x --mainline 1 \K[a-f0-9]+')
+          if [ -z "${commit_sha}" ]; then
+            echo "error: Could not parse commit SHA from comment"
+            exit 1
+          fi
+
+          echo "base_branch=${base_branch}" >> "$GITHUB_OUTPUT"
+          echo "commit_sha=${commit_sha}" >> "$GITHUB_OUTPUT"
+
+          echo "Parsed from comment:"
+          echo "  base_branch: ${base_branch}"
+          echo "  commit_sha:  ${commit_sha}"
+
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve backport conflicts with AI
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          PR_NUMBER="${{ github.event.issue.number }}"
+          COMMIT_SHA="${{ steps.parse.outputs.commit_sha }}"
+          TARGET_BRANCH="${{ steps.parse.outputs.base_branch }}"
+          HEAD_BRANCH="backport-${PR_NUMBER}-to-${TARGET_BRANCH}"
+          REPO_SLUG="${{ github.repository }}"
+
+          echo "=== AI Backport Resolver ==="
+          echo "PR:            #${PR_NUMBER}"
+          echo "Commit:        ${COMMIT_SHA}"
+          echo "Target branch: ${TARGET_BRANCH}"
+          echo "Head branch:   ${HEAD_BRANCH}"
+          echo ""
+
+          comment_on_pr() {
+            gh pr comment "${PR_NUMBER}" --body "$1"
+          }
+
+          cleanup_on_failure() {
+            local msg="$1"
+            echo "error: ${msg}"
+            comment_on_pr "$(cat <<EOF
+          **AI Backport Resolver** attempted to resolve conflicts for the backport to \`${TARGET_BRANCH}\` but failed:
+
+          \`\`\`
+          ${msg}
+          \`\`\`
+
+          Manual resolution is still required. See the original failure comment above for instructions.
+          EOF
+          )"
+            exit 1
+          }
+
+          # Set up the backport branch
+          echo "--- Setting up backport branch ---"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git checkout "${TARGET_BRANCH}"
+          git switch --create "${HEAD_BRANCH}"
+
+          # Attempt cherry-pick
+          echo ""
+          echo "--- Attempting cherry-pick ---"
+          set +e
+          cherry_pick_exit=0
+          git cherry-pick -x --mainline 1 "${COMMIT_SHA}" || cherry_pick_exit=$?
+          set -e
+
+          if [ ${cherry_pick_exit} -eq 0 ]; then
+            echo "Cherry-pick succeeded without conflicts. Pushing directly."
+            git push --set-upstream origin "${HEAD_BRANCH}"
+
+            PR_TITLE=$(git log -1 --pretty=format:"%s")
+            PR_TITLE="[${TARGET_BRANCH}] ${PR_TITLE}"
+
+            PR_URL=$(gh pr create \
+              --base "${TARGET_BRANCH}" \
+              --title "${PR_TITLE}" \
+              --body "Backport #${PR_NUMBER} to branch ${TARGET_BRANCH}")
+
+            echo "Backport PR created: ${PR_URL}"
+            comment_on_pr "**AI Backport Resolver** created a backport PR (no conflicts): ${PR_URL}"
+            exit 0
+          fi
+
+          # Cherry-pick failed -- check for conflicts
+          CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
+          if [ -z "${CONFLICTED_FILES}" ]; then
+            cleanup_on_failure "Cherry-pick failed but no conflicted files were found. This may be a non-conflict error."
+          fi
+
+          echo ""
+          echo "--- Conflicted files ---"
+          echo "${CONFLICTED_FILES}"
+          echo ""
+
+          # Fetch the original PR diff for context
+          echo "--- Fetching original PR diff ---"
+          PR_DIFF=$(curl -sL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github.v3.diff" \
+            "https://api.github.com/repos/${REPO_SLUG}/pulls/${PR_NUMBER}")
+
+          if [ -z "${PR_DIFF}" ]; then
+            cleanup_on_failure "Could not fetch PR diff from GitHub API."
+          fi
+
+          RESOLVED_FILES=()
+          FAILED_FILES=()
+
+          resolve_file_with_ai() {
+            local filepath="$1"
+            local conflicted_content
+            conflicted_content=$(cat "$filepath")
+
+            local file_diff
+            file_diff=$(echo "${PR_DIFF}" | awk '
+              /^diff --git/ {
+                if (printing) exit
+                if (index($0, "b/'"${filepath}"'") > 0) printing = 1
+              }
+              printing { print }
+            ' 2>/dev/null || echo "")
+
+            if [ -z "${file_diff}" ]; then
+              file_diff="(full file diff not available for this file)"
+            fi
+
+            local prompt
+            prompt=$(cat <<PROMPT_EOF
+          You are resolving a git merge conflict that occurred during a cherry-pick backport.
+
+          CONTEXT:
+          - Pull request #${PR_NUMBER} was merged to the main branch.
+          - We are backporting (cherry-picking) commit ${COMMIT_SHA} to the \`${TARGET_BRANCH}\` branch.
+          - The cherry-pick produced merge conflicts in this file.
+
+          ORIGINAL PR DIFF FOR THIS FILE:
+          \`\`\`diff
+          ${file_diff}
+          \`\`\`
+
+          FILE WITH CONFLICT MARKERS:
+          \`\`\`
+          ${conflicted_content}
+          \`\`\`
+
+          INSTRUCTIONS:
+          1. Resolve the conflict by applying the intent of the original PR change to the target branch code.
+          2. The code between <<<<<<< HEAD and ======= is from the TARGET branch (${TARGET_BRANCH}).
+          3. The code between ======= and >>>>>>> is from the CHERRY-PICKED commit.
+          4. Produce the final resolved file that correctly incorporates the PR's changes into the target branch.
+          5. Output ONLY the complete resolved file content. No explanations, no markdown fences, no commentary.
+          PROMPT_EOF
+          )
+
+            local json_payload
+            json_payload=$(jq -n \
+              --arg prompt "$prompt" \
+              '{
+                model: "claude-sonnet-4-20250514",
+                max_tokens: 16384,
+                messages: [
+                  {
+                    role: "user",
+                    content: $prompt
+                  }
+                ]
+              }')
+
+            echo "  Calling Claude API for: ${filepath}"
+            local response
+            response=$(curl -s \
+              -H "x-api-key: ${ANTHROPIC_API_KEY}" \
+              -H "anthropic-version: 2023-06-01" \
+              -H "content-type: application/json" \
+              -d "$json_payload" \
+              "https://api.anthropic.com/v1/messages")
+
+            local api_error
+            api_error=$(echo "${response}" | jq -r '.error.message // empty' 2>/dev/null || echo "")
+            if [ -n "${api_error}" ]; then
+              echo "  ERROR: Claude API error for ${filepath}: ${api_error}"
+              return 1
+            fi
+
+            local stop_reason
+            stop_reason=$(echo "${response}" | jq -r '.stop_reason // empty' 2>/dev/null || echo "")
+            if [ "${stop_reason}" != "end_turn" ]; then
+              echo "  WARNING: Unexpected stop_reason '${stop_reason}' for ${filepath}"
+            fi
+
+            local resolved_content
+            resolved_content=$(echo "${response}" | jq -r '.content[0].text // empty' 2>/dev/null || echo "")
+
+            if [ -z "${resolved_content}" ]; then
+              echo "  ERROR: Empty response from Claude for ${filepath}"
+              return 1
+            fi
+
+            if echo "${resolved_content}" | grep -qE '^(<<<<<<<|=======|>>>>>>>)'; then
+              echo "  ERROR: Claude's resolution still contains conflict markers for ${filepath}"
+              return 1
+            fi
+
+            echo "${resolved_content}" > "$filepath"
+            git add "$filepath"
+            echo "  Resolved: ${filepath}"
+            return 0
+          }
+
+          # Resolve each conflicted file
+          echo "--- Resolving conflicts with AI ---"
+          while IFS= read -r filepath; do
+            if resolve_file_with_ai "$filepath"; then
+              RESOLVED_FILES+=("$filepath")
+            else
+              FAILED_FILES+=("$filepath")
+            fi
+          done <<< "${CONFLICTED_FILES}"
+
+          echo ""
+          echo "--- Resolution summary ---"
+          echo "Resolved: ${#RESOLVED_FILES[@]} file(s)"
+          echo "Failed:   ${#FAILED_FILES[@]} file(s)"
+
+          if [ ${#FAILED_FILES[@]} -gt 0 ]; then
+            failed_list=""
+            for f in "${FAILED_FILES[@]}"; do
+              failed_list="${failed_list}  - ${f}
+          "
+            done
+            cleanup_on_failure "Could not resolve conflicts in the following files:
+          ${failed_list}"
+          fi
+
+          if [ ${#RESOLVED_FILES[@]} -eq 0 ]; then
+            cleanup_on_failure "No files were resolved."
+          fi
+
+          # Complete the cherry-pick
+          echo ""
+          echo "--- Completing cherry-pick ---"
+          GIT_EDITOR=true git cherry-pick --continue
+
+          # Push and create PR
+          echo ""
+          echo "--- Creating backport PR ---"
+          git push --set-upstream origin "${HEAD_BRANCH}"
+
+          PR_TITLE=$(git log -1 --pretty=format:"%s")
+          PR_TITLE="[${TARGET_BRANCH}] ${PR_TITLE}"
+
+          resolved_list=""
+          for f in "${RESOLVED_FILES[@]}"; do
+            resolved_list="${resolved_list}- ${f}
+          "
+          done
+
+          PR_BODY="Backport #${PR_NUMBER} to branch ${TARGET_BRANCH}.
+
+          ### AI-resolved conflicts
+
+          This backport had merge conflicts that were automatically resolved using AI (Claude). The following files had conflicts that were resolved:
+
+          ${resolved_list}
+          > **Please review the conflict resolutions carefully before merging.**"
+
+          PR_URL=$(gh pr create \
+            --base "${TARGET_BRANCH}" \
+            --title "${PR_TITLE}" \
+            --body "${PR_BODY}" \
+            --label "ai-resolved-backport")
+
+          echo "Backport PR created: ${PR_URL}"
+
+          comment_on_pr "**AI Backport Resolver** resolved the conflicts and created a backport PR: ${PR_URL}
+
+          Files with AI-resolved conflicts:
+          ${resolved_list}"
+
+          echo ""
+          echo "=== Done ==="

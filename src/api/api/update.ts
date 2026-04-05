@@ -110,30 +110,11 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
       id: params.id,
       index: params.index
     },
-    acceptedParams: [
-      'id',
-      'index',
-      'detect_noop',
-      'doc',
-      'doc_as_upsert',
-      'script',
-      'scripted_upsert',
-      '_source',
-      'upsert',
-      'if_primary_term',
-      'if_seq_no',
-      'include_source_on_error',
-      'lang',
-      'refresh',
-      'require_alias',
-      'retry_on_conflict',
-      'routing',
-      'timeout',
-      'wait_for_active_shards',
-      '_source',
-      '_source_excludes',
-      '_source_includes'
-    ]
+    acceptedParams: {
+      path: ['id', 'index'],
+      body: ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', '_source', 'upsert'],
+      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'lang', 'refresh', 'require_alias', 'retry_on_conflict', 'routing', 'timeout', 'wait_for_active_shards', '_source', '_source_excludes', '_source_includes']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

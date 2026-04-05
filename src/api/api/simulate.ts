@@ -110,16 +110,11 @@ export default class Simulate {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'docs',
-        'component_template_substitutions',
-        'index_template_substitutions',
-        'mapping_addition',
-        'pipeline_substitutions',
-        'pipeline',
-        'merge_type'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['docs', 'component_template_substitutions', 'index_template_substitutions', 'mapping_addition', 'pipeline_substitutions'],
+        query: ['pipeline', 'merge_type']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

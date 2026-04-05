@@ -44,7 +44,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 
 /**
   * Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option in the search API.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-knn-search | Elasticsearch API documentation}
   */
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.KnnSearchResponse<TDocument>, unknown>>
@@ -95,16 +94,11 @@ export default async function KnnSearchApi<TDocument = unknown> (this: That, par
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      '_source',
-      'docvalue_fields',
-      'stored_fields',
-      'fields',
-      'filter',
-      'knn',
-      'routing'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['_source', 'docvalue_fields', 'stored_fields', 'fields', 'filter', 'knn'],
+      query: ['routing']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

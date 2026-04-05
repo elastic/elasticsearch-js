@@ -214,9 +214,11 @@ export default class Fleet {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -261,9 +263,11 @@ export default class Fleet {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -309,13 +313,11 @@ export default class Fleet {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'wait_for_advance',
-        'wait_for_index',
-        'checkpoints',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['wait_for_advance', 'wait_for_index', 'checkpoints', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -370,23 +372,11 @@ export default class Fleet {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'searches',
-        'allow_no_indices',
-        'ccs_minimize_roundtrips',
-        'expand_wildcards',
-        'ignore_throttled',
-        'ignore_unavailable',
-        'max_concurrent_searches',
-        'max_concurrent_shard_requests',
-        'pre_filter_shard_size',
-        'search_type',
-        'rest_total_hits_as_int',
-        'typed_keys',
-        'wait_for_checkpoints',
-        'allow_partial_search_results'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['searches'],
+        query: ['allow_no_indices', 'ccs_minimize_roundtrips', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'max_concurrent_searches', 'max_concurrent_shard_requests', 'pre_filter_shard_size', 'search_type', 'rest_total_hits_as_int', 'typed_keys', 'wait_for_checkpoints', 'allow_partial_search_results']
+      }
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
@@ -440,9 +430,11 @@ export default class Fleet {
     const path = '/_fleet/secret'
     const meta: TransportRequestMetadata = {
       name: 'fleet.post_secret',
-      acceptedParams: [
-        'value'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['value'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -500,84 +492,11 @@ export default class Fleet {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'aggregations',
-        'aggs',
-        'collapse',
-        'explain',
-        'ext',
-        'from',
-        'highlight',
-        'track_total_hits',
-        'indices_boost',
-        'docvalue_fields',
-        'min_score',
-        'post_filter',
-        'profile',
-        'query',
-        'rescore',
-        'script_fields',
-        'search_after',
-        'size',
-        'slice',
-        'sort',
-        '_source',
-        'fields',
-        'suggest',
-        'terminate_after',
-        'timeout',
-        'track_scores',
-        'version',
-        'seq_no_primary_term',
-        'stored_fields',
-        'pit',
-        'runtime_mappings',
-        'stats',
-        'allow_no_indices',
-        'analyzer',
-        'analyze_wildcard',
-        'batched_reduce_size',
-        'ccs_minimize_roundtrips',
-        'default_operator',
-        'df',
-        'docvalue_fields',
-        'expand_wildcards',
-        'explain',
-        'ignore_throttled',
-        'ignore_unavailable',
-        'lenient',
-        'max_concurrent_shard_requests',
-        'preference',
-        'pre_filter_shard_size',
-        'request_cache',
-        'routing',
-        'scroll',
-        'search_type',
-        'stats',
-        'stored_fields',
-        'suggest_field',
-        'suggest_mode',
-        'suggest_size',
-        'suggest_text',
-        'terminate_after',
-        'timeout',
-        'track_total_hits',
-        'track_scores',
-        'typed_keys',
-        'rest_total_hits_as_int',
-        'version',
-        '_source',
-        '_source_excludes',
-        '_source_includes',
-        'seq_no_primary_term',
-        'q',
-        'size',
-        'from',
-        'sort',
-        'wait_for_checkpoints',
-        'allow_partial_search_results'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats'],
+        query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort', 'wait_for_checkpoints', 'allow_partial_search_results']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

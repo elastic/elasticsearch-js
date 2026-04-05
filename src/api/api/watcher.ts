@@ -210,10 +210,11 @@ export default class Watcher {
         watch_id: params.watch_id,
         action_id: params.action_id
       },
-      acceptedParams: [
-        'watch_id',
-        'action_id'
-      ]
+      acceptedParams: {
+        path: ['watch_id', 'action_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -259,9 +260,11 @@ export default class Watcher {
       pathParts: {
         watch_id: params.watch_id
       },
-      acceptedParams: [
-        'watch_id'
-      ]
+      acceptedParams: {
+        path: ['watch_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -307,9 +310,11 @@ export default class Watcher {
       pathParts: {
         watch_id: params.watch_id
       },
-      acceptedParams: [
-        'watch_id'
-      ]
+      acceptedParams: {
+        path: ['watch_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -355,9 +360,11 @@ export default class Watcher {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -423,17 +430,11 @@ export default class Watcher {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'action_modes',
-        'alternative_input',
-        'ignore_condition',
-        'record_execution',
-        'simulated_actions',
-        'trigger_data',
-        'watch',
-        'debug'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['action_modes', 'alternative_input', 'ignore_condition', 'record_execution', 'simulated_actions', 'trigger_data', 'watch'],
+        query: ['debug']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -477,9 +478,11 @@ export default class Watcher {
     const path = '/_watcher/settings'
     const meta: TransportRequestMetadata = {
       name: 'watcher.get_settings',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -525,9 +528,11 @@ export default class Watcher {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -585,21 +590,11 @@ export default class Watcher {
       pathParts: {
         id: params.id
       },
-      acceptedParams: [
-        'id',
-        'actions',
-        'condition',
-        'input',
-        'metadata',
-        'throttle_period',
-        'throttle_period_in_millis',
-        'transform',
-        'trigger',
-        'active',
-        'if_primary_term',
-        'if_seq_no',
-        'version'
-      ]
+      acceptedParams: {
+        path: ['id'],
+        body: ['actions', 'condition', 'input', 'metadata', 'throttle_period', 'throttle_period_in_millis', 'transform', 'trigger'],
+        query: ['active', 'if_primary_term', 'if_seq_no', 'version']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -655,13 +650,11 @@ export default class Watcher {
     const path = '/_watcher/_query/watches'
     const meta: TransportRequestMetadata = {
       name: 'watcher.query_watches',
-      acceptedParams: [
-        'from',
-        'size',
-        'query',
-        'sort',
-        'search_after'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['from', 'size', 'query', 'sort', 'search_after'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -705,9 +698,11 @@ export default class Watcher {
     const path = '/_watcher/_start'
     const meta: TransportRequestMetadata = {
       name: 'watcher.start',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -761,11 +756,11 @@ export default class Watcher {
       pathParts: {
         metric: params.metric
       },
-      acceptedParams: [
-        'metric',
-        'emit_stacktraces',
-        'metric'
-      ]
+      acceptedParams: {
+        path: ['metric'],
+        body: [],
+        query: ['emit_stacktraces', 'metric']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -809,9 +804,11 @@ export default class Watcher {
     const path = '/_watcher/_stop'
     const meta: TransportRequestMetadata = {
       name: 'watcher.stop',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -867,12 +864,11 @@ export default class Watcher {
     const path = '/_watcher/settings'
     const meta: TransportRequestMetadata = {
       name: 'watcher.update_settings',
-      acceptedParams: [
-        'index.auto_expand_replicas',
-        'index.number_of_replicas',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['index.auto_expand_replicas', 'index.number_of_replicas'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

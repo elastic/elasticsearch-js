@@ -157,10 +157,11 @@ export default class Nodes {
         node_id: params.node_id,
         max_archive_version: params.max_archive_version
       },
-      acceptedParams: [
-        'node_id',
-        'max_archive_version'
-      ]
+      acceptedParams: {
+        path: ['node_id', 'max_archive_version'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -206,9 +207,11 @@ export default class Nodes {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -262,16 +265,11 @@ export default class Nodes {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'ignore_idle_threads',
-        'interval',
-        'snapshots',
-        'threads',
-        'timeout',
-        'type',
-        'sort'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: ['ignore_idle_threads', 'interval', 'snapshots', 'threads', 'timeout', 'type', 'sort']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -332,12 +330,11 @@ export default class Nodes {
         node_id: params.node_id,
         metric: params.metric
       },
-      acceptedParams: [
-        'node_id',
-        'metric',
-        'flat_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id', 'metric'],
+        body: [],
+        query: ['flat_settings', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -403,11 +400,11 @@ export default class Nodes {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'secure_settings_password',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: ['secure_settings_password'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -475,20 +472,11 @@ export default class Nodes {
         metric: params.metric,
         index_metric: params.index_metric
       },
-      acceptedParams: [
-        'node_id',
-        'metric',
-        'index_metric',
-        'completion_fields',
-        'fielddata_fields',
-        'fields',
-        'groups',
-        'include_segment_file_sizes',
-        'level',
-        'timeout',
-        'types',
-        'include_unloaded_segments'
-      ]
+      acceptedParams: {
+        path: ['node_id', 'metric', 'index_metric'],
+        body: [],
+        query: ['completion_fields', 'fielddata_fields', 'fields', 'groups', 'include_segment_file_sizes', 'level', 'timeout', 'types', 'include_unloaded_segments']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -549,11 +537,11 @@ export default class Nodes {
         node_id: params.node_id,
         metric: params.metric
       },
-      acceptedParams: [
-        'node_id',
-        'metric',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id', 'metric'],
+        body: [],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

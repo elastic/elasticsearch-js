@@ -226,16 +226,6 @@ export default class Indices {
           'timeout'
         ]
       },
-      'indices.delete_sample_configuration': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'master_timeout',
-          'timeout'
-        ]
-      },
       'indices.delete_template': {
         path: [
           'name'
@@ -397,13 +387,6 @@ export default class Indices {
           'master_timeout'
         ]
       },
-      'indices.get_all_sample_configuration': {
-        path: [],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
       'indices.get_data_lifecycle': {
         path: [
           'name'
@@ -499,29 +482,6 @@ export default class Indices {
         ]
       },
       'indices.get_migrate_reindex_status': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: []
-      },
-      'indices.get_sample': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: []
-      },
-      'indices.get_sample_configuration': {
-        path: [
-          'index'
-        ],
-        body: [],
-        query: [
-          'master_timeout'
-        ]
-      },
-      'indices.get_sample_stats': {
         path: [
           'index'
         ],
@@ -720,22 +680,6 @@ export default class Indices {
           'master_timeout',
           'timeout',
           'write_index_only'
-        ]
-      },
-      'indices.put_sample_configuration': {
-        path: [
-          'index'
-        ],
-        body: [
-          'rate',
-          'max_samples',
-          'max_size',
-          'time_to_live',
-          'if'
-        ],
-        query: [
-          'master_timeout',
-          'timeout'
         ]
       },
       'indices.put_settings': {
@@ -1056,15 +1000,11 @@ export default class Indices {
         index: params.index,
         block: params.block
       },
-      acceptedParams: [
-        'index',
-        'block',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index', 'block'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1130,19 +1070,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'analyzer',
-        'attributes',
-        'char_filter',
-        'explain',
-        'field',
-        'filter',
-        'normalizer',
-        'text',
-        'tokenizer',
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['analyzer', 'attributes', 'char_filter', 'explain', 'field', 'filter', 'normalizer', 'text', 'tokenizer'],
+        query: ['index']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1188,9 +1120,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1244,17 +1178,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'fielddata',
-        'fields',
-        'ignore_unavailable',
-        'query',
-        'request'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['index', 'allow_no_indices', 'expand_wildcards', 'fielddata', 'fields', 'ignore_unavailable', 'query', 'request']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1313,15 +1241,11 @@ export default class Indices {
         index: params.index,
         target: params.target
       },
-      acceptedParams: [
-        'index',
-        'target',
-        'aliases',
-        'settings',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index', 'target'],
+        body: ['aliases', 'settings'],
+        query: ['master_timeout', 'timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1367,15 +1291,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1433,15 +1353,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'aliases',
-        'mappings',
-        'settings',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['aliases', 'mappings', 'settings'],
+        query: ['master_timeout', 'timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1487,11 +1403,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1540,11 +1456,11 @@ export default class Indices {
         source: params.source,
         dest: params.dest
       },
-      acceptedParams: [
-        'source',
-        'dest',
-        'create_from'
-      ]
+      acceptedParams: {
+        path: ['source', 'dest'],
+        body: ['create_from'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1598,10 +1514,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expand_wildcards'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['expand_wildcards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1647,14 +1564,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1708,12 +1622,11 @@ export default class Indices {
         index: params.index,
         name: params.name
       },
-      acceptedParams: [
-        'index',
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index', 'name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1759,12 +1672,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expand_wildcards',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['expand_wildcards', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1810,11 +1722,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'expand_wildcards'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'expand_wildcards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1860,12 +1772,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expand_wildcards',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['expand_wildcards', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1911,61 +1822,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Delete sampling configuration. Delete the sampling configuration for the specified index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
-    */
-  async deleteSampleConfiguration (this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteSampleConfigurationResponse>
-  async deleteSampleConfiguration (this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteSampleConfigurationResponse, unknown>>
-  async deleteSampleConfiguration (this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteSampleConfigurationResponse>
-  async deleteSampleConfiguration (this: That, params: T.IndicesDeleteSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this[kAcceptedParams]['indices.delete_sample_configuration']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
       }
-    }
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'DELETE'
-    const path = `/${encodeURIComponent(params.index.toString())}/_sample/config`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.delete_sample_configuration',
-      pathParts: {
-        index: params.index
-      },
-      acceptedParams: [
-        'index',
-        'master_timeout',
-        'timeout'
-      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2011,11 +1872,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2061,14 +1922,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flush',
-        'ignore_unavailable',
-        'run_expensive_tasks'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'flush', 'ignore_unavailable', 'run_expensive_tasks']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2117,11 +1975,11 @@ export default class Indices {
         index: params.index,
         target_index: params.target_index
       },
-      acceptedParams: [
-        'index',
-        'target_index',
-        'config'
-      ]
+      acceptedParams: {
+        path: ['index', 'target_index'],
+        body: ['config'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2167,15 +2025,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flat_settings',
-        'ignore_unavailable',
-        'include_defaults',
-        'local'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'include_defaults', 'local']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2229,14 +2083,11 @@ export default class Indices {
         name: params.name,
         index: params.index
       },
-      acceptedParams: [
-        'name',
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name', 'index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2282,12 +2133,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'local',
-        'flat_settings',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['local', 'flat_settings', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2333,12 +2183,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'flat_settings',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['flat_settings', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2384,11 +2233,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'include_defaults',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['include_defaults', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2434,13 +2283,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'fields'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'fields']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2494,14 +2341,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'force',
-        'ignore_unavailable',
-        'wait_if_ongoing'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'force', 'ignore_unavailable', 'wait_if_ongoing']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2555,16 +2399,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flush',
-        'ignore_unavailable',
-        'max_num_segments',
-        'only_expunge_deletes',
-        'wait_for_completion'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'flush', 'ignore_unavailable', 'max_num_segments', 'only_expunge_deletes', 'wait_for_completion']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2610,17 +2449,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flat_settings',
-        'ignore_unavailable',
-        'include_defaults',
-        'local',
-        'master_timeout',
-        'features'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'include_defaults', 'local', 'master_timeout', 'features']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2681,60 +2514,11 @@ export default class Indices {
         name: params.name,
         index: params.index
       },
-      acceptedParams: [
-        'name',
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout'
-      ]
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Get all sampling configurations. Get the sampling configurations for all indices.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
-    */
-  async getAllSampleConfiguration (this: That, params?: T.IndicesGetAllSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAllSampleConfigurationResponse>
-  async getAllSampleConfiguration (this: That, params?: T.IndicesGetAllSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetAllSampleConfigurationResponse, unknown>>
-  async getAllSampleConfiguration (this: That, params?: T.IndicesGetAllSampleConfigurationRequest, options?: TransportRequestOptions): Promise<T.IndicesGetAllSampleConfigurationResponse>
-  async getAllSampleConfiguration (this: That, params?: T.IndicesGetAllSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this[kAcceptedParams]['indices.get_all_sample_configuration']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
+      acceptedParams: {
+        path: ['name', 'index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout']
       }
-    }
-
-    params = params ?? {}
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'GET'
-    const path = '/_sample/config'
-    const meta: TransportRequestMetadata = {
-      name: 'indices.get_all_sample_configuration',
-      acceptedParams: [
-        'master_timeout'
-      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2780,12 +2564,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expand_wildcards',
-        'include_defaults',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['expand_wildcards', 'include_defaults', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2829,8 +2612,11 @@ export default class Indices {
     const path = '/_lifecycle/stats'
     const meta: TransportRequestMetadata = {
       name: 'indices.get_data_lifecycle_stats',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2884,13 +2670,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expand_wildcards',
-        'include_defaults',
-        'master_timeout',
-        'verbose'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['expand_wildcards', 'include_defaults', 'master_timeout', 'verbose']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2936,10 +2720,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2985,11 +2770,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'expand_wildcards',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['expand_wildcards', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3035,10 +2820,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3092,14 +2878,11 @@ export default class Indices {
         fields: params.fields,
         index: params.index
       },
-      acceptedParams: [
-        'fields',
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'include_defaults'
-      ]
+      acceptedParams: {
+        path: ['fields', 'index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'include_defaults']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3153,13 +2936,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'local',
-        'flat_settings',
-        'master_timeout',
-        'include_defaults'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['local', 'flat_settings', 'master_timeout', 'include_defaults']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3213,14 +2994,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3266,154 +3044,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Request for a random sample of raw documents ingested into the given index or data stream.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
-    */
-  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleResponse>
-  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleResponse, unknown>>
-  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSampleResponse>
-  async getSample (this: That, params: T.IndicesGetSampleRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this[kAcceptedParams]['indices.get_sample']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
       }
-    }
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_sample`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.get_sample',
-      pathParts: {
-        index: params.index
-      },
-      acceptedParams: [
-        'index'
-      ]
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Get sampling configuration. Get the sampling configuration for the specified index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
-    */
-  async getSampleConfiguration (this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleConfigurationResponse>
-  async getSampleConfiguration (this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleConfigurationResponse, unknown>>
-  async getSampleConfiguration (this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSampleConfigurationResponse>
-  async getSampleConfiguration (this: That, params: T.IndicesGetSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this[kAcceptedParams]['indices.get_sample_configuration']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_sample/config`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.get_sample_configuration',
-      pathParts: {
-        index: params.index
-      },
-      acceptedParams: [
-        'index',
-        'master_timeout'
-      ]
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Request stats for a random sample of raw documents ingested into the given index or data stream.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
-    */
-  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSampleStatsResponse>
-  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetSampleStatsResponse, unknown>>
-  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSampleStatsResponse>
-  async getSampleStats (this: That, params: T.IndicesGetSampleStatsRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath
-    } = this[kAcceptedParams]['indices.get_sample_stats']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
-      }
-    }
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_sample/stats`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.get_sample_stats',
-      pathParts: {
-        index: params.index
-      },
-      acceptedParams: [
-        'index'
-      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3474,17 +3109,11 @@ export default class Indices {
         index: params.index,
         name: params.name
       },
-      acceptedParams: [
-        'index',
-        'name',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flat_settings',
-        'ignore_unavailable',
-        'include_defaults',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['index', 'name'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'include_defaults', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3538,12 +3167,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'flat_settings',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['flat_settings', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3588,9 +3216,11 @@ export default class Indices {
     const path = '/_migration/reindex'
     const meta: TransportRequestMetadata = {
       name: 'indices.migrate_reindex',
-      acceptedParams: [
-        'reindex'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['reindex'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3636,11 +3266,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3695,9 +3325,11 @@ export default class Indices {
     const path = '/_data_stream/_modify'
     const meta: TransportRequestMetadata = {
       name: 'indices.modify_data_stream',
-      acceptedParams: [
-        'actions'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['actions'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3743,15 +3375,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3797,10 +3425,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3866,17 +3495,11 @@ export default class Indices {
         index: params.index,
         name: params.name
       },
-      acceptedParams: [
-        'index',
-        'name',
-        'filter',
-        'index_routing',
-        'is_write_index',
-        'routing',
-        'search_routing',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index', 'name'],
+        body: ['filter', 'index_routing', 'is_write_index', 'routing', 'search_routing'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3934,16 +3557,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'data_retention',
-        'downsampling',
-        'downsampling_method',
-        'enabled',
-        'expand_wildcards',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['data_retention', 'downsampling', 'downsampling_method', 'enabled'],
+        query: ['expand_wildcards', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -3991,13 +3609,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'mappings',
-        'dry_run',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['mappings'],
+        query: ['dry_run', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4055,13 +3671,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'failure_store',
-        'expand_wildcards',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['failure_store'],
+        query: ['expand_wildcards', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4109,13 +3723,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'settings',
-        'dry_run',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['settings'],
+        query: ['dry_run', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4173,22 +3785,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'index_patterns',
-        'composed_of',
-        'template',
-        'data_stream',
-        'priority',
-        'version',
-        '_meta',
-        'allow_auto_create',
-        'ignore_missing_component_templates',
-        'deprecated',
-        'create',
-        'master_timeout',
-        'cause'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'allow_auto_create', 'ignore_missing_component_templates', 'deprecated'],
+        query: ['create', 'master_timeout', 'cause']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4246,93 +3847,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'date_detection',
-        'dynamic',
-        'dynamic_date_formats',
-        'dynamic_templates',
-        '_field_names',
-        '_meta',
-        'numeric_detection',
-        'properties',
-        '_routing',
-        '_source',
-        'runtime',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout',
-        'timeout',
-        'write_index_only'
-      ]
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Create or update sampling configuration. Create or update the sampling configuration for the specified index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
-    */
-  async putSampleConfiguration (this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSampleConfigurationResponse>
-  async putSampleConfiguration (this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutSampleConfigurationResponse, unknown>>
-  async putSampleConfiguration (this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptions): Promise<T.IndicesPutSampleConfigurationResponse>
-  async putSampleConfiguration (this: That, params: T.IndicesPutSampleConfigurationRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this[kAcceptedParams]['indices.put_sample_configuration']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: Record<string, any> | string | undefined
-    const userBody = params?.body
-    if (userBody != null) {
-      if (typeof userBody === 'string') {
-        body = userBody
-      } else {
-        body = { ...userBody }
+      acceptedParams: {
+        path: ['index'],
+        body: ['date_detection', 'dynamic', 'dynamic_date_formats', 'dynamic_templates', '_field_names', '_meta', 'numeric_detection', 'properties', '_routing', '_source', 'runtime'],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'write_index_only']
       }
-    }
-
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
-      }
-    }
-
-    const method = 'PUT'
-    const path = `/${encodeURIComponent(params.index.toString())}/_sample/config`
-    const meta: TransportRequestMetadata = {
-      name: 'indices.put_sample_configuration',
-      pathParts: {
-        index: params.index
-      },
-      acceptedParams: [
-        'index',
-        'rate',
-        'max_samples',
-        'max_size',
-        'time_to_live',
-        'if',
-        'master_timeout',
-        'timeout'
-      ]
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4387,18 +3906,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'settings',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flat_settings',
-        'ignore_unavailable',
-        'master_timeout',
-        'preserve_existing',
-        'reopen',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['settings'],
+        query: ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'master_timeout', 'preserve_existing', 'reopen', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4456,19 +3968,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'aliases',
-        'index_patterns',
-        'mappings',
-        'order',
-        'settings',
-        'version',
-        'create',
-        'master_timeout',
-        'order',
-        'cause'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['aliases', 'index_patterns', 'mappings', 'order', 'settings', 'version'],
+        query: ['create', 'master_timeout', 'order', 'cause']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4522,14 +4026,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'active_only',
-        'detailed',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['active_only', 'detailed', 'allow_no_indices', 'expand_wildcards', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4583,12 +4084,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4634,13 +4134,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'resource'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'resource']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4687,15 +4185,11 @@ export default class Indices {
         index: params.index,
         block: params.block
       },
-      acceptedParams: [
-        'index',
-        'block',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index', 'block'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4749,14 +4243,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_throttled',
-        'ignore_unavailable',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4814,14 +4305,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'project_routing',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'allow_no_indices',
-        'mode'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['project_routing'],
+        query: ['expand_wildcards', 'ignore_unavailable', 'allow_no_indices', 'mode']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4887,19 +4375,11 @@ export default class Indices {
         alias: params.alias,
         new_index: params.new_index
       },
-      acceptedParams: [
-        'alias',
-        'new_index',
-        'aliases',
-        'conditions',
-        'mappings',
-        'settings',
-        'dry_run',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards',
-        'lazy'
-      ]
+      acceptedParams: {
+        path: ['alias', 'new_index'],
+        body: ['aliases', 'conditions', 'mappings', 'settings'],
+        query: ['dry_run', 'master_timeout', 'timeout', 'wait_for_active_shards', 'lazy']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -4953,12 +4433,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5012,13 +4491,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'ignore_unavailable',
-        'status'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'status']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5077,15 +4554,11 @@ export default class Indices {
         index: params.index,
         target: params.target
       },
-      acceptedParams: [
-        'index',
-        'target',
-        'aliases',
-        'settings',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index', 'target'],
+        body: ['aliases', 'settings'],
+        query: ['master_timeout', 'timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5133,14 +4606,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'index_template',
-        'create',
-        'cause',
-        'master_timeout',
-        'include_defaults'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['index_template'],
+        query: ['create', 'cause', 'master_timeout', 'include_defaults']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5206,23 +4676,11 @@ export default class Indices {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'allow_auto_create',
-        'index_patterns',
-        'composed_of',
-        'template',
-        'data_stream',
-        'priority',
-        'version',
-        '_meta',
-        'ignore_missing_component_templates',
-        'deprecated',
-        'create',
-        'cause',
-        'master_timeout',
-        'include_defaults'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'ignore_missing_component_templates', 'deprecated'],
+        query: ['create', 'cause', 'master_timeout', 'include_defaults']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5281,15 +4739,11 @@ export default class Indices {
         index: params.index,
         target: params.target
       },
-      acceptedParams: [
-        'index',
-        'target',
-        'aliases',
-        'settings',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards'
-      ]
+      acceptedParams: {
+        path: ['index', 'target'],
+        body: ['aliases', 'settings'],
+        query: ['master_timeout', 'timeout', 'wait_for_active_shards']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5350,19 +4804,11 @@ export default class Indices {
         metric: params.metric,
         index: params.index
       },
-      acceptedParams: [
-        'metric',
-        'index',
-        'completion_fields',
-        'expand_wildcards',
-        'fielddata_fields',
-        'fields',
-        'forbid_closed_indices',
-        'groups',
-        'include_segment_file_sizes',
-        'include_unloaded_segments',
-        'level'
-      ]
+      acceptedParams: {
+        path: ['metric', 'index'],
+        body: [],
+        query: ['completion_fields', 'expand_wildcards', 'fielddata_fields', 'fields', 'forbid_closed_indices', 'groups', 'include_segment_file_sizes', 'include_unloaded_segments', 'level']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5418,11 +4864,11 @@ export default class Indices {
     const path = '/_aliases'
     const meta: TransportRequestMetadata = {
       name: 'indices.update_aliases',
-      acceptedParams: [
-        'actions',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['actions'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -5488,22 +4934,11 @@ export default class Indices {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'query',
-        'allow_no_indices',
-        'all_shards',
-        'analyzer',
-        'analyze_wildcard',
-        'default_operator',
-        'df',
-        'expand_wildcards',
-        'explain',
-        'ignore_unavailable',
-        'lenient',
-        'rewrite',
-        'q'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['query'],
+        query: ['allow_no_indices', 'all_shards', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'explain', 'ignore_unavailable', 'lenient', 'rewrite', 'q']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

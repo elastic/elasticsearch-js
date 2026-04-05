@@ -101,15 +101,11 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'requests',
-      'metric',
-      'allow_no_indices',
-      'expand_wildcards',
-      'ignore_unavailable',
-      'search_type'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: ['requests', 'metric'],
+      query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'search_type']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -145,10 +145,11 @@ export default class QueryRules {
         ruleset_id: params.ruleset_id,
         rule_id: params.rule_id
       },
-      acceptedParams: [
-        'ruleset_id',
-        'rule_id'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id', 'rule_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -194,9 +195,11 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id
       },
-      acceptedParams: [
-        'ruleset_id'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -243,10 +246,11 @@ export default class QueryRules {
         ruleset_id: params.ruleset_id,
         rule_id: params.rule_id
       },
-      acceptedParams: [
-        'ruleset_id',
-        'rule_id'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id', 'rule_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -292,9 +296,11 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id
       },
-      acceptedParams: [
-        'ruleset_id'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -338,10 +344,11 @@ export default class QueryRules {
     const path = '/_query_rules'
     const meta: TransportRequestMetadata = {
       name: 'query_rules.list_rulesets',
-      acceptedParams: [
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -400,14 +407,11 @@ export default class QueryRules {
         ruleset_id: params.ruleset_id,
         rule_id: params.rule_id
       },
-      acceptedParams: [
-        'ruleset_id',
-        'rule_id',
-        'type',
-        'criteria',
-        'actions',
-        'priority'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id', 'rule_id'],
+        body: ['type', 'criteria', 'actions', 'priority'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -465,10 +469,11 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id
       },
-      acceptedParams: [
-        'ruleset_id',
-        'rules'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id'],
+        body: ['rules'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -526,10 +531,11 @@ export default class QueryRules {
       pathParts: {
         ruleset_id: params.ruleset_id
       },
-      acceptedParams: [
-        'ruleset_id',
-        'match_criteria'
-      ]
+      acceptedParams: {
+        path: ['ruleset_id'],
+        body: ['match_criteria'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

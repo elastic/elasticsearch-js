@@ -162,9 +162,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -210,9 +212,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -258,9 +262,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -314,9 +320,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -360,11 +368,11 @@ export default class SearchApplication {
     const path = '/_application/search_application'
     const meta: TransportRequestMetadata = {
       name: 'search_application.list',
-      acceptedParams: [
-        'q',
-        'from',
-        'size'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['q', 'from', 'size']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -413,12 +421,11 @@ export default class SearchApplication {
         collection_name: params.collection_name,
         event_type: params.event_type
       },
-      acceptedParams: [
-        'collection_name',
-        'event_type',
-        'payload',
-        'debug'
-      ]
+      acceptedParams: {
+        path: ['collection_name', 'event_type'],
+        body: ['payload'],
+        query: ['debug']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -466,11 +473,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'search_application',
-        'create'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['search_application'],
+        query: ['create']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -516,9 +523,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -576,10 +585,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'params'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['params'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -637,11 +647,11 @@ export default class SearchApplication {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'params',
-        'typed_keys'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['params'],
+        query: ['typed_keys']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

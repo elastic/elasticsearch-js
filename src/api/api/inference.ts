@@ -297,6 +297,21 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_fireworksai': {
+        path: [
+          'task_type',
+          'fireworksai_inference_id'
+        ],
+        body: [
+          'chunking_settings',
+          'service',
+          'service_settings',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.put_googleaistudio': {
         path: [
           'task_type',
@@ -579,11 +594,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'chat_completion_request',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['chat_completion_request'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -641,12 +656,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'input',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['input', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -700,12 +714,11 @@ export default class Inference {
         task_type: params.task_type,
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'inference_id',
-        'dry_run',
-        'force'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'inference_id'],
+        body: [],
+        query: ['dry_run', 'force']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -753,11 +766,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'embedding',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['embedding'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -818,10 +831,11 @@ export default class Inference {
         task_type: params.task_type,
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'inference_id'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'inference_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -887,21 +901,17 @@ export default class Inference {
         task_type: params.task_type,
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'inference_id',
-        'query',
-        'input',
-        'input_type',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'inference_id'],
+        body: ['query', 'input', 'input_type', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AI21 (`chat_completion`, `completion`) * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`) * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `rerank`, `text_embedding`) * Azure OpenAI (`chat_completion`, `completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`chat_completion`, `completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Groq (`chat_completion`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * JinaAI (`embedding`, `rerank`, `text_embedding`) * Llama (`chat_completion`, `completion`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * Nvidia (`chat_completion`, `completion`, `text_embedding`, `rerank`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * VoyageAI (`rerank`, `text_embedding`) * Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
+    * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AI21 (`chat_completion`, `completion`) * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`) * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `rerank`, `text_embedding`) * Azure OpenAI (`chat_completion`, `completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`chat_completion`, `completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Fireworks AI (`chat_completion`, `completion`, `text_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Groq (`chat_completion`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * JinaAI (`embedding`, `rerank`, `text_embedding`) * Llama (`chat_completion`, `completion`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * Nvidia (`chat_completion`, `completion`, `text_embedding`, `rerank`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * VoyageAI (`rerank`, `text_embedding`) * Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
@@ -951,12 +961,11 @@ export default class Inference {
         task_type: params.task_type,
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'inference_id',
-        'inference_config',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'inference_id'],
+        body: ['inference_config'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1015,13 +1024,11 @@ export default class Inference {
         task_type: params.task_type,
         ai21_inference_id: params.ai21_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'ai21_inference_id',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'ai21_inference_id'],
+        body: ['service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1080,15 +1087,11 @@ export default class Inference {
         task_type: params.task_type,
         alibabacloud_inference_id: params.alibabacloud_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'alibabacloud_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'alibabacloud_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1147,15 +1150,11 @@ export default class Inference {
         task_type: params.task_type,
         amazonbedrock_inference_id: params.amazonbedrock_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'amazonbedrock_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'amazonbedrock_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1214,15 +1213,11 @@ export default class Inference {
         task_type: params.task_type,
         amazonsagemaker_inference_id: params.amazonsagemaker_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'amazonsagemaker_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'amazonsagemaker_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1281,14 +1276,11 @@ export default class Inference {
         task_type: params.task_type,
         anthropic_inference_id: params.anthropic_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'anthropic_inference_id',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'anthropic_inference_id'],
+        body: ['service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1347,15 +1339,11 @@ export default class Inference {
         task_type: params.task_type,
         azureaistudio_inference_id: params.azureaistudio_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'azureaistudio_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'azureaistudio_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1414,15 +1402,11 @@ export default class Inference {
         task_type: params.task_type,
         azureopenai_inference_id: params.azureopenai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'azureopenai_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'azureopenai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1481,15 +1465,11 @@ export default class Inference {
         task_type: params.task_type,
         cohere_inference_id: params.cohere_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'cohere_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'cohere_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1548,14 +1528,11 @@ export default class Inference {
         task_type: params.task_type,
         contextualai_inference_id: params.contextualai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'contextualai_inference_id',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'contextualai_inference_id'],
+        body: ['service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1614,14 +1591,11 @@ export default class Inference {
         task_type: params.task_type,
         custom_inference_id: params.custom_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'custom_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'custom_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1680,13 +1654,11 @@ export default class Inference {
         task_type: params.task_type,
         deepseek_inference_id: params.deepseek_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'deepseek_inference_id',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'deepseek_inference_id'],
+        body: ['service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1745,15 +1717,11 @@ export default class Inference {
         task_type: params.task_type,
         elasticsearch_inference_id: params.elasticsearch_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'elasticsearch_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'elasticsearch_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1812,14 +1780,74 @@ export default class Inference {
         task_type: params.task_type,
         elser_inference_id: params.elser_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'elser_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'elser_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings'],
+        query: ['timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create a Fireworks AI inference endpoint. Create an inference endpoint to perform an inference task with the `fireworksai` service.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-fireworksai | Elasticsearch API documentation}
+    */
+  async putFireworksai (this: That, params: T.InferencePutFireworksaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutFireworksaiResponse>
+  async putFireworksai (this: That, params: T.InferencePutFireworksaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutFireworksaiResponse, unknown>>
+  async putFireworksai (this: That, params: T.InferencePutFireworksaiRequest, options?: TransportRequestOptions): Promise<T.InferencePutFireworksaiResponse>
+  async putFireworksai (this: That, params: T.InferencePutFireworksaiRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.put_fireworksai']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.fireworksai_inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_fireworksai',
+      pathParts: {
+        task_type: params.task_type,
+        fireworksai_inference_id: params.fireworksai_inference_id
+      },
+      acceptedParams: {
+        path: ['task_type', 'fireworksai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1878,14 +1906,11 @@ export default class Inference {
         task_type: params.task_type,
         googleaistudio_inference_id: params.googleaistudio_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'googleaistudio_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'googleaistudio_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1944,15 +1969,11 @@ export default class Inference {
         task_type: params.task_type,
         googlevertexai_inference_id: params.googlevertexai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'googlevertexai_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'googlevertexai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2011,13 +2032,11 @@ export default class Inference {
         task_type: params.task_type,
         groq_inference_id: params.groq_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'groq_inference_id',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'groq_inference_id'],
+        body: ['service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2076,15 +2095,11 @@ export default class Inference {
         task_type: params.task_type,
         huggingface_inference_id: params.huggingface_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'huggingface_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'huggingface_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2143,15 +2158,11 @@ export default class Inference {
         task_type: params.task_type,
         jinaai_inference_id: params.jinaai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'jinaai_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'jinaai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2210,14 +2221,11 @@ export default class Inference {
         task_type: params.task_type,
         llama_inference_id: params.llama_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'llama_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'llama_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2276,14 +2284,11 @@ export default class Inference {
         task_type: params.task_type,
         mistral_inference_id: params.mistral_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'mistral_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'mistral_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2342,15 +2347,11 @@ export default class Inference {
         task_type: params.task_type,
         nvidia_inference_id: params.nvidia_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'nvidia_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'nvidia_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2409,15 +2410,11 @@ export default class Inference {
         task_type: params.task_type,
         openai_inference_id: params.openai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'openai_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'openai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2476,15 +2473,11 @@ export default class Inference {
         task_type: params.task_type,
         openshiftai_inference_id: params.openshiftai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'openshiftai_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'openshiftai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2543,15 +2536,11 @@ export default class Inference {
         task_type: params.task_type,
         voyageai_inference_id: params.voyageai_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'voyageai_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'voyageai_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2610,14 +2599,11 @@ export default class Inference {
         task_type: params.task_type,
         watsonx_inference_id: params.watsonx_inference_id
       },
-      acceptedParams: [
-        'task_type',
-        'watsonx_inference_id',
-        'chunking_settings',
-        'service',
-        'service_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['task_type', 'watsonx_inference_id'],
+        body: ['chunking_settings', 'service', 'service_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2675,15 +2661,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'query',
-        'input',
-        'return_documents',
-        'top_n',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['query', 'input', 'return_documents', 'top_n', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2741,12 +2723,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'input',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['input', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2804,12 +2785,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'input',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['input', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2867,13 +2847,11 @@ export default class Inference {
       pathParts: {
         inference_id: params.inference_id
       },
-      acceptedParams: [
-        'inference_id',
-        'input',
-        'input_type',
-        'task_settings',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['input', 'input_type', 'task_settings'],
+        query: ['timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -2929,11 +2907,11 @@ export default class Inference {
         inference_id: params.inference_id,
         task_type: params.task_type
       },
-      acceptedParams: [
-        'inference_id',
-        'task_type',
-        'inference_config'
-      ]
+      acceptedParams: {
+        path: ['inference_id', 'task_type'],
+        body: ['inference_config'],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

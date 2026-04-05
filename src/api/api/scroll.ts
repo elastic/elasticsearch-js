@@ -91,14 +91,11 @@ export default async function ScrollApi<TDocument = unknown, TAggregations = Rec
     pathParts: {
       scroll_id: params.scroll_id
     },
-    acceptedParams: [
-      'scroll_id',
-      'scroll',
-      'scroll_id',
-      'scroll',
-      'scroll_id',
-      'rest_total_hits_as_int'
-    ]
+    acceptedParams: {
+      path: ['scroll_id'],
+      body: ['scroll', 'scroll_id'],
+      query: ['scroll', 'scroll_id', 'rest_total_hits_as_int']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

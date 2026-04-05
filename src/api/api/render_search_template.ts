@@ -97,13 +97,11 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
     pathParts: {
       id: params.id
     },
-    acceptedParams: [
-      'id',
-      'id',
-      'file',
-      'params',
-      'source'
-    ]
+    acceptedParams: {
+      path: ['id'],
+      body: ['id', 'file', 'params', 'source'],
+      query: []
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

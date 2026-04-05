@@ -76,8 +76,11 @@ export default class Ssl {
     const path = '/_ssl/certificates'
     const meta: TransportRequestMetadata = {
       name: 'ssl.certificates',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -272,19 +272,11 @@ export default class Cluster {
     const path = '/_cluster/allocation/explain'
     const meta: TransportRequestMetadata = {
       name: 'cluster.allocation_explain',
-      acceptedParams: [
-        'index',
-        'shard',
-        'primary',
-        'current_node',
-        'index',
-        'shard',
-        'primary',
-        'current_node',
-        'include_disk_info',
-        'include_yes_decisions',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['index', 'shard', 'primary', 'current_node'],
+        query: ['index', 'shard', 'primary', 'current_node', 'include_disk_info', 'include_yes_decisions', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -330,11 +322,11 @@ export default class Cluster {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -378,10 +370,11 @@ export default class Cluster {
     const path = '/_cluster/voting_config_exclusions'
     const meta: TransportRequestMetadata = {
       name: 'cluster.delete_voting_config_exclusions',
-      acceptedParams: [
-        'master_timeout',
-        'wait_for_removal'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'wait_for_removal']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -427,11 +420,11 @@ export default class Cluster {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'local'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'local']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -485,14 +478,11 @@ export default class Cluster {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'flat_settings',
-        'settings_filter',
-        'include_defaults',
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['flat_settings', 'settings_filter', 'include_defaults', 'local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -536,12 +526,11 @@ export default class Cluster {
     const path = '/_cluster/settings'
     const meta: TransportRequestMetadata = {
       name: 'cluster.get_settings',
-      acceptedParams: [
-        'flat_settings',
-        'include_defaults',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['flat_settings', 'include_defaults', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -595,20 +584,11 @@ export default class Cluster {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'expand_wildcards',
-        'level',
-        'local',
-        'master_timeout',
-        'timeout',
-        'wait_for_active_shards',
-        'wait_for_events',
-        'wait_for_nodes',
-        'wait_for_no_initializing_shards',
-        'wait_for_no_relocating_shards',
-        'wait_for_status'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['expand_wildcards', 'level', 'local', 'master_timeout', 'timeout', 'wait_for_active_shards', 'wait_for_events', 'wait_for_nodes', 'wait_for_no_initializing_shards', 'wait_for_no_relocating_shards', 'wait_for_status']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -654,9 +634,11 @@ export default class Cluster {
       pathParts: {
         target: params.target
       },
-      acceptedParams: [
-        'target'
-      ]
+      acceptedParams: {
+        path: ['target'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -700,10 +682,11 @@ export default class Cluster {
     const path = '/_cluster/pending_tasks'
     const meta: TransportRequestMetadata = {
       name: 'cluster.pending_tasks',
-      acceptedParams: [
-        'local',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['local', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -747,12 +730,11 @@ export default class Cluster {
     const path = '/_cluster/voting_config_exclusions'
     const meta: TransportRequestMetadata = {
       name: 'cluster.post_voting_config_exclusions',
-      acceptedParams: [
-        'node_names',
-        'node_ids',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['node_names', 'node_ids', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -810,16 +792,11 @@ export default class Cluster {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'template',
-        'version',
-        '_meta',
-        'deprecated',
-        'create',
-        'cause',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['template', 'version', '_meta', 'deprecated'],
+        query: ['create', 'cause', 'master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -875,13 +852,11 @@ export default class Cluster {
     const path = '/_cluster/settings'
     const meta: TransportRequestMetadata = {
       name: 'cluster.put_settings',
-      acceptedParams: [
-        'persistent',
-        'transient',
-        'flat_settings',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['persistent', 'transient'],
+        query: ['flat_settings', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -925,8 +900,11 @@ export default class Cluster {
     const path = '/_remote/info'
     const meta: TransportRequestMetadata = {
       name: 'cluster.remote_info',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -982,15 +960,11 @@ export default class Cluster {
     const path = '/_cluster/reroute'
     const meta: TransportRequestMetadata = {
       name: 'cluster.reroute',
-      acceptedParams: [
-        'commands',
-        'dry_run',
-        'explain',
-        'metric',
-        'retry_failed',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: ['commands'],
+        query: ['dry_run', 'explain', 'metric', 'retry_failed', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1048,18 +1022,11 @@ export default class Cluster {
         metric: params.metric,
         index: params.index
       },
-      acceptedParams: [
-        'metric',
-        'index',
-        'allow_no_indices',
-        'expand_wildcards',
-        'flat_settings',
-        'ignore_unavailable',
-        'local',
-        'master_timeout',
-        'wait_for_metadata_version',
-        'wait_for_timeout'
-      ]
+      acceptedParams: {
+        path: ['metric', 'index'],
+        body: [],
+        query: ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'local', 'master_timeout', 'wait_for_metadata_version', 'wait_for_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -1113,11 +1080,11 @@ export default class Cluster {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'include_remotes',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: ['include_remotes', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -102,15 +102,11 @@ export default class Graph {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'connections',
-        'controls',
-        'query',
-        'vertices',
-        'routing',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: ['connections', 'controls', 'query', 'vertices'],
+        query: ['routing', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

@@ -113,11 +113,11 @@ export default class Autoscaling {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -161,9 +161,11 @@ export default class Autoscaling {
     const path = '/_autoscaling/capacity'
     const meta: TransportRequestMetadata = {
       name: 'autoscaling.get_autoscaling_capacity',
-      acceptedParams: [
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -209,10 +211,11 @@ export default class Autoscaling {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -260,12 +263,11 @@ export default class Autoscaling {
       pathParts: {
         name: params.name
       },
-      acceptedParams: [
-        'name',
-        'policy',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['name'],
+        body: ['policy'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

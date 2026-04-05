@@ -20,6 +20,18 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.3.4 [elasticsearch-javascript-client-9.3.4-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.3.4-fixes]
+
+- Pins transport 9.3.5 for client v9.3.4+.
+
+## 9.3.3 [elasticsearch-javascript-client-9.3.3-release-notes]
+
+### Fixes [elasticsearch-javascript-client-9.3.3-fixes]
+
+- **Categorized `acceptedParams` in transport metadata:** `acceptedParams` now provides `path`, `body`, and `query` categorization so consumers can determine where to inject parameters like `project_routing`.
+
 ## 9.3.2 [elasticsearch-javascript-client-9.3.2-release-notes]
 
 ### Fixes [elasticsearch-javascript-client-9.3.2-fixes]

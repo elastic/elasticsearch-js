@@ -100,12 +100,11 @@ export default class DanglingIndices {
       pathParts: {
         index_uuid: params.index_uuid
       },
-      acceptedParams: [
-        'index_uuid',
-        'accept_data_loss',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index_uuid'],
+        body: [],
+        query: ['accept_data_loss', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -151,12 +150,11 @@ export default class DanglingIndices {
       pathParts: {
         index_uuid: params.index_uuid
       },
-      acceptedParams: [
-        'index_uuid',
-        'accept_data_loss',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['index_uuid'],
+        body: [],
+        query: ['accept_data_loss', 'master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -200,8 +198,11 @@ export default class DanglingIndices {
     const path = '/_dangling'
     const meta: TransportRequestMetadata = {
       name: 'dangling_indices.list_dangling_indices',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

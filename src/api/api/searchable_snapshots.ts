@@ -36,9 +36,7 @@ export default class SearchableSnapshots {
           'node_id'
         ],
         body: [],
-        query: [
-          'master_timeout'
-        ]
+        query: []
       },
       'searchable_snapshots.clear_cache': {
         path: [
@@ -129,10 +127,11 @@ export default class SearchableSnapshots {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -186,12 +185,11 @@ export default class SearchableSnapshots {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'expand_wildcards',
-        'allow_no_indices',
-        'ignore_unavailable'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['expand_wildcards', 'allow_no_indices', 'ignore_unavailable']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -250,17 +248,11 @@ export default class SearchableSnapshots {
         repository: params.repository,
         snapshot: params.snapshot
       },
-      acceptedParams: [
-        'repository',
-        'snapshot',
-        'index',
-        'renamed_index',
-        'index_settings',
-        'ignore_index_settings',
-        'master_timeout',
-        'wait_for_completion',
-        'storage'
-      ]
+      acceptedParams: {
+        path: ['repository', 'snapshot'],
+        body: ['index', 'renamed_index', 'index_settings', 'ignore_index_settings'],
+        query: ['master_timeout', 'wait_for_completion', 'storage']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -314,10 +306,11 @@ export default class SearchableSnapshots {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index',
-        'level'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: ['level']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

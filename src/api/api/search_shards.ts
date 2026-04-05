@@ -88,16 +88,11 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
     pathParts: {
       index: params.index
     },
-    acceptedParams: [
-      'index',
-      'allow_no_indices',
-      'expand_wildcards',
-      'ignore_unavailable',
-      'local',
-      'master_timeout',
-      'preference',
-      'routing'
-    ]
+    acceptedParams: {
+      path: ['index'],
+      body: [],
+      query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'master_timeout', 'preference', 'routing']
+    }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

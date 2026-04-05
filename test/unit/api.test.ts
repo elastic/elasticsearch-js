@@ -231,13 +231,12 @@ test('Api request metadata', t => {
   t.test('acceptedParams', async t => {
     class TestTransport extends Transport {
       // @ts-expect-error
-      async request (params, options) {
-        t.strictSame(params.meta.acceptedParams, [
-          'set_id',
-          'rule_id',
-          'synonyms',
-          'refresh',
-        ])
+      async request(params, options) {
+        t.strictSame(params.meta.acceptedParams, {
+          path: ['set_id', 'rule_id'],
+          body: ['synonyms'],
+          query: ['refresh'],
+        })
         return super.request(params, options)
       }
     }

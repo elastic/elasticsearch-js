@@ -109,11 +109,11 @@ export default class Shutdown {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -167,10 +167,11 @@ export default class Shutdown {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'master_timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: [],
+        query: ['master_timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -228,15 +229,11 @@ export default class Shutdown {
       pathParts: {
         node_id: params.node_id
       },
-      acceptedParams: [
-        'node_id',
-        'type',
-        'reason',
-        'allocation_delay',
-        'target_node_name',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['node_id'],
+        body: ['type', 'reason', 'allocation_delay', 'target_node_name'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

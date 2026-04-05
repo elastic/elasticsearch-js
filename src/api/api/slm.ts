@@ -161,11 +161,11 @@ export default class Slm {
       pathParts: {
         policy_id: params.policy_id
       },
-      acceptedParams: [
-        'policy_id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy_id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -211,11 +211,11 @@ export default class Slm {
       pathParts: {
         policy_id: params.policy_id
       },
-      acceptedParams: [
-        'policy_id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy_id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -259,10 +259,11 @@ export default class Slm {
     const path = '/_slm/_execute_retention'
     const meta: TransportRequestMetadata = {
       name: 'slm.execute_retention',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -316,11 +317,11 @@ export default class Slm {
       pathParts: {
         policy_id: params.policy_id
       },
-      acceptedParams: [
-        'policy_id',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy_id'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -364,10 +365,11 @@ export default class Slm {
     const path = '/_slm/stats'
     const meta: TransportRequestMetadata = {
       name: 'slm.get_stats',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -411,10 +413,11 @@ export default class Slm {
     const path = '/_slm/status'
     const meta: TransportRequestMetadata = {
       name: 'slm.get_status',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -472,16 +475,11 @@ export default class Slm {
       pathParts: {
         policy_id: params.policy_id
       },
-      acceptedParams: [
-        'policy_id',
-        'config',
-        'name',
-        'repository',
-        'retention',
-        'schedule',
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: ['policy_id'],
+        body: ['config', 'name', 'repository', 'retention', 'schedule'],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -525,10 +523,11 @@ export default class Slm {
     const path = '/_slm/start'
     const meta: TransportRequestMetadata = {
       name: 'slm.start',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -572,10 +571,11 @@ export default class Slm {
     const path = '/_slm/stop'
     const meta: TransportRequestMetadata = {
       name: 'slm.stop',
-      acceptedParams: [
-        'master_timeout',
-        'timeout'
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }

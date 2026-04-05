@@ -212,14 +212,14 @@ client.count({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded, or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`min_score` (Optional, number)**: The minimum `_score` value that documents must have to be included in the result.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
@@ -481,7 +481,7 @@ client.deleteByQuery({ index })
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to delete specified with Query DSL.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: A sort object that specifies the order of deleted documents.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: What to do if delete by query hits version conflicts: `abort` or `proceed`.
@@ -489,7 +489,7 @@ client.deleteByQuery({ index })
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`from` (Optional, number)**: Skips the specified number of documents.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`refresh` (Optional, boolean)**: If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes. This is different than the delete API's `refresh` parameter, which causes just the shard that received the delete request to be refreshed. Unlike the delete API, it does not support `wait_for`.
@@ -675,9 +675,9 @@ client.fieldCaps({ ... })
 - **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard. IMPORTANT: The filtering is done on a best-effort basis, it uses index statistics and mappings to rewrite queries to `match_none` instead of fully running the request. For instance a range query over a date field can rewrite to `match_none` if all documents within a shard (including deleted documents) are outside of the provided range. However, not all queries can rewrite to `match_none` so this API may return an index even if the provided filter matches no document.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: Define ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the field-caps query using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with foo but no index starts with bar.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`include_unmapped` (Optional, boolean)**: If true, unmapped fields are included in the response.
 - **`filters` (Optional, string \| string[])**: A list of filters to apply to the response.
 - **`types` (Optional, string[])**: A list of field types to include. Any fields that do not match one of these types will be excluded from the results. It defaults to empty, meaning that all field types are returned.
@@ -1109,11 +1109,11 @@ client.msearch({ ... })
 
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and index aliases to search.
 - **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`include_named_queries_score` (Optional, boolean)**: Indicates whether hit.matched_queries should be rendered as a map that includes the name of the matched query associated with its score (true) or as an array containing the name of the matched queries (false) This functionality reruns each named query on every hit in a search response. Typically, this adds a small overhead to a request. However, using computationally expensive named queries on a large number of hits may add significant overhead.
 - **`max_concurrent_searches` (Optional, number)**: Maximum number of concurrent searches the multi search API can execute. Defaults to `max(1, (# of data nodes * min(search thread pool size, 10)))`.
 - **`max_concurrent_shard_requests` (Optional, number)**: Maximum number of concurrent shard requests that each sub-search request executes per node.
@@ -1249,7 +1249,7 @@ client.openPointInTime({ index, keep_alive })
 - **`keep_alive` (string \| -1 \| 0)**: Extend the length of time that the point in time persists.
 - **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the PIT request using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
 - **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
@@ -1304,9 +1304,9 @@ client.rankEval({ requests })
 - **`requests` ({ id, request, ratings, template_id, params }[])**: A set of typical search requests, together with their provided ratings.
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and index aliases used to limit the request. Wildcard (`*`) expressions are supported. To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`.
 - **`metric` (Optional, { precision, recall, mean_reciprocal_rank, dcg, expected_reciprocal_rank })**: Definition of the evaluation metric to calculate.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Search operation type
 
 ## client.reindex [_reindex]
@@ -1370,7 +1370,7 @@ client.reindex({ dest, source })
 #### Request (object) [_request_reindex]
 
 - **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination you are copying to.
-- **`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source you are copying from.
+- **`source` ({ index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source you are copying from.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: Indicates whether to continue reindexing even when there are conflicts.
 - **`max_docs` (Optional, number)**: The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when reindexing.
@@ -1408,6 +1408,7 @@ client.reindexRethrottle({ task_id, requests_per_second })
 
 - **`task_id` (string)**: The task identifier, which can be found by using the tasks API.
 - **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+- **`group_by` (Optional, Enum("nodes" \| "parents" \| "none"))**
 
 ## client.renderSearchTemplate [_render_search_template]
 Render a search template.
@@ -1495,13 +1496,12 @@ To search a point in time (PIT) for an alias, you must have the `read` index pri
 
 When paging through a large number of documents, it can be helpful to split the search into multiple slices to consume them independently with the `slice` and `pit` properties.
 By default the splitting is done first on the shards, then locally on each shard.
-The local splitting partitions the shard into contiguous ranges based on Lucene document IDs.
 
 For instance if the number of shards is equal to 2 and you request 4 slices, the slices 0 and 2 are assigned to the first shard and the slices 1 and 3 are assigned to the second shard.
 
 IMPORTANT: The same point-in-time ID should be used for all slices.
 If different PIT IDs are used, slices can overlap and miss documents.
-This situation can occur because the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
+This situation can occur because, by default, the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search)
 
@@ -1548,7 +1548,7 @@ client.search({ ... })
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: One or more runtime fields in the search request. These fields take precedence over mapped fields with the same name.
 - **`stats` (Optional, string[])**: The stats groups to associate with the search. Each group maintains a statistics aggregation for its associated searches. You can retrieve these stats using the indices stats API.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`allow_partial_search_results` (Optional, boolean)**: If `true` and there are shard request timeouts or shard failures, the request returns partial results. If `false`, it returns an error with no partial results. To override the default behavior, you can set the `search.default_allow_partial_results` cluster setting to `false`.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
@@ -1558,7 +1558,7 @@ client.search({ ... })
 - **`df` (Optional, string)**: The field to use as a default when no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded or aliased indices will be ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`include_named_queries_score` (Optional, boolean)**: If `true`, the response includes the score contribution from any named queries. This functionality reruns each named query on every hit in a search response. Typically, this adds a small overhead to a request. However, using computationally expensive named queries on a large number of hits may add significant overhead.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`max_concurrent_shard_requests` (Optional, number)**: The number of concurrent shard requests per node that the search runs concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests.
@@ -1720,9 +1720,9 @@ client.searchShards({ ... })
 #### Request (object) [_request_search_shards]
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. IT can also be set to `-1` to indicate that the request should never timeout.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
@@ -1747,11 +1747,11 @@ client.searchTemplate({ ... })
 - **`profile` (Optional, boolean)**: If `true`, the query execution is profiled.
 - **`source` (Optional, string \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats })**: An inline search template. Supports the same parameters as the search API's request body. It also supports Mustache variables. If no `id` is specified, this parameter is required.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
-- **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
+- **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports a list of values, such as `open,hidden`.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
 - **`scroll` (Optional, string \| -1 \| 0)**: Specifies how long a consistent view of the index should be maintained for scrolled search.
@@ -2020,14 +2020,14 @@ client.updateByQuery({ index })
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when updating.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: The preferred behavior when update by query hits version conflicts: `abort` or `proceed`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. It supports a list of values, such as `open,hidden`.
 - **`from` (Optional, number)**: Skips the specified number of documents.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`pipeline` (Optional, string)**: The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
@@ -2111,6 +2111,13 @@ If the search is completed, its saved results are deleted.
 - **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**: Specifies to wait for the search to be completed up until the provided timeout.
 Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires.
 By default no timeout is set meaning that the currently available results will be returned without any additional wait.
+- **`return_intermediate_results` (Optional, boolean)**: Specifies whether the response should contain intermediate results if the query is still running when the wait_for_completion_timeout
+expires or if no wait_for_completion_timeout is specified.
+If true and the search is still running, the search response
+will include any hits and partial aggregations that are available.
+If false and the search is still running, the search response will not include any hits (but possibly include
+total hits) nor will include any partial aggregations.
+When not specified, the intermediate results are returned for running queries.
 
 ## client.asyncSearch.status [_async_search.status]
 Get the async search status.
@@ -2222,8 +2229,12 @@ When the async search completes within the timeout, the response won’t include
 - **`keep_alive` (Optional, string \| -1 \| 0)**: Specifies how long the async search needs to be available.
 Ongoing async searches and any saved search results are deleted after this period.
 - **`keep_on_completion` (Optional, boolean)**: If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-(This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`allow_partial_search_results` (Optional, boolean)**: Indicate if an error should be returned if there is a partial search failure or timeout
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string
 - **`analyze_wildcard` (Optional, boolean)**: Specify whether wildcard and prefix queries should be analyzed
@@ -2234,7 +2245,9 @@ A partial reduction is performed every time the coordinating node has received a
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both
 - **`ignore_throttled` (Optional, boolean)**: Whether specified concrete, expanded or aliased indices should be ignored when throttled
-- **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
 - **`max_concurrent_shard_requests` (Optional, number)**: The number of concurrent shard requests per node this search executes concurrently.
 This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
@@ -2479,6 +2492,10 @@ Use this request to get the following information for each index in a cluster:
 
 These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents.
 To get an accurate count of Elasticsearch documents, use the cat count or count APIs.
+
+NOTE: Storage metrics reported by this API reflect the post-compression size of the indices on disk. Because these values are calculated after Elasticsearch compresses the data and processes deletions, they are typically significantly smaller than the raw, uncompressed data volume ingested.
+
+IMPORTANT: For Elastic Cloud Serverless, ingest billing is based on the raw, uncompressed data volume, not the post-compression metrics reported here. To learn more, refer to [Elasticsearch billing dimensions](https://www.elastic.co/docs/deploy-manage/cloud-organization/billing/elasticsearch-billing-dimensions).
 
 CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use an index endpoint.
@@ -2834,11 +2851,16 @@ node will send requests for further information to each selected node.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
 determines whether wildcard expressions match hidden data streams. Supports a list of values,
 such as open,hidden.
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
-missing or closed indices. This behavior applies even if the request targets other open indices. For example,
-a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`allow_closed` (Optional, boolean)**: If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
 of throwing an exception if index pattern matches closed indices
 
@@ -3463,12 +3485,13 @@ client.cluster.getSettings({ ... })
 
 #### Request (object) [_request_cluster.get_settings]
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`include_defaults` (Optional, boolean)**: If `true`, also returns default values for all other cluster settings, reflecting the values
-in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
-cluster do not all have the same values in their `elasticsearch.yml` config files then the
-values returned by this API may vary from invocation to invocation and may not reflect the
-values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
-fetch the settings for each individual node in your cluster.
+- **`include_defaults` (Optional, boolean)**: If `true`, also returns the values of all other cluster settings set in the
+`elasticsearch.yml` file on one of the nodes in your cluster, together with the default
+values of all other cluster settings on that node. The default value of each setting may
+depend on the values of other settings on that node. If the nodes in your cluster do not all
+have the same configuration then the values returned by this API may vary from invocation to
+invocation and may not reflect the values that Elasticsearch uses in all situations. Use the
+`GET _nodes/settings` API to fetch the settings for each individual node in your cluster.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -3776,11 +3799,17 @@ client.cluster.state({ ... })
 #### Request (object) [_request_cluster.state]
 - **`metric` (Optional, Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs") \| Enum("_all" \| "version" \| "master_node" \| "blocks" \| "nodes" \| "metadata" \| "routing_table" \| "routing_nodes" \| "customs")[])**: Limit the information returned to the specified metrics.
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-(This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both
 - **`flat_settings` (Optional, boolean)**: Return settings in flat format
-- **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`local` (Optional, boolean)**: Return local information, do not retrieve the state from master node
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Timeout for waiting for new cluster state in case it is blocked
 - **`wait_for_metadata_version` (Optional, number)**: Wait for the metadata version to be equal or greater than the specified metadata version
@@ -4601,11 +4630,17 @@ If false, the sequence query will return successfully, but will always have empt
 - **`max_samples_per_key` (Optional, number)**: By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
 parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the
 `max_samples_per_key` parameter. Pipes are not supported for sample queries.
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-(This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
-- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.esql.asyncQuery [_esql.async_query]
 Run an async ES|QL query.
@@ -4628,7 +4663,7 @@ client.esql.asyncQuery({ query })
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`time_zone` (Optional, string)**: Sets the default timezone of the query.
 - **`locale` (Optional, string)**: Returns results (especially dates) formatted per the conventions of the locale.
-- **`params` (Optional, number \| number \| string \| boolean \| null[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[]>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -4926,11 +4961,18 @@ client.fleet.msearch({ ... })
 #### Request (object) [_request_fleet.msearch]
 - **`index` (Optional, string \| string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
 - **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`max_concurrent_searches` (Optional, number)**: Maximum number of concurrent searches the multi search API can execute.
 - **`max_concurrent_shard_requests` (Optional, number)**: Maximum number of concurrent shard requests that each sub-search request executes per node.
 - **`pre_filter_shard_size` (Optional, number)**: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
@@ -5014,7 +5056,12 @@ precedence over mapped fields with the same name.
 - **`stats` (Optional, string[])**: Stats groups to associate with the search. Each group maintains a statistics
 aggregation for its associated searches. You can retrieve these stats using
 the indices stats API.
-- **`allow_no_indices` (Optional, boolean)**
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`analyzer` (Optional, string)**
 - **`analyze_wildcard` (Optional, boolean)**
 - **`batched_reduce_size` (Optional, number)**
@@ -5023,7 +5070,9 @@ the indices stats API.
 - **`df` (Optional, string)**
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**
 - **`ignore_throttled` (Optional, boolean)**
-- **`ignore_unavailable` (Optional, boolean)**
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**
 - **`max_concurrent_shard_requests` (Optional, number)**
 - **`preference` (Optional, string)**
@@ -5324,13 +5373,18 @@ By default, you must explicitly name the indices you are adding blocks to.
 To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
 - **`block` (Enum("metadata" \| "read" \| "read_only" \| "write"))**: The block type to add to the index.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
-For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 It supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
@@ -5412,15 +5466,21 @@ client.indices.clearCache({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`fielddata` (Optional, boolean)**: If `true`, clears the fields cache.
 Use the `fields` parameter to clear the cache of specific fields only.
 - **`fields` (Optional, string \| string[])**: List of field names used to limit the `fielddata` parameter.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`query` (Optional, boolean)**: If `true`, clears the query cache.
 - **`request` (Optional, boolean)**: If `true`, clears the request cache.
 
@@ -5523,12 +5583,18 @@ client.indices.close({ index })
 
 #### Request (object) [_request_indices.close]
 - **`index` (string \| string[])**: List or wildcard expression of index names used to limit the request.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -5675,12 +5741,18 @@ client.indices.delete({ index })
 You cannot specify index aliases.
 By default, this parameter does not support wildcards (`*`) or `_all`.
 To use wildcards or `_all`, set the `action.destructive_requires_name` cluster setting to `false`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -5832,15 +5904,20 @@ client.indices.diskUsage({ index })
 #### Request (object) [_request_indices.disk_usage]
 - **`index` (string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 It’s recommended to execute this API with a single index (or the latest backing index of a data stream) as the API consumes resources significantly.
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
-For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`flush` (Optional, boolean)**: If `true`, the API performs a flush before analysis.
 If `false`, the response may not include uncommitted data.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`run_expensive_tasks` (Optional, boolean)**: Analyzing field disk usage is resource-intensive.
 To use the API, this parameter must be set to `true`.
 
@@ -5888,13 +5965,19 @@ client.indices.exists({ index })
 
 #### Request (object) [_request_indices.exists]
 - **`index` (string \| string[])**: List of data streams, indices, and aliases. Supports wildcards (`*`).
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`include_defaults` (Optional, boolean)**: If `true`, return all default settings in the response.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 
@@ -5915,12 +5998,18 @@ client.indices.existsAlias({ name })
 - **`name` (string \| string[])**: List of aliases to check. Supports wildcards (`*`).
 - **`index` (Optional, string \| string[])**: List of data streams or indices used to limit the request. Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, requests that include a missing data stream or index in the target indices or data streams return an error.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -6006,13 +6095,18 @@ client.indices.fieldUsageStats({ index })
 
 #### Request (object) [_request_indices.field_usage_stats]
 - **`index` (string \| string[])**: List or wildcard expression of index names used to limit the request.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
-For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 
 ## client.indices.flush [_indices.flush]
@@ -6041,13 +6135,19 @@ client.indices.flush({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases to flush.
 Supports wildcards (`*`).
 To flush all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`force` (Optional, boolean)**: If `true`, the request forces a flush even if there are no changes to commit to the index.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`wait_if_ongoing` (Optional, boolean)**: If `true`, the flush operation blocks until execution when another flush operation is running.
 If `false`, Elasticsearch returns an error if you request a flush when another flush operation is running.
 
@@ -6117,11 +6217,17 @@ client.indices.forcemerge({ ... })
 
 #### Request (object) [_request_indices.forcemerge]
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-(This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 - **`flush` (Optional, boolean)**: Specify whether the index should be flushed after performing the operation
-- **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`max_num_segments` (Optional, number)**: The number of segments the index should be merged into (default: dynamic)
 - **`only_expunge_deletes` (Optional, boolean)**: Specify whether the operation should only expunge deleted documents
 - **`wait_for_completion` (Optional, boolean)**: Should the request wait until the force merge is completed
@@ -6143,14 +6249,19 @@ client.indices.get({ index })
 #### Request (object) [_request_indices.get]
 - **`index` (string \| string[])**: List of data streams, indices, and index aliases used to limit the request.
 Wildcard expressions (*) are supported.
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
-missing or closed indices. This behavior applies even if the request targets other open indices. For example,
-a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument
 determines whether wildcard expressions match hidden data streams. Supports a list of values,
 such as open,hidden.
 - **`flat_settings` (Optional, boolean)**: If true, returns settings in flat format.
-- **`ignore_unavailable` (Optional, boolean)**: If false, requests that target a missing index return an error.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`include_defaults` (Optional, boolean)**: If true, return all default settings in the response.
 - **`local` (Optional, boolean)**: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
@@ -6176,12 +6287,18 @@ To retrieve all aliases, omit this parameter or use `*` or `_all`.
 - **`index` (Optional, string \| string[])**: List of data streams or indices used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -6322,12 +6439,18 @@ Supports wildcards (`*`).
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`include_defaults` (Optional, boolean)**: If `true`, return all default settings in the response.
 
 ## client.indices.getIndexTemplate [_indices.get_index_template]
@@ -6367,12 +6490,18 @@ client.indices.getMapping({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
@@ -6412,16 +6541,19 @@ client.indices.getSettings({ ... })
 the request. Supports wildcards (`*`). To target all data streams and
 indices, omit this parameter or use `*` or `_all`.
 - **`name` (Optional, string \| string[])**: List or wildcard expression of settings to retrieve.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index
-alias, or `_all` value targets only missing or closed indices. This
-behavior applies even if the request targets other open indices. For
-example, a request targeting `foo*,bar*` returns an error if an index
-starts with foo but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`include_defaults` (Optional, boolean)**: If `true`, return all default settings in the response.
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only. If
 `false`, information is retrieved from the master node.
@@ -6554,12 +6686,18 @@ Supports wildcards (`*`).
 By default, you must explicitly name the indices you using to limit the request.
 To limit a request using `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to false.
 You can update this setting in the `elasticsearch.yml` file or using the cluster update settings API.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -6793,7 +6931,7 @@ client.indices.putIndexTemplate({ name })
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
-- **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
+- **`data_stream` (Optional, { hidden, allow_custom_routing, failure_store })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
 Data streams require a matching index template with a `data_stream` object.
 - **`priority` (Optional, number)**: Priority to determine index template precedence when a new data stream or index is created.
@@ -6867,12 +7005,18 @@ application-specific metadata.
 - **`_routing` (Optional, { required })**: Enable making a routing value required on indexed documents.
 - **`_source` (Optional, { compress, compress_threshold, enabled, excludes, includes, mode })**: Control whether the _source field is enabled on the index.
 - **`runtime` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)**: Mapping of runtime fields for the index.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -6950,17 +7094,20 @@ client.indices.putSettings({ ... })
 the request. Supports wildcards (`*`). To target all data streams and
 indices, omit this parameter or use `*` or `_all`.
 - **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index
-alias, or `_all` value targets only missing or closed indices. This
-behavior applies even if the request targets other open indices. For
-example, a request targeting `foo*,bar*` returns an error if an index
-starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target
 data streams, this argument determines whether wildcard expressions match
 hidden data streams. Supports a list of values, such as
 `open,hidden`.
 - **`flat_settings` (Optional, boolean)**: If `true`, returns settings in flat format.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, returns settings in flat format.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is
 received before the timeout expires, the request fails and returns an
 error.
@@ -7063,12 +7210,18 @@ Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.indices.refresh [_indices.refresh]
 Refresh an index.
@@ -7101,12 +7254,18 @@ client.indices.refresh({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.indices.reloadSearchAnalyzers [_indices.reload_search_analyzers]
 Reload search analyzers.
@@ -7135,10 +7294,16 @@ client.indices.reloadSearchAnalyzers({ index })
 
 #### Request (object) [_request_indices.reload_search_analyzers]
 - **`index` (string \| string[])**: A list of index names to reload analyzers for
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-(This includes `_all` string or when no indices have been specified)
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-- **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`resource` (Optional, string)**: Changed resource to reload analyzers from if applicable
 
 ## client.indices.removeBlock [_indices.remove_block]
@@ -7161,13 +7326,18 @@ By default, you must explicitly name the indices you are removing blocks from.
 To allow the removal of blocks from indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
 You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API.
 - **`block` (Enum("metadata" \| "read" \| "read_only" \| "write"))**: The block type to remove from the index.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
-For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: The type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 It supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 It can also be set to `-1` to indicate that the request should never timeout.
@@ -7237,9 +7407,12 @@ Resources on remote clusters can be specified using the `<cluster>`:`<name>` syn
 Index and cluster exclusions (e.g., `-cluster1:*`) are also supported.
 If no index expression is specified, information about all remote clusters configured on the local cluster
 is returned without doing any index matching
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing
-or closed indices. This behavior applies even if the request targets other open indices. For example, a request
-targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
 options to the `_resolve/cluster` API endpoint that takes no index expression.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
@@ -7250,7 +7423,9 @@ options to the `_resolve/cluster` API endpoint that takes no index expression.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded, or aliased indices are ignored when frozen.
 NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
 options to the `_resolve/cluster` API endpoint that takes no index expression.
-- **`ignore_unavailable` (Optional, boolean)**: If false, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 NOTE: This option is only supported when specifying an index expression. You will get an error if you specify index
 options to the `_resolve/cluster` API endpoint that takes no index expression.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for remote clusters to respond.
@@ -7290,10 +7465,15 @@ Supported in serverless only.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
-For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`mode` (Optional, Enum("standard" \| "time_series" \| "logsdb" \| "lookup") \| Enum("standard" \| "time_series" \| "logsdb" \| "lookup")[])**: Filter indices by index mode - standard, lookup, time_series, etc. List of IndexMode. Empty means no filter.
 
 ## client.indices.rollover [_indices.rollover]
@@ -7389,12 +7569,18 @@ client.indices.segments({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.indices.shardStores [_indices.shard_stores]
 Get index shard stores.
@@ -7421,12 +7607,17 @@ client.indices.shardStores({ ... })
 
 #### Request (object) [_request_indices.shard_stores]
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
-- **`allow_no_indices` (Optional, boolean)**: If false, the request returns an error if any wildcard expression, index alias, or _all
-value targets only missing or closed indices. This behavior applies even if the request
-targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams,
 this argument determines whether wildcard expressions match hidden data streams.
-- **`ignore_unavailable` (Optional, boolean)**: If true, missing or closed indices are not included in the response.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`status` (Optional, Enum("green" \| "yellow" \| "red" \| "all") \| Enum("green" \| "yellow" \| "red" \| "all")[])**: List of shard health statuses used to limit the request.
 
 ## client.indices.shrink [_indices.shrink]
@@ -7532,7 +7723,7 @@ If set to `false`, then indices or data streams matching the template must alway
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 - **`template` (Optional, { aliases, mappings, settings, lifecycle, data_stream_options })**: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
-- **`data_stream` (Optional, { hidden, allow_custom_routing })**: If this object is included, the template is used to create data streams and their backing indices.
+- **`data_stream` (Optional, { hidden, allow_custom_routing, failure_store })**: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
 Data streams require a matching index template with a `data_stream` object.
 - **`priority` (Optional, number)**: Priority to determine index template precedence when a new data stream or index is created.
@@ -7632,7 +7823,7 @@ client.indices.stats({ ... })
 ### Arguments [_arguments_indices.stats]
 
 #### Request (object) [_request_indices.stats]
-- **`metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: Limit the information returned the specific metrics
+- **`metric` (Optional, Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector") \| Enum("_all" \| "store" \| "indexing" \| "get" \| "search" \| "merge" \| "flush" \| "refresh" \| "query_cache" \| "fielddata" \| "docs" \| "warmer" \| "completion" \| "segments" \| "translog" \| "request_cache" \| "recovery" \| "bulk" \| "shard_stats" \| "mappings" \| "dense_vector" \| "sparse_vector")[])**: List of metrics used to limit the request.
 - **`index` (Optional, string \| string[])**: A list of index names; use `_all` or empty string to perform the operation on all indices
 - **`completion_fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in fielddata and suggest statistics.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument
@@ -7684,8 +7875,12 @@ client.indices.validateQuery({ ... })
 Supports wildcards (`*`).
 To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query in the Lucene query string syntax.
-- **`allow_no_indices` (Optional, boolean)**: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
-This behavior applies even if the request targets other open indices.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`all_shards` (Optional, boolean)**: If `true`, the validation is executed on all shards instead of one random shard per index.
 - **`analyzer` (Optional, string)**: Analyzer to use for the query string.
 This parameter can only be used when the `q` query string parameter is specified.
@@ -7697,7 +7892,9 @@ This parameter can only be used when the `q` query string parameter is specified
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 - **`explain` (Optional, boolean)**: If `true`, the response returns detailed information if an error has occurred.
-- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a missing or closed index.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 - **`rewrite` (Optional, boolean)**: If `true`, returns a more detailed explanation showing the actual Lucene query that will be executed.
 - **`q` (Optional, string)**: Query in the Lucene query string syntax.
@@ -7723,7 +7920,7 @@ client.inference.chatCompletionUnified({ inference_id })
 
 #### Request (object) [_request_inference.chat_completion_unified]
 - **`inference_id` (string)**: The inference Id
-- **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, stop, temperature, tool_choice, tools, top_p })**
+- **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, reasoning, stop, temperature, tool_choice, tools, top_p })**
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.completion [_inference.completion]
@@ -7867,6 +8064,7 @@ The following integrations are available through the inference API. You can find
 * DeepSeek (`chat_completion`, `completion`)
 * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
 * ELSER (`sparse_embedding`)
+* Fireworks AI (`chat_completion`, `completion`, `text_embedding`)
 * Google AI Studio (`completion`, `text_embedding`)
 * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 * Groq (`chat_completion`)
@@ -8066,11 +8264,11 @@ client.inference.putAzureopenai({ task_type, azureopenai_inference_id, service, 
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`azureopenai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("azureopenai"))**: The type of service supported for the specified task type. In this case, `azureopenai`.
-- **`service_settings` ({ api_key, api_version, deployment_id, entra_id, rate_limit, resource_name })**: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
+- **`service_settings` ({ api_key, api_version, client_id, client_secret, deployment_id, entra_id, rate_limit, resource_name, scopes, tenant_id })**: Settings used to install the inference model. These settings are specific to the `azureopenai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `completion` and `chat_completion` task types.
-- **`task_settings` (Optional, { user })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { user, headers })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
@@ -8282,6 +8480,33 @@ client.inference.putElser({ task_type, elser_inference_id, service, service_sett
 - **`service_settings` ({ adaptive_allocations, num_allocations, num_threads })**: Settings used to install the inference model. These settings are specific to the `elser` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Note that for ELSER endpoints, the max_chunk_size may not exceed `300`.
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+
+## client.inference.putFireworksai [_inference.put_fireworksai]
+Create a Fireworks AI inference endpoint.
+
+Create an inference endpoint to perform an inference task with the `fireworksai` service.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-fireworksai)
+
+```ts
+client.inference.putFireworksai({ task_type, fireworksai_inference_id, service, service_settings })
+```
+
+### Arguments [_arguments_inference.put_fireworksai]
+
+#### Request (object) [_request_inference.put_fireworksai]
+- **`task_type` (Enum("chat_completion" \| "completion" \| "text_embedding"))**: The type of the inference task that the model will perform.
+- **`fireworksai_inference_id` (string)**: The unique identifier of the inference endpoint.
+- **`service` (Enum("fireworksai"))**: The type of service supported for the specified task type. In this case, `fireworksai`.
+- **`service_settings` ({ api_key, model_id, url, dimensions, similarity, rate_limit })**: Settings used to install the inference model. These settings are specific to the `fireworksai` service.
+- **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
+Applies only to the `text_embedding` task type.
+Not applicable to the `completion` or `chat_completion` task types.
+- **`task_settings` (Optional, { user, headers })**: Settings to configure the inference task.
+Applies only to the `completion` or `chat_completion` task types.
+Not applicable to the `text_embedding` task type.
+These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
 ## client.inference.putGoogleaistudio [_inference.put_googleaistudio]
@@ -9056,7 +9281,8 @@ client.license.post({ ... })
 #### Request (object) [_request_license.post]
 - **`license` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid })**
 - **`licenses` (Optional, { expiry_date_in_millis, issue_date_in_millis, start_date_in_millis, issued_to, issuer, max_nodes, max_resource_units, signature, type, uid }[])**: A sequence of one or more JSON documents containing the license information.
-- **`acknowledge` (Optional, boolean)**: Specifies whether you acknowledge the license changes.
+- **`acknowledge` (Optional, boolean)**: To update a license, you must accept the acknowledge messages and set this parameter to `true`.
+In particular, if you are upgrading or downgrading a license, you must acknowlege the feature changes.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -9081,7 +9307,7 @@ client.license.postStartBasic({ ... })
 ### Arguments [_arguments_license.post_start_basic]
 
 #### Request (object) [_request_license.post_start_basic]
-- **`acknowledge` (Optional, boolean)**: Whether the user has acknowledged acknowledge messages
+- **`acknowledge` (Optional, boolean)**: To start a basic license, you must accept the acknowledge messages and set this parameter to `true`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
@@ -9104,7 +9330,7 @@ client.license.postStartTrial({ ... })
 ### Arguments [_arguments_license.post_start_trial]
 
 #### Request (object) [_request_license.post_start_trial]
-- **`acknowledge` (Optional, boolean)**: Whether the user has acknowledged acknowledge messages
+- **`acknowledge` (Optional, boolean)**: To start a trial, you must accept the acknowledge messages and set this parameter to `true`.
 - **`type` (Optional, string)**: The type of trial license to generate
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
@@ -9163,10 +9389,16 @@ Pipeline IDs must begin with a letter or underscore and contain only letters, un
 ## client.migration.deprecations [_migration.deprecations]
 Get deprecation information.
 
-Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+Returns information about deprecated features which are in use in the cluster.
+The reported features include cluster, node, and index level settings that will be removed or changed in the next major version.
+You must address the reported issues before upgrading to the next major version.
+However, no action is required when upgrading within the current major version.
+Deprecated features remain fully supported and will continue to work in the current version, and when upgrading to a newer minor or patch release in the same major version.
+Use this API to review your usage of these features and migrate away from them at your own pace, before upgrading to a new major version.
 
-TIP: This APIs is designed for indirect use by the Upgrade Assistant.
-You are strongly recommended to use the Upgrade Assistant.
+> info
+> This API is designed for indirect use by the [Upgrade Assistant](https://www.elastic.co/docs/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant).
+> We recommend learning about deprecated features using the Upgrade Assistant rather than calling this API directly.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations)
 
@@ -10513,12 +10745,18 @@ The detector configuration objects in a job can contain functions that use these
 - **`scroll_size` (Optional, number)**: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`, which is 10,000 by default.
 - **`headers` (Optional, Record<string, string \| string[]>)**
-- **`allow_no_indices` (Optional, boolean)**: If true, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the `_all`
-string or when no indices are specified.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
 whether wildcard expressions match hidden data streams. Supports a list of values.
 - **`ignore_throttled` (Optional, boolean)**: If true, concrete, expanded, or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If true, unavailable indices (missing or closed) are ignored.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.ml.putFilter [_ml.put_filter]
 Create a filter.
@@ -10571,12 +10809,18 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 - **`renormalization_window_days` (Optional, number)**: Advanced configuration option. The period over which adjustments to the score are applied, as new data is seen. The default value is the longer of 30 days or 100 bucket spans.
 - **`results_index_name` (Optional, string)**: A text string that affects the name of the machine learning results index. By default, the job generates an index named `.ml-anomalies-shared`.
 - **`results_retention_days` (Optional, number)**: Advanced configuration option. The period of time (in days) that results are retained. Age is calculated relative to the timestamp of the latest bucket result. If this property has a non-null value, once per day at 00:30 (server time), results that are the specified number of days older than the latest bucket result are deleted from Elasticsearch. The default value is null, which means all results are retained. Annotations generated by the system also count as results for retention purposes; they are deleted after the same number of days as results. Annotations added by users are retained forever.
-- **`allow_no_indices` (Optional, boolean)**: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
-`_all` string or when no indices are specified.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
 whether wildcard expressions match hidden data streams. Supports a list of values.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, unavailable indices (missing or closed) are ignored.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.ml.putTrainedModel [_ml.put_trained_model]
 Create a trained model.
@@ -11043,12 +11287,18 @@ when there are multiple jobs running on the same node.
 The detector configuration objects in a job can contain functions that use these script fields.
 - **`scroll_size` (Optional, number)**: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`.
-- **`allow_no_indices` (Optional, boolean)**: If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
-`_all` string or when no indices are specified.
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
 whether wildcard expressions match hidden data streams. Supports a list of values.
 - **`ignore_throttled` (Optional, boolean)**: If `true`, concrete, expanded or aliased indices are ignored when frozen.
-- **`ignore_unavailable` (Optional, boolean)**: If `true`, unavailable indices (missing or closed) are ignored.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.ml.updateFilter [_ml.update_filter]
 Update a filter.
@@ -11928,7 +12178,6 @@ client.searchableSnapshots.cacheStats({ ... })
 
 #### Request (object) [_request_searchable_snapshots.cache_stats]
 - **`node_id` (Optional, string \| string[])**: The names of the nodes in the cluster to target.
-- **`master_timeout` (Optional, string \| -1 \| 0)**
 
 ## client.searchableSnapshots.clearCache [_searchable_snapshots.clear_cache]
 Clear the cache.
@@ -11947,9 +12196,15 @@ client.searchableSnapshots.clearCache({ ... })
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to clear from the cache.
 It supports wildcards (`*`).
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Whether to expand wildcard expression to concrete indices that are open, closed or both
-- **`allow_no_indices` (Optional, boolean)**: Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-(This includes `_all` string or when no indices have been specified)
-- **`ignore_unavailable` (Optional, boolean)**: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+- **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
+If `false`, the request returns an error (1) if any wildcard expression
+(including `_all` and `*`) resolves to zero matching indices or (2) if the
+complete set of resolved indices, aliases or data streams is empty after all
+expressions are evaluated. If `true`, index expressions that resolve to no
+indices are allowed and the request returns an empty result.
+- **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+index, alias, or data stream that is missing, closed, or otherwise unavailable.
+If `true`, unavailable concrete targets are silently ignored.
 
 ## client.searchableSnapshots.mount [_searchable_snapshots.mount]
 Mount a snapshot.
@@ -11978,7 +12233,8 @@ If no `renamed_index` is specified, this name will also be used to create the ne
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
 - **`wait_for_completion` (Optional, boolean)**: If true, the request blocks until the operation is complete.
-- **`storage` (Optional, string)**: The mount option for the searchable snapshot index.
+- **`storage` (Optional, Enum("full_copy" \| "shared_cache"))**: The mount option for the searchable snapshot index.
+For further information on mount options, refer to: [Mount options](https://www.elastic.co/docs/deploy-manage/tools/snapshot-and-restore/searchable-snapshots#searchable-snapshot-mount-storage-options)
 
 ## client.searchableSnapshots.stats [_searchable_snapshots.stats]
 Get searchable snapshot statistics.
@@ -12964,7 +13220,7 @@ client.security.hasPrivileges({ ... })
 #### Request (object) [_request_security.has_privileges]
 - **`user` (Optional, string)**: Username
 - **`application` (Optional, { application, privileges, resources }[])**
-- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets")[])**: A list of the cluster privileges that you want to check.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of the cluster privileges that you want to check.
 - **`index` (Optional, { names, privileges, allow_restricted_indices }[])**
 
 ## client.security.hasPrivilegesUserProfile [_security.has_privileges_user_profile]
@@ -13190,7 +13446,7 @@ client.security.putRole({ name })
 #### Request (object) [_request_security.put_role]
 - **`name` (string)**: The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role.
 - **`applications` (Optional, { application, privileges, resources }[])**: A list of application privilege entries.
-- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
 - **`global` (Optional, Record<string, User-defined value>)**: An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
 - **`indices` (Optional, { field_security, names, privileges, query, allow_restricted_indices }[])**: A list of indices permissions entries.
 - **`remote_indices` (Optional, { clusters, field_security, names, privileges, query, allow_restricted_indices }[])**: A list of remote indices permissions entries.
@@ -14241,7 +14497,7 @@ Valid values are `asc` for ascending and `desc` for descending order.
 The default behavior is ascending order.
 - **`offset` (Optional, number)**: Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0.
 - **`size` (Optional, number)**: The maximum number of snapshots to return.
-The default is 0, which means to return all that match the request without limit.
+The default is -1, which means to return all that match the request without limit.
 - **`slm_policy_filter` (Optional, string)**: Filter snapshots by a list of snapshot lifecycle management (SLM) policy names that snapshots belong to.
 
 You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
@@ -14992,7 +15248,6 @@ client.synonyms.getSynonymsSets({ ... })
 Create or update a synonym set.
 
 Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
-If you need to manage more synonym rules, you can create multiple synonym sets.
 
 When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
 This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
@@ -15672,8 +15927,8 @@ indexing. The minimum value is 1s and the maximum is 1h.
 - **`pivot` (Optional, { aggregations, group_by })**: The pivot method transforms the data by aggregating and grouping it.
 These objects define the group by fields and the aggregation to reduce
 the data.
-- **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
+- **`source` (Optional, { index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
@@ -15719,7 +15974,7 @@ client.transform.putTransform({ transform_id, dest, source })
 - **`transform_id` (string)**: Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9),
 hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters.
 - **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination for the transform.
-- **`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
+- **`source` ({ index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
 - **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the transform is running continuously. Also
 determines the retry interval in the event of transient failures while the transform is searching or indexing.
@@ -15730,7 +15985,7 @@ The minimum value is `1s` and the maximum is `1h`.
 and the aggregation to reduce the data.
 - **`retention_policy` (Optional, { time })**: Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the
 destination index.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`defer_validation` (Optional, boolean)**: When the transform is created, a series of validations occur to ensure its success. For example, there is a
 check for the existence of the source indices and a check that the destination index is not part of the source
@@ -15903,8 +16158,8 @@ transform is running continuously. Also determines the retry interval in
 the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
 - **`_meta` (Optional, Record<string, User-defined value>)**: Defines optional transform metadata.
-- **`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
-- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, unattended })**: Defines optional transform settings.
+- **`source` (Optional, { index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
+- **`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })**: Defines optional transform settings.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time } \| null)**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.

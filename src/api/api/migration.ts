@@ -50,7 +50,7 @@ export default class Migration {
   }
 
   /**
-    * Get deprecation information. Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version. TIP: This APIs is designed for indirect use by the Upgrade Assistant. You are strongly recommended to use the Upgrade Assistant.
+    * Get deprecation information. Returns information about deprecated features which are in use in the cluster. The reported features include cluster, node, and index level settings that will be removed or changed in the next major version. You must address the reported issues before upgrading to the next major version. However, no action is required when upgrading within the current major version. Deprecated features remain fully supported and will continue to work in the current version, and when upgrading to a newer minor or patch release in the same major version. Use this API to review your usage of these features and migrate away from them at your own pace, before upgrading to a new major version. > info > This API is designed for indirect use by the [Upgrade Assistant](https://www.elastic.co/docs/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant). > We recommend learning about deprecated features using the Upgrade Assistant rather than calling this API directly.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations | Elasticsearch API documentation}
     */
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationDeprecationsResponse>
@@ -98,9 +98,11 @@ export default class Migration {
       pathParts: {
         index: params.index
       },
-      acceptedParams: [
-        'index'
-      ]
+      acceptedParams: {
+        path: ['index'],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -144,8 +146,11 @@ export default class Migration {
     const path = '/_migration/system_features'
     const meta: TransportRequestMetadata = {
       name: 'migration.get_feature_upgrade_status',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -189,8 +194,11 @@ export default class Migration {
     const path = '/_migration/system_features'
     const meta: TransportRequestMetadata = {
       name: 'migration.post_feature_upgrade',
-      acceptedParams: [
-      ]
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
