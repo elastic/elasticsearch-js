@@ -2347,8 +2347,6 @@ The document count only includes live documents, not deleted documents which hav
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the count API.
 
-NOTE: Starting in Elasticsearch 9.3.0, this endpoint also supports the `POST` method. This is primarily intended for project routing in serverless environments.
-
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count)
 
 ```ts
