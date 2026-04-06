@@ -3164,7 +3164,7 @@ export default class Indices {
 
   /**
     * Get the migration reindexing status. Get the status of a migration reindex attempt for a data stream or index.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-migration | Elasticsearch API documentation}
     */
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMigrateReindexStatusResponse>
   async getMigrateReindexStatus (this: That, params: T.IndicesGetMigrateReindexStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetMigrateReindexStatusResponse, unknown>>
