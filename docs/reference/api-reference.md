@@ -5059,7 +5059,7 @@ An initial request to the `_explore` API contains a seed query that identifies t
 Subsequent requests enable you to spider out from one more vertices of interest.
 You can exclude vertices that have already been returned.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-graph)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-graph)
 
 ```ts
 client.graph.explore({ index })
@@ -6384,7 +6384,7 @@ Get the migration reindexing status.
 
 Get the status of a migration reindex attempt for a data stream or index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-migration)
 
 ```ts
 client.indices.getMigrateReindexStatus({ index })
@@ -15125,7 +15125,7 @@ However, you can optionally override some of the decisions about the text struct
 If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response.
 It helps determine why the returned structure was chosen.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-text_structure)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-text_structure)
 
 ```ts
 client.textStructure.findFieldStructure({ field, index })
