@@ -1,3 +1,8 @@
+/*
+ * Copyright Elasticsearch B.V. and contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // we import the base configuration from Neostandard (a modern ESLint preset)
 // and also its internal plugins
 import neostandard, { plugins } from 'neostandard'
