@@ -11,10 +11,24 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import { Table, TypeMap, tableFromIPC, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node'
+import type { Table, TypeMap, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node'
 import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+function loadArrow (): typeof import('apache-arrow/Arrow.node') {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('apache-arrow/Arrow.node') as typeof import('apache-arrow/Arrow.node')
+  } catch /* c8 ignore next */ {
+    /* c8 ignore next 4 */
+    throw new Error(
+      'Package "apache-arrow" is required for Arrow functionality. ' +
+      'Install it with: npm install apache-arrow'
+    )
+  }
+}
 
 export interface HelpersOptions {
   client: Client
@@ -988,6 +1002,7 @@ export default class Helpers {
       },
 
       async toArrowTable (): Promise<Table<TypeMap>> {
+        const { tableFromIPC } = loadArrow()
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
           reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
@@ -1001,6 +1016,7 @@ export default class Helpers {
       },
 
       async toArrowReader (): Promise<AsyncRecordBatchStreamReader> {
+        const { AsyncRecordBatchStreamReader } = loadArrow()
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
           reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`

@@ -20,6 +20,13 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.4.0 [elasticsearch-javascript-client-9.4.0-release-notes]
+
+### Features and enhancements [elasticsearch-javascript-client-9.4.0-features-enhancements]
+
+- **Compatibility with Elasticsearch 9.4:** All changes and additions to Elasticsearch APIs for its 9.4 release are reflected in this release.
+- **Apache Arrow is optional:** The `apache-arrow` package was added to support some useful ES|QL helpers, but is not needed unless those functions are used. It's a large package, so making it an optional peer dependency helps make the dependency tree smaller.
+
 ## 9.3.4 [elasticsearch-javascript-client-9.3.4-release-notes]
 
 ### Fixes [elasticsearch-javascript-client-9.3.4-fixes]
