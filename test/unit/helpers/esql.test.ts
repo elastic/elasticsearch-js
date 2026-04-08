@@ -314,5 +314,7 @@ test('ES|QL helper', t => {
 
     t.end()
   })
+
+  // note: the loadArrow catch block (when apache-arrow is not installed) is excluded
   t.end()
 })

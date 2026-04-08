@@ -7,10 +7,24 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import { Table, TypeMap, tableFromIPC, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node'
+import type { Table, TypeMap, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node'
 import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+function loadArrow (): typeof import('apache-arrow/Arrow.node') {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('apache-arrow/Arrow.node') as typeof import('apache-arrow/Arrow.node')
+  } catch /* c8 ignore next */ {
+    /* c8 ignore next 4 */
+    throw new Error(
+      'Package "apache-arrow" is required for Arrow functionality. ' +
+      'Install it with: npm install apache-arrow'
+    )
+  }
+}
 
 export interface HelpersOptions {
   client: Client
@@ -115,6 +129,7 @@ export interface BulkHelperOptions<TDocument = unknown> extends T.BulkRequest {
   wait?: number
   onDrop?: (doc: OnDropDocument<TDocument>) => void
   onSuccess?: (doc: OnSuccessDocument) => void
+  onFlush?: (stats: BulkStats) => void | Promise<void>
   refreshOnCompletion?: boolean | string
 }
 
@@ -579,6 +594,7 @@ export default class Helpers {
       // onSuccess does not default to noop, to avoid the performance hit
       // of deserializing every document in the bulk request
       onSuccess,
+      onFlush,
       refreshOnCompletion = false,
       ...bulkOptions
     } = options
@@ -897,9 +913,13 @@ export default class Helpers {
                 }
                 if (onSuccess != null) onSuccess({ result, document: document() })
               }
+              stats.total = stats.successful + stats.failed
+              if (typeof onFlush === 'function') {
+                return Promise.resolve(onFlush(stats)).then(() => callback(null, []), err => callback(err, []))
+              }
               return callback(null, [])
             }
-            const retry = []
+            const retry: string[] = []
             for (const item of results) {
               const { result, raw, document = noop } = item
               const operation = Object.keys(result)[0]
@@ -932,6 +952,10 @@ export default class Helpers {
                 stats.successful += 1
                 if (onSuccess != null) onSuccess({ result, document: document() })
               }
+            }
+            stats.total = stats.successful + stats.failed
+            if (typeof onFlush === 'function') {
+              return Promise.resolve(onFlush(stats)).then(() => callback(null, retry), err => callback(err, []))
             }
             callback(null, retry)
           })
@@ -984,6 +1008,7 @@ export default class Helpers {
       },
 
       async toArrowTable (): Promise<Table<TypeMap>> {
+        const { tableFromIPC } = loadArrow()
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
           reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
@@ -997,6 +1022,7 @@ export default class Helpers {
       },
 
       async toArrowReader (): Promise<AsyncRecordBatchStreamReader> {
+        const { AsyncRecordBatchStreamReader } = loadArrow()
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
           reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`

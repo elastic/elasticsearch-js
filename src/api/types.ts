@@ -25297,7 +25297,7 @@ export interface InferenceMessage {
     *   "content": [
     *       {
     *        "image_url": {
-    *          "url": "data:image/jpg;base64,..."
+    *          "url": "data:image/jpeg;base64,..."
     *        },
     *        "type": "image_url"
     *       }
@@ -25681,7 +25681,7 @@ export interface InferenceRequestEmbedding {
     *     "content": {
     *       "type": "image",
     *       "format": "base64",
-    *       "value": "data:image/jpg;base64,..."
+    *       "value": "data:image/jpeg;base64,..."
     *     }
     *   }
     * ```
@@ -25699,7 +25699,7 @@ export interface InferenceRequestEmbedding {
     *     "content": {
     *       "type": "image",
     *       "format": "base64",
-    *       "value": "data:image/jpg;base64,..."
+    *       "value": "data:image/jpeg;base64,..."
     *     }
     *   }
     * ]
@@ -27175,6 +27175,8 @@ export interface IngestGrokProcessor extends IngestProcessorBase {
   patterns: GrokPattern[]
   /** When `true`, `_ingest._grok_match_index` will be inserted into your matched document’s metadata with the index into the pattern found in `patterns` that matched. */
   trace_match?: boolean
+  /** When `true`, the processor does matching but does not extract structured fields */
+  validate_only?: boolean
 }
 
 export interface IngestGsubProcessor extends IngestProcessorBase {

@@ -792,6 +792,118 @@ test('bulk index', t => {
       t.end()
     })
 
+    t.test('onFlush is called after each bulk flush', async t => {
+      const flushEvents: Array<{ total: number; successful: number; failed: number; retry: number; bytes: number; aborted: boolean }> = []
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        },
+        onFlush (stats) {
+          flushEvents.push({ ...stats })
+        }
+      })
+
+      t.equal(flushEvents.length, 3, 'onFlush should be called exactly 3 times (once per item)')
+      t.equal(flushEvents[0].total, 1)
+      t.equal(flushEvents[0].successful, 1)
+      t.equal(flushEvents[0].failed, 0)
+      t.equal(flushEvents[0].retry, 0)
+
+      t.equal(flushEvents[1].total, 2)
+      t.equal(flushEvents[1].successful, 2)
+      t.equal(flushEvents[1].failed, 0)
+      t.equal(flushEvents[1].retry, 0)
+
+      t.equal(flushEvents[2].total, 3)
+      t.equal(flushEvents[2].successful, 3)
+      t.equal(flushEvents[2].failed, 0)
+      t.equal(flushEvents[2].retry, 0)
+      t.end()
+    })
+
+    t.test('onFlush stats are cumulative across flushes', async t => {
+      const flushStats: Array<{ total: number; successful: number; failed: number }> = []
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        },
+        onFlush (stats) {
+          flushStats.push({ total: stats.total, successful: stats.successful, failed: stats.failed })
+        }
+      })
+
+      t.equal(flushStats[0].total, 1, 'first flush: total = 1')
+      t.equal(flushStats[0].successful, 1, 'first flush: successful = 1')
+      t.equal(flushStats[0].failed, 0, 'first flush: failed = 0')
+
+      t.equal(flushStats[1].total, 2, 'second flush: total = 2')
+      t.equal(flushStats[1].successful, 2, 'second flush: successful = 2')
+      t.equal(flushStats[1].failed, 0, 'second flush: failed = 0')
+
+      t.equal(flushStats[2].total, 3, 'third flush: total = 3')
+      t.equal(flushStats[2].successful, 3, 'third flush: successful = 3')
+      t.equal(flushStats[2].failed, 0, 'third flush: failed = 0')
+      t.end()
+    })
+
+    t.test('onFlush supports async callback', async t => {
+      let called = false
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.bulk({
+        datasource: dataset.slice(),
+        onDocument (doc) {
+          return { index: { _index: 'test' } }
+        },
+        async onFlush (stats) {
+          await new Promise(resolve => setTimeout(resolve, 10))
+          called = true
+        }
+      })
+
+      t.ok(called, 'async onFlush should be awaited')
+    })
+
     t.end()
   })
 
