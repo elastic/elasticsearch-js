@@ -133,6 +133,7 @@ export interface BulkHelperOptions<TDocument = unknown> extends T.BulkRequest {
   wait?: number
   onDrop?: (doc: OnDropDocument<TDocument>) => void
   onSuccess?: (doc: OnSuccessDocument) => void
+  onFlush?: (stats: BulkStats) => void | Promise<void>
   refreshOnCompletion?: boolean | string
 }
 
@@ -597,6 +598,7 @@ export default class Helpers {
       // onSuccess does not default to noop, to avoid the performance hit
       // of deserializing every document in the bulk request
       onSuccess,
+      onFlush,
       refreshOnCompletion = false,
       ...bulkOptions
     } = options
@@ -915,9 +917,13 @@ export default class Helpers {
                 }
                 if (onSuccess != null) onSuccess({ result, document: document() })
               }
+              stats.total = stats.successful + stats.failed
+              if (typeof onFlush === 'function') {
+                return Promise.resolve(onFlush(stats)).then(() => callback(null, []), err => callback(err, []))
+              }
               return callback(null, [])
             }
-            const retry = []
+            const retry: string[] = []
             for (const item of results) {
               const { result, raw, document = noop } = item
               const operation = Object.keys(result)[0]
@@ -950,6 +956,10 @@ export default class Helpers {
                 stats.successful += 1
                 if (onSuccess != null) onSuccess({ result, document: document() })
               }
+            }
+            stats.total = stats.successful + stats.failed
+            if (typeof onFlush === 'function') {
+              return Promise.resolve(onFlush(stats)).then(() => callback(null, retry), err => callback(err, []))
             }
             callback(null, retry)
           })
