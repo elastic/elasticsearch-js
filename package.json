@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && c8 --exclude='**/api/**' --exclude='**/test/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=88 tap --disable-coverage",
+    "test": "npm run build && npm run lint && c8 --exclude='**/api/**' --exclude='**/test/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=91 tap --disable-coverage",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && bunx tap",
     "test:bundler": "npm run build && cd test/bundlers/repro && npm install file:../../.. && npx esbuild@0.24 --bundle --platform=node repro.mjs --outfile=bundled.js && node bundled.js",
@@ -109,11 +109,19 @@
     "typescript": "5.9.3",
     "workq": "3.0.0",
     "xmlbuilder2": "4.0.3",
-    "zx": "8.8.5"
+    "zx": "8.8.5",
+    "apache-arrow": "18.x - 21.x"
   },
   "dependencies": {
     "@elastic/transport": "^9.3.5",
-    "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
+  },
+  "peerDependencies": {
+    "apache-arrow": "18.x - 21.x"
+  },
+  "peerDependenciesMeta": {
+    "apache-arrow": {
+      "optional": true
+    }
   }
 }
