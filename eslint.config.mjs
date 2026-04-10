@@ -8,10 +8,10 @@
 import neostandard, { plugins } from 'neostandard'
 import { defineConfig } from 'eslint/config'
 
-// we export the Eslintd configuration
+// we export the ESLint configuration
 export default defineConfig([
   ...neostandard({
-    // enablee support for TypeScript
+    // enable support for TypeScript
     ts: true,
     // external dependencies (never lint them)
     ignores: [
@@ -28,7 +28,7 @@ export default defineConfig([
   // style rules applied to the important project files
   // applies to:
   //  src: source code
-  //  test:tests
+  //  test: tests
   //  scripts: internal tools
   {
     files: ['src/**/*.js', 'src/**/*.ts', 'test/**/*.js', 'test/**/*.ts', 'scripts/**/*.js'],
@@ -59,7 +59,7 @@ export default defineConfig([
   // relaxed rules for code generated inside src
   {
     files: ['src/**/*.ts'],
-    // this si code generated as an API client
+    // this is code generated as an API client
     rules: {
     // snake_case
       camelcase: 'off',
@@ -88,7 +88,7 @@ export default defineConfig([
     rules: {
       // scripts can have unused variables (args)
       'no-unused-vars': 'off',
-      // reegex in scripts may require special escapes
+      // regex in scripts may require special escapes
       'no-useless-escape': 'off'
     }
   },
