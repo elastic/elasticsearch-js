@@ -8,18 +8,17 @@ import { URL } from 'node:url'
 import { setTimeout } from 'node:timers/promises'
 import { test } from 'tap'
 import FakeTimers from '@sinonjs/fake-timers'
-import { Transport } from '@elastic/transport'
+import { Transport, BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool, HttpConnection } from '@elastic/transport'
 import { buildServer, connection } from '../utils'
 import { Client, errors, SniffingTransport } from '../..'
 import * as symbols from '@elastic/transport/lib/symbols'
-import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool, HttpConnection } from '@elastic/transport'
 import { BasicTracerProvider, InMemorySpanExporter, SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base'
 
-let clientVersion: string = require('../../package.json').version // eslint-disable-line
+let clientVersion: string = require('../../package.json').version
 if (clientVersion.includes('-')) {
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
-let transportVersion: string = require('@elastic/transport/package.json').version // eslint-disable-line
+let transportVersion: string = require('@elastic/transport/package.json').version
 if (transportVersion.includes('-')) {
   transportVersion = transportVersion.slice(0, transportVersion.indexOf('-')) + 'p'
 }
@@ -112,7 +111,6 @@ test('Custom headers should merge, not overwrite', t => {
 test('Redaction options should merge, not overwrite', t => {
   const client = new Client({
     node: 'http://localhost:9200',
-    // @ts-expect-error
     redaction: {
       additionalKeys: ['foo'],
     }
@@ -126,7 +124,7 @@ test('Basic auth', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { authorization: 'Basic aGVsbG86d29ybGQ=' })
       return {
         statusCode: 200,
@@ -151,7 +149,7 @@ test('Basic auth via url', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { authorization: 'Basic aGVsbG86d29ybGQ=' })
       return {
         statusCode: 200,
@@ -172,7 +170,7 @@ test('ApiKey as string', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { authorization: 'ApiKey foobar' })
       return {
         statusCode: 200,
@@ -196,7 +194,7 @@ test('ApiKey as object', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
       return {
         statusCode: 200,
@@ -223,7 +221,7 @@ test('Bearer auth', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { authorization: 'Bearer token' })
       return {
         statusCode: 200,
@@ -247,7 +245,7 @@ test('Override authentication per request', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { authorization: 'Basic foobar' })
       return {
         statusCode: 200,
@@ -272,11 +270,10 @@ test('Override authentication per request', async t => {
 })
 
 test('Child client auth should not affect sibling children', async t => {
-
   const requests: { label: string, auth: string | undefined }[] = []
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       return {
         statusCode: 200,
         body: { hello: 'world' }
@@ -319,7 +316,7 @@ test('Custom headers per request', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, {
         foo: 'bar',
         faz: 'bar'
@@ -347,7 +344,7 @@ test('Close the client', async t => {
   t.plan(1)
 
   class MyConnectionPool extends BaseConnectionPool {
-    async empty(): Promise<void> {
+    async empty (): Promise<void> {
       t.pass('called')
     }
   }
@@ -373,7 +370,7 @@ test('Elastic Cloud config', t => {
   })
 
   t.ok(client.connectionPool instanceof CloudConnectionPool)
-  const connection = client.connectionPool.connections.find(c => c.id === 'https://abcd.localhost/')
+  const connection = client.connectionPool.connections.find((c:any) => c.id === 'https://abcd.localhost/')
 
   t.equal(connection?.headers?.authorization, `Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
   t.same(connection?.tls, { secureProtocol: 'TLSv1_2_method' })
@@ -396,8 +393,6 @@ test('Elastic Cloud config', t => {
 
   t.end()
 })
-
-
 
 test('Override default Elastic Cloud options', t => {
   const client = new Client({
@@ -445,7 +440,7 @@ test('name as string', t => {
 })
 
 test('name as symbol', t => {
-  const s = Symbol()
+  const s = Symbol('symbol')
   const client = new Client({
     node: 'http://localhost:9200',
     name: s
@@ -460,7 +455,7 @@ test('Meta header enabled by default', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.match(opts.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}` })
       return {
         statusCode: 200,
@@ -481,7 +476,7 @@ test('Meta header disabled', async t => {
   t.plan(1)
 
   const Connection = connection.buildMockConnection({
-    onRequest(opts) {
+    onRequest (opts) {
       t.notOk(opts.headers?.['x-elastic-client-meta'])
       return {
         statusCode: 200,
@@ -502,7 +497,7 @@ test('Meta header disabled', async t => {
 test('Meta header indicates when UndiciConnection is used', async t => {
   t.plan(1)
 
-  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
     t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion}`)
     res.end('ok')
   }
@@ -521,7 +516,7 @@ test('Meta header indicates when UndiciConnection is used', async t => {
 test('Meta header indicates when HttpConnection is used', async t => {
   t.plan(1)
 
-  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
     t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}`)
     res.end('ok')
   }
@@ -540,7 +535,7 @@ test('Meta header indicates when HttpConnection is used', async t => {
 test('Meta header indicates when Bun is used', async t => {
   t.plan(1)
 
-  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
     t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion},bn=1.2.3`)
     res.end('ok')
   }
@@ -548,7 +543,7 @@ test('Meta header indicates when Bun is used', async t => {
   const [{ port }, server] = await buildServer(handler)
   t.after(() => server.stop())
 
-  process.versions.bun = "1.2.3"
+  process.versions.bun = '1.2.3'
   const client = new Client({ node: `http://localhost:${port}` })
   delete process.versions.bun
 
@@ -558,7 +553,7 @@ test('Meta header indicates when Bun is used', async t => {
 test('Meta header indicates when Deno is used', async t => {
   t.plan(1)
 
-  function handler(req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (req: http.IncomingMessage, res: http.ServerResponse) {
     t.equal(req.headers['x-elastic-client-meta'], `es=${clientVersion},js=${nodeVersion},t=${transportVersion},un=${nodeVersion},dn=1.2.3`)
     res.end('ok')
   }
@@ -566,7 +561,7 @@ test('Meta header indicates when Deno is used', async t => {
   const [{ port }, server] = await buildServer(handler)
   t.after(() => server.stop())
 
-  process.versions.deno = "1.2.3"
+  process.versions.deno = '1.2.3'
   const client = new Client({ node: `http://localhost:${port}` })
   delete process.versions.deno
 
@@ -588,7 +583,7 @@ test('caFingerprint can\'t be configured over http / 1', t => {
     node: 'http://localhost:9200',
     caFingerprint: 'FO:OB:AR'
   }),
-    errors.ConfigurationError
+  errors.ConfigurationError
   )
   t.end()
 })
@@ -598,7 +593,7 @@ test('caFingerprint can\'t be configured over http / 2', t => {
     nodes: ['http://localhost:9200'],
     caFingerprint: 'FO:OB:AR'
   }),
-    errors.ConfigurationError
+  errors.ConfigurationError
   )
   t.end()
 })
@@ -633,7 +628,7 @@ test('Ensure new client does not time out if requestTimeout is not set', async t
   const clock = FakeTimers.install({ toFake: ['setTimeout'] })
   t.teardown(() => clock.uninstall())
 
-  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
     setTimeout(1000 * 60 * 60).then(() => {
       t.ok('timeout ended')
       res.setHeader('content-type', 'application/json')
@@ -650,7 +645,7 @@ test('Ensure new client does not time out if requestTimeout is not set', async t
 
   try {
     await client.transport.request({ method: 'GET', path: '/' })
-  } catch (error) {
+  } catch (error: any) {
     t.fail('Error should not be thrown', error)
   } finally {
     server.stop()
@@ -728,7 +723,7 @@ test('serverless defaults', t => {
       }
     })
 
-    const connection = client.connectionPool.connections.find(c => c.id === 'https://localhost:9200/')
+    const connection = client.connectionPool.connections.find((c:any) => c.id === 'https://localhost:9200/')
 
     t.equal(connection?.headers?.authorization, `Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
     t.same(connection?.tls, { secureProtocol: 'TLSv1_2_method' })
@@ -742,7 +737,7 @@ test('serverless defaults', t => {
     t.plan(1)
 
     const Connection = connection.buildMockConnection({
-      onRequest(opts) {
+      onRequest (opts) {
         t.equal(opts.headers?.['elastic-api-version'], '2023-10-31')
         return {
           statusCode: 200,
@@ -773,13 +768,13 @@ test('custom transport: class', async t => {
   t.plan(3)
 
   class MyTransport extends Transport {
-    async request(params, options): Promise<any> {
+    async request (params:any, options:any): Promise<any> {
       t.ok(true, 'custom Transport request function should be called')
       return super.request(params, options)
     }
   }
 
-  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
     t.ok(true, 'handler should be called')
     res.end('ok')
   }
@@ -812,14 +807,14 @@ test('custom transport: disable otel via options', async t => {
   })
 
   class MyTransport extends Transport {
-    async request(params, options = {}): Promise<any> {
+    async request (params:any, options = {}): Promise<any> {
       // @ts-expect-error
       options.openTelemetry = { enabled: false }
       return super.request(params, options)
     }
   }
 
-  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
     res.end('ok')
   }
 
@@ -855,7 +850,7 @@ test('custom transport: disable otel via env var', async t => {
     await provider.shutdown()
   })
 
-  function handler(_req: http.IncomingMessage, res: http.ServerResponse) {
+  function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
     res.end('ok')
   }
 
