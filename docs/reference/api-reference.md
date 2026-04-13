@@ -1030,7 +1030,7 @@ client.index({ index })
 Get cluster info.
 
 Get basic build, version, and cluster information.
-::: In Serverless, this API is retained for backward compatibility only. Some response fields, such as the version number, should be ignored.
+::: In Serverless, `version.number` always reports the next target Elasticsearch release version at the time of the request. Serverless does not track to a traditional release versioning model; it is continuously updated. The version number is provided to maintain compatibility with existing clients, but it is not meaningful for assessing feature availability. Clients should detect a Serverless environment by checking for `build_flavor: serverless`.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info)
 
@@ -1331,7 +1331,7 @@ If the Elasticsearch security features are enabled, you must have the following 
 * If reindexing from a remote cluster, the `source.remote.user` must have the `monitor` cluster privilege and the `read` index privilege for the source data stream, index, or alias.
 
 If reindexing from a remote cluster into a cluster using Elastic Stack, you must explicitly allow the remote host using the `reindex.remote.whitelist` node setting on the destination cluster.
-If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from Elastic Cloud Hosted are allowed.
+If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from [Elastic Cloud Hosted](https://cloud.elastic.co/registration?page=docs&placement=docs-body) are allowed.
 Automatic data stream creation requires a matching index template with data stream enabled.
 
 The `dest` element can be configured like the index API to control optimistic concurrency control.
@@ -4783,6 +4783,22 @@ A query ID is also provided when the request was submitted with the `keep_on_com
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
 
+## client.esql.deleteView [_esql.delete_view]
+Delete an ES|QL view.
+
+Deletes a stored ES|QL view.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.deleteView({ name })
+```
+
+### Arguments [_arguments_esql.delete_view]
+
+#### Request (object) [_request_esql.delete_view]
+- **`name` (string)**: The view name to remove.
+
 ## client.esql.getQuery [_esql.get_query]
 Get a specific running ES|QL query information.
 
@@ -4799,6 +4815,22 @@ client.esql.getQuery({ id })
 #### Request (object) [_request_esql.get_query]
 - **`id` (string)**: The query ID
 
+## client.esql.getView [_esql.get_view]
+Get an ES|QL view.
+
+Returns a stored ES|QL view.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.getView({ ... })
+```
+
+### Arguments [_arguments_esql.get_view]
+
+#### Request (object) [_request_esql.get_view]
+- **`name` (Optional, string)**: The comma-separated view names to retrieve.
+
 ## client.esql.listQueries [_esql.list_queries]
 Get running ES|QL queries information.
 
@@ -4810,6 +4842,21 @@ Returns an object containing IDs and other information about the running ES|QL q
 client.esql.listQueries()
 ```
 
+
+## client.esql.putView [_esql.put_view]
+Create or update an ES|QL view.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.putView({ name, query })
+```
+
+### Arguments [_arguments_esql.put_view]
+
+#### Request (object) [_request_esql.put_view]
+- **`name` (string)**: The view name to create or update.
+- **`query` (string)**: The ES|QL query string from which to create a view.
 
 ## client.esql.query [_esql.query]
 Run an ES|QL query.
@@ -8318,7 +8365,7 @@ client.inference.putContextualai({ task_type, contextualai_inference_id, service
 - **`contextualai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("contextualai"))**: The type of service supported for the specified task type. In this case, `contextualai`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `contextualai` service.
-- **`task_settings` (Optional, { instruction, return_documents, top_k })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { instruction, top_k })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 

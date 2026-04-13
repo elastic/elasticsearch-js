@@ -30,7 +30,9 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   scroll: {
-    path: [],
+    path: [
+      'scroll_id'
+    ],
     body: [
       'scroll',
       'scroll_id'
