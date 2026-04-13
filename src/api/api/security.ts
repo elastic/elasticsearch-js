@@ -498,9 +498,10 @@ export default class Security {
         ]
       },
       'security.put_user': {
-        path: [],
+        path: [
+          'username'
+        ],
         body: [
-          'username',
           'email',
           'full_name',
           'metadata',
@@ -3474,7 +3475,7 @@ export default class Security {
       },
       acceptedParams: {
         path: ['username'],
-        body: ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled'],
+        body: ['email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled'],
         query: ['refresh']
       }
     }

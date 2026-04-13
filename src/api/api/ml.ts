@@ -654,7 +654,9 @@ export default class Ml {
         query: []
       },
       'ml.put_job': {
-        path: [],
+        path: [
+          'job_id'
+        ],
         body: [
           'allow_lazy_open',
           'analysis_config',
@@ -665,7 +667,6 @@ export default class Ml {
           'data_description',
           'datafeed_config',
           'description',
-          'job_id',
           'groups',
           'model_plot_config',
           'model_snapshot_retention_days',
@@ -766,9 +767,10 @@ export default class Ml {
         ]
       },
       'ml.start_data_frame_analytics': {
-        path: [],
+        path: [
+          'id'
+        ],
         body: [
-          'id',
           'timeout'
         ],
         query: [
@@ -809,9 +811,10 @@ export default class Ml {
         ]
       },
       'ml.stop_data_frame_analytics': {
-        path: [],
+        path: [
+          'id'
+        ],
         body: [
-          'id',
           'allow_no_match',
           'force',
           'timeout'
@@ -3967,7 +3970,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['job_id'],
-        body: ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'job_id', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days'],
+        body: ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days'],
         query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
       }
     }
@@ -4428,7 +4431,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['id'],
-        body: ['id', 'timeout'],
+        body: ['timeout'],
         query: ['timeout']
       }
     }
@@ -4614,7 +4617,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['id'],
-        body: ['id', 'allow_no_match', 'force', 'timeout'],
+        body: ['allow_no_match', 'force', 'timeout'],
         query: ['allow_no_match', 'force', 'timeout']
       }
     }
