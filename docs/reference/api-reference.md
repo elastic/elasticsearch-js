@@ -1331,7 +1331,7 @@ If the Elasticsearch security features are enabled, you must have the following 
 * If reindexing from a remote cluster, the `source.remote.user` must have the `monitor` cluster privilege and the `read` index privilege for the source data stream, index, or alias.
 
 If reindexing from a remote cluster into a cluster using Elastic Stack, you must explicitly allow the remote host using the `reindex.remote.whitelist` node setting on the destination cluster.
-If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from Elastic Cloud Hosted are allowed.
+If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from [Elastic Cloud Hosted](https://cloud.elastic.co/registration?page=docs&placement=docs-body) are allowed.
 Automatic data stream creation requires a matching index template with data stream enabled.
 
 The `dest` element can be configured like the index API to control optimistic concurrency control.
@@ -8104,7 +8104,7 @@ client.inference.putContextualai({ task_type, contextualai_inference_id, service
 - **`contextualai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("contextualai"))**: The type of service supported for the specified task type. In this case, `contextualai`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `contextualai` service.
-- **`task_settings` (Optional, { instruction, return_documents, top_k })**: Settings to configure the inference task.
+- **`task_settings` (Optional, { instruction, top_k })**: Settings to configure the inference task.
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
