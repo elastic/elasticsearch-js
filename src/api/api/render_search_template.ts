@@ -30,9 +30,10 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   render_search_template: {
-    path: [],
+    path: [
+      'id'
+    ],
     body: [
-      'id',
       'file',
       'params',
       'source'
@@ -104,7 +105,7 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
     },
     acceptedParams: {
       path: ['id'],
-      body: ['id', 'file', 'params', 'source'],
+      body: ['file', 'params', 'source'],
       query: []
     }
   }
