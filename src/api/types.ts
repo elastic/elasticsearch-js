@@ -1296,7 +1296,7 @@ export interface InfoResponse {
   /** The responding node's name. */
   name: Name
   tagline: string
-  /** The running version of Elasticsearch. */
+  /** Version information for the Elasticsearch cluster. In Serverless, `version.number` always reports the next target Elasticsearch release version at the time of the request, not an actual deployed version. The version number is provided to maintain client compatibility but is not meaningful for assessing feature availability. Use `build_flavor: serverless` to detect a Serverless environment. */
   version: ElasticsearchVersionInfo
 }
 
@@ -6043,7 +6043,7 @@ export interface AggregationsExtendedStatsBucketAggregation extends Aggregations
   sigma?: double
 }
 
-export type AggregationsFieldDateMath = DateMath | double
+export type AggregationsFieldDateMath = DateMath | long
 
 export interface AggregationsFilterAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
@@ -24302,9 +24302,6 @@ export interface InferenceContextualAITaskSettings {
   /** Instructions for the reranking model. Refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-instruction>
     * Only for the `rerank` task type. */
   instruction?: string
-  /** Whether to return the source documents in the response.
-    * Only for the `rerank` task type. */
-  return_documents?: boolean
   /** The number of most relevant documents to return.
     * If not specified, the reranking results of all documents will be returned.
     * Only for the `rerank` task type. */
@@ -35329,8 +35326,6 @@ export interface SecurityApiKey {
   _sort?: SortResults
 }
 
-export type SecurityApiKeyManagedBy = 'cloud' | 'elasticsearch'
-
 export type SecurityApiKeyType = 'rest' | 'cross_cluster'
 
 export interface SecurityApplicationGlobalUserPrivileges {
@@ -35362,6 +35357,8 @@ export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot'
 export interface SecurityCreatedStatus {
   created: boolean
 }
+
+export type SecurityCredentialManagedBy = 'cloud' | 'elasticsearch'
 
 export interface SecurityFieldSecurity {
   except?: Fields
@@ -35699,7 +35696,7 @@ export type SecurityActivateUserProfileResponse = SecurityUserProfileWithMetadat
 export interface SecurityAuthenticateAuthenticateApiKey {
   id: Id
   name?: Name
-  managed_by: SecurityApiKeyManagedBy
+  managed_by: SecurityCredentialManagedBy
   internal?: boolean
 }
 
@@ -35725,8 +35722,9 @@ export interface SecurityAuthenticateResponse {
 }
 
 export interface SecurityAuthenticateToken {
-  name: Name
+  name?: Name
   type?: string
+  managed_by?: SecurityCredentialManagedBy
 }
 
 export interface SecurityBulkDeleteRoleRequest extends RequestBase {
