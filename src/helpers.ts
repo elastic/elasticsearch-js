@@ -12,10 +12,8 @@ import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 function loadArrow (): typeof import('apache-arrow/Arrow.node') {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     return require('apache-arrow/Arrow.node') as typeof import('apache-arrow/Arrow.node')
   } catch /* c8 ignore next */ {
     /* c8 ignore next 4 */
