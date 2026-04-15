@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/promise-function-async */
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-
 import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
@@ -15,6 +11,18 @@ import { Table, TypeMap, tableFromIPC, AsyncRecordBatchStreamReader } from 'apac
 import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
+
+function loadArrow (): typeof import('apache-arrow/Arrow.node') {
+  try {
+    return require('apache-arrow/Arrow.node') as typeof import('apache-arrow/Arrow.node')
+  } catch /* c8 ignore next */ {
+    /* c8 ignore next 4 */
+    throw new Error(
+      'Package "apache-arrow" is required for Arrow functionality. ' +
+      'Install it with: npm install apache-arrow'
+    )
+  }
+}
 
 export interface HelpersOptions {
   client: Client
@@ -179,7 +187,7 @@ export default class Helpers {
       return result.hits.hits.map(d => ({
         // Starting with version 8.14.0, _id is optional, but in our case it's always present.
         // See @es_quirk documentation in elasticsearch-specification/specification/_global/search/_types/hits.ts
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
         _id: d._id!,
         ...(d._source as TDocument)
       }))
@@ -391,7 +399,7 @@ export default class Helpers {
       const msearchBody: Array<T.MsearchMultisearchHeader | T.SearchSearchRequestBody> = []
       const callbacks: any[] = []
       let loadedOperations = 0
-      timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
+      timeoutRef = setTimeout(onFlushTimeout, flushInterval)
 
       try {
         for await (const operation of operationsStream) {
@@ -654,7 +662,7 @@ export default class Helpers {
       let actionBody = ''
       let payloadBody = ''
       let chunkBytes = 0
-      timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
+      timeoutRef = setTimeout(onFlushTimeout, flushInterval)
 
       // @ts-expect-error datasource is an iterable
       for await (const chunk of datasource) {
@@ -731,7 +739,7 @@ export default class Helpers {
           send(bulkBodyCopy)
         } catch (err: any) {
           /* istanbul ignore next */
-          helper.abort() // eslint-disable-line
+          helper.abort()
         }
       }
     }
@@ -1035,7 +1043,7 @@ function addDocumentsGetter<TDocument, TAggregations> (result: TransportResult<T
 
 function appendFilterPath (filter: string, params: Record<string, any>, force: boolean): void {
   if (params.filter_path !== undefined) {
-    params.filter_path += ',' + filter // eslint-disable-line
+    params.filter_path += ',' + filter
   } else if (force) {
     params.filter_path = filter
   }
