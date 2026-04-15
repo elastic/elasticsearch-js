@@ -7,11 +7,11 @@ import { test } from 'tap'
 import { Client, errors } from '../../../'
 import { connection } from '../../utils'
 
-let clientVersion: string = require('../../../package.json').version // eslint-disable-line
+let clientVersion: string = require('../../../package.json').version
 if (clientVersion.includes('-')) {
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
-let transportVersion: string = require('@elastic/transport/package.json').version // eslint-disable-line
+let transportVersion: string = require('@elastic/transport/package.json').version
 if (transportVersion.includes('-')) {
   transportVersion = transportVersion.slice(0, transportVersion.indexOf('-')) + 'p'
 }
@@ -46,10 +46,10 @@ test('Scroll search', async t => {
             hits: count === 3
               ? []
               : [
-                  { _source: { one: 'one' } },
-                  { _source: { two: 'two' } },
-                  { _source: { three: 'three' } }
-                ]
+                { _source: { one: 'one' } },
+                { _source: { two: 'two' } },
+                { _source: { three: 'three' } }
+              ]
           }
         }
       }
@@ -146,10 +146,10 @@ test('Scroll search (retry)', async t => {
             hits: count === 4
               ? []
               : [
-                  { _source: { one: 'one' } },
-                  { _source: { two: 'two' } },
-                  { _source: { three: 'three' } }
-                ]
+                { _source: { one: 'one' } },
+                { _source: { two: 'two' } },
+                { _source: { three: 'three' } }
+              ]
           }
         }
       }
@@ -203,7 +203,7 @@ test('Scroll search (retry throws and maxRetries)', async t => {
   })
 
   try {
-    for await (const _result of scrollSearch) { // eslint-disable-line
+    for await (const _result of scrollSearch) {
       t.fail('we should not be here')
     }
   } catch (err: any) {
@@ -263,7 +263,7 @@ test('Scroll search (retry throws later)', async t => {
   })
 
   try {
-    for await (const result of scrollSearch) { // eslint-disable-line
+    for await (const result of scrollSearch) {
       // @ts-expect-error
       t.equal(result.body.count, count)
     }
@@ -293,10 +293,10 @@ test('Scroll search documents', async t => {
             hits: count === 3
               ? []
               : [
-                  { _source: { val: 1 * count } },
-                  { _source: { val: 2 * count } },
-                  { _source: { val: 3 * count } }
-                ]
+                { _source: { val: 1 * count } },
+                { _source: { val: 2 * count } },
+                { _source: { val: 3 * count } }
+              ]
           }
         }
       }
@@ -350,7 +350,7 @@ test('Should not retry if maxRetries = 0', async t => {
   })
 
   try {
-    for await (const _result of scrollSearch) { // eslint-disable-line
+    for await (const _result of scrollSearch) {
       t.fail('we should not be here')
     }
   } catch (err: any) {
@@ -385,8 +385,8 @@ test('Fix querystring for scroll search', async t => {
             hits: count === 3
               ? []
               : [
-                  { _source: { val: count } }
-                ]
+                { _source: { val: count } }
+              ]
           }
         }
       }
