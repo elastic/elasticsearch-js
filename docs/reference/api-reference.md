@@ -12558,6 +12558,36 @@ client.security.clearCachedServiceTokens({ namespace, service, name })
 Use a wildcard (`*`) to evict all tokens that belong to a service account.
 It does not support other wildcard patterns.
 
+## client.security.cloneApiKey [_security.clone_api_key]
+Clone an API key.
+
+Create a copy of an existing API key with a new ID.
+The cloned key inherits the role descriptors of the source key.
+This is intended for applications (such as Kibana) that need to
+create API keys on behalf of a user using an existing API key credential,
+since derived API keys (API keys created by API keys) are not otherwise supported.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.security.cloneApiKey({ api_key })
+```
+
+### Arguments [_arguments_security.clone_api_key]
+
+#### Request (object) [_request_security.clone_api_key]
+- **`api_key` (string)**: The credentials of the API key to clone.
+This is the secret value returned when the key was originally created.
+- **`name` (Optional, string)**: A name for the cloned API key.
+If not provided, the name of the source key is used.
+- **`expiration` (Optional, string \| -1 \| 0)**: The expiration time for the cloned API key.
+By default, API keys never expire.
+Set to `null` to explicitly create a key with no expiration.
+- **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata to associate with the cloned API key.
+It supports nested data structure.
+Within the metadata object, keys beginning with `_` are reserved for system usage.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
 ## client.security.createApiKey [_security.create_api_key]
 Create an API key.
 
@@ -15391,6 +15421,7 @@ client.tasks.get({ task_id })
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the task has completed.
+- **`follow_relocations` (Optional, boolean)**: Internal use only
 
 ## client.tasks.list [_tasks.list]
 Get all tasks.
@@ -16082,6 +16113,9 @@ client.transform.scheduleNowTransform({ transform_id })
 #### Request (object) [_request_transform.schedule_now_transform]
 - **`transform_id` (string)**: Identifier for the transform.
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the scheduling to take place
+- **`defer` (Optional, boolean)**: When true, defers the scheduling by the transform's configured sync delay
+instead of triggering immediately. The transform will process new data after
+the delay elapses rather than right away.
 
 ## client.transform.setUpgradeMode [_transform.set_upgrade_mode]
 Set upgrade_mode for transform indices.

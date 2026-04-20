@@ -127,7 +127,8 @@ export default class Transform {
         ],
         body: [],
         query: [
-          'timeout'
+          'timeout',
+          'defer'
         ]
       },
       'transform.set_upgrade_mode': {
@@ -623,7 +624,7 @@ export default class Transform {
       acceptedParams: {
         path: ['transform_id'],
         body: [],
-        query: ['timeout']
+        query: ['timeout', 'defer']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -48,7 +48,8 @@ export default class Tasks {
         body: [],
         query: [
           'timeout',
-          'wait_for_completion'
+          'wait_for_completion',
+          'follow_relocations'
         ]
       },
       'tasks.list': {
@@ -169,7 +170,7 @@ export default class Tasks {
       acceptedParams: {
         path: ['task_id'],
         body: [],
-        query: ['timeout', 'wait_for_completion']
+        query: ['timeout', 'wait_for_completion', 'follow_relocations']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
