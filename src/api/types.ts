@@ -3616,7 +3616,7 @@ export interface AggregationsExtendedStatsBucketAggregation extends Aggregations
   sigma?: double
 }
 
-export type AggregationsFieldDateMath = DateMath | double
+export type AggregationsFieldDateMath = DateMath | long
 
 export interface AggregationsFilterAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
@@ -6554,6 +6554,9 @@ export interface QueryDslLikeDocument {
   version_type?: VersionType
 }
 
+export interface QueryDslLongNumberRangeQuery extends QueryDslRangeQueryBase<long> {
+}
+
 export interface QueryDslMatchAllQuery extends QueryDslQueryBase {
 }
 
@@ -6801,7 +6804,7 @@ export interface QueryDslRandomScoreFunction {
   seed?: long | string
 }
 
-export type QueryDslRangeQuery = QueryDslUntypedRangeQuery | QueryDslDateRangeQuery | QueryDslNumberRangeQuery | QueryDslTermRangeQuery
+export type QueryDslRangeQuery = QueryDslUntypedRangeQuery | QueryDslDateRangeQuery | QueryDslNumberRangeQuery | QueryDslLongNumberRangeQuery | QueryDslTermRangeQuery
 
 export interface QueryDslRangeQueryBase<T = unknown> extends QueryDslQueryBase {
   relation?: QueryDslRangeRelation
