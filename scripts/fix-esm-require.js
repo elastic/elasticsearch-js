@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright Elasticsearch B.V. and contributors
  * SPDX-License-Identifier: Apache-2.0
@@ -16,8 +15,8 @@ if (fs.existsSync(clientPath)) {
   let content = fs.readFileSync(clientPath, 'utf8')
 
   // Check if we need to add createRequire
-  const hasPackageRequire = content.includes("require('../package.json')") ||
-                            content.includes("require('@elastic/transport/package.json')")
+  const hasPackageRequire = content.includes('require(\'../package.json\')') ||
+                            content.includes('require(\'@elastic/transport/package.json\')')
 
   if (!content.includes('createRequire') && hasPackageRequire) {
     // Find the last import statement
@@ -28,7 +27,7 @@ if (fs.existsSync(clientPath)) {
       const beforeImport = content.substring(0, newlineAfterImport + 1)
       const afterImport = content.substring(newlineAfterImport + 1)
 
-      content = beforeImport + "import { createRequire } from 'node:module';\nconst require = createRequire(import.meta.url);\n" + afterImport
+      content = beforeImport + 'import { createRequire } from \'node:module\';\nconst require = createRequire(import.meta.url);\n' + afterImport
     }
 
     fs.writeFileSync(clientPath, content, 'utf8')
@@ -43,8 +42,8 @@ if (fs.existsSync(helpersPath)) {
   let content = fs.readFileSync(helpersPath, 'utf8')
 
   // Fix the apache-arrow import that tsc-esm-fix incorrectly modified
-  const originalApacheImport = "import { tableFromIPC, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node.js';"
-  const fixedApacheImport = "import { tableFromIPC, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node';"
+  const originalApacheImport = 'import { tableFromIPC, AsyncRecordBatchStreamReader } from \'apache-arrow/Arrow.node.js\';'
+  const fixedApacheImport = 'import { tableFromIPC, AsyncRecordBatchStreamReader } from \'apache-arrow/Arrow.node\';'
 
   if (content.includes(originalApacheImport)) {
     content = content.replace(originalApacheImport, fixedApacheImport)
