@@ -49,7 +49,7 @@ if (clientVersion.includes('-')) {
   // clean prerelease
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
-let transportVersion: string = transportPackageJson.version // eslint-disable-line
+let transportVersion: string = transportPackageJson.version
 /* istanbul ignore next */
 if (transportVersion.includes('-')) {
   // clean prerelease
@@ -314,6 +314,11 @@ export default class Client extends API {
         // assumes HttpConnection
         clientMeta += `,hc=${nodeVersion}`
       }
+
+      // detect alternative runtimes
+      if (process.versions.bun != null) clientMeta += `,bn=${process.versions.bun}`
+      if (process.versions.deno != null) clientMeta += `,dn=${process.versions.deno}`
+
       options.headers['x-elastic-client-meta'] = clientMeta
     }
 
@@ -410,7 +415,7 @@ export default class Client extends API {
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
       redaction: options.redaction,
-      /* eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error */
+
       // @ts-ignore enableMetaHeader will be available in transport v9.1.1
       enableMetaHeader: options.enableMetaHeader
     }
