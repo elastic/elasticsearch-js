@@ -553,7 +553,7 @@ export default class Inference {
 
   /**
     * Perform chat completion inference on the service. The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type. NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. To determine whether a given inference service supports this task type, please see the page for that service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-unified-inference | Elasticsearch API documentation}
     */
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceChatCompletionUnifiedResponse, unknown>>
@@ -605,7 +605,7 @@ export default class Inference {
 
   /**
     * Perform completion inference on the service. Get responses for completion tasks. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference | Elasticsearch API documentation}
     */
   async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceCompletionResponse>
   async completion (this: That, params: T.InferenceCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceCompletionResponse, unknown>>
@@ -667,7 +667,7 @@ export default class Inference {
 
   /**
     * Delete an inference endpoint. This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-delete | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
   async delete (this: That, params: T.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
@@ -725,7 +725,7 @@ export default class Inference {
 
   /**
     * Perform dense embedding inference on the service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference | Elasticsearch API documentation}
     */
   async embedding (this: That, params: T.InferenceEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceEmbeddingResponse>
   async embedding (this: That, params: T.InferenceEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceEmbeddingResponse, unknown>>
@@ -777,7 +777,7 @@ export default class Inference {
 
   /**
     * Get an inference endpoint. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-get | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
   async get (this: That, params?: T.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
@@ -842,7 +842,7 @@ export default class Inference {
 
   /**
     * Perform inference on the service. This API enables you to use machine learning models to perform specific tasks on data that you provide as an input. It returns a response with the results of the tasks. The inference endpoint you use can perform one specific task that has been defined when the endpoint was created with the create inference API. For details about using this API with a service, such as Amazon Bedrock, Anthropic, or HuggingFace, refer to the service-specific documentation. > info > The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference | Elasticsearch API documentation}
     */
   async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
   async inference (this: That, params: T.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
@@ -912,7 +912,7 @@ export default class Inference {
 
   /**
     * Create an inference endpoint. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. The following integrations are available through the inference API. You can find the available task types next to the integration name: * AI21 (`chat_completion`, `completion`) * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`) * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`) * Anthropic (`completion`) * Azure AI Studio (`completion`, `rerank`, `text_embedding`) * Azure OpenAI (`chat_completion`, `completion`, `text_embedding`) * Cohere (`completion`, `rerank`, `text_embedding`) * DeepSeek (`chat_completion`, `completion`) * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland) * ELSER (`sparse_embedding`) * Fireworks AI (`chat_completion`, `completion`, `text_embedding`) * Google AI Studio (`completion`, `text_embedding`) * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * Groq (`chat_completion`) * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`) * JinaAI (`embedding`, `rerank`, `text_embedding`) * Llama (`chat_completion`, `completion`, `text_embedding`) * Mistral (`chat_completion`, `completion`, `text_embedding`) * Nvidia (`chat_completion`, `completion`, `text_embedding`, `rerank`) * OpenAI (`chat_completion`, `completion`, `text_embedding`) * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`) * VoyageAI (`rerank`, `text_embedding`) * Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
   async put (this: That, params: T.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
@@ -972,7 +972,7 @@ export default class Inference {
 
   /**
     * Create a AI21 inference endpoint. Create an inference endpoint to perform an inference task with the `ai21` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21 | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-ai21 | Elasticsearch API documentation}
     */
   async putAi21 (this: That, params: T.InferencePutAi21Request, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAi21Response>
   async putAi21 (this: That, params: T.InferencePutAi21Request, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAi21Response, unknown>>
@@ -1035,7 +1035,7 @@ export default class Inference {
 
   /**
     * Create an AlibabaCloud AI Search inference endpoint. Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-alibabacloud | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-alibabacloud | Elasticsearch API documentation}
     */
   async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAlibabacloudResponse>
   async putAlibabacloud (this: That, params: T.InferencePutAlibabacloudRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAlibabacloudResponse, unknown>>
@@ -1098,7 +1098,7 @@ export default class Inference {
 
   /**
     * Create an Amazon Bedrock inference endpoint. Create an inference endpoint to perform an inference task with the `amazonbedrock` service. >info > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonbedrock | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-amazonbedrock | Elasticsearch API documentation}
     */
   async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonbedrockResponse>
   async putAmazonbedrock (this: That, params: T.InferencePutAmazonbedrockRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonbedrockResponse, unknown>>
@@ -1161,7 +1161,7 @@ export default class Inference {
 
   /**
     * Create an Amazon SageMaker inference endpoint. Create an inference endpoint to perform an inference task with the `amazon_sagemaker` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonsagemaker | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-amazonsagemaker | Elasticsearch API documentation}
     */
   async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAmazonsagemakerResponse>
   async putAmazonsagemaker (this: That, params: T.InferencePutAmazonsagemakerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAmazonsagemakerResponse, unknown>>
@@ -1224,7 +1224,7 @@ export default class Inference {
 
   /**
     * Create an Anthropic inference endpoint. Create an inference endpoint to perform an inference task with the `anthropic` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-anthropic | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-anthropic | Elasticsearch API documentation}
     */
   async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAnthropicResponse>
   async putAnthropic (this: That, params: T.InferencePutAnthropicRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAnthropicResponse, unknown>>
@@ -1287,7 +1287,7 @@ export default class Inference {
 
   /**
     * Create an Azure AI studio inference endpoint. Create an inference endpoint to perform an inference task with the `azureaistudio` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureaistudio | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-azureaistudio | Elasticsearch API documentation}
     */
   async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureaistudioResponse>
   async putAzureaistudio (this: That, params: T.InferencePutAzureaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureaistudioResponse, unknown>>
@@ -1350,7 +1350,7 @@ export default class Inference {
 
   /**
     * Create an Azure OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `azureopenai` service. The list of chat completion models that you can choose from in your Azure OpenAI deployment include: * [GPT-4 and GPT-4 Turbo models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4-and-gpt-4-turbo-models) * [GPT-3.5](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-35) The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings).
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureopenai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-azureopenai | Elasticsearch API documentation}
     */
   async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutAzureopenaiResponse>
   async putAzureopenai (this: That, params: T.InferencePutAzureopenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutAzureopenaiResponse, unknown>>
@@ -1413,7 +1413,7 @@ export default class Inference {
 
   /**
     * Create a Cohere inference endpoint. Create an inference endpoint to perform an inference task with the `cohere` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-cohere | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-cohere | Elasticsearch API documentation}
     */
   async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCohereResponse>
   async putCohere (this: That, params: T.InferencePutCohereRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCohereResponse, unknown>>
@@ -1476,7 +1476,7 @@ export default class Inference {
 
   /**
     * Create an Contextual AI inference endpoint. Create an inference endpoint to perform an inference task with the `contexualai` service. To review the available `rerank` models, refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-model>.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-contextualai | Elasticsearch API documentation}
     */
   async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutContextualaiResponse>
   async putContextualai (this: That, params: T.InferencePutContextualaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutContextualaiResponse, unknown>>
@@ -1539,7 +1539,7 @@ export default class Inference {
 
   /**
     * Create a custom inference endpoint. The custom service gives more control over how to interact with external inference services that aren't explicitly supported through dedicated integrations. The custom service gives you the ability to define the headers, url, query parameters, request body, and secrets. The custom service supports the template replacement functionality, which enables you to define a template that can be replaced with the value associated with that key. Templates are portions of a string that start with `${` and end with `}`. The parameters `secret_parameters` and `task_settings` are checked for keys for template replacement. Template replacement is supported in the `request`, `headers`, `url`, and `query_parameters`. If the definition (key) is not found for a template, an error message is returned. In case of an endpoint definition like the following: ``` PUT _inference/text_embedding/test-text-embedding { "service": "custom", "service_settings": { "secret_parameters": { "api_key": "<some api key>" }, "url": "...endpoints.huggingface.cloud/v1/embeddings", "headers": { "Authorization": "Bearer ${api_key}", "Content-Type": "application/json" }, "request": "{\"input\": ${input}}", "response": { "json_parser": { "text_embeddings":"$.data[*].embedding[*]" } } } } ``` To replace `${api_key}` the `secret_parameters` and `task_settings` are checked for a key named `api_key`. > info > Templates should not be surrounded by quotes. Pre-defined templates: * `${input}` refers to the array of input strings that comes from the `input` field of the subsequent inference requests. * `${input_type}` refers to the input type translation values. * `${query}` refers to the query field used specifically for reranking tasks. * `${top_n}` refers to the `top_n` field available when performing rerank requests. * `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-custom | Elasticsearch API documentation}
     */
   async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutCustomResponse>
   async putCustom (this: That, params: T.InferencePutCustomRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutCustomResponse, unknown>>
@@ -1602,7 +1602,7 @@ export default class Inference {
 
   /**
     * Create a DeepSeek inference endpoint. Create an inference endpoint to perform an inference task with the `deepseek` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-deepseek | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-deepseek | Elasticsearch API documentation}
     */
   async putDeepseek (this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutDeepseekResponse>
   async putDeepseek (this: That, params: T.InferencePutDeepseekRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutDeepseekResponse, unknown>>
@@ -1665,7 +1665,7 @@ export default class Inference {
 
   /**
     * Create an Elasticsearch inference endpoint. Create an inference endpoint to perform an inference task with the `elasticsearch` service. > info > Your Elasticsearch deployment contains preconfigured ELSER and E5 inference endpoints, you only need to create the enpoints using the API if you want to customize the settings. If you use the ELSER or the E5 model through the `elasticsearch` service, the API request will automatically download and deploy the model if it isn't downloaded yet. > info > You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elasticsearch | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-elasticsearch | Elasticsearch API documentation}
     */
   async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElasticsearchResponse>
   async putElasticsearch (this: That, params: T.InferencePutElasticsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElasticsearchResponse, unknown>>
@@ -1728,7 +1728,7 @@ export default class Inference {
 
   /**
     * Create an ELSER inference endpoint. Create an inference endpoint to perform an inference task with the `elser` service. You can also deploy ELSER by using the Elasticsearch inference integration. > info > Your Elasticsearch deployment contains a preconfigured ELSER inference endpoint, you only need to create the enpoint using the API if you want to customize the settings. The API request will automatically download and deploy the ELSER model if it isn't already downloaded. > info > You might see a 502 bad gateway error in the response when using the Kibana Console. This error usually just reflects a timeout, while the model downloads in the background. You can check the download progress in the Machine Learning UI. If using the Python client, you can set the timeout parameter to a higher value. After creating the endpoint, wait for the model deployment to complete before using it. To verify the deployment status, use the get trained model statistics API. Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elser | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-elser | Elasticsearch API documentation}
     */
   async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutElserResponse>
   async putElser (this: That, params: T.InferencePutElserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutElserResponse, unknown>>
@@ -1791,7 +1791,7 @@ export default class Inference {
 
   /**
     * Create a Fireworks AI inference endpoint. Create an inference endpoint to perform an inference task with the `fireworksai` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-fireworksai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-fireworksai | Elasticsearch API documentation}
     */
   async putFireworksai (this: That, params: T.InferencePutFireworksaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutFireworksaiResponse>
   async putFireworksai (this: That, params: T.InferencePutFireworksaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutFireworksaiResponse, unknown>>
@@ -1854,7 +1854,7 @@ export default class Inference {
 
   /**
     * Create an Google AI Studio inference endpoint. Create an inference endpoint to perform an inference task with the `googleaistudio` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googleaistudio | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-googleaistudio | Elasticsearch API documentation}
     */
   async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGoogleaistudioResponse>
   async putGoogleaistudio (this: That, params: T.InferencePutGoogleaistudioRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGoogleaistudioResponse, unknown>>
@@ -1917,7 +1917,7 @@ export default class Inference {
 
   /**
     * Create a Google Vertex AI inference endpoint. Create an inference endpoint to perform an inference task with the `googlevertexai` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googlevertexai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-googlevertexai | Elasticsearch API documentation}
     */
   async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGooglevertexaiResponse>
   async putGooglevertexai (this: That, params: T.InferencePutGooglevertexaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGooglevertexaiResponse, unknown>>
@@ -1980,7 +1980,7 @@ export default class Inference {
 
   /**
     * Create a Groq inference endpoint. Create an inference endpoint to perform an inference task with the `groq` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-groq | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-groq | Elasticsearch API documentation}
     */
   async putGroq (this: That, params: T.InferencePutGroqRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutGroqResponse>
   async putGroq (this: That, params: T.InferencePutGroqRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutGroqResponse, unknown>>
@@ -2043,7 +2043,7 @@ export default class Inference {
 
   /**
     * Create a Hugging Face inference endpoint. Create an inference endpoint to perform an inference task with the `hugging_face` service. Supported tasks include: `text_embedding`, `completion`, and `chat_completion`. To configure the endpoint, first visit the Hugging Face Inference Endpoints page and create a new endpoint. Select a model that supports the task you intend to use. For Elastic's `text_embedding` task: The selected model must support the `Sentence Embeddings` task. On the new endpoint creation page, select the `Sentence Embeddings` task under the `Advanced Configuration` section. After the endpoint has initialized, copy the generated endpoint URL. Recommended models for `text_embedding` task: * `all-MiniLM-L6-v2` * `all-MiniLM-L12-v2` * `all-mpnet-base-v2` * `e5-base-v2` * `e5-small-v2` * `multilingual-e5-base` * `multilingual-e5-small` For Elastic's `chat_completion` and `completion` tasks: The selected model must support the `Text Generation` task and expose OpenAI API. HuggingFace supports both serverless and dedicated endpoints for `Text Generation`. When creating dedicated endpoint select the `Text Generation` task. After the endpoint is initialized (for dedicated) or ready (for serverless), ensure it supports the OpenAI API and includes `/v1/chat/completions` part in URL. Then, copy the full endpoint URL for use. Recommended models for `chat_completion` and `completion` tasks: * `Mistral-7B-Instruct-v0.2` * `QwQ-32B` * `Phi-3-mini-128k-instruct` For Elastic's `rerank` task: The selected model must support the `sentence-ranking` task and expose OpenAI API. HuggingFace supports only dedicated (not serverless) endpoints for `Rerank` so far. After the endpoint is initialized, copy the full endpoint URL for use. Tested models for `rerank` task: * `bge-reranker-base` * `jina-reranker-v1-turbo-en-GGUF`
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-hugging-face | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-hugging-face | Elasticsearch API documentation}
     */
   async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutHuggingFaceResponse>
   async putHuggingFace (this: That, params: T.InferencePutHuggingFaceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutHuggingFaceResponse, unknown>>
@@ -2106,7 +2106,7 @@ export default class Inference {
 
   /**
     * Create an JinaAI inference endpoint. Create an inference endpoint to perform an inference task with the `jinaai` service. To review the available `rerank` models, refer to <https://jina.ai/reranker>. To review the available `embedding` and `text_embedding` models, refer to <https://jina.ai/embeddings/>.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-jinaai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-jinaai | Elasticsearch API documentation}
     */
   async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutJinaaiResponse>
   async putJinaai (this: That, params: T.InferencePutJinaaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutJinaaiResponse, unknown>>
@@ -2169,7 +2169,7 @@ export default class Inference {
 
   /**
     * Create a Llama inference endpoint. Create an inference endpoint to perform an inference task with the `llama` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-llama | Elasticsearch API documentation}
     */
   async putLlama (this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutLlamaResponse>
   async putLlama (this: That, params: T.InferencePutLlamaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutLlamaResponse, unknown>>
@@ -2232,7 +2232,7 @@ export default class Inference {
 
   /**
     * Create a Mistral inference endpoint. Create an inference endpoint to perform an inference task with the `mistral` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-mistral | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-mistral | Elasticsearch API documentation}
     */
   async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutMistralResponse>
   async putMistral (this: That, params: T.InferencePutMistralRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutMistralResponse, unknown>>
@@ -2295,7 +2295,7 @@ export default class Inference {
 
   /**
     * Create an Nvidia inference endpoint. Create an inference endpoint to perform an inference task with the `nvidia` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-nvidia | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-nvidia | Elasticsearch API documentation}
     */
   async putNvidia (this: That, params: T.InferencePutNvidiaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutNvidiaResponse>
   async putNvidia (this: That, params: T.InferencePutNvidiaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutNvidiaResponse, unknown>>
@@ -2358,7 +2358,7 @@ export default class Inference {
 
   /**
     * Create an OpenAI inference endpoint. Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-openai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-openai | Elasticsearch API documentation}
     */
   async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutOpenaiResponse>
   async putOpenai (this: That, params: T.InferencePutOpenaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutOpenaiResponse, unknown>>
@@ -2421,7 +2421,7 @@ export default class Inference {
 
   /**
     * Create an OpenShift AI inference endpoint. Create an inference endpoint to perform an inference task with the `openshift_ai` service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-openshift-ai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-openshift-ai | Elasticsearch API documentation}
     */
   async putOpenshiftAi (this: That, params: T.InferencePutOpenshiftAiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutOpenshiftAiResponse>
   async putOpenshiftAi (this: That, params: T.InferencePutOpenshiftAiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutOpenshiftAiResponse, unknown>>
@@ -2484,7 +2484,7 @@ export default class Inference {
 
   /**
     * Create a VoyageAI inference endpoint. Create an inference endpoint to perform an inference task with the `voyageai` service. Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-voyageai | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-voyageai | Elasticsearch API documentation}
     */
   async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutVoyageaiResponse>
   async putVoyageai (this: That, params: T.InferencePutVoyageaiRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutVoyageaiResponse, unknown>>
@@ -2547,7 +2547,7 @@ export default class Inference {
 
   /**
     * Create a Watsonx inference endpoint. Create an inference endpoint to perform an inference task with the `watsonxai` service. You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service. You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-watsonx | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-watsonx | Elasticsearch API documentation}
     */
   async putWatsonx (this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutWatsonxResponse>
   async putWatsonx (this: That, params: T.InferencePutWatsonxRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutWatsonxResponse, unknown>>
@@ -2610,7 +2610,7 @@ export default class Inference {
 
   /**
     * Perform reranking inference on the service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference | Elasticsearch API documentation}
     */
   async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceRerankResponse>
   async rerank (this: That, params: T.InferenceRerankRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceRerankResponse, unknown>>
@@ -2672,7 +2672,7 @@ export default class Inference {
 
   /**
     * Perform sparse embedding inference on the service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference | Elasticsearch API documentation}
     */
   async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceSparseEmbeddingResponse>
   async sparseEmbedding (this: That, params: T.InferenceSparseEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceSparseEmbeddingResponse, unknown>>
@@ -2734,7 +2734,7 @@ export default class Inference {
 
   /**
     * Perform streaming completion inference on the service. Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-stream-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-stream-inference | Elasticsearch API documentation}
     */
   async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceStreamCompletionResponse>
   async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceStreamCompletionResponse, unknown>>
@@ -2796,7 +2796,7 @@ export default class Inference {
 
   /**
     * Perform text embedding inference on the service.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference | Elasticsearch API documentation}
     */
   async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceTextEmbeddingResponse>
   async textEmbedding (this: That, params: T.InferenceTextEmbeddingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceTextEmbeddingResponse, unknown>>
@@ -2858,7 +2858,7 @@ export default class Inference {
 
   /**
     * Update an inference endpoint. Modify `task_settings`, secrets (within `service_settings`), or `num_allocations` for an inference endpoint, depending on the specific endpoint service and `task_type`. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-update | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-update | Elasticsearch API documentation}
     */
   async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceUpdateResponse>
   async update (this: That, params: T.InferenceUpdateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceUpdateResponse, unknown>>

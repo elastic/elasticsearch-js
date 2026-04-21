@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/array-type */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /**
  * We are still working on this type, it will arrive soon.
  * If it's critical for you, please open an issue.
@@ -186,6 +190,46 @@ export interface BulkWriteOperation extends BulkOperationBase {
   pipeline?: string
   /** If `true`, the request's actions must target an index alias. */
   require_alias?: boolean
+}
+
+export interface CancelReindexRequest extends RequestBase {
+  /** The ID of the reindex task to cancel. */
+  task_id: TaskId
+  /** If `true` (the default), the request blocks until the cancellation is complete and returns the final task state.
+    * If `false`, the request returns immediately with `acknowledged: true`. */
+  wait_for_completion?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, wait_for_completion?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, wait_for_completion?: never }
+}
+
+export interface CancelReindexResponse {
+  /** Present and `true` when `wait_for_completion=false`. */
+  acknowledged?: boolean
+  /** Whether the reindex task has completed. Present when `wait_for_completion=true`. */
+  completed?: boolean
+  /** The ID of the reindex task, in `nodeId:taskNum` format. Present when `wait_for_completion=true`. */
+  id?: TaskId
+  /** A sanitized description of the reindex operation. */
+  description?: string
+  /** The time at which the reindex task started, in milliseconds since the Unix epoch. */
+  start_time_in_millis?: EpochTime<UnitMillis>
+  /** The time at which the reindex task started, as an ISO 8601 formatted string. */
+  start_time?: string
+  /** The elapsed running time of the reindex task, in a human-readable format.
+    * Only present when the request includes the `?human=true` query parameter. */
+  running_time?: Duration
+  /** The elapsed running time of the reindex task, in nanoseconds. */
+  running_time_in_nanos?: DurationValue<UnitNanos>
+  /** Whether the reindex task has been cancelled. */
+  cancelled?: boolean
+  /** The status of the reindex operation at the time of cancellation. */
+  status?: ReindexStatus
+  /** The error that caused the reindex task to fail, if any. */
+  error?: ErrorCause
+  /** The final result of the reindex operation, if it completed before being cancelled. */
+  response?: ReindexTaskResult
 }
 
 export interface CapabilitiesFailedNodeException {
@@ -923,6 +967,46 @@ export interface GetRequest extends RequestBase {
 
 export type GetResponse<TDocument = unknown> = GetGetResult<TDocument>
 
+export interface GetReindexRequest extends RequestBase {
+  /** The ID of the reindex task to retrieve. */
+  task_id: TaskId
+  /** If `true`, the request blocks until the reindex task completes, then returns the result. */
+  wait_for_completion?: boolean
+  /** The period to wait for the reindex task to complete when `wait_for_completion` is `true`. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { task_id?: never, wait_for_completion?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { task_id?: never, wait_for_completion?: never, timeout?: never }
+}
+
+export interface GetReindexResponse {
+  /** Whether the reindex task has completed. */
+  completed: boolean
+  /** The ID of the reindex task, in `nodeId:taskNum` format. */
+  id: TaskId
+  /** A sanitized description of the reindex operation (source and destination indices, and optionally remote host info). */
+  description?: string
+  /** The time at which the reindex task started, in milliseconds since the Unix epoch. */
+  start_time_in_millis: EpochTime<UnitMillis>
+  /** The time at which the reindex task started, as an ISO 8601 formatted string.
+    * Only present when the request includes the `?human=true` query parameter. */
+  start_time?: string
+  /** The elapsed running time of the reindex task, in a human-readable format.
+    * Only present when the request includes the `?human=true` query parameter. */
+  running_time?: Duration
+  /** The elapsed running time of the reindex task, in nanoseconds. */
+  running_time_in_nanos: DurationValue<UnitNanos>
+  /** Whether the reindex task has been cancelled. */
+  cancelled: boolean
+  /** The current progress of the reindex operation. */
+  status?: ReindexStatus
+  /** The error that caused the reindex task to fail, if any. */
+  error?: ErrorCause
+  /** The final result of the completed reindex operation, if the task has finished successfully. */
+  response?: ReindexTaskResult
+}
+
 export interface GetScriptRequest extends RequestBase {
   /** The identifier for the stored script or search template. */
   id: Id
@@ -1357,6 +1441,24 @@ export interface KnnSearchKnnSearchQuery {
   k: integer
   /** The number of nearest neighbor candidates to consider per shard */
   num_candidates: integer
+}
+
+export interface ListReindexRequest extends RequestBase {
+  /** If `true`, include detailed task status information in the response. */
+  detailed?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { detailed?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { detailed?: never }
+}
+
+export interface ListReindexResponse {
+  /** The list of currently running reindex tasks. */
+  reindex: ReindexTaskInfo[]
+  /** Task-level failures that occurred while listing reindex tasks. */
+  task_failures?: TaskFailure[]
+  /** Node-level failures that occurred while listing reindex tasks. */
+  node_failures?: ErrorCause[]
 }
 
 export interface MgetMultiGetError {
@@ -4798,6 +4900,58 @@ export interface ReindexStatus {
   version_conflicts: long
   /** The reason for cancellation if the slice was canceled */
   cancelled?: string
+}
+
+export interface ReindexTaskInfo {
+  /** The ID of the reindex task, in `nodeId:taskNum` format. */
+  id: TaskId
+  /** A sanitized description of the reindex operation (source and destination indices, and optionally remote host info). */
+  description?: string
+  /** The time at which the reindex task started, in milliseconds since the Unix epoch. */
+  start_time_in_millis: EpochTime<UnitMillis>
+  /** The time at which the reindex task started, as an ISO 8601 formatted string.
+    * Only present when the request includes the `?human=true` query parameter. */
+  start_time?: string
+  /** The elapsed running time of the reindex task, in a human-readable format.
+    * Only present when the request includes the `?human=true` query parameter. */
+  running_time?: Duration
+  /** The elapsed running time of the reindex task, in nanoseconds. */
+  running_time_in_nanos: DurationValue<UnitNanos>
+  /** Whether the reindex task has been cancelled. */
+  cancelled: boolean
+  /** The current progress of the reindex operation. */
+  status?: ReindexStatus
+}
+
+export interface ReindexTaskResult {
+  /** The number of scroll responses pulled back by the reindex. */
+  batches?: long
+  /** The number of documents that were successfully created. */
+  created?: long
+  /** The number of documents that were successfully deleted. */
+  deleted?: long
+  /** Any failures encountered during the reindex. If non-empty, the reindex ended because of these failures. */
+  failures?: BulkIndexByScrollFailure[]
+  /** The number of documents that were ignored because the script returned a `noop` value for `ctx.op`. */
+  noops?: long
+  /** The number of requests per second effectively executed during the reindex. */
+  requests_per_second?: float
+  /** The number of retries attempted by reindex. */
+  retries?: Retries
+  /** Number of milliseconds the request slept to conform to `requests_per_second`. */
+  throttled_millis?: DurationValue<UnitMillis>
+  /** This field should always be equal to zero in a completed reindex result. */
+  throttled_until_millis?: DurationValue<UnitMillis>
+  /** Whether any of the requests executed during the reindex timed out. */
+  timed_out?: boolean
+  /** The total milliseconds the entire operation took. */
+  took?: DurationValue<UnitMillis>
+  /** The number of documents that were successfully processed. */
+  total?: long
+  /** The number of documents that were successfully updated. */
+  updated?: long
+  /** The number of version conflicts that occurred. */
+  version_conflicts?: long
 }
 
 export type RelationName = string
@@ -8830,7 +8984,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'counted_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'wildcard' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'counted_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -9806,6 +9960,9 @@ export interface QueryDslLikeDocument {
   version_type?: VersionType
 }
 
+export interface QueryDslLongNumberRangeQuery extends QueryDslRangeQueryBase<long> {
+}
+
 export interface QueryDslMatchAllQuery extends QueryDslQueryBase {
 }
 
@@ -10270,7 +10427,7 @@ export interface QueryDslRandomScoreFunction {
   seed?: long | string
 }
 
-export type QueryDslRangeQuery = QueryDslUntypedRangeQuery | QueryDslDateRangeQuery | QueryDslNumberRangeQuery | QueryDslTermRangeQuery
+export type QueryDslRangeQuery = QueryDslUntypedRangeQuery | QueryDslDateRangeQuery | QueryDslNumberRangeQuery | QueryDslLongNumberRangeQuery | QueryDslTermRangeQuery
 
 export interface QueryDslRangeQueryBase<T = unknown> extends QueryDslQueryBase {
   /** Indicates how the range query matches values for `range` fields. */
@@ -35908,6 +36065,44 @@ export interface SecurityClearCachedServiceTokensResponse {
   _nodes: NodeStatistics
   cluster_name: Name
   nodes: Record<string, SecurityClusterNode>
+}
+
+export interface SecurityCloneApiKeyRequest extends RequestBase {
+  /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
+  refresh?: Refresh
+  /** The credentials of the API key to clone.
+    * This is the secret value returned when the key was originally created. */
+  api_key: string
+  /** A name for the cloned API key.
+    * If not provided, the name of the source key is used. */
+  name?: Name
+  /** The expiration time for the cloned API key.
+    * By default, API keys never expire.
+    * Set to `null` to explicitly create a key with no expiration. */
+  expiration?: Duration
+  /** Arbitrary metadata to associate with the cloned API key.
+    * It supports nested data structure.
+    * Within the metadata object, keys beginning with `_` are reserved for system usage. */
+  metadata?: Metadata
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { refresh?: never, api_key?: never, name?: never, expiration?: never, metadata?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { refresh?: never, api_key?: never, name?: never, expiration?: never, metadata?: never }
+}
+
+export interface SecurityCloneApiKeyResponse {
+  /** The generated API key value for the cloned key. */
+  api_key: string
+  /** Expiration in milliseconds for the API key. */
+  expiration?: long
+  /** The unique ID of the cloned API key. */
+  id: Id
+  /** The name of the cloned API key. */
+  name: Name
+  /** API key credentials which is the base64-encoding of
+    * the UTF-8 representation of `id` and `api_key` joined
+    * by a colon (`:`). */
+  encoded: string
 }
 
 export interface SecurityCreateApiKeyRequest extends RequestBase {

@@ -127,7 +127,7 @@ The other two shards that make up the index do not participate in the `_bulk` re
 You might want to disable the refresh interval temporarily to improve indexing throughput for large bulk requests.
 Refer to the linked documentation for step-by-step instructions using the index settings API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-bulk)
 
 ```ts
 client.bulk({ ... })
@@ -156,7 +156,7 @@ Clear a scrolling search.
 
 Clear the search context and results for a scrolling search.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-clear-scroll)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-clear-scroll)
 
 ```ts
 client.clearScroll({ ... })
@@ -175,7 +175,7 @@ The `keep_alive` parameter tells Elasticsearch how long it should persist.
 A point in time is automatically closed when the `keep_alive` period has elapsed.
 However, keeping points in time has a cost; close them as soon as they are no longer required for search requests.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-open-point-in-time)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-open-point-in-time)
 
 ```ts
 client.closePointInTime({ id })
@@ -200,7 +200,7 @@ The operation is broadcast across all shards.
 For each shard ID group, a replica is chosen and the search is run against it.
 This means that replicas increase the scalability of the count.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-count)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-count)
 
 ```ts
 client.count({ ... })
@@ -301,7 +301,7 @@ It is important to note that this setting greatly reduces the chances of the wri
 After the write operation is underway, it is still possible for replication to fail on any number of shard copies but still succeed on the primary.
 The `_shards` section of the API response reveals the number of shard copies on which replication succeeded and failed.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-create)
 
 ```ts
 client.create({ id, index })
@@ -365,7 +365,7 @@ The document is not deleted if the correct routing is not specified.
 The delete operation gets hashed into a specific shard ID.
 It then gets redirected into the primary shard within that ID group and replicated (if needed) to shard replicas within that ID group.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-delete)
 
 ```ts
 client.delete({ id, index })
@@ -467,7 +467,7 @@ The task ID can be found by using the get tasks API.
 Cancellation should happen quickly but might take a few seconds.
 The get task status API will continue to list the delete by query task until this task checks that it has been cancelled and terminates itself.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-by-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-delete-by-query)
 
 ```ts
 client.deleteByQuery({ index })
@@ -515,7 +515,7 @@ Throttle a delete by query operation.
 Change the number of requests per second for a particular delete by query operation.
 Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-by-query-rethrottle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-delete-by-query-rethrottle)
 
 ```ts
 client.deleteByQueryRethrottle({ task_id, requests_per_second })
@@ -532,7 +532,7 @@ Delete a script or search template.
 
 Deletes a stored script or search template.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-script)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-delete-script)
 
 ```ts
 client.deleteScript({ id })
@@ -566,7 +566,7 @@ Internally, Elasticsearch has marked the old document as deleted and added an en
 The old version of the document doesn't disappear immediately, although you won't be able to access it.
 Elasticsearch cleans up deleted documents in the background as you continue to index more data.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get)
 
 ```ts
 client.exists({ id, index })
@@ -600,7 +600,7 @@ HEAD my-index-000001/_source/1
 
 A document's source is not available if it is disabled in the mapping.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get)
 
 ```ts
 client.existsSource({ id, index })
@@ -627,7 +627,7 @@ Explain a document match result.
 Get information about why a specific document matches, or doesn't match, a query.
 It computes a score explanation for a query and a specific document.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-explain)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-explain)
 
 ```ts
 client.explain({ id, index })
@@ -661,7 +661,7 @@ For data streams, the API returns field capabilities among the stream’s backin
 It returns runtime fields like any other field.
 For example, a runtime field with a type of keyword is returned the same as any other field that belongs to the `keyword` family.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-field-caps)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-field-caps)
 
 ```ts
 client.fieldCaps({ ... })
@@ -743,7 +743,7 @@ Internally, Elasticsearch has marked the old document as deleted and added an en
 The old version of the document doesn't disappear immediately, although you won't be able to access it.
 Elasticsearch cleans up deleted documents in the background as you continue to index more data.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get)
 
 ```ts
 client.get({ id, index })
@@ -772,7 +772,7 @@ Get a script or search template.
 
 Retrieves a stored script or search template.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-get-script)
 
 ```ts
 client.getScript({ id })
@@ -789,7 +789,7 @@ Get script contexts.
 
 Get a list of supported script contexts and their methods.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-context)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-get-script-context)
 
 ```ts
 client.getScriptContext()
@@ -800,7 +800,7 @@ Get script languages.
 
 Get a list of available script types, languages, and contexts.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-languages)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-get-script-languages)
 
 ```ts
 client.getScriptLanguages()
@@ -822,7 +822,7 @@ You can use the source filtering parameters to control which parts of the `_sour
 GET my-index-000001/_source/1/?_source_includes=*.id&_source_excludes=entities
 ```
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get)
 
 ```ts
 client.getSource({ id, index })
@@ -864,7 +864,7 @@ A diagnosis contains a cause detailing a root cause analysis, an action containi
 NOTE: The health indicators perform root cause analysis of non-green health statuses. This can be computationally expensive when called frequently.
 When setting up automated polling of the API for health status, set verbose to false to disable the more expensive analysis logic.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-health-report)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-health-report)
 
 ```ts
 client.healthReport({ ... })
@@ -1000,7 +1000,7 @@ If the document was already updated and its version was set to 2 or higher, the 
 A nice side effect is that there is no need to maintain strict ordering of async indexing operations run as a result of changes to a source database, as long as version numbers from the source database are used.
 Even the simple case of updating the Elasticsearch index using data from a database is simplified if external versioning is used, as only the latest version will be used if the index operations arrive out of order.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-create)
 
 ```ts
 client.index({ index })
@@ -1032,7 +1032,7 @@ Get cluster info.
 Get basic build, version, and cluster information.
 ::: In Serverless, this API is retained for backward compatibility only. Some response fields, such as the version number, should be ignored.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-info)
 
 ```ts
 client.info()
@@ -1057,7 +1057,7 @@ Use the `stored_fields` attribute to specify the set of stored fields you want t
 Any requested fields that are not stored are ignored.
 You can include the `stored_fields` query parameter in the request URI to specify the defaults to use when there are no per-document instructions.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-mget)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-mget)
 
 ```ts
 client.mget({ ... })
@@ -1098,7 +1098,7 @@ IMPORTANT: The final line of data must end with a newline character `\n`.
 Each newline character may be preceded by a carriage return `\r`.
 When sending requests to this endpoint the `Content-Type` header should be set to `application/x-ndjson`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-msearch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-msearch)
 
 ```ts
 client.msearch({ ... })
@@ -1141,7 +1141,7 @@ $ cat requests
 $ curl -H "Content-Type: application/x-ndjson" -XGET localhost:9200/_msearch/template --data-binary "@requests"; echo
 ```
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-msearch-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-msearch-template)
 
 ```ts
 client.msearchTemplate({ ... })
@@ -1173,7 +1173,7 @@ Each element has the structure provided by the termvectors API.
 You can also use `mtermvectors` to generate term vectors for artificial documents provided in the body of the request.
 The mapping used is determined by the specified `_index`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-mtermvectors)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-mtermvectors)
 
 ```ts
 client.mtermvectors({ ... })
@@ -1236,7 +1236,7 @@ Ensure that your nodes have sufficient heap space if you have many open point-in
 Note that a point-in-time doesn't prevent its associated indices from being deleted.
 You can check how many point-in-times (that is, search contexts) are open with the nodes stats API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-open-point-in-time)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-open-point-in-time)
 
 ```ts
 client.openPointInTime({ index, keep_alive })
@@ -1261,7 +1261,7 @@ Ping the cluster.
 
 Get information about whether the cluster is running.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cluster)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-cluster)
 
 ```ts
 client.ping()
@@ -1272,7 +1272,7 @@ Create or update a script or search template.
 
 Creates or updates a stored script or search template.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-put-script)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-put-script)
 
 ```ts
 client.putScript({ id, script })
@@ -1292,7 +1292,7 @@ Evaluate ranked search results.
 
 Evaluate the quality of ranked search results over a set of typical search queries.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rank-eval)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rank-eval)
 
 ```ts
 client.rankEval({ requests })
@@ -1360,7 +1360,7 @@ Additionally, dry runs, checking disk space, and fetching index recovery informa
 
 Refer to the linked documentation for examples of how to reindex documents.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-reindex)
 
 ```ts
 client.reindex({ dest, source })
@@ -1397,7 +1397,7 @@ Rethrottling that speeds up the query takes effect immediately.
 Rethrottling that slows down the query will take effect after completing the current batch.
 This behavior prevents scroll timeouts.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-reindex)
 
 ```ts
 client.reindexRethrottle({ task_id, requests_per_second })
@@ -1415,7 +1415,7 @@ Render a search template.
 
 Render a search template as a search request body.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-render-search-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-render-search-template)
 
 ```ts
 client.renderSearchTemplate({ ... })
@@ -1469,7 +1469,7 @@ You can also use the scroll API to specify a new scroll parameter that extends o
 
 IMPORTANT: Results from a scrolling search reflect the state of the index at the time of the initial search request. Subsequent indexing or document changes only affect later search and scroll requests.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-scroll)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-scroll)
 
 ```ts
 client.scroll({ scroll_id })
@@ -1503,7 +1503,7 @@ IMPORTANT: The same point-in-time ID should be used for all slices.
 If different PIT IDs are used, slices can overlap and miss documents.
 This situation can occur because, by default, the splitting criterion is based on Lucene document IDs, which are not stable across changes to the index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search)
 
 ```ts
 client.search({ ... })
@@ -1671,7 +1671,7 @@ Elasticsearch uses the H3 resolution that is closest to the corresponding geotil
 
 Learn how to use the vector tile search API with practical examples in the [Vector tile search examples](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/vector-tile-search) guide.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-mvt)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-mvt)
 
 ```ts
 client.searchMvt({ index, field, zoom, x, y })
@@ -1710,7 +1710,7 @@ When filtered aliases are used, the filter is returned as part of the `indices` 
 
 If the Elasticsearch security features are enabled, you must have the `view_index_metadata` or `manage` index privilege for the target data stream, index, or alias.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-shards)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-shards)
 
 ```ts
 client.searchShards({ ... })
@@ -1731,7 +1731,7 @@ client.searchShards({ ... })
 ## client.searchTemplate [_search_template]
 Run a search with a search template.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-template)
 
 ```ts
 client.searchTemplate({ ... })
@@ -1768,7 +1768,7 @@ This API is designed for low-latency look-ups used in auto-complete scenarios.
 > info
 > The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-terms-enum)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-terms-enum)
 
 ```ts
 client.termsEnum({ index, field })
@@ -1830,7 +1830,7 @@ By default, when requesting term vectors of artificial documents, a shard to get
 Use `routing` only to hit a particular shard.
 Refer to the linked documentation for detailed examples of how to use this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-termvectors)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-termvectors)
 
 ```ts
 client.termvectors({ index })
@@ -1878,7 +1878,7 @@ The `_source` field must be enabled to use this API.
 In addition to `_source`, you can access the following variables through the `ctx` map: `_index`, `_type`, `_id`, `_version`, `_routing`, and `_now` (the current timestamp).
 For usage examples such as partial updates, upserts, and scripted updates, see the External documentation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-update)
 
 ```ts
 client.update({ id, index })
@@ -2005,7 +2005,7 @@ If you're slicing manually or otherwise tuning automatic slicing, keep in mind t
 Whether query or update performance dominates the runtime depends on the documents being reindexed and cluster resources.
 Refer to the linked documentation for examples of how to update documents using the `_update_by_query` API:
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update-by-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-update-by-query)
 
 ```ts
 client.updateByQuery({ index })
@@ -2056,7 +2056,7 @@ Throttle an update by query operation.
 Change the number of requests per second for a particular update by query operation.
 Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update-by-query-rethrottle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-update-by-query-rethrottle)
 
 ```ts
 client.updateByQueryRethrottle({ task_id, requests_per_second })
@@ -2075,7 +2075,7 @@ If the asynchronous search is still running, it is cancelled.
 Otherwise, the saved search results are deleted.
 If the Elasticsearch security features are enabled, the deletion of a specific async search is restricted to: the authenticated user that submitted the original search request; users that have the `cancel_task` cluster privilege.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-async-search-submit)
 
 ```ts
 client.asyncSearch.delete({ id })
@@ -2092,7 +2092,7 @@ Get async search results.
 Retrieve the results of a previously submitted asynchronous search request.
 If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-async-search-submit)
 
 ```ts
 client.asyncSearch.get({ id })
@@ -2128,7 +2128,7 @@ If the Elasticsearch security features are enabled, the access to the status of 
 * The user or API key that submitted the original async search request.
 * Users that have the `monitor` cluster privilege or greater privileges.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-async-search-submit)
 
 ```ts
 client.asyncSearch.status({ id })
@@ -2151,7 +2151,7 @@ Warning: Asynchronous search does not support scroll or search requests that inc
 By default, Elasticsearch does not allow you to store an async search response larger than 10Mb and an attempt to do this results in an error.
 The maximum allowed size for a stored async search response can be set by changing the `search.max_async_search_response_size` cluster level setting.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-async-search-submit)
 
 ```ts
 client.asyncSearch.submit({ ... })
@@ -2273,7 +2273,7 @@ This API does not return data stream aliases.
 
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-aliases)
 
 ```ts
 client.cat.aliases({ ... })
@@ -2301,7 +2301,7 @@ Get a snapshot of the number of shards allocated to each data node and their dis
 
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-allocation)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-allocation)
 
 ```ts
 client.cat.allocation({ ... })
@@ -2327,7 +2327,7 @@ Get circuit breakers statistics.
 
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-circuit-breaker)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-circuit-breaker)
 
 ```ts
 client.cat.circuitBreaker({ ... })
@@ -2356,7 +2356,7 @@ Component templates are building blocks for constructing index templates that sp
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the get component template API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-component-templates)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-component-templates)
 
 ```ts
 client.cat.componentTemplates({ ... })
@@ -2389,7 +2389,7 @@ They are not intended for use by applications. For application consumption, use 
 
 NOTE: Starting in Elasticsearch 9.3.0, this endpoint also supports the `POST` method. This is primarily intended for project routing in serverless environments.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-count)
 
 ```ts
 client.cat.count({ ... })
@@ -2422,7 +2422,7 @@ Get the amount of heap memory currently used by the field data cache on every da
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the nodes stats API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-fielddata)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-fielddata)
 
 ```ts
 client.cat.fielddata({ ... })
@@ -2451,7 +2451,7 @@ The latter format is useful for cluster recoveries that take multiple days.
 You can use the cat health API to verify cluster health across multiple nodes.
 You also can use the API to track the recovery of a large cluster over a longer period of time.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-health)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-health)
 
 ```ts
 client.cat.health({ ... })
@@ -2471,7 +2471,7 @@ Get CAT help.
 
 Get help for the CAT APIs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cat)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-cat)
 
 ```ts
 client.cat.help()
@@ -2500,7 +2500,7 @@ IMPORTANT: For Elastic Cloud Serverless, ingest billing is based on the raw, unc
 CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use an index endpoint.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-indices)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-indices)
 
 ```ts
 client.cat.indices({ ... })
@@ -2528,7 +2528,7 @@ Get information about the master node, including the ID, bound IP address, and n
 
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-master)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-master)
 
 ```ts
 client.cat.master({ ... })
@@ -2556,7 +2556,7 @@ IMPORTANT: CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
 application consumption, use the get data frame analytics jobs statistics API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-ml-data-frame-analytics)
 
 ```ts
 client.cat.mlDataFrameAnalytics({ ... })
@@ -2584,7 +2584,7 @@ IMPORTANT: CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
 application consumption, use the get datafeed statistics API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-datafeeds)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-ml-datafeeds)
 
 ```ts
 client.cat.mlDatafeeds({ ... })
@@ -2618,7 +2618,7 @@ IMPORTANT: CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
 application consumption, use the get anomaly detection job statistics API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-jobs)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-ml-jobs)
 
 ```ts
 client.cat.mlJobs({ ... })
@@ -2649,7 +2649,7 @@ IMPORTANT: CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
 application consumption, use the get trained models statistics API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-trained-models)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-ml-trained-models)
 
 ```ts
 client.cat.mlTrainedModels({ ... })
@@ -2673,7 +2673,7 @@ Get node attribute information.
 Get information about custom node attributes.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodeattrs)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-nodeattrs)
 
 ```ts
 client.cat.nodeattrs({ ... })
@@ -2698,7 +2698,7 @@ Get node information.
 Get information about the nodes in a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-nodes)
 
 ```ts
 client.cat.nodes({ ... })
@@ -2722,7 +2722,7 @@ Get pending task information.
 Get information about cluster-level changes that have not yet taken effect.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-pending-tasks)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-pending-tasks)
 
 ```ts
 client.cat.pendingTasks({ ... })
@@ -2747,7 +2747,7 @@ Get plugin information.
 Get a list of plugins running on each node of a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-plugins)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-plugins)
 
 ```ts
 client.cat.plugins({ ... })
@@ -2775,7 +2775,7 @@ Shard recovery is the process of initializing a shard copy, such as restoring a 
 For data streams, the API returns information about the stream’s backing indices.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index recovery API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-recovery)
 
 ```ts
 client.cat.recovery({ ... })
@@ -2800,7 +2800,7 @@ Get snapshot repository information.
 Get a list of snapshot repositories for a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot repository API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-repositories)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-repositories)
 
 ```ts
 client.cat.repositories({ ... })
@@ -2826,7 +2826,7 @@ Get low-level information about the Lucene segments in index shards.
 For data streams, the API returns information about the backing indices.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the index segments API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-segments)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-segments)
 
 ```ts
 client.cat.segments({ ... })
@@ -2871,7 +2871,7 @@ Get information about the shards in a cluster.
 For data streams, the API returns information about the backing indices.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-shards)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-shards)
 
 ```ts
 client.cat.shards({ ... })
@@ -2896,7 +2896,7 @@ Get information about the snapshots stored in one or more repositories.
 A snapshot is a backup of an index or running Elasticsearch cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-snapshots)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-snapshots)
 
 ```ts
 client.cat.snapshots({ ... })
@@ -2923,7 +2923,7 @@ Get task information.
 Get information about tasks currently running in the cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-tasks)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-tasks)
 
 ```ts
 client.cat.tasks({ ... })
@@ -2951,7 +2951,7 @@ Get information about the index templates in a cluster.
 You can use index templates to apply index settings and field mappings to new indices at creation.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get index template API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-templates)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-templates)
 
 ```ts
 client.cat.templates({ ... })
@@ -2979,7 +2979,7 @@ Get thread pool statistics for each node in a cluster.
 Returned information includes all built-in thread pools and custom thread pools.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-thread-pool)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-thread-pool)
 
 ```ts
 client.cat.threadPool({ ... })
@@ -3009,7 +3009,7 @@ CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
 application consumption, use the get transform statistics API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-transforms)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cat-transforms)
 
 ```ts
 client.cat.transforms({ ... })
@@ -3033,7 +3033,7 @@ Delete auto-follow patterns.
 
 Delete a collection of cross-cluster replication auto-follow patterns.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-delete-auto-follow-pattern)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-delete-auto-follow-pattern)
 
 ```ts
 client.ccr.deleteAutoFollowPattern({ name })
@@ -3053,7 +3053,7 @@ Create a follower.
 Create a cross-cluster replication follower index that follows a specific leader index.
 When the API returns, the follower index exists and cross-cluster replication starts replicating operations from the leader index to the follower index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-follow)
 
 ```ts
 client.ccr.follow({ index, leader_index, remote_cluster })
@@ -3094,7 +3094,7 @@ Get follower information.
 Get information about all cross-cluster replication follower indices.
 For example, the results include follower index names, leader index names, replication options, and whether the follower indices are active or paused.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-follow-info)
 
 ```ts
 client.ccr.followInfo({ index })
@@ -3114,7 +3114,7 @@ Get follower stats.
 Get cross-cluster replication follower stats.
 The API returns shard-level stats about the "following tasks" associated with each shard for the specified indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-follow-stats)
 
 ```ts
 client.ccr.followStats({ index })
@@ -3142,7 +3142,7 @@ This API exists to enable manually removing the leases when the unfollow API is 
 NOTE: This API does not stop replication by a following index. If you use this API with a follower index that is still actively following, the following index will add back retention leases on the leader.
 The only purpose of this API is to handle the case of failure to remove the following retention leases after the unfollow API is invoked.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-forget-follower)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-forget-follower)
 
 ```ts
 client.ccr.forgetFollower({ index })
@@ -3163,7 +3163,7 @@ Get auto-follow patterns.
 
 Get cross-cluster replication auto-follow patterns.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-get-auto-follow-pattern-1)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-get-auto-follow-pattern-1)
 
 ```ts
 client.ccr.getAutoFollowPattern({ ... })
@@ -3189,7 +3189,7 @@ You can resume auto-following with the resume auto-follow pattern API.
 When it resumes, the auto-follow pattern is active again and automatically configures follower indices for newly created indices on the remote cluster that match its patterns.
 Remote indices that were created while the pattern was paused will also be followed, unless they have been deleted or closed in the interim.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-pause-auto-follow-pattern)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-pause-auto-follow-pattern)
 
 ```ts
 client.ccr.pauseAutoFollowPattern({ name })
@@ -3211,7 +3211,7 @@ The follower index will not fetch any additional operations from the leader inde
 You can resume following with the resume follower API.
 You can pause and resume a follower index to change the configuration of the following task.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-pause-follow)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-pause-follow)
 
 ```ts
 client.ccr.pauseFollow({ index })
@@ -3235,7 +3235,7 @@ Indices on the remote cluster that were created before the auto-follow pattern w
 This API can also be used to update auto-follow patterns.
 NOTE: Follower indices that were configured automatically before updating an auto-follow pattern will remain unchanged even if they do not match against the new patterns.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-put-auto-follow-pattern)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-put-auto-follow-pattern)
 
 ```ts
 client.ccr.putAutoFollowPattern({ name, remote_cluster })
@@ -3269,7 +3269,7 @@ Resume a cross-cluster replication auto-follow pattern that was paused.
 The auto-follow pattern will resume configuring following indices for newly created indices that match its patterns on the remote cluster.
 Remote indices created while the pattern was paused will also be followed unless they have been deleted or closed in the interim.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-resume-auto-follow-pattern)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-resume-auto-follow-pattern)
 
 ```ts
 client.ccr.resumeAutoFollowPattern({ name })
@@ -3291,7 +3291,7 @@ The follower index could have been paused with the pause follower API.
 Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks.
 When this API returns, the follower index will resume fetching operations from the leader index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-resume-follow)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-resume-follow)
 
 ```ts
 client.ccr.resumeFollow({ index })
@@ -3318,7 +3318,7 @@ Get cross-cluster replication stats.
 
 This API returns stats about auto-following and the same shard-level stats as the get follower stats API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-stats)
 
 ```ts
 client.ccr.stats({ ... })
@@ -3342,7 +3342,7 @@ The follower index must be paused and closed before you call the unfollow API.
 > info
 > Currently cross-cluster replication does not support converting an existing regular index to a follower index. Converting a follower index to a regular index is an irreversible operation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-unfollow)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ccr-unfollow)
 
 ```ts
 client.ccr.unfollow({ index })
@@ -3366,7 +3366,7 @@ For assigned shards, it provides an explanation for why the shard is remaining o
 This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
 Refer to the linked documentation for examples of how to troubleshoot allocation issues using this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-allocation-explain)
 
 ```ts
 client.cluster.allocationExplain({ ... })
@@ -3388,7 +3388,7 @@ Delete component templates.
 
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-put-component-template)
 
 ```ts
 client.cluster.deleteComponentTemplate({ name })
@@ -3408,7 +3408,7 @@ Clear cluster voting config exclusions.
 
 Remove master-eligible nodes from the voting configuration exclusion list.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-post-voting-config-exclusions)
 
 ```ts
 client.cluster.deleteVotingConfigExclusions({ ... })
@@ -3430,7 +3430,7 @@ Check component templates.
 
 Returns information about whether a particular component template exists.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-put-component-template)
 
 ```ts
 client.cluster.existsComponentTemplate({ name })
@@ -3452,7 +3452,7 @@ Get component templates.
 
 Get information about component templates.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-put-component-template)
 
 ```ts
 client.cluster.getComponentTemplate({ ... })
@@ -3475,7 +3475,7 @@ Get cluster-wide settings.
 
 By default, it returns only settings that have been explicitly defined.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-get-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-get-settings)
 
 ```ts
 client.cluster.getSettings({ ... })
@@ -3510,7 +3510,7 @@ The index level status is controlled by the worst shard status.
 One of the main benefits of the API is the ability to wait until the cluster reaches a certain high watermark health level.
 The cluster status is controlled by the worst index status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-health)
 
 ```ts
 client.cluster.health({ ... })
@@ -3550,7 +3550,7 @@ Get cluster info.
 
 Returns basic information about the cluster.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-info)
 
 ```ts
 client.cluster.info({ target })
@@ -3570,7 +3570,7 @@ NOTE: This API returns a list of any pending updates to the cluster state.
 These are distinct from the tasks reported by the task management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests.
 However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-pending-tasks)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-pending-tasks)
 
 ```ts
 client.cluster.pendingTasks({ ... })
@@ -3605,7 +3605,7 @@ In that case, you may safely retry the call.
 NOTE: Voting exclusions are required only when you remove at least half of the master-eligible nodes from a cluster in a short time period.
 They are not required when removing master-ineligible nodes or when removing fewer than half of the master-eligible nodes.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-post-voting-config-exclusions)
 
 ```ts
 client.cluster.postVotingConfigExclusions({ ... })
@@ -3647,7 +3647,7 @@ You can include comments anywhere in the request body except before the opening 
 You cannot directly apply a component template to a data stream or index.
 To be applied, a component template must be included in an index template's `composed_of` list.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-put-component-template)
 
 ```ts
 client.cluster.putComponentTemplate({ name, template })
@@ -3697,7 +3697,7 @@ The API doesn’t require a restart and ensures a setting’s value is the same 
 WARNING: Transient cluster settings are no longer recommended. Use persistent cluster settings instead.
 If a cluster becomes unstable, transient settings can clear unexpectedly, resulting in a potentially undesired cluster configuration.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-put-settings)
 
 ```ts
 client.cluster.putSettings({ ... })
@@ -3724,7 +3724,7 @@ The API returns connection and endpoint information keyed by the configured remo
 > Elasticsearch does not spontaneously try to reconnect to a disconnected remote cluster.
 > To trigger a reconnection, attempt a cross-cluster search, ES|QL cross-cluster search, or try the [resolve cluster endpoint](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-cluster).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-remote-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-remote-info)
 
 ```ts
 client.cluster.remoteInfo()
@@ -3748,7 +3748,7 @@ This scenario can be caused by structural problems such as having an analyzer wh
 
 Once the problem has been corrected, allocation can be manually retried by calling the reroute API with the `?retry_failed` URI query parameter, which will attempt a single retry round for these shards.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-reroute)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-reroute)
 
 ```ts
 client.cluster.reroute({ ... })
@@ -3788,7 +3788,7 @@ Its format is not subject to the same compatibility guarantees as other more sta
 Do not query this API using external monitoring tools.
 Instead, obtain the information you require using other more stable cluster APIs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-state)
 
 ```ts
 client.cluster.state({ ... })
@@ -3820,7 +3820,7 @@ Get cluster statistics.
 
 Get basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-cluster-stats)
 
 ```ts
 client.cluster.stats({ ... })
@@ -3840,7 +3840,7 @@ Check in a connector.
 
 Update the `last_seen` field in the connector and set it to the current timestamp.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-check-in)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-check-in)
 
 ```ts
 client.connector.checkIn({ connector_id })
@@ -3859,7 +3859,7 @@ This is a destructive action that is not recoverable.
 NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector.
 These need to be removed manually.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-delete)
 
 ```ts
 client.connector.delete({ connector_id })
@@ -3877,7 +3877,7 @@ Get a connector.
 
 Get the details about a connector.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-get)
 
 ```ts
 client.connector.get({ connector_id })
@@ -3894,7 +3894,7 @@ Get all connectors.
 
 Get information about all connectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-list)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-list)
 
 ```ts
 client.connector.list({ ... })
@@ -3918,7 +3918,7 @@ Connectors are Elasticsearch integrations that bring content from third-party da
 Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud.
 Self-managed connectors (Connector clients) are self-managed on your infrastructure.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-put)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-put)
 
 ```ts
 client.connector.post({ ... })
@@ -3937,7 +3937,7 @@ client.connector.post({ ... })
 ## client.connector.put [_connector.put]
 Create or update a connector.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-put)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-put)
 
 ```ts
 client.connector.put({ ... })
@@ -3960,7 +3960,7 @@ Cancel a connector sync job.
 Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time.
 The connector service is then responsible for setting the status of connector sync jobs to cancelled.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-cancel)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-cancel)
 
 ```ts
 client.connector.syncJobCancel({ connector_sync_job_id })
@@ -3979,7 +3979,7 @@ Check in a connector sync job and set the `last_seen` field to the current time 
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-check-in)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-check-in)
 
 ```ts
 client.connector.syncJobCheckIn({ connector_sync_job_id })
@@ -4002,7 +4002,7 @@ It supports the implementation of services that utilize the connector protocol t
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-claim)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-claim)
 
 ```ts
 client.connector.syncJobClaim({ connector_sync_job_id, worker_hostname })
@@ -4022,7 +4022,7 @@ Delete a connector sync job.
 Remove a connector sync job and its associated data.
 This is a destructive action that is not recoverable.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-delete)
 
 ```ts
 client.connector.syncJobDelete({ connector_sync_job_id })
@@ -4041,7 +4041,7 @@ Set the `error` field for a connector sync job and set its `status` to `error`.
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-error)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-error)
 
 ```ts
 client.connector.syncJobError({ connector_sync_job_id, error })
@@ -4056,7 +4056,7 @@ client.connector.syncJobError({ connector_sync_job_id, error })
 ## client.connector.syncJobGet [_connector.sync_job_get]
 Get a connector sync job.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-get)
 
 ```ts
 client.connector.syncJobGet({ connector_sync_job_id })
@@ -4072,7 +4072,7 @@ Get all connector sync jobs.
 
 Get information about all stored connector sync jobs listed by their creation date in ascending order.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-list)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-list)
 
 ```ts
 client.connector.syncJobList({ ... })
@@ -4092,7 +4092,7 @@ Create a connector sync job.
 
 Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-post)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-post)
 
 ```ts
 client.connector.syncJobPost({ id })
@@ -4115,7 +4115,7 @@ This API is mainly used by the connector service for updating sync job informati
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-update-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-sync-job-update-stats)
 
 ```ts
 client.connector.syncJobUpdateStats({ connector_sync_job_id, deleted_document_count, indexed_document_count, indexed_document_volume })
@@ -4137,7 +4137,7 @@ Activate the connector draft filter.
 
 Activates the valid draft filtering for a connector.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-filtering)
 
 ```ts
 client.connector.updateActiveFiltering({ connector_id })
@@ -4156,7 +4156,7 @@ You can specify the ID of the API key used for authorization and the ID of the c
 The connector secret ID is required only for Elastic managed (native) connectors.
 Self-managed connectors (connector clients) do not use this field.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-api-key-id)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-api-key-id)
 
 ```ts
 client.connector.updateApiKeyId({ connector_id })
@@ -4174,7 +4174,7 @@ Update the connector configuration.
 
 Update the configuration field in the connector document.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-configuration)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-configuration)
 
 ```ts
 client.connector.updateConfiguration({ connector_id })
@@ -4194,7 +4194,7 @@ Set the error field for the connector.
 If the error provided in the request body is non-null, the connector’s status is updated to error.
 Otherwise, if the error is reset to null, the connector status is updated to connected.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-error)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-error)
 
 ```ts
 client.connector.updateError({ connector_id, error })
@@ -4223,7 +4223,7 @@ However, you can use this API to override the default behavior.
 To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
 This service runs automatically on Elastic Cloud for Elastic managed connectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-features)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-features)
 
 ```ts
 client.connector.updateFeatures({ connector_id, features })
@@ -4242,7 +4242,7 @@ Update the draft filtering configuration of a connector and marks the draft vali
 The filtering draft is activated once validated by the running Elastic connector service.
 The filtering property is used to configure sync rules (both basic and advanced) for a connector.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-filtering)
 
 ```ts
 client.connector.updateFiltering({ connector_id })
@@ -4261,7 +4261,7 @@ Update the connector draft filtering validation.
 
 Update the draft filtering validation info for a connector.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering-validation)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-filtering-validation)
 
 ```ts
 client.connector.updateFilteringValidation({ connector_id, validation })
@@ -4278,7 +4278,7 @@ Update the connector index name.
 
 Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-index-name)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-index-name)
 
 ```ts
 client.connector.updateIndexName({ connector_id, index_name })
@@ -4293,7 +4293,7 @@ client.connector.updateIndexName({ connector_id, index_name })
 ## client.connector.updateName [_connector.update_name]
 Update the connector name and description.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-name)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-name)
 
 ```ts
 client.connector.updateName({ connector_id })
@@ -4309,7 +4309,7 @@ client.connector.updateName({ connector_id })
 ## client.connector.updateNative [_connector.update_native]
 Update the connector is_native flag.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-native)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-native)
 
 ```ts
 client.connector.updateNative({ connector_id, is_native })
@@ -4326,7 +4326,7 @@ Update the connector pipeline.
 
 When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-pipeline)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-pipeline)
 
 ```ts
 client.connector.updatePipeline({ connector_id, pipeline })
@@ -4341,7 +4341,7 @@ client.connector.updatePipeline({ connector_id, pipeline })
 ## client.connector.updateScheduling [_connector.update_scheduling]
 Update the connector scheduling.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-scheduling)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-scheduling)
 
 ```ts
 client.connector.updateScheduling({ connector_id, scheduling })
@@ -4356,7 +4356,7 @@ client.connector.updateScheduling({ connector_id, scheduling })
 ## client.connector.updateServiceType [_connector.update_service_type]
 Update the connector service type.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-service-type)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-service-type)
 
 ```ts
 client.connector.updateServiceType({ connector_id, service_type })
@@ -4371,7 +4371,7 @@ client.connector.updateServiceType({ connector_id, service_type })
 ## client.connector.updateStatus [_connector.update_status]
 Update the connector status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-connector-update-status)
 
 ```ts
 client.connector.updateStatus({ connector_id, status })
@@ -4389,7 +4389,7 @@ Delete a dangling index.
 If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
 For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-delete-dangling-index)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-dangling-indices-delete-dangling-index)
 
 ```ts
 client.danglingIndices.deleteDanglingIndex({ index_uuid })
@@ -4409,7 +4409,7 @@ Import a dangling index.
 If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
 For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-import-dangling-index)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-dangling-indices-import-dangling-index)
 
 ```ts
 client.danglingIndices.importDanglingIndex({ index_uuid })
@@ -4432,7 +4432,7 @@ For example, this can happen if you delete more than `cluster.indices.tombstones
 
 Use this API to list dangling indices, which you can then import or delete.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-list-dangling-indices)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-dangling-indices-list-dangling-indices)
 
 ```ts
 client.danglingIndices.listDanglingIndices()
@@ -4444,7 +4444,7 @@ Delete an enrich policy.
 
 Deletes an existing enrich policy and its enrich index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-delete-policy)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-enrich-delete-policy)
 
 ```ts
 client.enrich.deletePolicy({ name })
@@ -4461,7 +4461,7 @@ Run an enrich policy.
 
 Create the enrich index for an existing enrich policy.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-execute-policy)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-enrich-execute-policy)
 
 ```ts
 client.enrich.executePolicy({ name })
@@ -4479,7 +4479,7 @@ Get an enrich policy.
 
 Returns information about an enrich policy.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-get-policy)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-enrich-get-policy)
 
 ```ts
 client.enrich.getPolicy({ ... })
@@ -4497,7 +4497,7 @@ Create an enrich policy.
 
 Creates an enrich policy.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-put-policy)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-enrich-put-policy)
 
 ```ts
 client.enrich.putPolicy({ name })
@@ -4517,7 +4517,7 @@ Get enrich stats.
 
 Returns enrich coordinator statistics and information about enrich policies that are currently executing.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-enrich-stats)
 
 ```ts
 client.enrich.stats({ ... })
@@ -4534,7 +4534,7 @@ Delete an async EQL search.
 Delete an async EQL search or a stored synchronous EQL search.
 The API also deletes results for the search.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-eql-delete)
 
 ```ts
 client.eql.delete({ id })
@@ -4552,7 +4552,7 @@ Get async EQL search results.
 
 Get the current status and available results for an async EQL search or a stored synchronous EQL search.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-eql-get)
 
 ```ts
 client.eql.get({ id })
@@ -4572,7 +4572,7 @@ Get the async EQL status.
 
 Get the current status for an async EQL search or a stored synchronous EQL search without returning results.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-get-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-eql-get-status)
 
 ```ts
 client.eql.getStatus({ id })
@@ -4589,7 +4589,7 @@ Get EQL search results.
 Returns search results for an Event Query Language (EQL) query.
 EQL assumes each document in a data stream or index corresponds to an event.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-search)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-eql-search)
 
 ```ts
 client.eql.search({ index, query })
@@ -4649,7 +4649,7 @@ Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its pr
 
 The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-esql-async-query)
 
 ```ts
 client.esql.asyncQuery({ query })
@@ -4721,7 +4721,7 @@ If the Elasticsearch security features are enabled, only the following users can
 * The authenticated user that submitted the original query request
 * Users with the `cancel_task` cluster privilege
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-esql-async-query-delete)
 
 ```ts
 client.esql.asyncQueryDelete({ id })
@@ -4740,7 +4740,7 @@ Get async ES|QL query results.
 Get the current status and available results or stored results for an ES|QL asynchronous query.
 If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can retrieve the results using this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-esql-async-query-get)
 
 ```ts
 client.esql.asyncQueryGet({ id })
@@ -4768,7 +4768,7 @@ Stop async ES|QL query.
 This API interrupts the query execution and returns the results so far.
 If the Elasticsearch security features are enabled, only the user who first submitted the ES|QL query can stop it.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-stop)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-esql-async-query-stop)
 
 ```ts
 client.esql.asyncQueryStop({ id })
@@ -4788,7 +4788,7 @@ Get a specific running ES|QL query information.
 
 Returns an object extended information about a running ES|QL query.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-esql-get-query)
 
 ```ts
 client.esql.getQuery({ id })
@@ -4804,7 +4804,7 @@ Get running ES|QL queries information.
 
 Returns an object containing IDs and other information about the running ES|QL queries.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-esql-list-queries)
 
 ```ts
 client.esql.listQueries()
@@ -4876,7 +4876,7 @@ In order to ensure data integrity, all system indices that comprise a feature st
 The features listed by this API are a combination of built-in features and features defined by plugins.
 In order for a feature state to be listed in this API and recognized as a valid feature state by the create snapshot API, the plugin that defines that feature must be installed on the master node.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-features-get-features)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-features-get-features)
 
 ```ts
 client.features.getFeatures({ ... })
@@ -4907,7 +4907,7 @@ To list the features that will be affected, use the get features API.
 
 IMPORTANT: The features installed on the node you submit this request to are the features that will be reset. Run on the master node if you have any doubts about which plugins are installed on individual nodes.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-features-reset-features)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-features-reset-features)
 
 ```ts
 client.features.resetFeatures({ ... })
@@ -4924,7 +4924,7 @@ Get global checkpoints.
 Get the current global checkpoints for an index.
 This API is designed for internal use by the Fleet server project.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-fleet)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-fleet)
 
 ```ts
 client.fleet.globalCheckpoints({ index })
@@ -4950,7 +4950,7 @@ Run several Fleet searches with a single API request.
 The API follows the same structure as the multi search API.
 However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-fleet-msearch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-fleet-msearch)
 
 ```ts
 client.fleet.msearch({ ... })
@@ -4992,7 +4992,7 @@ Run a Fleet search.
 The purpose of the Fleet search API is to provide an API where the search will be run only
 after the provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-fleet-search)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-fleet-search)
 
 ```ts
 client.fleet.search({ index })
@@ -5106,7 +5106,7 @@ An initial request to the `_explore` API contains a seed query that identifies t
 Subsequent requests enable you to spider out from one more vertices of interest.
 You can exclude vertices that have already been returned.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-graph)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-graph)
 
 ```ts
 client.graph.explore({ index })
@@ -5130,7 +5130,7 @@ Delete a lifecycle policy.
 
 You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-delete-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-delete-lifecycle)
 
 ```ts
 client.ilm.deleteLifecycle({ policy })
@@ -5151,7 +5151,7 @@ For data streams, the API retrieves the current lifecycle status for the stream'
 
 The response indicates when the index entered each lifecycle state, provides the definition of the running phase, and information about any failures.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-explain-lifecycle)
 
 ```ts
 client.ilm.explainLifecycle({ index })
@@ -5169,7 +5169,7 @@ To target all data streams and indices, use `*` or `_all`.
 ## client.ilm.getLifecycle [_ilm.get_lifecycle]
 Get lifecycle policies.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-get-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-get-lifecycle)
 
 ```ts
 client.ilm.getLifecycle({ ... })
@@ -5187,7 +5187,7 @@ Get the ILM status.
 
 Get the current index lifecycle management status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-get-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-get-status)
 
 ```ts
 client.ilm.getStatus()
@@ -5211,7 +5211,7 @@ This API provides an automated way of performing three out of the four manual st
 ILM must be stopped before performing the migration.
 Use the stop ILM and get ILM status APIs to wait until the reported operation mode is `STOPPED`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-migrate-to-data-tiers)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-migrate-to-data-tiers)
 
 ```ts
 client.ilm.migrateToDataTiers({ ... })
@@ -5245,7 +5245,7 @@ If the phase and action are specified, the index will move to the first step of 
 Only actions specified in the ILM policy are considered valid.
 An index cannot move to a step that is not part of its policy.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-move-to-step)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-move-to-step)
 
 ```ts
 client.ilm.moveToStep({ index, current_step, next_step })
@@ -5265,7 +5265,7 @@ If the specified policy exists, it is replaced and the policy version is increme
 
 NOTE: Only the latest version of the policy is stored, you cannot revert to previous versions.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-put-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-put-lifecycle)
 
 ```ts
 client.ilm.putLifecycle({ policy })
@@ -5284,7 +5284,7 @@ Remove policies from an index.
 Remove the assigned lifecycle policies from an index or a data stream's backing indices.
 It also stops managing the indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-remove-policy)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-remove-policy)
 
 ```ts
 client.ilm.removePolicy({ index })
@@ -5302,7 +5302,7 @@ Retry running the lifecycle policy for an index that is in the ERROR step.
 The API sets the policy back to the step where the error occurred and runs the step.
 Use the explain lifecycle state API to determine whether an index is in the ERROR step.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-retry)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-retry)
 
 ```ts
 client.ilm.retry({ index })
@@ -5320,7 +5320,7 @@ Start the index lifecycle management plugin if it is currently stopped.
 ILM is started automatically when the cluster is formed.
 Restarting ILM is necessary only when it has been stopped using the stop ILM API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-start)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-start)
 
 ```ts
 client.ilm.start({ ... })
@@ -5341,7 +5341,7 @@ This is useful when you are performing maintenance on the cluster and need to pr
 The API returns as soon as the stop request has been acknowledged, but the plugin might continue to run until in-progress operations complete and the plugin can be safely stopped.
 Use the get ILM status API to check whether ILM is running.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-stop)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ilm-stop)
 
 ```ts
 client.ilm.stop({ ... })
@@ -5359,7 +5359,7 @@ Add an index block.
 Add an index block to an index.
 Index blocks limit the operations allowed on an index by blocking specific operation types.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-add-block)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-add-block)
 
 ```ts
 client.indices.addBlock({ index, block })
@@ -5402,7 +5402,7 @@ The `index.analyze.max_token_count` setting enables you to limit the number of t
 If more than this limit of tokens gets generated, an error occurs.
 The `_analyze` endpoint without a specified index will always use `10000` as its limit.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-analyze)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-analyze)
 
 ```ts
 client.indices.analyze({ ... })
@@ -5433,7 +5433,7 @@ Cancel a migration reindex operation.
 
 Cancel a migration reindex attempt for a data stream or index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-cancel-migrate-reindex)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-cancel-migrate-reindex)
 
 ```ts
 client.indices.cancelMigrateReindex({ index })
@@ -5454,7 +5454,7 @@ By default, the clear cache API clears all caches.
 To clear only specific caches, use the `fielddata`, `query`, or `request` parameters.
 To clear the cache only of specific fields, use the `fields` parameter.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-clear-cache)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-clear-cache)
 
 ```ts
 client.indices.clearCache({ ... })
@@ -5532,7 +5532,7 @@ At that point, Elasticsearch will try to allocate any replicas and may decide to
 
 Because the clone operation creates a new index to clone the shards to, the wait for active shards setting on index creation applies to the clone index action as well.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-clone)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-clone)
 
 ```ts
 client.indices.clone({ index, target })
@@ -5573,7 +5573,7 @@ To open or close indices with `_all`, `*`, or other wildcard expressions, change
 Closed indices consume a significant amount of disk-space which can cause problems in managed environments.
 Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-close)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-close)
 
 ```ts
 client.indices.close({ index })
@@ -5625,7 +5625,7 @@ If `shards_acknowledged` is false, then the request timed out before the requisi
 You can change the default of only waiting for the primary shards to start through the index setting `index.write.wait_for_active_shards`.
 Note that changing this setting will also affect the `wait_for_active_shards` value on all subsequent write operations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-create)
 
 ```ts
 client.indices.create({ index })
@@ -5662,7 +5662,7 @@ Create a data stream.
 
 You must have a matching index template with data stream enabled.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create-data-stream)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-create-data-stream)
 
 ```ts
 client.indices.createDataStream({ name })
@@ -5685,7 +5685,7 @@ Create an index from a source index.
 
 Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create-from)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-create-from)
 
 ```ts
 client.indices.createFrom({ source, dest })
@@ -5703,7 +5703,7 @@ Get data stream stats.
 
 Get statistics for one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-data-streams-stats-1)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-data-streams-stats-1)
 
 ```ts
 client.indices.dataStreamsStats({ ... })
@@ -5728,7 +5728,7 @@ You cannot delete the current write index of a data stream.
 To delete the index, you must roll over the data stream so a new write index is created.
 You can then use the delete index API to delete the previous write index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete)
 
 ```ts
 client.indices.delete({ index })
@@ -5763,7 +5763,7 @@ Delete an alias.
 
 Removes a data stream or index from an alias.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-alias)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete-alias)
 
 ```ts
 client.indices.deleteAlias({ index, name })
@@ -5786,7 +5786,7 @@ Delete data stream lifecycles.
 
 Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete-data-lifecycle)
 
 ```ts
 client.indices.deleteDataLifecycle({ name })
@@ -5806,7 +5806,7 @@ Delete data streams.
 
 Deletes one or more data streams and their backing indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete-data-stream)
 
 ```ts
 client.indices.deleteDataStream({ name })
@@ -5824,7 +5824,7 @@ Delete data stream options.
 
 Removes the data stream options from a data stream.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream-options)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete-data-stream-options)
 
 ```ts
 client.indices.deleteDataStreamOptions({ name })
@@ -5846,7 +5846,7 @@ The provided <index-template> may contain multiple template names separated by a
 names are specified then there is no wildcard support and the provided names should match completely with
 existing templates.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-index-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete-index-template)
 
 ```ts
 client.indices.deleteIndexTemplate({ name })
@@ -5864,7 +5864,7 @@ Delete a legacy index template.
 
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-delete-template)
 
 ```ts
 client.indices.deleteTemplate({ name })
@@ -5893,7 +5893,7 @@ The stored size of the `_id` field is likely underestimated while the `_source` 
 
 For usage examples see the External documentation or refer to [Analyze the index disk usage example](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/index-disk-usage) for an example.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-disk-usage)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-disk-usage)
 
 ```ts
 client.indices.diskUsage({ index })
@@ -5937,7 +5937,7 @@ NOTE: Only indices in a time series data stream are supported.
 Neither field nor document level security can be defined on the source index.
 The source index must be read-only (`index.blocks.write: true`).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-downsample)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-downsample)
 
 ```ts
 client.indices.downsample({ index, target_index })
@@ -5955,7 +5955,7 @@ Check indices.
 
 Check if one or more indices, index aliases, or data streams exist.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-exists)
 
 ```ts
 client.indices.exists({ index })
@@ -5986,7 +5986,7 @@ Check aliases.
 
 Check if one or more data stream or index aliases exist.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-alias)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-exists-alias)
 
 ```ts
 client.indices.existsAlias({ name })
@@ -6018,7 +6018,7 @@ Check index templates.
 
 Check whether index templates exist.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-index-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-exists-index-template)
 
 ```ts
 client.indices.existsIndexTemplate({ name })
@@ -6040,7 +6040,7 @@ Index templates define settings, mappings, and aliases that can be applied autom
 
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-exists-template)
 
 ```ts
 client.indices.existsTemplate({ name })
@@ -6062,7 +6062,7 @@ Get the status for a data stream lifecycle.
 
 Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-explain-data-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-explain-data-lifecycle)
 
 ```ts
 client.indices.explainDataLifecycle({ index })
@@ -6085,7 +6085,7 @@ A shard-level search request that accesses a given field, even if multiple times
 The response body reports the per-shard usage count of the data structures that back the fields in the index.
 A given request will increment each count by a maximum value of 1, even if the request accesses the same field multiple times.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-field-usage-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-field-usage-stats)
 
 ```ts
 client.indices.fieldUsageStats({ index })
@@ -6123,7 +6123,7 @@ The transaction log is made up of multiple files, called generations, and Elasti
 It is also possible to trigger a flush on one or more indices using the flush API, although it is rare for users to need to call this API directly.
 If you call the flush API after indexing some documents then a successful response indicates that Elasticsearch has flushed all the documents that were indexed before the flush API was called.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-flush)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-flush)
 
 ```ts
 client.indices.flush({ ... })
@@ -6207,7 +6207,7 @@ For example:
 POST /.ds-my-data-stream-2099.03.07-000001/_forcemerge?max_num_segments=1
 ```
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-forcemerge)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-forcemerge)
 
 ```ts
 client.indices.forcemerge({ ... })
@@ -6238,7 +6238,7 @@ Get index information.
 Get information about one or more indices. For data streams, the API returns information about the
 stream’s backing indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get)
 
 ```ts
 client.indices.get({ index })
@@ -6272,7 +6272,7 @@ Get aliases.
 
 Retrieves information for one or more data stream or index aliases.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-alias)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-alias)
 
 ```ts
 client.indices.getAlias({ ... })
@@ -6307,7 +6307,7 @@ Get data stream lifecycles.
 
 Get the data stream lifecycle configuration of one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-data-lifecycle)
 
 ```ts
 client.indices.getDataLifecycle({ name })
@@ -6329,7 +6329,7 @@ Get data stream lifecycle stats.
 
 Get statistics about the data streams that are managed by a data stream lifecycle.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-lifecycle-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-data-lifecycle-stats)
 
 ```ts
 client.indices.getDataLifecycleStats()
@@ -6341,7 +6341,7 @@ Get data streams.
 
 Get information about one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-data-stream)
 
 ```ts
 client.indices.getDataStream({ ... })
@@ -6363,7 +6363,7 @@ Get data stream mappings.
 
 Get mapping information for one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-data-stream-mappings)
 
 ```ts
 client.indices.getDataStreamMappings({ name })
@@ -6382,7 +6382,7 @@ Get data stream options.
 
 Get the data stream options configuration of one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-options)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-data-stream-options)
 
 ```ts
 client.indices.getDataStreamOptions({ name })
@@ -6403,7 +6403,7 @@ Get data stream settings.
 
 Get setting information for one or more data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-data-stream-settings)
 
 ```ts
 client.indices.getDataStreamSettings({ name })
@@ -6425,7 +6425,7 @@ For data streams, the API retrieves field mappings for the stream’s backing in
 
 This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-mapping)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-mapping)
 
 ```ts
 client.indices.getFieldMapping({ fields })
@@ -6458,7 +6458,7 @@ Get index templates.
 
 Get information about one or more index templates.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-index-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-index-template)
 
 ```ts
 client.indices.getIndexTemplate({ ... })
@@ -6478,7 +6478,7 @@ Get mapping definitions.
 
 For data streams, the API retrieves mappings for the stream’s backing indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-mapping)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-mapping)
 
 ```ts
 client.indices.getMapping({ ... })
@@ -6511,7 +6511,7 @@ Get the migration reindexing status.
 
 Get the status of a migration reindex attempt for a data stream or index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-migration)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration)
 
 ```ts
 client.indices.getMigrateReindexStatus({ index })
@@ -6528,7 +6528,7 @@ Get index settings.
 Get setting information for one or more indices.
 For data streams, it returns setting information for the stream's backing indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-settings)
 
 ```ts
 client.indices.getSettings({ ... })
@@ -6568,7 +6568,7 @@ Get information about one or more index templates.
 
 IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-get-template)
 
 ```ts
 client.indices.getTemplate({ ... })
@@ -6592,7 +6592,7 @@ Reindex all legacy backing indices for a data stream.
 This operation occurs in a persistent task.
 The persistent task ID is returned immediately and the reindexing work is completed in that task.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-migrate-reindex)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-migrate-reindex)
 
 ```ts
 client.indices.migrateReindex({ ... })
@@ -6617,7 +6617,7 @@ If successful, the request removes the alias and creates a data stream with the 
 The indices for the alias become hidden backing indices for the stream.
 The write index for the alias becomes the write index for the stream.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-migrate-to-data-stream)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-migrate-to-data-stream)
 
 ```ts
 client.indices.migrateToDataStream({ name })
@@ -6635,7 +6635,7 @@ Update data streams.
 
 Performs one or more data stream modification actions in a single atomic operation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-modify-data-stream)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-modify-data-stream)
 
 ```ts
 client.indices.modifyDataStream({ actions })
@@ -6672,7 +6672,7 @@ Closing indices can be turned off with the cluster settings API by setting `clus
 
 Because opening or closing an index allocates its shards, the `wait_for_active_shards` setting on index creation applies to the `_open` and `_close` index actions as well.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-open)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-open)
 
 ```ts
 client.indices.open({ index })
@@ -6719,7 +6719,7 @@ NOTE: When promoting a data stream, ensure the local cluster has a data stream e
 If this is missing, the data stream will not be able to roll over until a matching index template is created.
 This will affect the lifecycle management of the data stream and interfere with the data stream size and retention.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-promote-data-stream)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-promote-data-stream)
 
 ```ts
 client.indices.promoteDataStream({ name })
@@ -6736,7 +6736,7 @@ Create or update an alias.
 
 Adds a data stream or index to an alias.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-alias)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-alias)
 
 ```ts
 client.indices.putAlias({ index, name })
@@ -6774,7 +6774,7 @@ Update data stream lifecycles.
 
 Update the data stream lifecycle of the specified data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-data-lifecycle)
 
 ```ts
 client.indices.putDataLifecycle({ name })
@@ -6809,7 +6809,7 @@ This API can be used to override mappings on specific data streams. These overri
 is specified in the template that the data stream matches. The mapping change is only applied to new write indices
 that are created during rollover after this API is called. No indices are changed by this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-data-stream-mappings)
 
 ```ts
 client.indices.putDataStreamMappings({ name })
@@ -6834,7 +6834,7 @@ Update data stream options.
 
 Update the data stream options of the specified data streams.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-options)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-data-stream-options)
 
 ```ts
 client.indices.putDataStreamOptions({ name })
@@ -6865,7 +6865,7 @@ is specified in the template that the data stream matches. To prevent your data 
 only certain settings are allowed. If possible, the setting change is applied to all
 backing indices. Otherwise, it will be applied when the data stream is next rolled over.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-data-stream-settings)
 
 ```ts
 client.indices.putDataStreamSettings({ name })
@@ -6916,7 +6916,7 @@ This recursive merging strategy applies not only to field mappings, but also roo
 If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end.
 If an entry already exists with the same key, then it is overwritten by the new definition.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-index-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-index-template)
 
 ```ts
 client.indices.putIndexTemplate({ name })
@@ -6975,7 +6975,7 @@ You can use the update mapping API to:
 
 Learn how to use the update mapping API with practical examples in the [Update mapping API examples](https://www.elastic.co/docs/manage-data/data-store/mapping/update-mappings-examples) guide.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-mapping)
 
 ```ts
 client.indices.putMapping({ index })
@@ -7081,7 +7081,7 @@ However, it does not affect the data stream's backing indices or their existing 
 To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
 Refer to [updating analyzers on existing indices](https://www.elastic.co/docs/manage-data/data-store/text-analysis/specify-an-analyzer#update-analyzers-on-existing-indices) for step-by-step examples.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-settings)
 
 ```ts
 client.indices.putSettings({ ... })
@@ -7142,7 +7142,7 @@ Multiple index templates can potentially match an index, in this case, both the 
 The order of the merging can be controlled using the order parameter, with lower order being applied first, and higher orders overriding them.
 NOTE: Multiple matching templates with the same order value will result in a non-deterministic merging order.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-put-template)
 
 ```ts
 client.indices.putTemplate({ name })
@@ -7196,7 +7196,7 @@ The index recovery API reports information about completed recoveries only for s
 It only reports the last recovery for each shard copy and does not report historical information about earlier recoveries, nor does it report information about the recoveries of shard copies that no longer exist.
 This means that if a shard copy completes a recovery and then Elasticsearch relocates it onto a different node then the information about the original recovery will not be shown in the recovery API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-recovery)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-recovery)
 
 ```ts
 client.indices.recovery({ ... })
@@ -7242,7 +7242,7 @@ To ensure good cluster performance, it's recommended to wait for Elasticsearch's
 If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's `refresh=wait_for` query parameter option.
 This option ensures the indexing operation waits for a periodic refresh before running the search.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-refresh)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-refresh)
 
 ```ts
 client.indices.refresh({ ... })
@@ -7284,7 +7284,7 @@ As a result, the total shard count returned by the API can differ from the numbe
 Because reloading affects every node with an index shard, it is important to update the synonym file on every data node in the cluster--including nodes that don't contain a shard replica--before using this API.
 This ensures the synonym file is updated everywhere in the cluster in case shards are relocated in the future.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-reload-search-analyzers)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-reload-search-analyzers)
 
 ```ts
 client.indices.reloadSearchAnalyzers({ index })
@@ -7312,7 +7312,7 @@ Remove an index block.
 Remove an index block from an index.
 Index blocks limit the operations allowed on an index by blocking specific operation types.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-remove-block)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-remove-block)
 
 ```ts
 client.indices.removeBlock({ index, block })
@@ -7393,7 +7393,7 @@ For example with `GET _resolve/cluster` or `GET _resolve/cluster/*:*`.
 The `connected` field in the response will indicate whether it was successful.
 If a connection was (re-)established, this will also cause the `remote/info` endpoint to now indicate a connected status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-cluster)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-resolve-cluster)
 
 ```ts
 client.indices.resolveCluster({ ... })
@@ -7443,7 +7443,7 @@ Resolve indices.
 Resolve the names and/or index patterns for indices, aliases, and data streams.
 Multiple patterns and remote clusters are supported.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-index)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-resolve-index)
 
 ```ts
 client.indices.resolveIndex({ name })
@@ -7517,7 +7517,7 @@ For example, you can create an alias that points to an index named `<my-index-{n
 If you create the index on May 6, 2099, the index's name is `my-index-2099.05.06-000001`.
 If you roll over the alias on May 7, 2099, the new index's name is `my-index-2099.05.07-000002`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-rollover)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-rollover)
 
 ```ts
 client.indices.rollover({ alias })
@@ -7557,7 +7557,7 @@ Get index segments.
 Get low-level information about the Lucene segments in index shards.
 For data streams, the API returns information about the stream's backing indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-segments)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-segments)
 
 ```ts
 client.indices.segments({ ... })
@@ -7597,7 +7597,7 @@ The index shard stores API returns the following information:
 
 By default, the API returns store information only for primary shards that are unassigned or have one or more unassigned replica shards.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-shard-stores)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-shard-stores)
 
 ```ts
 client.indices.shardStores({ ... })
@@ -7657,7 +7657,7 @@ IMPORTANT: Indices can only be shrunk if they satisfy the following requirements
 * The index must not contain more than 2,147,483,519 documents in total across all shards that will be shrunk into a single shard on the target index as this is the maximum number of docs that can fit into a single shard.
 * The node handling the shrink process must have sufficient free disk space to accommodate a second copy of the existing index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-shrink)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-shrink)
 
 ```ts
 client.indices.shrink({ index, target })
@@ -7683,7 +7683,7 @@ Simulate an index.
 
 Get the index configuration that would be applied to the specified index from an existing index template.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-index-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-simulate-index-template)
 
 ```ts
 client.indices.simulateIndexTemplate({ name })
@@ -7704,7 +7704,7 @@ Simulate an index template.
 
 Get the index configuration that would be applied by a particular index template.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-template)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-simulate-template)
 
 ```ts
 client.indices.simulateTemplate({ ... })
@@ -7780,7 +7780,7 @@ IMPORTANT: Indices can only be split if they satisfy the following requirements:
 * The number of primary shards in the target index must be a multiple of the number of primary shards in the source index.
 * The node handling the split process must have sufficient free disk space to accommodate a second copy of the existing index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-split)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-split)
 
 ```ts
 client.indices.split({ index, target })
@@ -7814,7 +7814,7 @@ To get shard-level statistics, set the `level` parameter to `shards`.
 NOTE: When moving to another node, the shard-level statistics for a shard are cleared.
 Although the shard is no longer part of the node, that node retains any node-level statistics to which the shard contributed.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-stats)
 
 ```ts
 client.indices.stats({ ... })
@@ -7842,7 +7842,7 @@ Create or update an alias.
 
 Adds a data stream or index to an alias.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-update-aliases)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-update-aliases)
 
 ```ts
 client.indices.updateAliases({ ... })
@@ -7862,7 +7862,7 @@ Validate a query.
 
 Validates a query without running it.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-validate-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-validate-query)
 
 ```ts
 client.indices.validateQuery({ ... })
@@ -7910,7 +7910,7 @@ The Chat completion inference API and the Stream inference API differ in their r
 The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
 To determine whether a given inference service supports this task type, please see the page for that service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-unified-inference)
 
 ```ts
 client.inference.chatCompletionUnified({ inference_id })
@@ -7933,7 +7933,7 @@ IMPORTANT: The inference APIs enable you to use certain services, such as built-
 
 This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference)
 
 ```ts
 client.inference.completion({ inference_id, input })
@@ -7953,7 +7953,7 @@ Delete an inference endpoint.
 
 This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-delete)
 
 ```ts
 client.inference.delete({ inference_id })
@@ -7970,7 +7970,7 @@ client.inference.delete({ inference_id })
 ## client.inference.embedding [_inference.embedding]
 Perform dense embedding inference on the service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference)
 
 ```ts
 client.inference.embedding({ inference_id })
@@ -7988,7 +7988,7 @@ Get an inference endpoint.
 
 This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-get)
 
 ```ts
 client.inference.get({ ... })
@@ -8013,7 +8013,7 @@ For details about using this API with a service, such as Amazon Bedrock, Anthrop
 > info
 > The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference)
 
 ```ts
 client.inference.inference({ inference_id, input })
@@ -8078,7 +8078,7 @@ The following integrations are available through the inference API. You can find
 * VoyageAI (`rerank`, `text_embedding`)
 * Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put)
 
 ```ts
 client.inference.put({ inference_id })
@@ -8097,7 +8097,7 @@ Create a AI21 inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `ai21` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-ai21)
 
 ```ts
 client.inference.putAi21({ task_type, ai21_inference_id, service, service_settings })
@@ -8117,7 +8117,7 @@ Create an AlibabaCloud AI Search inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-alibabacloud)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-alibabacloud)
 
 ```ts
 client.inference.putAlibabacloud({ task_type, alibabacloud_inference_id, service, service_settings })
@@ -8145,7 +8145,7 @@ Create an inference endpoint to perform an inference task with the `amazonbedroc
 >info
 > You need to provide the access and secret keys only once, during the inference model creation. The get inference API does not retrieve your access or secret keys. After creating the inference model, you cannot change the associated key pairs. If you want to use a different access and secret key pair, delete the inference model and recreate it with the same name and the updated keys.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonbedrock)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-amazonbedrock)
 
 ```ts
 client.inference.putAmazonbedrock({ task_type, amazonbedrock_inference_id, service, service_settings })
@@ -8170,7 +8170,7 @@ Create an Amazon SageMaker inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `amazon_sagemaker` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonsagemaker)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-amazonsagemaker)
 
 ```ts
 client.inference.putAmazonsagemaker({ task_type, amazonsagemaker_inference_id, service, service_settings })
@@ -8196,7 +8196,7 @@ Create an Anthropic inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `anthropic` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-anthropic)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-anthropic)
 
 ```ts
 client.inference.putAnthropic({ task_type, anthropic_inference_id, service, service_settings })
@@ -8219,7 +8219,7 @@ Create an Azure AI studio inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `azureaistudio` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureaistudio)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-azureaistudio)
 
 ```ts
 client.inference.putAzureaistudio({ task_type, azureaistudio_inference_id, service, service_settings })
@@ -8251,7 +8251,7 @@ The list of chat completion models that you can choose from in your Azure OpenAI
 
 The list of embeddings models that you can choose from in your deployment can be found in the [Azure models documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureopenai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-azureopenai)
 
 ```ts
 client.inference.putAzureopenai({ task_type, azureopenai_inference_id, service, service_settings })
@@ -8277,7 +8277,7 @@ Create a Cohere inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `cohere` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-cohere)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-cohere)
 
 ```ts
 client.inference.putCohere({ task_type, cohere_inference_id, service, service_settings })
@@ -8305,7 +8305,7 @@ Create an inference endpoint to perform an inference task with the `contexualai`
 
 To review the available `rerank` models, refer to <https://docs.contextual.ai/api-reference/rerank/rerank#body-model>.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-contextualai)
 
 ```ts
 client.inference.putContextualai({ task_type, contextualai_inference_id, service, service_settings })
@@ -8366,7 +8366,7 @@ Pre-defined templates:
 * `${top_n}` refers to the `top_n` field available when performing rerank requests.
 * `${return_documents}` refers to the `return_documents` field available when performing rerank requests.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-custom)
 
 ```ts
 client.inference.putCustom({ task_type, custom_inference_id, service, service_settings })
@@ -8391,7 +8391,7 @@ Create a DeepSeek inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `deepseek` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-deepseek)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-deepseek)
 
 ```ts
 client.inference.putDeepseek({ task_type, deepseek_inference_id, service, service_settings })
@@ -8425,7 +8425,7 @@ To verify the deployment status, use the get trained model statistics API.
 Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
 Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elasticsearch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-elasticsearch)
 
 ```ts
 client.inference.putElasticsearch({ task_type, elasticsearch_inference_id, service, service_settings })
@@ -8465,7 +8465,7 @@ To verify the deployment status, use the get trained model statistics API.
 Look for `"state": "fully_allocated"` in the response and ensure that the `"allocation_count"` matches the `"target_allocation_count"`.
 Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elser)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-elser)
 
 ```ts
 client.inference.putElser({ task_type, elser_inference_id, service, service_settings })
@@ -8487,7 +8487,7 @@ Create a Fireworks AI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `fireworksai` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-fireworksai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-fireworksai)
 
 ```ts
 client.inference.putFireworksai({ task_type, fireworksai_inference_id, service, service_settings })
@@ -8514,7 +8514,7 @@ Create an Google AI Studio inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `googleaistudio` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googleaistudio)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-googleaistudio)
 
 ```ts
 client.inference.putGoogleaistudio({ task_type, googleaistudio_inference_id, service, service_settings })
@@ -8537,7 +8537,7 @@ Create a Google Vertex AI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `googlevertexai` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-googlevertexai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-googlevertexai)
 
 ```ts
 client.inference.putGooglevertexai({ task_type, googlevertexai_inference_id, service, service_settings })
@@ -8562,7 +8562,7 @@ Create a Groq inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `groq` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-groq)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-groq)
 
 ```ts
 client.inference.putGroq({ task_type, groq_inference_id, service, service_settings })
@@ -8617,7 +8617,7 @@ Tested models for `rerank` task:
 * `bge-reranker-base`
 * `jina-reranker-v1-turbo-en-GGUF`
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-hugging-face)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-hugging-face)
 
 ```ts
 client.inference.putHuggingFace({ task_type, huggingface_inference_id, service, service_settings })
@@ -8645,7 +8645,7 @@ Create an inference endpoint to perform an inference task with the `jinaai` serv
 To review the available `rerank` models, refer to <https://jina.ai/reranker>.
 To review the available `embedding` and `text_embedding` models, refer to <https://jina.ai/embeddings/>.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-jinaai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-jinaai)
 
 ```ts
 client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_settings })
@@ -8670,7 +8670,7 @@ Create a Llama inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `llama` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-llama)
 
 ```ts
 client.inference.putLlama({ task_type, llama_inference_id, service, service_settings })
@@ -8693,7 +8693,7 @@ Create a Mistral inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `mistral` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-mistral)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-mistral)
 
 ```ts
 client.inference.putMistral({ task_type, mistral_inference_id, service, service_settings })
@@ -8716,7 +8716,7 @@ Create an Nvidia inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `nvidia` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-nvidia)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-nvidia)
 
 ```ts
 client.inference.putNvidia({ task_type, nvidia_inference_id, service, service_settings })
@@ -8744,7 +8744,7 @@ Create an OpenAI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-openai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-openai)
 
 ```ts
 client.inference.putOpenai({ task_type, openai_inference_id, service, service_settings })
@@ -8770,7 +8770,7 @@ Create an OpenShift AI inference endpoint.
 
 Create an inference endpoint to perform an inference task with the `openshift_ai` service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-openshift-ai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-openshift-ai)
 
 ```ts
 client.inference.putOpenshiftAi({ task_type, openshiftai_inference_id, service, service_settings })
@@ -8800,7 +8800,7 @@ Create an inference endpoint to perform an inference task with the `voyageai` se
 
 Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-voyageai)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-voyageai)
 
 ```ts
 client.inference.putVoyageai({ task_type, voyageai_inference_id, service, service_settings })
@@ -8827,7 +8827,7 @@ Create an inference endpoint to perform an inference task with the `watsonxai` s
 You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service.
 You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-watsonx)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-put-watsonx)
 
 ```ts
 client.inference.putWatsonx({ task_type, watsonx_inference_id, service, service_settings })
@@ -8848,7 +8848,7 @@ Not applicable to the `rerank`, `completion` or `chat_completion` task types.
 ## client.inference.rerank [_inference.rerank]
 Perform reranking inference on the service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference)
 
 ```ts
 client.inference.rerank({ inference_id, query, input })
@@ -8869,7 +8869,7 @@ These settings are specific to the task type you specified and override the task
 ## client.inference.sparseEmbedding [_inference.sparse_embedding]
 Perform sparse embedding inference on the service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference)
 
 ```ts
 client.inference.sparseEmbedding({ inference_id, input })
@@ -8894,7 +8894,7 @@ IMPORTANT: The inference APIs enable you to use certain services, such as built-
 
 This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-stream-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-stream-inference)
 
 ```ts
 client.inference.streamCompletion({ inference_id, input })
@@ -8914,7 +8914,7 @@ NOTE: Inference endpoints for the completion task type currently only support a 
 ## client.inference.textEmbedding [_inference.text_embedding]
 Perform text embedding inference on the service.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-inference)
 
 ```ts
 client.inference.textEmbedding({ inference_id, input })
@@ -8948,7 +8948,7 @@ IMPORTANT: The inference APIs enable you to use certain services, such as built-
 For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
 However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-update)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-update)
 
 ```ts
 client.inference.update({ inference_id })
@@ -8966,7 +8966,7 @@ Delete GeoIP database configurations.
 
 Delete one or more IP geolocation database configurations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-geoip-database)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-delete-geoip-database)
 
 ```ts
 client.ingest.deleteGeoipDatabase({ id })
@@ -8983,7 +8983,7 @@ If no response is received before the timeout expires, the request fails and ret
 ## client.ingest.deleteIpLocationDatabase [_ingest.delete_ip_location_database]
 Delete IP geolocation database configurations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-ip-location-database)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-delete-ip-location-database)
 
 ```ts
 client.ingest.deleteIpLocationDatabase({ id })
@@ -9005,7 +9005,7 @@ Delete pipelines.
 
 Delete one or more ingest pipelines.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-pipeline)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-delete-pipeline)
 
 ```ts
 client.ingest.deletePipeline({ id })
@@ -9038,7 +9038,7 @@ Get GeoIP database configurations.
 
 Get information about one or more IP geolocation database configurations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-geoip-database)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-get-geoip-database)
 
 ```ts
 client.ingest.getGeoipDatabase({ ... })
@@ -9054,7 +9054,7 @@ To get all database configurations, omit this parameter or use `*`.
 ## client.ingest.getIpLocationDatabase [_ingest.get_ip_location_database]
 Get IP geolocation database configurations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-ip-location-database)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-get-ip-location-database)
 
 ```ts
 client.ingest.getIpLocationDatabase({ ... })
@@ -9073,7 +9073,7 @@ Get pipelines.
 Get information about one or more ingest pipelines.
 This API returns a local reference of the pipeline.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-get-pipeline)
 
 ```ts
 client.ingest.getPipeline({ ... })
@@ -9108,7 +9108,7 @@ Create or update a GeoIP database configuration.
 
 Refer to the create or update IP geolocation database configuration API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-geoip-database)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-put-geoip-database)
 
 ```ts
 client.ingest.putGeoipDatabase({ id, name, maxmind })
@@ -9128,7 +9128,7 @@ If no response is received before the timeout expires, the request fails and ret
 ## client.ingest.putIpLocationDatabase [_ingest.put_ip_location_database]
 Create or update an IP geolocation database configuration.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-ip-location-database)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-put-ip-location-database)
 
 ```ts
 client.ingest.putIpLocationDatabase({ id })
@@ -9179,7 +9179,7 @@ Simulate a pipeline.
 Run an ingest pipeline against a set of provided documents.
 You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ingest-simulate)
 
 ```ts
 client.ingest.simulate({ docs })
@@ -9203,7 +9203,7 @@ When the license expires, your subscription level reverts to Basic.
 
 If the operator privileges feature is enabled, only operator users can use this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-delete)
 
 ```ts
 client.license.delete({ ... })
@@ -9224,7 +9224,7 @@ Get information about your Elastic license including its type, its status, when 
 > If the master node is generating a new cluster state, the get license API may return a `404 Not Found` response.
 > If you receive an unexpected 404 response after cluster startup, wait a short period and retry the request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-get)
 
 ```ts
 client.license.get({ ... })
@@ -9242,7 +9242,7 @@ In earlier versions the default is `false`, which means the information is retri
 ## client.license.getBasicStatus [_license.get_basic_status]
 Get the basic license status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get-basic-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-get-basic-status)
 
 ```ts
 client.license.getBasicStatus()
@@ -9252,7 +9252,7 @@ client.license.getBasicStatus()
 ## client.license.getTrialStatus [_license.get_trial_status]
 Get the trial status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get-trial-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-get-trial-status)
 
 ```ts
 client.license.getTrialStatus()
@@ -9270,7 +9270,7 @@ You must then re-submit the API request with the acknowledge parameter set to tr
 NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license.
 If the operator privileges feature is enabled, only operator users can use this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-post)
 
 ```ts
 client.license.post({ ... })
@@ -9298,7 +9298,7 @@ You must then re-submit the API request with the `acknowledge` parameter set to 
 
 To check the status of your basic license, use the get basic license API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post-start-basic)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-post-start-basic)
 
 ```ts
 client.license.postStartBasic({ ... })
@@ -9321,7 +9321,7 @@ For example, if you have already activated a trial for v8.0, you cannot start a 
 
 To check the status of your trial, use the get trial status API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post-start-trial)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-license-post-start-trial)
 
 ```ts
 client.license.postStartTrial({ ... })
@@ -9340,7 +9340,7 @@ Delete a Logstash pipeline.
 Delete a pipeline that is used for Logstash Central Management.
 If the request succeeds, you receive an empty response with an appropriate status code.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-delete-pipeline)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-logstash-delete-pipeline)
 
 ```ts
 client.logstash.deletePipeline({ id })
@@ -9356,7 +9356,7 @@ Get Logstash pipelines.
 
 Get pipelines that are used for Logstash Central Management.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-get-pipeline)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-logstash-get-pipeline)
 
 ```ts
 client.logstash.getPipeline({ ... })
@@ -9373,7 +9373,7 @@ Create or update a Logstash pipeline.
 Create a pipeline that is used for Logstash Central Management.
 If the specified pipeline exists, it is replaced.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-put-pipeline)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-logstash-put-pipeline)
 
 ```ts
 client.logstash.putPipeline({ id })
@@ -9400,7 +9400,7 @@ Use this API to review your usage of these features and migrate away from them a
 > This API is designed for indirect use by the [Upgrade Assistant](https://www.elastic.co/docs/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant).
 > We recommend learning about deprecated features using the Upgrade Assistant rather than calling this API directly.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-migration-deprecations)
 
 ```ts
 client.migration.deprecations({ ... })
@@ -9420,7 +9420,7 @@ Check which features need to be migrated and the status of any migrations that a
 TIP: This API is designed for indirect use by the Upgrade Assistant.
 You are strongly recommended to use the Upgrade Assistant.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-get-feature-upgrade-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-migration-get-feature-upgrade-status)
 
 ```ts
 client.migration.getFeatureUpgradeStatus()
@@ -9437,7 +9437,7 @@ Some functionality might be temporarily unavailable during the migration process
 
 TIP: The API is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-get-feature-upgrade-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-migration-get-feature-upgrade-status)
 
 ```ts
 client.migration.postFeatureUpgrade()
@@ -9452,7 +9452,7 @@ A trained model deployment may have an inference cache enabled.
 As requests are handled by each allocated node, their responses may be cached on that individual node.
 Calling this API clears the caches without restarting the deployment.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-clear-trained-model-deployment-cache)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-clear-trained-model-deployment-cache)
 
 ```ts
 client.ml.clearTrainedModelDeploymentCache({ model_id })
@@ -9471,7 +9471,7 @@ When you close a job, it runs housekeeping tasks such as pruning the model histo
 If you close an anomaly detection job whose datafeed is running, the request first tries to stop the datafeed. This behavior is equivalent to calling stop datafeed API with the same timeout and force parameters as the close job request.
 When a datafeed that has a specified end date stops, it automatically closes its associated job.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-close-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-close-job)
 
 ```ts
 client.ml.closeJob({ job_id })
@@ -9490,7 +9490,7 @@ Delete a calendar.
 
 Remove all scheduled events from a calendar, then delete it.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-calendar)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-calendar)
 
 ```ts
 client.ml.deleteCalendar({ calendar_id })
@@ -9504,7 +9504,7 @@ client.ml.deleteCalendar({ calendar_id })
 ## client.ml.deleteCalendarEvent [_ml.delete_calendar_event]
 Delete events from a calendar.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-calendar-event)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-calendar-event)
 
 ```ts
 client.ml.deleteCalendarEvent({ calendar_id, event_id })
@@ -9520,7 +9520,7 @@ You can obtain this identifier by using the get calendar events API.
 ## client.ml.deleteCalendarJob [_ml.delete_calendar_job]
 Delete anomaly jobs from a calendar.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-calendar-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-calendar-job)
 
 ```ts
 client.ml.deleteCalendarJob({ calendar_id, job_id })
@@ -9536,7 +9536,7 @@ list of jobs or groups.
 ## client.ml.deleteDataFrameAnalytics [_ml.delete_data_frame_analytics]
 Delete a data frame analytics job.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-data-frame-analytics)
 
 ```ts
 client.ml.deleteDataFrameAnalytics({ id })
@@ -9552,7 +9552,7 @@ client.ml.deleteDataFrameAnalytics({ id })
 ## client.ml.deleteDatafeed [_ml.delete_datafeed]
 Delete a datafeed.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-datafeed)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-datafeed)
 
 ```ts
 client.ml.deleteDatafeed({ datafeed_id })
@@ -9580,7 +9580,7 @@ wildcard expression. You can delete expired data for all anomaly detection
 jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the
 `<job_id>`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-expired-data)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-expired-data)
 
 ```ts
 client.ml.deleteExpiredData({ ... })
@@ -9601,7 +9601,7 @@ Delete a filter.
 If an anomaly detection job references the filter, you cannot delete the
 filter. You must update or delete the job before you can delete the filter.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-filter)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-filter)
 
 ```ts
 client.ml.deleteFilter({ filter_id })
@@ -9620,7 +9620,7 @@ different retention period with the `expires_in` parameter in the forecast
 jobs API. The delete forecast API enables you to delete one or more
 forecasts before they expire.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-forecast)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-forecast)
 
 ```ts
 client.ml.deleteForecast({ job_id })
@@ -9651,7 +9651,7 @@ first tries to delete the datafeed. This behavior is equivalent to calling
 the delete datafeed API with the same timeout and force parameters as the
 delete job request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-job)
 
 ```ts
 client.ml.deleteJob({ job_id })
@@ -9676,7 +9676,7 @@ You cannot delete the active model snapshot. To delete that snapshot, first
 revert to a different one. To identify the active model snapshot, refer to
 the `model_snapshot_id` in the results from the get jobs API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-model-snapshot)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-model-snapshot)
 
 ```ts
 client.ml.deleteModelSnapshot({ job_id, snapshot_id })
@@ -9693,7 +9693,7 @@ Delete an unreferenced trained model.
 
 The request deletes a trained inference model that is not referenced by an ingest pipeline.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-trained-model)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-trained-model)
 
 ```ts
 client.ml.deleteTrainedModel({ model_id })
@@ -9713,7 +9713,7 @@ This API deletes an existing model alias that refers to a trained model. If
 the model alias is missing or refers to a model other than the one identified
 by the `model_id`, this API returns an error.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-trained-model-alias)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-delete-trained-model-alias)
 
 ```ts
 client.ml.deleteTrainedModelAlias({ model_alias, model_id })
@@ -9732,7 +9732,7 @@ Make an estimation of the memory usage for an anomaly detection job model.
 The estimate is based on analysis configuration details for the job and cardinality
 estimates for the fields it references.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-estimate-model-memory)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-estimate-model-memory)
 
 ```ts
 client.ml.estimateModelMemory({ ... })
@@ -9764,7 +9764,7 @@ of machine learning features. This has been designed for use on indexes
 created by data frame analytics. Evaluation requires both a ground truth
 field and an analytics result field to be present.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-evaluate-data-frame)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-evaluate-data-frame)
 
 ```ts
 client.ml.evaluateDataFrame({ evaluation, index })
@@ -9787,7 +9787,7 @@ explanations are provided:
 * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on.
 If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-explain-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-explain-data-frame-analytics)
 
 ```ts
 client.ml.explainDataFrameAnalytics({ ... })
@@ -9836,7 +9836,7 @@ to continue analyzing data. A close operation additionally prunes and
 persists the model state to disk and the job must be opened again before
 analyzing further data.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-flush-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-flush-job)
 
 ```ts
 client.ml.flushJob({ job_id })
@@ -9860,7 +9860,7 @@ error occurs if you try to create a forecast for a job that has an
 `over_field_name` in its configuration. Forcasts predict future behavior
 based on historical data.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-forecast)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-forecast)
 
 ```ts
 client.ml.forecast({ job_id })
@@ -9880,7 +9880,7 @@ Get anomaly detection job results for buckets.
 
 The API presents a chronological view of the records, grouped by bucket.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-buckets)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-buckets)
 
 ```ts
 client.ml.getBuckets({ job_id })
@@ -9906,7 +9906,7 @@ parameter, the API returns information about all buckets.
 ## client.ml.getCalendarEvents [_ml.get_calendar_events]
 Get info about events in calendars.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-calendar-events)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-calendar-events)
 
 ```ts
 client.ml.getCalendarEvents({ calendar_id })
@@ -9925,7 +9925,7 @@ client.ml.getCalendarEvents({ calendar_id })
 ## client.ml.getCalendars [_ml.get_calendars]
 Get calendar configuration info.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-calendars)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-calendars)
 
 ```ts
 client.ml.getCalendars({ ... })
@@ -9942,7 +9942,7 @@ client.ml.getCalendars({ ... })
 ## client.ml.getCategories [_ml.get_categories]
 Get anomaly detection job results for categories.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-categories)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-categories)
 
 ```ts
 client.ml.getCategories({ job_id })
@@ -9970,7 +9970,7 @@ You can get information for multiple data frame analytics jobs in a single
 API request by using a list of data frame analytics jobs or a
 wildcard expression.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-data-frame-analytics)
 
 ```ts
 client.ml.getDataFrameAnalytics({ ... })
@@ -10002,7 +10002,7 @@ be retrieved and then added to another cluster.
 ## client.ml.getDataFrameAnalyticsStats [_ml.get_data_frame_analytics_stats]
 Get data frame analytics job stats.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-data-frame-analytics-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-data-frame-analytics-stats)
 
 ```ts
 client.ml.getDataFrameAnalyticsStats({ ... })
@@ -10039,7 +10039,7 @@ get statistics for all datafeeds by using `_all`, by specifying `*` as the
 only information you receive is the `datafeed_id` and the `state`.
 This API returns a maximum of 10,000 datafeeds.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-datafeed-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-datafeed-stats)
 
 ```ts
 client.ml.getDatafeedStats({ ... })
@@ -10071,7 +10071,7 @@ get information for all datafeeds by using `_all`, by specifying `*` as the
 `<feed_id>`, or by omitting the `<feed_id>`.
 This API returns a maximum of 10,000 datafeeds.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-datafeeds)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-datafeeds)
 
 ```ts
 client.ml.getDatafeeds({ ... })
@@ -10102,7 +10102,7 @@ Get filters.
 
 You can get a single filter or all filters.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-filters)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-filters)
 
 ```ts
 client.ml.getFilters({ ... })
@@ -10122,7 +10122,7 @@ Influencers are the entities that have contributed to, or are to blame for,
 the anomalies. Influencer results are available only if an
 `influencer_field_name` is specified in the job configuration.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-influencers)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-influencers)
 
 ```ts
 client.ml.getInfluencers({ job_id })
@@ -10152,7 +10152,7 @@ means it is unset and results are not limited to specific timestamps.
 ## client.ml.getJobStats [_ml.get_job_stats]
 Get anomaly detection job stats.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-job-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-job-stats)
 
 ```ts
 client.ml.getJobStats({ ... })
@@ -10184,7 +10184,7 @@ request by using a group name, a list of jobs, or a wildcard
 expression. You can get information for all anomaly detection jobs by using
 `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-jobs)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-jobs)
 
 ```ts
 client.ml.getJobs({ ... })
@@ -10216,7 +10216,7 @@ Get machine learning memory usage info.
 Get information about how machine learning jobs and trained models are using memory,
 on each node, both within the JVM heap, and natively, outside of the JVM.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-memory-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-memory-stats)
 
 ```ts
 client.ml.getMemoryStats({ ... })
@@ -10235,7 +10235,7 @@ fails and returns an error.
 ## client.ml.getModelSnapshotUpgradeStats [_ml.get_model_snapshot_upgrade_stats]
 Get anomaly detection job model snapshot upgrade usage info.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-model-snapshot-upgrade-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-model-snapshot-upgrade-stats)
 
 ```ts
 client.ml.getModelSnapshotUpgradeStats({ job_id, snapshot_id })
@@ -10261,7 +10261,7 @@ no matches or only partial matches.
 ## client.ml.getModelSnapshots [_ml.get_model_snapshots]
 Get model snapshots info.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-model-snapshots)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-model-snapshots)
 
 ```ts
 client.ml.getModelSnapshots({ job_id })
@@ -10303,7 +10303,7 @@ greater than its default), the `overall_score` is the maximum
 `overall_score` of the overall buckets that have a span equal to the
 jobs' largest bucket span.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-overall-buckets)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-overall-buckets)
 
 ```ts
 client.ml.getOverallBuckets({ job_id })
@@ -10340,7 +10340,7 @@ The number of record results depends on the number of anomalies found in each
 bucket, which relates to the number of time series being modeled and the
 number of detectors.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-records)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-records)
 
 ```ts
 client.ml.getRecords({ job_id })
@@ -10363,7 +10363,7 @@ client.ml.getRecords({ job_id })
 ## client.ml.getTrainedModels [_ml.get_trained_models]
 Get trained model configuration info.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-trained-models)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-trained-models)
 
 ```ts
 client.ml.getTrainedModels({ ... })
@@ -10404,7 +10404,7 @@ Get trained models usage info.
 You can get usage information for multiple trained
 models in a single API request by using a list of model IDs or a wildcard expression.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-trained-models-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-get-trained-models-stats)
 
 ```ts
 client.ml.getTrainedModelsStats({ ... })
@@ -10429,7 +10429,7 @@ subset of results when there are partial matches.
 ## client.ml.inferTrainedModel [_ml.infer_trained_model]
 Evaluate a trained model.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-infer-trained-model)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-infer-trained-model)
 
 ```ts
 client.ml.inferTrainedModel({ model_id, docs })
@@ -10456,7 +10456,7 @@ used to find out what those defaults are. It also provides information about
 the maximum size of machine learning jobs that could run in the current
 cluster configuration.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-info)
 
 ```ts
 client.ml.info()
@@ -10473,7 +10473,7 @@ When you open an existing job, the most recent model state is automatically
 loaded. The job is ready to resume its analysis from where it left off, once
 new data is received.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-open-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-open-job)
 
 ```ts
 client.ml.openJob({ job_id })
@@ -10488,7 +10488,7 @@ client.ml.openJob({ job_id })
 ## client.ml.postCalendarEvents [_ml.post_calendar_events]
 Add scheduled events to the calendar.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-post-calendar-events)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-post-calendar-events)
 
 ```ts
 client.ml.postCalendarEvents({ calendar_id, events })
@@ -10506,7 +10506,7 @@ Send data to an anomaly detection job for analysis.
 IMPORTANT: For each job, data can be accepted from only a single connection at a time.
 It is not currently possible to post data to multiple jobs using wildcards or a list.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-post-data)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-post-data)
 
 ```ts
 client.ml.postData({ job_id })
@@ -10525,7 +10525,7 @@ Preview features used by data frame analytics.
 
 Preview the extracted features used by a data frame analytics config.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-preview-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-preview-data-frame-analytics)
 
 ```ts
 client.ml.previewDataFrameAnalytics({ ... })
@@ -10551,7 +10551,7 @@ called the API. However, when the datafeed starts it uses the roles of the last 
 datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials.
 You can also use secondary authorization headers to supply the credentials.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-preview-datafeed)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-preview-datafeed)
 
 ```ts
 client.ml.previewDatafeed({ ... })
@@ -10575,7 +10575,7 @@ used. You cannot specify a `job_config` object unless you also supply a `datafee
 ## client.ml.putCalendar [_ml.put_calendar]
 Create a calendar.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-calendar)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-calendar)
 
 ```ts
 client.ml.putCalendar({ calendar_id })
@@ -10591,7 +10591,7 @@ client.ml.putCalendar({ calendar_id })
 ## client.ml.putCalendarJob [_ml.put_calendar_job]
 Add anomaly detection job to calendar.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-calendar-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-calendar-job)
 
 ```ts
 client.ml.putCalendarJob({ calendar_id, job_id })
@@ -10614,7 +10614,7 @@ If the destination index does not exist, it is created automatically when you st
 
 If you supply only a subset of the regression or classification parameters, hyperparameter optimization occurs. It determines a value for each of the undefined parameters.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-data-frame-analytics)
 
 ```ts
 client.ml.putDataFrameAnalytics({ id, analysis, dest, source })
@@ -10696,7 +10696,7 @@ those credentials are used instead.
 You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed
 directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-datafeed)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-datafeed)
 
 ```ts
 client.ml.putDatafeed({ datafeed_id })
@@ -10764,7 +10764,7 @@ Create a filter.
 A filter contains a list of strings. It can be used by one or more anomaly detection jobs.
 Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-filter)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-filter)
 
 ```ts
 client.ml.putFilter({ filter_id })
@@ -10784,7 +10784,7 @@ Create an anomaly detection job.
 If you include a `datafeed_config`, you must have read index privileges on the source index.
 If you include a `datafeed_config` but do not provide a query, the datafeed uses `{"match_all": {"boost": 1}}`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-job)
 
 ```ts
 client.ml.putJob({ job_id, analysis_config, data_description })
@@ -10827,7 +10827,7 @@ Create a trained model.
 
 Enable you to supply a trained model that is not created by data frame analytics.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-trained-model)
 
 ```ts
 client.ml.putTrainedModel({ model_id })
@@ -10888,7 +10888,7 @@ If you use this API to update an alias and there are very few input fields in
 common between the old and new trained models for the model alias, the API
 returns a warning.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model-alias)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-trained-model-alias)
 
 ```ts
 client.ml.putTrainedModelAlias({ model_alias, model_id })
@@ -10906,7 +10906,7 @@ already assigned and this parameter is false, the API returns an error.
 ## client.ml.putTrainedModelDefinitionPart [_ml.put_trained_model_definition_part]
 Create part of a trained model definition.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model-definition-part)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-trained-model-definition-part)
 
 ```ts
 client.ml.putTrainedModelDefinitionPart({ model_id, part, definition, total_definition_length, total_parts })
@@ -10928,7 +10928,7 @@ Create a trained model vocabulary.
 This API is supported only for natural language processing (NLP) models.
 The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model-vocabulary)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-put-trained-model-vocabulary)
 
 ```ts
 client.ml.putTrainedModelVocabulary({ model_id, vocabulary })
@@ -10950,7 +10950,7 @@ it had just been created.
 It is not currently possible to reset multiple jobs using wildcards or a
 comma separated list.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-reset-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-reset-job)
 
 ```ts
 client.ml.resetJob({ job_id })
@@ -10977,7 +10977,7 @@ one-off, then it might be appropriate to reset the model state to a time
 before this event. For example, you might consider reverting to a saved
 snapshot after Black Friday or a critical system failure.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-revert-model-snapshot)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-revert-model-snapshot)
 
 ```ts
 client.ml.revertModelSnapshot({ job_id, snapshot_id })
@@ -11008,7 +11008,7 @@ indices, though stopping jobs is not a requirement in that case.
 You can see the current value for the upgrade_mode setting by using the get
 machine learning info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-set-upgrade-mode)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-set-upgrade-mode)
 
 ```ts
 client.ml.setUpgradeMode({ ... })
@@ -11037,7 +11037,7 @@ If there are any mapping conflicts, the job fails to start.
 If the destination index exists, it is used as is. You can therefore set up
 the destination index in advance with custom settings and mappings.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-start-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-start-data-frame-analytics)
 
 ```ts
 client.ml.startDataFrameAnalytics({ id })
@@ -11067,7 +11067,7 @@ When Elasticsearch security features are enabled, your datafeed remembers which 
 update it had at the time of creation or update and runs the query using those same roles. If you provided secondary
 authorization headers when you created or updated the datafeed, those credentials are used instead.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-start-datafeed)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-start-datafeed)
 
 ```ts
 client.ml.startDatafeed({ datafeed_id })
@@ -11088,7 +11088,7 @@ Start a trained model deployment.
 
 It allocates the model to every machine learning node.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-start-trained-model-deployment)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-start-trained-model-deployment)
 
 ```ts
 client.ml.startTrainedModelDeployment({ model_id })
@@ -11129,7 +11129,7 @@ Stop data frame analytics jobs.
 A data frame analytics job can be started and stopped multiple times
 throughout its lifecycle.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-stop-data-frame-analytics)
 
 ```ts
 client.ml.stopDataFrameAnalytics({ id })
@@ -11162,7 +11162,7 @@ Stop datafeeds.
 A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped
 multiple times throughout its lifecycle.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-datafeed)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-stop-datafeed)
 
 ```ts
 client.ml.stopDatafeed({ datafeed_id })
@@ -11182,7 +11182,7 @@ the identifier.
 ## client.ml.stopTrainedModelDeployment [_ml.stop_trained_model_deployment]
 Stop a trained model deployment.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-trained-model-deployment)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-stop-trained-model-deployment)
 
 ```ts
 client.ml.stopTrainedModelDeployment({ model_id })
@@ -11203,7 +11203,7 @@ restart the model deployment.
 ## client.ml.updateDataFrameAnalytics [_ml.update_data_frame_analytics]
 Update a data frame analytics job.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-data-frame-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-update-data-frame-analytics)
 
 ```ts
 client.ml.updateDataFrameAnalytics({ id })
@@ -11236,7 +11236,7 @@ When Elasticsearch security features are enabled, your datafeed remembers which 
 the time of the update and runs the query using those same roles. If you provide secondary authorization headers,
 those credentials are used instead.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-datafeed)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-update-datafeed)
 
 ```ts
 client.ml.updateDatafeed({ datafeed_id })
@@ -11305,7 +11305,7 @@ Update a filter.
 
 Updates the description of a filter, adds items, or removes items from the list.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-filter)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-update-filter)
 
 ```ts
 client.ml.updateFilter({ filter_id })
@@ -11324,7 +11324,7 @@ Update an anomaly detection job.
 
 Updates certain properties of an anomaly detection job.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-update-job)
 
 ```ts
 client.ml.updateJob({ job_id })
@@ -11389,7 +11389,7 @@ Update a snapshot.
 
 Updates certain properties of a snapshot.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-model-snapshot)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-update-model-snapshot)
 
 ```ts
 client.ml.updateModelSnapshot({ job_id, snapshot_id })
@@ -11408,7 +11408,7 @@ snapshot will be deleted when the job is deleted.
 ## client.ml.updateTrainedModelDeployment [_ml.update_trained_model_deployment]
 Update a trained model deployment.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-trained-model-deployment)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-update-trained-model-deployment)
 
 ```ts
 client.ml.updateTrainedModelDeployment({ model_id })
@@ -11442,7 +11442,7 @@ Only one snapshot per anomaly detection job can be upgraded at a time and the
 upgraded snapshot cannot be the current snapshot of the anomaly detection
 job.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-upgrade-job-snapshot)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-ml-upgrade-job-snapshot)
 
 ```ts
 client.ml.upgradeJobSnapshot({ job_id, snapshot_id })
@@ -11462,7 +11462,7 @@ Clear the archived repositories metering.
 
 Clear the archived repositories metering information in the cluster.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-clear-repositories-metering-archive)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-clear-repositories-metering-archive)
 
 ```ts
 client.nodes.clearRepositoriesMeteringArchive({ node_id, max_archive_version })
@@ -11481,7 +11481,7 @@ Get repositories metering information for a cluster.
 This API exposes monotonically non-decreasing counters and it is expected that clients would durably store the information needed to compute aggregations over a period of time.
 Additionally, the information exposed by this API is volatile, meaning that it will not be present after node restarts.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-get-repositories-metering-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-get-repositories-metering-info)
 
 ```ts
 client.nodes.getRepositoriesMeteringInfo({ node_id })
@@ -11498,7 +11498,7 @@ Get the hot threads for nodes.
 Get a breakdown of the hot threads on each selected node in the cluster.
 The output is plain text with a breakdown of the top hot threads for each node.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-hot-threads)
 
 ```ts
 client.nodes.hotThreads({ ... })
@@ -11523,7 +11523,7 @@ Get node information.
 
 By default, the API returns all attributes and core settings for cluster nodes.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-info)
 
 ```ts
 client.nodes.info({ ... })
@@ -11548,7 +11548,7 @@ When the Elasticsearch keystore is password protected and not simply obfuscated,
 Reloading the settings for the whole cluster assumes that the keystores for all nodes are protected with the same password; this method is allowed only when inter-node communications are encrypted.
 Alternatively, you can reload the secure settings on each node by locally accessing the API and passing the node-specific Elasticsearch keystore password.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-reload-secure-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-reload-secure-settings)
 
 ```ts
 client.nodes.reloadSecureSettings({ ... })
@@ -11568,7 +11568,7 @@ Get node statistics.
 Get statistics for nodes in a cluster.
 By default, all stats are returned. You can limit the returned information by using metrics.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-stats)
 
 ```ts
 client.nodes.stats({ ... })
@@ -11593,7 +11593,7 @@ client.nodes.stats({ ... })
 ## client.nodes.usage [_nodes.usage]
 Get feature usage information.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-usage)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-nodes-usage)
 
 ```ts
 client.nodes.usage({ ... })
@@ -11615,7 +11615,7 @@ Delete a query rule.
 Delete a query rule within a query ruleset.
 This is a destructive action that is only recoverable by re-adding the same rule with the create or update query rule API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-delete-rule)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-delete-rule)
 
 ```ts
 client.queryRules.deleteRule({ ruleset_id, rule_id })
@@ -11633,7 +11633,7 @@ Delete a query ruleset.
 Remove a query ruleset and its associated data.
 This is a destructive action that is not recoverable.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-delete-ruleset)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-delete-ruleset)
 
 ```ts
 client.queryRules.deleteRuleset({ ruleset_id })
@@ -11649,7 +11649,7 @@ Get a query rule.
 
 Get details about a query rule within a query ruleset.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-rule)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-get-rule)
 
 ```ts
 client.queryRules.getRule({ ruleset_id, rule_id })
@@ -11666,7 +11666,7 @@ Get a query ruleset.
 
 Get details about a query ruleset.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-ruleset)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-get-ruleset)
 
 ```ts
 client.queryRules.getRuleset({ ruleset_id })
@@ -11682,7 +11682,7 @@ Get all query rulesets.
 
 Get summarized information about the query rulesets.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-list-rulesets)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-list-rulesets)
 
 ```ts
 client.queryRules.listRulesets({ ... })
@@ -11704,7 +11704,7 @@ It is advised to use one or the other in query rulesets, to avoid errors.
 Additionally, pinned queries have a maximum limit of 100 pinned hits.
 If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-put-rule)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-put-rule)
 
 ```ts
 client.queryRules.putRule({ ruleset_id, rule_id, type, criteria, actions })
@@ -11733,7 +11733,7 @@ It is advised to use one or the other in query rulesets, to avoid errors.
 Additionally, pinned queries have a maximum limit of 100 pinned hits.
 If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-put-ruleset)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-put-ruleset)
 
 ```ts
 client.queryRules.putRuleset({ ruleset_id, rules })
@@ -11750,7 +11750,7 @@ Test a query ruleset.
 
 Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-test)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-query-rules-test)
 
 ```ts
 client.queryRules.test({ ruleset_id, match_criteria })
@@ -11789,7 +11789,7 @@ POST my_rollup_index/_delete_by_query
 }
 ```
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-delete-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-delete-job)
 
 ```ts
 client.rollup.deleteJob({ id })
@@ -11809,7 +11809,7 @@ NOTE: This API returns only active (both `STARTED` and `STOPPED`) jobs.
 If a job was created, ran for a while, then was deleted, the API does not return any details about it.
 For details about a historical rollup job, the rollup capabilities API may be more useful.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-get-jobs)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-get-jobs)
 
 ```ts
 client.rollup.getJobs({ ... })
@@ -11833,7 +11833,7 @@ This API enables you to inspect an index and determine:
 1. Does this index have associated rollup data somewhere in the cluster?
 2. If yes to the first question, what fields were rolled up, what aggregations can be performed, and where does the data live?
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-get-rollup-caps)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-get-rollup-caps)
 
 ```ts
 client.rollup.getRollupCaps({ ... })
@@ -11854,7 +11854,7 @@ A single rollup index may store the data for multiple rollup jobs and may have a
 * What jobs are stored in an index (or indices specified via a pattern)?
 * What target indices were rolled up, what fields were used in those rollups, and what aggregations can be performed on each job?
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-get-rollup-index-caps)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-get-rollup-index-caps)
 
 ```ts
 client.rollup.getRollupIndexCaps({ index })
@@ -11877,7 +11877,7 @@ There are three main sections to the job configuration: the logistical details a
 
 Jobs are created in a `STOPPED` state. You can start them with the start rollup jobs API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-put-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-put-job)
 
 ```ts
 client.rollup.putJob({ id, cron, groups, index_pattern, page_size, rollup_index })
@@ -11927,7 +11927,7 @@ The following functionality is not available:
 
 For more detailed examples of using the rollup search API, including querying rolled-up data only or combining rolled-up and live data, refer to the External documentation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-rollup-search)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-rollup-search)
 
 ```ts
 client.rollup.rollupSearch({ index })
@@ -11955,7 +11955,7 @@ Start rollup jobs.
 If you try to start a job that does not exist, an exception occurs.
 If you try to start a job that is already started, nothing happens.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-start-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-start-job)
 
 ```ts
 client.rollup.startJob({ id })
@@ -11981,7 +11981,7 @@ POST _rollup/job/sensor/_stop?wait_for_completion=true&timeout=10s
 The parameter blocks the API call from returning until either the job has moved to STOPPED or the specified time has elapsed.
 If the specified time elapses without the job moving to STOPPED, a timeout exception occurs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-rollup-stop-job)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-rollup-stop-job)
 
 ```ts
 client.rollup.stopJob({ id })
@@ -12003,7 +12003,7 @@ Delete a search application.
 
 Remove a search application and its associated alias. Indices attached to the search application are not removed.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-delete)
 
 ```ts
 client.searchApplication.delete({ name })
@@ -12019,7 +12019,7 @@ Delete a behavioral analytics collection.
 
 The associated data stream is also deleted.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete-behavioral-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-delete-behavioral-analytics)
 
 ```ts
 client.searchApplication.deleteBehavioralAnalytics({ name })
@@ -12033,7 +12033,7 @@ client.searchApplication.deleteBehavioralAnalytics({ name })
 ## client.searchApplication.get [_search_application.get]
 Get search application details.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-get)
 
 ```ts
 client.searchApplication.get({ name })
@@ -12047,7 +12047,7 @@ client.searchApplication.get({ name })
 ## client.searchApplication.getBehavioralAnalytics [_search_application.get_behavioral_analytics]
 Get behavioral analytics collections.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-get-behavioral-analytics)
 
 ```ts
 client.searchApplication.getBehavioralAnalytics({ ... })
@@ -12063,7 +12063,7 @@ Get search applications.
 
 Get information about search applications.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-get-behavioral-analytics)
 
 ```ts
 client.searchApplication.list({ ... })
@@ -12079,7 +12079,7 @@ client.searchApplication.list({ ... })
 ## client.searchApplication.postBehavioralAnalyticsEvent [_search_application.post_behavioral_analytics_event]
 Create a behavioral analytics collection event.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-post-behavioral-analytics-event)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-post-behavioral-analytics-event)
 
 ```ts
 client.searchApplication.postBehavioralAnalyticsEvent({ collection_name, event_type })
@@ -12096,7 +12096,7 @@ client.searchApplication.postBehavioralAnalyticsEvent({ collection_name, event_t
 ## client.searchApplication.put [_search_application.put]
 Create or update a search application.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-put)
 
 ```ts
 client.searchApplication.put({ name })
@@ -12112,7 +12112,7 @@ client.searchApplication.put({ name })
 ## client.searchApplication.putBehavioralAnalytics [_search_application.put_behavioral_analytics]
 Create a behavioral analytics collection.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put-behavioral-analytics)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-put-behavioral-analytics)
 
 ```ts
 client.searchApplication.putBehavioralAnalytics({ name })
@@ -12132,7 +12132,7 @@ The API returns the specific Elasticsearch query that would be generated and run
 
 You must have `read` privileges on the backing alias of the search application.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-render-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-render-query)
 
 ```ts
 client.searchApplication.renderQuery({ name })
@@ -12150,7 +12150,7 @@ Run a search application search.
 Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template.
 Unspecified template parameters are assigned their default values if applicable.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-search)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-search-application-search)
 
 ```ts
 client.searchApplication.search({ name })
@@ -12168,7 +12168,7 @@ Get cache statistics.
 
 Get statistics about the shared cache for partially mounted indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-cache-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-cache-stats)
 
 ```ts
 client.searchableSnapshots.cacheStats({ ... })
@@ -12184,7 +12184,7 @@ Clear the cache.
 
 Clear indices and data streams from the shared cache for partially mounted indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-clear-cache)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-clear-cache)
 
 ```ts
 client.searchableSnapshots.clearCache({ ... })
@@ -12213,7 +12213,7 @@ Mount a snapshot as a searchable snapshot index.
 Do not use this API for snapshots managed by index lifecycle management (ILM).
 Manually mounting ILM-managed snapshots can interfere with ILM processes.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-mount)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-mount)
 
 ```ts
 client.searchableSnapshots.mount({ repository, snapshot, index })
@@ -12239,7 +12239,7 @@ For further information on mount options, refer to: [Mount options](https://www.
 ## client.searchableSnapshots.stats [_searchable_snapshots.stats]
 Get searchable snapshot statistics.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-stats)
 
 ```ts
 client.searchableSnapshots.stats({ ... })
@@ -12267,7 +12267,7 @@ For example, in the JWT `access_token` case, the profile user's `username` is ex
 When updating a profile document, the API enables the document if it was disabled.
 Any updates do not change existing content for either the `labels` or `data` fields.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-activate-user-profile)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-activate-user-profile)
 
 ```ts
 client.security.activateUserProfile({ grant_type })
@@ -12296,7 +12296,7 @@ Include the user information in a [basic auth header](https://en.wikipedia.org/w
 A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user.
 If the user cannot be authenticated, this API returns a 401 status code.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-authenticate)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-authenticate)
 
 ```ts
 client.security.authenticate()
@@ -12309,7 +12309,7 @@ Bulk delete roles.
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The bulk delete roles API cannot delete roles that are defined in roles files.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-bulk-delete-role)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-bulk-delete-role)
 
 ```ts
 client.security.bulkDeleteRole({ names })
@@ -12327,7 +12327,7 @@ Bulk create or update roles.
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The bulk create or update roles API cannot update roles that are defined in roles files.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-bulk-put-role)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-bulk-put-role)
 
 ```ts
 client.security.bulkPutRole({ roles })
@@ -12358,7 +12358,7 @@ IMPORTANT: If you don't specify `role_descriptors` in the request, a call to thi
 
 A successful request returns a JSON structure that contains the IDs of all updated API keys, the IDs of API keys that already had the requested changes and did not require an update, and error details for any failed update.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-bulk-update-api-keys)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-bulk-update-api-keys)
 
 ```ts
 client.security.bulkUpdateApiKeys({ ids })
@@ -12387,7 +12387,7 @@ Change passwords.
 
 Change the passwords of users in the native realm and built-in users.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-change-password)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-change-password)
 
 ```ts
 client.security.changePassword({ ... })
@@ -12411,7 +12411,7 @@ Clear the API key cache.
 Evict a subset of all entries from the API key cache.
 The cache is also automatically cleared on state changes of the security index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-api-key-cache)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-api-key-cache)
 
 ```ts
 client.security.clearApiKeyCache({ ids })
@@ -12430,7 +12430,7 @@ Clear the privileges cache.
 Evict privileges from the native application privilege cache.
 The cache is also automatically cleared for applications that have their privileges updated.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-cached-privileges)
 
 ```ts
 client.security.clearCachedPrivileges({ application })
@@ -12453,7 +12453,7 @@ User credentials are cached in memory on each node to avoid connecting to a remo
 There are realm settings that you can use to configure the user cache.
 For more information, refer to the documentation about controlling the user cache.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-realms)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-cached-realms)
 
 ```ts
 client.security.clearCachedRealms({ realms })
@@ -12473,7 +12473,7 @@ Clear the roles cache.
 
 Evict roles from the native role cache.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-roles)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-cached-roles)
 
 ```ts
 client.security.clearCachedRoles({ name })
@@ -12496,7 +12496,7 @@ This API clears matching entries from both caches.
 The cache for service account tokens backed by the `.security` index is cleared automatically on state changes of the security index.
 The cache for tokens backed by the `service_tokens` file is cleared automatically on file changes.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-service-tokens)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-cached-service-tokens)
 
 ```ts
 client.security.clearCachedServiceTokens({ namespace, service, name })
@@ -12510,6 +12510,36 @@ client.security.clearCachedServiceTokens({ namespace, service, name })
 - **`name` (string \| string[])**: A list of token names to evict from the service account token caches.
 Use a wildcard (`*`) to evict all tokens that belong to a service account.
 It does not support other wildcard patterns.
+
+## client.security.cloneApiKey [_security.clone_api_key]
+Clone an API key.
+
+Create a copy of an existing API key with a new ID.
+The cloned key inherits the role descriptors of the source key.
+This is intended for applications (such as Kibana) that need to
+create API keys on behalf of a user using an existing API key credential,
+since derived API keys (API keys created by API keys) are not otherwise supported.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.security.cloneApiKey({ api_key })
+```
+
+### Arguments [_arguments_security.clone_api_key]
+
+#### Request (object) [_request_security.clone_api_key]
+- **`api_key` (string)**: The credentials of the API key to clone.
+This is the secret value returned when the key was originally created.
+- **`name` (Optional, string)**: A name for the cloned API key.
+If not provided, the name of the source key is used.
+- **`expiration` (Optional, string \| -1 \| 0)**: The expiration time for the cloned API key.
+By default, API keys never expire.
+Set to `null` to explicitly create a key with no expiration.
+- **`metadata` (Optional, Record<string, User-defined value>)**: Arbitrary metadata to associate with the cloned API key.
+It supports nested data structure.
+Within the metadata object, keys beginning with `_` are reserved for system usage.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.createApiKey [_security.create_api_key]
 Create an API key.
@@ -12527,7 +12557,7 @@ NOTE: By default, API keys never expire. You can specify expiration information 
 The API keys are created by the Elasticsearch API key service, which is automatically enabled.
 To configure or turn off the API key service, refer to API key service setting documentation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-create-api-key)
 
 ```ts
 client.security.createApiKey({ ... })
@@ -12570,7 +12600,7 @@ By default, API keys never expire. You can specify expiration information when y
 Cross-cluster API keys can only be updated with the update cross-cluster API key API.
 Attempting to update them with the update REST API key API or the bulk update REST API keys API will result in an error.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-cross-cluster-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-create-cross-cluster-api-key)
 
 ```ts
 client.security.createCrossClusterApiKey({ access, name })
@@ -12603,7 +12633,7 @@ Create a service accounts token for access without requiring basic authenticatio
 NOTE: Service account tokens never expire.
 You must actively delete them if they are no longer needed.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-create-service-token)
 
 ```ts
 client.security.createServiceToken({ namespace, service })
@@ -12637,7 +12667,7 @@ IMPORTANT: The association between the subject public key in the target certific
 This is part of the TLS authentication process and it is delegated to the proxy that calls this API.
 The proxy is trusted to have performed the TLS authentication and this API translates that authentication into an Elasticsearch access token.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delegate-pki)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delegate-pki)
 
 ```ts
 client.security.delegatePki({ x509_certificate_chain })
@@ -12660,7 +12690,7 @@ To use this API, you must have one of the following privileges:
 * The `manage_security` cluster privilege (or a greater privilege such as `all`).
 * The "Manage Application Privileges" global privilege for the application being referenced in the request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-privileges)
 
 ```ts
 client.security.deletePrivileges({ application, name })
@@ -12681,7 +12711,7 @@ Delete roles in the native realm.
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The delete roles API cannot remove roles that are defined in roles files.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-role)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-role)
 
 ```ts
 client.security.deleteRole({ name })
@@ -12700,7 +12730,7 @@ Role mappings define which roles are assigned to each user.
 The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files.
 The delete role mappings API cannot remove role mappings that are defined in role mapping files.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-role-mapping)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-role-mapping)
 
 ```ts
 client.security.deleteRoleMapping({ name })
@@ -12718,7 +12748,7 @@ Delete service account tokens.
 
 Delete service account tokens for a service in a specified namespace.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-service-token)
 
 ```ts
 client.security.deleteServiceToken({ namespace, service, name })
@@ -12737,7 +12767,7 @@ Delete users.
 
 Delete users from the native realm.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-user)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-user)
 
 ```ts
 client.security.deleteUser({ username })
@@ -12756,7 +12786,7 @@ Disable users in the native realm.
 By default, when you create users, they are enabled.
 You can use this API to revoke a user's access to Elasticsearch.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-disable-user)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-disable-user)
 
 ```ts
 client.security.disableUser({ username })
@@ -12780,7 +12810,7 @@ Elastic reserves the right to change or remove this feature in future releases w
 When you activate a user profile, its automatically enabled and visible in user profile searches. You can use the disable user profile API to disable a user profile so it’s not visible in these searches.
 To re-enable a disabled user profile, use the enable user profile API .
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-disable-user-profile)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-disable-user-profile)
 
 ```ts
 client.security.disableUserProfile({ uid })
@@ -12800,7 +12830,7 @@ Enable users.
 Enable users in the native realm.
 By default, when you create users, they are enabled.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enable-user)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-enable-user)
 
 ```ts
 client.security.enableUser({ username })
@@ -12824,7 +12854,7 @@ Elastic reserves the right to change or remove this feature in future releases w
 When you activate a user profile, it's automatically enabled and visible in user profile searches.
 If you later disable the user profile, you can use the enable user profile API to make the profile visible in these searches again.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enable-user-profile)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-enable-user-profile)
 
 ```ts
 client.security.enableUserProfile({ uid })
@@ -12847,7 +12877,7 @@ Enable a Kibana instance to configure itself for communication with a secured El
 NOTE: This API is currently intended for internal use only by Kibana.
 Kibana uses this API internally to configure itself for communications with an Elasticsearch cluster that already has security features enabled.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enroll-kibana)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-enroll-kibana)
 
 ```ts
 client.security.enrollKibana()
@@ -12862,7 +12892,7 @@ Enroll a new node to allow it to join an existing cluster with security features
 The response contains all the necessary information for the joining node to bootstrap discovery and security related settings so that it can successfully join the cluster.
 The response contains key and certificate material that allows the caller to generate valid signed certificates for the HTTP layer of all nodes in the cluster.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enroll-node)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-enroll-node)
 
 ```ts
 client.security.enrollNode()
@@ -12876,7 +12906,7 @@ Retrieves information for one or more API keys.
 NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
 If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-api-key)
 
 ```ts
 client.security.getApiKey({ ... })
@@ -12908,7 +12938,7 @@ Get builtin privileges.
 
 Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-builtin-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-builtin-privileges)
 
 ```ts
 client.security.getBuiltinPrivileges()
@@ -12923,7 +12953,7 @@ To use this API, you must have one of the following privileges:
 * The `read_security` cluster privilege (or a greater privilege such as `manage_security` or `all`).
 * The "Manage Application Privileges" global privilege for the application being referenced in the request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-privileges)
 
 ```ts
 client.security.getPrivileges({ ... })
@@ -12945,7 +12975,7 @@ Get roles in the native realm.
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The get roles API cannot retrieve roles that are defined in roles files.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-role)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-role)
 
 ```ts
 client.security.getRole({ ... })
@@ -12965,7 +12995,7 @@ Role mappings define which roles are assigned to each user.
 The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files.
 The get role mappings API cannot retrieve role mappings that are defined in role mapping files.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-role-mapping)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-role-mapping)
 
 ```ts
 client.security.getRoleMapping({ ... })
@@ -12983,7 +13013,7 @@ Get a list of service accounts that match the provided path parameters.
 
 NOTE: Currently, only the `elastic/fleet-server` service account is available.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-accounts)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-service-accounts)
 
 ```ts
 client.security.getServiceAccounts({ ... })
@@ -13008,7 +13038,7 @@ The response includes service account tokens that were created with the create s
 NOTE: For tokens backed by the `service_tokens` file, the API collects them from all nodes of the cluster.
 Tokens with the same name from different nodes are assumed to be the same token and are only counted once towards the total number of service tokens.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-credentials)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-service-credentials)
 
 ```ts
 client.security.getServiceCredentials({ namespace, service })
@@ -13030,7 +13060,7 @@ This includes:
 * `index.auto_expand_replicas`
 * `index.number_of_replicas`
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-settings)
 
 ```ts
 client.security.getSettings({ ... })
@@ -13047,7 +13077,7 @@ Get security stats.
 
 Gather security usage statistics from all node(s) within the cluster.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-stats)
 
 ```ts
 client.security.getStats()
@@ -13070,7 +13100,7 @@ The tokens returned by the get token API have a finite period of time for which 
 That time period is defined by the `xpack.security.authc.token.timeout` setting.
 If you want to invalidate a token immediately, you can do so by using the invalidate token API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-token)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-token)
 
 ```ts
 client.security.getToken({ ... })
@@ -13101,7 +13131,7 @@ Get users.
 
 Get information about users in the native realm and built-in users.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-user)
 
 ```ts
 client.security.getUser({ ... })
@@ -13121,7 +13151,7 @@ All users can use this API, but only to determine their own privileges.
 To check the privileges of other users, you must use the run as feature.
 To check whether a user has a specific list of privileges, use the has privileges API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-user-privileges)
 
 ```ts
 client.security.getUserPrivileges()
@@ -13137,7 +13167,7 @@ NOTE: The user profile feature is designed only for use by Kibana and Elastic's 
 Individual users and external applications should not call this API directly.
 Elastic reserves the right to change or remove this feature in future releases without prior notice.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user-profile)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-user-profile)
 
 ```ts
 client.security.getUserProfile({ uid })
@@ -13176,7 +13206,7 @@ If applicable, it also returns expiration information for the API key in millise
 
 By default, API keys never expire. You can specify expiration information when you create the API keys.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-grant-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-grant-api-key)
 
 ```ts
 client.security.grantApiKey({ api_key, grant_type })
@@ -13209,7 +13239,7 @@ Determine whether the specified user has a specified list of privileges.
 All users can use this API, but only to determine their own privileges.
 To check the privileges of other users, you must use the run as feature.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-has-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-has-privileges)
 
 ```ts
 client.security.hasPrivileges({ ... })
@@ -13231,7 +13261,7 @@ Determine whether the users associated with the specified user profile IDs have 
 NOTE: The user profile feature is designed only for use by Kibana and Elastic's Observability, Enterprise Search, and Elastic Security solutions. Individual users and external applications should not call this API directly.
 Elastic reserves the right to change or remove this feature in future releases without prior notice.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-has-privileges-user-profile)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-has-privileges-user-profile)
 
 ```ts
 client.security.hasPrivilegesUserProfile({ uids, privileges })
@@ -13259,7 +13289,7 @@ In addition, with the `manage_own_api_key` privilege, an invalidation request mu
 - Or, set both `username` and `realm_name` to match the user's identity.
 - Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-invalidate-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-invalidate-api-key)
 
 ```ts
 client.security.invalidateApiKey({ ... })
@@ -13297,7 +13327,7 @@ NOTE: While all parameters are optional, at least one of them is required.
 More specifically, either one of `token` or `refresh_token` parameters is required.
 If none of these two are specified, then `realm_name` and/or `username` need to be specified.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-invalidate-token)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-invalidate-token)
 
 ```ts
 client.security.invalidateToken({ ... })
@@ -13323,7 +13353,7 @@ Exchange an OpenID Connect authentication response message for an Elasticsearch 
 Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
 These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-oidc-authenticate)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-oidc-authenticate)
 
 ```ts
 client.security.oidcAuthenticate({ nonce, redirect_uri, state })
@@ -13351,7 +13381,7 @@ If the OpenID Connect authentication realm in Elasticsearch is accordingly confi
 Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
 These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-oidc-logout)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-oidc-logout)
 
 ```ts
 client.security.oidcLogout({ token })
@@ -13373,7 +13403,7 @@ The response of this API is a URL pointing to the Authorization Endpoint of the 
 Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
 These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-oidc-prepare-authentication)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-oidc-prepare-authentication)
 
 ```ts
 client.security.oidcPrepareAuthentication({ ... })
@@ -13416,7 +13446,7 @@ Privilege names must begin with a lowercase ASCII letter and must contain only A
 
 Action names can contain any number of printable ASCII characters and must contain at least one of the following characters: `/`, `*`, `:`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-privileges)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-put-privileges)
 
 ```ts
 client.security.putPrivileges({ ... })
@@ -13435,7 +13465,7 @@ The role management APIs are generally the preferred way to manage roles in the 
 The create or update roles API cannot update roles that are defined in roles files.
 File-based role management is not available in Elastic Serverless.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-put-role)
 
 ```ts
 client.security.putRole({ name })
@@ -13488,7 +13518,7 @@ Thus it is possible to assign a user to a role that reflects their username, the
 By default a template is evaluated to produce a single string that is the name of the role which should be assigned to the user.
 If the format of the template is set to "json" then the template is expected to produce a JSON string or an array of JSON strings for the role names.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role-mapping)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-put-role-mapping)
 
 ```ts
 client.security.putRoleMapping({ name })
@@ -13518,7 +13548,7 @@ Add and update users in the native realm.
 A password is required for adding a new user but is optional when updating an existing user.
 To change a user's password without updating any other fields, use the change password API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-user)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-put-user)
 
 ```ts
 client.security.putUser({ username })
@@ -13562,7 +13592,7 @@ If you have only the `manage_own_api_key` privilege, this API returns only the A
 If you have the `read_security`, `manage_api_key`, or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
 Refer to the linked documentation for examples of how to find API keys:
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-api-keys)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-query-api-keys)
 
 ```ts
 client.security.queryApiKeys({ ... })
@@ -13615,7 +13645,7 @@ The query roles API does not retrieve roles that are defined in roles files, nor
 You can optionally filter the results with a query.
 Also, the results can be paginated and sorted.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-role)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-query-role)
 
 ```ts
 client.security.queryRole({ ... })
@@ -13653,7 +13683,7 @@ You can optionally filter the results with a query.
 NOTE: As opposed to the get user API, built-in users are excluded from the result.
 This API is only for native users.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-user)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-query-user)
 
 ```ts
 client.security.queryUser({ ... })
@@ -13699,7 +13729,7 @@ In either case, the SAML message needs to be a base64 encoded XML document with 
 After successful validation, Elasticsearch responds with an Elasticsearch internal access token and refresh token that can be subsequently used for authentication.
 This API endpoint essentially exchanges SAML responses that indicate successful authentication in the IdP for Elasticsearch access and refresh tokens, which can be used for authentication against Elasticsearch.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-authenticate)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-authenticate)
 
 ```ts
 client.security.samlAuthenticate({ content, ids })
@@ -13726,7 +13756,7 @@ An empty response is returned if the verification process is successful.
 The response can be sent by the IdP with either the HTTP-Redirect or the HTTP-Post binding.
 The caller of this API must prepare the request accordingly so that this API can handle either of them.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-complete-logout)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-complete-logout)
 
 ```ts
 client.security.samlCompleteLogout({ realm, ids })
@@ -13753,7 +13783,7 @@ The custom web application can use this API to have Elasticsearch process the `L
 After successful validation of the request, Elasticsearch invalidates the access token and refresh token that corresponds to that specific SAML principal and provides a URL that contains a SAML LogoutResponse message.
 Thus the user can be redirected back to their IdP.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-invalidate)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-invalidate)
 
 ```ts
 client.security.samlInvalidate({ query_string })
@@ -13781,7 +13811,7 @@ If you are using Kibana, refer to the documentation for configuring SAML single-
 This API invalidates the tokens that were generated for a user by the SAML authenticate API.
 If the SAML realm in Elasticsearch is configured accordingly and the SAML IdP supports this, the Elasticsearch response contains a URL to redirect the user to the IdP that contains a SAML logout request (starting an SP-initiated SAML Single Logout).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-logout)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-logout)
 
 ```ts
 client.security.samlLogout({ token })
@@ -13811,7 +13841,7 @@ These parameters contain the algorithm used for the signature and the signature 
 It also returns a random string that uniquely identifies this SAML Authentication request.
 The caller of this API needs to store this identifier as it needs to be used in a following step of the authentication process.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-prepare-authentication)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-prepare-authentication)
 
 ```ts
 client.security.samlPrepareAuthentication({ ... })
@@ -13835,7 +13865,7 @@ Generate SAML metadata for a SAML 2.0 Service Provider.
 The SAML 2.0 specification provides a mechanism for Service Providers to describe their capabilities and configuration using a metadata file.
 This API generates Service Provider metadata based on the configuration of a SAML realm in Elasticsearch.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-service-provider-metadata)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-service-provider-metadata)
 
 ```ts
 client.security.samlServiceProviderMetadata({ realm_name })
@@ -13855,7 +13885,7 @@ NOTE: The user profile feature is designed only for use by Kibana and Elastic's 
 Individual users and external applications should not call this API directly.
 Elastic reserves the right to change or remove this feature in future releases without prior notice.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-suggest-user-profiles)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-suggest-user-profiles)
 
 ```ts
 client.security.suggestUserProfiles({ ... })
@@ -13898,7 +13928,7 @@ The snapshot of the owner's permissions is updated automatically on every call.
 IMPORTANT: If you don't specify `role_descriptors` in the request, a call to this API might still change the API key's access scope.
 This change can occur if the owner user's permissions have changed since the API key was created or last modified.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-update-api-key)
 
 ```ts
 client.security.updateApiKey({ id })
@@ -13944,7 +13974,7 @@ NOTE: This API cannot update REST API keys, which should be updated by either th
 
 To learn more about how to use this API, refer to the [Update cross cluter API key API examples page](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/update-cc-api-key-examples).
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-cross-cluster-api-key)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-update-cross-cluster-api-key)
 
 ```ts
 client.security.updateCrossClusterApiKey({ id, access })
@@ -13981,7 +14011,7 @@ NOTE: If `index.auto_expand_replicas` is set, `index.number_of_replicas` will be
 If a specific index is not in use on the system and settings are provided for it, the request will be rejected.
 This API does not yet support configuring the settings for indices before they are in use.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-update-settings)
 
 ```ts
 client.security.updateSettings({ ... })
@@ -14018,7 +14048,7 @@ New keys and their values are added to the profile document and conflicting keys
 For both labels and data, content is namespaced by the top-level fields.
 The `update_profile_data` global privilege grants privileges for updating only the allowed namespaces.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-user-profile-data)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-update-user-profile-data)
 
 ```ts
 client.security.updateUserProfileData({ uid })
@@ -14062,7 +14092,7 @@ By default, the pipeline definitions that are currently in the system are used.
 However, you can supply substitute pipeline definitions in the body of the request.
 These will be used in place of the pipeline definitions that are already in the system. This can be used to replace existing pipeline definitions or to create new ones. The pipeline substitutions are used only within this request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-simulate-ingest)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-simulate-ingest)
 
 ```ts
 client.simulate.ingest({ docs })
@@ -14094,7 +14124,7 @@ Delete a policy.
 Delete a snapshot lifecycle policy definition.
 This operation prevents any future snapshots from being taken but does not cancel in-progress snapshots or remove previously-taken snapshots.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-delete-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-delete-lifecycle)
 
 ```ts
 client.slm.deleteLifecycle({ policy_id })
@@ -14115,7 +14145,7 @@ Run a policy.
 Immediately create a snapshot according to the snapshot lifecycle policy without waiting for the scheduled time.
 The snapshot policy is normally applied according to its schedule, but you might want to manually run a policy before performing an upgrade or other maintenance.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-execute-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-execute-lifecycle)
 
 ```ts
 client.slm.executeLifecycle({ policy_id })
@@ -14136,7 +14166,7 @@ Run a retention policy.
 Manually apply the retention policy to force immediate removal of snapshots that are expired according to the snapshot lifecycle policy retention rules.
 The retention policy is normally applied according to its schedule.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-execute-retention)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-execute-retention)
 
 ```ts
 client.slm.executeRetention({ ... })
@@ -14155,7 +14185,7 @@ Get policy information.
 
 Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-get-lifecycle)
 
 ```ts
 client.slm.getLifecycle({ ... })
@@ -14175,7 +14205,7 @@ Get snapshot lifecycle management statistics.
 
 Get global and policy-level statistics about actions taken by snapshot lifecycle management.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-get-stats)
 
 ```ts
 client.slm.getStats({ ... })
@@ -14190,7 +14220,7 @@ client.slm.getStats({ ... })
 ## client.slm.getStatus [_slm.get_status]
 Get the snapshot lifecycle management status.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-get-status)
 
 ```ts
 client.slm.getStatus({ ... })
@@ -14213,7 +14243,7 @@ Create or update a snapshot lifecycle policy.
 If the policy already exists, this request increments the policy version.
 Only the latest version of a policy is stored.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-put-lifecycle)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-put-lifecycle)
 
 ```ts
 client.slm.putLifecycle({ policy_id })
@@ -14241,7 +14271,7 @@ Start snapshot lifecycle management.
 Snapshot lifecycle management (SLM) starts automatically when a cluster is formed.
 Manually starting SLM is necessary only if it has been stopped using the stop SLM API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-start)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-start)
 
 ```ts
 client.slm.start({ ... })
@@ -14268,7 +14298,7 @@ You can manually trigger snapshots with the run snapshot lifecycle policy API ev
 The API returns a response as soon as the request is acknowledged, but the plugin might continue to run until in-progress operations complete and it can be safely stopped.
 Use the get snapshot lifecycle management status API to see if SLM is running.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-stop)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-slm-stop)
 
 ```ts
 client.slm.stop({ ... })
@@ -14289,7 +14319,7 @@ Clean up the snapshot repository.
 
 Trigger the review of the contents of a snapshot repository and delete any stale data not referenced by existing snapshots.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-cleanup-repository)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-cleanup-repository)
 
 ```ts
 client.snapshot.cleanupRepository({ repository })
@@ -14311,7 +14341,7 @@ Clone a snapshot.
 
 Clone part of all of a snapshot into another snapshot in the same repository.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-clone)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-clone)
 
 ```ts
 client.snapshot.clone({ repository, snapshot, target_snapshot, indices })
@@ -14334,7 +14364,7 @@ Create a snapshot.
 
 Take a snapshot of a cluster or of data streams and indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-create)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-create)
 
 ```ts
 client.snapshot.create({ repository, snapshot })
@@ -14393,7 +14423,7 @@ Ensure there are no cluster blocks (for example, `cluster.blocks.read_only` and 
 Several options for this API can be specified using a query parameter or a request body parameter.
 If both parameters are specified, only the query parameter is used.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-create-repository)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-create-repository)
 
 ```ts
 client.snapshot.createRepository({ repository })
@@ -14416,7 +14446,7 @@ You can also perform this verification with the verify snapshot repository API.
 ## client.snapshot.delete [_snapshot.delete]
 Delete snapshots.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-delete)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-delete)
 
 ```ts
 client.snapshot.delete({ repository, snapshot })
@@ -14440,7 +14470,7 @@ Delete snapshot repositories.
 When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots.
 The snapshots themselves are left untouched and in place.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-delete-repository)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-delete-repository)
 
 ```ts
 client.snapshot.deleteRepository({ repository })
@@ -14465,7 +14495,7 @@ NOTE: The `after` parameter and `next` field enable you to iterate through snaps
 It is guaranteed that any snapshot that exists at the beginning of the iteration and is not concurrently deleted will be seen during the iteration.
 Snapshots concurrently created may be seen during an iteration.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-get)
 
 ```ts
 client.snapshot.get({ repository, snapshot })
@@ -14515,7 +14545,7 @@ NOTE: The parameters `size`, `order`, `after`, `from_sort_value`, `offset`, `slm
 ## client.snapshot.getRepository [_snapshot.get_repository]
 Get snapshot repository information.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get-repository)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-get-repository)
 
 ```ts
 client.snapshot.getRepository({ ... })
@@ -14562,6 +14592,11 @@ For instance, if you are using storage that offers an API which the supplier cla
 This allows you to demonstrate to your storage supplier that a repository analysis failure must only be caused by an incompatibility with AWS S3 and cannot be attributed to a problem in Elasticsearch.
 Please do not report Elasticsearch issues involving third-party storage systems unless you can demonstrate that the same issue exists when analysing a repository that uses the reference implementation of the same storage protocol.
 You will need to work with the supplier of your storage system to address the incompatibilities that Elasticsearch detects.
+
+The analysis may also report a failure if your repository experienced a service disruption while the analysis was running.
+In practice, occasional service disruptions are inevitable, but the analysis cannot itself distinguish such disruptions from incorrect behavior so must report all deviations from the expected behavior as failures.
+If you are certain that you can ascribe an analysis failure to such a service disruption, wait for your service provider to resolve the disruption and then re-run the analysis.
+Elasticsearch will be unable to create or restore snapshots during repository service disruptions, so you must ensure that these events occur only very rarely.
 
 If the analysis is successful, the API returns details of the testing process, optionally including how long each operation took.
 You can use this information to determine the performance of your storage system.
@@ -14640,7 +14675,7 @@ If an operation fails due to contention, Elasticsearch retries the operation unt
 Most of the compare-and-exchange operations performed by repository analysis atomically increment a counter which is represented as an 8-byte blob.
 Some operations also verify the behavior on small blobs with sizes other than 8 bytes.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-repository-analyze)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-repository-analyze)
 
 ```ts
 client.snapshot.repositoryAnalyze({ repository })
@@ -14718,7 +14753,7 @@ For large repositories, consider setting up a separate single-node Elasticsearch
 The response exposes implementation details of the analysis which may change from version to version.
 The response body format is therefore not considered stable and may be different in newer versions.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-repository-verify-integrity)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-repository-verify-integrity)
 
 ```ts
 client.snapshot.repositoryVerifyIntegrity({ repository })
@@ -14763,7 +14798,7 @@ If no such template exists, you can create one or restore a cluster state that c
 
 If your snapshot contains data from App Search or Workplace Search, you must restore the Enterprise Search encryption key before you restore the snapshot.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-restore)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-restore)
 
 ```ts
 client.snapshot.restore({ repository, snapshot })
@@ -14859,7 +14894,7 @@ For example, if you have 100 snapshots with 1,000 shards each, an API request th
 Depending on the latency of your storage, such requests can take an extremely long time to return results.
 These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-status)
 
 ```ts
 client.snapshot.status({ ... })
@@ -14884,7 +14919,7 @@ Verify a snapshot repository.
 
 Check for common misconfigurations in a snapshot repository.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-verify-repository)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-snapshot-verify-repository)
 
 ```ts
 client.snapshot.verifyRepository({ repository })
@@ -14904,7 +14939,7 @@ To indicate that the request should never timeout, set it to `-1`.
 ## client.sql.clearCursor [_sql.clear_cursor]
 Clear an SQL search cursor.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-clear-cursor)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-sql-clear-cursor)
 
 ```ts
 client.sql.clearCursor({ cursor })
@@ -14926,7 +14961,7 @@ If the Elasticsearch security features are enabled, only the following users can
 * Users with the `cancel_task` cluster privilege.
 * The user who first submitted the search.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-delete-async)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-sql-delete-async)
 
 ```ts
 client.sql.deleteAsync({ id })
@@ -14944,7 +14979,7 @@ Get the current status and available results for an async SQL search or stored s
 
 If the Elasticsearch security features are enabled, only the user who first submitted the SQL search can retrieve the search using this API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-sql-get-async)
 
 ```ts
 client.sql.getAsync({ id })
@@ -14969,7 +15004,7 @@ Get the async SQL search status.
 
 Get the current status of an async SQL search or a stored synchronous SQL search.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-sql-get-async-status)
 
 ```ts
 client.sql.getAsyncStatus({ id })
@@ -14985,7 +15020,7 @@ Get SQL search results.
 
 Run an SQL request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-sql-query)
 
 ```ts
 client.sql.query({ ... })
@@ -15043,7 +15078,7 @@ Translate SQL into Elasticsearch queries.
 Translate an SQL search into a search API request containing Query DSL.
 It accepts the same request body parameters as the SQL search API, excluding `cursor`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-translate)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-sql-translate)
 
 ```ts
 client.sql.translate({ query })
@@ -15076,7 +15111,7 @@ NOTE: When a PKCS#11 token is configured as the truststore of the JRE, the API r
 
 If Elasticsearch is configured to use a keystore or truststore, the API output includes all certificates in that store, even though some of the certificates might not be in active use within the cluster.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ssl-certificates)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ssl-certificates)
 
 ```ts
 client.ssl.certificates()
@@ -15164,7 +15199,7 @@ You can migrate an index by creating a new index that does not contain the token
 Once finished, you can delete the index.
 When the synonyms set is not used in analyzers, you will be able to delete it.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-delete-synonym)
 
 ```ts
 client.synonyms.deleteSynonym({ id })
@@ -15180,7 +15215,7 @@ Delete a synonym rule.
 
 Delete a synonym rule from a synonym set.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym-rule)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-delete-synonym-rule)
 
 ```ts
 client.synonyms.deleteSynonymRule({ set_id, rule_id })
@@ -15197,7 +15232,7 @@ If `false`, analyzers will not be reloaded with the deleted synonym rule
 ## client.synonyms.getSynonym [_synonyms.get_synonym]
 Get a synonym set.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-get-synonym)
 
 ```ts
 client.synonyms.getSynonym({ id })
@@ -15215,7 +15250,7 @@ Get a synonym rule.
 
 Get a synonym rule from a synonym set.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym-rule)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-get-synonym-rule)
 
 ```ts
 client.synonyms.getSynonymRule({ set_id, rule_id })
@@ -15232,7 +15267,7 @@ Get all synonym sets.
 
 Get a summary of all defined synonym sets.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-get-synonym)
 
 ```ts
 client.synonyms.getSynonymsSets({ ... })
@@ -15254,7 +15289,7 @@ This is equivalent to invoking the reload search analyzers API for all indices t
 
 For practical examples of how to create or update a synonyms set, refer to the External documentation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-put-synonym)
 
 ```ts
 client.synonyms.putSynonym({ id, synonyms_set })
@@ -15277,7 +15312,7 @@ If any of the synonym rules included is invalid, the API returns an error.
 
 When you update a synonym rule, all analyzers using the synonyms set will be reloaded automatically to reflect the new rule.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym-rule)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-synonyms-put-synonym-rule)
 
 ```ts
 client.synonyms.putSynonymRule({ set_id, rule_id, synonyms })
@@ -15306,7 +15341,7 @@ The cancelled flag in the response indicates that the cancellation command has b
 To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the `?detailed` parameter to identify the other tasks the system is running.
 You can also use the node hot threads API to obtain detailed information about the work the system is doing instead of completing the cancelled task.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-tasks)
 
 ```ts
 client.tasks.cancel({ ... })
@@ -15331,7 +15366,7 @@ The API may change in ways that are not backwards compatible.
 
 If the task identifier is not found, a 404 response code indicates that there are no resources that match the request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-tasks)
 
 ```ts
 client.tasks.get({ task_id })
@@ -15407,7 +15442,7 @@ In this example, `X-Opaque-Id: 123456` is the ID as a part of the response heade
 The `X-Opaque-Id` in the task `headers` is the ID for the task that was initiated by the REST request.
 The `X-Opaque-Id` in the children `headers` is the child task of the task that was initiated by the REST request.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-tasks)
 
 ```ts
 client.tasks.list({ ... })
@@ -15452,7 +15487,7 @@ However, you can optionally override some of the decisions about the text struct
 If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response.
 It helps determine why the returned structure was chosen.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-text_structure)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-text_structure)
 
 ```ts
 client.textStructure.findFieldStructure({ field, index })
@@ -15567,7 +15602,7 @@ However, you can optionally override some of the decisions about the text struct
 If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response.
 It helps determine why the returned structure was chosen.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-find-message-structure)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-text-structure-find-message-structure)
 
 ```ts
 client.textStructure.findMessageStructure({ messages })
@@ -15676,7 +15711,7 @@ The response from the API contains:
 All this information can be calculated by the structure finder with no guidance.
 However, you can optionally override some of the decisions about the text structure by specifying one or more query parameters.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-find-structure)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-text-structure-find-structure)
 
 ```ts
 client.textStructure.findStructure({ ... })
@@ -15790,7 +15825,7 @@ Test a Grok pattern.
 Test a Grok pattern on one or more lines of text.
 The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-test-grok-pattern)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-text-structure-test-grok-pattern)
 
 ```ts
 client.textStructure.testGrokPattern({ grok_pattern, text })
@@ -15808,7 +15843,7 @@ Valid values are `disabled` and `v1`.
 ## client.transform.deleteTransform [_transform.delete_transform]
 Delete a transform.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-delete-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-delete-transform)
 
 ```ts
 client.transform.deleteTransform({ transform_id })
@@ -15829,7 +15864,7 @@ Get node stats.
 
 Get per-node information about transform usage.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-node-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-get-node-stats)
 
 ```ts
 client.transform.getNodeStats()
@@ -15841,7 +15876,7 @@ Get transforms.
 
 Get configuration information for transforms.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-get-transform)
 
 ```ts
 client.transform.getTransform({ ... })
@@ -15873,7 +15908,7 @@ Get transform stats.
 
 Get usage information for transforms.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-get-transform-stats)
 
 ```ts
 client.transform.getTransformStats({ transform_id })
@@ -15907,7 +15942,7 @@ It returns a maximum of 100 results. The calculations are based on all the curre
 generates a list of mappings and settings for the destination index. These values are determined based on the field
 types of the source index and the transform aggregations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-preview-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-preview-transform)
 
 ```ts
 client.transform.previewTransform({ ... })
@@ -15962,7 +15997,7 @@ NOTE: You must use Kibana or this API to create a transform. Do not add a transf
 not give users any privileges on `.transform-internal*` indices. If you used transforms prior to 7.5, also do not
 give users any privileges on `.data-frame-internal*` indices.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-put-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-put-transform)
 
 ```ts
 client.transform.putTransform({ transform_id, dest, source })
@@ -16000,7 +16035,7 @@ Reset a transform.
 Before you can reset it, you must stop it; alternatively, use the `force` query parameter.
 If the destination index was created by the transform, it is deleted.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-reset-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-reset-transform)
 
 ```ts
 client.transform.resetTransform({ transform_id })
@@ -16024,7 +16059,7 @@ without waiting for the configured frequency interval. After the API is called,
 the transform will be processed again at `now + frequency` unless the API
 is called again in the meantime.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-schedule-now-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-schedule-now-transform)
 
 ```ts
 client.transform.scheduleNowTransform({ transform_id })
@@ -16052,7 +16087,7 @@ indices, though stopping transforms is not a requirement in that case.
 You can see the current value for the upgrade_mode setting by using the get
 transform info API.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-set-upgrade-mode)
 
 ```ts
 client.transform.setUpgradeMode({ ... })
@@ -16084,7 +16119,7 @@ Elasticsearch security features are enabled, the transform remembers which roles
 time of creation and uses those same roles. If those roles do not have the required privileges on the source and
 destination indices, the transform fails when it attempts unauthorized operations.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-start-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-start-transform)
 
 ```ts
 client.transform.startTransform({ transform_id })
@@ -16102,7 +16137,7 @@ Stop transforms.
 
 Stops one or more transforms.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-stop-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-stop-transform)
 
 ```ts
 client.transform.stopTransform({ transform_id })
@@ -16141,7 +16176,7 @@ privileges for the source indices. You must also have `index` and `read` privile
 Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the
 time of update and runs with those privileges.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-update-transform)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-update-transform)
 
 ```ts
 client.transform.updateTransform({ transform_id })
@@ -16186,7 +16221,7 @@ A summary is returned when the upgrade is finished.
 To ensure continuous transforms remain running during a major version upgrade of the cluster – for example, from 7.16 to 8.0 – it is recommended to upgrade transforms before upgrading the cluster.
 You may want to perform a recent cluster backup prior to the upgrade.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-upgrade-transforms)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-transform-upgrade-transforms)
 
 ```ts
 client.transform.upgradeTransforms({ ... })
@@ -16213,7 +16248,7 @@ Acknowledging an action throttles further executions of that action until its `a
 This happens when the condition of the watch is not met (the condition evaluates to false).
 To demonstrate how throttling works in practice and how it can be configured for individual actions within a watch, refer to External documentation.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-ack-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-ack-watch)
 
 ```ts
 client.watcher.ackWatch({ watch_id })
@@ -16231,7 +16266,7 @@ Activate a watch.
 
 A watch can be either active or inactive.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-activate-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-activate-watch)
 
 ```ts
 client.watcher.activateWatch({ watch_id })
@@ -16247,7 +16282,7 @@ Deactivate a watch.
 
 A watch can be either active or inactive.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-deactivate-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-deactivate-watch)
 
 ```ts
 client.watcher.deactivateWatch({ watch_id })
@@ -16269,7 +16304,7 @@ IMPORTANT: Deleting a watch must be done by using only this API.
 Do not delete the watch directly from the `.watches` index using the Elasticsearch delete document API
 When Elasticsearch security features are enabled, make sure no write privileges are granted to anyone for the `.watches` index.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-delete-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-delete-watch)
 
 ```ts
 client.watcher.deleteWatch({ id })
@@ -16298,7 +16333,7 @@ If your user is allowed to read index `a`, but not index `b`, then the exact sam
 When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
 Refer to the external documentation for examples of watch execution requests, including existing, customized, and inline watches.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-execute-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-execute-watch)
 
 ```ts
 client.watcher.executeWatch({ ... })
@@ -16326,7 +16361,7 @@ Get Watcher index settings.
 Get settings for the Watcher internal index (`.watches`).
 Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-get-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-get-settings)
 
 ```ts
 client.watcher.getSettings({ ... })
@@ -16341,7 +16376,7 @@ If no response is received before the timeout expires, the request fails and ret
 ## client.watcher.getWatch [_watcher.get_watch]
 Get a watch.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-get-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-get-watch)
 
 ```ts
 client.watcher.getWatch({ id })
@@ -16367,7 +16402,7 @@ When you add a watch you can also define its initial active state by setting the
 When Elasticsearch security features are enabled, your watch can index or search only on indices for which the user that stored the watch has privileges.
 If the user is able to read index `a`, but not index `b`, the same will apply when the watch runs.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-put-watch)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-put-watch)
 
 ```ts
 client.watcher.putWatch({ id })
@@ -16401,7 +16436,7 @@ Get all registered watches in a paginated manner and optionally filter watches b
 
 Note that only the `_id` and `metadata.*` fields are queryable or sortable.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-query-watches)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-query-watches)
 
 ```ts
 client.watcher.queryWatches({ ... })
@@ -16423,7 +16458,7 @@ Start the watch service.
 
 Start the Watcher service if it is not already running.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-start)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-start)
 
 ```ts
 client.watcher.start({ ... })
@@ -16440,7 +16475,7 @@ Get Watcher statistics.
 This API always returns basic metrics.
 You retrieve more metrics by using the metric parameter.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stats)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-stats)
 
 ```ts
 client.watcher.stats({ ... })
@@ -16457,7 +16492,7 @@ Stop the watch service.
 
 Stop the Watcher service if it is running.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stop)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-stop)
 
 ```ts
 client.watcher.stop({ ... })
@@ -16480,7 +16515,7 @@ This includes `index.auto_expand_replicas`, `index.number_of_replicas`, `index.r
 Modification of `index.routing.allocation.include._tier_preference` is an exception and is not allowed as the
 Watcher shards must always be in the `data_content` tier.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-update-settings)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-watcher-update-settings)
 
 ```ts
 client.watcher.updateSettings({ ... })
@@ -16505,7 +16540,7 @@ The information provided by the API includes:
 * License information about the currently installed license.
 * Feature information for the features that are currently enabled and available under the current license.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-info)
 
 ```ts
 client.xpack.info({ ... })
@@ -16526,7 +16561,7 @@ Get usage information.
 Get information about the features that are currently enabled and available under the current license.
 The API also provides some usage statistics.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-xpack)
 
 ```ts
 client.xpack.usage({ ... })

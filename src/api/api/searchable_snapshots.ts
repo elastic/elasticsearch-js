@@ -80,7 +80,7 @@ export default class SearchableSnapshots {
 
   /**
     * Get cache statistics. Get statistics about the shared cache for partially mounted indices.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-cache-stats | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-cache-stats | Elasticsearch API documentation}
     */
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsCacheStatsResponse>
   async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsCacheStatsResponse, unknown>>
@@ -138,7 +138,7 @@ export default class SearchableSnapshots {
 
   /**
     * Clear the cache. Clear indices and data streams from the shared cache for partially mounted indices.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-clear-cache | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-clear-cache | Elasticsearch API documentation}
     */
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsClearCacheResponse>
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsClearCacheResponse, unknown>>
@@ -196,7 +196,7 @@ export default class SearchableSnapshots {
 
   /**
     * Mount a snapshot. Mount a snapshot as a searchable snapshot index. Do not use this API for snapshots managed by index lifecycle management (ILM). Manually mounting ILM-managed snapshots can interfere with ILM processes.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-mount | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-mount | Elasticsearch API documentation}
     */
   async mount (this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsMountResponse>
   async mount (this: That, params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsMountResponse, unknown>>
@@ -259,7 +259,7 @@ export default class SearchableSnapshots {
 
   /**
     * Get searchable snapshot statistics.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-stats | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-searchable-snapshots-stats | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsStatsResponse>
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsStatsResponse, unknown>>
