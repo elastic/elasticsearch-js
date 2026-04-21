@@ -11,19 +11,6 @@ import { Table, TypeMap, tableFromIPC, AsyncRecordBatchStreamReader } from 'apac
 import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
-
-function loadArrow (): typeof import('apache-arrow/Arrow.node') {
-  try {
-    return require('apache-arrow/Arrow.node') as typeof import('apache-arrow/Arrow.node')
-  } catch /* c8 ignore next */ {
-    /* c8 ignore next 4 */
-    throw new Error(
-      'Package "apache-arrow" is required for Arrow functionality. ' +
-      'Install it with: npm install apache-arrow'
-    )
-  }
-}
-
 export interface HelpersOptions {
   client: Client
   metaHeader: string | null
