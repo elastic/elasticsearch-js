@@ -314,6 +314,11 @@ export default class Client extends API {
         // assumes HttpConnection
         clientMeta += `,hc=${nodeVersion}`
       }
+
+      // detect alternative runtimes
+      if (process.versions.bun != null) clientMeta += `,bn=${process.versions.bun}`
+      if (process.versions.deno != null) clientMeta += `,dn=${process.versions.deno}`
+
       options.headers['x-elastic-client-meta'] = clientMeta
     }
 
