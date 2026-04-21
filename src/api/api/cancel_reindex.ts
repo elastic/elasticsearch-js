@@ -22,29 +22,28 @@ interface That {
 }
 
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  reindex_rethrottle: {
+  cancel_reindex: {
     path: [
       'task_id'
     ],
     body: [],
     query: [
-      'requests_per_second',
-      'group_by'
+      'wait_for_completion'
     ]
   }
 }
 
 /**
-  * Throttle a reindex operation. Change the number of requests per second for a particular reindex operation. For example: ``` POST _reindex/r1A2WoRbTwKZ516z6NEs5A:36619/_rethrottle?requests_per_second=-1 ``` Rethrottling that speeds up the query takes effect immediately. Rethrottling that slows down the query will take effect after completing the current batch. This behavior prevents scroll timeouts.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-reindex | Elasticsearch API documentation}
+  * Cancel a reindex task. Cancel an ongoing reindex task. If `wait_for_completion` is `true` (the default), the response contains the final task state after cancellation. If `wait_for_completion` is `false`, the response contains only `acknowledged: true`.
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
   */
-export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexRethrottleResponse>
-export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexRethrottleResponse, unknown>>
-export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<T.ReindexRethrottleResponse>
-export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function CancelReindexApi (this: That, params: T.CancelReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CancelReindexResponse>
+export default async function CancelReindexApi (this: That, params: T.CancelReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CancelReindexResponse, unknown>>
+export default async function CancelReindexApi (this: That, params: T.CancelReindexRequest, options?: TransportRequestOptions): Promise<T.CancelReindexResponse>
+export default async function CancelReindexApi (this: That, params: T.CancelReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const {
     path: acceptedPath
-  } = acceptedParams.reindex_rethrottle
+  } = acceptedParams.cancel_reindex
 
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -69,16 +68,16 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
   }
 
   const method = 'POST'
-  const path = `/_reindex/${encodeURIComponent(params.task_id.toString())}/_rethrottle`
+  const path = `/_reindex/${encodeURIComponent(params.task_id.toString())}/_cancel`
   const meta: TransportRequestMetadata = {
-    name: 'reindex_rethrottle',
+    name: 'cancel_reindex',
     pathParts: {
       task_id: params.task_id
     },
     acceptedParams: {
       path: ['task_id'],
       body: [],
-      query: ['requests_per_second', 'group_by']
+      query: ['wait_for_completion']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

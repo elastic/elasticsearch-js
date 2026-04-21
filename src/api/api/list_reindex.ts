@@ -22,24 +22,26 @@ interface That {
 }
 
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
-  get_script_languages: {
+  list_reindex: {
     path: [],
     body: [],
-    query: []
+    query: [
+      'detailed'
+    ]
   }
 }
 
 /**
-  * Get script languages. Get a list of available script types, languages, and contexts.
-  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-get-script-languages | Elasticsearch API documentation}
+  * List active reindex tasks. Get information about all currently running reindex tasks.
+  * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
   */
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptLanguagesResponse>
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptLanguagesResponse, unknown>>
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<T.GetScriptLanguagesResponse>
-export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ListReindexApi (this: That, params?: T.ListReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ListReindexResponse>
+export default async function ListReindexApi (this: That, params?: T.ListReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ListReindexResponse, unknown>>
+export default async function ListReindexApi (this: That, params?: T.ListReindexRequest, options?: TransportRequestOptions): Promise<T.ListReindexResponse>
+export default async function ListReindexApi (this: That, params?: T.ListReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const {
     path: acceptedPath
-  } = acceptedParams.get_script_languages
+  } = acceptedParams.list_reindex
 
   const userQuery = params?.querystring
   const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
@@ -65,13 +67,13 @@ export default async function GetScriptLanguagesApi (this: That, params?: T.GetS
   }
 
   const method = 'GET'
-  const path = '/_script_language'
+  const path = '/_reindex'
   const meta: TransportRequestMetadata = {
-    name: 'get_script_languages',
+    name: 'list_reindex',
     acceptedParams: {
       path: [],
       body: [],
-      query: []
+      query: ['detailed']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

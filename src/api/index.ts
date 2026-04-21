@@ -10,6 +10,7 @@
 import AsyncSearchApi from './api/async_search'
 import AutoscalingApi from './api/autoscaling'
 import bulkApi from './api/bulk'
+import cancelReindexApi from './api/cancel_reindex'
 import capabilitiesApi from './api/capabilities'
 import CatApi from './api/cat'
 import CcrApi from './api/ccr'
@@ -34,6 +35,7 @@ import FeaturesApi from './api/features'
 import fieldCapsApi from './api/field_caps'
 import FleetApi from './api/fleet'
 import getApi from './api/get'
+import getReindexApi from './api/get_reindex'
 import getScriptApi from './api/get_script'
 import getScriptContextApi from './api/get_script_context'
 import getScriptLanguagesApi from './api/get_script_languages'
@@ -48,6 +50,7 @@ import infoApi from './api/info'
 import IngestApi from './api/ingest'
 import knnSearchApi from './api/knn_search'
 import LicenseApi from './api/license'
+import listReindexApi from './api/list_reindex'
 import LogstashApi from './api/logstash'
 import mgetApi from './api/mget'
 import MigrationApi from './api/migration'
@@ -101,6 +104,7 @@ export default interface API {
   asyncSearch: AsyncSearchApi
   autoscaling: AutoscalingApi
   bulk: typeof bulkApi
+  cancelReindex: typeof cancelReindexApi
   capabilities: typeof capabilitiesApi
   cat: CatApi
   ccr: CcrApi
@@ -125,6 +129,7 @@ export default interface API {
   fieldCaps: typeof fieldCapsApi
   fleet: FleetApi
   get: typeof getApi
+  getReindex: typeof getReindexApi
   getScript: typeof getScriptApi
   getScriptContext: typeof getScriptContextApi
   getScriptLanguages: typeof getScriptLanguagesApi
@@ -139,6 +144,7 @@ export default interface API {
   ingest: IngestApi
   knnSearch: typeof knnSearchApi
   license: LicenseApi
+  listReindex: typeof listReindexApi
   logstash: LogstashApi
   mget: typeof mgetApi
   migration: MigrationApi
@@ -324,6 +330,7 @@ export default class API {
 }
 
 API.prototype.bulk = bulkApi
+API.prototype.cancelReindex = cancelReindexApi
 API.prototype.capabilities = capabilitiesApi
 API.prototype.clearScroll = clearScrollApi
 API.prototype.closePointInTime = closePointInTimeApi
@@ -338,6 +345,7 @@ API.prototype.existsSource = existsSourceApi
 API.prototype.explain = explainApi
 API.prototype.fieldCaps = fieldCapsApi
 API.prototype.get = getApi
+API.prototype.getReindex = getReindexApi
 API.prototype.getScript = getScriptApi
 API.prototype.getScriptContext = getScriptContextApi
 API.prototype.getScriptLanguages = getScriptLanguagesApi
@@ -346,6 +354,7 @@ API.prototype.healthReport = healthReportApi
 API.prototype.index = indexApi
 API.prototype.info = infoApi
 API.prototype.knnSearch = knnSearchApi
+API.prototype.listReindex = listReindexApi
 API.prototype.mget = mgetApi
 API.prototype.msearch = msearchApi
 API.prototype.msearchTemplate = msearchTemplateApi
