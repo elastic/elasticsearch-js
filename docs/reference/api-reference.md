@@ -14148,6 +14148,11 @@ This allows you to demonstrate to your storage supplier that a repository analys
 Please do not report Elasticsearch issues involving third-party storage systems unless you can demonstrate that the same issue exists when analysing a repository that uses the reference implementation of the same storage protocol.
 You will need to work with the supplier of your storage system to address the incompatibilities that Elasticsearch detects.
 
+The analysis may also report a failure if your repository experienced a service disruption while the analysis was running.
+In practice, occasional service disruptions are inevitable, but the analysis cannot itself distinguish such disruptions from incorrect behavior so must report all deviations from the expected behavior as failures.
+If you are certain that you can ascribe an analysis failure to such a service disruption, wait for your service provider to resolve the disruption and then re-run the analysis.
+Elasticsearch will be unable to create or restore snapshots during repository service disruptions, so you must ensure that these events occur only very rarely.
+
 If the analysis is successful, the API returns details of the testing process, optionally including how long each operation took.
 You can use this information to determine the performance of your storage system.
 If any operation fails or returns an incorrect result, the API returns an error.
