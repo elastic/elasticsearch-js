@@ -125,6 +125,18 @@ export default class Security {
         body: [],
         query: []
       },
+      'security.clone_api_key': {
+        path: [],
+        body: [
+          'api_key',
+          'name',
+          'expiration',
+          'metadata'
+        ],
+        query: [
+          'refresh'
+        ]
+      },
       'security.create_api_key': {
         path: [],
         body: [
@@ -1268,6 +1280,65 @@ export default class Security {
         path: ['namespace', 'service', 'name'],
         body: [],
         query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Clone an API key. Create a copy of an existing API key with a new ID. The cloned key inherits the role descriptors of the source key. This is intended for applications (such as Kibana) that need to create API keys on behalf of a user using an existing API key credential, since derived API keys (API keys created by API keys) are not otherwise supported.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async cloneApiKey (this: That, params: T.SecurityCloneApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCloneApiKeyResponse>
+  async cloneApiKey (this: That, params: T.SecurityCloneApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCloneApiKeyResponse, unknown>>
+  async cloneApiKey (this: That, params: T.SecurityCloneApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCloneApiKeyResponse>
+  async cloneApiKey (this: That, params: T.SecurityCloneApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['security.clone_api_key']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_security/api_key/clone'
+    const meta: TransportRequestMetadata = {
+      name: 'security.clone_api_key',
+      acceptedParams: {
+        path: [],
+        body: ['api_key', 'name', 'expiration', 'metadata'],
+        query: ['refresh']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
