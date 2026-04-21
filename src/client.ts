@@ -49,7 +49,7 @@ if (clientVersion.includes('-')) {
   // clean prerelease
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
-let transportVersion: string = transportPackageJson.version // eslint-disable-line
+let transportVersion: string = transportPackageJson.version
 /* istanbul ignore next */
 if (transportVersion.includes('-')) {
   // clean prerelease
