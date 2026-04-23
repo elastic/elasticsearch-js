@@ -33,6 +33,7 @@ const getAllFiles = async dir => {
   const entries = await fs.promises.readdir(dir, { recursive: true })
   return entries
     .filter(f => f.endsWith('.yml') || f.endsWith('.yaml'))
+    .filter(f => !f.split(path.sep).some(part => part.startsWith('.')))
     .map(f => path.join(dir, f))
     .sort()
 }
