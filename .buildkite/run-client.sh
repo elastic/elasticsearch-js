@@ -6,7 +6,7 @@ script_path=$(dirname "$(realpath -s "$0")")
 set -euo pipefail
 repo=$(pwd)
 
-export NODE_VERSION=${NODE_VERSION:-20}
+export NODE_VERSION=${NODE_VERSION:-22}
 
 echo "--- :javascript: Building Docker image"
 docker build \
@@ -35,4 +35,9 @@ docker run \
   --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
-  bash -c "npm run test:integration; [ -f ./report-junit.xml ] && mv ./report-junit.xml /junit-output/junit-$BUILDKITE_JOB_ID.xml || echo 'No JUnit artifact found'"
+  bash -c "npm run test:integration; TEST_EXIT=\$?; [ -f ./report-junit.xml ] && mv ./report-junit.xml /junit-output/junit-$BUILDKITE_JOB_ID.xml || echo 'No JUnit artifact found'; exit \$TEST_EXIT"
+
+if [ ! -f "$repo/junit-output/junit-$BUILDKITE_JOB_ID.xml" ]; then
+  echo "No JUnit artifact produced, creating empty placeholder"
+  echo '<?xml version="1.0" encoding="UTF-8"?><testsuites></testsuites>' > "$repo/junit-output/junit-$BUILDKITE_JOB_ID.xml"
+fi
