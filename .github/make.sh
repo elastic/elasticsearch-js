@@ -208,8 +208,7 @@ if [[ "$CMD" == "codegen" ]]; then
   if [ -n "$(git status --porcelain)" ]; then
     echo -e "\033[32;1mTARGET: successfully generated client v$VERSION\033[0m"
   else
-    echo -e "\033[31;1mTARGET: failed generating client v$VERSION\033[0m"
-    exit 1
+    echo -e "\033[33;1mTARGET: codegen completed for v$VERSION (no changes - code already up to date)\033[0m"
   fi
 fi
 
