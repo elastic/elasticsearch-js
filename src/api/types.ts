@@ -8984,7 +8984,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'counted_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'wildcard' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'passthrough' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'counted_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -24085,6 +24085,8 @@ export type InferenceAmazonBedrockTaskType = 'chat_completion' | 'completion' | 
 
 export type InferenceAmazonSageMakerApi = 'openai' | 'elastic'
 
+export type InferenceAmazonSageMakerElementType = 'byte' | 'float' | 'bit'
+
 export interface InferenceAmazonSageMakerServiceSettings {
   /** A valid AWS access key that has permissions to use Amazon SageMaker and access to models for invoking requests. */
   access_key: string
@@ -24099,6 +24101,13 @@ export interface InferenceAmazonSageMakerServiceSettings {
   /** A valid AWS secret key that is paired with the `access_key`.
     * For information about creating and managing access and secret keys, refer to the AWS documentation. */
   secret_key: string
+  /** Required when `api` is `elastic` and task type is `text_embedding`. The similarity measure used when invoking the
+    * `text_embedding` task type. */
+  similarity?: InferenceAmazonSageMakerSimilarity
+  /** Required when `api` is `elastic` and task type is `text_embedding`. The data type returned by the text embedding
+    * model.
+    * This value is used when parsing the response back to Elasticsearch data structures. */
+  element_type?: InferenceAmazonSageMakerElementType
   /** The model ID when calling a multi-model endpoint. */
   target_model?: string
   /** The container to directly invoke when calling a multi-container endpoint. */
@@ -24115,6 +24124,8 @@ export interface InferenceAmazonSageMakerServiceSettings {
 }
 
 export type InferenceAmazonSageMakerServiceType = 'amazon_sagemaker'
+
+export type InferenceAmazonSageMakerSimilarity = 'cosine' | 'dot_product' | 'l2_norm'
 
 export interface InferenceAmazonSageMakerTaskSettings {
   /** The AWS custom attributes passed verbatim through to the model running in the SageMaker Endpoint.
@@ -38995,6 +39006,10 @@ export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
   /** The total number of blobs to write to the repository during the test.
     * For realistic experiments, set this parameter to at least `2000`. */
   blob_count?: integer
+  /** Whether to run the overwrite protection check.
+    * For realistic experiments, leave this parameter unset.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  check_overwrite_protection?: boolean
   /** The number of operations to run concurrently during the test.
     * For realistic experiments, leave this parameter unset. */
   concurrency?: integer
@@ -39033,9 +39048,9 @@ export interface SnapshotRepositoryAnalyzeRequest extends RequestBase {
     * For realistic experiments, set this parameter sufficiently long to allow the test to complete. */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, blob_count?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { name?: never, blob_count?: never, check_overwrite_protection?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, blob_count?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { name?: never, blob_count?: never, check_overwrite_protection?: never, concurrency?: never, detailed?: never, early_read_node_count?: never, max_blob_size?: never, max_total_data_size?: never, rare_action_probability?: never, rarely_abort_writes?: never, read_node_count?: never, register_operation_count?: never, seed?: never, timeout?: never }
 }
 
 export interface SnapshotRepositoryAnalyzeResponse {
@@ -40414,7 +40429,7 @@ export interface TransformSettings {
   docs_per_second?: float
   /** Defines the initial page size to use for the composite aggregation for each checkpoint. If circuit breaker
     * exceptions occur, the page size is dynamically adjusted to a lower value. The minimum value is `10` and the
-    * maximum is `65,536`. */
+    * maximum is `65,536`. The default value is `500` for `pivot` transforms and `5000` for `latest` transforms. */
   max_page_search_size?: integer
   /** Specifies whether the transform checkpoint will use the Point In Time API while searching over the source index.
     * In general, Point In Time is an optimization that will reduce pressure on the source index by reducing the amount
