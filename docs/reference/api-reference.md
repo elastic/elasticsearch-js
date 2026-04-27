@@ -1331,7 +1331,7 @@ If the Elasticsearch security features are enabled, you must have the following 
 * If reindexing from a remote cluster, the `source.remote.user` must have the `monitor` cluster privilege and the `read` index privilege for the source data stream, index, or alias.
 
 If reindexing from a remote cluster into a cluster using Elastic Stack, you must explicitly allow the remote host using the `reindex.remote.whitelist` node setting on the destination cluster.
-If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from [Elastic Cloud Hosted](https://cloud.elastic.co/registration?page=docs&placement=docs-body) are allowed.
+If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from [Elastic Cloud Hosted and Elastic Cloud Serverless](https://cloud.elastic.co/registration?page=docs&placement=docs-body) are allowed.
 Automatic data stream creation requires a matching index template with data stream enabled.
 
 The `dest` element can be configured like the index API to control optimistic concurrency control.
@@ -8229,7 +8229,7 @@ client.inference.putAmazonsagemaker({ task_type, amazonsagemaker_inference_id, s
 - **`task_type` (Enum("text_embedding" \| "completion" \| "chat_completion" \| "sparse_embedding" \| "rerank"))**: The type of the inference task that the model will perform.
 - **`amazonsagemaker_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("amazon_sagemaker"))**: The type of service supported for the specified task type. In this case, `amazon_sagemaker`.
-- **`service_settings` ({ access_key, endpoint_name, api, region, secret_key, target_model, target_container_hostname, inference_component_name, batch_size, dimensions })**: Settings used to install the inference model.
+- **`service_settings` ({ access_key, endpoint_name, api, region, secret_key, similarity, element_type, target_model, target_container_hostname, inference_component_name, batch_size, dimensions })**: Settings used to install the inference model.
 These settings are specific to the `amazon_sagemaker` service and `service_settings.api` you specified.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `sparse_embedding` or `text_embedding` task types.
@@ -14640,6 +14640,11 @@ This allows you to demonstrate to your storage supplier that a repository analys
 Please do not report Elasticsearch issues involving third-party storage systems unless you can demonstrate that the same issue exists when analysing a repository that uses the reference implementation of the same storage protocol.
 You will need to work with the supplier of your storage system to address the incompatibilities that Elasticsearch detects.
 
+The analysis may also report a failure if your repository experienced a service disruption while the analysis was running.
+In practice, occasional service disruptions are inevitable, but the analysis cannot itself distinguish such disruptions from incorrect behavior so must report all deviations from the expected behavior as failures.
+If you are certain that you can ascribe an analysis failure to such a service disruption, wait for your service provider to resolve the disruption and then re-run the analysis.
+Elasticsearch will be unable to create or restore snapshots during repository service disruptions, so you must ensure that these events occur only very rarely.
+
 If the analysis is successful, the API returns details of the testing process, optionally including how long each operation took.
 You can use this information to determine the performance of your storage system.
 If any operation fails or returns an incorrect result, the API returns an error.
@@ -14729,6 +14734,8 @@ client.snapshot.repositoryAnalyze({ repository })
 - **`repository` (string)**: The name of the repository.
 - **`blob_count` (Optional, number)**: The total number of blobs to write to the repository during the test.
 For realistic experiments, set this parameter to at least `2000`.
+- **`check_overwrite_protection` (Optional, boolean)**: Whether to run the overwrite protection check.
+For realistic experiments, leave this parameter unset.
 - **`concurrency` (Optional, number)**: The number of operations to run concurrently during the test.
 For realistic experiments, leave this parameter unset.
 - **`detailed` (Optional, boolean)**: Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
