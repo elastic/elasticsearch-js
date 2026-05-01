@@ -1,6 +1,6 @@
 {
   "name": "@elastic/elasticsearch",
-  "version": "9.4.0",
+  "version": "9.5.0",
   "versionCanary": "9.3.4-canary.0",
   "description": "The official Elasticsearch client for Node.js",
   "type": "commonjs",
@@ -81,7 +81,7 @@
     "@elastic/request-converter": "9.3.0",
     "@opentelemetry/sdk-trace-base": "1.30.1",
     "@sinonjs/fake-timers": "14.0.0",
-    "@types/debug": "4.1.12",
+    "@types/debug": "4.1.13",
     "@types/ms": "2.1.0",
     "@types/node": "22.19.11",
     "@types/sinonjs__fake-timers": "8.1.5",
