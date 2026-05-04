@@ -3063,6 +3063,8 @@ export interface SearchPointInTimeReference {
 
 export interface SearchProfile {
   shards: SearchShardProfile[]
+  /** When profiling is enabled, the original query source and target indices from the coordinating request. */
+  request?: SearchSearchRequestCoordinatorMetadata
 }
 
 export interface SearchQueryBreakdown {
@@ -3249,6 +3251,13 @@ export interface SearchSearchRequestBody {
     * Each group maintains a statistics aggregation for its associated searches.
     * You can retrieve these stats using the indices stats API. */
   stats?: string[]
+}
+
+export interface SearchSearchRequestCoordinatorMetadata {
+  /** Original query source from the search request (`SearchSourceBuilder` as JSON). */
+  source?: SearchSearchRequestBody
+  /** Target index expressions from the request (before index resolution). */
+  indices?: IndexName[]
 }
 
 export interface SearchShardProfile {
@@ -37877,7 +37886,8 @@ export interface ShutdownPutNodeRequest extends RequestBase {
   /** Only valid if type is restart.
     * Controls how long Elasticsearch will wait for the node to restart and join the cluster before reassigning its shards to other nodes.
     * This works the same as delaying allocation with the index.unassigned.node_left.delayed_timeout setting.
-    * If you specify both a restart allocation delay and an index-level allocation delay, the longer of the two is used. */
+    * If you don't specify a restart allocation delay, a default value of 5 minutes will be used.
+    * If both a restart allocation delay and an index-level allocation delay are configured, the longer of the two is used. */
   allocation_delay?: string
   /** Only valid if type is replace.
     * Specifies the name of the node that is replacing the node being shut down.
