@@ -36923,7 +36923,8 @@ export interface ShutdownPutNodeRequest extends RequestBase {
   /** Only valid if type is restart.
     * Controls how long Elasticsearch will wait for the node to restart and join the cluster before reassigning its shards to other nodes.
     * This works the same as delaying allocation with the index.unassigned.node_left.delayed_timeout setting.
-    * If you specify both a restart allocation delay and an index-level allocation delay, the longer of the two is used. */
+    * If you don't specify a restart allocation delay, a default value of 5 minutes will be used.
+    * If both a restart allocation delay and an index-level allocation delay are configured, the longer of the two is used. */
   allocation_delay?: string
   /** Only valid if type is replace.
     * Specifies the name of the node that is replacing the node being shut down.
@@ -39445,7 +39446,7 @@ export interface TransformSettings {
   docs_per_second?: float
   /** Defines the initial page size to use for the composite aggregation for each checkpoint. If circuit breaker
     * exceptions occur, the page size is dynamically adjusted to a lower value. The minimum value is `10` and the
-    * maximum is `65,536`. */
+    * maximum is `65,536`. The default value is `500` for `pivot` transforms and `5000` for `latest` transforms. */
   max_page_search_size?: integer
   /** Specifies whether the transform checkpoint will use the Point In Time API while searching over the source index.
     * In general, Point In Time is an optimization that will reduce pressure on the source index by reducing the amount
