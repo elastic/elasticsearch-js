@@ -354,6 +354,35 @@ test('ES|QL helper', t => {
       t.end()
     })
 
+    t.test('Throws ResponseError with non-JSON error body', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest (_params) {
+          return {
+            body: 'internal server error',
+            statusCode: 500,
+            headers: {
+              'content-type': 'text/plain'
+            }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      try {
+        await client.helpers.esql({ query: 'FROM test | LIMIT 1' }).toArrowReader()
+        t.fail('Should throw')
+      } catch (err: any) {
+        t.ok(err instanceof errors.ResponseError)
+        t.equal(err.statusCode, 500)
+      }
+
+      t.end()
+    })
+
     t.end()
   })
 

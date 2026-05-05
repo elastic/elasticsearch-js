@@ -758,3 +758,34 @@ test('Should use req options', async t => {
 
   t.teardown(() => m.stop())
 })
+
+test('documents returns empty array when hits is absent', async t => {
+  const MockConnection = connection.buildMockConnection({
+    onRequest (_params) {
+      return {
+        body: {
+          responses: [{
+            status: 200,
+            aggregations: { count: { value: 5 } }
+          }]
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const m = client.helpers.msearch({ operations: 1 })
+
+  const result = await m.search(
+    { index: 'test' },
+    { query: { match_all: {} } }
+  )
+
+  t.same(result.documents, [])
+
+  t.teardown(() => m.stop())
+})
