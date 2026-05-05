@@ -6,7 +6,7 @@
 import { test } from 'tap'
 import * as arrow from 'apache-arrow'
 import { connection } from '../../utils'
-import { Client } from '../../../'
+import { Client, errors } from '../../../'
 
 test('ES|QL helper', t => {
   test('toRecords', t => {
@@ -309,6 +309,48 @@ test('ES|QL helper', t => {
           t.equal((Math.round(val * 10) / 10).toFixed(1), (counter * 0.1).toFixed(1))
         }
       }
+      t.end()
+    })
+
+    t.test('Throws ResponseError when server returns a JSON error', async t => {
+      const errorBody = {
+        error: {
+          root_cause: [{
+            type: 'illegal_argument_exception',
+            reason: 'ES|QL type [date_range] is not supported by the Arrow format'
+          }],
+          type: 'illegal_argument_exception',
+          reason: 'ES|QL type [date_range] is not supported by the Arrow format'
+        },
+        status: 400
+      }
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest (_params) {
+          return {
+            body: JSON.stringify(errorBody),
+            statusCode: 400,
+            headers: {
+              'content-type': 'application/vnd.elasticsearch+json;compatible-with=9'
+            }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      try {
+        await client.helpers.esql({ query: 'FROM test-range | LIMIT 1' }).toArrowReader()
+        t.fail('Should throw')
+      } catch (err: any) {
+        t.ok(err instanceof errors.ResponseError)
+        t.equal(err.statusCode, 400)
+        t.equal(err.message, 'illegal_argument_exception\n\tRoot causes:\n\t\tillegal_argument_exception: ES|QL type [date_range] is not supported by the Arrow format')
+      }
+
       t.end()
     })
 
