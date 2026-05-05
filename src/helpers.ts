@@ -1024,13 +1024,34 @@ export default class Helpers {
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
           reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
-          reqOptions.asStream = true
         }
 
         params.format = 'arrow'
+        reqOptions.asStream = true
+        reqOptions.meta = true
 
-        const response = await client.esql.query(params, reqOptions) as unknown as Readable
-        return await AsyncRecordBatchStreamReader.from(response)
+        const result = await client.esql.query(params, reqOptions) as unknown as TransportResult<Readable, unknown>
+        if (result.statusCode >= 400) {
+          const chunks: Buffer[] = []
+          if (Buffer.isBuffer(result.body)) {
+            chunks.push(result.body)
+          } else {
+            for await (const chunk of result.body) {
+              chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
+            }
+          }
+          const body = Buffer.concat(chunks)
+          let parsedBody: any
+          try {
+            parsedBody = JSON.parse(body.toString())
+          } catch {
+            parsedBody = body.toString()
+          }
+          result.body = parsedBody
+          throw new ResponseError(result as any)
+        }
+
+        return await AsyncRecordBatchStreamReader.from(result.body)
       }
     }
 
