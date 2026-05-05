@@ -904,6 +904,32 @@ test('bulk index', t => {
       t.ok(called, 'async onFlush should be awaited')
     })
 
+    t.test('onFlush error causes bulk to reject', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest () {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await t.rejects(
+        client.helpers.bulk({
+          datasource: dataset.slice(),
+          onDocument (doc) {
+            return { index: { _index: 'test' } }
+          },
+          onFlush () {
+            return Promise.reject(new Error('onFlush failed'))
+          }
+        }),
+        { message: 'onFlush failed' }
+      )
+    })
+
     t.end()
   })
 
