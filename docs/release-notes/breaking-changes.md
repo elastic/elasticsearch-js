@@ -15,6 +15,18 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 % **Action**<br> Steps for mitigating deprecation impact.
 % ::::
 
+## 9.4.0 [elasticsearch-javascript-client-940-breaking-changes]
+
+::::{dropdown} Minimum supported Node.js version raised to 20
+Node.js 18 reached end-of-life in April 2025. The minimum supported Node.js version for the client is now 20.
+
+For more information, check [PR #3249](https://github.com/elastic/elasticsearch-js/pull/3249).
+
+**Impact**<br> Applications running on Node.js 18 will no longer be supported.
+
+**Action**<br> Upgrade to Node.js 20 or later before upgrading the client to 9.4.
+::::
+
 ## 9.0.0 [elasticsearch-javascript-client-900-breaking-changes]
 
 ::::{dropdown} Changes to the optional body property

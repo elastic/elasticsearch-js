@@ -26,6 +26,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 - **Compatibility with Elasticsearch 9.4:** All changes and additions to Elasticsearch APIs for its 9.4 release are reflected in this release.
 - **Apache Arrow is optional:** The `apache-arrow` package was added to support some useful ES|QL helpers, but is not needed unless those functions are used. It's a large package, so making it an optional peer dependency helps make the dependency tree smaller.
+- **`onFlush` callback for bulk helper:** The `helpers.bulk()` helper now accepts an `onFlush` callback that is called each time the bulk buffer is flushed, receiving the same stats object as `onDrop`. This makes it easier to track progress or trigger side effects on each batch.
+- **Minimum supported Node.js version is now 20:** Node.js 18 reached end-of-life in April 2025. The minimum supported version has been updated to Node.js 20.
+
+### Fixes [elasticsearch-javascript-client-9.4.0-fixes]
+
+- **Improved error handling in Apache Arrow ES|QL helper:** The `esql.toArrowReader()` helper now correctly surfaces server error responses as a `ResponseError` instead of passing the raw error stream to Apache Arrow, which could produce a confusing parse failure.
 
 ## 9.3.4 [elasticsearch-javascript-client-9.3.4-release-notes]
 
