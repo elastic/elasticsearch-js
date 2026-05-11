@@ -13034,6 +13034,8 @@ client.security.getRole({ ... })
 - **`name` (Optional, string \| string[])**: The name of the role.
 You can specify multiple roles as a list.
 If you do not specify this parameter, the API returns information about all roles.
+- **`include_implicit` (Optional, boolean)**: If `true`, include privileges that are implicitly granted by registered `ImplicitPrivilegesProviders` alongside the explicitly configured privileges.
+Each implicit entry in the response is annotated with `implicitly_granted: true`.
 
 ## client.security.getRoleMapping [_security.get_role_mapping]
 Get role mappings.

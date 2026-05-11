@@ -36548,22 +36548,44 @@ export interface SecurityGetPrivilegesRequest extends RequestBase {
 
 export type SecurityGetPrivilegesResponse = Record<string, Record<string, SecurityPutPrivilegesActions>>
 
+export interface SecurityGetRoleIndicesPrivilegesRead {
+  /** Set to `true` on entries that were contributed by a registered `ImplicitPrivilegesProvider`
+    * rather than explicitly stored on the role. Only present when the get role API is called with
+    * `include_implicit=true`. The put role API rejects this field, so clients must not echo it back
+    * on a GET-then-PUT round-trip. */
+  implicitly_granted?: boolean
+  /** The document fields that the owners of the role have read access to. */
+  field_security?: SecurityFieldSecurity
+  /** A list of indices (or index name patterns) to which the permissions in this entry apply. */
+  names: IndexName | IndexName[]
+  /** The index level privileges that owners of the role have on the specified indices. */
+  privileges: SecurityIndexPrivilege[]
+  /** A search query that defines the documents the owners of the role have access to. A document within the specified indices must match this query for it to be accessible by the owners of the role. */
+  query?: SecurityIndicesPrivilegesQuery
+  /** Set to `true` if using wildcard or regular expressions for patterns that cover restricted indices. Implicitly, restricted indices have limited privileges that can cause pattern tests to fail. If restricted indices are explicitly included in the `names` list, Elasticsearch checks privileges against these indices regardless of the value set for `allow_restricted_indices`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  allow_restricted_indices?: boolean
+}
+
 export interface SecurityGetRoleRequest extends RequestBase {
   /** The name of the role.
     * You can specify multiple roles as a comma-separated list.
     * If you do not specify this parameter, the API returns information about all roles. */
   name?: Names
+  /** If `true`, include privileges that are implicitly granted by registered `ImplicitPrivilegesProviders` alongside the explicitly configured privileges.
+    * Each implicit entry in the response is annotated with `implicitly_granted: true`. */
+  include_implicit?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never }
+  body?: string | { [key: string]: any } & { name?: never, include_implicit?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never }
+  querystring?: { [key: string]: any } & { name?: never, include_implicit?: never }
 }
 
 export type SecurityGetRoleResponse = Record<string, SecurityGetRoleRole>
 
 export interface SecurityGetRoleRole {
   cluster: SecurityClusterPrivilege[]
-  indices: SecurityIndicesPrivileges[]
+  indices: SecurityGetRoleIndicesPrivilegesRead[]
   /** @remarks This property is not supported on Elastic Cloud Serverless. */
   remote_indices?: SecurityRemoteIndicesPrivileges[]
   /** @remarks This property is not supported on Elastic Cloud Serverless. */
