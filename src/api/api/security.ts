@@ -304,7 +304,9 @@ export default class Security {
           'name'
         ],
         body: [],
-        query: []
+        query: [
+          'include_implicit'
+        ]
       },
       'security.get_role_mapping': {
         path: [
@@ -2340,7 +2342,7 @@ export default class Security {
       acceptedParams: {
         path: ['name'],
         body: [],
-        query: []
+        query: ['include_implicit']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
