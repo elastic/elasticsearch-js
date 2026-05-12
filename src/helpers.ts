@@ -666,44 +666,51 @@ export default class Helpers {
       let chunkBytes = 0
       timeoutRef = setTimeout(onFlushTimeout, flushInterval)
 
-      // @ts-expect-error datasource is an iterable
-      for await (const chunk of datasource) {
-        if (shouldAbort) break
-        timeoutRef.refresh()
-        const result = onDocument(chunk)
-        const [action, payload] = Array.isArray(result) ? result : [result, chunk]
-        const operation = Object.keys(action)[0]
-        if (operation === 'index' || operation === 'create') {
-          actionBody = serializer.serialize(action)
-          payloadBody = typeof payload === 'string'
-            ? payload
-            : serializer.serialize(payload)
-          chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
-          bulkBody.push(actionBody, payloadBody)
-        } else if (operation === 'update') {
-          actionBody = serializer.serialize(action)
-          payloadBody = typeof chunk === 'string'
-            ? `{"doc":${chunk}}`
-            : serializer.serialize({ doc: chunk, ...payload })
-          chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
-          bulkBody.push(actionBody, payloadBody)
-        } else if (operation === 'delete') {
-          actionBody = serializer.serialize(action)
-          chunkBytes += Buffer.byteLength(actionBody)
-          bulkBody.push(actionBody)
-        } else {
-          clearTimeout(timeoutRef)
-          throw new ConfigurationError(`Bulk helper invalid action: '${operation}'`)
-        }
+      try {
+        // @ts-expect-error datasource is an iterable
+        for await (const chunk of datasource) {
+          if (shouldAbort) break
+          timeoutRef.refresh()
+          const result = onDocument(chunk)
+          const [action, payload] = Array.isArray(result) ? result : [result, chunk]
+          const operation = Object.keys(action)[0]
+          if (operation === 'index' || operation === 'create') {
+            actionBody = serializer.serialize(action)
+            payloadBody = typeof payload === 'string'
+              ? payload
+              : serializer.serialize(payload)
+            chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
+            bulkBody.push(actionBody, payloadBody)
+          } else if (operation === 'update') {
+            actionBody = serializer.serialize(action)
+            payloadBody = typeof chunk === 'string'
+              ? `{"doc":${chunk}}`
+              : serializer.serialize({ doc: chunk, ...payload })
+            chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
+            bulkBody.push(actionBody, payloadBody)
+          } else if (operation === 'delete') {
+            actionBody = serializer.serialize(action)
+            chunkBytes += Buffer.byteLength(actionBody)
+            bulkBody.push(actionBody)
+          } else {
+            clearTimeout(timeoutRef)
+            throw new ConfigurationError(`Bulk helper invalid action: '${operation}'`)
+          }
 
-        if (chunkBytes >= flushBytes) {
-          stats.bytes += chunkBytes
-          const bulkBodyCopy = bulkBody.slice()
-          bulkBody.length = 0
-          chunkBytes = 0
-          const send = await semaphore()
-          send(bulkBodyCopy)
+          if (chunkBytes >= flushBytes) {
+            stats.bytes += chunkBytes
+            const bulkBodyCopy = bulkBody.slice()
+            bulkBody.length = 0
+            chunkBytes = 0
+            const send = await semaphore()
+            send(bulkBodyCopy)
+          }
         }
+      } catch (err) {
+        // when we destroy a stream datasource to abort, the for-await loop
+        // throws a premature close error -- ignore it if we already have the
+        // real error stored
+        if (!shouldAbort) throw err
       }
 
       clearTimeout(timeoutRef)
@@ -803,6 +810,11 @@ export default class Helpers {
           if (err != null) {
             shouldAbort = true
             error = err
+            // If the datasource is a stream, destroy it so the `for await` loop
+            // unblocks and can exit, allowing `finish()` to reject with the error.
+            if (isReadableStream(datasource)) {
+              datasource.destroy()
+            }
           }
           if (resolveSemaphore !== null) {
             running += 1
