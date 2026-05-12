@@ -930,6 +930,42 @@ test('bulk index', t => {
       )
     })
 
+    t.test('Server error rejects when datasource is an unconsumed stream', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest (_params) {
+          return {
+            statusCode: 500,
+            body: { something: 'went wrong' }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      const readStream = new Readable({ objectMode: true, read () {} })
+      readStream.push({ user: 'arya', age: 18 })
+      readStream.push({ user: 'bob', age: 25 })
+      // push(null) is intentionally omitted to simulate a stream that
+      // never ends, which is the scenario reported in #2085
+
+      const b = client.helpers.bulk({
+        datasource: readStream,
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (_doc) {
+          return { index: { _index: 'test' } }
+        },
+        onDrop (_doc) {
+          t.fail('This should never be called')
+        }
+      })
+
+      await t.rejects(b, errors.ResponseError)
+    })
+
     t.end()
   })
 
