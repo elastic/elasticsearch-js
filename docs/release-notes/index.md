@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.4.1 [elasticsearch-javascript-client-9.4.1]
+
+### Fixes [elasticsearch-javascript-client-9.4.1-fixes]
+
+- Throw errors properly when `bulk` helper is given a stream
+
 ## 9.4.0 [elasticsearch-javascript-client-9.4.0-release-notes]
 
 ### Features and enhancements [elasticsearch-javascript-client-9.4.0-features-enhancements]
