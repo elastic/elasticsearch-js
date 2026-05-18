@@ -9,6 +9,7 @@
 
 import {
   Transport,
+  errors,
   TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
@@ -56,6 +57,11 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.BulkResponse, unknown>>
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.BulkResponse>
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
+  const operations = params.operations ?? params.body
+  if (!Array.isArray(operations) || operations.length === 0) {
+    throw new errors.ConfigurationError('Missing required parameter [operations]: must be a non-empty array')
+  }
+
   const {
     path: acceptedPath,
     body: acceptedBody,
