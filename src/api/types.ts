@@ -11300,7 +11300,7 @@ export type CatCatTrainedModelsColumn = 'create_time' | 'ct' | 'created_by' | 'c
 
 export type CatCatTrainedModelsColumns = CatCatTrainedModelsColumn | CatCatTrainedModelsColumn[]
 
-export type CatCatTransformColumn = 'changes_last_detection_time' | 'cldt' | 'checkpoint' | 'cp' | 'checkpoint_duration_time_exp_avg' | 'cdtea' | 'checkpointTimeExpAvg' | 'checkpoint_progress' | 'c' | 'checkpointProgress' | 'create_time' | 'ct' | 'createTime' | 'delete_time' | 'dtime' | 'description' | 'd' | 'dest_index' | 'di' | 'destIndex' | 'documents_deleted' | 'docd' | 'documents_indexed' | 'doci' | 'docs_per_second' | 'dps' | 'documents_processed' | 'docp' | 'frequency' | 'f' | 'id' | 'index_failure' | 'if' | 'index_time' | 'itime' | 'index_total' | 'it' | 'indexed_documents_exp_avg' | 'idea' | 'last_search_time' | 'lst' | 'lastSearchTime' | 'max_page_search_size' | 'mpsz' | 'pages_processed' | 'pp' | 'pipeline' | 'p' | 'processed_documents_exp_avg' | 'pdea' | 'processing_time' | 'pt' | 'reason' | 'r' | 'search_failure' | 'sf' | 'search_time' | 'stime' | 'search_total' | 'st' | 'source_index' | 'si' | 'sourceIndex' | 'state' | 's' | 'transform_type' | 'tt' | 'trigger_count' | 'tc' | 'version' | 'v'
+export type CatCatTransformColumn = 'changes_last_detection_time' | 'cldt' | 'checkpoint' | 'cp' | 'checkpoint_duration_time_exp_avg' | 'cdtea' | 'checkpointTimeExpAvg' | 'checkpoint_progress' | 'c' | 'checkpointProgress' | 'create_time' | 'ct' | 'createTime' | 'delete_time' | 'dtime' | 'description' | 'd' | 'dest_index' | 'di' | 'destIndex' | 'documents_deleted' | 'docd' | 'documents_indexed' | 'doci' | 'docs_per_second' | 'dps' | 'documents_processed' | 'docp' | 'frequency' | 'f' | 'id' | 'index_failure' | 'if' | 'index_time' | 'itime' | 'index_total' | 'it' | 'indexed_documents_exp_avg' | 'idea' | 'last_search_time' | 'lst' | 'lastSearchTime' | 'max_page_search_size' | 'mpsz' | 'pages_processed' | 'pp' | 'pipeline' | 'p' | 'processed_documents_exp_avg' | 'pdea' | 'processing_time' | 'pt' | 'project_routing' | 'pr' | 'projectRouting' | 'reason' | 'r' | 'search_failure' | 'sf' | 'search_time' | 'stime' | 'search_total' | 'st' | 'source_index' | 'si' | 'sourceIndex' | 'state' | 's' | 'transform_type' | 'tt' | 'trigger_count' | 'tc' | 'version' | 'v'
 
 export type CatCatTransformColumns = CatCatTransformColumn | CatCatTransformColumn[]
 
@@ -16090,6 +16090,14 @@ export interface CatTransformsTransformsRecord {
   /** The unique identifier for the ingest pipeline.
     * @alias pipeline */
   p?: string
+  /** The project routing filter for cross-project search from the source configuration. */
+  project_routing?: string
+  /** The project routing filter for cross-project search from the source configuration.
+    * @alias project_routing */
+  pr?: string
+  /** The project routing filter for cross-project search from the source configuration.
+    * @alias project_routing */
+  projectRouting?: string
   /** The description of the transform. */
   description?: string
   /** The description of the transform.
@@ -24844,21 +24852,23 @@ export type InferenceEmbeddingContentFormat = 'text' | 'base64'
 export type InferenceEmbeddingContentInput = InferenceEmbeddingContentObject | InferenceEmbeddingContentObject[]
 
 export interface InferenceEmbeddingContentObject {
-  /** An object containing the input data for the model to embed */
-  content: InferenceEmbeddingContentObjectContents
+  /** An object or an array of objects containing the input data for the model to embed */
+  content: InferenceEmbeddingContentObjectGroup
 }
 
-export interface InferenceEmbeddingContentObjectContents {
-  /** The type of input to embed. */
+export type InferenceEmbeddingContentObjectGroup = InferenceEmbeddingContentObjectItem | InferenceEmbeddingContentObjectItem[]
+
+export interface InferenceEmbeddingContentObjectItem {
+  /** The type of input to embed. Not all models support all input types. */
   type: InferenceEmbeddingContentType
-  /** The format of the input. For the `text` type this must be `text`. For the `image` type, this must be `base64`.
-    * If not specified, this will default to `text` for the `text` type and `base64` for the `image` type. */
+  /** The format of the input. For the `text` type this must be `text`. For all other types, this must be `base64`.
+    * If not specified, this will default to `text` for the `text` type and `base64` for all other types. */
   format?: InferenceEmbeddingContentFormat
   /** The value of the input to embed. For images, this must be a base64-encoded data URI, i.e. "data:content/type;base64,..." */
   value: string
 }
 
-export type InferenceEmbeddingContentType = 'text' | 'image'
+export type InferenceEmbeddingContentType = 'text' | 'image' | 'audio' | 'video' | 'pdf'
 
 interface InferenceEmbeddingInferenceResultExclusiveProps {
   embeddings_bytes?: InferenceDenseEmbeddingByteResult[]
@@ -25607,7 +25617,7 @@ export interface InferenceOpenAIServiceSettings {
     * IMPORTANT: You need to provide the API key only once, during the inference model creation.
     * The get inference endpoint API does not retrieve your API key. */
   api_key: string
-  /** The number of dimensions the resulting output embeddings should have.
+  /** For a `text_embedding` or `embedding` task, the number of dimensions the resulting output embeddings should have.
     * It is supported only in `text-embedding-3` and later models.
     * If it is not set, the OpenAI defined default for the model is used. */
   dimensions?: integer
@@ -25619,13 +25629,15 @@ export interface InferenceOpenAIServiceSettings {
   organization_id?: string
   /** This setting helps to minimize the number of rate limit errors returned from OpenAI.
     * The `openai` service sets a default number of requests allowed per minute depending on the task type.
-    * For `text_embedding`, it is set to `3000`.
-    * For `completion`, it is set to `500`. */
+    * For `text_embedding` and `embedding`, it is set to `3000`.
+    * For `completion` and `chat_completion`, it is set to `500`. */
   rate_limit?: InferenceRateLimitSetting
-  /** For a `text_embedding` task, the similarity measure. One of cosine, dot_product, l2_norm. Defaults to `dot_product`. */
+  /** For a `text_embedding` or `embedding` task, the similarity measure. One of `cosine`, `dot_product`, `l2_norm`. Defaults to `dot_product`. */
   similarity?: InferenceOpenAISimilarityType
   /** The URL endpoint to use for the requests.
-    * It can be changed for testing purposes. */
+    * It can be changed for testing purposes.
+    * Default value is `https://api.openai.com/v1/embeddings` for a `text_embedding` or `embedding` task,
+    * `https://api.openai.com/v1/chat/completions` for a `completion` or `chat_completion` task. */
   url?: string
 }
 
@@ -25648,7 +25660,7 @@ export interface InferenceOpenAITaskSettings {
   headers?: Record<string, string>
 }
 
-export type InferenceOpenAITaskType = 'chat_completion' | 'completion' | 'text_embedding'
+export type InferenceOpenAITaskType = 'chat_completion' | 'completion' | 'text_embedding' | 'embedding'
 
 export interface InferenceOpenShiftAiServiceSettings {
   /** A valid API key for your OpenShift AI endpoint.
@@ -25840,6 +25852,8 @@ export interface InferenceRequestChatCompletion {
 export interface InferenceRequestEmbedding {
   /** Inference input.
     * Either a string, an array of strings, a `content` object, or an array of `content` objects.
+    * `content` objects may contain a single item or an array of items. Models that support multiple items per `content`
+    * object will return a single embedding for each `content` object, regardless of how many items it contains.
     *
     * string example:
     * ```
@@ -25875,6 +25889,24 @@ export interface InferenceRequestEmbedding {
     *       "format": "base64",
     *       "value": "data:image/jpeg;base64,..."
     *     }
+    *   }
+    * ]
+    * ```
+    * Multiple items in one `content` object example:
+    * ```
+    * "input": [
+    *   {
+    *     "content": [
+    *       {
+    *         "type": "image",
+    *         "format": "base64",
+    *         "value": "data:image/jpeg;base64,..."
+    *       },
+    *       {
+    *         "type": "text",
+    *         "value": "Some text to create an embedding"
+    *       }
+    *     ]
     *   }
     * ]
     * ``` */
@@ -25968,7 +26000,7 @@ export type InferenceTaskTypeMistral = 'text_embedding' | 'chat_completion' | 'c
 
 export type InferenceTaskTypeNvidia = 'chat_completion' | 'completion' | 'rerank' | 'text_embedding'
 
-export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion'
+export type InferenceTaskTypeOpenAI = 'text_embedding' | 'chat_completion' | 'completion' | 'embedding'
 
 export type InferenceTaskTypeOpenShiftAi = 'text_embedding' | 'chat_completion' | 'completion' | 'rerank'
 
