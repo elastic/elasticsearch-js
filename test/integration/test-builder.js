@@ -14,70 +14,22 @@ const { mkdir } = promises
 const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
 
 const stackSkips = [
-  // test definition bug: response is empty string
-  'cat/fielddata.yml',
-  // test definition bug: response is empty string
-  'cluster/delete_voting_config_exclusions.yml',
-  // test definition bug: response is empty string
-  'cluster/voting_config_exclusions.yml',
-  // client bug: ILM request takes a "body" param, but "body" is a special keyword in the JS client
-  'ilm/10_basic.yml',
-  // health report is... not healthy
-  'health_report.yml',
   // TODO: `contains` action only supports checking for primitives inside arrays or strings inside strings, not referenced values like objects inside arrays
   'entsearch/10_basic.yml',
-  // test definition bug: error message does not match
-  'entsearch/30_sync_jobs_stack.yml',
-  // no handler found for uri [/knn_test/_knn_search]
-  'knn_search.yml',
-  // TODO: fix license on ES startup - "Operation failed: Current license is basic."
+  // test deletes trial license, breaking all subsequent licensed-feature tests
   'license/10_stack.yml',
-  // response.body should be truthy. found: ""
-  'logstash/10_basic.yml',
-  // test definition bug? security_exception: unable to authenticate user [x_pack_rest_user] for REST request [/_ml/trained_models/test_model/definition/0]
+  // test definition bug: uses x_pack_rest_user which doesn't exist in this test environment
   'machine_learning/clear_tm_deployment_cache.yml',
-  // client bug: 0.99995 does not equal 0.5
+  // client bug: 0.99995 does not equal 0.5 (data evaluation returns wrong value)
   'machine_learning/data_frame_evaluate.yml',
-  // test definition bug? regex has whitespace, maybe needs to be removed
-  'machine_learning/explain_data_frame_analytics.yml',
-  // client bug: 4 != 227
+  // client bug: preview returns 227 results instead of expected 4
   'machine_learning/preview_datafeed.yml',
-  // test definition bug: error message does not match
-  'machine_learning/revert_model_snapshot.yml',
-  // test definition bug: error message does not match
-  'machine_learning/update_model_snapshot.yml',
-  // version_conflict_engine_exception
-  'machine_learning/jobs_crud.yml',
-  // test definition bug: error message does not match
-  'machine_learning/model_snapshots.yml',
-  // test definition bug: error message does not match
-  'query_rules/30_test.yml',
-  // client bug: 0 != 0.1
-  'script/10_basic.yml',
-  // client bug: request takes a "body" param, but "body" is a special keyword in the JS client
-  'searchable_snapshots/10_basic.yml',
-  // test builder bug: does `match` action need to support "array contains value"?
-  'security/10_api_key_basic.yml',
-  // test definition bug: error message does not match
-  'security/140_user.yml',
-  // test definition bug: error message does not match
-  'security/30_privileges_stack.yml',
   // unknown issue: $profile.enabled path doesn't exist in response
   'security/130_user_profile.yml',
-  // test definition bug: error message does not match
-  'security/change_password.yml',
-  // test builder bug: media_type_header_exception
-  'simulate/ingest.yml',
-  // client bug: request takes a "body" param, but "body" is a special keyword in the JS client
-  'snapshot/10_basic.yml',
-  // test definition bug: illegal_argument_exception
-  'sql/10_basic.yml',
-  // test definition bug: illegal_argument_exception
+  // test definition bug: bulk body sent as JSON array, not NDJSON
   'text_structure/10_basic.yml',
-  // test definition bug: illegal_argument_exception
+  // test definition bug: bulk body sent as JSON array, not NDJSON
   'transform/10_basic.yml',
-  // attempts to retrieve index.routing.allocation.include, which does not exist
-  'watcher/10_basic.yml'
 ]
 
 const serverlessSkips = [
