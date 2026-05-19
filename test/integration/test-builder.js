@@ -232,10 +232,17 @@ function buildDo (action) {
   let code = ''
   const keys = Object.keys(action)
   if (keys.includes('catch')) {
+    const catchVal = action.catch
     code += 'try {\n'
     code += indent(buildRequest(action), 2)
+    code += '  t.fail("Expected an error to be thrown")\n'
     code += '} catch (err) {\n'
-    code += `  t.match(err.toString(), ${buildValLiteral(action.catch)})\n`
+    const statusMap = { missing: 404, unauthorized: 401, bad_request: 400, forbidden: 403, conflict: 409, request_timeout: 408, param: 400 }
+    if (statusMap[catchVal] != null) {
+      code += `  t.equal(err.statusCode, ${statusMap[catchVal]}, \`expected status ${statusMap[catchVal]} for ${catchVal}, got \${err.statusCode}\`)\n`
+    } else {
+      code += `  t.match(err.toString(), ${buildValLiteral(catchVal)})\n`
+    }
     code += '}\n'
   } else {
     code += buildRequest(action)
@@ -265,7 +272,7 @@ function buildRequest (action) {
       }
     }
 
-    code += `response = await client.${toCamelCase(key)}(${buildApiParams(action[key])}, ${JSON.stringify(options)})\n`
+    code += `response = await client.${toCamelCase(key)}(${buildApiParams(key, action[key])}, ${JSON.stringify(options)})\n`
   }
   return code
 }
@@ -363,12 +370,44 @@ function buildExists (keyName) {
   return `t.ok(${lookup} != null, \`Key "${keyName}" not found in response body: \$\{JSON.stringify(response.body, null, 2)\}\`)\n`
 }
 
-function buildApiParams (params) {
+// Derives param name mappings from schema.json where REST spec names differ from client TypeScript names
+const paramNameMappings = buildParamNameMappings()
+function buildParamNameMappings () {
+  const schemaPath = join(__dirname, '..', '..', 'schema', 'schema.json')
+  let schema
+  try {
+    schema = JSON.parse(readFileSync(schemaPath, 'utf8'))
+  } catch {
+    return {}
+  }
+  const mappings = {}
+  for (const type of schema.types) {
+    if (type.kind !== 'request') continue
+    for (const prop of type.path ?? []) {
+      if (prop.codegenName != null && prop.codegenName !== prop.name) {
+        const endpoint = schema.endpoints.find(e =>
+          e.request != null && e.request.name === type.name.name && e.request.namespace === type.name.namespace
+        )
+        if (endpoint != null) {
+          if (mappings[endpoint.name] == null) mappings[endpoint.name] = {}
+          mappings[endpoint.name][prop.name] = prop.codegenName
+        }
+      }
+    }
+  }
+  return mappings
+}
+
+function buildApiParams (apiName, params) {
   if (Object.keys(params).length === 0) {
     return 'undefined'
   } else {
     const out = {}
-    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => { out[k] = params[k] })
+    const mapping = paramNameMappings[apiName]
+    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => {
+      const mappedKey = mapping != null && mapping[k] != null ? mapping[k] : k
+      out[mappedKey] = params[k]
+    })
     return buildValLiteral(out)
   }
 }
@@ -410,6 +449,8 @@ function buildValLiteral (val) {
     return val.replace(/^\$/, '')
   } else if (isPlainObject(val)) {
     return JSON.stringify(cleanObject(val), null, 2).replace(/"\$([a-zA-Z0-9_]+)"/g, '$1')
+  } else if (Array.isArray(val)) {
+    return JSON.stringify(val, null, 2).replace(/"\$([a-zA-Z0-9_]+)"/g, '$1')
   } else {
     return JSON.stringify(val)
   }
