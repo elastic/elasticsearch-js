@@ -2082,3 +2082,31 @@ test('Flush interval', t => {
 
   t.end()
 })
+
+test('finally', async t => {
+  const MockConnection = connection.buildMockConnection({
+    onRequest (_params) {
+      return {
+        body: { errors: false, items: [{ index: {} }] }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  let finallyCalled = false
+  await client.helpers.bulk({
+    datasource: [{ user: 'jon', age: 23 }],
+    onDocument (_) {
+      return { index: { _index: 'test' } }
+    }
+  }).finally(() => {
+    finallyCalled = true
+  })
+
+  t.equal(finallyCalled, true)
+  t.end()
+})
