@@ -1,0 +1,14 @@
+name: AI Backport Resolver
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  resolve:
+    uses: elastic/dev-experience-team/.github/workflows/ai-backport-resolver.yml@main
+    with:
+      comment_body: ${{ github.event.comment.body }}
+      comment_user: ${{ github.event.comment.user.login }}
+      pr_number: ${{ github.event.issue.number }}
+    secrets:
+      LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
