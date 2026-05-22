@@ -14,8 +14,14 @@ const { mkdir } = promises
 const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
 
 const stackSkips = [
-  // TODO: `contains` action only supports checking for primitives inside arrays or strings inside strings, not referenced values like objects inside arrays
+  // TODO: `contains` action only supports matching primitives/strings, not objects inside arrays
   'entsearch/10_basic.yml',
+  'cluster/voting_config_exclusions.yml',
+  // test definition bugs on 9.4 branch (fixed on main, pending backport)
+  'cat/fielddata.yml',
+  'machine_learning/explain_data_frame_analytics.yml',
+  'machine_learning/jobs_crud.yml',
+  'security/10_api_key_basic.yml',
   // test deletes trial license, breaking all subsequent licensed-feature tests
   'license/10_stack.yml',
   // test definition bug: uses x_pack_rest_user which doesn't exist in this test environment
@@ -85,6 +91,8 @@ function parse (data) {
 async function build (yamlFiles, clientOptions) {
   await rimraf(generatedTestsPath)
   await mkdir(generatedTestsPath, { recursive: true })
+
+  paramNameMappings = buildParamNameMappings()
 
   for (const file of yamlFiles) {
     const apiName = file.split(`${sep}tests${sep}`)[1]
@@ -259,7 +267,8 @@ function buildRequest (action) {
     if (key === 'catch') continue
 
     if (key === 'headers') {
-      options.headers = action.headers
+      const { 'Content-Type': _, ...rest } = action.headers
+      if (Object.keys(rest).length > 0) options.headers = rest
       continue
     }
 
@@ -370,8 +379,7 @@ function buildExists (keyName) {
   return `t.ok(${lookup} != null, \`Key "${keyName}" not found in response body: \$\{JSON.stringify(response.body, null, 2)\}\`)\n`
 }
 
-// Derives param name mappings from schema.json where REST spec names differ from client TypeScript names
-const paramNameMappings = buildParamNameMappings()
+let paramNameMappings
 function buildParamNameMappings () {
   const schemaPath = join(__dirname, '..', '..', 'schema', 'schema.json')
   let schema
@@ -426,15 +434,15 @@ function buildLookup (path) {
 
   const outPath = path.split('.').map(step => {
     if (parseInt(step, 10).toString() === step) {
-      return `[${step}]`
+      return `?.[${step}]`
     } else if (step.match(/^\$[a-zA-Z0-9_]+$/)) {
       const lookup = step.replace(/^\$/, '')
       if (lookup === 'body') return ''
-      return `[${lookup}]`
+      return `?.[${lookup}]`
     } else if (step === '') {
       return ''
     } else {
-      return `['${step}']`
+      return `?.['${step}']`
     }
   }).join('')
   return `response.body${outPath}`
