@@ -14,7 +14,6 @@ const assert = require('node:assert')
 const url = require('node:url')
 const fs = require('node:fs')
 const path = require('node:path')
-const globby = require('globby')
 const semver = require('semver')
 
 const buildTests = require('./test-builder')
@@ -31,12 +30,12 @@ async function loadDownloadArtifacts () {
 }
 
 const getAllFiles = async dir => {
-  const files = await globby(dir, {
-    expandDirectories: {
-      extensions: ['yml', 'yaml']
-    }
-  })
-  return files.sort()
+  const entries = await fs.promises.readdir(dir, { recursive: true })
+  return entries
+    .filter(f => f.endsWith('.yml') || f.endsWith('.yaml'))
+    .filter(f => !f.split(path.sep).some(part => part.startsWith('.')))
+    .map(f => path.join(dir, f))
+    .sort()
 }
 
 async function doTestBuilder (version, clientOptions) {
