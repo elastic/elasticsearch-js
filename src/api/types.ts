@@ -2134,6 +2134,39 @@ export interface ReindexSource {
   runtime_mappings?: MappingRuntimeFields
 }
 
+export interface ReindexRethrottleParentReindexStatus {
+  slices?: ReindexStatus[]
+  /** The slice ID */
+  slice_id?: integer
+  /** The number of scroll responses pulled back by the reindex. */
+  batches: long
+  /** The number of documents that were successfully created. */
+  created?: long
+  /** The number of documents that were successfully deleted. */
+  deleted: long
+  /** The number of documents that were ignored because the script used for the reindex returned a `noop` value for `ctx.op`. */
+  noops: long
+  /** The number of requests per second effectively executed during the reindex. */
+  requests_per_second: float
+  /** The number of retries attempted by reindex. `bulk` is the number of bulk actions retried and `search` is the number of search actions retried. */
+  retries: Retries
+  throttled?: Duration
+  /** Number of milliseconds the request slept to conform to `requests_per_second`. */
+  throttled_millis: DurationValue<UnitMillis>
+  throttled_until?: Duration
+  /** This field should always be equal to zero in a `_reindex` response.
+    * It only has meaning when using the Task API, where it indicates the next time (in milliseconds since epoch) a throttled request will be executed again in order to conform to `requests_per_second`. */
+  throttled_until_millis: DurationValue<UnitMillis>
+  /** The number of documents that were successfully processed. */
+  total: long
+  /** The number of documents that were successfully updated, for example, a document with same ID already existed prior to reindex updating it. */
+  updated?: long
+  /** The number of version conflicts that reindex hits. */
+  version_conflicts: long
+  /** The reason for cancellation if the slice was canceled */
+  cancelled?: string
+}
+
 export interface ReindexRethrottleParentReindexTask extends ReindexRethrottleReindexTask {
   children?: ReindexRethrottleReindexTask[]
 }
@@ -2151,7 +2184,7 @@ export interface ReindexRethrottleReindexTask {
   node: Name
   running_time_in_nanos: DurationValue<UnitNanos>
   start_time_in_millis: EpochTime<UnitMillis>
-  status: ReindexStatus
+  status: ReindexRethrottleParentReindexStatus
   type: string
   headers: HttpHeaders
 }
@@ -2911,7 +2944,8 @@ export interface SearchInnerHits {
   ignore_unmapped?: boolean
   script_fields?: Record<Field, ScriptField>
   seq_no_primary_term?: boolean
-  fields?: Field[]
+  field?: Field[]
+  fields?: (QueryDslFieldAndFormat | Field)[]
   /** How the inner hits should be sorted per `inner_hits`.
     * By default, inner hits are sorted by score. */
   sort?: Sort
@@ -4343,6 +4377,12 @@ export interface ElasticsearchVersionMinInfo {
   number: string
 }
 
+export interface Embedding {
+  inference_id?: string
+  input: KnnEmbeddingInput
+  timeout?: Duration
+}
+
 export interface EmptyObject {
 }
 
@@ -4553,6 +4593,17 @@ export interface IndicesResponseBase extends AcknowledgedResponseBase {
   _shards?: ShardStatistics
 }
 
+export interface InferenceString {
+  /** The type of data that the value represents. */
+  type: InferenceEmbeddingContentType
+  /** The format of the data. If null, the default data format for the given type is used. */
+  format?: InferenceEmbeddingContentFormat | null
+  /** String which may be raw text, or the string representation of some other data such as an image in base64. */
+  value: string
+}
+
+export type InferenceStringGroup = InferenceString | InferenceString[]
+
 export interface InlineGetKeys<TDocument = unknown> {
   fields?: Record<string, any>
   found: boolean
@@ -4571,6 +4622,8 @@ export interface InnerRetriever {
 }
 
 export type Ip = string
+
+export type KnnEmbeddingInput = string | InferenceStringGroup
 
 export interface KnnQuery extends QueryDslQueryBase {
   /** The name of the vector field to search against */
@@ -4814,6 +4867,7 @@ export interface QueryCacheStats {
 export type QueryVector = float[]
 
 interface QueryVectorBuilderExclusiveProps {
+  embedding?: Embedding
   text_embedding?: TextEmbedding
   /** Lookup a vector from an existing document.
     * Must reference a dense_vector field and a single value. */
@@ -5708,7 +5762,7 @@ export interface AggregationsAutoDateHistogramAggregation extends AggregationsBu
   format?: string
   /** The minimum rounding interval.
     * This can make the collection process more efficient, as the aggregation will not attempt to round at any interval lower than `minimum_interval`. */
-  minimum_interval?: AggregationsMinimumInterval
+  minimum_interval?: AggregationsMinimumInterval | null
   /** The value to apply to documents that do not have a value.
     * By default, documents without a value are ignored. */
   missing?: DateTime
@@ -8864,6 +8918,13 @@ export interface MappingDenseVectorIndexOptions {
     * @remarks This property is not supported on Elastic Cloud Serverless.
     * @experimental */
   on_disk_rescore?: boolean
+  /** The segment document count threshold below which HNSW graph construction is skipped in favor of brute-force flat
+    * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
+    * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
+    *
+    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, and `bbq_hnsw` index types.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  flat_index_threshold?: integer
 }
 
 export interface MappingDenseVectorIndexOptionsRescoreVector {
@@ -17444,6 +17505,7 @@ export interface ClusterStatsCharFilterTypes {
   built_in_tokenizers: ClusterStatsFieldTypes[]
   /** Contains statistics about character filter types used in selected nodes. */
   char_filter_types: ClusterStatsFieldTypes[]
+  multiple_synonym_graph_filters?: ClusterStatsMultipleSynonymGraphFilter
   /** Contains statistics about token filter types used in selected nodes. */
   filter_types: ClusterStatsFieldTypes[]
   /** Contains statistics about tokenizer types used in selected nodes. */
@@ -17809,6 +17871,13 @@ export interface ClusterStatsIndicesVersions {
   total_primary_bytes: long
   total_primary_size?: ByteSize
   version: VersionString
+}
+
+export interface ClusterStatsMultipleSynonymGraphFilter {
+  /** Number of analyzers across the cluster whose filter chain contains more than one synonym_graph filter. */
+  analyzer_count?: integer
+  /** Number of indices that contain at least one analyzer with more than one synonym_graph filter. */
+  index_count?: integer
 }
 
 export interface ClusterStatsNodePackagingType {
@@ -19348,7 +19417,7 @@ export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
 
 export interface EsqlDeleteViewRequest extends RequestBase {
   /** The view name to remove. */
-  name: Id
+  name: Ids
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -20351,6 +20420,10 @@ export interface IndicesDataStreamLifecycle {
     * Any time after this duration the document could be deleted.
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
+  /** The least amount of time data should be kept by elasticsearch. */
+  effective_retention?: Duration
+  /** Configuration source that can influence the retention of a data stream. */
+  retention_determined_by?: IndicesRetentionSource
   /** The list of downsampling rounds to execute as part of this downsampling configuration */
   downsampling?: IndicesDownsamplingRound[]
   /** The method used to downsample the data. There are two options `aggregate` and `last_value`. It requires
@@ -20860,6 +20933,8 @@ export interface IndicesQueries {
 export interface IndicesRetentionLease {
   period: Duration
 }
+
+export type IndicesRetentionSource = 'data_stream_configuration' | 'default_global_retention' | 'max_global_retention' | 'default_failures_retention'
 
 export type IndicesSamplingMethod = 'aggregate' | 'last_value'
 
@@ -21995,6 +22070,12 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
 
 export interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
+  global_retention: IndicesGetDataLifecycleGlobalRetention
+}
+
+export interface IndicesGetDataLifecycleGlobalRetention {
+  max_retention?: Duration
+  default_retention?: Duration
 }
 
 export interface IndicesGetDataLifecycleStatsDataStreamStats {
@@ -30503,6 +30584,7 @@ export interface MlTrainedModelDeploymentNodesStats {
   average_inference_time_ms_last_minute?: DurationValue<UnitFloatMillis>
   /** The average time for each inference call to complete on this node, excluding cache */
   average_inference_time_ms_excluding_cache_hits?: DurationValue<UnitFloatMillis>
+  average_inference_process_memory_rss_bytes?: ByteSize
   /** The number of errors when evaluating the trained model. */
   error_count?: integer
   /** The total number of inference calls made against this node for this model. */
@@ -42359,6 +42441,9 @@ export interface XpackUsageWatcherWatchTriggerSchedule extends XpackUsageCounter
   _all: XpackUsageCounter
 }
 
+export interface SpecUtilsOverloadOf<TDefinition = unknown> {
+}
+
 export interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
 }
 
@@ -42381,9 +42466,6 @@ export interface SpecUtilsCommonQueryParameters {
   /** If set to `true` the returned JSON will be "pretty-formatted". Only use
     * this option for debugging only. */
   pretty?: boolean
-}
-
-export interface SpecUtilsOverloadOf<TDefinition = unknown> {
 }
 
 export interface SpecUtilsCommonCatQueryParameters {
