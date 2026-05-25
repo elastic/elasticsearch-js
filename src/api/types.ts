@@ -2748,7 +2748,8 @@ export interface SearchInnerHits {
   ignore_unmapped?: boolean
   script_fields?: Record<Field, ScriptField>
   seq_no_primary_term?: boolean
-  fields?: Field[]
+  field?: Field[]
+  fields?: (QueryDslFieldAndFormat | Field)[]
   /** How the inner hits should be sorted per `inner_hits`.
     * By default, inner hits are sorted by score. */
   sort?: Sort
@@ -5459,7 +5460,7 @@ export interface AggregationsAutoDateHistogramAggregation extends AggregationsBu
   format?: string
   /** The minimum rounding interval.
     * This can make the collection process more efficient, as the aggregation will not attempt to round at any interval lower than `minimum_interval`. */
-  minimum_interval?: AggregationsMinimumInterval
+  minimum_interval?: AggregationsMinimumInterval | null
   /** The value to apply to documents that do not have a value.
     * By default, documents without a value are ignored. */
   missing?: DateTime
@@ -20013,6 +20014,10 @@ export interface IndicesDataStreamLifecycle {
     * Any time after this duration the document could be deleted.
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
+  /** The least amount of time data should be kept by elasticsearch. */
+  effective_retention?: Duration
+  /** Configuration source that can influence the retention of a data stream. */
+  retention_determined_by?: IndicesRetentionSource
   /** The list of downsampling rounds to execute as part of this downsampling configuration */
   downsampling?: IndicesDownsamplingRound[]
   /** The method used to downsample the data. There are two options `aggregate` and `last_value`. It requires
@@ -20463,6 +20468,8 @@ export interface IndicesQueries {
 export interface IndicesRetentionLease {
   period: Duration
 }
+
+export type IndicesRetentionSource = 'data_stream_configuration' | 'default_global_retention' | 'max_global_retention' | 'default_failures_retention'
 
 export interface IndicesSamplingConfiguration {
   /** The fraction of documents to sample between 0 and 1. */
@@ -21589,6 +21596,12 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
 
 export interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
+  global_retention: IndicesGetDataLifecycleGlobalRetention
+}
+
+export interface IndicesGetDataLifecycleGlobalRetention {
+  max_retention?: Duration
+  default_retention?: Duration
 }
 
 export interface IndicesGetDataLifecycleStatsDataStreamStats {
