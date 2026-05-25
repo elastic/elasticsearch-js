@@ -16,7 +16,6 @@ steps:
     matrix:
       setup:
         nodejs:
-          - "18"
           - "20"
           - "22"
     command: ./.buildkite/run-tests.sh
