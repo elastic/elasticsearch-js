@@ -7778,6 +7778,7 @@ IMPORTANT: Indices can only be split if they satisfy the following requirements:
 * The target index must not exist.
 * The source index must have fewer primary shards than the target index.
 * The number of primary shards in the target index must be a multiple of the number of primary shards in the source index.
+* The number of primary shards in the target index must be a divisor of the source index's `index.number_of_routing_shards`.
 * The node handling the split process must have sufficient free disk space to accommodate a second copy of the existing index.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-indices-split)
@@ -8894,7 +8895,7 @@ IMPORTANT: The inference APIs enable you to use certain services, such as built-
 
 This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-stream-inference)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-stream-completion)
 
 ```ts
 client.inference.streamCompletion({ inference_id, input })

@@ -2734,7 +2734,7 @@ export default class Inference {
 
   /**
     * Perform streaming completion inference on the service. Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation. This API works only with the completion task type. IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs. This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege). You must use a client that supports streaming.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation-inference-stream-inference | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-stream-completion | Elasticsearch API documentation}
     */
   async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceStreamCompletionResponse>
   async streamCompletion (this: That, params: T.InferenceStreamCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceStreamCompletionResponse, unknown>>
