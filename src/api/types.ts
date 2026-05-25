@@ -2134,6 +2134,39 @@ export interface ReindexSource {
   runtime_mappings?: MappingRuntimeFields
 }
 
+export interface ReindexRethrottleParentReindexStatus {
+  slices?: ReindexStatus[]
+  /** The slice ID */
+  slice_id?: integer
+  /** The number of scroll responses pulled back by the reindex. */
+  batches: long
+  /** The number of documents that were successfully created. */
+  created?: long
+  /** The number of documents that were successfully deleted. */
+  deleted: long
+  /** The number of documents that were ignored because the script used for the reindex returned a `noop` value for `ctx.op`. */
+  noops: long
+  /** The number of requests per second effectively executed during the reindex. */
+  requests_per_second: float
+  /** The number of retries attempted by reindex. `bulk` is the number of bulk actions retried and `search` is the number of search actions retried. */
+  retries: Retries
+  throttled?: Duration
+  /** Number of milliseconds the request slept to conform to `requests_per_second`. */
+  throttled_millis: DurationValue<UnitMillis>
+  throttled_until?: Duration
+  /** This field should always be equal to zero in a `_reindex` response.
+    * It only has meaning when using the Task API, where it indicates the next time (in milliseconds since epoch) a throttled request will be executed again in order to conform to `requests_per_second`. */
+  throttled_until_millis: DurationValue<UnitMillis>
+  /** The number of documents that were successfully processed. */
+  total: long
+  /** The number of documents that were successfully updated, for example, a document with same ID already existed prior to reindex updating it. */
+  updated?: long
+  /** The number of version conflicts that reindex hits. */
+  version_conflicts: long
+  /** The reason for cancellation if the slice was canceled */
+  cancelled?: string
+}
+
 export interface ReindexRethrottleParentReindexTask extends ReindexRethrottleReindexTask {
   children?: ReindexRethrottleReindexTask[]
 }
@@ -2151,7 +2184,7 @@ export interface ReindexRethrottleReindexTask {
   node: Name
   running_time_in_nanos: DurationValue<UnitNanos>
   start_time_in_millis: EpochTime<UnitMillis>
-  status: ReindexStatus
+  status: ReindexRethrottleParentReindexStatus
   type: string
   headers: HttpHeaders
 }
@@ -2911,7 +2944,8 @@ export interface SearchInnerHits {
   ignore_unmapped?: boolean
   script_fields?: Record<Field, ScriptField>
   seq_no_primary_term?: boolean
-  fields?: Field[]
+  field?: Field[]
+  fields?: (QueryDslFieldAndFormat | Field)[]
   /** How the inner hits should be sorted per `inner_hits`.
     * By default, inner hits are sorted by score. */
   sort?: Sort
@@ -4352,6 +4386,12 @@ export interface ElasticsearchVersionMinInfo {
   number: string
 }
 
+export interface Embedding {
+  inference_id?: string
+  input: KnnEmbeddingInput
+  timeout?: Duration
+}
+
 export interface EmptyObject {
 }
 
@@ -4562,6 +4602,17 @@ export interface IndicesResponseBase extends AcknowledgedResponseBase {
   _shards?: ShardStatistics
 }
 
+export interface InferenceString {
+  /** The type of data that the value represents. */
+  type: InferenceEmbeddingContentType
+  /** The format of the data. If null, the default data format for the given type is used. */
+  format?: InferenceEmbeddingContentFormat | null
+  /** String which may be raw text, or the string representation of some other data such as an image in base64. */
+  value: string
+}
+
+export type InferenceStringGroup = InferenceString | InferenceString[]
+
 export interface InlineGetKeys<TDocument = unknown> {
   fields?: Record<string, any>
   found: boolean
@@ -4580,6 +4631,8 @@ export interface InnerRetriever {
 }
 
 export type Ip = string
+
+export type KnnEmbeddingInput = string | InferenceStringGroup
 
 export interface KnnQuery extends QueryDslQueryBase {
   /** The name of the vector field to search against */
@@ -4823,6 +4876,7 @@ export interface QueryCacheStats {
 export type QueryVector = float[]
 
 interface QueryVectorBuilderExclusiveProps {
+  embedding?: Embedding
   text_embedding?: TextEmbedding
   /** Lookup a vector from an existing document.
     * Must reference a dense_vector field and a single value. */
@@ -5717,7 +5771,7 @@ export interface AggregationsAutoDateHistogramAggregation extends AggregationsBu
   format?: string
   /** The minimum rounding interval.
     * This can make the collection process more efficient, as the aggregation will not attempt to round at any interval lower than `minimum_interval`. */
-  minimum_interval?: AggregationsMinimumInterval
+  minimum_interval?: AggregationsMinimumInterval | null
   /** The value to apply to documents that do not have a value.
     * By default, documents without a value are ignored. */
   missing?: DateTime
@@ -8873,6 +8927,13 @@ export interface MappingDenseVectorIndexOptions {
     * @remarks This property is not supported on Elastic Cloud Serverless.
     * @experimental */
   on_disk_rescore?: boolean
+  /** The segment document count threshold below which HNSW graph construction is skipped in favor of brute-force flat
+    * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
+    * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
+    *
+    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, and `bbq_hnsw` index types.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  flat_index_threshold?: integer
 }
 
 export interface MappingDenseVectorIndexOptionsRescoreVector {
@@ -17461,6 +17522,7 @@ export interface ClusterStatsCharFilterTypes {
   built_in_tokenizers: ClusterStatsFieldTypes[]
   /** Contains statistics about character filter types used in selected nodes. */
   char_filter_types: ClusterStatsFieldTypes[]
+  multiple_synonym_graph_filters?: ClusterStatsMultipleSynonymGraphFilter
   /** Contains statistics about token filter types used in selected nodes. */
   filter_types: ClusterStatsFieldTypes[]
   /** Contains statistics about tokenizer types used in selected nodes. */
@@ -17826,6 +17888,13 @@ export interface ClusterStatsIndicesVersions {
   total_primary_bytes: long
   total_primary_size?: ByteSize
   version: VersionString
+}
+
+export interface ClusterStatsMultipleSynonymGraphFilter {
+  /** Number of analyzers across the cluster whose filter chain contains more than one synonym_graph filter. */
+  analyzer_count?: integer
+  /** Number of indices that contain at least one analyzer with more than one synonym_graph filter. */
+  index_count?: integer
 }
 
 export interface ClusterStatsNodePackagingType {
@@ -19365,7 +19434,7 @@ export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
 
 export interface EsqlDeleteViewRequest extends RequestBase {
   /** The view name to remove. */
-  name: Id
+  name: Ids
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -20368,6 +20437,10 @@ export interface IndicesDataStreamLifecycle {
     * Any time after this duration the document could be deleted.
     * When empty, every document in this data stream will be stored indefinitely. */
   data_retention?: Duration
+  /** The least amount of time data should be kept by elasticsearch. */
+  effective_retention?: Duration
+  /** Configuration source that can influence the retention of a data stream. */
+  retention_determined_by?: IndicesRetentionSource
   /** The list of downsampling rounds to execute as part of this downsampling configuration */
   downsampling?: IndicesDownsamplingRound[]
   /** The method used to downsample the data. There are two options `aggregate` and `last_value`. It requires
@@ -20877,6 +20950,8 @@ export interface IndicesQueries {
 export interface IndicesRetentionLease {
   period: Duration
 }
+
+export type IndicesRetentionSource = 'data_stream_configuration' | 'default_global_retention' | 'max_global_retention' | 'default_failures_retention'
 
 export type IndicesSamplingMethod = 'aggregate' | 'last_value'
 
@@ -22012,6 +22087,12 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
 
 export interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
+  global_retention: IndicesGetDataLifecycleGlobalRetention
+}
+
+export interface IndicesGetDataLifecycleGlobalRetention {
+  max_retention?: Duration
+  default_retention?: Duration
 }
 
 export interface IndicesGetDataLifecycleStatsDataStreamStats {
@@ -27027,6 +27108,11 @@ export interface IngestAttachmentProcessor extends IngestProcessorBase {
   indexed_chars?: long
   /** Field name from which you can overwrite the number of chars being used for extraction. */
   indexed_chars_field?: Field
+  /** Maximum allowed size of the attachment `field` value in bytes: length of a string (if base64 in JSON,
+    * checked before base64 decoding) or byte array length for binary (for example, CBOR).
+    * If set to `-1`, there is no per-processor limit.
+    * The node setting `ingest.attachment.max_field_size` also applies. */
+  max_field_bytes?: ByteSize
   /** Array of properties to select to be stored.
     * Can be `content`, `title`, `name`, `author`, `keywords`, `date`, `content_type`, `content_length`, `language`. */
   properties?: string[]
@@ -30555,6 +30641,7 @@ export interface MlTrainedModelDeploymentNodesStats {
   average_inference_time_ms_last_minute?: DurationValue<UnitFloatMillis>
   /** The average time for each inference call to complete on this node, excluding cache */
   average_inference_time_ms_excluding_cache_hits?: DurationValue<UnitFloatMillis>
+  average_inference_process_memory_rss_bytes?: ByteSize
   /** The number of errors when evaluating the trained model. */
   error_count?: integer
   /** The total number of inference calls made against this node for this model. */
@@ -38637,10 +38724,168 @@ export interface SnapshotSourceOnlyRepository extends SnapshotRepositoryBase {
   settings: SnapshotSourceOnlyRepositorySettings
 }
 
-export interface SnapshotSourceOnlyRepositorySettings extends SnapshotRepositorySettingsBase {
-  /** The delegated repository type. For valid values, refer to the `type` parameter.
-    * Source repositories can use `settings` properties for its delegated repository type. */
-  delegate_type?: string
+export type SnapshotSourceOnlyRepositorySettings = SnapshotSourceOnlyRepositorySettingsForSharedFileSystem | SnapshotSourceOnlyRepositorySettingsForReadOnlyUrl | SnapshotSourceOnlyRepositorySettingsForAzure | SnapshotSourceOnlyRepositorySettingsForGcs | SnapshotSourceOnlyRepositorySettingsForS3
+
+export interface SnapshotSourceOnlyRepositorySettingsForAzure {
+  delegate_type: 'azure'
+  /** The path to the repository data within the container.
+    * It defaults to the root directory.
+    *
+    * NOTE: Don't set `base_path` when configuring a snapshot repository for Elastic Cloud Enterprise.
+    * Elastic Cloud Enterprise automatically generates the `base_path` for each deployment so that multiple deployments can share the same bucket. */
+  base_path?: string
+  /** The name of the Azure repository client to use. */
+  client?: string
+  /** The Azure container. */
+  container?: string
+  /** The maxmimum batch size, between 1 and 256, used for `BlobBatch` requests.
+    * Defaults to 256 which is the maximum number supported by the Azure blob batch API. */
+  delete_objects_max_size?: integer
+  /** Either `primary_only` or `secondary_only`.
+    * Note that if you set it to `secondary_only`, it will force `readonly` to `true`. */
+  location_mode?: string
+  /** The maximum number of concurrent batch delete requests that will be submitted for any individual bulk delete with `BlobBatch`.
+    * Note that the effective number of concurrent deletes is further limited by the Azure client connection and event loop thread limits.
+    * Defaults to 10, minimum is 1, maximum is 100. */
+  max_concurrent_batch_deletes?: integer
+  /** If `true`, the repository is read-only.
+    * The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
+    *
+    * Only a cluster with write access can create snapshots in the repository.
+    * All other clusters connected to the repository should have the `readonly` parameter set to `true`.
+    * If `false`, the cluster can write to the repository and create snapshots in it.
+    *
+    * IMPORTANT: If you register the same snapshot repository with multiple clusters, only one cluster should have write access to the repository.
+    * Having multiple clusters write to the repository at the same time risks corrupting the contents of the repository. */
+  readonly?: boolean
+}
+
+export interface SnapshotSourceOnlyRepositorySettingsForGcs {
+  delegate_type: 'gcs'
+  /** The name of the bucket to be used for snapshots. */
+  bucket: string
+  /** The name used by the client when it uses the Google Cloud Storage service. */
+  application_name?: string
+  /** The path to the repository data within the bucket.
+    * It defaults to the root of the bucket.
+    *
+    * NOTE: Don't set `base_path` when configuring a snapshot repository for Elastic Cloud Enterprise.
+    * Elastic Cloud Enterprise automatically generates the `base_path` for each deployment so that multiple deployments can share the same bucket. */
+  base_path?: string
+  /** The name of the client to use to connect to Google Cloud Storage. */
+  client?: string
+  /** If `true`, the repository is read-only.
+    * The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
+    *
+    * Only a cluster with write access can create snapshots in the repository.
+    * All other clusters connected to the repository should have the `readonly` parameter set to `true`.
+    *
+    * If `false`, the cluster can write to the repository and create snapshots in it.
+    *
+    * IMPORTANT: If you register the same snapshot repository with multiple clusters, only one cluster should have write access to the repository.
+    * Having multiple clusters write to the repository at the same time risks corrupting the contents of the repository. */
+  readonly?: boolean
+}
+
+export interface SnapshotSourceOnlyRepositorySettingsForReadOnlyUrl {
+  delegate_type: 'url'
+  /** The maximum number of retries for HTTP and HTTPS URLs. */
+  http_max_retries?: integer
+  /** The maximum wait time for data transfers over a connection. */
+  http_socket_timeout?: Duration
+  /** The maximum number of snapshots the repository can contain.
+    * The default is `Integer.MAX_VALUE`, which is 2^31-1 or `2147483647`. */
+  max_number_of_snapshots?: integer
+  /** The URL location of the root of the shared filesystem repository.
+    * The following protocols are supported:
+    *
+    * * `file`
+    * * `ftp`
+    * * `http`
+    * * `https`
+    * * `jar`
+    *
+    * URLs using the HTTP, HTTPS, or FTP protocols must be explicitly allowed with the `repositories.url.allowed_urls` cluster setting.
+    * This setting supports wildcards in the place of a host, path, query, or fragment in the URL.
+    *
+    * URLs using the file protocol must point to the location of a shared filesystem accessible to all master and data nodes in the cluster.
+    * This location must be registered in the `path.repo` setting.
+    * You don't need to register URLs using the FTP, HTTP, HTTPS, or JAR protocols in the `path.repo` setting. */
+  url: string
+}
+
+export interface SnapshotSourceOnlyRepositorySettingsForS3 {
+  delegate_type: 's3'
+  /** The name of the S3 bucket to use for snapshots.
+    * The bucket name must adhere to Amazon's S3 bucket naming rules. */
+  bucket: string
+  /** The path to the repository data within its bucket.
+    * It defaults to an empty string, meaning that the repository is at the root of the bucket.
+    * The value of this setting should not start or end with a forward slash (`/`).
+    *
+    * NOTE: Don't set base_path when configuring a snapshot repository for Elastic Cloud Enterprise.
+    * Elastic Cloud Enterprise automatically generates the `base_path` for each deployment so that multiple deployments may share the same bucket. */
+  base_path?: string
+  /** The minimum threshold below which the chunk is uploaded using a single request.
+    * Beyond this threshold, the S3 repository will use the AWS Multipart Upload API to split the chunk into several parts, each of `buffer_size` length, and to upload each part in its own request.
+    * Note that setting a buffer size lower than 5mb is not allowed since it will prevent the use of the Multipart API and may result in upload errors.
+    * It is also not possible to set a buffer size greater than 5gb as it is the maximum upload size allowed by S3.
+    * Defaults to `100mb` or 5% of JVM heap, whichever is smaller. */
+  buffer_size?: ByteSize
+  /** The S3 repository supports all S3 canned ACLs: `private`, `public-read`, `public-read-write`, `authenticated-read`, `log-delivery-write`, `bucket-owner-read`, `bucket-owner-full-control`.
+    * You could specify a canned ACL using the `canned_acl` setting.
+    * When the S3 repository creates buckets and objects, it adds the canned ACL into the buckets and objects. */
+  canned_acl?: string
+  /** The name of the S3 client to use to connect to S3. */
+  client?: string
+  /** The maxmimum batch size, between 1 and 1000, used for `DeleteObjects` requests.
+    * Defaults to 1000 which is the maximum number supported by the  AWS DeleteObjects API. */
+  delete_objects_max_size?: integer
+  /** The time to wait before trying again if an attempt to read a linearizable register fails. */
+  get_register_retry_delay?: Duration
+  /** The maximum number of parts that Elasticsearch will write during a multipart upload of a single object.
+    * Files which are larger than `buffer_size × max_multipart_parts` will be chunked into several smaller objects.
+    * Elasticsearch may also split a file across multiple objects to satisfy other constraints such as the `chunk_size` limit.
+    * Defaults to `10000` which is the maximum number of parts in a multipart upload in AWS S3. */
+  max_multipart_parts?: integer
+  /** The maximum number of possibly-dangling multipart uploads to clean up in each batch of snapshot deletions.
+    * Defaults to 1000 which is the maximum number supported by the AWS ListMultipartUploads API.
+    * If set to `0`, Elasticsearch will not attempt to clean up dangling multipart uploads. */
+  max_multipart_upload_cleanup_size?: integer
+  /** If true, the repository is read-only.
+    * The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
+    *
+    * Only a cluster with write access can create snapshots in the repository.
+    * All other clusters connected to the repository should have the `readonly` parameter set to `true`.
+    *
+    * If `false`, the cluster can write to the repository and create snapshots in it.
+    *
+    * IMPORTANT: If you register the same snapshot repository with multiple clusters, only one cluster should have write access to the repository.
+    * Having multiple clusters write to the repository at the same time risks corrupting the contents of the repository. */
+  readonly?: boolean
+  /** When set to `true`, files are encrypted on server side using an AES256 algorithm. */
+  server_side_encryption?: boolean
+  /** The S3 storage class for objects written to the repository.
+    * Values may be `standard`, `reduced_redundancy`, `standard_ia`, `onezone_ia`, and `intelligent_tiering`. */
+  storage_class?: string
+  /** The delay before the first retry and the amount the delay is incremented by on each subsequent retry.
+    * The default is 50ms and the minimum is 0ms. */
+  'throttled_delete_retry.delay_increment'?: Duration
+  /** The upper bound on how long the delays between retries will grow to.
+    * The default is 5s and the minimum is 0ms. */
+  'throttled_delete_retry.maximum_delay'?: Duration
+  /** The number times to retry a throttled snapshot deletion.
+    * The default is 10 and the minimum value is 0 which will disable retries altogether.
+    * Note that if retries are enabled in the Azure client, each of these retries comprises that many client-level retries. */
+  'throttled_delete_retry.maximum_number_of_retries'?: integer
+}
+
+export interface SnapshotSourceOnlyRepositorySettingsForSharedFileSystem {
+  delegate_type: 'fs'
+  /** The location of the shared filesystem used to store and retrieve snapshots.
+    * This location must be registered in the `path.repo` setting on all master and data nodes in the cluster.
+    * Unlike `path.repo`, this setting supports only a single file path. */
+  location: string
   /** The maximum number of snapshots the repository can contain.
     * The default is `Integer.MAX_VALUE`, which is 2^31-1 or `2147483647`. */
   max_number_of_snapshots?: integer
@@ -38654,18 +38899,6 @@ export interface SnapshotSourceOnlyRepositorySettings extends SnapshotRepository
     *
     * IMPORTANT: If you register the same snapshot repository with multiple clusters, only one cluster should have write access to the repository.
     * Having multiple clusters write to the repository at the same time risks corrupting the contents of the repository. */
-  read_only?: boolean
-  /** If `true`, the repository is read-only.
-    * The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
-    *
-    * Only a cluster with write access can create snapshots in the repository.
-    * All other clusters connected to the repository should have the `readonly` parameter set to `true`.
-    *
-    * If `false`, the cluster can write to the repository and create snapshots in it.
-    *
-    * IMPORTANT: If you register the same snapshot repository with multiple clusters, only one cluster should have write access to the repository.
-    * Having multiple clusters write to the repository at the same time risks corrupting the contents of the repository.
-    * @alias read_only */
   readonly?: boolean
 }
 
@@ -42444,6 +42677,9 @@ export interface XpackUsageWatcherWatchTriggerSchedule extends XpackUsageCounter
   _all: XpackUsageCounter
 }
 
+export interface SpecUtilsOverloadOf<TDefinition = unknown> {
+}
+
 export interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
 }
 
@@ -42466,9 +42702,6 @@ export interface SpecUtilsCommonQueryParameters {
   /** If set to `true` the returned JSON will be "pretty-formatted". Only use
     * this option for debugging only. */
   pretty?: boolean
-}
-
-export interface SpecUtilsOverloadOf<TDefinition = unknown> {
 }
 
 export interface SpecUtilsCommonCatQueryParameters {
