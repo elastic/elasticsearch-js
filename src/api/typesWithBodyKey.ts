@@ -11902,6 +11902,8 @@ export interface IndicesDataStreamIndex {
 
 export interface IndicesDataStreamLifecycle {
   data_retention?: Duration
+  effective_retention?: Duration
+  retention_determined_by?: IndicesRetentionSource
   downsampling?: IndicesDownsamplingRound[]
   enabled?: boolean
 }
@@ -12233,6 +12235,8 @@ export interface IndicesQueries {
 export interface IndicesRetentionLease {
   period: Duration
 }
+
+export type IndicesRetentionSource = 'data_stream_configuration' | 'default_global_retention' | 'max_global_retention' | 'default_failures_retention'
 
 export interface IndicesSearchIdle {
   after?: Duration
@@ -12873,6 +12877,12 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
 
 export interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
+  global_retention: IndicesGetDataLifecycleGlobalRetention
+}
+
+export interface IndicesGetDataLifecycleGlobalRetention {
+  max_retention?: Duration
+  default_retention?: Duration
 }
 
 export interface IndicesGetDataLifecycleStatsDataStreamStats {
