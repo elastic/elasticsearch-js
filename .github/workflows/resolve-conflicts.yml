@@ -121,36 +121,35 @@ jobs:
             ' 2>/dev/null || echo "")
             [ -z "$file_diff" ] && file_diff="(diff not available)"
 
-            local prompt
-            prompt="You are resolving a git merge conflict during a cherry-pick backport.
-
-CONTEXT:
-- PR #${PR_NUMBER} was merged to the main branch.
-- We are backporting commit ${COMMIT_SHA} to \`${BASE_BRANCH}\`.
-- The cherry-pick produced a conflict in this file.
-
-ORIGINAL PR DIFF FOR THIS FILE:
-\`\`\`diff
-${file_diff}
-\`\`\`
-
-FILE WITH CONFLICT MARKERS:
-\`\`\`
-${conflicted_content}
-\`\`\`
-
-INSTRUCTIONS:
-1. The \`<<<<<<< HEAD\` side is the target branch (${BASE_BRANCH}).
-2. The \`=======\` / \`>>>>>>>\` side is the cherry-picked change.
-3. Apply the intent of the cherry-picked change onto the target branch code.
-4. Output ONLY the complete resolved file. No markdown fences, no commentary."
+            local prompt_file
+            prompt_file=$(mktemp)
+            printf '%s\n' \
+              "You are resolving a git merge conflict during a cherry-pick backport." \
+              "" \
+              "CONTEXT:" \
+              "- PR #${PR_NUMBER} was merged to the main branch." \
+              "- We are backporting commit ${COMMIT_SHA} to ${BASE_BRANCH}." \
+              "- The cherry-pick produced a conflict in this file." \
+              "" \
+              "ORIGINAL PR DIFF FOR THIS FILE:" \
+              "${file_diff}" \
+              "" \
+              "FILE WITH CONFLICT MARKERS:" \
+              "${conflicted_content}" \
+              "" \
+              "INSTRUCTIONS:" \
+              "1. The <<<<<<< HEAD side is the target branch (${BASE_BRANCH})." \
+              "2. The ======= / >>>>>>> side is the cherry-picked change." \
+              "3. Apply the intent of the cherry-picked change onto the target branch code." \
+              "4. Output ONLY the complete resolved file. No markdown fences, no commentary." \
+              > "$prompt_file"
 
             local response
             response=$(curl -sf \
               -H "Authorization: Bearer ${LITELLM_API_KEY}" \
               -H "Content-Type: application/json" \
               "https://elastic.litellm-prod.ai/v1/chat/completions" \
-              -d "$(jq -n --arg prompt "$prompt" '{
+              -d "$(jq -n --rawfile prompt "$prompt_file" '{
                 model: "llm-gateway/claude-sonnet-4-6",
                 max_tokens: 16384,
                 messages: [{role: "user", content: $prompt}]
