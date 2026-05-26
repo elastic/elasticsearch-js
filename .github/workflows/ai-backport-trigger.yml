@@ -1,0 +1,48 @@
+name: AI Backport Trigger
+# Listens for backport bot failure comments and dispatches the gh-aw AI Backport Resolver.
+# The gh-aw workflow uses workflow_dispatch (so its pre_activation check passes for any caller),
+# while this file handles the issue_comment event detection from trusted bots.
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.issue.pull_request
+      && (
+        github.event.comment.user.login == 'github-actions[bot]'
+        || github.event.comment.user.login == 'elastic-vault-github-plugin-prod[bot]'
+      )
+      && contains(github.event.comment.body, 'To backport manually, run these commands')
+    permissions:
+      actions: write
+    steps:
+      - name: Parse comment and dispatch resolver
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.comment.body;
+
+            const branchMatch = body.match(/git worktree add \.worktrees\/\S+ (\S+)/);
+            const shaMatch = body.match(/cherry-pick -x --mainline 1 ([a-f0-9]+)/);
+
+            if (!branchMatch || !shaMatch) {
+              core.warning('Could not parse base_branch or commit_sha from backport comment.');
+              return;
+            }
+
+            const base_branch = branchMatch[1];
+            const commit_sha = shaMatch[1];
+            const pr_number = String(context.payload.issue.number);
+
+            core.info(`Dispatching AI Backport Resolver for PR #${pr_number} -> ${base_branch} @ ${commit_sha}`);
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'resolve-conflicts.lock.yml',
+              ref: 'main',
+              inputs: { pr_number, base_branch, commit_sha },
+            });
