@@ -14,67 +14,39 @@ const { mkdir } = promises
 const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
 
 const stackSkips = [
-  // TODO: `contains` action only supports matching primitives/strings, not objects inside arrays
-  'entsearch/10_basic.yml',
-  'cluster/voting_config_exclusions.yml',
-  // test definition bugs on 9.4 branch (fixed on main, pending backport)
-  'cat/fielddata.yml',
-  'machine_learning/explain_data_frame_analytics.yml',
-  'machine_learning/jobs_crud.yml',
-  'security/10_api_key_basic.yml',
-  // test deletes trial license, breaking all subsequent licensed-feature tests
-  'license/10_stack.yml',
-  // test definition bug: uses x_pack_rest_user which doesn't exist in this test environment
-  'machine_learning/clear_tm_deployment_cache.yml',
-  // client bug: 0.99995 does not equal 0.5 (data evaluation returns wrong value)
-  'machine_learning/data_frame_evaluate.yml',
-  // client bug: preview returns 227 results instead of expected 4
-  'machine_learning/preview_datafeed.yml',
-  // unknown issue: $profile.enabled path doesn't exist in response
-  'security/130_user_profile.yml',
-  // test definition bug: bulk body sent as JSON array, not NDJSON
-  'text_structure/10_basic.yml',
-  // test definition bug: bulk body sent as JSON array, not NDJSON
-  'transform/10_basic.yml',
+  { file: 'entsearch/10_basic.yml', skipReason: 'TODO: `contains` action only supports matching primitives/strings, not objects inside arrays' },
+  { file: 'cluster/voting_config_exclusions.yml', skipReason: 'TODO: `contains` action only supports matching primitives/strings, not objects inside arrays' },
+  { file: 'cat/fielddata.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'machine_learning/explain_data_frame_analytics.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'machine_learning/jobs_crud.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'security/10_api_key_basic.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'license/10_stack.yml', skipReason: 'test deletes trial license, breaking all subsequent licensed-feature tests' },
+  { file: 'machine_learning/clear_tm_deployment_cache.yml', skipReason: 'test definition bug: uses x_pack_rest_user which does not exist in this test environment' },
+  { file: 'machine_learning/data_frame_evaluate.yml', skipReason: 'client bug: 0.99995 does not equal 0.5 (data evaluation returns wrong value)' },
+  { file: 'machine_learning/preview_datafeed.yml', skipReason: 'client bug: preview returns 227 results instead of expected 4' },
+  { file: 'security/130_user_profile.yml', skipReason: 'unknown issue: $profile.enabled path does not exist in response' },
+  { file: 'text_structure/10_basic.yml', skipReason: 'test definition bug: bulk body sent as JSON array, not NDJSON' },
+  { file: 'transform/10_basic.yml', skipReason: 'test definition bug: bulk body sent as JSON array, not NDJSON' },
 ]
 
 const serverlessSkips = [
-  // TODO: sql.getAsync does not set a content-type header but ES expects one
-  // transport only sets a content-type if the body is not empty
-  'sql/10_basic.yml',
-  // TODO: bulk call in setup fails due to "malformed action/metadata line"
-  // bulk body is being sent as a Buffer, unsure if related.
-  'transform/10_basic.yml',
-  // TODO: scripts_painless_execute expects {"result":"0.1"}, gets {"result":"0"}
-  // body sent as Buffer, unsure if related
-  'script/10_basic.yml',
-  // TODO: expects {"outlier_detection.auc_roc.value":0.99995}, gets {"outlier_detection.auc_roc.value":0.5}
-  // remove if/when https://github.com/elastic/elasticsearch-clients-tests/issues/37 is resolved
-  'machine_learning/data_frame_evaluate.yml',
-  // TODO: Cannot perform requested action because job [job-crud-test-apis] is not open
-  'machine_learning/jobs_crud.yml',
-  // TODO: test runner needs to support ignoring 410 errors
-  'enrich/10_basic.yml',
-  // TODO: parameter `enabled` is not allowed in source
-  // Same underlying problem as https://github.com/elastic/elasticsearch-clients-tests/issues/55
-  'cluster/component_templates.yml',
-  // TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`
-  'indices/simulate_template.yml',
-  'indices/simulate_index_template.yml',
-  // TODO: test currently times out
-  'inference/10_basic.yml',
-  // TODO: Fix: "Trained model deployment [test_model] is not allocated to any nodes"
-  'machine_learning/20_trained_model_serverless.yml',
-  // TODO: query_rules api not available yet
-  'query_rules/10_query_rules.yml',
-  'query_rules/20_rulesets.yml',
-  'query_rules/30_test.yml',
-  // TODO: security.putRole API not available
-  'security/50_roles_serverless.yml',
-  // TODO: expected undefined to equal 'some_table'
-  'entsearch/50_connector_updates.yml',
-  // TODO: resource_not_found_exception
-  'tasks_serverless.yml',
+  { file: 'sql/10_basic.yml', skipReason: 'TODO: sql.getAsync does not set a content-type header but ES expects one; transport only sets a content-type if the body is not empty' },
+  { file: 'transform/10_basic.yml', skipReason: 'TODO: bulk call in setup fails due to "malformed action/metadata line"; bulk body is being sent as a Buffer, unsure if related' },
+  { file: 'script/10_basic.yml', skipReason: 'TODO: scripts_painless_execute expects {"result":"0.1"}, gets {"result":"0"}; body sent as Buffer, unsure if related' },
+  { file: 'machine_learning/data_frame_evaluate.yml', skipReason: 'TODO: expects outlier_detection.auc_roc.value 0.99995, gets 0.5; remove if/when https://github.com/elastic/elasticsearch-clients-tests/issues/37 is resolved' },
+  { file: 'machine_learning/jobs_crud.yml', skipReason: 'TODO: Cannot perform requested action because job [job-crud-test-apis] is not open' },
+  { file: 'enrich/10_basic.yml', skipReason: 'TODO: test runner needs to support ignoring 410 errors' },
+  { file: 'cluster/component_templates.yml', skipReason: 'TODO: parameter `enabled` is not allowed in source; same underlying problem as https://github.com/elastic/elasticsearch-clients-tests/issues/55' },
+  { file: 'indices/simulate_template.yml', skipReason: 'TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`' },
+  { file: 'indices/simulate_index_template.yml', skipReason: 'TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`' },
+  { file: 'inference/10_basic.yml', skipReason: 'TODO: test currently times out' },
+  { file: 'machine_learning/20_trained_model_serverless.yml', skipReason: 'TODO: Fix: "Trained model deployment [test_model] is not allocated to any nodes"' },
+  { file: 'query_rules/10_query_rules.yml', skipReason: 'TODO: query_rules api not available yet' },
+  { file: 'query_rules/20_rulesets.yml', skipReason: 'TODO: query_rules api not available yet' },
+  { file: 'query_rules/30_test.yml', skipReason: 'TODO: query_rules api not available yet' },
+  { file: 'security/50_roles_serverless.yml', skipReason: 'TODO: security.putRole API not available' },
+  { file: 'entsearch/50_connector_updates.yml', skipReason: 'TODO: expected undefined to equal \'some_table\'' },
+  { file: 'tasks_serverless.yml', skipReason: 'TODO: resource_not_found_exception' },
 ]
 
 function parse (data) {
@@ -118,8 +90,10 @@ async function build (yamlFiles, clientOptions) {
       if (!stack) skip.add('process.env.TEST_ES_STACK === "1"')
     }
 
-    if (stackSkips.includes(apiName)) skip.add('process.env.TEST_ES_STACK === "1"')
-    if (serverlessSkips.includes(apiName)) skip.add('process.env.TEST_ES_SERVERLESS === "1"')
+    const stackSkip = stackSkips.find(s => s.file === apiName)
+    if (stackSkip) skip.add(`process.env.TEST_ES_STACK === "1" ? ${JSON.stringify(stackSkip.skipReason)} : false`)
+    const serverlessSkip = serverlessSkips.find(s => s.file === apiName)
+    if (serverlessSkip) skip.add(`process.env.TEST_ES_SERVERLESS === "1" ? ${JSON.stringify(serverlessSkip.skipReason)} : false`)
 
     if (skip.size > 0) {
       code += `test('${apiName}', { skip: ${Array.from(skip).join(' || ')} }, t => {\n`
