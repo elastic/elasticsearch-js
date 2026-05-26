@@ -216,20 +216,23 @@ jobs:
           if [ "$CONFLICTS" == "false" ]; then
             PR_BODY="Backport #${PR_NUMBER} to \`${BASE_BRANCH}\` (no conflicts)."
           else
-            PR_BODY="Backport #${PR_NUMBER} to \`${BASE_BRANCH}\`.
-
-### AI-resolved conflicts
-
-The following files had conflicts resolved automatically by Claude:
-
-${RESOLVED_LIST}"
+            PR_BODY=$(printf '%s\n' \
+              "Backport #${PR_NUMBER} to \`${BASE_BRANCH}\`." \
+              "" \
+              "### AI-resolved conflicts" \
+              "" \
+              "The following files had conflicts resolved automatically by Claude:" \
+              "" \
+              "${RESOLVED_LIST}")
             if [ -n "${FAILED_FILES:-}" ]; then
-              PR_BODY="${PR_BODY}
-
-> WARNING: The following files could not be resolved automatically and still contain conflict markers: \`${FAILED_FILES}\`"
+              PR_BODY=$(printf '%s\n' \
+                "${PR_BODY}" \
+                "" \
+                "> WARNING: The following files could not be resolved automatically and still contain conflict markers: \`${FAILED_FILES}\`")
             else
-              PR_BODY="${PR_BODY}
-> **Please review the AI-resolved conflicts carefully before merging.**"
+              PR_BODY=$(printf '%s\n' \
+                "${PR_BODY}" \
+                "> **Please review the AI-resolved conflicts carefully before merging.**")
             fi
           fi
 
@@ -241,10 +244,11 @@ ${RESOLVED_LIST}"
           if [ "$CONFLICTS" == "false" ]; then
             COMMENT="**AI Backport Resolver** created a backport PR (no conflicts): ${BACKPORT_PR_URL}"
           else
-            COMMENT="**AI Backport Resolver** resolved conflicts and created a backport PR: ${BACKPORT_PR_URL}
-
-Files with AI-resolved conflicts:
-${RESOLVED_LIST}"
+            COMMENT=$(printf '%s\n' \
+              "**AI Backport Resolver** resolved conflicts and created a backport PR: ${BACKPORT_PR_URL}" \
+              "" \
+              "Files with AI-resolved conflicts:" \
+              "${RESOLVED_LIST}")
           fi
 
           gh pr comment "$PR_NUMBER" --body "$COMMENT"
