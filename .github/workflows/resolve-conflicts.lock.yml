@@ -1422,7 +1422,7 @@ jobs:
 
   pre_activation:
     if: >
-      github.event_name != 'issue_comment' && github.event_name != 'pull_request_review_comment' || contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+      github.event_name != 'issue_comment' && github.event_name != 'pull_request_review_comment' || contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) || github.event.comment.user.login == 'elastic-vault-github-plugin-prod[bot]' || github.event.comment.user.login == 'github-actions[bot]'
     runs-on: ubuntu-slim
     outputs:
       activated: ${{ steps.check_membership.outputs.is_team_member == 'true' }}
