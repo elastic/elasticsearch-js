@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { Readable } from 'node:stream'
 import { test } from 'tap'
 import { connection } from '../utils'
 import { Client } from '../..'
@@ -258,6 +259,49 @@ test('Api request metadata', t => {
     })
     // @ts-expect-error
     await client.synonyms.putSynonymRule({ set_id: 'foo', rule_id: 'bar' })
+  })
+
+  t.end()
+})
+
+test('bulk operations validation', t => {
+  const Connection = connection.buildMockConnection({
+    onRequest (_opts) {
+      return { statusCode: 200, body: { took: 1, errors: false, items: [] } }
+    }
+  })
+  const client = new Client({ node: 'http://localhost:9200', Connection })
+
+  t.test('passes with a non-empty array', async t => {
+    const result = await client.bulk({
+      operations: [{ index: { _index: 'test' } }, { foo: 'bar' }]
+    })
+    t.equal(result.errors, false)
+  })
+
+  t.test('passes with a non-empty NDJSON string', async t => {
+    // @ts-expect-error - string is a valid bulk body but not yet reflected in types
+    const result = await client.bulk({
+      operations: '{"index":{"_index":"test"}}\n{"foo":"bar"}\n'
+    })
+    t.equal(result.errors, false)
+  })
+
+  t.test('passes with a non-empty Buffer', async t => {
+    // @ts-expect-error - Buffer is a valid bulk body but not yet reflected in types
+    const result = await client.bulk({
+      operations: Buffer.from('{"index":{"_index":"test"}}\n{"foo":"bar"}\n')
+    })
+    t.equal(result.errors, false)
+  })
+
+  t.test('passes with a Readable stream', async t => {
+    const stream = Readable.from(['{"index":{"_index":"test"}}\n{"foo":"bar"}\n'])
+    // @ts-expect-error - Readable is a valid bulk body but not yet reflected in types
+    const result = await client.bulk({
+      operations: stream
+    })
+    t.equal(result.errors, false)
   })
 
   t.end()
