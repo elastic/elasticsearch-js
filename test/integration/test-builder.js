@@ -14,109 +14,39 @@ const { mkdir } = promises
 const generatedTestsPath = join(__dirname, '..', '..', 'generated-tests')
 
 const stackSkips = [
-  // test definition bug: response is empty string
-  'cat/fielddata.yml',
-  // test definition bug: response is empty string
-  'cluster/delete_voting_config_exclusions.yml',
-  // test definition bug: response is empty string
-  'cluster/voting_config_exclusions.yml',
-  // client bug: ILM request takes a "body" param, but "body" is a special keyword in the JS client
-  'ilm/10_basic.yml',
-  // health report is... not healthy
-  'health_report.yml',
-  // TODO: `contains` action only supports checking for primitives inside arrays or strings inside strings, not referenced values like objects inside arrays
-  'entsearch/10_basic.yml',
-  // test definition bug: error message does not match
-  'entsearch/30_sync_jobs_stack.yml',
-  // no handler found for uri [/knn_test/_knn_search]
-  'knn_search.yml',
-  // TODO: fix license on ES startup - "Operation failed: Current license is basic."
-  'license/10_stack.yml',
-  // response.body should be truthy. found: ""
-  'logstash/10_basic.yml',
-  // test definition bug? security_exception: unable to authenticate user [x_pack_rest_user] for REST request [/_ml/trained_models/test_model/definition/0]
-  'machine_learning/clear_tm_deployment_cache.yml',
-  // client bug: 0.99995 does not equal 0.5
-  'machine_learning/data_frame_evaluate.yml',
-  // test definition bug? regex has whitespace, maybe needs to be removed
-  'machine_learning/explain_data_frame_analytics.yml',
-  // client bug: 4 != 227
-  'machine_learning/preview_datafeed.yml',
-  // test definition bug: error message does not match
-  'machine_learning/revert_model_snapshot.yml',
-  // test definition bug: error message does not match
-  'machine_learning/update_model_snapshot.yml',
-  // version_conflict_engine_exception
-  'machine_learning/jobs_crud.yml',
-  // test definition bug: error message does not match
-  'machine_learning/model_snapshots.yml',
-  // test definition bug: error message does not match
-  'query_rules/30_test.yml',
-  // client bug: 0 != 0.1
-  'script/10_basic.yml',
-  // client bug: request takes a "body" param, but "body" is a special keyword in the JS client
-  'searchable_snapshots/10_basic.yml',
-  // test builder bug: does `match` action need to support "array contains value"?
-  'security/10_api_key_basic.yml',
-  // test definition bug: error message does not match
-  'security/140_user.yml',
-  // test definition bug: error message does not match
-  'security/30_privileges_stack.yml',
-  // unknown issue: $profile.enabled path doesn't exist in response
-  'security/130_user_profile.yml',
-  // test definition bug: error message does not match
-  'security/change_password.yml',
-  // test builder bug: media_type_header_exception
-  'simulate/ingest.yml',
-  // client bug: request takes a "body" param, but "body" is a special keyword in the JS client
-  'snapshot/10_basic.yml',
-  // test definition bug: illegal_argument_exception
-  'sql/10_basic.yml',
-  // test definition bug: illegal_argument_exception
-  'text_structure/10_basic.yml',
-  // test definition bug: illegal_argument_exception
-  'transform/10_basic.yml',
-  // attempts to retrieve index.routing.allocation.include, which does not exist
-  'watcher/10_basic.yml'
+  { file: 'entsearch/10_basic.yml', skipReason: 'TODO: `contains` action only supports matching primitives/strings, not objects inside arrays' },
+  { file: 'cluster/voting_config_exclusions.yml', skipReason: 'TODO: `contains` action only supports matching primitives/strings, not objects inside arrays' },
+  { file: 'cat/fielddata.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'machine_learning/explain_data_frame_analytics.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'machine_learning/jobs_crud.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'security/10_api_key_basic.yml', skipReason: 'test definition bugs on 9.4 branch (fixed on main, pending backport)' },
+  { file: 'license/10_stack.yml', skipReason: 'test deletes trial license, breaking all subsequent licensed-feature tests' },
+  { file: 'machine_learning/clear_tm_deployment_cache.yml', skipReason: 'test definition bug: uses x_pack_rest_user which does not exist in this test environment' },
+  { file: 'machine_learning/data_frame_evaluate.yml', skipReason: 'client bug: 0.99995 does not equal 0.5 (data evaluation returns wrong value)' },
+  { file: 'machine_learning/preview_datafeed.yml', skipReason: 'client bug: preview returns 227 results instead of expected 4' },
+  { file: 'security/130_user_profile.yml', skipReason: 'unknown issue: $profile.enabled path does not exist in response' },
+  { file: 'text_structure/10_basic.yml', skipReason: 'test definition bug: bulk body sent as JSON array, not NDJSON' },
+  { file: 'transform/10_basic.yml', skipReason: 'test definition bug: bulk body sent as JSON array, not NDJSON' },
 ]
 
 const serverlessSkips = [
-  // TODO: sql.getAsync does not set a content-type header but ES expects one
-  // transport only sets a content-type if the body is not empty
-  'sql/10_basic.yml',
-  // TODO: bulk call in setup fails due to "malformed action/metadata line"
-  // bulk body is being sent as a Buffer, unsure if related.
-  'transform/10_basic.yml',
-  // TODO: scripts_painless_execute expects {"result":"0.1"}, gets {"result":"0"}
-  // body sent as Buffer, unsure if related
-  'script/10_basic.yml',
-  // TODO: expects {"outlier_detection.auc_roc.value":0.99995}, gets {"outlier_detection.auc_roc.value":0.5}
-  // remove if/when https://github.com/elastic/elasticsearch-clients-tests/issues/37 is resolved
-  'machine_learning/data_frame_evaluate.yml',
-  // TODO: Cannot perform requested action because job [job-crud-test-apis] is not open
-  'machine_learning/jobs_crud.yml',
-  // TODO: test runner needs to support ignoring 410 errors
-  'enrich/10_basic.yml',
-  // TODO: parameter `enabled` is not allowed in source
-  // Same underlying problem as https://github.com/elastic/elasticsearch-clients-tests/issues/55
-  'cluster/component_templates.yml',
-  // TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`
-  'indices/simulate_template.yml',
-  'indices/simulate_index_template.yml',
-  // TODO: test currently times out
-  'inference/10_basic.yml',
-  // TODO: Fix: "Trained model deployment [test_model] is not allocated to any nodes"
-  'machine_learning/20_trained_model_serverless.yml',
-  // TODO: query_rules api not available yet
-  'query_rules/10_query_rules.yml',
-  'query_rules/20_rulesets.yml',
-  'query_rules/30_test.yml',
-  // TODO: security.putRole API not available
-  'security/50_roles_serverless.yml',
-  // TODO: expected undefined to equal 'some_table'
-  'entsearch/50_connector_updates.yml',
-  // TODO: resource_not_found_exception
-  'tasks_serverless.yml',
+  { file: 'sql/10_basic.yml', skipReason: 'TODO: sql.getAsync does not set a content-type header but ES expects one; transport only sets a content-type if the body is not empty' },
+  { file: 'transform/10_basic.yml', skipReason: 'TODO: bulk call in setup fails due to "malformed action/metadata line"; bulk body is being sent as a Buffer, unsure if related' },
+  { file: 'script/10_basic.yml', skipReason: 'TODO: scripts_painless_execute expects {"result":"0.1"}, gets {"result":"0"}; body sent as Buffer, unsure if related' },
+  { file: 'machine_learning/data_frame_evaluate.yml', skipReason: 'TODO: expects outlier_detection.auc_roc.value 0.99995, gets 0.5; remove if/when https://github.com/elastic/elasticsearch-clients-tests/issues/37 is resolved' },
+  { file: 'machine_learning/jobs_crud.yml', skipReason: 'TODO: Cannot perform requested action because job [job-crud-test-apis] is not open' },
+  { file: 'enrich/10_basic.yml', skipReason: 'TODO: test runner needs to support ignoring 410 errors' },
+  { file: 'cluster/component_templates.yml', skipReason: 'TODO: parameter `enabled` is not allowed in source; same underlying problem as https://github.com/elastic/elasticsearch-clients-tests/issues/55' },
+  { file: 'indices/simulate_template.yml', skipReason: 'TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`' },
+  { file: 'indices/simulate_index_template.yml', skipReason: 'TODO: expecting `ct_field` field mapping to be returned, but instead only finds `field`' },
+  { file: 'inference/10_basic.yml', skipReason: 'TODO: test currently times out' },
+  { file: 'machine_learning/20_trained_model_serverless.yml', skipReason: 'TODO: Fix: "Trained model deployment [test_model] is not allocated to any nodes"' },
+  { file: 'query_rules/10_query_rules.yml', skipReason: 'TODO: query_rules api not available yet' },
+  { file: 'query_rules/20_rulesets.yml', skipReason: 'TODO: query_rules api not available yet' },
+  { file: 'query_rules/30_test.yml', skipReason: 'TODO: query_rules api not available yet' },
+  { file: 'security/50_roles_serverless.yml', skipReason: 'TODO: security.putRole API not available' },
+  { file: 'entsearch/50_connector_updates.yml', skipReason: 'TODO: expected undefined to equal \'some_table\'' },
+  { file: 'tasks_serverless.yml', skipReason: 'TODO: resource_not_found_exception' },
 ]
 
 function parse (data) {
@@ -133,6 +63,8 @@ function parse (data) {
 async function build (yamlFiles, clientOptions) {
   await rimraf(generatedTestsPath)
   await mkdir(generatedTestsPath, { recursive: true })
+
+  paramNameMappings = buildParamNameMappings()
 
   for (const file of yamlFiles) {
     const apiName = file.split(`${sep}tests${sep}`)[1]
@@ -158,8 +90,10 @@ async function build (yamlFiles, clientOptions) {
       if (!stack) skip.add('process.env.TEST_ES_STACK === "1"')
     }
 
-    if (stackSkips.includes(apiName)) skip.add('process.env.TEST_ES_STACK === "1"')
-    if (serverlessSkips.includes(apiName)) skip.add('process.env.TEST_ES_SERVERLESS === "1"')
+    const stackSkip = stackSkips.find(s => s.file === apiName)
+    if (stackSkip) skip.add(`process.env.TEST_ES_STACK === "1" ? ${JSON.stringify(stackSkip.skipReason)} : false`)
+    const serverlessSkip = serverlessSkips.find(s => s.file === apiName)
+    if (serverlessSkip) skip.add(`process.env.TEST_ES_SERVERLESS === "1" ? ${JSON.stringify(serverlessSkip.skipReason)} : false`)
 
     if (skip.size > 0) {
       code += `test('${apiName}', { skip: ${Array.from(skip).join(' || ')} }, t => {\n`
@@ -280,10 +214,17 @@ function buildDo (action) {
   let code = ''
   const keys = Object.keys(action)
   if (keys.includes('catch')) {
+    const catchVal = action.catch
     code += 'try {\n'
     code += indent(buildRequest(action), 2)
+    code += '  t.fail("Expected an error to be thrown")\n'
     code += '} catch (err) {\n'
-    code += `  t.match(err.toString(), ${buildValLiteral(action.catch)})\n`
+    const statusMap = { missing: 404, unauthorized: 401, bad_request: 400, forbidden: 403, conflict: 409, request_timeout: 408, param: 400 }
+    if (statusMap[catchVal] != null) {
+      code += `  t.equal(err.statusCode, ${statusMap[catchVal]}, \`expected status ${statusMap[catchVal]} for ${catchVal}, got \${err.statusCode}\`)\n`
+    } else {
+      code += `  t.match(err.toString(), ${buildValLiteral(catchVal)})\n`
+    }
     code += '}\n'
   } else {
     code += buildRequest(action)
@@ -300,7 +241,8 @@ function buildRequest (action) {
     if (key === 'catch') continue
 
     if (key === 'headers') {
-      options.headers = action.headers
+      const { 'Content-Type': _, ...rest } = action.headers
+      if (Object.keys(rest).length > 0) options.headers = rest
       continue
     }
 
@@ -313,7 +255,7 @@ function buildRequest (action) {
       }
     }
 
-    code += `response = await client.${toCamelCase(key)}(${buildApiParams(action[key])}, ${JSON.stringify(options)})\n`
+    code += `response = await client.${toCamelCase(key)}(${buildApiParams(key, action[key])}, ${JSON.stringify(options)})\n`
   }
   return code
 }
@@ -411,12 +353,43 @@ function buildExists (keyName) {
   return `t.ok(${lookup} != null, \`Key "${keyName}" not found in response body: \$\{JSON.stringify(response.body, null, 2)\}\`)\n`
 }
 
-function buildApiParams (params) {
+let paramNameMappings
+function buildParamNameMappings () {
+  const schemaPath = join(__dirname, '..', '..', 'schema', 'schema.json')
+  let schema
+  try {
+    schema = JSON.parse(readFileSync(schemaPath, 'utf8'))
+  } catch {
+    return {}
+  }
+  const mappings = {}
+  for (const type of schema.types) {
+    if (type.kind !== 'request') continue
+    for (const prop of type.path ?? []) {
+      if (prop.codegenName != null && prop.codegenName !== prop.name) {
+        const endpoint = schema.endpoints.find(e =>
+          e.request != null && e.request.name === type.name.name && e.request.namespace === type.name.namespace
+        )
+        if (endpoint != null) {
+          if (mappings[endpoint.name] == null) mappings[endpoint.name] = {}
+          mappings[endpoint.name][prop.name] = prop.codegenName
+        }
+      }
+    }
+  }
+  return mappings
+}
+
+function buildApiParams (apiName, params) {
   if (Object.keys(params).length === 0) {
     return 'undefined'
   } else {
     const out = {}
-    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => { out[k] = params[k] })
+    const mapping = paramNameMappings[apiName]
+    Object.keys(params).filter(k => k !== 'ignore' && k !== 'headers').forEach(k => {
+      const mappedKey = mapping != null && mapping[k] != null ? mapping[k] : k
+      out[mappedKey] = params[k]
+    })
     return buildValLiteral(out)
   }
 }
@@ -435,15 +408,15 @@ function buildLookup (path) {
 
   const outPath = path.split('.').map(step => {
     if (parseInt(step, 10).toString() === step) {
-      return `[${step}]`
+      return `?.[${step}]`
     } else if (step.match(/^\$[a-zA-Z0-9_]+$/)) {
       const lookup = step.replace(/^\$/, '')
       if (lookup === 'body') return ''
-      return `[${lookup}]`
+      return `?.[${lookup}]`
     } else if (step === '') {
       return ''
     } else {
-      return `['${step}']`
+      return `?.['${step}']`
     }
   }).join('')
   return `response.body${outPath}`
@@ -458,6 +431,8 @@ function buildValLiteral (val) {
     return val.replace(/^\$/, '')
   } else if (isPlainObject(val)) {
     return JSON.stringify(cleanObject(val), null, 2).replace(/"\$([a-zA-Z0-9_]+)"/g, '$1')
+  } else if (Array.isArray(val)) {
+    return JSON.stringify(val, null, 2).replace(/"\$([a-zA-Z0-9_]+)"/g, '$1')
   } else {
     return JSON.stringify(val)
   }
