@@ -24,12 +24,12 @@ jobs:
           if [[ "$COMMENT_USER" != "github-actions[bot]" && \
                 "$COMMENT_USER" != "elastic-vault-github-plugin-prod[bot]" ]]; then
             echo "should_resolve=false" >> "$GITHUB_OUTPUT"
-            echo "Not a backport bot comment — skipping."
+            echo "Not a backport bot comment - skipping."
             exit 0
           fi
           if ! echo "$COMMENT_BODY" | grep -q "To backport manually, run these commands"; then
             echo "should_resolve=false" >> "$GITHUB_OUTPUT"
-            echo "Not a backport failure comment — skipping."
+            echo "Not a backport failure comment - skipping."
             exit 0
           fi
           echo "should_resolve=true" >> "$GITHUB_OUTPUT"
@@ -227,7 +227,7 @@ ${RESOLVED_LIST}"
             if [ -n "${FAILED_FILES:-}" ]; then
               PR_BODY="${PR_BODY}
 
-> ⚠️ The following files could not be resolved automatically and still contain conflict markers: \`${FAILED_FILES}\`"
+> WARNING: The following files could not be resolved automatically and still contain conflict markers: \`${FAILED_FILES}\`"
             else
               PR_BODY="${PR_BODY}
 > **Please review the AI-resolved conflicts carefully before merging.**"
