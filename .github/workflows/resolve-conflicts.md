@@ -1,9 +1,18 @@
 ---
 name: AI Backport Resolver
-description: When the backport bot fails, parse the failure comment and use Claude to resolve cherry-pick conflicts and create the backport PR
+description: Given a PR number and backport failure details, use Claude to resolve cherry-pick conflicts and create the backport PR
 on:
-  issue_comment:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number that failed to backport"
+        required: true
+      base_branch:
+        description: "Target branch to backport to (e.g. 9.4)"
+        required: true
+      commit_sha:
+        description: "Commit SHA to cherry-pick"
+        required: true
 engine:
   id: claude
   model: "llm-gateway/claude-sonnet-4-6"
@@ -13,33 +22,13 @@ engine:
 checkout:
   fetch-depth: 0
 steps:
-  - name: Parse backport failure comment and attempt cherry-pick
+  - name: Cherry-pick and detect conflicts
     env:
-      COMMENT_BODY: ${{ github.event.comment.body }}
-      COMMENT_USER: ${{ github.event.comment.user.login }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_NUMBER: ${{ github.event.inputs.pr_number }}
+      BASE_BRANCH: ${{ github.event.inputs.base_branch }}
+      COMMIT_SHA: ${{ github.event.inputs.commit_sha }}
     run: |
-      # Only act on backport bot failure comments
-      if [[ "$COMMENT_USER" != "github-actions[bot]" && "$COMMENT_USER" != "elastic-vault-github-plugin-prod[bot]" ]]; then
-        echo "skip" > /tmp/gh-aw/agent/status.txt
-        exit 0
-      fi
-      if ! echo "$COMMENT_BODY" | grep -q "To backport manually, run these commands"; then
-        echo "skip" > /tmp/gh-aw/agent/status.txt
-        exit 0
-      fi
-
-      # Parse target branch and commit SHA from the comment
-      BASE_BRANCH=$(echo "$COMMENT_BODY" | grep -oP 'git worktree add \.worktrees/\S+ \K\S+')
-      COMMIT_SHA=$(echo "$COMMENT_BODY" | grep -oP 'cherry-pick -x --mainline 1 \K[a-f0-9]+')
-
-      if [[ -z "$BASE_BRANCH" || -z "$COMMIT_SHA" ]]; then
-        echo "skip" > /tmp/gh-aw/agent/status.txt
-        echo "Could not parse base branch or commit SHA from comment."
-        exit 0
-      fi
-
-      PR_NUMBER="${{ github.event.issue.number }}"
       PR_TITLE=$(gh pr view "$PR_NUMBER" --json title -q .title)
       BACKPORT_BRANCH="backport-${PR_NUMBER}-to-${BASE_BRANCH}"
 
@@ -53,11 +42,8 @@ steps:
       git config user.name "github-actions[bot]"
 
       git fetch origin "$BASE_BRANCH"
-      git fetch origin "$COMMIT_SHA" 2>/dev/null || true
       git checkout "$BASE_BRANCH"
 
-      # Use --no-commit so staged/conflicted changes are left in the workspace
-      # for the agent to resolve and safe-outputs to commit
       set +e
       git cherry-pick -x --mainline 1 --no-commit "$COMMIT_SHA" 2>&1
       CHERRY_EXIT=$?
