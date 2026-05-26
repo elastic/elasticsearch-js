@@ -10,47 +10,23 @@ jobs:
   resolve:
     name: AI Backport Resolver
     runs-on: ubuntu-latest
+    if: >
+      github.event.issue.pull_request
+      && (
+        github.event.comment.user.login == 'github-actions[bot]'
+        || github.event.comment.user.login == 'elastic-vault-github-plugin-prod[bot]'
+      )
+      && startsWith(github.event.comment.body, 'The backport to')
     permissions:
       contents: write
       pull-requests: write
       issues: write
     steps:
-      - name: Check comment is a backport failure
-        id: check
-        env:
-          COMMENT_USER: ${{ github.event.comment.user.login }}
-          COMMENT_BODY: ${{ github.event.comment.body }}
-        run: |
-          if [[ "$COMMENT_USER" != "github-actions[bot]" && \
-                "$COMMENT_USER" != "elastic-vault-github-plugin-prod[bot]" ]]; then
-            echo "should_resolve=false" >> "$GITHUB_OUTPUT"
-            echo "Not a backport bot comment - skipping."
-            exit 0
-          fi
-          if ! echo "$COMMENT_BODY" | grep -q "To backport manually, run these commands"; then
-            echo "should_resolve=false" >> "$GITHUB_OUTPUT"
-            echo "Not a backport failure comment - skipping."
-            exit 0
-          fi
-          echo "should_resolve=true" >> "$GITHUB_OUTPUT"
-
-      - name: Checkout repository
-        if: steps.check.outputs.should_resolve == 'true'
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ github.token }}
-
-      - name: Parse comment and attempt cherry-pick
-        if: steps.check.outputs.should_resolve == 'true'
-        id: cherry-pick
+      - name: Parse backport failure comment
+        id: parse
         env:
           COMMENT_BODY: ${{ github.event.comment.body }}
-          PR_NUMBER: ${{ github.event.issue.number }}
-          GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
-
           BASE_BRANCH=$(echo "$COMMENT_BODY" | grep -oP 'git worktree add \.worktrees/\S+ \K\S+')
           COMMIT_SHA=$(echo "$COMMENT_BODY" | grep -oP 'cherry-pick -x --mainline 1 \K[a-f0-9]+')
 
@@ -59,13 +35,28 @@ jobs:
             exit 1
           fi
 
-          BACKPORT_BRANCH="backport-${PR_NUMBER}-to-${BASE_BRANCH}"
-          PR_TITLE=$(gh pr view "$PR_NUMBER" --json title -q .title)
-
           echo "base_branch=${BASE_BRANCH}" >> "$GITHUB_OUTPUT"
           echo "commit_sha=${COMMIT_SHA}" >> "$GITHUB_OUTPUT"
-          echo "backport_branch=${BACKPORT_BRANCH}" >> "$GITHUB_OUTPUT"
-          echo "pr_title=${PR_TITLE}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ github.token }}
+
+      - name: Cherry-pick and resolve conflicts
+        env:
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          BASE_BRANCH: ${{ steps.parse.outputs.base_branch }}
+          COMMIT_SHA: ${{ steps.parse.outputs.commit_sha }}
+          REPO_SLUG: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          BACKPORT_BRANCH="backport-${PR_NUMBER}-to-${BASE_BRANCH}"
+          PR_TITLE=$(gh pr view "$PR_NUMBER" --json title -q .title)
 
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
@@ -80,26 +71,20 @@ jobs:
           set -e
 
           if [ $CHERRY_EXIT -eq 0 ]; then
-            echo "conflicts=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "conflicts=true" >> "$GITHUB_OUTPUT"
-            git diff --name-only --diff-filter=U > /tmp/conflicted-files.txt
-            echo "Conflicted files:"
-            cat /tmp/conflicted-files.txt
+            git push --set-upstream origin "$BACKPORT_BRANCH"
+            BACKPORT_PR_URL=$(gh pr create \
+              --base "$BASE_BRANCH" \
+              --title "[${BASE_BRANCH}] ${PR_TITLE}" \
+              --body "Backport #${PR_NUMBER} to \`${BASE_BRANCH}\` (no conflicts).")
+            gh pr comment "$PR_NUMBER" --body "**AI Backport Resolver** created a backport PR (no conflicts): ${BACKPORT_PR_URL}"
+            exit 0
           fi
 
-      - name: Resolve conflicts with Claude via LiteLLM
-        if: steps.check.outputs.should_resolve == 'true' && steps.cherry-pick.outputs.conflicts == 'true'
-        id: resolve
-        env:
-          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
-          PR_NUMBER: ${{ github.event.issue.number }}
-          COMMIT_SHA: ${{ steps.cherry-pick.outputs.commit_sha }}
-          BASE_BRANCH: ${{ steps.cherry-pick.outputs.base_branch }}
-          REPO_SLUG: ${{ github.repository }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
+          CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
+          if [ -z "$CONFLICTED_FILES" ]; then
+            echo "Cherry-pick failed but no conflicted files found."
+            exit 1
+          fi
 
           PR_DIFF=$(curl -sL \
             -H "Authorization: Bearer ${GH_TOKEN}" \
@@ -116,40 +101,43 @@ jobs:
 
             local file_diff
             file_diff=$(echo "${PR_DIFF}" | awk '
-              /^diff --git/ { if (printing) exit; if (index($0, "b/'"${filepath}"'") > 0) printing=1 }
+              /^diff --git/ {
+                if (printing) exit
+                if (index($0, "b/'"${filepath}"'") > 0) printing = 1
+              }
               printing { print }
             ' 2>/dev/null || echo "")
             [ -z "$file_diff" ] && file_diff="(diff not available)"
 
-            local prompt_file
-            prompt_file=$(mktemp)
-            printf '%s\n' \
-              "You are resolving a git merge conflict during a cherry-pick backport." \
-              "" \
-              "CONTEXT:" \
-              "- PR #${PR_NUMBER} was merged to the main branch." \
-              "- We are backporting commit ${COMMIT_SHA} to ${BASE_BRANCH}." \
-              "- The cherry-pick produced a conflict in this file." \
-              "" \
-              "ORIGINAL PR DIFF FOR THIS FILE:" \
-              "${file_diff}" \
-              "" \
-              "FILE WITH CONFLICT MARKERS:" \
-              "${conflicted_content}" \
-              "" \
-              "INSTRUCTIONS:" \
-              "1. The <<<<<<< HEAD side is the target branch (${BASE_BRANCH})." \
-              "2. The ======= / >>>>>>> side is the cherry-picked change." \
-              "3. Apply the intent of the cherry-picked change onto the target branch code." \
-              "4. Output ONLY the complete resolved file. No markdown fences, no commentary." \
-              > "$prompt_file"
+            local prompt
+            prompt=$(cat <<PROMPT_EOF
+          You are resolving a git merge conflict during a cherry-pick backport.
+
+          CONTEXT:
+          - PR #${PR_NUMBER} was merged to the main branch.
+          - We are backporting commit ${COMMIT_SHA} to the ${BASE_BRANCH} branch.
+          - The cherry-pick produced a conflict in this file.
+
+          ORIGINAL PR DIFF FOR THIS FILE:
+          ${file_diff}
+
+          FILE WITH CONFLICT MARKERS:
+          ${conflicted_content}
+
+          INSTRUCTIONS:
+          1. The <<<<<<< HEAD side is the target branch (${BASE_BRANCH}).
+          2. The ======= / >>>>>>> side is the cherry-picked change.
+          3. Apply the intent of the cherry-picked change onto the target branch code.
+          4. Output ONLY the complete resolved file. No markdown fences, no commentary.
+          PROMPT_EOF
+          )
 
             local response
             response=$(curl -sf \
               -H "Authorization: Bearer ${LITELLM_API_KEY}" \
               -H "Content-Type: application/json" \
               "https://elastic.litellm-prod.ai/v1/chat/completions" \
-              -d "$(jq -n --rawfile prompt "$prompt_file" '{
+              -d "$(jq -n --arg prompt "$prompt" '{
                 model: "llm-gateway/claude-sonnet-4-6",
                 max_tokens: 16384,
                 messages: [{role: "user", content: $prompt}]
@@ -179,76 +167,41 @@ jobs:
             else
               FAILED_FILES+=("$filepath")
             fi
-          done < /tmp/conflicted-files.txt
-
-          echo "Resolved: ${#RESOLVED_FILES[@]} file(s), Failed: ${#FAILED_FILES[@]} file(s)"
+          done <<< "$CONFLICTED_FILES"
 
           if [ ${#FAILED_FILES[@]} -gt 0 ]; then
-            echo "failed_files=$(IFS=,; echo "${FAILED_FILES[*]}")" >> "$GITHUB_OUTPUT"
+            echo "Failed to resolve: ${FAILED_FILES[*]}"
+            exit 1
           fi
-
-          resolved_list=""
-          for f in "${RESOLVED_FILES[@]}"; do resolved_list="${resolved_list}- ${f}\n"; done
-          echo "resolved_list<<EOF" >> "$GITHUB_OUTPUT"
-          printf "%b" "$resolved_list" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
 
           GIT_EDITOR=true git cherry-pick --continue
-
-      - name: Push backport branch and create PR
-        if: steps.check.outputs.should_resolve == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.issue.number }}
-          BASE_BRANCH: ${{ steps.cherry-pick.outputs.base_branch }}
-          BACKPORT_BRANCH: ${{ steps.cherry-pick.outputs.backport_branch }}
-          PR_TITLE: ${{ steps.cherry-pick.outputs.pr_title }}
-          CONFLICTS: ${{ steps.cherry-pick.outputs.conflicts }}
-          RESOLVED_LIST: ${{ steps.resolve.outputs.resolved_list }}
-          FAILED_FILES: ${{ steps.resolve.outputs.failed_files }}
-        run: |
-          set -euo pipefail
-
           git push --set-upstream origin "$BACKPORT_BRANCH"
 
-          FULL_TITLE="[${BASE_BRANCH}] ${PR_TITLE}"
-
-          if [ "$CONFLICTS" == "false" ]; then
-            PR_BODY="Backport #${PR_NUMBER} to \`${BASE_BRANCH}\` (no conflicts)."
-          else
-            PR_BODY=$(printf '%s\n' \
-              "Backport #${PR_NUMBER} to \`${BASE_BRANCH}\`." \
-              "" \
-              "### AI-resolved conflicts" \
-              "" \
-              "The following files had conflicts resolved automatically by Claude:" \
-              "" \
-              "${RESOLVED_LIST}")
-            if [ -n "${FAILED_FILES:-}" ]; then
-              PR_BODY=$(printf '%s\n' \
-                "${PR_BODY}" \
-                "" \
-                "> WARNING: The following files could not be resolved automatically and still contain conflict markers: \`${FAILED_FILES}\`")
-            else
-              PR_BODY=$(printf '%s\n' \
-                "${PR_BODY}" \
-                "> **Please review the AI-resolved conflicts carefully before merging.**")
-            fi
-          fi
+          resolved_list=""
+          for f in "${RESOLVED_FILES[@]}"; do
+            resolved_list="${resolved_list}- ${f}
+          "
+          done
 
           BACKPORT_PR_URL=$(gh pr create \
             --base "$BASE_BRANCH" \
-            --title "$FULL_TITLE" \
-            --body "$PR_BODY")
+            --title "[${BASE_BRANCH}] ${PR_TITLE}" \
+            --body "$(cat <<PR_BODY_EOF
+          Backport #${PR_NUMBER} to \`${BASE_BRANCH}\`.
 
-          if [ "$CONFLICTS" == "false" ]; then
-            COMMENT="**AI Backport Resolver** created a backport PR (no conflicts): ${BACKPORT_PR_URL}"
-          else
-            COMMENT=$(printf '%s\n' \
-              "**AI Backport Resolver** resolved conflicts and created a backport PR: ${BACKPORT_PR_URL}" \
-              "" \
-              "Files with AI-resolved conflicts:" \
-              "${RESOLVED_LIST}")
-          fi
+          ### AI-resolved conflicts
 
-          gh pr comment "$PR_NUMBER" --body "$COMMENT"
+          The following files had conflicts resolved automatically by Claude:
+
+          ${resolved_list}
+          > **Please review the AI-resolved conflicts carefully before merging.**
+          PR_BODY_EOF
+          )")
+
+          gh pr comment "$PR_NUMBER" --body "$(cat <<COMMENT_EOF
+          **AI Backport Resolver** resolved conflicts and created a backport PR: ${BACKPORT_PR_URL}
+
+          Files with AI-resolved conflicts:
+          ${resolved_list}
+          COMMENT_EOF
+          )"
