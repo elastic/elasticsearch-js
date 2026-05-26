@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.4.2 [elasticsearch-javascript-client-9.4.2]
+
+### Fixes [elasticsearch-javascript-client-9.4.2-fixes]
+
+- Only throw an error when `bulk` API's `operations` value is truly empty
+
 ## 9.4.1 [elasticsearch-javascript-client-9.4.1]
 
 ### Fixes [elasticsearch-javascript-client-9.4.1-fixes]

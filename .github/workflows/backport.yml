@@ -6,6 +6,10 @@ on:
       - closed
       - labeled
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   backport:
     name: Backport
@@ -22,6 +26,9 @@ jobs:
         )
       )
     permissions:
+      contents: write
+      pull-requests: write
+      issues: write
       id-token: write
     steps:
       - name: Fetch ephemeral GitHub token
