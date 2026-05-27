@@ -1,0 +1,14 @@
+name: Auto PR
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  auto-pr:
+    if: startsWith(github.event.label.name, 'auto-pr')
+    uses: elastic/clients-team-automations/.github/workflows/auto-pr.yml@main
+    with:
+      issue_number: ${{ github.event.issue.number }}
+      search_directory: src
+    secrets:
+      LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
