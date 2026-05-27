@@ -5,7 +5,7 @@ on:
 
 jobs:
   resolve:
-    uses: elastic/devtools/.github/workflows/ai-backport-resolver.yml@main
+    uses: elastic/clients-team-automations/.github/workflows/ai-backport-resolver.yml@main
     with:
       comment_body: ${{ github.event.comment.body }}
       comment_user: ${{ github.event.comment.user.login }}
