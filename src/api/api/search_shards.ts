@@ -34,7 +34,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'local',
       'master_timeout',
       'preference',
-      'routing'
+      'routing',
+      '_slice'
     ]
   }
 }
@@ -91,7 +92,7 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
     acceptedParams: {
       path: ['index'],
       body: [],
-      query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'master_timeout', 'preference', 'routing']
+      query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'master_timeout', 'preference', 'routing', '_slice']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

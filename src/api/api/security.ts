@@ -1466,7 +1466,7 @@ export default class Security {
   }
 
   /**
-    * Create a service account token. Create a service accounts token for access without requiring basic authentication. NOTE: Service account tokens never expire. You must actively delete them if they are no longer needed.
+    * Create a service account token. Create a service accounts token for access without requiring basic authentication. NOTE: Service account tokens never expire. You must actively delete them if they are no longer needed. IMPORTANT: On Serverless, non-operator users can create tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`. Creating tokens for any other service account requires operator privileges.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token | Elasticsearch API documentation}
     */
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
@@ -1735,7 +1735,7 @@ export default class Security {
   }
 
   /**
-    * Delete service account tokens. Delete service account tokens for a service in a specified namespace.
+    * Delete service account tokens. Delete service account tokens for a service in a specified namespace. IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`. Deleting tokens for any other service account requires operator privileges.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token | Elasticsearch API documentation}
     */
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
