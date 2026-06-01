@@ -58,8 +58,8 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.BulkResponse>
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
   const operations = params.operations ?? params.body
-  if (!Array.isArray(operations) || operations.length === 0) {
-    throw new errors.ConfigurationError('Missing required parameter [operations]: must be a non-empty array')
+  if (operations == null) {
+    throw new errors.ConfigurationError('Missing required parameter [operations]')
   }
 
   const {
