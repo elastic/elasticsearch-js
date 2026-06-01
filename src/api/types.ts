@@ -209,7 +209,7 @@ export interface CancelReindexResponse {
   acknowledged?: boolean
   /** Whether the reindex task has completed. Present when `wait_for_completion=true`. */
   completed?: boolean
-  /** The ID of the reindex task, in `nodeId:taskNum` format. Present when `wait_for_completion=true`. */
+  /** The ID of the reindex task. The value is the ID assigned when the task was first created and remains stable across node-shutdown relocations. Present when `wait_for_completion=true`. */
   id?: TaskId
   /** A sanitized description of the reindex operation. */
   description?: string
@@ -516,7 +516,8 @@ export interface DeleteByQueryRequest extends RequestBase {
   /** If `true`, the request cache is used for this request.
     * Defaults to the index-level setting. */
   request_cache?: boolean
-  /** The throttle for this request in sub-requests per second. */
+  /** The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices).
+    * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
   /** A custom value used to route operations to a specific shard. */
   routing?: Routing
@@ -613,8 +614,8 @@ export interface DeleteByQueryResponse {
 export interface DeleteByQueryRethrottleRequest extends RequestBase {
   /** The ID for the task. */
   task_id: TaskId
-  /** The throttle for this request in sub-requests per second.
-    * To disable throttling, set it to `-1`. */
+  /** The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices).
+    * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second: float
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
@@ -983,7 +984,7 @@ export interface GetReindexRequest extends RequestBase {
 export interface GetReindexResponse {
   /** Whether the reindex task has completed. */
   completed: boolean
-  /** The ID of the reindex task, in `nodeId:taskNum` format. */
+  /** The ID of the reindex task. The value is the ID assigned when the task was first created and remains stable across node-shutdown relocations. */
   id: TaskId
   /** A sanitized description of the reindex operation (source and destination indices, and optionally remote host info). */
   description?: string
@@ -1455,9 +1456,11 @@ export interface ListReindexRequest extends RequestBase {
 export interface ListReindexResponse {
   /** The list of currently running reindex tasks. */
   reindex: ReindexTaskInfo[]
-  /** Task-level failures that occurred while listing reindex tasks. */
+  /** Per-task failures encountered while listing reindex tasks. Tasks that failed are not included in the `reindex` array. */
   task_failures?: TaskFailure[]
-  /** Node-level failures that occurred while listing reindex tasks. */
+  /** Node-level failures encountered while listing reindex tasks.
+    * Typically populated when a node disconnects or stops responding mid-request,
+    * reindex tasks running on such nodes will be missing from the `reindex` array for the duration of the disruption. */
   node_failures?: ErrorCause[]
 }
 
@@ -1553,11 +1556,17 @@ export interface MsearchMultisearchHeader {
   preference?: string
   project_routing?: ProjectRouting
   request_cache?: boolean
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
   search_type?: SearchType
   ccs_minimize_roundtrips?: boolean
   allow_partial_search_results?: boolean
   ignore_throttled?: boolean
+  /** The slice identifier for routing the search to a specific slice.
+    * Use the special value `_all` to query all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
 }
 
 export interface MsearchRequest extends RequestBase {
@@ -1604,17 +1613,24 @@ export interface MsearchRequest extends RequestBase {
   project_routing?: ProjectRouting
   /** If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object. */
   rest_total_hits_as_int?: boolean
-  /** Custom routing value used to route search operations to a specific shard. */
+  /** Custom routing value used to route search operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
   /** Indicates whether global term and document frequencies should be used when scoring returned documents. */
   search_type?: SearchType
+  /** The slice identifier for routing the search to a specific slice.
+    * When provided at the top level, all sub-searches are routed to shards matching the given slice value.
+    * Use the special value `_all` to query all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
+    * Individual sub-search headers can also specify `_slice` to override the top-level setting. */
+  _slice?: string
   /** Specifies whether aggregation and suggester names should be prefixed by their respective types in the response. */
   typed_keys?: boolean
   searches?: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, _slice?: never, typed_keys?: never, searches?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, _slice?: never, typed_keys?: never, searches?: never }
 }
 
 export type MsearchRequestItem = MsearchMultisearchHeader | SearchSearchRequestBody
@@ -1803,6 +1819,10 @@ export interface OpenPointInTimeResponse {
   /** Shards used to create the PIT */
   _shards: ShardStatistics
   id: Id
+  /** Metadata about the clusters involved in the request, returned when the request targets
+    * one or more remote clusters.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  _clusters?: ClusterStatistics
 }
 
 export interface PingRequest extends RequestBase {
@@ -2010,10 +2030,13 @@ export interface ReindexRemoteSource {
 export interface ReindexRequest extends RequestBase {
   /** If `true`, the request refreshes affected shards to make this operation visible to search. */
   refresh?: boolean
-  /** The throttle for this request in sub-requests per second.
-    * By default, there is no throttle. */
+  /** The maximum number of documents to index per second, across the entire reindex operation (including slices).
+    * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
-  /** The period of time that a consistent view of the index should be maintained for scrolled search. */
+  /** The period of time that a consistent view of the index should be maintained for scrolled search.
+    * In serverless, and stack versions >= v9.5.0, we use PIT rather than scroll for pagination.
+    * We only use scroll for reindexing from remote clusters that are older than v7.10.0.
+    * Therefore, this parameter is ignored unless you are reindexing from a remote cluster that is older than v7.10.0. */
   scroll?: Duration
   /** The number of slices this task should be divided into.
     * It defaults to one slice, which means the task isn't sliced into subtasks.
@@ -2192,12 +2215,16 @@ export interface ReindexRethrottleReindexTask {
 export type ReindexRethrottleReindexTasks = ReindexRethrottleReindexTask[] | Record<string, ReindexRethrottleParentReindexTask>
 
 export interface ReindexRethrottleRequest extends RequestBase {
-  /** The task identifier, which can be found by using the tasks API. */
+  /** The task identifier, returned when creating a reindex task, or by listing tasks via
+    * `GET /_reindex` or `GET /_tasks`.
+    * In stack, can be either the original task ID or the task ID of the relocated task. */
   task_id: Id
-  /** The throttle for this request in sub-requests per second.
+  /** The maximum number of documents to index per second, across the entire reindex operation (including slices).
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second: float
-  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  /** The way to group the tasks in the response.
+    * We recommend setting this to `none`, which provides the cleanest response format.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   group_by?: TasksGroupBy
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never, group_by?: never }
@@ -2206,9 +2233,24 @@ export interface ReindexRethrottleRequest extends RequestBase {
 }
 
 export interface ReindexRethrottleResponse {
+  /** Node-level failures encountered while applying the rethrottle request.
+    * Will return a `failed_node_exception` wrapping a `no_such_node_exception`,
+    * if a node handling the task either never existed, or has left the cluster, and one of the following is true:
+    * 1. The task has completed.
+    * 2. The task cannot be found.
+    *
+    * Note: Rethrottle handles relocations, so it should succeed if the task can be found and has not completed. */
   node_failures?: ErrorCause[]
+  /** Per-task failures encountered while applying the rethrottle.
+    * If a rethrottle is attempted during a relocation handoff, the failure object reports `status: SERVICE_UNAVAILABLE` (the HTTP response itself is still `200 OK`).
+    * In this case, the request can be retried until success. */
   task_failures?: TaskFailure[]
+  /** Tasks grouped by node, returned only when `group_by=nodes` (the default).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   nodes?: Record<string, ReindexRethrottleReindexNode>
+  /** The tasks that were successfully rethrottled.
+    * Always returned in serverless.
+    * Returned with `group_by=none` or `group_by=parents` in stack. */
   tasks?: ReindexRethrottleReindexTasks
 }
 
@@ -3588,12 +3630,18 @@ export interface SearchShardsRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * It is random by default. */
   preference?: string
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier for routing the search to a specific slice.
+    * When provided, the request is limited to shards that match the given slice value.
+    * Use the special value `_all` to query all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never, _slice?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, local?: never, master_timeout?: never, preference?: never, routing?: never, _slice?: never }
 }
 
 export interface SearchShardsResponse {
@@ -3975,7 +4023,8 @@ export interface UpdateByQueryRequest extends RequestBase {
   /** If `true`, the request cache is used for this request.
     * It defaults to the index-level setting. */
   request_cache?: boolean
-  /** The throttle for this request in sub-requests per second. */
+  /** The maximum number of documents to update per second, across the entire update_by_query operation (including slices).
+    * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
   /** A custom value used to route operations to a specific shard. */
   routing?: Routing
@@ -4081,8 +4130,8 @@ export interface UpdateByQueryResponse {
 export interface UpdateByQueryRethrottleRequest extends RequestBase {
   /** The ID for the task. */
   task_id: Id
-  /** The throttle for this request in sub-requests per second.
-    * To turn off throttling, set it to `-1`. */
+  /** The maximum number of documents to update per second, across the entire update_by_query operation (including slices).
+    * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second: float
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_id?: never, requests_per_second?: never }
@@ -4966,19 +5015,19 @@ export interface ReindexStatus {
 }
 
 export interface ReindexTaskInfo {
-  /** The ID of the reindex task, in `nodeId:taskNum` format. */
+  /** The ID of the reindex task. The ID is assigned when the task was first created and remains the same across graceful shutdown relocations. */
   id: TaskId
   /** A sanitized description of the reindex operation (source and destination indices, and optionally remote host info). */
   description?: string
-  /** The time at which the reindex task started, in milliseconds since the Unix epoch. */
+  /** The time at which the reindex task started, in milliseconds since the Unix epoch. Remains the same across graceful shutdown relocations. */
   start_time_in_millis: EpochTime<UnitMillis>
-  /** The time at which the reindex task started, as an ISO 8601 formatted string.
+  /** The time at which the reindex task started, as an ISO-8601 formatted string. Remains the same across graceful shutdown relocations.
     * Only present when the request includes the `?human=true` query parameter. */
   start_time?: string
-  /** The elapsed running time of the reindex task, in a human-readable format.
+  /** The elapsed running time of the reindex task, including relocations, in a human-readable format.
     * Only present when the request includes the `?human=true` query parameter. */
   running_time?: Duration
-  /** The elapsed running time of the reindex task, in nanoseconds. */
+  /** The elapsed running time of the reindex task, including relocations, in nanoseconds. */
   running_time_in_nanos: DurationValue<UnitNanos>
   /** Whether the reindex task has been cancelled. */
   cancelled: boolean
@@ -24255,16 +24304,16 @@ export interface InferenceAnthropicServiceSettings {
 export type InferenceAnthropicServiceType = 'anthropic'
 
 export interface InferenceAnthropicTaskSettings {
-  /** For a `completion` task, it is the maximum number of tokens to generate before stopping. */
+  /** For a `completion` or `chat_completion` task, it is the maximum number of tokens to generate before stopping. */
   max_tokens: integer
-  /** For a `completion` task, it is the amount of randomness injected into the response.
+  /** For a `completion` or `chat_completion` task, it is the amount of randomness injected into the response.
     * For more details about the supported range, refer to Anthropic documentation. */
   temperature?: float
-  /** For a `completion` task, it specifies to only sample from the top K options for each subsequent token.
+  /** For a `completion` or `chat_completion` task, it specifies to only sample from the top K options for each subsequent token.
     * It is recommended for advanced use cases only.
     * You usually only need to use `temperature`. */
   top_k?: integer
-  /** For a `completion` task, it specifies to use Anthropic's nucleus sampling.
+  /** For a `completion` or `chat_completion` task, it specifies to use Anthropic's nucleus sampling.
     * In nucleus sampling, Anthropic computes the cumulative distribution over all the options for each subsequent token in decreasing probability order and cuts it off once it reaches the specified probability.
     * You should either alter `temperature` or `top_p`, but not both.
     * It is recommended for advanced use cases only.
@@ -24272,7 +24321,7 @@ export interface InferenceAnthropicTaskSettings {
   top_p?: float
 }
 
-export type InferenceAnthropicTaskType = 'completion'
+export type InferenceAnthropicTaskType = 'completion' | 'chat_completion'
 
 export interface InferenceAzureAiStudioServiceSettings {
   /** A valid API key of your Azure AI Studio model deployment.
@@ -26045,7 +26094,7 @@ export type InferenceTaskTypeAmazonBedrock = 'chat_completion' | 'completion' | 
 
 export type InferenceTaskTypeAmazonSageMaker = 'text_embedding' | 'completion' | 'chat_completion' | 'sparse_embedding' | 'rerank'
 
-export type InferenceTaskTypeAnthropic = 'completion'
+export type InferenceTaskTypeAnthropic = 'completion' | 'chat_completion'
 
 export type InferenceTaskTypeAzureAIStudio = 'text_embedding' | 'completion' | 'rerank'
 
@@ -26429,7 +26478,8 @@ export type InferencePutAmazonsagemakerResponse = InferenceInferenceEndpointInfo
 
 export interface InferencePutAnthropicRequest extends RequestBase {
   /** The task type.
-    * The only valid task type for the model to perform is `completion`. */
+    * The valid task types for the model to perform are `completion` and `chat_completion`.
+    * NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. */
   task_type: InferenceAnthropicTaskType
   /** The unique identifier of the inference endpoint. */
   anthropic_inference_id: Id
@@ -35644,7 +35694,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_esql' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_esql' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | 'read_project_routing' | 'manage_project_routing' | string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_esql' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_reindex' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_esql' | 'monitor_inference' | 'monitor_ml' | 'monitor_reindex' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | 'read_project_routing' | 'manage_project_routing' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -40108,6 +40158,13 @@ export interface TasksTaskInfo {
   status?: any
   type: string
   parent_task_id?: TaskId
+  /** The task ID of the original task. Only present when the task is continuing the work of an earlier task that was running on a node which has since shut down (i.e. a relocatable task).
+    * For tasks that have not been relocated this is always equal to the task's own ID and is omitted from the response. */
+  original_task_id?: TaskId
+  /** The time at which the original task started, in milliseconds since the Unix epoch. Only present together with `original_task_id`. */
+  original_start_time_in_millis?: EpochTime<UnitMillis>
+  /** The time at which the original task started, as an ISO 8601 formatted string. Only present together with `original_task_id` and when the request includes the `?human=true` query parameter. */
+  original_start_time?: string
 }
 
 export type TasksTaskInfos = TasksTaskInfo[] | Record<string, TasksParentTaskInfo>

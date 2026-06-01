@@ -32,7 +32,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
 }
 
 /**
-  * List active reindex tasks. Get information about all currently running reindex tasks.
+  * Get information about all currently running reindex tasks. Reindex tasks that are mid-relocation between nodes are reported once, under their original task ID, so callers do not see duplicates across the relocation chain. If the API returns a HTTP status of `200 OK`, but `node_failures` or `task_failures` are non-empty in the body, the listing is not a complete authoritative listing and may be missing tasks.
   * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
   */
 export default async function ListReindexApi (this: That, params?: T.ListReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ListReindexResponse>

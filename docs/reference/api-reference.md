@@ -151,6 +151,52 @@ client.bulk({ ... })
 - **`require_alias` (Optional, boolean)**: If `true`, the request's actions must target an index alias.
 - **`require_data_stream` (Optional, boolean)**: If `true`, the request's actions must target a data stream (existing or to be created).
 
+## client.cancelReindex [_cancel_reindex]
+Cancel an ongoing reindex task.
+
+If `wait_for_completion` is `true` (the default), the response contains the final task state after cancellation.
+If `wait_for_completion` is `false`, the response contains only `acknowledged: true`.
+
+This API follows reindex tasks across node-shutdown relocations, so callers can
+keep using the original task ID throughout the lifetime of the operation.
+Returned task IDs and timings reflect the original task, not its relocated successor.
+Relocated task IDs are also supported. They are followed transparently and return the task ID and timings of the original task.
+
+When the task ID cannot be cancelled (unknown ID, non-reindex task, sliced child, finished task, or node left with no stored result), the API returns the following response with a 404 status code:
+```
+{
+  "error": {
+    "type": "resource_not_found_exception",
+    "reason": "reindex task [r1A2WoRbTwKZ516z6NEs5A:36619] either not found or completed"
+  },
+  "status": 404
+}
+```
+
+During a brief handoff window of a node-shutdown relocation, you may receive the response below with a 503 status code.
+Retry with the same task ID; the retry follows the relocated task transparently.
+```
+{
+  "error": {
+    "type": "status_exception",
+    "reason": "cannot cancel task [36619] because it is being relocated"
+  },
+  "status": 503
+}
+```
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.cancelReindex({ task_id })
+```
+### Arguments [_arguments_cancel_reindex]
+
+#### Request (object) [_request_cancel_reindex]
+
+- **`task_id` (string)**: The ID of the reindex task to cancel.
+- **`wait_for_completion` (Optional, boolean)**: If `true` (the default), the request blocks until the cancellation is complete and returns the final task state. If `false`, the request returns immediately with `acknowledged: true`.
+
 ## client.clearScroll [_clear_scroll]
 Clear a scrolling search.
 
@@ -494,7 +540,7 @@ client.deleteByQuery({ index })
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`refresh` (Optional, boolean)**: If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes. This is different than the delete API's `refresh` parameter, which causes just the shard that received the delete request to be refreshed. Unlike the delete API, it does not support `wait_for`.
 - **`request_cache` (Optional, boolean)**: If `true`, the request cache is used for this request. Defaults to the index-level setting.
-- **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second.
+- **`requests_per_second` (Optional, float)**: The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
 - **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
 - **`q` (Optional, string)**: A query in the Lucene query string syntax.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
@@ -525,7 +571,7 @@ client.deleteByQueryRethrottle({ task_id, requests_per_second })
 #### Request (object) [_request_delete_by_query_rethrottle]
 
 - **`task_id` (string)**: The ID for the task.
-- **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. To disable throttling, set it to `-1`.
+- **`requests_per_second` (float)**: The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
 
 ## client.deleteScript [_delete_script]
 Delete a script or search template.
@@ -766,6 +812,39 @@ client.get({ id, index })
 - **`stored_fields` (Optional, string \| string[])**: A list of stored fields to return as part of a hit. If no fields are specified, no stored fields are included in the response. If this field is specified, the `_source` parameter defaults to `false`. Only leaf fields can be retrieved with the `stored_fields` option. Object fields can't be returned; if specified, the request fails.
 - **`version` (Optional, number)**: The version number for concurrency control. It must match the current version of the document for the request to succeed.
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
+
+## client.getReindex [_get_reindex]
+Get the status and progress of a specific reindex task.
+
+This API follows reindex tasks across node-shutdown relocations, so callers can
+keep using the original task ID throughout the lifetime of the operation.
+Returned task IDs and timings reflect the original task, not its relocated successor.
+Relocated task IDs are also supported. They are followed transparently and return the task ID and timings of the original task.
+
+When the task ID cannot be resolved, the API returns the response below with a 404 status code.
+This response is used whether the ID is unknown, refers to a non-reindex task, refers to a sliced child subtask, or refers to a task whose node left the cluster with no stored result (e.g. a non-graceful shutdown).
+```
+{
+  "error": {
+    "type": "resource_not_found_exception",
+    "reason": "Reindex operation [r1A2WoRbTwKZ516z6NEs5A:36619] not found"
+  },
+  "status": 404
+}
+```
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.getReindex({ task_id })
+```
+### Arguments [_arguments_get_reindex]
+
+#### Request (object) [_request_get_reindex]
+
+- **`task_id` (string)**: The ID of the reindex task to retrieve.
+- **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the reindex task completes, then returns the result.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for the reindex task to complete when `wait_for_completion` is `true`.
 
 ## client.getScript [_get_script]
 Get a script or search template.
@@ -1038,6 +1117,25 @@ Get basic build, version, and cluster information.
 client.info()
 ```
 
+## client.listReindex [_list_reindex]
+Get information about all currently running reindex tasks.
+
+Reindex tasks that are mid-relocation between nodes are reported once,
+under their original task ID, so callers do not see duplicates across the relocation chain.
+
+If the API returns a HTTP status of `200 OK`, but `node_failures` or `task_failures` are non-empty in the body, the listing is not a complete authoritative listing and may be missing tasks.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.listReindex({ ... })
+```
+### Arguments [_arguments_list_reindex]
+
+#### Request (object) [_request_list_reindex]
+
+- **`detailed` (Optional, boolean)**: If `true`, include detailed task status information in the response.
+
 ## client.mget [_mget]
 Get multiple documents.
 
@@ -1108,7 +1206,7 @@ client.msearch({ ... })
 #### Request (object) [_request_msearch]
 
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and index aliases to search.
-- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled, _slice } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests.
 - **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
@@ -1120,8 +1218,9 @@ client.msearch({ ... })
 - **`pre_filter_shard_size` (Optional, number)**: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for a search using project metadata tags in a subset Lucene syntax. Allowed Lucene queries: the _alias tag and a single value (possible wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`rest_total_hits_as_int` (Optional, boolean)**: If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
-- **`routing` (Optional, string \| string[])**: Custom routing value used to route search operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: Custom routing value used to route search operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Indicates whether global term and document frequencies should be used when scoring returned documents.
+- **`_slice` (Optional, string)**: The slice identifier for routing the search to a specific slice. When provided at the top level, all sub-searches are routed to shards matching the given slice value. Use the special value `_all` to query all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. Individual sub-search headers can also specify `_slice` to override the top-level setting.
 - **`typed_keys` (Optional, boolean)**: Specifies whether aggregation and suggester names should be prefixed by their respective types in the response.
 
 ## client.msearchTemplate [_msearch_template]
@@ -1151,7 +1250,7 @@ client.msearchTemplate({ ... })
 #### Request (object) [_request_msearch_template]
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*`.
-- **`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled, _slice } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`ccs_minimize_roundtrips` (Optional, boolean)**: If `true`, network round-trips are minimized for cross-cluster search requests.
 - **`max_concurrent_searches` (Optional, number)**: The maximum number of concurrent searches the API can run.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
@@ -1375,8 +1474,8 @@ client.reindex({ dest, source })
 - **`max_docs` (Optional, number)**: The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when reindexing.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes affected shards to make this operation visible to search.
-- **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second. By default, there is no throttle.
-- **`scroll` (Optional, string \| -1 \| 0)**: The period of time that a consistent view of the index should be maintained for scrolled search.
+- **`requests_per_second` (Optional, float)**: The maximum number of documents to index per second, across the entire reindex operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+- **`scroll` (Optional, string \| -1 \| 0)**: The period of time that a consistent view of the index should be maintained for scrolled search. In serverless, and stack versions >= v9.5.0, we use PIT rather than scroll for pagination. We only use scroll for reindexing from remote clusters that are older than v7.10.0. Therefore, this parameter is ignored unless you are reindexing from a remote cluster that is older than v7.10.0.
 - **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into. It defaults to one slice, which means the task isn't sliced into subtasks. Reindex supports sliced scroll to parallelize the reindexing process. This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts. NOTE: Reindexing from remote clusters does not support manual or automatic slicing. If set to `auto`, Elasticsearch chooses the number of slices to use. This setting will use one slice per shard, up to a certain limit. If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards. By default, Elasticsearch waits for at least one minute before failing. The actual wait time could be longer, particularly when multiple waits occur.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value is one, which means it waits for each primary shard to be active.
@@ -1386,16 +1485,26 @@ client.reindex({ dest, source })
 ## client.reindexRethrottle [_reindex_rethrottle]
 Throttle a reindex operation.
 
-Change the number of requests per second for a particular reindex operation.
-For example:
+Change the maximum number of documents to index per second for a particular reindex operation.
+For example, to unthrottle to unlimited documents per second:
 
 ```
 POST _reindex/r1A2WoRbTwKZ516z6NEs5A:36619/_rethrottle?requests_per_second=-1
 ```
 
 Rethrottling that speeds up the query takes effect immediately.
-Rethrottling that slows down the query will take effect after completing the current batch.
+Rethrottling that slows down the query will take effect after completing the current batch of documents.
 This behavior prevents scroll timeouts.
+
+This API follows reindex tasks across node-shutdown relocations, so callers can keep using
+the original task ID throughout the lifetime of the operation.
+The relocated task ID is also accepted and is followed transparently.
+In either case, returned task IDs and timings reflect the original task, not its relocated successor.
+
+The rethrottle may not have been applied to any tasks if either `node_failures` or `task_failures` are non-empty, or if the response contains
+no successfully rethrottled tasks — that is, no entries under `nodes` (returned with the default
+`group_by=nodes` in stack) or under `tasks` (returned in serverless, or in stack with
+`group_by=none` or `group_by=parents`).
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)
 
@@ -1406,9 +1515,9 @@ client.reindexRethrottle({ task_id, requests_per_second })
 
 #### Request (object) [_request_reindex_rethrottle]
 
-- **`task_id` (string)**: The task identifier, which can be found by using the tasks API.
-- **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
-- **`group_by` (Optional, Enum("nodes" \| "parents" \| "none"))**
+- **`task_id` (string)**: The task identifier, returned when creating a reindex task, or by listing tasks via `GET /_reindex` or `GET /_tasks`. In stack, can be either the original task ID or the task ID of the relocated task.
+- **`requests_per_second` (float)**: The maximum number of documents to index per second, across the entire reindex operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+- **`group_by` (Optional, Enum("nodes" \| "parents" \| "none"))**: The way to group the tasks in the response. We recommend setting this to `none`, which provides the cleanest response format.
 
 ## client.renderSearchTemplate [_render_search_template]
 Render a search template.
@@ -1726,7 +1835,8 @@ client.searchShards({ ... })
 - **`local` (Optional, boolean)**: If `true`, the request retrieves information from the local node only.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node. If the master node is not available before the timeout expires, the request fails and returns an error. IT can also be set to `-1` to indicate that the request should never timeout.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier for routing the search to a specific slice. When provided, the request is limited to shards that match the given slice value. Use the special value `_all` to query all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 
 ## client.searchTemplate [_search_template]
 Run a search with a search template.
@@ -2034,7 +2144,7 @@ client.updateByQuery({ index })
 - **`q` (Optional, string)**: A query in the Lucene query string syntax.
 - **`refresh` (Optional, boolean)**: If `true`, Elasticsearch refreshes affected shards to make the operation visible to search after the request completes. This is different than the update API's `refresh` parameter, which causes just the shard that received the request to be refreshed.
 - **`request_cache` (Optional, boolean)**: If `true`, the request cache is used for this request. It defaults to the index-level setting.
-- **`requests_per_second` (Optional, float)**: The throttle for this request in sub-requests per second.
+- **`requests_per_second` (Optional, float)**: The maximum number of documents to update per second, across the entire update_by_query operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
 - **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
 - **`scroll_size` (Optional, number)**: The size of the scroll request that powers the operation.
@@ -2066,7 +2176,7 @@ client.updateByQueryRethrottle({ task_id, requests_per_second })
 #### Request (object) [_request_update_by_query_rethrottle]
 
 - **`task_id` (string)**: The ID for the task.
-- **`requests_per_second` (float)**: The throttle for this request in sub-requests per second. To turn off throttling, set it to `-1`.
+- **`requests_per_second` (float)**: The maximum number of documents to update per second, across the entire update_by_query operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
 
 ## client.asyncSearch.delete [_async_search.delete]
 Delete an async search.
@@ -5007,7 +5117,7 @@ client.fleet.msearch({ ... })
 
 #### Request (object) [_request_fleet.msearch]
 - **`index` (Optional, string \| string)**: A single target to search. If the target is an index alias, it must resolve to a single index.
-- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
+- **`searches` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, project_routing, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled, _slice } \| { aggregations, collapse, explain, ext, from, highlight, track_total_hits, indices_boost, docvalue_fields, knn, rank, min_score, post_filter, profile, query, rescore, retriever, script_fields, search_after, size, slice, sort, _source, fields, suggest, terminate_after, timeout, track_scores, version, seq_no_primary_term, stored_fields, pit, runtime_mappings, stats }[])**
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
 (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -8105,7 +8215,7 @@ The following integrations are available through the inference API. You can find
 * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
 * Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`)
 * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
-* Anthropic (`completion`)
+* Anthropic (`chat_completion`, `completion`)
 * Azure AI Studio (`completion`, `rerank`, `text_embedding`)
 * Azure OpenAI (`chat_completion`, `completion`, `text_embedding`)
 * Cohere (`completion`, `rerank`, `text_embedding`)
@@ -8253,8 +8363,9 @@ client.inference.putAnthropic({ task_type, anthropic_inference_id, service, serv
 ### Arguments [_arguments_inference.put_anthropic]
 
 #### Request (object) [_request_inference.put_anthropic]
-- **`task_type` (Enum("completion"))**: The task type.
-The only valid task type for the model to perform is `completion`.
+- **`task_type` (Enum("completion" \| "chat_completion"))**: The task type.
+The valid task types for the model to perform are `completion` and `chat_completion`.
+NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`anthropic_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("anthropic"))**: The type of service supported for the specified task type. In this case, `anthropic`.
 - **`service_settings` ({ api_key, model_id, rate_limit })**: Settings used to install the inference model. These settings are specific to the `anthropic` service.
@@ -12681,6 +12792,9 @@ Create a service accounts token for access without requiring basic authenticatio
 NOTE: Service account tokens never expire.
 You must actively delete them if they are no longer needed.
 
+IMPORTANT: On Serverless, non-operator users can create tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
+Creating tokens for any other service account requires operator privileges.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token)
 
 ```ts
@@ -12795,6 +12909,9 @@ The name is used solely as an identifier to facilitate interaction via the API; 
 Delete service account tokens.
 
 Delete service account tokens for a service in a specified namespace.
+
+IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
+Deleting tokens for any other service account requires operator privileges.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token)
 
@@ -13300,7 +13417,7 @@ client.security.hasPrivileges({ ... })
 #### Request (object) [_request_security.has_privileges]
 - **`user` (Optional, string)**: Username
 - **`application` (Optional, { application, privileges, resources }[])**
-- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of the cluster privileges that you want to check.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_reindex" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_reindex" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of the cluster privileges that you want to check.
 - **`index` (Optional, { names, privileges, allow_restricted_indices }[])**
 
 ## client.security.hasPrivilegesUserProfile [_security.has_privileges_user_profile]
@@ -13526,7 +13643,7 @@ client.security.putRole({ name })
 #### Request (object) [_request_security.put_role]
 - **`name` (string)**: The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role.
 - **`applications` (Optional, { application, privileges, resources }[])**: A list of application privilege entries.
-- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
+- **`cluster` (Optional, Enum("all" \| "cancel_task" \| "create_snapshot" \| "cross_cluster_replication" \| "cross_cluster_search" \| "delegate_pki" \| "grant_api_key" \| "manage" \| "manage_api_key" \| "manage_autoscaling" \| "manage_behavioral_analytics" \| "manage_ccr" \| "manage_data_frame_transforms" \| "manage_data_stream_global_retention" \| "manage_enrich" \| "manage_esql" \| "manage_ilm" \| "manage_index_templates" \| "manage_inference" \| "manage_ingest_pipelines" \| "manage_logstash_pipelines" \| "manage_ml" \| "manage_oidc" \| "manage_own_api_key" \| "manage_pipeline" \| "manage_reindex" \| "manage_rollup" \| "manage_saml" \| "manage_search_application" \| "manage_search_query_rules" \| "manage_search_synonyms" \| "manage_security" \| "manage_service_account" \| "manage_slm" \| "manage_token" \| "manage_transform" \| "manage_user_profile" \| "manage_watcher" \| "monitor" \| "monitor_data_frame_transforms" \| "monitor_data_stream_global_retention" \| "monitor_enrich" \| "monitor_esql" \| "monitor_inference" \| "monitor_ml" \| "monitor_reindex" \| "monitor_rollup" \| "monitor_snapshot" \| "monitor_stats" \| "monitor_text_structure" \| "monitor_transform" \| "monitor_watcher" \| "none" \| "post_behavioral_analytics_event" \| "read_ccr" \| "read_fleet_secrets" \| "read_ilm" \| "read_pipeline" \| "read_security" \| "read_slm" \| "transport_client" \| "write_connector_secrets" \| "write_fleet_secrets" \| "read_project_routing" \| "manage_project_routing")[])**: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
 - **`global` (Optional, Record<string, User-defined value>)**: An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
 - **`indices` (Optional, { field_security, names, privileges, query, allow_restricted_indices }[])**: A list of indices permissions entries.
 - **`remote_indices` (Optional, { clusters, field_security, names, privileges, query, allow_restricted_indices }[])**: A list of remote indices permissions entries.
@@ -15393,6 +15510,10 @@ The cancelled flag in the response indicates that the cancellation command has b
 To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the `?detailed` parameter to identify the other tasks the system is running.
 You can also use the node hot threads API to obtain detailed information about the work the system is doing instead of completing the cancelled task.
 
+For relocatable tasks, this API transparently follows the task across graceful shutdown relocations,
+so callers can keep using the original task ID. The returned task reports its `original_task_id` and `original_start_time_in_millis`
+if it is continuing work from an earlier task.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks)
 
 ```ts
@@ -15418,6 +15539,10 @@ The API may change in ways that are not backwards compatible.
 
 If the task identifier is not found, a 404 response code indicates that there are no resources that match the request.
 
+For relocatable tasks, this API transparently follows the task across graceful shutdown relocations,
+so callers can keep using the original task ID. The returned task reports its `original_task_id` and `original_start_time_in_millis`
+if it is continuing work from an earlier task.
+
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks)
 
 ```ts
@@ -15440,6 +15565,10 @@ Get information about the tasks currently running on one or more nodes in the cl
 
 WARNING: The task management API is new and should still be considered a beta feature.
 The API may change in ways that are not backwards compatible.
+
+For relocatable tasks, this API transparently follows the task across graceful shutdown relocations,
+so callers can keep using the original task ID. The returned task reports its `original_task_id` and `original_start_time_in_millis`
+if it is continuing work from an earlier task.
 
 **Identifying running tasks**
 
