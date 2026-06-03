@@ -112,17 +112,29 @@ jobs:
       - name: Lint
         shell: bash
         run: |
-          [ "$CODE_CHANGED" = "true" ] && bun run lint || exit 0
+          if [ "$CODE_CHANGED" = "true" ]; then
+            bun run lint;
+          else
+            exit 0;
+          fi
 
       - name: Unit test
         shell: bash
         run: |
-          [ "$CODE_CHANGED" = "true" ] && bun run test:unit-bun || exit 0
+          if [ "$CODE_CHANGED" = "true" ]; then
+            bun run test:unit-bun;
+          else
+            exit 0;
+          fi
 
       - name: ECMAScript module test
         shell: bash
         run: |
-          [ "$CODE_CHANGED" = "true" ] && bun run test:esm || exit 0
+          if [ "$CODE_CHANGED" = "true" ]; then
+            bun run test:esm;
+          else
+            exit 0;
+          fi
 
   test-bundler:
     name: Test ESM bundle (Bun/Rolldown compatibility)
