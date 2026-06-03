@@ -164,3 +164,32 @@ jobs:
           else
             exit 0;
           fi
+
+  test-fuzz:
+    name: Fuzz tests
+    runs-on: ubuntu-latest
+    needs: paths-filter
+    env:
+      CODE_CHANGED: ${{ needs.paths-filter.outputs.src-only }}
+
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.x
+
+      - name: Install
+        run: npm install
+
+      - name: Fuzz test
+        shell: bash
+        run: |
+          if [ "$CODE_CHANGED" = "true" ]; then
+            npm run test:fuzz;
+          else
+            exit 0;
+          fi
