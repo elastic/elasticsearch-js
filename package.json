@@ -35,6 +35,7 @@
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
     "test:integration-build": "npm run build && node test/integration/index.js",
     "test:integration": "npm run test:integration-build && env tap run --jobs=1 --allow-empty-coverage --allow-incomplete-coverage --reporter=junit --reporter-file=report-junit.xml generated-tests/",
+    "test:fuzz": "npm run build && node test/fuzz/run.mjs",
     "lint": "eslint",
     "lint:fix": "eslint . --fix ",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
@@ -87,12 +88,14 @@
     "@types/sinonjs__fake-timers": "8.1.5",
     "@types/split2": "4.2.3",
     "@types/stoppable": "1.1.3",
+    "apache-arrow": "21.1.0",
     "c8": "10.1.3",
     "cross-zip": "4.0.1",
     "desm": "1.3.1",
     "eslint": "9.39.4",
     "inly": "5.0.1",
     "js-yaml": "4.1.1",
+    "jsfuzz": "1.0.15",
     "license-checker": "25.0.1",
     "minimist": "1.2.8",
     "ms": "2.1.3",
@@ -110,8 +113,7 @@
     "typescript": "5.9.3",
     "workq": "3.0.0",
     "xmlbuilder2": "4.0.3",
-    "zx": "8.8.5",
-    "apache-arrow": "21.1.0"
+    "zx": "8.8.5"
   },
   "dependencies": {
     "@elastic/transport": "^9.3.5",
