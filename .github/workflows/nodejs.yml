@@ -4,6 +4,9 @@ name: Node CI
 on:
   pull_request: {}
 
+permissions:
+  contents: read
+
 jobs:
   paths-filter:
     name: Detect files changed
