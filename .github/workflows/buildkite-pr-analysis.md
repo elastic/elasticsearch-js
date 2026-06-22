@@ -96,7 +96,8 @@ safe-outputs:
 network:
   allowed:
     - defaults
-    - api.buildkite.com
+    - buildkite.com
+    - "*.buildkite.com"
     - elastic.litellm-prod.ai
 ---
 
