@@ -127,7 +127,7 @@ jobs:
           fi
       - name: Fetch ephemeral GitHub token
         id: fetch-token
-        uses: elastic/ci-gh-actions/fetch-github-token@8a7604dfdd4e7fe21f969bfe9ff96e17635ea577 # v1.0.0
+        uses: elastic/ci-gh-actions/fetch-github-token@v1.5.3 # v1.0.0
         with:
           vault-instance: "ci-prod"
       - name: Publish version on GitHub
