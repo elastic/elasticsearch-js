@@ -24778,7 +24778,7 @@ export interface InferenceJinaAIServiceSettings {
     * Use `bit` for binary embeddings, which are encoded as bytes with signed int8 precision.
     * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `bit`).
     * Use `float` for the default float embeddings. */
-  element_type?: InferenceJinaAIElementType
+  embedding_type?: InferenceJinaAIElementType
 }
 
 export type InferenceJinaAIServiceType = 'jinaai'
@@ -31616,7 +31616,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     * only works on one platform, because it is heavily optimized for a particular
     * processor architecture and OS combination, then this field specifies which.
     * The format of the string must match the platform identifiers used by Elasticsearch,
-    * so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
+    * so one of, `linux-x86_64`, `linux-aarch64`, `darwin-aarch64`,
     * or `windows-x86_64`. For portable models (those that work independent of processor
     * architecture or OS features), leave this field unset. */
   platform_architecture?: string
