@@ -1,4 +1,4 @@
-# gh-aw-metadata: {"schema_version":"v3","frontmatter_hash":"a6b424b0f8dc3e3725d9fea47920273e11bdef8a6a896de993dfd6509840718f","compiler_version":"v0.74.8","strict":true,"agent_id":"claude","agent_model":"llm-gateway/claude-sonnet-4-6"}
+# gh-aw-metadata: {"schema_version":"v3","frontmatter_hash":"d235ca63f7933b67c61c1c5b6cf2314b6bf7a2ce14fc0a084e2a7a59fc41b76d","compiler_version":"v0.74.8","strict":true,"agent_id":"claude","agent_model":"llm-gateway/claude-sonnet-4-6"}
 # gh-aw-manifest: {"version":1,"secrets":["BUILDKITE_API_TOKEN","GH_AW_GITHUB_MCP_SERVER_TOKEN","GH_AW_GITHUB_TOKEN","GITHUB_TOKEN","LITELLM_API_KEY"],"actions":[{"repo":"actions/checkout","sha":"de0fac2e4500dabe0009e67214ff5f5447ce83dd","version":"v6.0.2"},{"repo":"actions/download-artifact","sha":"3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c","version":"v8.0.1"},{"repo":"actions/github-script","sha":"3a2844b7e9c422d3c10d287c895573f7108da1b3","version":"v9.0.0"},{"repo":"actions/setup-node","sha":"48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e","version":"v6.4.0"},{"repo":"actions/upload-artifact","sha":"043fb46d1a93c77aae656e7c1c64a875d1fc6a0a","version":"v7.0.1"},{"repo":"github/gh-aw-actions/setup","sha":"efa55847f72aadb03490d955263ff911bf758700","version":"v0.74.8"}],"containers":[{"image":"ghcr.io/github/gh-aw-firewall/agent:0.25.49"},{"image":"ghcr.io/github/gh-aw-firewall/api-proxy:0.25.49"},{"image":"ghcr.io/github/gh-aw-firewall/squid:0.25.49"},{"image":"ghcr.io/github/gh-aw-mcpg:v0.3.9","digest":"sha256:64828b42a4482f58fab16509d7f8f495a6d97c972a98a68aff20543531ac0388","pinned_image":"ghcr.io/github/gh-aw-mcpg:v0.3.9@sha256:64828b42a4482f58fab16509d7f8f495a6d97c972a98a68aff20543531ac0388"},{"image":"ghcr.io/github/github-mcp-server:v1.0.4"},{"image":"node:lts-alpine","digest":"sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f","pinned_image":"node:lts-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f"}]}
 #    ___                   _   _      
 #   / _ \                 | | (_)     
@@ -202,20 +202,20 @@ jobs:
         run: |
           bash "${RUNNER_TEMP}/gh-aw/actions/create_prompt_first.sh"
           {
-          cat << 'GH_AW_PROMPT_904b5b0a102b10a2_EOF'
+          cat << 'GH_AW_PROMPT_ea3a1988d0d67c8e_EOF'
           <system>
-          GH_AW_PROMPT_904b5b0a102b10a2_EOF
+          GH_AW_PROMPT_ea3a1988d0d67c8e_EOF
           cat "${RUNNER_TEMP}/gh-aw/prompts/xpia.md"
           cat "${RUNNER_TEMP}/gh-aw/prompts/temp_folder_prompt.md"
           cat "${RUNNER_TEMP}/gh-aw/prompts/markdown.md"
           cat "${RUNNER_TEMP}/gh-aw/prompts/safe_outputs_prompt.md"
-          cat << 'GH_AW_PROMPT_904b5b0a102b10a2_EOF'
+          cat << 'GH_AW_PROMPT_ea3a1988d0d67c8e_EOF'
           <safe-output-tools>
           Tools: add_comment, missing_tool, missing_data, noop
           </safe-output-tools>
-          GH_AW_PROMPT_904b5b0a102b10a2_EOF
+          GH_AW_PROMPT_ea3a1988d0d67c8e_EOF
           cat "${RUNNER_TEMP}/gh-aw/prompts/mcp_cli_tools_prompt.md"
-          cat << 'GH_AW_PROMPT_904b5b0a102b10a2_EOF'
+          cat << 'GH_AW_PROMPT_ea3a1988d0d67c8e_EOF'
           <github-context>
           The following GitHub context information is available for this workflow:
           {{#if github.actor}}
@@ -244,12 +244,12 @@ jobs:
           {{/if}}
           </github-context>
           
-          GH_AW_PROMPT_904b5b0a102b10a2_EOF
+          GH_AW_PROMPT_ea3a1988d0d67c8e_EOF
           cat "${RUNNER_TEMP}/gh-aw/prompts/github_mcp_tools_with_safeoutputs_prompt.md"
-          cat << 'GH_AW_PROMPT_904b5b0a102b10a2_EOF'
+          cat << 'GH_AW_PROMPT_ea3a1988d0d67c8e_EOF'
           </system>
           {{#runtime-import .github/workflows/buildkite-pr-analysis.md}}
-          GH_AW_PROMPT_904b5b0a102b10a2_EOF
+          GH_AW_PROMPT_ea3a1988d0d67c8e_EOF
           } > "$GH_AW_PROMPT"
       - name: Interpolate variables and render templates
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -385,7 +385,7 @@ jobs:
           COMMIT: ${{ github.event.pull_request.head.sha }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         name: Fetch Buildkite build results
-        run: "mkdir -p /tmp/gh-aw/agent\necho \"$PR_NUMBER\" > /tmp/gh-aw/agent/pr-number.txt\n\n# Poll until the build for this commit is finished (max 45 minutes)\nMAX_WAIT=2700\nELAPSED=0\nSLEEP=30\n\nwhile [ $ELAPSED -lt $MAX_WAIT ]; do\n  BK_RESPONSE=$(curl -s -w \"\\n__HTTP_STATUS__%{http_code}\" \\\n    \"https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds?commit=${COMMIT}&per_page=1\" \\\n    -H \"Authorization: Bearer $BUILDKITE_API_TOKEN\")\n\n  HTTP_STATUS=$(echo \"$BK_RESPONSE\" | tail -1 | sed 's/__HTTP_STATUS__//')\n  BUILD=$(echo \"$BK_RESPONSE\" | sed '$d')\n\n  if [ \"$HTTP_STATUS\" -ge 400 ]; then\n    echo \"Buildkite API error (HTTP $HTTP_STATUS): $BUILD\"\n    exit 1\n  fi\n\n  BUILD_COUNT=$(echo \"$BUILD\" | jq 'length')\n  if [ \"$BUILD_COUNT\" -eq 0 ]; then\n    echo \"No build found for commit $COMMIT yet, waiting...\"\n    sleep $SLEEP\n    ELAPSED=$((ELAPSED + SLEEP))\n    continue\n  fi\n\n  STATE=$(echo \"$BUILD\" | jq -r '.[0].state')\n  BUILD_NUMBER=$(echo \"$BUILD\" | jq -r '.[0].number')\n  BUILD_URL=$(echo \"$BUILD\" | jq -r '.[0].web_url')\n\n  echo \"$STATE\" > /tmp/gh-aw/agent/build-state.txt\n  echo \"$BUILD_URL\" > /tmp/gh-aw/agent/build-url.txt\n\n  if [ \"$STATE\" = \"running\" ] || [ \"$STATE\" = \"scheduled\" ] || [ \"$STATE\" = \"creating\" ]; then\n    echo \"Build is $STATE, waiting...\"\n    sleep $SLEEP\n    ELAPSED=$((ELAPSED + SLEEP))\n    continue\n  fi\n\n  # Build is in a terminal state\n  if [ \"$STATE\" != \"failed\" ]; then\n    echo \"Build passed (state=$STATE), nothing to do.\"\n    exit 0\n  fi\n\n  # Fetch logs for each failed job (cap at 200 lines per job)\n  echo \"$BUILD\" | jq -r '.[0].jobs[] | select(.state == \"failed\") | [.id, .name] | @tsv' | \\\n  while IFS=$'\\t' read -r JOB_ID JOB_NAME; do\n    echo \"=== Failed job: $JOB_NAME ===\" >> /tmp/gh-aw/agent/failed-jobs.txt\n    curl -sf \\\n      \"https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds/$BUILD_NUMBER/jobs/$JOB_ID/log\" \\\n      -H \"Authorization: Bearer $BUILDKITE_API_TOKEN\" \\\n      | jq -r '.content' \\\n      | sed 's/\\x1b\\[[0-9;]*m//g' \\\n      | tail -200 >> /tmp/gh-aw/agent/failed-jobs.txt\n    echo \"\" >> /tmp/gh-aw/agent/failed-jobs.txt\n  done\n\n  exit 0\ndone\n\necho \"Timed out waiting for Buildkite build after ${MAX_WAIT}s\"\nexit 0\n"
+        run: "mkdir -p /tmp/gh-aw/agent\necho \"$PR_NUMBER\" > /tmp/gh-aw/agent/pr-number.txt\n\n# Poll until the build for this commit is finished (max 45 minutes)\nMAX_WAIT=2700\nELAPSED=0\nSLEEP=30\n\nwhile [ $ELAPSED -lt $MAX_WAIT ]; do\n  BK_RESPONSE=$(curl -s -w \"\\n__HTTP_STATUS__%{http_code}\" \\\n    \"https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds?commit=${COMMIT}&per_page=1\" \\\n    -H \"Authorization: Bearer $BUILDKITE_API_TOKEN\")\n\n  HTTP_STATUS=$(echo \"$BK_RESPONSE\" | tail -1 | sed 's/__HTTP_STATUS__//')\n  BUILD=$(echo \"$BK_RESPONSE\" | sed '$d')\n\n  if [ \"$HTTP_STATUS\" -ge 400 ]; then\n    echo \"Buildkite API error (HTTP $HTTP_STATUS): $BUILD\"\n    exit 1\n  fi\n\n  BUILD_COUNT=$(echo \"$BUILD\" | jq 'length')\n  if [ \"$BUILD_COUNT\" -eq 0 ]; then\n    echo \"No build found for commit $COMMIT yet, waiting...\"\n    sleep $SLEEP\n    ELAPSED=$((ELAPSED + SLEEP))\n    continue\n  fi\n\n  STATE=$(echo \"$BUILD\" | jq -r '.[0].state')\n  BUILD_NUMBER=$(echo \"$BUILD\" | jq -r '.[0].number')\n  BUILD_URL=$(echo \"$BUILD\" | jq -r '.[0].web_url')\n\n  echo \"$STATE\" > /tmp/gh-aw/agent/build-state.txt\n  echo \"$BUILD_URL\" > /tmp/gh-aw/agent/build-url.txt\n\n  if [ \"$STATE\" = \"running\" ] || [ \"$STATE\" = \"scheduled\" ] || [ \"$STATE\" = \"creating\" ]; then\n    echo \"Build is $STATE, waiting...\"\n    sleep $SLEEP\n    ELAPSED=$((ELAPSED + SLEEP))\n    continue\n  fi\n\n  # Build is in a terminal state\n  if [ \"$STATE\" != \"failed\" ]; then\n    echo \"Build passed (state=$STATE), nothing to do.\"\n    exit 0\n  fi\n\n  # Fetch build annotations (junit-annotate plugin writes test results here)\n  curl -sf \\\n    \"https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds/$BUILD_NUMBER/annotations?per_page=10\" \\\n    -H \"Authorization: Bearer $BUILDKITE_API_TOKEN\" \\\n    | jq -r '.[] | \"[\\(.style)] \\(.context)\\n\\(.body_text // .body // \"\")\\n\"' \\\n    > /tmp/gh-aw/agent/annotations.txt || true\n\n  # Fetch logs for each non-passed job (failed, broken, timed_out)\n  echo \"$BUILD\" | jq -r '.[0].jobs[] | select(.state == \"failed\" or .state == \"broken\" or .state == \"timed_out\") | select(.type == \"script\") | [.id, .name] | @tsv' | \\\n  while IFS=$'\\t' read -r JOB_ID JOB_NAME; do\n    echo \"=== Failed job: $JOB_NAME ===\" >> /tmp/gh-aw/agent/failed-jobs.txt\n    curl -sf \\\n      \"https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds/$BUILD_NUMBER/jobs/$JOB_ID/log\" \\\n      -H \"Authorization: Bearer $BUILDKITE_API_TOKEN\" \\\n      | jq -r '.content' \\\n      | sed 's/\\x1b\\[[0-9;]*m//g' \\\n      | tail -200 >> /tmp/gh-aw/agent/failed-jobs.txt\n    echo \"\" >> /tmp/gh-aw/agent/failed-jobs.txt\n  done\n\n  exit 0\ndone\n\necho \"Timed out waiting for Buildkite build after ${MAX_WAIT}s\"\nexit 0\n"
 
       - name: Configure Git credentials
         env:
@@ -436,9 +436,9 @@ jobs:
           mkdir -p "${RUNNER_TEMP}/gh-aw/safeoutputs"
           mkdir -p /tmp/gh-aw/safeoutputs
           mkdir -p /tmp/gh-aw/mcp-logs/safeoutputs
-          cat > "${RUNNER_TEMP}/gh-aw/safeoutputs/config.json" << 'GH_AW_SAFE_OUTPUTS_CONFIG_74bca1f4ae8f4736_EOF'
+          cat > "${RUNNER_TEMP}/gh-aw/safeoutputs/config.json" << 'GH_AW_SAFE_OUTPUTS_CONFIG_7e873ad87e0e54ec_EOF'
           {"add_comment":{"max":1,"target":"*","target-repo":"elastic/elasticsearch-js"},"create_report_incomplete_issue":{},"missing_data":{},"missing_tool":{},"noop":{"max":1,"report-as-issue":"true"},"report_incomplete":{}}
-          GH_AW_SAFE_OUTPUTS_CONFIG_74bca1f4ae8f4736_EOF
+          GH_AW_SAFE_OUTPUTS_CONFIG_7e873ad87e0e54ec_EOF
       - name: Generate Safe Outputs Tools
         env:
           GH_AW_TOOLS_META_JSON: |
@@ -631,7 +631,7 @@ jobs:
           export MCP_GATEWAY_DOCKER_COMMAND='docker run -i --rm --network host --add-host host.docker.internal:127.0.0.1 --user '"${MCP_GATEWAY_UID}"':'"${MCP_GATEWAY_GID}"' --group-add '"${DOCKER_SOCK_GID}"' -v '"${DOCKER_SOCK_PATH}"':/var/run/docker.sock -e MCP_GATEWAY_PORT -e MCP_GATEWAY_DOMAIN -e MCP_GATEWAY_API_KEY -e MCP_GATEWAY_PAYLOAD_DIR -e MCP_GATEWAY_PAYLOAD_SIZE_THRESHOLD -e DOCKER_HOST=unix:///var/run/docker.sock -e DEBUG -e MCP_GATEWAY_LOG_DIR -e GH_AW_MCP_LOG_DIR -e GH_AW_SAFE_OUTPUTS -e GH_AW_SAFE_OUTPUTS_CONFIG_PATH -e GH_AW_SAFE_OUTPUTS_TOOLS_PATH -e GH_AW_ASSETS_BRANCH -e GH_AW_ASSETS_MAX_SIZE_KB -e GH_AW_ASSETS_ALLOWED_EXTS -e DEFAULT_BRANCH -e GITHUB_MCP_SERVER_TOKEN -e GITHUB_MCP_GUARD_MIN_INTEGRITY -e GITHUB_MCP_GUARD_REPOS -e GITHUB_REPOSITORY -e GITHUB_SERVER_URL -e GITHUB_SHA -e GITHUB_WORKSPACE -e GITHUB_TOKEN -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ATTEMPT -e GITHUB_JOB -e GITHUB_ACTION -e GITHUB_EVENT_NAME -e GITHUB_EVENT_PATH -e GITHUB_ACTOR -e GITHUB_ACTOR_ID -e GITHUB_TRIGGERING_ACTOR -e GITHUB_WORKFLOW -e GITHUB_WORKFLOW_REF -e GITHUB_WORKFLOW_SHA -e GITHUB_REF -e GITHUB_REF_NAME -e GITHUB_REF_TYPE -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GH_AW_SAFE_OUTPUTS_PORT -e GH_AW_SAFE_OUTPUTS_API_KEY -v /tmp/gh-aw/mcp-payloads:/tmp/gh-aw/mcp-payloads:rw -v /opt:/opt:ro -v /tmp:/tmp:rw -v '"${GITHUB_WORKSPACE}"':'"${GITHUB_WORKSPACE}"':rw ghcr.io/github/gh-aw-mcpg:v0.3.9'
           
           GH_AW_NODE=$(which node 2>/dev/null || command -v node 2>/dev/null || echo node)
-          cat << GH_AW_MCP_CONFIG_b6a493655f37a0da_EOF | "$GH_AW_NODE" "${RUNNER_TEMP}/gh-aw/actions/start_mcp_gateway.cjs"
+          cat << GH_AW_MCP_CONFIG_f8132c4430378d2e_EOF | "$GH_AW_NODE" "${RUNNER_TEMP}/gh-aw/actions/start_mcp_gateway.cjs"
           {
             "mcpServers": {
               "github": {
@@ -671,7 +671,7 @@ jobs:
               "payloadDir": "${MCP_GATEWAY_PAYLOAD_DIR}"
             }
           }
-          GH_AW_MCP_CONFIG_b6a493655f37a0da_EOF
+          GH_AW_MCP_CONFIG_f8132c4430378d2e_EOF
       - name: Mount MCP servers as CLIs
         id: mount-mcp-clis
         continue-on-error: true

@@ -68,8 +68,15 @@ steps:
           exit 0
         fi
 
-        # Fetch logs for each failed job (cap at 200 lines per job)
-        echo "$BUILD" | jq -r '.[0].jobs[] | select(.state == "failed") | [.id, .name] | @tsv' | \
+        # Fetch build annotations (junit-annotate plugin writes test results here)
+        curl -sf \
+          "https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds/$BUILD_NUMBER/annotations?per_page=10" \
+          -H "Authorization: Bearer $BUILDKITE_API_TOKEN" \
+          | jq -r '.[] | "[\(.style)] \(.context)\n\(.body_text // .body // "")\n"' \
+          > /tmp/gh-aw/agent/annotations.txt || true
+
+        # Fetch logs for each non-passed job (failed, broken, timed_out)
+        echo "$BUILD" | jq -r '.[0].jobs[] | select(.state == "failed" or .state == "broken" or .state == "timed_out") | select(.type == "script") | [.id, .name] | @tsv' | \
         while IFS=$'\t' read -r JOB_ID JOB_NAME; do
           echo "=== Failed job: $JOB_NAME ===" >> /tmp/gh-aw/agent/failed-jobs.txt
           curl -sf \
@@ -112,7 +119,8 @@ Otherwise:
 
 1. Read the PR number from `/tmp/gh-aw/agent/pr-number.txt`.
 2. Read the build URL from `/tmp/gh-aw/agent/build-url.txt`.
-3. Read the failed job output from `/tmp/gh-aw/agent/failed-jobs.txt`.
+3. Read `/tmp/gh-aw/agent/annotations.txt` — this contains the junit-annotate plugin output with test failure summaries (primary source).
+4. Read `/tmp/gh-aw/agent/failed-jobs.txt` if it exists — raw job logs for additional context.
 
 Analyse the failures:
 - Identify distinct error patterns (assertion failures, unhandled rejections, timeout errors, infrastructure errors, etc.).
