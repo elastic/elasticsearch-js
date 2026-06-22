@@ -24313,13 +24313,13 @@ export interface InferenceAzureOpenAIServiceSettings {
   /** The Azure API version ID to use.
     * It is recommended to use the latest supported non-preview version. */
   api_version: string
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The application ID that's assigned to your app.
     *
     * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
     * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
   client_id?: string
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The application secret that you created in the Microsoft app registration portal for your app.
     *
     * IMPORTANT: You must specify either `api_key`, `entra_id`, or `client_secret`.
@@ -24344,7 +24344,7 @@ export interface InferenceAzureOpenAIServiceSettings {
   /** The name of your Azure OpenAI resource.
     * You can find this from the list of resources in the Azure Portal for your subscription. */
   resource_name: string
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The resource identifier (application ID URI) of the resource you want, suffixed with .default
     * For example:
     * ```
@@ -24356,7 +24356,7 @@ export interface InferenceAzureOpenAIServiceSettings {
     * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
     * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
   scopes?: string[]
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The directory tenant the application plans to operate against.
     *
     * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
@@ -24716,7 +24716,7 @@ export interface InferenceCustomServiceSettings {
     * The batch size is the maximum number of inputs in a single request to the upstream service.
     * The chunk within the batch are controlled by the selected chunking strategy for the semantic_text field. */
   batch_size?: integer
-  /** Specifies the HTTP header parameters – such as `Authentication` or `Content-Type` – that are required to access the custom service.
+  /** Specifies the HTTP header parameters – such as `Authorization` or `Content-Type` – that are required to access the custom service.
     * For example:
     * ```
     * "headers": {
@@ -25437,7 +25437,7 @@ export interface InferenceJinaAIServiceSettings {
     * Use `bit` for binary embeddings, which are encoded as bytes with signed int8 precision.
     * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `bit`).
     * Use `float` for the default float embeddings. */
-  element_type?: InferenceJinaAIElementType
+  embedding_type?: InferenceJinaAIElementType
   /** For the `embedding` task, whether the model supports multimodal inputs. If true, requests sent to the Jina model
     * will use the multimodal request format (a list of objects). If false, requests sent to the model will use the same
     * format as the `text_embedding` task (a list of strings). Setting this to `false` allows the `embedding` task to be
@@ -32509,7 +32509,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     * only works on one platform, because it is heavily optimized for a particular
     * processor architecture and OS combination, then this field specifies which.
     * The format of the string must match the platform identifiers used by Elasticsearch,
-    * so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
+    * so one of, `linux-x86_64`, `linux-aarch64`, `darwin-aarch64`,
     * or `windows-x86_64`. For portable models (those that work independent of processor
     * architecture or OS features), leave this field unset. */
   platform_architecture?: string
