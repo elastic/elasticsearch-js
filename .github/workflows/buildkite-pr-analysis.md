@@ -5,7 +5,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 permissions:
-  pull-requests: write
   id-token: write
 engine:
   id: claude
