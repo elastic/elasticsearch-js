@@ -8417,7 +8417,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`task_type` (Enum("rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`jinaai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
-- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, element_type })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
+- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, embedding_type })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `rerank` task type.
@@ -10605,7 +10605,7 @@ or the model definition is not supplied.
 only works on one platform, because it is heavily optimized for a particular
 processor architecture and OS combination, then this field specifies which.
 The format of the string must match the platform identifiers used by Elasticsearch,
-so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
+so one of, `linux-x86_64`, `linux-aarch64`, `darwin-aarch64`,
 or `windows-x86_64`. For portable models (those that work independent of processor
 architecture or OS features), leave this field unset.
 - **`tags` (Optional, string[])**: An array of tags to organize the model.
