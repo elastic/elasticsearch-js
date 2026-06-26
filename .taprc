@@ -2,5 +2,3 @@ files:
   - test/unit/
   - test/esm/
 jobs: 1
-coverage-exclude:
-  - src/api/**
