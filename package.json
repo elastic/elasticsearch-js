@@ -27,9 +27,9 @@
   "scripts": {
     "test": "npm run build && npm run lint && c8 --exclude='**/api/**' --exclude='**/test/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=91 tap --disable-coverage",
     "test:unit": "npm run build && tap",
-    "test:unit-bun": "bun run build && bunx tap",
+    "test:unit-bun": "bun run build && c8 --exclude='**/api/**' --exclude='**/test/**' bunx tap --disable-coverage",
     "test:bundler": "npm run build && cd test/bundlers/repro && npm install file:../../.. && npx esbuild@0.24 --bundle --platform=node repro.mjs --outfile=bundled.js && node bundled.js",
-    "test:esm": "npm run build:esm && tap test/esm/",
+    "test:esm": "npm run build:esm && c8 --exclude='**/api/**' --exclude='**/test/**' tap --disable-coverage test/esm/",
     "test:coverage-100": "npm run build && tap --coverage --100",
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
