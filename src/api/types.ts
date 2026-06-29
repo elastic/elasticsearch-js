@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/array-type */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /**
  * We are still working on this type, it will arrive soon.
  * If it's critical for you, please open an issue.
@@ -8629,8 +8633,8 @@ export interface AnalysisSynonymTokenFilterBase extends AnalysisTokenFilterBase 
   synonyms?: string[]
   /** Used to provide a synonym file. This path must be absolute or relative to the `config` location. */
   synonyms_path?: string
-  /** Provide a synonym set created via Synonyms Management APIs. */
-  synonyms_set?: string
+  /** Provide one or more synonym sets created through the Synonyms Management APIs. Maximum 100 sets per filter. */
+  synonyms_set?: string | string[]
   /** Controls the tokenizers that will be used to tokenize the synonym, this parameter is for backwards compatibility for indices that created before 6.0. */
   tokenizer?: string
   /** If `true` allows reloading search analyzers to pick up changes to synonym files. Only to be used for search analyzers. Defaults to `false`. */
@@ -24386,19 +24390,19 @@ export interface InferenceAzureOpenAIServiceSettings {
   /** The Azure API version ID to use.
     * It is recommended to use the latest supported non-preview version. */
   api_version: string
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The application ID that's assigned to your app.
     *
-    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `tenant_id`, and `client_secret` together.
     * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
   client_id?: string
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The application secret that you created in the Microsoft app registration portal for your app.
     *
     * IMPORTANT: You must specify either `api_key`, `entra_id`, or `client_secret`.
     * If you do not provide one or you provide more than one of them, you will receive an error when you try to create your endpoint.
     *
-    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `tenant_id`, and `client_secret` together.
     * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
   client_secret?: string
   /** The deployment name of your deployed models.
@@ -24417,7 +24421,7 @@ export interface InferenceAzureOpenAIServiceSettings {
   /** The name of your Azure OpenAI resource.
     * You can find this from the list of resources in the Azure Portal for your subscription. */
   resource_name: string
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The resource identifier (application ID URI) of the resource you want, suffixed with .default
     * For example:
     * ```
@@ -24426,13 +24430,13 @@ export interface InferenceAzureOpenAIServiceSettings {
     * ]
     * ```
     *
-    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `tenant_id`, and `client_secret` together.
     * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
   scopes?: string[]
-  /** For OAuth 2.0 authentication using the client credentials grant flow.
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
     * The directory tenant the application plans to operate against.
     *
-    * IMPORTANT: To configure OAuth 2.0, you must specify client_id, scopes, tenant_id, and client_secret together.
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `tenant_id`, and `client_secret` together.
     * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
   tenant_id?: string
 }
@@ -24789,7 +24793,7 @@ export interface InferenceCustomServiceSettings {
     * The batch size is the maximum number of inputs in a single request to the upstream service.
     * The chunk within the batch are controlled by the selected chunking strategy for the semantic_text field. */
   batch_size?: integer
-  /** Specifies the HTTP header parameters – such as `Authentication` or `Content-Type` – that are required to access the custom service.
+  /** Specifies the HTTP header parameters – such as `Authorization` or `Content-Type` – that are required to access the custom service.
     * For example:
     * ```
     * "headers": {
@@ -25109,7 +25113,9 @@ export interface InferenceGoogleVertexAIServiceSettings {
     * Information on constructing the URL for various providers can be found in the Google Model Garden documentation for the model, or on the endpoint’s `Sample request` page. The request examples also illustrate the proper formatting for the `streaming_url`. */
   streaming_url?: string
   /** The name of the location to use for the inference task for the Google Vertex AI inference task.
-    * For Google Vertex AI, when `provider` is omitted or `google` `location` is mandatory.
+    * For Google Vertex AI, when `provider` is omitted or `google`, `location` is optional.
+    * When `location` is omitted, the request targets the Google Vertex AI global endpoint (`https://aiplatform.googleapis.com`); when it is provided, the corresponding regional endpoint (`https://<location>-aiplatform.googleapis.com`) is used.
+    * The field must be omitted to select the global endpoint; an empty string is not a valid `location`.
     * For Google Model Garden's `completion` and `chat_completion` tasks, when `provider` is a supported non-`google` value - `location` is ignored.
     * Refer to the Google documentation for the list of supported locations. */
   location?: string
@@ -25512,7 +25518,7 @@ export interface InferenceJinaAIServiceSettings {
     * Use `bit` for binary embeddings, which are encoded as bytes with signed int8 precision.
     * Use `binary` for binary embeddings, which are encoded as bytes with signed int8 precision (this is a synonym of `bit`).
     * Use `float` for the default float embeddings. */
-  element_type?: InferenceJinaAIElementType
+  embedding_type?: InferenceJinaAIElementType
   /** For the `embedding` task, whether the model supports multimodal inputs. If true, requests sent to the Jina model
     * will use the multimodal request format (a list of objects). If false, requests sent to the model will use the same
     * format as the `text_embedding` task (a list of strings). Setting this to `false` allows the `embedding` task to be
@@ -25740,9 +25746,24 @@ export interface InferenceOpenAIServiceSettings {
   /** A valid API key of your OpenAI account.
     * You can find your OpenAI API keys in your OpenAI account under the API keys section.
     *
-    * IMPORTANT: You need to provide the API key only once, during the inference model creation.
-    * The get inference endpoint API does not retrieve your API key. */
-  api_key: string
+    * IMPORTANT: You must specify either `api_key` or `client_secret`.
+    * If you do not provide one or you provide more than one of them, you will receive an error when you try to create your endpoint. */
+  api_key?: string
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
+    * The application ID that's assigned to your app.
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `token_url`, and `client_secret` together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  client_id?: string
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
+    * The application secret that you created for your app.
+    *
+    * IMPORTANT: You must specify either `api_key` or `client_secret`.
+    * If you do not provide one or you provide more than one of them, you will receive an error when you try to create your endpoint.
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `token_url`, and `client_secret` together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  client_secret?: string
   /** For a `text_embedding` or `embedding` task, the number of dimensions the resulting output embeddings should have.
     * It is supported only in `text-embedding-3` and later models.
     * If it is not set, the OpenAI defined default for the model is used. */
@@ -25758,8 +25779,27 @@ export interface InferenceOpenAIServiceSettings {
     * For `text_embedding` and `embedding`, it is set to `3000`.
     * For `completion` and `chat_completion`, it is set to `500`. */
   rate_limit?: InferenceRateLimitSetting
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
+    * The resource identifier of the resource you want.
+    * For example:
+    * ```
+    * "scopes": [
+    *   "scope1",
+    *   "scope2"
+    * ]
+    * ```
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `token_url`, and `client_secret` together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  scopes?: string[]
   /** For a `text_embedding` or `embedding` task, the similarity measure. One of `cosine`, `dot_product`, `l2_norm`. Defaults to `dot_product`. */
   similarity?: InferenceOpenAISimilarityType
+  /** For OAuth 2.0 authorization using the client credentials grant flow.
+    * An OAuth2 token endpoint where Elasticsearch sends a request to exchange client credentials for an access token.
+    *
+    * IMPORTANT: To configure OAuth 2.0, you must specify `client_id`, `scopes`, `token_url`, and `client_secret` together.
+    * If one of the fields is missing, you will receive an error when you try to create your endpoint. */
+  token_url?: string
   /** The URL endpoint to use for the requests.
     * It can be changed for testing purposes.
     * Default value is `https://api.openai.com/v1/embeddings` for a `text_embedding` or `embedding` task,
@@ -32612,7 +32652,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     * only works on one platform, because it is heavily optimized for a particular
     * processor architecture and OS combination, then this field specifies which.
     * The format of the string must match the platform identifiers used by Elasticsearch,
-    * so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
+    * so one of, `linux-x86_64`, `linux-aarch64`, `darwin-aarch64`,
     * or `windows-x86_64`. For portable models (those that work independent of processor
     * architecture or OS features), leave this field unset. */
   platform_architecture?: string
@@ -40019,14 +40059,18 @@ export type SynonymsDeleteSynonymRuleResponse = SynonymsSynonymsUpdateResult
 export interface SynonymsGetSynonymRequest extends RequestBase {
   /** The synonyms set identifier to retrieve. */
   id: Id
-  /** The starting offset for query rules to retrieve. */
+  /** The starting offset for synonym rules to retrieve. */
   from?: integer
-  /** The max number of query rules to retrieve. */
+  /** The max number of synonym rules to retrieve. */
   size?: integer
+  /** The synonym rule ID to use as a cursor for pagination.
+    * The next page of results will start after this rule ID.
+    * This parameter cannot be used with `from`. */
+  search_after?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, from?: never, size?: never }
+  body?: string | { [key: string]: any } & { id?: never, from?: never, size?: never, search_after?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, from?: never, size?: never }
+  querystring?: { [key: string]: any } & { id?: never, from?: never, size?: never, search_after?: never }
 }
 
 export interface SynonymsGetSynonymResponse {
@@ -40081,12 +40125,15 @@ export interface SynonymsPutSynonymRequest extends RequestBase {
     * If `false`, analyzers will not be reloaded with the new synonym set
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   refresh?: boolean
+  /** If `true`, the provided synonym rules are appended to the existing set, with matching IDs overwriting existing rules.
+    * If `false`, the entire synonyms set is replaced with the new synonym rules definitions. */
+  append?: boolean
   /** The synonym rules definitions for the synonyms set. */
   synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, refresh?: never, synonyms_set?: never }
+  body?: string | { [key: string]: any } & { id?: never, refresh?: never, append?: never, synonyms_set?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, refresh?: never, synonyms_set?: never }
+  querystring?: { [key: string]: any } & { id?: never, refresh?: never, append?: never, synonyms_set?: never }
 }
 
 export interface SynonymsPutSynonymResponse {

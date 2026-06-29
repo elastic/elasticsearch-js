@@ -8816,7 +8816,7 @@ client.inference.putJinaai({ task_type, jinaai_inference_id, service, service_se
 - **`task_type` (Enum("embedding" \| "rerank" \| "text_embedding"))**: The type of the inference task that the model will perform.
 - **`jinaai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("jinaai"))**: The type of service supported for the specified task type. In this case, `jinaai`.
-- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, element_type, multimodal_model })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
+- **`service_settings` ({ api_key, model_id, rate_limit, similarity, dimensions, embedding_type, multimodal_model })**: Settings used to install the inference model. These settings are specific to the `jinaai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `embedding` and text_embedding` task types.
 Not applicable to the `rerank` task type.
@@ -8916,7 +8916,7 @@ client.inference.putOpenai({ task_type, openai_inference_id, service, service_se
 NOTE: The `chat_completion` task type only supports streaming and only through the _stream API.
 - **`openai_inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`service` (Enum("openai"))**: The type of service supported for the specified task type. In this case, `openai`.
-- **`service_settings` ({ api_key, dimensions, model_id, organization_id, rate_limit, similarity, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
+- **`service_settings` ({ api_key, client_id, client_secret, dimensions, model_id, organization_id, rate_limit, scopes, similarity, token_url, url })**: Settings used to install the inference model. These settings are specific to the `openai` service.
 - **`chunking_settings` (Optional, { max_chunk_size, overlap, sentence_overlap, separator_group, separators, strategy })**: The chunking configuration object.
 Applies only to the `text_embedding` task type.
 Not applicable to the `completion` or `chat_completion` task types.
@@ -11016,7 +11016,7 @@ or the model definition is not supplied.
 only works on one platform, because it is heavily optimized for a particular
 processor architecture and OS combination, then this field specifies which.
 The format of the string must match the platform identifiers used by Elasticsearch,
-so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
+so one of, `linux-x86_64`, `linux-aarch64`, `darwin-aarch64`,
 or `windows-x86_64`. For portable models (those that work independent of processor
 architecture or OS features), leave this field unset.
 - **`tags` (Optional, string[])**: An array of tags to organize the model.
@@ -15411,8 +15411,11 @@ client.synonyms.getSynonym({ id })
 
 #### Request (object) [_request_synonyms.get_synonym]
 - **`id` (string)**: The synonyms set identifier to retrieve.
-- **`from` (Optional, number)**: The starting offset for query rules to retrieve.
-- **`size` (Optional, number)**: The max number of query rules to retrieve.
+- **`from` (Optional, number)**: The starting offset for synonym rules to retrieve.
+- **`size` (Optional, number)**: The max number of synonym rules to retrieve.
+- **`search_after` (Optional, string)**: The synonym rule ID to use as a cursor for pagination.
+The next page of results will start after this rule ID.
+This parameter cannot be used with `from`.
 
 ## client.synonyms.getSynonymRule [_synonyms.get_synonym_rule]
 Get a synonym rule.
@@ -15451,7 +15454,8 @@ client.synonyms.getSynonymsSets({ ... })
 ## client.synonyms.putSynonym [_synonyms.put_synonym]
 Create or update a synonym set.
 
-Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
+Synonym sets are limited to a maximum of 100,000 synonym rules per set by default.
+This limit is configurable using the `synonyms.max_synonym_rules` cluster setting.
 
 When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
 This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
@@ -15471,6 +15475,8 @@ client.synonyms.putSynonym({ id, synonyms_set })
 - **`synonyms_set` ({ id, synonyms } \| { id, synonyms }[])**: The synonym rules definitions for the synonyms set.
 - **`refresh` (Optional, boolean)**: If `true`, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
 If `false`, analyzers will not be reloaded with the new synonym set
+- **`append` (Optional, boolean)**: If `true`, the provided synonym rules are appended to the existing set, with matching IDs overwriting existing rules.
+If `false`, the entire synonyms set is replaced with the new synonym rules definitions.
 
 ## client.synonyms.putSynonymRule [_synonyms.put_synonym_rule]
 Create or update a synonym rule.
