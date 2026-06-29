@@ -55,7 +55,8 @@ export default class Synonyms {
         body: [],
         query: [
           'from',
-          'size'
+          'size',
+          'search_after'
         ]
       },
       'synonyms.get_synonym_rule': {
@@ -82,7 +83,8 @@ export default class Synonyms {
           'synonyms_set'
         ],
         query: [
-          'refresh'
+          'refresh',
+          'append'
         ]
       },
       'synonyms.put_synonym_rule': {
@@ -245,7 +247,7 @@ export default class Synonyms {
       acceptedParams: {
         path: ['id'],
         body: [],
-        query: ['from', 'size']
+        query: ['from', 'size', 'search_after']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -351,7 +353,7 @@ export default class Synonyms {
   }
 
   /**
-    * Create or update a synonym set. Synonyms sets are limited to a maximum of 10,000 synonym rules per set. When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices. This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set. For practical examples of how to create or update a synonyms set, refer to the External documentation.
+    * Create or update a synonym set. Synonym sets are limited to a maximum of 100,000 synonym rules per set by default. This limit is configurable using the `synonyms.max_synonym_rules` cluster setting. When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices. This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set. For practical examples of how to create or update a synonyms set, refer to the External documentation.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym | Elasticsearch API documentation}
     */
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymResponse>
@@ -406,7 +408,7 @@ export default class Synonyms {
       acceptedParams: {
         path: ['id'],
         body: ['synonyms_set'],
-        query: ['refresh']
+        query: ['refresh', 'append']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
