@@ -3,7 +3,7 @@
   "extends": [
     "local>elastic/renovate-config",
     "schedule:automergeMonthly",
-    "npm:unpublishSafe",
+    "security:minimumReleaseAgeNpm",
     "mergeConfidence:all-badges"
   ],
   "schedule": [
