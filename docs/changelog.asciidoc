@@ -1,6 +1,17 @@
 [[changelog-client]]
 == Release notes
 [discrete]
+=== 8.19.2
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump default timeout to 10 minutes
+
+In 9.0, the default 30-second timeout was removed from this client. In the meantime, we've decided that increasing the timeout value in 8.x is not a breaking change, so it's been increased to 10 minutes to help avoid premature disconnection of slow requests (e.g. large bulk uploads).
+
+[discrete]
 === 8.19.1
 
 [discrete]

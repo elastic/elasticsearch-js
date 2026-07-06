@@ -108,7 +108,7 @@ export interface ClientOptions {
     * @defaultValue 3 */
   maxRetries?: number
   /** @property requestTimeout Max request timeout in milliseconds for each request
-    * @defaultValue 30000 */
+    * @defaultValue 600000 */
   requestTimeout?: number
   /** @property pingTimeout Max number of milliseconds a `ClusterConnectionPool` will wait when pinging nodes before marking them dead
     * @defaultValue 3000 */
@@ -272,7 +272,7 @@ export default class Client extends API {
       Serializer,
       ConnectionPool: (opts.cloud != null) ? CloudConnectionPool : WeightedConnectionPool,
       maxRetries: 3,
-      requestTimeout: 30000,
+      requestTimeout: 600000,
       pingTimeout: 3000,
       sniffInterval: false,
       sniffOnStart: false,

@@ -415,7 +415,7 @@ _Default:_ `null`
 
 |`requestTimeout`
 |`number | string` - Max request timeout for the request in milliseconds, it overrides the client default. +
-_Default:_ `30000`
+_Default:_ `600000`
 
 |`retryOnTimeout`
 |`boolean` - Retry requests that have timed out.
