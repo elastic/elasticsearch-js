@@ -546,7 +546,9 @@ export default class Inference {
         body: [
           'inference_config'
         ],
-        query: []
+        query: [
+          'timeout'
+        ]
       }
     }
   }
@@ -2910,7 +2912,7 @@ export default class Inference {
       acceptedParams: {
         path: ['inference_id', 'task_type'],
         body: ['inference_config'],
-        query: []
+        query: ['timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

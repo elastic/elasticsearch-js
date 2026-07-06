@@ -9496,8 +9496,8 @@ export type MappingSyntheticSourceKeepEnum = 'none' | 'arrays' | 'all'
 export type MappingTermVectorOption = 'no' | 'yes' | 'with_offsets' | 'with_positions' | 'with_positions_offsets' | 'with_positions_offsets_payloads' | 'with_positions_payloads'
 
 export interface MappingTextIndexPrefixes {
-  max_chars: integer
-  min_chars: integer
+  max_chars?: integer
+  min_chars?: integer
 }
 
 export interface MappingTextProperty extends MappingCorePropertyBase {
@@ -26403,7 +26403,8 @@ export interface InferencePutRequest extends RequestBase {
   task_type?: InferenceTaskType
   /** The inference Id */
   inference_id: Id
-  /** Specifies the amount of time to wait for the inference endpoint to be created. */
+  /** Specifies the amount of time to wait for the inference endpoint to be created.
+    * The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types. */
   timeout?: Duration
   inference_config?: InferenceInferenceEndpoint
   /** All values in `body` will be added to the request body. */
@@ -27156,11 +27157,14 @@ export interface InferenceUpdateRequest extends RequestBase {
   inference_id: Id
   /** The type of inference task that the model performs. */
   task_type?: InferenceTaskType
+  /** Specifies the amount of time to wait for the inference endpoint to be updated.
+    * The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types. */
+  timeout?: Duration
   inference_config?: InferenceInferenceEndpoint
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, inference_config?: never }
+  body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, timeout?: never, inference_config?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { inference_id?: never, task_type?: never, inference_config?: never }
+  querystring?: { [key: string]: any } & { inference_id?: never, task_type?: never, timeout?: never, inference_config?: never }
 }
 
 export type InferenceUpdateResponse = InferenceInferenceEndpointInfo

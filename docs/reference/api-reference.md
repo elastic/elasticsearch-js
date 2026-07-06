@@ -8249,6 +8249,7 @@ client.inference.put({ inference_id })
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type. Refer to the integration list in the API description for the available task types.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
+The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types.
 
 ## client.inference.putAi21 [_inference.put_ai21]
 Create a AI21 inference endpoint.
@@ -9119,6 +9120,8 @@ client.inference.update({ inference_id })
 - **`inference_id` (string)**: The unique identifier of the inference endpoint.
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The type of inference task that the model performs.
 - **`inference_config` (Optional, { chunking_settings, service, service_settings, task_settings })**
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be updated.
+The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types.
 
 ## client.ingest.deleteGeoipDatabase [_ingest.delete_geoip_database]
 Delete GeoIP database configurations.
