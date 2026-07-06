@@ -588,7 +588,7 @@ test('Ensure new client instance stores requestTimeout for each connection', t =
   t.end()
 })
 
-test('Ensure new client does not time out at default (30s) when client sets requestTimeout', async t => {
+test('Ensure new client does not time out at default (10m) when client sets requestTimeout', async t => {
   const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
   t.teardown(() => clock.uninstall())
 
@@ -597,7 +597,7 @@ test('Ensure new client does not time out at default (30s) when client sets requ
       t.pass('timeout ended')
       res.setHeader('content-type', 'application/json')
       res.end(JSON.stringify({ success: true }))
-    }, 31000) // default is 30000
+    }, 31000) // well under the 600000ms default
     clock.runToLast()
   }
 
@@ -605,7 +605,7 @@ test('Ensure new client does not time out at default (30s) when client sets requ
 
   const client = new Client({
     node: `http://localhost:${port}`,
-    requestTimeout: 60000
+    requestTimeout: 60000 // override default of 600000
   })
 
   try {
@@ -616,6 +616,14 @@ test('Ensure new client does not time out at default (30s) when client sets requ
     server.stop()
     t.end()
   }
+})
+
+test('Default requestTimeout is 10 minutes (600000ms)', t => {
+  const client = new Client({
+    node: 'http://localhost:9200',
+  })
+  t.equal(client.connectionPool.connections[0].timeout, 600000)
+  t.end()
 })
 
 test('Pass disablePrototypePoisoningProtection option to serializer', async t => {

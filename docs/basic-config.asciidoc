@@ -82,7 +82,7 @@ _Default:_ `3`
 
 |`requestTimeout`
 |`number` - Max request timeout in milliseconds for each request. +
-_Default:_ `30000`
+_Default:_ `600000`
 
 |`pingTimeout`
 |`number` - Max ping request timeout in milliseconds for each request. +

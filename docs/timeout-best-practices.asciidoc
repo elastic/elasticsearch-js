@@ -1,9 +1,9 @@
 [[timeout-best-practices]]
 === Timeout best practices
 
-This client is configured by default to operate like many HTTP client libraries do, by using a relatively short (30 second) timeout on all requests sent to {es}, raising a `TimeoutError` when that time period has elapsed without receiving a response. However, {es} will always eventually respond to any request, even if it takes several minutes. The {ref}/modules-network.html#_http_client_configuration[official {es} recommendation] is to disable response timeouts entirely by default.
+This client defaults to a 10-minute (`600000` ms) request timeout. This is intentionally generous: {es} will always eventually respond to any request, even when indexing large payloads, running ML inference pipelines, or operating in Serverless environments with auto-scaling latency. The {ref}/modules-network.html#_http_client_configuration[official {es} recommendation] is to disable response timeouts entirely by default.
 
-Since changing this default would be a breaking change, we won't do that until the next major release. In the meantime, here is our recommendation for properly configuring your client:
+Since removing the timeout completely would be a breaking change, it has only been removed in the 9.x client. In the 8.x client, it defaults to 30 seconds in all client versions prior to 8.19.2, where the timeout default was increased. In the meantime, here is our recommendation for properly configuring your client:
 
 * Ensure keep-alive is enabled; this is the default, so no settings need to be changed, unless you have set `agent` to `false` or provided an alternate `agent` that disables keep-alive
 * If using the default `UndiciConnection`, disable request timeouts by setting `timeout` to `0`
