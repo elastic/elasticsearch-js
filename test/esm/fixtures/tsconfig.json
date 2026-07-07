@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@elastic/elasticsearch": ["../../../esm/index.d.ts"]
+    }
+  },
+  "include": ["client-options.ts"]
+}

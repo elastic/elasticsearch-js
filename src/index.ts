@@ -56,3 +56,5 @@ export type {
 } from '@elastic/transport'
 
 export * as estypes from './api/types'
+
+export type { ClientOptions, NodeOptions } from './client'
