@@ -54,10 +54,14 @@ jobs:
           npm run lint
 
       - name: Unit test
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == '18.x' && '--experimental-global-webcrypto' || '' }}
         run: |
           npm run test:unit
 
       - name: ECMAScript module test
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == '18.x' && '--experimental-global-webcrypto' || '' }}
         run: |
           npm run test:esm
 
