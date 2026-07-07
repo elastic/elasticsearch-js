@@ -7,6 +7,11 @@
 ==== Fixes
 
 [discrete]
+===== Support path prefix in node URL
+
+Fixes a long-standing issue where nodes configured with a URL path prefix (e.g. `https://host/elastic/`) would fail with an `invalid url` error. The underlying transport was passing `url.toString()` to the connection pool, which strips path prefixes. Now uses `url.origin`. Fix in https://github.com/elastic/elastic-transport-js/pull/388[elastic-transport-js#388], available via `@elastic/transport@8.10.2`.
+
+[discrete]
 ===== Bump default timeout to 10 minutes
 
 In 9.0, the default 30-second timeout was removed from this client. In the meantime, we've decided that increasing the timeout value in 8.x is not a breaking change, so it's been increased to 10 minutes to help avoid premature disconnection of slow requests (e.g. large bulk uploads).
