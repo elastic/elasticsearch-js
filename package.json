@@ -1,6 +1,6 @@
 {
   "name": "@elastic/elasticsearch",
-  "version": "8.19.2",
+  "version": "8.19.3",
   "versionCanary": "8.19.2-canary.0",
   "description": "The official Elasticsearch client for Node.js",
   "main": "./index.js",
@@ -90,7 +90,7 @@
     "zx": "7.2.3"
   },
   "dependencies": {
-    "@elastic/transport": "^8.9.6",
+    "@elastic/transport": "^8.10.2",
     "apache-arrow": "18.x - 21.x",
     "tslib": "^2.4.0"
   },

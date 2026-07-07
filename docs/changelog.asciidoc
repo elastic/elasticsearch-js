@@ -1,6 +1,17 @@
 [[changelog-client]]
 == Release notes
 [discrete]
+=== 8.19.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Support path prefix in node URL
+
+Fixes a long-standing issue where Elasticsearch nodes configured with a URL path prefix (e.g. `https://host/elastic/`) would fail with an `invalid url` error. The underlying transport was stripping the path when creating the connection pool. Upgrade to `@elastic/transport@8.10.2` to get the fix.
+
+[discrete]
 === 8.19.2
 
 [discrete]
