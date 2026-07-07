@@ -64,7 +64,7 @@ test/bundlers/**/bundled.js
 test/bundlers/parcel-test/.parcel-cache
 
 lib
-esm/
+/esm/
 src/version.generated.ts
 junit-output
 bun.lockb
