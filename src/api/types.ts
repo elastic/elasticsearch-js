@@ -9316,6 +9316,7 @@ export interface MappingRuntimeField {
   target_index?: IndexName
   /** Painless script executed at query time. */
   script?: Script | ScriptSource
+  on_script_error?: MappingOnScriptError
   /** Field type, which can be: `boolean`, `composite`, `date`, `double`, `geo_point`, `ip`,`keyword`, `long`, or `lookup`. */
   type: MappingRuntimeFieldType
 }
@@ -20610,6 +20611,7 @@ export interface IndicesIndexSettingsKeys {
   max_terms_count?: integer
   max_regex_length?: integer
   routing?: IndicesIndexRouting
+  unassigned?: IndicesIndexSettingsUnassigned
   gc_deletes?: Duration
   default_pipeline?: PipelineName
   final_pipeline?: PipelineName
@@ -20685,6 +20687,16 @@ export interface IndicesIndexSettingsLifecycleStep {
 export interface IndicesIndexSettingsTimeSeries {
   end_time?: DateTime
   start_time?: DateTime
+}
+
+export interface IndicesIndexSettingsUnassigned {
+  node_left?: IndicesIndexSettingsUnassignedNodeLeft
+}
+
+export interface IndicesIndexSettingsUnassignedNodeLeft {
+  /** The amount of time to wait for a node that has left before assuming its
+    * shards are permanently missing and starting to allocate replacement replicas. */
+  delayed_timeout?: Duration
 }
 
 export interface IndicesIndexState {
@@ -33242,6 +33254,19 @@ export interface NodesAdaptiveSelection {
   rank?: string
 }
 
+export interface NodesAllocations {
+  /** Number of shards allocated to the node. */
+  shards?: integer
+  /** Number of shards allocated to the node that are currently undesired. */
+  undesired_shards?: integer
+  /** Forecasted ingest load for the node. */
+  forecasted_ingest_load?: double
+  /** Forecasted disk usage, in bytes, for the node. */
+  forecasted_disk_usage_in_bytes?: long
+  /** Current disk usage, in bytes, for the node. */
+  current_disk_usage_in_bytes?: long
+}
+
 export interface NodesBreaker {
   /** Estimated memory used for the operation. */
   estimated_size?: string
@@ -33914,6 +33939,8 @@ export interface NodesSizeHttpHistogram {
 export interface NodesStats {
   /** Statistics about adaptive replica selection. */
   adaptive_selection?: Record<string, NodesAdaptiveSelection>
+  /** Statistics about shard allocations on the node. */
+  allocations?: NodesAllocations
   /** Statistics about the field data circuit breaker. */
   breakers?: Record<string, NodesBreaker>
   /** File system information, data path, free disk space, read/write stats. */
@@ -34140,7 +34167,7 @@ export interface NodesInfoNodeInfoClient {
 export interface NodesInfoNodeInfoDiscoverKeys {
   seed_hosts?: string[] | string
   type?: string
-  seed_providers?: string[]
+  seed_providers?: string[] | string
 }
 export type NodesInfoNodeInfoDiscover = NodesInfoNodeInfoDiscoverKeys
 & { [property: string]: any }
