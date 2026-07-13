@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/array-type */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /**
  * We are still working on this type, it will arrive soon.
  * If it's critical for you, please open an issue.
@@ -340,6 +344,8 @@ export interface CountRequest extends RequestBase {
   preference?: string
   /** A custom value used to route operations to a specific shard. */
   routing?: Routing
+  /** Specific `tag` of the request for logging and statistical purposes. */
+  stats?: string[] | string
   /** The maximum number of documents to collect for each shard.
     * If a query reaches this limit, Elasticsearch terminates the query early.
     * Elasticsearch collects documents before sorting.
@@ -364,9 +370,9 @@ export interface CountRequest extends RequestBase {
     * Supported in serverless only. */
   project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, stats?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, stats?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
 }
 
 export interface CountResponse {
@@ -807,6 +813,10 @@ export interface FieldCapsFieldCapability {
   /** Whether this field is indexed for search on all indices. */
   searchable: boolean
   type: string
+  /** Whether this field is an inference field, meaning a field that automatically performs inference (for example, `semantic_text` fields), on all indices. */
+  inference?: boolean
+  /** The list of indices where this field is not an inference field, or null if all indices have the same definition for the field. */
+  non_inference_indices?: Indices
   /** Whether this field is registered as a metadata field. */
   metadata_field?: boolean
   /** Whether this field is used as a time series dimension.
@@ -1191,6 +1201,7 @@ export interface HealthReportIndicators {
   slm?: HealthReportSlmIndicator
   shards_capacity?: HealthReportShardsCapacityIndicator
   file_settings?: HealthReportFileSettingsIndicator
+  project_encryption_key?: HealthReportProjectEncryptionKeyIndicator
 }
 
 export interface HealthReportMasterIsStableIndicator extends HealthReportBaseIndicator {
@@ -1213,6 +1224,18 @@ export interface HealthReportMasterIsStableIndicatorDetails {
 export interface HealthReportMasterIsStableIndicatorExceptionFetchingHistory {
   message: string
   stack_trace: string
+}
+
+export interface HealthReportProjectEncryptionKeyDetails {
+  active_key_id?: string
+  active_password_id: string
+  key_count?: integer
+  metadata_password_id?: string
+  state: string
+}
+
+export interface HealthReportProjectEncryptionKeyIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportProjectEncryptionKeyDetails
 }
 
 export interface HealthReportRepositoryIntegrityIndicator extends HealthReportBaseIndicator {
@@ -3778,10 +3801,19 @@ export interface TermsEnumRequest extends RequestBase {
   /** The string after which terms in the index should be returned.
     * It allows for a form of pagination if the last result from one request is passed as the `search_after` parameter for a subsequent request. */
   search_after?: string
+  /** Specifies a subset of projects to target for the search using project
+    * metadata tags in a subset of Lucene query syntax.
+    * Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+    * Examples:
+    *  _alias:my-project
+    *  _alias:_origin
+    *  _alias:*pr*
+    * Supported in serverless only. */
+  project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never }
+  body?: string | { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never }
+  querystring?: { [key: string]: any } & { index?: never, field?: never, size?: never, timeout?: never, case_insensitive?: never, index_filter?: never, string?: never, search_after?: never, project_routing?: never }
 }
 
 export interface TermsEnumResponse {
@@ -9370,6 +9402,7 @@ export interface MappingRuntimeField {
   target_index?: IndexName
   /** Painless script executed at query time. */
   script?: Script | ScriptSource
+  on_script_error?: MappingOnScriptError
   /** Field type, which can be: `boolean`, `composite`, `date`, `double`, `geo_point`, `ip`,`keyword`, `long`, or `lookup`. */
   type: MappingRuntimeFieldType
 }
@@ -20672,6 +20705,7 @@ export interface IndicesIndexSettingsKeys {
   max_terms_count?: integer
   max_regex_length?: integer
   routing?: IndicesIndexRouting
+  unassigned?: IndicesIndexSettingsUnassigned
   gc_deletes?: Duration
   default_pipeline?: PipelineName
   final_pipeline?: PipelineName
@@ -20747,6 +20781,16 @@ export interface IndicesIndexSettingsLifecycleStep {
 export interface IndicesIndexSettingsTimeSeries {
   end_time?: DateTime
   start_time?: DateTime
+}
+
+export interface IndicesIndexSettingsUnassigned {
+  node_left?: IndicesIndexSettingsUnassignedNodeLeft
+}
+
+export interface IndicesIndexSettingsUnassignedNodeLeft {
+  /** The amount of time to wait for a node that has left before assuming its
+    * shards are permanently missing and starting to allocate replacement replicas. */
+  delayed_timeout?: Duration
 }
 
 export interface IndicesIndexState {
@@ -33385,6 +33429,19 @@ export interface NodesAdaptiveSelection {
   rank?: string
 }
 
+export interface NodesAllocations {
+  /** Number of shards allocated to the node. */
+  shards?: integer
+  /** Number of shards allocated to the node that are currently undesired. */
+  undesired_shards?: integer
+  /** Forecasted ingest load for the node. */
+  forecasted_ingest_load?: double
+  /** Forecasted disk usage, in bytes, for the node. */
+  forecasted_disk_usage_in_bytes?: long
+  /** Current disk usage, in bytes, for the node. */
+  current_disk_usage_in_bytes?: long
+}
+
 export interface NodesBreaker {
   /** Estimated memory used for the operation. */
   estimated_size?: string
@@ -34057,6 +34114,8 @@ export interface NodesSizeHttpHistogram {
 export interface NodesStats {
   /** Statistics about adaptive replica selection. */
   adaptive_selection?: Record<string, NodesAdaptiveSelection>
+  /** Statistics about shard allocations on the node. */
+  allocations?: NodesAllocations
   /** Statistics about the field data circuit breaker. */
   breakers?: Record<string, NodesBreaker>
   /** File system information, data path, free disk space, read/write stats. */
@@ -34283,7 +34342,7 @@ export interface NodesInfoNodeInfoClient {
 export interface NodesInfoNodeInfoDiscoverKeys {
   seed_hosts?: string[] | string
   type?: string
-  seed_providers?: string[]
+  seed_providers?: string[] | string
 }
 export type NodesInfoNodeInfoDiscover = NodesInfoNodeInfoDiscoverKeys
 & { [property: string]: any }

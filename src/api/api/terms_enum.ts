@@ -35,7 +35,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'case_insensitive',
       'index_filter',
       'string',
-      'search_after'
+      'search_after',
+      'project_routing'
     ],
     query: []
   }
@@ -96,7 +97,7 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
     },
     acceptedParams: {
       path: ['index'],
-      body: ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after'],
+      body: ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after', 'project_routing'],
       query: []
     }
   }
