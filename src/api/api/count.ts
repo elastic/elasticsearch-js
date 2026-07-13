@@ -45,6 +45,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'min_score',
       'preference',
       'routing',
+      'stats',
       'terminate_after',
       'q'
     ]
@@ -115,7 +116,7 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
     acceptedParams: {
       path: ['index'],
       body: ['query', 'project_routing'],
-      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'min_score', 'preference', 'routing', 'terminate_after', 'q']
+      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'min_score', 'preference', 'routing', 'stats', 'terminate_after', 'q']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
