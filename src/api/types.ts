@@ -6064,6 +6064,7 @@ export interface MappingRuntimeField {
   target_field?: Field
   target_index?: IndexName
   script?: Script | string
+  on_script_error?: MappingOnScriptError
   type: MappingRuntimeFieldType
 }
 
@@ -11852,6 +11853,7 @@ export interface IndicesIndexSettingsKeys {
   max_terms_count?: integer
   max_regex_length?: integer
   routing?: IndicesIndexRouting
+  unassigned?: IndicesIndexSettingsUnassigned
   gc_deletes?: Duration
   default_pipeline?: PipelineName
   final_pipeline?: PipelineName
@@ -11906,6 +11908,14 @@ export interface IndicesIndexSettingsLifecycleStep {
 export interface IndicesIndexSettingsTimeSeries {
   end_time?: DateTime
   start_time?: DateTime
+}
+
+export interface IndicesIndexSettingsUnassigned {
+  node_left?: IndicesIndexSettingsUnassignedNodeLeft
+}
+
+export interface IndicesIndexSettingsUnassignedNodeLeft {
+  delayed_timeout?: Duration
 }
 
 export interface IndicesIndexState {
@@ -18087,6 +18097,14 @@ export interface NodesAdaptiveSelection {
   rank?: string
 }
 
+export interface NodesAllocations {
+  shards?: integer
+  undesired_shards?: integer
+  forecasted_ingest_load?: double
+  forecasted_disk_usage_in_bytes?: long
+  current_disk_usage_in_bytes?: long
+}
+
 export interface NodesBreaker {
   estimated_size?: string
   estimated_size_in_bytes?: long
@@ -18513,6 +18531,7 @@ export interface NodesSizeHttpHistogram {
 
 export interface NodesStats {
   adaptive_selection?: Record<string, NodesAdaptiveSelection>
+  allocations?: NodesAllocations
   breakers?: Record<string, NodesBreaker>
   fs?: NodesFileSystem
   host?: Host
@@ -18660,7 +18679,7 @@ export interface NodesInfoNodeInfoClient {
 export interface NodesInfoNodeInfoDiscoverKeys {
   seed_hosts?: string[] | string
   type?: string
-  seed_providers?: string[]
+  seed_providers?: string[] | string
 }
 export type NodesInfoNodeInfoDiscover = NodesInfoNodeInfoDiscoverKeys
 & { [property: string]: any }
