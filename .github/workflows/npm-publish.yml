@@ -1,17 +1,14 @@
 name: Publish Package to npm
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: "Git branch to build and publish"
-        required: true
+  release:
+    types: [published]
   push:
     branches:
       - main
 
 # kill in-progress action if another one is triggered (only for unstable publishes)
 concurrency:
-  group: ${{ github.event_name == 'push' && 'publish-unstable' || format('publish-manual-{0}', github.run_id) }}
+  group: ${{ github.event_name == 'push' && 'publish-unstable' || format('publish-release-{0}', github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'push' }}
 
 jobs:
@@ -85,16 +82,25 @@ jobs:
           npm publish --provenance --access public --tag "unstable"
 
   build:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       id-token: write
     steps:
+      - name: Derive branch from release tag
+        id: branch
+        run: |
+          # tag_name is e.g. "v9.5.0" or "9.5.0"
+          version="${{ github.event.release.tag_name }}"
+          version="${version#v}"
+          major=$(echo "$version" | cut -d '.' -f1)
+          minor=$(echo "$version" | cut -d '.' -f2)
+          echo "name=$major.$minor" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           persist-credentials: false
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ steps.branch.outputs.name }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24.x"
@@ -125,31 +131,3 @@ jobs:
             tag=$(echo "$tag_meta" | cut -d '.' -f1)
             npm publish --provenance --access public --tag "$tag"
           fi
-      - name: Fetch ephemeral GitHub token
-        id: fetch-token
-        uses: elastic/ci-gh-actions/fetch-github-token@2feb1c6f5086cf8e06f61ef35e275abed3456f7b # v1.5.3
-        with:
-          vault-instance: "ci-prod"
-      - name: Publish version on GitHub
-        run: |
-          version=$(jq -r .version package.json)
-          tag_meta=$(echo "$version" | cut -s -d '-' -f2)
-          if [[ -z "$tag_meta" ]]; then
-            gh release create \
-              -n "[Changelog](https://www.elastic.co/docs/release-notes/elasticsearch/clients/javascript#elasticsearch-javascript-client-$version)" \
-              --target "$BRANCH_NAME" \
-              --title "v$version" \
-              "v$version"
-          else
-            tag_main=$(echo "$version" | cut -d '-' -f1)
-            gh release create \
-              -n "This is a $tag_main pre-release. Changes may not be stable." \
-              --latest=false \
-              --prerelease \
-              --target "$BRANCH_NAME" \
-              --title "v$version" \
-              "v$version"
-          fi
-        env:
-          BRANCH_NAME: ${{ github.event.inputs.branch }}
-          GH_TOKEN: ${{ steps.fetch-token.outputs.token }}
