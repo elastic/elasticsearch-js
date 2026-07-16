@@ -1,5 +1,10 @@
 name: Publish Package to npm
 on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Git branch to build and publish"
+        required: true
   release:
     types: [published]
   push:
@@ -82,7 +87,7 @@ jobs:
           npm publish --provenance --access public --tag "unstable"
 
   build:
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -90,6 +95,7 @@ jobs:
     steps:
       - name: Derive branch from release tag
         id: branch
+        if: github.event_name == 'release'
         run: |
           # tag_name is e.g. "v9.5.0" or "9.5.0"
           version="${{ github.event.release.tag_name }}"
@@ -97,10 +103,15 @@ jobs:
           major=$(echo "$version" | cut -d '.' -f1)
           minor=$(echo "$version" | cut -d '.' -f2)
           echo "name=$major.$minor" >> "$GITHUB_OUTPUT"
+      - name: Set branch from workflow input
+        id: branch_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "name=${{ github.event.inputs.branch }}" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           persist-credentials: false
-          ref: ${{ steps.branch.outputs.name }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || steps.branch.outputs.name }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24.x"
