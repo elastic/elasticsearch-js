@@ -52,6 +52,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'preference',
       'realtime',
       'routing',
+      '_slice',
       'term_statistics',
       'version',
       'version_type'
@@ -123,7 +124,7 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
     acceptedParams: {
       path: ['index', 'id'],
       body: ['doc', 'filter', 'per_field_analyzer', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'term_statistics', 'routing', 'version', 'version_type'],
-      query: ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type']
+      query: ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', '_slice', 'term_statistics', 'version', 'version_type']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

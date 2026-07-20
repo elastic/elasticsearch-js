@@ -66,6 +66,7 @@ export default class Transform {
         body: [],
         query: [
           'allow_no_match',
+          'basic',
           'from',
           'size',
           'timeout'
@@ -392,7 +393,7 @@ export default class Transform {
       acceptedParams: {
         path: ['transform_id'],
         body: [],
-        query: ['allow_no_match', 'from', 'size', 'timeout']
+        query: ['allow_no_match', 'basic', 'from', 'size', 'timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

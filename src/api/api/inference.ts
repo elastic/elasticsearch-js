@@ -65,6 +65,11 @@ export default class Inference {
           'force'
         ]
       },
+      'inference.delete_region_policy': {
+        path: [],
+        body: [],
+        query: []
+      },
       'inference.embedding': {
         path: [
           'inference_id'
@@ -81,6 +86,11 @@ export default class Inference {
           'task_type',
           'inference_id'
         ],
+        body: [],
+        query: []
+      },
+      'inference.get_region_policy': {
+        path: [],
         body: [],
         query: []
       },
@@ -457,6 +467,15 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.put_region_policy': {
+        path: [],
+        body: [
+          'region_policy'
+        ],
+        query: [
+          'force'
+        ]
+      },
       'inference.put_voyageai': {
         path: [
           'task_type',
@@ -726,6 +745,54 @@ export default class Inference {
   }
 
   /**
+    * Delete the inference region policy.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete-region-policy | Elasticsearch API documentation}
+    */
+  async deleteRegionPolicy (this: That, params?: T.InferenceDeleteRegionPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteRegionPolicyResponse>
+  async deleteRegionPolicy (this: That, params?: T.InferenceDeleteRegionPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteRegionPolicyResponse, unknown>>
+  async deleteRegionPolicy (this: That, params?: T.InferenceDeleteRegionPolicyRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteRegionPolicyResponse>
+  async deleteRegionPolicy (this: That, params?: T.InferenceDeleteRegionPolicyRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['inference.delete_region_policy']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = '/_inference/_region_policy'
+    const meta: TransportRequestMetadata = {
+      name: 'inference.delete_region_policy',
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Perform dense embedding inference on the service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
     */
@@ -835,6 +902,54 @@ export default class Inference {
       },
       acceptedParams: {
         path: ['task_type', 'inference_id'],
+        body: [],
+        query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get the inference region policy.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get-region-policy | Elasticsearch API documentation}
+    */
+  async getRegionPolicy (this: That, params?: T.InferenceGetRegionPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetRegionPolicyResponse>
+  async getRegionPolicy (this: That, params?: T.InferenceGetRegionPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetRegionPolicyResponse, unknown>>
+  async getRegionPolicy (this: That, params?: T.InferenceGetRegionPolicyRequest, options?: TransportRequestOptions): Promise<T.InferenceGetRegionPolicyResponse>
+  async getRegionPolicy (this: That, params?: T.InferenceGetRegionPolicyRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['inference.get_region_policy']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_inference/_region_policy'
+    const meta: TransportRequestMetadata = {
+      name: 'inference.get_region_policy',
+      acceptedParams: {
+        path: [],
         body: [],
         query: []
       }
@@ -2479,6 +2594,65 @@ export default class Inference {
         path: ['task_type', 'openshiftai_inference_id'],
         body: ['chunking_settings', 'service', 'service_settings', 'task_settings'],
         query: ['timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create or update the inference region policy. The region policy restricts inference to a set of allowed geographic areas or cloud service provider regions.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-region-policy | Elasticsearch API documentation}
+    */
+  async putRegionPolicy (this: That, params: T.InferencePutRegionPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutRegionPolicyResponse>
+  async putRegionPolicy (this: That, params: T.InferencePutRegionPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutRegionPolicyResponse, unknown>>
+  async putRegionPolicy (this: That, params: T.InferencePutRegionPolicyRequest, options?: TransportRequestOptions): Promise<T.InferencePutRegionPolicyResponse>
+  async putRegionPolicy (this: That, params: T.InferencePutRegionPolicyRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.put_region_policy']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = '/_inference/_region_policy'
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_region_policy',
+      acceptedParams: {
+        path: [],
+        body: ['region_policy'],
+        query: ['force']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -51,6 +51,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'request_cache',
       'requests_per_second',
       'routing',
+      '_slice',
       'q',
       'scroll',
       'scroll_size',
@@ -124,7 +125,7 @@ export default async function DeleteByQueryApi (this: That, params: T.DeleteByQu
     acceptedParams: {
       path: ['index'],
       body: ['max_docs', 'query', 'slice', 'sort'],
-      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'conflicts', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'max_docs', 'preference', 'refresh', 'request_cache', 'requests_per_second', 'routing', 'q', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'slices', 'sort', 'stats', 'terminate_after', 'timeout', 'version', 'wait_for_active_shards', 'wait_for_completion']
+      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'conflicts', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'max_docs', 'preference', 'refresh', 'request_cache', 'requests_per_second', 'routing', '_slice', 'q', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'slices', 'sort', 'stats', 'terminate_after', 'timeout', 'version', 'wait_for_active_shards', 'wait_for_completion']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

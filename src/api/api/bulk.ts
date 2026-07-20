@@ -38,6 +38,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'pipeline',
       'refresh',
       'routing',
+      '_slice',
       '_source',
       '_source_excludes',
       '_source_includes',
@@ -107,7 +108,7 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
     acceptedParams: {
       path: ['index'],
       body: ['operations'],
-      query: ['include_source_on_error', 'list_executed_pipelines', 'pipeline', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'timeout', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
+      query: ['include_source_on_error', 'list_executed_pipelines', 'pipeline', 'refresh', 'routing', '_slice', '_source', '_source_excludes', '_source_includes', 'timeout', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
     }
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
