@@ -9055,6 +9055,10 @@ export interface MappingFlattenedProperty extends MappingPropertyBase {
   index?: boolean
   index_options?: MappingIndexOptions
   null_value?: string
+  /** How leaf arrays are represented in synthetic source.
+    * When set to `lossy`, leaf arrays are sorted, de-nulled, and deduplicated in the returned synthetic source.
+    * When set to `exact`, leaf arrays preserve order, nulls, and duplicates. */
+  preserve_leaf_arrays?: MappingPreserveLeafArrays
   similarity?: string
   split_queries_on_whitespace?: boolean
   time_series_dimensions?: string[]
@@ -9260,6 +9264,8 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   null_value?: string
   type: 'point'
 }
+
+export type MappingPreserveLeafArrays = 'lossy' | 'exact'
 
 export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingRankVectorProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingExponentialHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
@@ -20687,6 +20693,10 @@ export interface IndicesIndexSettingsLifecycleStep {
 export interface IndicesIndexSettingsTimeSeries {
   end_time?: DateTime
   start_time?: DateTime
+  /** The name of the field that stores the temporality of a metric.
+    * The referenced field must be a `keyword` dimension field; if the setting is unset or the
+    * field is missing or invalid, the metric temporality resolves to null. */
+  temporality_field?: Field
 }
 
 export interface IndicesIndexSettingsUnassigned {
@@ -24797,7 +24807,10 @@ export interface InferenceCustomTaskSettings {
     *     "return_token":true
     *   }
     * }
-    * ``` */
+    * ```
+    *
+    * > warn
+    * > The `task_settings.parameters` cannot contain the same keys as `secret_parameters`. If they do, an error will be returned. This applies to PUT requests and POST requests. */
   parameters?: Record<string, InferenceCustomTaskParameter>
 }
 
@@ -40718,6 +40731,14 @@ export interface TransformGetTransformStatsRequest extends RequestBase {
     * If this parameter is false, the request returns a 404 status code when
     * there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** If true, the response includes `id`, `state`, `node`, `stats`, `health`,
+    * and basic `checkpointing` information (the last and next checkpoint
+    * numbers, and the next checkpoint's `position` and `progress`). Skips
+    * statistics that require heavy computations to calculate:
+    * `operations_behind`, `changes_last_detected_at`, `last_search_time`, and
+    * the checkpoint timestamps.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  basic?: boolean
   /** Skips the specified number of transforms. */
   from?: long
   /** Specifies the maximum number of transforms to obtain. */
@@ -40725,9 +40746,9 @@ export interface TransformGetTransformStatsRequest extends RequestBase {
   /** Controls the time to wait for the stats */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, basic?: never, from?: never, size?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, basic?: never, from?: never, size?: never, timeout?: never }
 }
 
 export interface TransformGetTransformStatsResponse {
@@ -42096,6 +42117,15 @@ export interface XpackUsageEqlFeaturesSequences {
   sequence_maxspan: uint
 }
 
+export interface XpackUsageEsqlLoggingConfig {
+  /** Whether ES|QL query logging is enabled. */
+  enabled: boolean
+  /** Whether user information is included in the ES|QL query log. */
+  user: boolean
+  /** The configured logging thresholds, keyed by threshold name, if any. */
+  thresholds?: Record<string, Duration>
+}
+
 export interface XpackUsageFeatureToggle {
   enabled: boolean
 }
@@ -42153,6 +42183,13 @@ export interface XpackUsageJobUsage {
   detectors: MlJobStatistics
   forecasts: XpackUsageMlJobForecasts
   model_size: MlJobStatistics
+}
+
+export interface XpackUsageLogging {
+  /** Search query log configuration. */
+  querylog: XpackUsageQueryLoggingConfig
+  /** ES|QL query log configuration. */
+  esql: XpackUsageEsqlLoggingConfig
 }
 
 export interface XpackUsageMachineLearning extends XpackUsageBase {
@@ -42268,6 +42305,17 @@ export interface XpackUsageQuery {
   total?: integer
 }
 
+export interface XpackUsageQueryLoggingConfig {
+  /** Whether query logging is enabled. */
+  enabled: boolean
+  /** Whether user information is included in the query log. */
+  user: boolean
+  /** Whether system queries are included in the query log. */
+  system: boolean
+  /** The configured logging threshold, if any. */
+  threshold?: Duration
+}
+
 export interface XpackUsageRealm extends XpackUsageBase {
   name?: string[]
   order?: long[]
@@ -42312,6 +42360,8 @@ export interface XpackUsageResponse {
   gpu_vector_indexing?: XpackUsageGpuVectorIndexing
   health_api?: XpackUsageHealthStatistics
   ilm: XpackUsageIlm
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  logging?: XpackUsageLogging
   logstash: XpackUsageBase
   ml: XpackUsageMachineLearning
   monitoring: XpackUsageMonitoring
