@@ -42,6 +42,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'preference',
       'realtime',
       'routing',
+      '_slice',
       'term_statistics',
       'version',
       'version_type'
@@ -113,7 +114,7 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
     acceptedParams: {
       path: ['index'],
       body: ['docs', 'ids'],
-      query: ['ids', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type']
+      query: ['ids', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', '_slice', 'term_statistics', 'version', 'version_type']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -25,6 +25,7 @@ import deleteApi from './api/delete'
 import deleteByQueryApi from './api/delete_by_query'
 import deleteByQueryRethrottleApi from './api/delete_by_query_rethrottle'
 import deleteScriptApi from './api/delete_script'
+import EncryptionApi from './api/encryption'
 import EnrichApi from './api/enrich'
 import EqlApi from './api/eql'
 import EsqlApi from './api/esql'
@@ -119,6 +120,7 @@ export default interface API {
   deleteByQuery: typeof deleteByQueryApi
   deleteByQueryRethrottle: typeof deleteByQueryRethrottleApi
   deleteScript: typeof deleteScriptApi
+  encryption: EncryptionApi
   enrich: EnrichApi
   eql: EqlApi
   esql: EsqlApi
@@ -201,6 +203,7 @@ const kCcr = Symbol('Ccr')
 const kCluster = Symbol('Cluster')
 const kConnector = Symbol('Connector')
 const kDanglingIndices = Symbol('DanglingIndices')
+const kEncryption = Symbol('Encryption')
 const kEnrich = Symbol('Enrich')
 const kEql = Symbol('Eql')
 const kEsql = Symbol('Esql')
@@ -246,6 +249,7 @@ export default class API {
   [kCluster]: symbol | null
   [kConnector]: symbol | null
   [kDanglingIndices]: symbol | null
+  [kEncryption]: symbol | null
   [kEnrich]: symbol | null
   [kEql]: symbol | null
   [kEsql]: symbol | null
@@ -290,6 +294,7 @@ export default class API {
     this[kCluster] = null
     this[kConnector] = null
     this[kDanglingIndices] = null
+    this[kEncryption] = null
     this[kEnrich] = null
     this[kEql] = null
     this[kEsql] = null
@@ -399,6 +404,9 @@ Object.defineProperties(API.prototype, {
   },
   danglingIndices: {
     get () { return this[kDanglingIndices] === null ? (this[kDanglingIndices] = new DanglingIndicesApi(this.transport)) : this[kDanglingIndices] }
+  },
+  encryption: {
+    get () { return this[kEncryption] === null ? (this[kEncryption] = new EncryptionApi(this.transport)) : this[kEncryption] }
   },
   enrich: {
     get () { return this[kEnrich] === null ? (this[kEnrich] = new EnrichApi(this.transport)) : this[kEnrich] }

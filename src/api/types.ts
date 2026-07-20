@@ -79,8 +79,13 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
     * If `false`, do nothing with refreshes.
     * Valid values: `true`, `false`, `wait_for`. */
   refresh?: Refresh
-  /** A custom value that is used to route operations to a specific shard. */
+  /** A custom value that is used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return. */
   _source?: SearchSourceConfigParam
   /** A comma-separated list of source fields to exclude from the response.
@@ -98,7 +103,8 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
     * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
-    * The default is `1`, which waits for each primary shard to be active. */
+    * The default is `1`, which waits for each primary shard to be active.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** If `true`, the request's actions must target an index alias. */
   require_alias?: boolean
@@ -106,9 +112,9 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   require_data_stream?: boolean
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
+  body?: string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
+  querystring?: { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
 }
 
 export interface BulkResponse {
@@ -342,10 +348,15 @@ export interface CountRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * By default, it is random. */
   preference?: string
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
   /** Specific `tag` of the request for logging and statistical purposes. */
   stats?: string[] | string
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The maximum number of documents to collect for each shard.
     * If a query reaches this limit, Elasticsearch terminates the query early.
     * Elasticsearch collects documents before sorting.
@@ -370,9 +381,9 @@ export interface CountRequest extends RequestBase {
     * Supported in serverless only. */
   project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, stats?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, stats?: never, _slice?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, stats?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, min_score?: never, preference?: never, routing?: never, stats?: never, _slice?: never, terminate_after?: never, q?: never, query?: never, project_routing?: never }
 }
 
 export interface CountResponse {
@@ -420,7 +431,8 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
   version_type?: VersionType
   /** The number of shard copies that must be active before proceeding with the operation.
     * You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
-    * The default value of `1` means it waits for each primary shard to be active. */
+    * The default value of `1` means it waits for each primary shard to be active.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   document?: TDocument
   /** All values in `body` will be added to the request body. */
@@ -444,8 +456,13 @@ export interface DeleteRequest extends RequestBase {
     * If `wait_for`, it waits for a refresh to make this operation visible to search.
     * If `false`, it does nothing with refreshes. */
   refresh?: Refresh
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The period to wait for active shards.
     *
     * This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs.
@@ -459,12 +476,13 @@ export interface DeleteRequest extends RequestBase {
   version_type?: VersionType
   /** The minimum number of shard copies that must be active before proceeding with the operation.
     * You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
-    * The default value of `1` means it waits for each primary shard to be active. */
+    * The default value of `1` means it waits for each primary shard to be active.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, refresh?: never, routing?: never, _slice?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, refresh?: never, routing?: never, _slice?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never }
 }
 
 export type DeleteResponse = WriteResponseBase
@@ -521,8 +539,13 @@ export interface DeleteByQueryRequest extends RequestBase {
   /** The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices).
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** A query in the Lucene query string syntax. */
   q?: string
   /** The period to retain the search context for scrolling. */
@@ -554,7 +577,8 @@ export interface DeleteByQueryRequest extends RequestBase {
   version?: boolean
   /** The number of shard copies that must be active before proceeding with the operation.
     * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
-    * The `timeout` value controls how long each write request waits for unavailable shards to become available. */
+    * The `timeout` value controls how long each write request waits for unavailable shards to become available.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** If `true`, the request blocks until the operation is complete.
     * If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to cancel or get the status of the task. Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`. When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space. */
@@ -568,9 +592,9 @@ export interface DeleteByQueryRequest extends RequestBase {
   /** A sort object that specifies the order of deleted documents. */
   sort?: Sort
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
 }
 
 export interface DeleteByQueryResponse {
@@ -766,8 +790,13 @@ export interface ExplainRequest extends RequestBase {
   /** The node or shard the operation should be performed on.
     * It is random by default. */
   preference?: string
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** `True` or `false` to return the `_source` field or not or a list of fields to return. */
   _source?: SearchSourceConfigParam
   /** A comma-separated list of source fields to exclude from the response.
@@ -786,9 +815,9 @@ export interface ExplainRequest extends RequestBase {
   /** Defines the search definition using the Query DSL. */
   query?: QueryDslQueryContainer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, lenient?: never, preference?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, q?: never, query?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, lenient?: never, preference?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, q?: never, query?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, lenient?: never, preference?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, q?: never, query?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, lenient?: never, preference?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, q?: never, query?: never }
 }
 
 export interface ExplainResponse<TDocument = unknown> {
@@ -940,8 +969,13 @@ export interface GetRequest extends RequestBase {
   /** If `true`, the request refreshes the relevant shards before retrieving the document.
     * Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing). */
   refresh?: boolean
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return. */
   _source?: SearchSourceConfigParam
   /** A comma-separated list of source fields to exclude from the response.
@@ -967,9 +1001,9 @@ export interface GetRequest extends RequestBase {
   /** The version type. */
   version_type?: VersionType
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, stored_fields?: never, version?: never, version_type?: never }
 }
 
 export type GetResponse<TDocument = unknown> = GetGetResult<TDocument>
@@ -1229,6 +1263,9 @@ export interface HealthReportMasterIsStableIndicatorExceptionFetchingHistory {
 export interface HealthReportProjectEncryptionKeyDetails {
   active_key_id?: string
   active_password_id: string
+  /** Whether callers must refuse to store secrets when the service is not ready.
+    * If `false`, callers may fall back to storing secrets in plaintext (with a warning). */
+  encryption_required: boolean
   key_count?: integer
   metadata_password_id?: string
   state: string
@@ -1351,8 +1388,13 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
     * If `wait_for`, it waits for a refresh to make this operation visible to search.
     * If `false`, it does nothing with refreshes. */
   refresh?: Refresh
-  /** A custom value that is used to route operations to a specific shard. */
+  /** A custom value that is used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
     *
     * This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.
@@ -1367,7 +1409,8 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   version_type?: VersionType
   /** The number of shard copies that must be active before proceeding with the operation.
     * You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
-    * The default value of `1` means it waits for each primary shard to be active. */
+    * The default value of `1` means it waits for each primary shard to be active.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
@@ -1375,9 +1418,9 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   require_data_stream?: boolean
   document?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
 }
 
 export type IndexResponse = WriteResponseBase
@@ -1517,8 +1560,13 @@ export interface MgetRequest extends RequestBase {
   realtime?: boolean
   /** If `true`, the request refreshes relevant shards before retrieving documents. */
   refresh?: boolean
-  /** Custom value used to route operations to a specific shard. */
+  /** Custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** True or false to return the `_source` field or not, or a list of fields to return. */
   _source?: SearchSourceConfigParam
   /** A comma-separated list of source fields to exclude from the response.
@@ -1535,9 +1583,9 @@ export interface MgetRequest extends RequestBase {
   /** The IDs of the documents you want to retrieve. Allowed when the index is specified in the request URI. */
   ids?: Ids
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }
+  body?: string | { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }
+  querystring?: { [key: string]: any } & { index?: never, force_synthetic_source?: never, preference?: never, realtime?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, stored_fields?: never, docs?: never, ids?: never }
 }
 
 export interface MgetResponse<TDocument = unknown> {
@@ -1761,8 +1809,13 @@ export interface MtermvectorsRequest extends RequestBase {
   preference?: string
   /** If true, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** If true, the response includes term frequency and document frequency. */
   term_statistics?: boolean
   /** If `true`, returns the document version as part of a hit. */
@@ -1774,9 +1827,9 @@ export interface MtermvectorsRequest extends RequestBase {
   /** A simplified syntax to specify documents by their ID if they're in the same index. */
   ids?: Id[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
+  body?: string | { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, _slice?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
+  querystring?: { [key: string]: any } & { index?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, preference?: never, realtime?: never, routing?: never, _slice?: never, term_statistics?: never, version?: never, version_type?: never, docs?: never, ids?: never }
 }
 
 export interface MtermvectorsResponse {
@@ -2021,8 +2074,13 @@ export interface ReindexDestination {
   /** By default, a document's routing is preserved unless it's changed by the script.
     * If it is `keep`, the routing on the bulk request sent for each match is set to the routing on the match.
     * If it is `discard`, the routing on the bulk request sent for each match is set to `null`.
-    * If it is `=value`, the routing on the bulk request sent for each match is set to all value specified after the equals sign (`=`). */
+    * If it is `=value`, the routing on the bulk request sent for each match is set to all value specified after the equals sign (`=`).
+    * Not allowed when `index.slice.enabled` is `true` for the destination index; use `_slice` instead. */
   routing?: string
+  /** The slice identifier used to route the reindexed documents to a specific slice of the destination index.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the destination index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The versioning to use for the indexing operation. */
   version_type?: VersionType
 }
@@ -2075,9 +2133,12 @@ export interface ReindexRequest extends RequestBase {
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
     * Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
-    * The default value is one, which means it waits for each primary shard to be active. */
+    * The default value is one, which means it waits for each primary shard to be active.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
-  /** If `true`, the request blocks until the operation is complete. */
+  /** If `true`, the request blocks until the operation is complete. If your requested reindex operation is complex or time-consuming,
+    * it might timeout due to transport-layer limitations. While the reindex will continue to be processed by the cluster, your
+    * client will not receive updates on status automatically after timeout. Set this option `true` if you anticipate a long-running reindex. */
   wait_for_completion?: boolean
   /** If `true`, the destination must be an index alias. */
   require_alias?: boolean
@@ -2426,8 +2487,13 @@ export interface SearchRequest extends RequestBase {
   /** If `true`, the caching of search results is enabled for requests where `size` is `0`.
     * It defaults to index level settings. */
   request_cache?: boolean
-  /** A custom value that is used to route operations to a specific shard. */
+  /** A custom value that is used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The period to retain the search context for scrolling.
     * By default, this value cannot exceed `1d` (24 hours).
     * You can change this limit by using the `search.max_keep_alive` cluster-level setting. */
@@ -2589,9 +2655,9 @@ export interface SearchRequest extends RequestBase {
     * Supported in serverless only. */
   project_routing?: ProjectRouting
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never, project_routing?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, _slice?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never, project_routing?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never, project_routing?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, allow_partial_search_results?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, _slice?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_exclude_vectors?: never, _source_includes?: never, q?: never, force_synthetic_source?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, knn?: never, rank?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, retriever?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never, project_routing?: never }
 }
 
 export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -3860,6 +3926,10 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   preference?: string
   /** If true, the request is real-time as opposed to near-real-time. */
   realtime?: boolean
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** An artificial document (a document not present in the index) for which you want to retrieve term vectors. */
   doc?: TDocument
   /** Filter terms based on their tf-idf scores.
@@ -3899,9 +3969,9 @@ export interface TermvectorsRequest<TDocument = unknown> extends RequestBase {
   /** The version type. */
   version_type?: VersionType
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, id?: never, preference?: never, realtime?: never, doc?: never, filter?: never, per_field_analyzer?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, term_statistics?: never, routing?: never, version?: never, version_type?: never }
+  body?: string | { [key: string]: any } & { index?: never, id?: never, preference?: never, realtime?: never, _slice?: never, doc?: never, filter?: never, per_field_analyzer?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, term_statistics?: never, routing?: never, version?: never, version_type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, id?: never, preference?: never, realtime?: never, doc?: never, filter?: never, per_field_analyzer?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, term_statistics?: never, routing?: never, version?: never, version_type?: never }
+  querystring?: { [key: string]: any } & { index?: never, id?: never, preference?: never, realtime?: never, _slice?: never, doc?: never, filter?: never, per_field_analyzer?: never, fields?: never, field_statistics?: never, offsets?: never, payloads?: never, positions?: never, term_statistics?: never, routing?: never, version?: never, version_type?: never }
 }
 
 export interface TermvectorsResponse {
@@ -3955,15 +4025,21 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   require_alias?: boolean
   /** The number of times the operation should be retried when a conflict occurs. */
   retry_on_conflict?: integer
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The period to wait for the following operations: dynamic mapping updates and waiting for active shards.
     * Elasticsearch waits for at least the timeout period before failing.
     * The actual wait time could be longer, particularly when multiple waits occur. */
   timeout?: Duration
   /** The number of copies of each shard that must be active before proceeding with the operation.
     * Set to 'all' or any positive integer up to the total number of shards in the index (`number_of_replicas`+1).
-    * The default value of `1` means it waits for each primary shard to be active. */
+    * The default value of `1` means it waits for each primary shard to be active.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** The source fields you want to exclude. */
   _source_excludes?: Fields
@@ -3988,9 +4064,9 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
     * If the document exists, the 'script' is run. */
   upsert?: TDocument
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
+  body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, _slice?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
+  querystring?: { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, lang?: never, refresh?: never, require_alias?: never, retry_on_conflict?: never, routing?: never, _slice?: never, timeout?: never, wait_for_active_shards?: never, _source_excludes?: never, _source_includes?: never, detect_noop?: never, doc?: never, doc_as_upsert?: never, script?: never, scripted_upsert?: never, _source?: never, upsert?: never }
 }
 
 export type UpdateResponse<TDocument = unknown> = UpdateUpdateWriteResponseBase<TDocument>
@@ -4054,8 +4130,13 @@ export interface UpdateByQueryRequest extends RequestBase {
   /** The maximum number of documents to update per second, across the entire update_by_query operation (including slices).
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
-  /** A custom value used to route operations to a specific shard. */
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
   routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** The period to retain the search context for scrolling. */
   scroll?: Duration
   /** The size of the scroll request that powers the operation. */
@@ -4092,7 +4173,9 @@ export interface UpdateByQueryRequest extends RequestBase {
   /** The number of shard copies that must be active before proceeding with the operation.
     * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
     * The `timeout` parameter controls how long each write request waits for unavailable shards to become available.
-    * Both work exactly the way they work in the bulk API. */
+    * Both work exactly the way they work in the bulk API.
+    * Update by query uses scrolled searches, so you can also specify the `scroll` parameter to control how long it keeps the search context alive, for example `?scroll=10m`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** If `true`, the request blocks until the operation is complete.
     * If `false`, Elasticsearch performs some preflight checks, launches the request, and returns a task ID that you can use to cancel or get the status of the task.
@@ -4109,9 +4192,9 @@ export interface UpdateByQueryRequest extends RequestBase {
   /** The preferred behavior when update by query hits version conflicts: `abort` or `proceed`. */
   conflicts?: Conflicts
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, pipeline?: never, preference?: never, q?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, script?: never, slice?: never, conflicts?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, pipeline?: never, preference?: never, q?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, script?: never, slice?: never, conflicts?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, pipeline?: never, preference?: never, q?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, script?: never, slice?: never, conflicts?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, pipeline?: never, preference?: never, q?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, sort?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, script?: never, slice?: never, conflicts?: never }
 }
 
 export interface UpdateByQueryResponse {
@@ -4538,6 +4621,8 @@ export interface FlushStats {
   total: long
   total_time?: Duration
   total_time_in_millis: DurationValue<UnitMillis>
+  total_time_excluding_waiting?: Duration
+  total_time_excluding_waiting_on_lock_in_millis: DurationValue<UnitMillis>
 }
 
 export type Fuzziness = string | integer
@@ -4592,7 +4677,7 @@ export interface GetStats {
   missing_time?: Duration
   missing_time_in_millis: DurationValue<UnitMillis>
   missing_total: long
-  time?: Duration
+  getTime?: Duration
   time_in_millis: DurationValue<UnitMillis>
   total: long
 }
@@ -4647,6 +4732,7 @@ export interface IndexingStats {
   index_time_in_millis: DurationValue<UnitMillis>
   index_total: long
   index_failed: long
+  index_failed_due_to_version_conflict: long
   types?: Record<string, IndexingStats>
   write_load?: double
   recent_write_load?: double
@@ -4994,7 +5080,15 @@ export type RankContainer = ExactlyOne<RankContainerExclusiveProps>
 
 export interface RecoveryStats {
   current_as_source: long
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  current_as_source_queued?: long
   current_as_target: long
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  current_as_target_queued?: long
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  current_from_store?: long
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  current_from_store_queued?: long
   throttle_time?: Duration
   throttle_time_in_millis: DurationValue<UnitMillis>
 }
@@ -5003,6 +5097,7 @@ export type Refresh = boolean | 'true' | 'false' | 'wait_for'
 
 export interface RefreshStats {
   external_total: long
+  external_total_time?: Duration
   external_total_time_in_millis: DurationValue<UnitMillis>
   listeners: long
   total: long
@@ -5240,11 +5335,13 @@ export interface SearchStats {
   fetch_time?: Duration
   fetch_time_in_millis: DurationValue<UnitMillis>
   fetch_total: long
+  fetch_failure: long
   open_contexts?: long
   query_current: long
   query_time?: Duration
   query_time_in_millis: DurationValue<UnitMillis>
   query_total: long
+  query_failure: long
   scroll_current: long
   scroll_time?: Duration
   scroll_time_in_millis: DurationValue<UnitMillis>
@@ -5259,7 +5356,7 @@ export interface SearchStats {
 
 export interface SearchTransform {
   request: WatcherSearchInputRequestDefinition
-  timeout: Duration
+  timeout?: Duration
 }
 
 export type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
@@ -5490,7 +5587,7 @@ export interface TopRightBottomLeftGeoBounds {
 
 interface TransformContainerExclusiveProps {
   chain?: TransformContainer[]
-  script?: ScriptTransform
+  script?: ScriptTransform | ScriptSource
   search?: SearchTransform
 }
 
@@ -9054,8 +9151,25 @@ export interface MappingDenseVectorProperty extends MappingPropertyBase {
 
 export type MappingDenseVectorSimilarity = 'cosine' | 'dot_product' | 'l2_norm' | 'max_inner_product'
 
+export type MappingDocValues = boolean | MappingDocValuesConfig
+
+export interface MappingDocValuesConfig {
+  /** If `false`, the field is treated as single-valued, enabling optimized storage.
+    * Only has an effect when columnar index mode is active.
+    * @experimental */
+  multi_value?: boolean
+  /** If `false`, every document must provide a non-null value for the field: a document that
+    * omits the field, sets it to `null`, or supplies only null values (an empty array or an
+    * all-null array) is rejected at index time.
+    * A field that defines `null_value` is always exempt, since the configured default removes
+    * the absence of a value.
+    * Only has an effect when columnar index mode is active.
+    * @experimental */
+  nullability?: boolean
+}
+
 export interface MappingDocValuesPropertyBase extends MappingCorePropertyBase {
-  doc_values?: boolean
+  doc_values?: MappingDocValues
 }
 
 export interface MappingDoubleNumberProperty extends MappingNumberPropertyBase {
@@ -9141,6 +9255,10 @@ export interface MappingFlattenedProperty extends MappingPropertyBase {
   index?: boolean
   index_options?: MappingIndexOptions
   null_value?: string
+  /** How leaf arrays are represented in synthetic source.
+    * When set to `lossy`, leaf arrays are sorted, de-nulled, and deduplicated in the returned synthetic source.
+    * When set to `exact`, leaf arrays preserve order, nulls, and duplicates. */
+  preserve_leaf_arrays?: MappingPreserveLeafArrays
   similarity?: string
   split_queries_on_whitespace?: boolean
   time_series_dimensions?: string[]
@@ -9347,6 +9465,8 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
+export type MappingPreserveLeafArrays = 'lossy' | 'exact'
+
 export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingPassthroughObjectProperty | MappingRankVectorProperty | MappingSemanticTextProperty | MappingSparseVectorProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingCountedKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingExponentialHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty | MappingIcuCollationProperty
 
 export interface MappingPropertyBase {
@@ -9481,8 +9601,6 @@ export interface MappingSizeField {
 }
 
 export interface MappingSourceField {
-  compress?: boolean
-  compress_threshold?: string
   enabled?: boolean
   excludes?: string[]
   includes?: string[]
@@ -16457,7 +16575,8 @@ export interface CcrFollowRequest extends RequestBase {
   /** Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
     * active.
     * A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
-    * remote Lucene segment files to the follower index. */
+    * remote Lucene segment files to the follower index.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** If the leader index is part of a data stream, the name to which the local data stream for the followed index should be renamed. */
   data_stream_name?: string
@@ -17175,7 +17294,8 @@ export interface ClusterHealthRequest extends RequestBase {
   timeout?: Duration
   /** Wait for the specified number of active shards.
     * Use `all` to wait for all shards in the cluster to be active.
-    * Use `0` to not wait. */
+    * Use `0` to not wait.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** Wait until all currently queued events with the given priority are processed. */
   wait_for_events?: WaitForEvents
@@ -17887,8 +18007,8 @@ export interface ClusterStatsDenseVectorOffHeapStats {
   total_veq_size?: ByteSize
   total_vex_size_bytes: long
   total_vex_size?: ByteSize
-  total_cenif_size_bytes: long
-  total_cenif_size?: ByteSize
+  total_cenivf_size_bytes: long
+  total_cenivf_size?: ByteSize
   total_clivf_size_bytes: long
   total_clivf_size?: ByteSize
   fielddata?: Record<string, Record<string, long>>
@@ -18981,6 +19101,25 @@ export interface DanglingIndicesListDanglingIndicesResponse {
   dangling_indices: DanglingIndicesListDanglingIndicesDanglingIndex[]
 }
 
+export interface EncryptionResetRequest extends RequestBase {
+  /** Acknowledge that resetting the project encryption key permanently destroys all data
+    * that was encrypted under the current key.
+    * The request fails if this is not set to `true`. */
+  accept_data_loss: boolean
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The period to wait for a response.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { accept_data_loss?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { accept_data_loss?: never, master_timeout?: never, timeout?: never }
+}
+
+export type EncryptionResetResponse = AcknowledgedResponseBase
+
 export interface EnrichPolicy {
   enrich_fields: Fields
   indices: Indices
@@ -19292,6 +19431,69 @@ export interface EsqlAsyncEsqlResult extends EsqlEsqlResult {
   is_running: boolean
 }
 
+interface EsqlClassifiedNamedParameterExclusiveProps {
+  /** Interpret the parameter as a literal value. */
+  value?: EsqlSingleOrMultiValue
+  /** Interpret the parameter as an identifier, such as a field or function name. */
+  identifier?: string
+  /** Interpret the parameter as a pattern, such as an index or field name pattern. */
+  pattern?: string
+}
+
+export type EsqlClassifiedNamedParameter = ExactlyOne<EsqlClassifiedNamedParameterExclusiveProps>
+
+export interface EsqlDatasetFieldMapping {
+  /** The declared column type. */
+  type: string
+  /** The underlying file column that this logical column reads from.
+    * This is a read-path rename: the physical column becomes this single logical column. */
+  path?: string
+  /** The date-parse pattern for a declared `date` column, mirroring the index date-field `format`. */
+  format?: string
+}
+
+export interface EsqlDatasetMapping {
+  /** The policy for columns that are not declared in `properties`.
+    * `true` (the default) infers undeclared columns and overlays the declarations; `false` makes the declaration the entire schema, so undeclared columns are not queryable. */
+  dynamic?: EsqlDynamic
+  /** The per-column declarations, keyed by logical column name. */
+  properties?: Record<string, EsqlDatasetFieldMapping>
+  /** The `_id` meta-field configuration, sourcing the document identity from a column. */
+  _id?: EsqlIdPath
+}
+
+export type EsqlDynamic = boolean | 'true' | 'false'
+
+export interface EsqlESQLDataSource {
+  /** The data source name. */
+  name: Name
+  /** The data source type. Currently, `s3` is supported. */
+  type: string
+  /** A free-text description. */
+  description?: string
+  /** Type-specific connection and authentication settings. */
+  settings: Record<string, any>
+}
+
+export interface EsqlESQLDataset {
+  /** The dataset name. */
+  name: Name
+  /** The name of the referenced data source. */
+  data_source: Name
+  /** The URI that identifies the data to read, resolved against the referenced data source.
+    * It can include glob patterns, for example a recursive pattern that matches
+    * Parquet files under `s3://logs-bucket/access`. */
+  resource: string
+  /** A free-text description. */
+  description?: string
+  /** Format- and parsing-specific settings that configure how the resource is read.
+    * Common keys include `format` and `partition_detection`. Additional keys depend on the format reader;
+    * compression can be inferred from the resource URI. */
+  settings?: Record<string, any>
+  /** The user-declared mapping on the dataset definition. */
+  mappings?: EsqlDatasetMapping
+}
+
 export type EsqlESQLParams = EsqlSingleOrMultiValue[] | EsqlNamedValue[]
 
 export interface EsqlESQLView {
@@ -19299,6 +19501,17 @@ export interface EsqlESQLView {
   name: string
   /** The ES|QL query */
   query: string
+}
+
+export type EsqlEsqlApproximation = boolean | EsqlEsqlApproximationSettings
+
+export interface EsqlEsqlApproximationSettings {
+  /** The number of sampled rows used for approximating the query.
+    * It must be at least 10,000. A null value uses the system default. */
+  rows?: integer
+  /** The confidence level of the computed confidence intervals.
+    * A null value disables computing confidence intervals. */
+  confidence_level?: double
 }
 
 export interface EsqlEsqlClusterDetails {
@@ -19328,6 +19541,24 @@ export interface EsqlEsqlColumnInfo {
 
 export type EsqlEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
 
+export interface EsqlEsqlQuerySettings {
+  /** The default timezone to be used in the query.
+    * It defaults to UTC and overrides the `time_zone` request parameter. */
+  time_zone?: string
+  /** Enables query approximation if possible for the query.
+    * `false` (the default) disables query approximation and `true` enables it with default settings.
+    * A map value enables query approximation with custom settings. */
+  approximation?: EsqlEsqlApproximation
+  /** When enabled, column metadata is added to the query response as additional `_meta` properties.
+    * Currently, only `_meta.bucket` is added for columns corresponding to the `BUCKET` function, containing the bucket interval and unit for queries where it can be determined.
+    * @experimental */
+  column_metadata?: SpecUtilsStringified<boolean>
+  /** Limits the scope of a cross-project search (CPS) to specific projects before query execution, based on a Lucene query expression evaluated against project tags.
+    * Excluded projects are not queried, which can reduce cost and latency.
+    * @remarks This property is only supported on Elastic Cloud Serverless. */
+  project_routing?: ProjectRouting
+}
+
 export interface EsqlEsqlResult {
   took?: DurationValue<UnitMillis>
   is_partial?: boolean
@@ -19356,7 +19587,14 @@ export interface EsqlEsqlShardInfo {
   failed?: integer
 }
 
-export type EsqlNamedValue = Partial<Record<string, EsqlSingleOrMultiValue>>
+export interface EsqlIdPath {
+  /** The name of the column that provides the document identity. */
+  path: string
+}
+
+export type EsqlNamedParameterValue = EsqlSingleOrMultiValue | EsqlClassifiedNamedParameter
+
+export type EsqlNamedValue = Partial<Record<string, EsqlNamedParameterValue>>
 
 export type EsqlSingleOrMultiValue = FieldValue | FieldValue[]
 
@@ -19447,10 +19685,13 @@ export interface EsqlAsyncQueryRequest extends RequestBase {
     *  _alias:*pr*
     * Supported in serverless only. */
   project_routing?: ProjectRouting
+  /** Per-query settings, the request-body equivalent of the in-query `SET` command.
+    * For example, `time_zone` can be supplied here instead of as a top-level field. */
+  settings?: EsqlEsqlQuerySettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, project_routing?: never }
+  body?: string | { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, project_routing?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, project_routing?: never }
+  querystring?: { [key: string]: any } & { allow_partial_results?: never, delimiter?: never, drop_null_columns?: never, format?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, wait_for_completion_timeout?: never, keep_alive?: never, keep_on_completion?: never, project_routing?: never, settings?: never }
 }
 
 export type EsqlAsyncQueryResponse = EsqlAsyncEsqlResult
@@ -19510,6 +19751,36 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
 
 export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
 
+export interface EsqlDeleteDataSourceRequest extends RequestBase {
+  /** A comma-separated list of data source names to delete. */
+  name: Names
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+}
+
+export type EsqlDeleteDataSourceResponse = AcknowledgedResponseBase
+
+export interface EsqlDeleteDatasetRequest extends RequestBase {
+  /** A comma-separated list of dataset names to delete. */
+  name: Names
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never }
+}
+
+export type EsqlDeleteDatasetResponse = AcknowledgedResponseBase
+
 export interface EsqlDeleteViewRequest extends RequestBase {
   /** The view name to remove. */
   name: Ids
@@ -19520,6 +19791,39 @@ export interface EsqlDeleteViewRequest extends RequestBase {
 }
 
 export type EsqlDeleteViewResponse = AcknowledgedResponseBase
+
+export interface EsqlGetDataSourceRequest extends RequestBase {
+  /** A comma-separated list of data source names or wildcard patterns. Omit to return all data sources. */
+  name?: Names
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
+}
+
+export interface EsqlGetDataSourceResponse {
+  /** The matching data sources.
+    * Credential values in each data source's settings are redacted as `::es_redacted::` in the response. */
+  data_sources: EsqlESQLDataSource[]
+}
+
+export interface EsqlGetDatasetRequest extends RequestBase {
+  /** A comma-separated list of dataset names or wildcard patterns. Omit to return all datasets. */
+  name?: Names
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never }
+}
+
+export interface EsqlGetDatasetResponse {
+  /** The matching datasets. */
+  datasets: EsqlESQLDataset[]
+}
 
 export interface EsqlGetQueryRequest extends RequestBase {
   /** The query ID */
@@ -19571,6 +19875,60 @@ export interface EsqlListQueriesRequest extends RequestBase {
 export interface EsqlListQueriesResponse {
   queries: Record<TaskId, EsqlListQueriesBody>
 }
+
+export interface EsqlPutDataSourceRequest extends RequestBase {
+  /** The data source name to create or update. */
+  name: Name
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** The data source type. Currently, `s3` is supported.
+    * The value must be lowercase and contain no whitespace. */
+  type: string
+  /** A free-text description of the data source. */
+  description?: string
+  /** Type-specific connection and authentication settings.
+    * For `s3`, connection settings include `region` and `endpoint`. Authentication settings
+    * include `auth` and the credentials required by the selected authentication method. */
+  settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, type?: never, description?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, type?: never, description?: never, settings?: never }
+}
+
+export type EsqlPutDataSourceResponse = AcknowledgedResponseBase
+
+export interface EsqlPutDatasetRequest extends RequestBase {
+  /** The dataset name to create or update. */
+  name: Name
+  /** Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** The time to wait for the request to be completed. */
+  timeout?: Duration
+  /** The name of the referenced data source. The data source must already exist. */
+  data_source: Name
+  /** The URI that identifies the data to read, resolved against the referenced data source.
+    * It can include glob patterns. For example, a recursive pattern can match
+    * all Parquet files under the `s3://logs-bucket/access` prefix. */
+  resource: string
+  /** A free-text description of the dataset. */
+  description?: string
+  /** User-declared mapping on the dataset definition */
+  mappings?: EsqlDatasetMapping
+  /** Format and parsing-specific settings that configure how the resource is read.
+    * Common keys include `format`, which explicitly selects a registered format, and
+    * `partition_detection`, which accepts `auto`, `hive`, `template`, or `none`. Additional
+    * keys depend on the format reader. Compression can be inferred from the resource URI. */
+  settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, data_source?: never, resource?: never, description?: never, mappings?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, data_source?: never, resource?: never, description?: never, mappings?: never, settings?: never }
+}
+
+export type EsqlPutDatasetResponse = AcknowledgedResponseBase
 
 export interface EsqlPutViewRequest extends RequestBase {
   /** The view name to create or update. */
@@ -19638,10 +19996,13 @@ export interface EsqlQueryRequest extends RequestBase {
     *  _alias:*pr*
     * Supported in serverless only. */
   project_routing?: ProjectRouting
+  /** Per-query settings, the request-body equivalent of the in-query `SET` command.
+    * For example, `time_zone` can be supplied here instead of as a top-level field. */
+  settings?: EsqlEsqlQuerySettings
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, project_routing?: never }
+  body?: string | { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, project_routing?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, project_routing?: never }
+  querystring?: { [key: string]: any } & { format?: never, delimiter?: never, drop_null_columns?: never, allow_partial_results?: never, columnar?: never, filter?: never, time_zone?: never, locale?: never, params?: never, profile?: never, query?: never, tables?: never, include_ccs_metadata?: never, include_execution_metadata?: never, project_routing?: never, settings?: never }
 }
 
 export type EsqlQueryResponse = EsqlEsqlResult
@@ -20781,6 +21142,10 @@ export interface IndicesIndexSettingsLifecycleStep {
 export interface IndicesIndexSettingsTimeSeries {
   end_time?: DateTime
   start_time?: DateTime
+  /** The name of the field that stores the temporality of a metric.
+    * The referenced field must be a `keyword` dimension field; if the setting is unset or the
+    * field is missing or invalid, the metric temporality resolves to null. */
+  temporality_field?: Field
 }
 
 export interface IndicesIndexSettingsUnassigned {
@@ -21398,7 +21763,8 @@ export interface IndicesCloneRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** Aliases for the resulting index. */
   aliases?: Record<IndexName, IndicesAlias>
@@ -21450,7 +21816,8 @@ export interface IndicesCloseRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never }
@@ -21483,7 +21850,8 @@ export interface IndicesCreateRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** Aliases for the index. */
   aliases?: Record<Name, IndicesAlias>
@@ -22557,6 +22925,10 @@ interface IndicesModifyDataStreamActionExclusiveProps {
     * The index is unhidden as part of this operation.
     * A data stream’s write index cannot be removed. */
   remove_backing_index?: IndicesModifyDataStreamIndexAndDataStreamAction
+  /** Deletes a backing index from a data stream.
+    * A data stream’s write index cannot be deleted because it is the write index.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  delete_backing_index?: IndicesModifyDataStreamIndexAndDataStreamAction
 }
 
 export type IndicesModifyDataStreamAction = ExactlyOne<IndicesModifyDataStreamActionExclusiveProps>
@@ -22608,7 +22980,8 @@ export interface IndicesOpenRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, master_timeout?: never, timeout?: never, wait_for_active_shards?: never }
@@ -23442,7 +23815,8 @@ export interface IndicesRolloverRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write.
     * Only allowed on data streams. */
@@ -23654,7 +24028,8 @@ export interface IndicesShrinkRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** The key is the alias name.
     * Index alias names support date math. */
@@ -23776,7 +24151,8 @@ export interface IndicesSplitRequest extends RequestBase {
     * If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
   /** The number of shard copies that must be active before proceeding with the operation.
-    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). */
+    * Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   wait_for_active_shards?: WaitForActiveShards
   /** Aliases for the resulting index. */
   aliases?: Record<IndexName, IndicesAlias>
@@ -23848,6 +24224,9 @@ export interface IndicesStatsMappingStats {
   total_count: long
   total_estimated_overhead?: ByteSize
   total_estimated_overhead_in_bytes: long
+  total_segments: long
+  total_segment_fields: long
+  average_fields_per_segment: long
 }
 
 export interface IndicesStatsRequest extends RequestBase {
@@ -23921,6 +24300,7 @@ export interface IndicesStatsShardQueryCache {
   cache_size: long
   evictions: long
   hit_count: long
+  memory_size?: ByteSize
   memory_size_in_bytes: long
   miss_count: long
   total_count: long
@@ -23950,6 +24330,7 @@ export interface IndicesStatsShardSequenceNumber {
 export interface IndicesStatsShardStats {
   commit?: IndicesStatsShardCommit
   completion?: CompletionStats
+  dense_vector?: ClusterStatsDenseVectorStats
   docs?: DocStats
   fielddata?: FielddataStats
   flush?: FlushStats
@@ -23967,13 +24348,14 @@ export interface IndicesStatsShardStats {
   search?: SearchStats
   segments?: SegmentsStats
   seq_no?: IndicesStatsShardSequenceNumber
+  sparse_vector?: ClusterStatsSparseVectorStats
   store?: StoreStats
   translog?: TranslogStats
   warmer?: WarmerStats
   bulk?: BulkStats
   shards?: Record<IndexName, any>
   shard_stats?: IndicesStatsShardsTotalStats
-  indices?: IndicesStatsIndicesStats
+  indices?: Record<IndexName, IndicesStatsShardStats>
 }
 
 export interface IndicesStatsShardsTotalStats {
@@ -24120,12 +24502,19 @@ export interface IndicesValidateQueryRequest extends RequestBase {
   rewrite?: boolean
   /** Query in the Lucene query string syntax. */
   q?: string
+  /** A custom value used to route operations to a specific shard.
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+  routing?: Routing
+  /** The slice identifier used to route the operation to a specific slice.
+    * Use the special value `_all` to target all slices without restricting to a routing value.
+    * Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`. */
+  _slice?: string
   /** Query in the Lucene query string syntax. */
   query?: QueryDslQueryContainer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, all_shards?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, explain?: never, ignore_unavailable?: never, lenient?: never, rewrite?: never, q?: never, query?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, all_shards?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, explain?: never, ignore_unavailable?: never, lenient?: never, rewrite?: never, q?: never, routing?: never, _slice?: never, query?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, all_shards?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, explain?: never, ignore_unavailable?: never, lenient?: never, rewrite?: never, q?: never, query?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, all_shards?: never, analyzer?: never, analyze_wildcard?: never, default_operator?: never, df?: never, expand_wildcards?: never, explain?: never, ignore_unavailable?: never, lenient?: never, rewrite?: never, q?: never, routing?: never, _slice?: never, query?: never }
 }
 
 export interface IndicesValidateQueryResponse {
@@ -24659,6 +25048,13 @@ export interface InferenceContextualAITaskSettings {
   top_k?: integer
 }
 
+export interface InferenceCspRegion {
+  /** The cloud service provider, for example `aws`, `gcp`, or `azure`. */
+  csp: string
+  /** The region of the cloud service provider, for example `us-east-1`. */
+  region: string
+}
+
 export interface InferenceCustomRequestParams {
   /** The body structure of the request. It requires passing in the string-escaped result of the JSON format HTTP request body.
     * For example:
@@ -25032,7 +25428,8 @@ export interface InferenceEmbeddingContentObject {
 export type InferenceEmbeddingContentObjectGroup = InferenceEmbeddingContentObjectItem | InferenceEmbeddingContentObjectItem[]
 
 export interface InferenceEmbeddingContentObjectItem {
-  /** The type of input to embed. Not all models support all input types. */
+  /** The type of input to embed. Not all models support all input types.
+    * The `audio`, `video`, and `pdf` types are available in Elasticsearch 9.5.0 and later. */
   type: InferenceEmbeddingContentType
   /** The format of the input. For the `text` type this must be `text`. For all other types, this must be `base64`.
     * If not specified, this will default to `text` for the `text` type and `base64` for all other types. */
@@ -25967,6 +26364,29 @@ export type InferenceReasoningEffort = 'xhigh' | 'high' | 'medium' | 'low' | 'mi
 
 export type InferenceReasoningSummary = 'auto' | 'concise' | 'detailed'
 
+interface InferenceRegionPolicyExclusiveProps {
+  /** The list of allowed geographic areas.
+    * Mutually exclusive with `allowed_regions`. */
+  allowed_geos?: string[]
+  /** The list of allowed cloud service provider regions.
+    * Mutually exclusive with `allowed_geos`. */
+  allowed_regions?: InferenceCspRegion[]
+}
+
+export type InferenceRegionPolicy = ExactlyOne<InferenceRegionPolicyExclusiveProps>
+
+export interface InferenceRegionPolicyDoc {
+  region_policy: InferenceRegionPolicy
+  /** The date and time the region policy was created. */
+  created_at: DateTime
+  /** The user who created the region policy. */
+  created_by?: string
+  /** The date and time the region policy was last updated. */
+  updated_at?: DateTime
+  /** The user who last updated the region policy. */
+  updated_by?: string
+}
+
 export interface InferenceRequestChatCompletion {
   /** A list of objects representing the conversation.
     * Requests should generally only add new messages from the user (role `user`).
@@ -26063,6 +26483,7 @@ export interface InferenceRequestEmbedding {
     * Either a string, an array of strings, a `content` object, or an array of `content` objects.
     * `content` objects may contain a single item or an array of items. Models that support multiple items per `content`
     * object will return a single embedding for each `content` object, regardless of how many items it contains.
+    * Support for multiple items in a single `content` object is available in Elasticsearch 9.5.0 and later.
     *
     * string example:
     * ```
@@ -26101,7 +26522,7 @@ export interface InferenceRequestEmbedding {
     *   }
     * ]
     * ```
-    * Multiple items in one `content` object example:
+    * Multiple items in one `content` object example (available in Elasticsearch 9.5.0 and later):
     * ```
     * "input": [
     *   {
@@ -26373,6 +26794,15 @@ export interface InferenceDeleteRequest extends RequestBase {
 
 export type InferenceDeleteResponse = InferenceDeleteInferenceEndpointResult
 
+export interface InferenceDeleteRegionPolicyRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type InferenceDeleteRegionPolicyResponse = AcknowledgedResponseBase
+
 export interface InferenceEmbeddingRequest extends RequestBase {
   /** The inference Id */
   inference_id: Id
@@ -26402,6 +26832,15 @@ export interface InferenceGetRequest extends RequestBase {
 export interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
+
+export interface InferenceGetRegionPolicyRequest extends RequestBase {
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any }
+}
+
+export type InferenceGetRegionPolicyResponse = InferenceRegionPolicyDoc
 
 export interface InferenceInferenceRequest extends RequestBase {
   /** The type of inference task that the model performs. */
@@ -27055,6 +27494,19 @@ export interface InferencePutOpenshiftAiRequest extends RequestBase {
 
 export type InferencePutOpenshiftAiResponse = InferenceInferenceEndpointInfoOpenShiftAi
 
+export interface InferencePutRegionPolicyRequest extends RequestBase {
+  /** If `true`, the region policy is applied even if it would deny access to inference endpoints that are currently in use by ingest pipeline or indices. */
+  force?: boolean
+  /** The region policy configuration. */
+  region_policy: InferenceRegionPolicy
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { force?: never, region_policy?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { force?: never, region_policy?: never }
+}
+
+export type InferencePutRegionPolicyResponse = InferenceRegionPolicyDoc
+
 export interface InferencePutVoyageaiRequest extends RequestBase {
   /** The type of the inference task that the model will perform. */
   task_type: InferenceVoyageAITaskType
@@ -27109,10 +27561,65 @@ export interface InferenceRerankRequest extends RequestBase {
   inference_id: Id
   /** The amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  /** Query input. */
-  query: string
-  /** The documents to rank. */
-  input: string[]
+  /** Query input.
+    * The query can be specified as a single string, or as an object.
+    * The object form additionally allows specifying non-text inputs, such as images.
+    *
+    * > info
+    * > Only the `elastic` service currently supports non-text queries for the `rerank` task. For all other services, the query must be a string.
+    *
+    * string example:
+    * ```
+    * "query": "some query text"
+    * ```
+    * object example:
+    * ```
+    * "query": {
+    *   "type": "image",
+    *   "format": "base64",
+    *   "value": "data:image/jpeg;base64,..."
+    * }
+    * ``` */
+  query: InferenceRerankRerankQuery
+  /** The documents to rank.
+    * The input can be specified as a single string or an array of strings, or as an object or an array of objects.
+    * The object form additionally allows specifying non-text inputs, such as images.
+    *
+    * > info
+    * > Only the `elastic` service currently supports non-text inputs for the `rerank` task. For all other services, the input must be a string or an array of strings.
+    *
+    * string example:
+    * ```
+    * "input": "some document text"
+    * ```
+    * string array example:
+    * ```
+    * "input": ["some document text", "some more document text"]
+    * ```
+    * object example:
+    * ```
+    * "input": {
+    *   "type": "image",
+    *   "format": "base64",
+    *   "value": "data:image/jpeg;base64,..."
+    * }
+    * ```
+    * object array example:
+    * ```
+    * "input": [
+    *   {
+    *     "type": "text",
+    *     "format": "text",
+    *     "value": "some document text"
+    *   },
+    *   {
+    *     "type": "image",
+    *     "format": "base64",
+    *     "value": "data:image/jpeg;base64,..."
+    *   }
+    * ]
+    * ``` */
+  input: InferenceRerankRerankInput
   /** Include the document text in the response. */
   return_documents?: boolean
   /** Limit the response to the top N documents. */
@@ -27125,6 +27632,28 @@ export interface InferenceRerankRequest extends RequestBase {
   /** All values in `querystring` will be added to the request querystring. */
   querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, query?: never, input?: never, return_documents?: never, top_n?: never, task_settings?: never }
 }
+
+export type InferenceRerankRerankInput = InferenceRerankRerankStringInput | InferenceRerankRerankObjectInput
+
+export type InferenceRerankRerankInputFormat = 'text' | 'base64'
+
+export interface InferenceRerankRerankInputObject {
+  /** The type of input. Not all services and models support all input types. */
+  type: InferenceRerankRerankInputType
+  /** The format of the input. For the `text` type this must be `text`. For the `image` type this must be `base64`.
+    * If not specified, this defaults to `text` for the `text` type and `base64` for the `image` type. */
+  format?: InferenceRerankRerankInputFormat
+  /** The value of the input. For images, this must be a base64-encoded data URI, that is, "data:content/type;base64,...". */
+  value: string
+}
+
+export type InferenceRerankRerankInputType = 'text' | 'image'
+
+export type InferenceRerankRerankObjectInput = InferenceRerankRerankInputObject | InferenceRerankRerankInputObject[]
+
+export type InferenceRerankRerankQuery = string | InferenceRerankRerankInputObject
+
+export type InferenceRerankRerankStringInput = string | string[]
 
 export type InferenceRerankResponse = InferenceRerankedInferenceResult
 
@@ -32136,6 +32665,9 @@ export interface MlInfoDatafeeds {
 export interface MlInfoDefaults {
   anomaly_detectors: MlInfoAnomalyDetectors
   datafeeds: MlInfoDatafeeds
+  /** Returns `linux-x86_64` when all ML nodes are x86, or when no ML nodes exist but the cluster is in Elastic Cloud.
+    * Returns `platform_agnostic` otherwise. */
+  model_platform_variant: MlInfoModelPlatformVariant
 }
 
 export interface MlInfoLimits {
@@ -32145,6 +32677,8 @@ export interface MlInfoLimits {
   effective_max_model_memory_limit?: ByteSize
   total_ml_memory: ByteSize
 }
+
+export type MlInfoModelPlatformVariant = 'linux-x86_64' | 'platform_agnostic'
 
 export interface MlInfoNativeCode {
   build_hash: string
@@ -33439,8 +33973,12 @@ export interface NodesAllocations {
   undesired_shards?: integer
   /** Forecasted ingest load for the node. */
   forecasted_ingest_load?: double
+  /** Forecasted disk usage for the node. */
+  forecasted_disk_usage?: string
   /** Forecasted disk usage, in bytes, for the node. */
   forecasted_disk_usage_in_bytes?: long
+  /** Current disk usage for the node. */
+  current_disk_usage?: string
   /** Current disk usage, in bytes, for the node. */
   current_disk_usage_in_bytes?: long
 }
@@ -33514,9 +34052,15 @@ export interface NodesClient {
   /** The URI of the client’s most recent request. */
   last_uri?: string
   /** Time at which the client opened the connection. */
+  opened_time?: string
+  /** Time at which the client opened the connection. */
   opened_time_millis?: long
   /** Time at which the client closed the connection if the connection is closed. */
+  closed_time?: string
+  /** Time at which the client closed the connection if the connection is closed. */
   closed_time_millis?: long
+  /** Time of the most recent request from this client. */
+  last_request_time?: string
   /** Time of the most recent request from this client. */
   last_request_time_millis?: long
   /** Number of requests from this client. */
@@ -33586,6 +34130,8 @@ export interface NodesContext {
 }
 
 export interface NodesCpu {
+  /** The number of processors available to the Java virtual machine. */
+  available_processors?: integer
   percent?: integer
   sys?: Duration
   sys_in_millis?: DurationValue<UnitMillis>
@@ -33619,6 +34165,22 @@ export interface NodesDataPathStats {
   free?: string
   /** Total number of unallocated bytes in the file store. */
   free_in_bytes?: long
+  /** The amount of free disk space that, once reached, triggers the low disk watermark. */
+  low_watermark_free_space?: string
+  /** The amount of free disk space, in bytes, that, once reached, triggers the low disk watermark. */
+  low_watermark_free_space_in_bytes?: long
+  /** The amount of free disk space that, once reached, triggers the high disk watermark. */
+  high_watermark_free_space?: string
+  /** The amount of free disk space, in bytes, that, once reached, triggers the high disk watermark. */
+  high_watermark_free_space_in_bytes?: long
+  /** The amount of free disk space that, once reached, triggers the flood stage disk watermark. */
+  flood_stage_free_space?: string
+  /** The amount of free disk space, in bytes, that, once reached, triggers the flood stage disk watermark. */
+  flood_stage_free_space_in_bytes?: long
+  /** The amount of free disk space that, once reached, triggers the frozen flood stage disk watermark. */
+  frozen_flood_stage_free_space?: string
+  /** The amount of free disk space, in bytes, that, once reached, triggers the frozen flood stage disk watermark. */
+  frozen_flood_stage_free_space_in_bytes?: long
   /** Mount point of the file store (for example: `/dev/sda2`). */
   mount?: string
   /** Path to the file store. */
@@ -33717,12 +34279,14 @@ export interface NodesHttpRoute {
 
 export interface NodesHttpRouteRequests {
   count: long
+  total_size?: ByteSize
   total_size_in_bytes: long
   size_histogram: NodesSizeHttpHistogram[]
 }
 
 export interface NodesHttpRouteResponses {
   count: long
+  total_size?: ByteSize
   total_size_in_bytes: long
   handling_time_histogram: NodesTimeHttpHistogram[]
   size_histogram: NodesSizeHttpHistogram[]
@@ -33762,15 +34326,22 @@ export interface NodesIngestStats {
   failed: long
   /** Total number of ingest processors. */
   processors: Record<string, NodesKeyedProcessor>[]
+  /** Total time spent preprocessing ingest documents during the lifetime of this node. */
+  time?: Duration
   /** Total time, in milliseconds, spent preprocessing ingest documents during the lifetime of this node. */
   time_in_millis: DurationValue<UnitMillis>
+  /** Total size of all documents ingested by the pipeline.
+    * The value counts documents for which this pipeline was the first to process them; for pipelines that are not the first to process a document (for example, a final pipeline after a default pipeline, a pipeline run after a reroute processor, or a pipeline invoked by a pipeline processor), the value is `0`. */
+  ingested_as_first_pipeline?: ByteSize
   /** Total number of bytes of all documents ingested by the pipeline.
-    * This field is only present on pipelines which are the first to process a document.
-    * Thus, it is not present on pipelines which only serve as a final pipeline after a default pipeline, a pipeline run after a reroute processor, or pipelines in pipeline processors. */
+    * The value counts documents for which this pipeline was the first to process them; for pipelines that are not the first to process a document, the value is `0`. */
   ingested_as_first_pipeline_in_bytes: long
+  /** Total size of all documents produced by the pipeline.
+    * The value counts documents for which this pipeline was the first to process them; for pipelines that are not the first to process a document, the value is `0`.
+    * In situations where there are subsequent pipelines, the value represents the size of the document after all pipelines have run. */
+  produced_as_first_pipeline?: ByteSize
   /** Total number of bytes of all documents produced by the pipeline.
-    * This field is only present on pipelines which are the first to process a document.
-    * Thus, it is not present on pipelines which only serve as a final pipeline after a default pipeline, a pipeline run after a reroute processor, or pipelines in pipeline processors.
+    * The value counts documents for which this pipeline was the first to process them; for pipelines that are not the first to process a document, the value is `0`.
     * In situations where there are subsequent pipelines, the value represents the size of the document after all pipelines have run. */
   produced_as_first_pipeline_in_bytes: long
 }
@@ -33782,6 +34353,8 @@ export interface NodesIngestTotal {
   current: long
   /** Total number of failed ingest operations during the lifetime of this node. */
   failed: long
+  /** Total time spent preprocessing ingest documents during the lifetime of this node. */
+  time?: Duration
   /** Total time, in milliseconds, spent preprocessing ingest documents during the lifetime of this node. */
   time_in_millis: DurationValue<UnitMillis>
 }
@@ -33839,18 +34412,26 @@ export interface NodesJvmClasses {
 }
 
 export interface NodesJvmMemoryStats {
+  /** Memory currently in use by the heap. */
+  heap_used?: ByteSize
   /** Memory, in bytes, currently in use by the heap. */
   heap_used_in_bytes?: long
   /** Percentage of memory currently in use by the heap. */
   heap_used_percent?: long
+  /** Amount of memory available for use by the heap. */
+  heap_committed?: ByteSize
   /** Amount of memory, in bytes, available for use by the heap. */
   heap_committed_in_bytes?: long
   /** Maximum amount of memory, in bytes, available for use by the heap. */
   heap_max_in_bytes?: long
   /** Maximum amount of memory, available for use by the heap. */
   heap_max?: ByteSize
+  /** Non-heap memory used. */
+  non_heap_used?: ByteSize
   /** Non-heap memory used, in bytes. */
   non_heap_used_in_bytes?: long
+  /** Amount of non-heap memory available. */
+  non_heap_committed?: ByteSize
   /** Amount of non-heap memory available, in bytes. */
   non_heap_committed_in_bytes?: long
   /** Contains statistics about heap memory usage for the node. */
@@ -33870,6 +34451,9 @@ export interface NodesKeyedProcessor {
 }
 
 export interface NodesMemoryStats {
+  /** If the amount of physical memory has been overridden using the `es`.`total_memory_bytes` system property then this reports the overridden value.
+    * Otherwise it reports the same value as `total`. */
+  adjusted_total?: string
   /** If the amount of physical memory has been overridden using the `es`.`total_memory_bytes` system property then this reports the overridden value in bytes.
     * Otherwise it reports the same value as `total_in_bytes`. */
   adjusted_total_in_bytes?: long
@@ -33879,10 +34463,16 @@ export interface NodesMemoryStats {
   share_in_bytes?: long
   total_virtual?: string
   total_virtual_in_bytes?: long
+  /** Total amount of physical memory. */
+  total?: string
   /** Total amount of physical memory in bytes. */
   total_in_bytes?: long
+  /** Amount of free physical memory. */
+  free?: string
   /** Amount of free physical memory in bytes. */
   free_in_bytes?: long
+  /** Amount of used physical memory. */
+  used?: string
   /** Amount of used physical memory in bytes. */
   used_in_bytes?: long
 }
@@ -33927,12 +34517,20 @@ export interface NodesOperatingSystem {
 }
 
 export interface NodesPool {
+  /** Memory used by the heap. */
+  used?: string
   /** Memory, in bytes, used by the heap. */
   used_in_bytes?: long
+  /** Maximum amount of memory available for use by the heap. */
+  max?: string
   /** Maximum amount of memory, in bytes, available for use by the heap. */
   max_in_bytes?: long
+  /** Largest amount of memory historically used by the heap. */
+  peak_used?: string
   /** Largest amount of memory, in bytes, historically used by the heap. */
   peak_used_in_bytes?: long
+  /** Largest amount of memory historically used by the heap. */
+  peak_max?: string
   /** Largest amount of memory, in bytes, historically used by the heap. */
   peak_max_in_bytes?: long
 }
@@ -33991,6 +34589,8 @@ export interface NodesProcessor {
   current?: long
   /** Number of failed operations for the processor. */
   failed?: long
+  /** Time spent by the processor transforming documents. */
+  time?: Duration
   /** Time, in milliseconds, spent by the processor transforming documents. */
   time_in_millis?: DurationValue<UnitMillis>
 }
@@ -34043,6 +34643,37 @@ export interface NodesRepositoryMeteringInformation {
   cluster_version?: VersionNumber
   /** An object with the number of request performed against the repository grouped by request type. */
   request_counts: NodesRequestCounts
+}
+
+export interface NodesRepositorySnapshotStats {
+  /** The cumulative time spent throttling read operations for this repository. */
+  total_read_throttled_time?: Duration
+  /** The cumulative time spent throttling write operations for this repository. */
+  total_write_throttled_time?: Duration
+  /** The cumulative time, in nanoseconds, spent throttling read operations for this repository. */
+  total_read_throttled_time_nanos: DurationValue<UnitNanos>
+  /** The cumulative time, in nanoseconds, spent throttling write operations for this repository. */
+  total_write_throttled_time_nanos: DurationValue<UnitNanos>
+  /** The number of shard snapshots started for this repository. */
+  shard_snapshots_started: long
+  /** The number of shard snapshots completed for this repository. */
+  shard_snapshots_completed: long
+  /** The number of shard snapshots currently in progress for this repository. */
+  shard_snapshots_in_progress: long
+  /** The number of blobs uploaded to this repository. */
+  uploaded_blobs: long
+  /** The cumulative size of the blobs uploaded to this repository. */
+  uploaded_size?: ByteSize
+  /** The cumulative size, in bytes, of the blobs uploaded to this repository. */
+  uploaded_size_in_bytes: long
+  /** The cumulative time spent uploading blobs to this repository. */
+  total_upload_time?: Duration
+  /** The cumulative time, in milliseconds, spent uploading blobs to this repository. */
+  total_upload_time_in_millis: DurationValue<UnitMillis>
+  /** The cumulative time spent reading blobs while uploading to this repository. */
+  total_read_time?: Duration
+  /** The cumulative time, in milliseconds, spent reading blobs while uploading to this repository. */
+  total_read_time_in_millis: DurationValue<UnitMillis>
 }
 
 export interface NodesRequestCounts {
@@ -34110,7 +34741,9 @@ export interface NodesSerializedClusterStateDetail {
 
 export interface NodesSizeHttpHistogram {
   count: long
+  ge?: ByteSize
   ge_bytes?: long
+  lt?: ByteSize
   lt_bytes?: long
 }
 
@@ -34160,6 +34793,8 @@ export interface NodesStats {
   indexing_pressure?: NodesIndexingPressure
   /** Indices stats about size, document count, indexing and deletion times, search times, field cache size, merges and flushes. */
   indices?: IndicesStatsShardStats
+  /** Statistics about snapshot activity for the node's registered repositories, keyed by repository name. */
+  repositories?: Record<string, NodesRepositorySnapshotStats>
 }
 
 export interface NodesThreadCount {
@@ -34179,7 +34814,9 @@ export interface NodesThreadCount {
 
 export interface NodesTimeHttpHistogram {
   count: long
+  ge?: Duration
   ge_millis?: long
+  lt?: Duration
   lt_millis?: long
 }
 
@@ -34206,16 +34843,58 @@ export interface NodesTransport {
     * Each transport connection may comprise multiple TCP connections but is only counted once in this statistic.
     * Transport connections are typically long-lived so this statistic should remain constant in a stable cluster. */
   total_outbound_connections?: long
+  /** Statistics about the transport messages sent and received by the node, broken down by action name. */
+  actions?: Record<string, NodesTransportActionStats>
+}
+
+export interface NodesTransportActionMessageStats {
+  /** The number of messages of this kind that the node has handled for this action. */
+  count: long
+  /** The cumulative size of the messages of this kind that the node has handled for this action. */
+  total_size?: ByteSize
+  /** The cumulative size, in bytes, of the messages of this kind that the node has handled for this action. */
+  total_size_in_bytes: long
+  /** The distribution of the sizes of the messages of this kind that the node has handled for this action, represented as a histogram. */
+  histogram: NodesTransportMessageSizeHistogramBucket[]
+}
+
+export interface NodesTransportActionStats {
+  /** Statistics about the requests received for this action. */
+  requests: NodesTransportActionMessageStats
+  /** Statistics about the responses sent for this action. */
+  responses: NodesTransportActionMessageStats
 }
 
 export interface NodesTransportHistogram {
   /** The number of times a transport thread took a period of time within the bounds of this bucket to handle an inbound message. */
   count?: long
+  /** The exclusive upper bound of the bucket.
+    * May be omitted on the last bucket if this bucket has no upper bound. */
+  lt?: Duration
   /** The exclusive upper bound of the bucket in milliseconds.
     * May be omitted on the last bucket if this bucket has no upper bound. */
   lt_millis?: long
+  /** The inclusive lower bound of the bucket. May be omitted on the first bucket if this bucket has no lower bound. */
+  ge?: Duration
   /** The inclusive lower bound of the bucket in milliseconds. May be omitted on the first bucket if this bucket has no lower bound. */
   ge_millis?: long
+}
+
+export interface NodesTransportMessageSizeHistogramBucket {
+  /** The number of messages with a size that falls within the bounds of this bucket. */
+  count: long
+  /** The inclusive lower bound of the bucket.
+    * May be omitted on the first bucket if this bucket has no lower bound. */
+  ge?: ByteSize
+  /** The inclusive lower bound of the bucket in bytes.
+    * May be omitted on the first bucket if this bucket has no lower bound. */
+  ge_bytes?: long
+  /** The exclusive upper bound of the bucket.
+    * May be omitted on the last bucket if this bucket has no upper bound. */
+  lt?: ByteSize
+  /** The exclusive upper bound of the bucket in bytes.
+    * May be omitted on the last bucket if this bucket has no upper bound. */
+  lt_bytes?: long
 }
 
 export interface NodesClearRepositoriesMeteringArchiveRequest extends RequestBase {
@@ -35800,6 +36479,15 @@ export interface SecurityCreatedStatus {
 
 export type SecurityCredentialManagedBy = 'cloud' | 'elasticsearch'
 
+export type SecurityDataSourcePrivilege = 'create' | 'delete' | 'read_metadata' | 'read' | 'manage' | string
+
+export interface SecurityDataSourcePrivileges {
+  /** A list of data source names or wildcard patterns to which the permissions in this entry apply. */
+  names: string[]
+  /** The data source privileges that owners of the role have for the specified data sources. */
+  privileges: SecurityDataSourcePrivilege[]
+}
+
 export interface SecurityFieldSecurity {
   except?: Fields
   grant?: Fields
@@ -35807,6 +36495,9 @@ export interface SecurityFieldSecurity {
 
 export interface SecurityGlobalPrivilege {
   application: SecurityApplicationGlobalUserPrivileges
+  /** A list of data source privilege entries, used to grant access to ES|QL data sources.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  data_source?: SecurityDataSourcePrivileges[]
 }
 
 export type SecurityGrantType = 'password' | 'access_token'
@@ -35926,7 +36617,7 @@ export interface SecurityRoleDescriptor {
     * NOTE: This is limited a subset of the cluster permissions.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   remote_cluster?: SecurityRemoteClusterPrivileges[]
-  /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
+  /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
   /** A list of application privilege entries */
@@ -35959,7 +36650,7 @@ export interface SecurityRoleDescriptorRead {
     * NOTE: This is limited a subset of the cluster permissions.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   remote_cluster?: SecurityRemoteClusterPrivileges[]
-  /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
+  /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
   /** A list of application privilege entries */
@@ -39169,11 +39860,12 @@ export interface SnapshotCreateRequest extends RequestBase {
     * It can have any contents but it must be less than 1024 bytes.
     * This information is not automatically generated by Elasticsearch. */
   metadata?: Metadata
-  /** If `true`, it enables you to restore a partial snapshot of indices with unavailable shards.
-    * Only shards that were successfully included in the snapshot will be restored.
-    * All missing shards will be recreated as empty.
+  /** If `true`, allows the snapshot to proceed even if some of the target shards are unavailable.
+    * In this case, the resulting snapshot will not contain snapshots of the unavailable target shards, and will report its state as `PARTIAL`.
+    * Additionally, if `true`, allows index metadata operations such as deletions while the snapshot is in progress.
+    * This is almost always preferable to failing the snapshot completely when a single shard is unavailable, and blocking index metadata operations.
     *
-    * If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available. */
+    * If `false`, the entire restore operation will fail if one or more indices included in the snapshot do not have all primary shards available, and index metadata operations such as deletions will be forbidden until the snapshot completes. */
   partial?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never, expand_wildcards?: never, feature_states?: never, ignore_unavailable?: never, include_global_state?: never, indices?: never, metadata?: never, partial?: never }
@@ -41085,6 +41777,14 @@ export interface TransformGetTransformStatsRequest extends RequestBase {
     * If this parameter is false, the request returns a 404 status code when
     * there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** If true, the response includes `id`, `state`, `node`, `stats`, `health`,
+    * and basic `checkpointing` information (the last and next checkpoint
+    * numbers, and the next checkpoint's `position` and `progress`). Skips
+    * statistics that require heavy computations to calculate:
+    * `operations_behind`, `changes_last_detected_at`, `last_search_time`, and
+    * the checkpoint timestamps.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  basic?: boolean
   /** Skips the specified number of transforms. */
   from?: long
   /** Specifies the maximum number of transforms to obtain. */
@@ -41092,9 +41792,9 @@ export interface TransformGetTransformStatsRequest extends RequestBase {
   /** Controls the time to wait for the stats */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, basic?: never, from?: never, size?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, basic?: never, from?: never, size?: never, timeout?: never }
 }
 
 export interface TransformGetTransformStatsResponse {
@@ -41452,7 +42152,7 @@ export interface WatcherActionStatus {
   last_throttle?: WatcherThrottleState
 }
 
-export type WatcherActionStatusOptions = 'success' | 'failure' | 'simulated' | 'throttled'
+export type WatcherActionStatusOptions = 'success' | 'failure' | 'partial_failure' | 'acknowledged' | 'throttled' | 'condition_failed' | 'simulated'
 
 export type WatcherActionType = 'email' | 'webhook' | 'index' | 'logging' | 'slack' | 'pagerduty'
 
@@ -41559,37 +42259,83 @@ export type WatcherExecutionPhase = 'awaits_execution' | 'started' | 'input' | '
 
 export interface WatcherExecutionResult {
   actions: WatcherExecutionResultAction[]
-  condition: WatcherExecutionResultCondition
+  condition?: WatcherExecutionResultCondition
   execution_duration: DurationValue<UnitMillis>
   execution_time: DateTime
-  input: WatcherExecutionResultInput
+  input?: WatcherExecutionResultInput
+  transform?: WatcherExecutionResultTransform
 }
 
-export interface WatcherExecutionResultAction {
-  email?: WatcherEmailResult
+export interface WatcherExecutionResultAction extends WatcherExecutionResultForeachAction {
   id: Id
-  index?: WatcherIndexResult
-  logging?: WatcherLoggingResult
-  pagerduty?: WatcherPagerDutyResult
-  reason?: string
-  slack?: WatcherSlackResult
-  status: WatcherActionStatusOptions
   type: WatcherActionType
-  webhook?: WatcherWebhookResult
-  error?: ErrorCause
+  status: WatcherActionStatusOptions
+  condition?: WatcherExecutionResultCondition
+  transform?: WatcherExecutionResultTransform
+  foreach?: WatcherExecutionResultForeachAction[]
+  max_iterations?: integer
+  number_of_actions_executed?: integer
 }
 
 export interface WatcherExecutionResultCondition {
   met: boolean
-  status: WatcherActionStatusOptions
+  status: WatcherExecutionResultStatus
   type: WatcherConditionType
+  compare?: WatcherExecutionResultConditionResolved
+  array_compare?: WatcherExecutionResultConditionResolved
+}
+
+export interface WatcherExecutionResultConditionResolved {
+  resolved_values?: Record<string, any>
+}
+
+export interface WatcherExecutionResultForeachAction {
+  email?: WatcherEmailResult
+  index?: WatcherIndexResult
+  logging?: WatcherLoggingResult
+  pagerduty?: WatcherPagerDutyResult
+  slack?: WatcherSlackResult
+  webhook?: WatcherWebhookResult
+  error?: ErrorCause
+  reason?: string
+}
+
+export interface WatcherExecutionResultHttpInput {
+  request: WatcherHttpInputRequestResult
+  /** The HTTP status code returned by the request.
+    * It is only present when the request was executed. */
+  status_code?: integer
 }
 
 export interface WatcherExecutionResultInput {
-  payload: Record<string, any>
-  status: WatcherActionStatusOptions
+  payload?: Record<string, any>
+  status: WatcherExecutionResultStatus
   type: WatcherInputType
+  /** The resolved search request, present when the input is a search input. */
+  search?: WatcherExecutionResultSearchInput
+  /** The resolved HTTP request, present when the input is an HTTP input. */
+  http?: WatcherExecutionResultHttpInput
+  /** The result of each named input, present when the input is a chain input. */
+  chain?: Record<string, WatcherExecutionResultInput>
+  error?: ErrorCause
 }
+
+export interface WatcherExecutionResultSearchInput {
+  request: WatcherSearchInputRequestDefinition
+}
+
+export type WatcherExecutionResultStatus = 'success' | 'failure'
+
+export interface WatcherExecutionResultTransform {
+  payload?: Record<string, any>
+  status: WatcherExecutionResultStatus
+  type: WatcherExecutionResultTransformType
+  search?: WatcherExecutionResultSearchInput
+  error?: ErrorCause
+  reason?: string
+}
+
+export type WatcherExecutionResultTransformType = 'script' | 'search' | 'chain'
 
 export interface WatcherExecutionState {
   successful: boolean
@@ -41669,7 +42415,7 @@ export interface WatcherHttpInputResponseResult {
 }
 
 export interface WatcherIndexAction {
-  index: IndexName
+  index?: IndexName
   doc_id?: Id
   refresh?: Refresh
   op_type?: OpType
@@ -41677,16 +42423,36 @@ export interface WatcherIndexAction {
   execution_time_field?: Field
 }
 
-export interface WatcherIndexResult {
-  response: WatcherIndexResultSummary
+interface WatcherIndexResultExclusiveProps {
+  /** The outcome of the index operation.
+    * A single summary is returned when a single document is indexed, or an array
+    * when several documents are indexed at once. When a bulk operation ends in
+    * `failure` or `partial_failure`, the array includes failed items. */
+  response?: WatcherIndexResultSummary | WatcherIndexResultSummary[]
+  /** The request that would have been executed.
+    * It is only present when the action is simulated. */
+  request?: WatcherIndexResultRequestSummary
+}
+
+export type WatcherIndexResult = ExactlyOne<WatcherIndexResultExclusiveProps>
+
+export interface WatcherIndexResultRequestSummary {
+  doc_id?: Id
+  index: IndexName
+  refresh?: Refresh
+  source: any
 }
 
 export interface WatcherIndexResultSummary {
-  created: boolean
   id: Id
   index: IndexName
-  result: Result
-  version: VersionNumber
+  created?: boolean
+  result?: Result
+  version?: VersionNumber
+  /** Only present for failed items */
+  failed?: boolean
+  /** Only present for failed items */
+  message?: string
 }
 
 interface WatcherInputContainerExclusiveProps {
@@ -41694,11 +42460,12 @@ interface WatcherInputContainerExclusiveProps {
   http?: WatcherHttpInput
   search?: WatcherSearchInput
   simple?: Record<string, any>
+  transform?: TransformContainer
 }
 
 export type WatcherInputContainer = ExactlyOne<WatcherInputContainerExclusiveProps>
 
-export type WatcherInputType = 'http' | 'search' | 'simple'
+export type WatcherInputType = 'chain' | 'http' | 'none' | 'search' | 'simple' | 'transform'
 
 export interface WatcherLoggingAction {
   level?: string
@@ -41807,13 +42574,9 @@ export interface WatcherSearchInput {
   timeout?: Duration
 }
 
-export interface WatcherSearchInputRequestBody {
-  query: QueryDslQueryContainer
-}
-
 export interface WatcherSearchInputRequestDefinition {
-  body?: WatcherSearchInputRequestBody
-  indices?: IndexName[]
+  body?: SearchSearchRequestBody
+  indices?: Indices
   indices_options?: IndicesOptions
   search_type?: SearchType
   template?: WatcherSearchTemplateRequestBody
@@ -41825,6 +42588,9 @@ export interface WatcherSearchTemplateRequestBody {
   /** ID of the search template to use. If no source is specified,
     * this parameter is required. */
   id?: Id
+  /** The language the template is written in.
+    * It is reported in the resolved search input of a watch record. */
+  lang?: ScriptLanguage
   params?: Record<string, any>
   profile?: boolean
   /** An inline search template. Supports the same parameters as the search API's
@@ -41928,7 +42694,7 @@ export interface WatcherTriggerEventResult {
 
 export interface WatcherWatch {
   actions: Record<IndexName, WatcherAction>
-  condition: WatcherConditionContainer
+  condition?: WatcherConditionContainer
   input: WatcherInputContainer
   metadata?: Metadata
   status?: WatcherWatchStatus
@@ -42047,17 +42813,20 @@ export interface WatcherExecuteWatchResponse {
 }
 
 export interface WatcherExecuteWatchWatchRecord {
-  condition: WatcherConditionContainer
-  input: WatcherInputContainer
-  messages: string[]
-  metadata?: Metadata
+  '@timestamp': DateTime
   node: string
-  result: WatcherExecutionResult
   state: WatcherExecutionStatus
   trigger_event: WatcherTriggerEventResult
-  user: Username
   watch_id: Id
+  condition?: WatcherConditionContainer
+  input?: WatcherInputContainer
+  metadata?: Metadata
+  result?: WatcherExecutionResult
+  user?: Username
   status?: WatcherWatchStatus
+  messages?: string[]
+  vars?: Record<string, any>
+  exception?: ErrorCause
 }
 
 export interface WatcherGetSettingsRequest extends RequestBase {
@@ -42392,6 +43161,57 @@ export interface XpackUsageCounter {
   total: long
 }
 
+export interface XpackUsageDataStreamLifecycleEffectiveRetentionStats extends XpackUsageDataStreamLifecycleThresholdStats {
+  /** The number of data streams for which an effective retention applies. */
+  retained_data_streams: long
+}
+
+export interface XpackUsageDataStreamLifecycleGlobalRetention {
+  /** Statistics about the cluster's default global retention. */
+  default: XpackUsageDataStreamLifecycleGlobalRetentionStats
+  /** Statistics about the cluster's maximum global retention. */
+  max: XpackUsageDataStreamLifecycleGlobalRetentionStats
+}
+
+export interface XpackUsageDataStreamLifecycleGlobalRetentionStats {
+  /** Whether this global retention is defined for the cluster. */
+  defined: boolean
+  /** The number of data streams affected by this global retention. */
+  affected_data_streams?: long
+  /** The global retention period in milliseconds. */
+  retention_millis?: long
+}
+
+export interface XpackUsageDataStreamLifecycleRetentionStats extends XpackUsageDataStreamLifecycleThresholdStats {
+  /** The number of data streams for which this value is configured. */
+  configured_data_streams: long
+}
+
+export interface XpackUsageDataStreamLifecycleThresholdStats {
+  /** The smallest configured value in milliseconds. */
+  minimum_millis?: long
+  /** The largest configured value in milliseconds. */
+  maximum_millis?: long
+  /** The average configured value in milliseconds. */
+  average_millis?: double
+}
+
+export interface XpackUsageDataStreamLifecycleUsage extends XpackUsageBase {
+  /** The number of data streams that have a lifecycle configured. */
+  count?: long
+  /** Whether the default rollover configuration is used by at least one data stream. */
+  default_rollover_used?: boolean
+  /** Statistics about the explicitly configured data retention across data streams. */
+  data_retention?: XpackUsageDataStreamLifecycleRetentionStats
+  /** Statistics about the effective retention (configured or derived from global retention) across data streams. */
+  effective_retention?: XpackUsageDataStreamLifecycleEffectiveRetentionStats
+  /** Statistics about the configured `frozen_after` (searchable snapshot) tier threshold across data streams.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  frozen_after?: XpackUsageDataStreamLifecycleRetentionStats
+  /** Statistics about the cluster's global default and maximum retention settings. */
+  global_retention?: XpackUsageDataStreamLifecycleGlobalRetention
+}
+
 export interface XpackUsageDataStreams extends XpackUsageBase {
   data_streams: long
   indices_count: long
@@ -42467,6 +43287,15 @@ export interface XpackUsageEqlFeaturesSequences {
   sequence_maxspan: uint
 }
 
+export interface XpackUsageEsqlLoggingConfig {
+  /** Whether ES|QL query logging is enabled. */
+  enabled: boolean
+  /** Whether user information is included in the ES|QL query log. */
+  user: boolean
+  /** The configured logging thresholds, keyed by threshold name, if any. */
+  thresholds?: Record<string, Duration>
+}
+
 export interface XpackUsageFeatureToggle {
   enabled: boolean
 }
@@ -42524,6 +43353,13 @@ export interface XpackUsageJobUsage {
   detectors: MlJobStatistics
   forecasts: XpackUsageMlJobForecasts
   model_size: MlJobStatistics
+}
+
+export interface XpackUsageLogging {
+  /** Search query log configuration. */
+  querylog: XpackUsageQueryLoggingConfig
+  /** ES|QL query log configuration. */
+  esql: XpackUsageEsqlLoggingConfig
 }
 
 export interface XpackUsageMachineLearning extends XpackUsageBase {
@@ -42639,6 +43475,17 @@ export interface XpackUsageQuery {
   total?: integer
 }
 
+export interface XpackUsageQueryLoggingConfig {
+  /** Whether query logging is enabled. */
+  enabled: boolean
+  /** Whether user information is included in the query log. */
+  user: boolean
+  /** Whether system queries are included in the query log. */
+  system: boolean
+  /** The configured logging threshold, if any. */
+  threshold?: Duration
+}
+
 export interface XpackUsageRealm extends XpackUsageBase {
   name?: string[]
   order?: long[]
@@ -42673,6 +43520,7 @@ export interface XpackUsageResponse {
   ccr: XpackUsageCcr
   data_frame?: XpackUsageBase
   data_science?: XpackUsageBase
+  data_lifecycle?: XpackUsageDataStreamLifecycleUsage
   data_streams?: XpackUsageDataStreams
   data_tiers: XpackUsageDataTiers
   enrich?: XpackUsageBase
@@ -42683,6 +43531,8 @@ export interface XpackUsageResponse {
   gpu_vector_indexing?: XpackUsageGpuVectorIndexing
   health_api?: XpackUsageHealthStatistics
   ilm: XpackUsageIlm
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  logging?: XpackUsageLogging
   logstash: XpackUsageBase
   ml: XpackUsageMachineLearning
   monitoring: XpackUsageMonitoring
@@ -42695,6 +43545,8 @@ export interface XpackUsageResponse {
   sql: XpackUsageSql
   transform: XpackUsageBase
   vectors?: XpackUsageVector
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  vectordb_document?: XpackUsageVectorDbDocument
   voting_only: XpackUsageBase
 }
 
@@ -42805,6 +43657,13 @@ export interface XpackUsageVector extends XpackUsageBase {
   dense_vector_dims_avg_count: integer
   dense_vector_fields_count: integer
   sparse_vector_fields_count?: integer
+}
+
+export interface XpackUsageVectorDbDocument extends XpackUsageBase {
+  /** The number of indices using the `vectordb_document` index mode. */
+  indices_count: integer
+  /** The total number of documents held across all `vectordb_document` indices. */
+  num_docs: long
 }
 
 export interface XpackUsageWatcher extends XpackUsageBase {
