@@ -40,6 +40,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'lenient',
       'preference',
       'routing',
+      '_slice',
       '_source',
       '_source_excludes',
       '_source_includes',
@@ -106,7 +107,7 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
     acceptedParams: {
       path: ['id', 'index'],
       body: ['query'],
-      query: ['analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'preference', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'q']
+      query: ['analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'preference', 'routing', '_slice', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'q']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

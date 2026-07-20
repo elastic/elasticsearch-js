@@ -33,6 +33,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'if_seq_no',
       'refresh',
       'routing',
+      '_slice',
       'timeout',
       'version',
       'version_type',
@@ -86,7 +87,7 @@ export default async function DeleteApi (this: That, params: T.DeleteRequest, op
     acceptedParams: {
       path: ['id', 'index'],
       body: [],
-      query: ['if_primary_term', 'if_seq_no', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards']
+      query: ['if_primary_term', 'if_seq_no', 'refresh', 'routing', '_slice', 'timeout', 'version', 'version_type', 'wait_for_active_shards']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

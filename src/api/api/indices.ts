@@ -952,7 +952,9 @@ export default class Indices {
           'ignore_unavailable',
           'lenient',
           'rewrite',
-          'q'
+          'q',
+          'routing',
+          '_slice'
         ]
       }
     }
@@ -4937,7 +4939,7 @@ export default class Indices {
       acceptedParams: {
         path: ['index'],
         body: ['query'],
-        query: ['allow_no_indices', 'all_shards', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'explain', 'ignore_unavailable', 'lenient', 'rewrite', 'q']
+        query: ['allow_no_indices', 'all_shards', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'explain', 'ignore_unavailable', 'lenient', 'rewrite', 'q', 'routing', '_slice']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
