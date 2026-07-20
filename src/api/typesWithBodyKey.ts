@@ -22752,6 +22752,7 @@ export interface TransformGetTransformStatsCheckpointing {
 export interface TransformGetTransformStatsRequest extends RequestBase {
   transform_id: Names
   allow_no_match?: boolean
+  basic?: boolean
   from?: long
   size?: long
   timeout?: Duration
