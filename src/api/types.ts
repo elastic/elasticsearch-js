@@ -24273,7 +24273,10 @@ export interface InferenceCustomTaskSettings {
     *     "return_token":true
     *   }
     * }
-    * ``` */
+    * ```
+    *
+    * > warn
+    * > The `task_settings.parameters` cannot contain the same keys as `secret_parameters`. If they do, an error will be returned. This applies to PUT requests and POST requests. */
   parameters?: any
 }
 
@@ -39674,6 +39677,14 @@ export interface TransformGetTransformStatsRequest extends RequestBase {
     * If this parameter is false, the request returns a 404 status code when
     * there are no matches or only partial matches. */
   allow_no_match?: boolean
+  /** If true, the response includes `id`, `state`, `node`, `stats`, `health`,
+    * and basic `checkpointing` information (the last and next checkpoint
+    * numbers, and the next checkpoint's `position` and `progress`). Skips
+    * statistics that require heavy computations to calculate:
+    * `operations_behind`, `changes_last_detected_at`, `last_search_time`, and
+    * the checkpoint timestamps.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  basic?: boolean
   /** Skips the specified number of transforms. */
   from?: long
   /** Specifies the maximum number of transforms to obtain. */
@@ -39681,9 +39692,9 @@ export interface TransformGetTransformStatsRequest extends RequestBase {
   /** Controls the time to wait for the stats */
   timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  body?: string | { [key: string]: any } & { transform_id?: never, allow_no_match?: never, basic?: never, from?: never, size?: never, timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, from?: never, size?: never, timeout?: never }
+  querystring?: { [key: string]: any } & { transform_id?: never, allow_no_match?: never, basic?: never, from?: never, size?: never, timeout?: never }
 }
 
 export interface TransformGetTransformStatsResponse {

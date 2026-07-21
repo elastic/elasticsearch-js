@@ -15561,6 +15561,12 @@ wildcard expression. You can get information for all transforms by using
 
 If this parameter is false, the request returns a 404 status code when
 there are no matches or only partial matches.
+- **`basic` (Optional, boolean)**: If true, the response includes `id`, `state`, `node`, `stats`, `health`,
+and basic `checkpointing` information (the last and next checkpoint
+numbers, and the next checkpoint's `position` and `progress`). Skips
+statistics that require heavy computations to calculate:
+`operations_behind`, `changes_last_detected_at`, `last_search_time`, and
+the checkpoint timestamps.
 - **`from` (Optional, number)**: Skips the specified number of transforms.
 - **`size` (Optional, number)**: Specifies the maximum number of transforms to obtain.
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the stats
