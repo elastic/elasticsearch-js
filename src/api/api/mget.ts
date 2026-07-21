@@ -38,6 +38,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'realtime',
       'refresh',
       'routing',
+      '_slice',
       '_source',
       '_source_excludes',
       '_source_includes',
@@ -110,7 +111,7 @@ export default async function MgetApi<TDocument = unknown> (this: That, params?:
     acceptedParams: {
       path: ['index'],
       body: ['docs', 'ids'],
-      query: ['force_synthetic_source', 'preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields']
+      query: ['force_synthetic_source', 'preference', 'realtime', 'refresh', 'routing', '_slice', '_source', '_source_excludes', '_source_includes', 'stored_fields']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

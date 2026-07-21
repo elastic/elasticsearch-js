@@ -40,6 +40,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'pipeline',
       'refresh',
       'routing',
+      '_slice',
       'timeout',
       'version',
       'version_type',
@@ -104,7 +105,7 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
     acceptedParams: {
       path: ['id', 'index'],
       body: ['document'],
-      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'op_type', 'pipeline', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
+      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'op_type', 'pipeline', 'refresh', 'routing', '_slice', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

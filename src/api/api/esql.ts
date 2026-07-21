@@ -47,7 +47,8 @@ export default class Esql {
           'wait_for_completion_timeout',
           'keep_alive',
           'keep_on_completion',
-          'project_routing'
+          'project_routing',
+          'settings'
         ],
         query: [
           'allow_partial_results',
@@ -84,12 +85,50 @@ export default class Esql {
           'drop_null_columns'
         ]
       },
+      'esql.delete_data_source': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'esql.delete_dataset': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
       'esql.delete_view': {
         path: [
           'name'
         ],
         body: [],
         query: []
+      },
+      'esql.get_data_source': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
+      },
+      'esql.get_dataset': {
+        path: [
+          'name'
+        ],
+        body: [],
+        query: [
+          'master_timeout'
+        ]
       },
       'esql.get_query': {
         path: [
@@ -109,6 +148,36 @@ export default class Esql {
         path: [],
         body: [],
         query: []
+      },
+      'esql.put_data_source': {
+        path: [
+          'name'
+        ],
+        body: [
+          'type',
+          'description',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
+      },
+      'esql.put_dataset': {
+        path: [
+          'name'
+        ],
+        body: [
+          'data_source',
+          'resource',
+          'description',
+          'mappings',
+          'settings'
+        ],
+        query: [
+          'master_timeout',
+          'timeout'
+        ]
       },
       'esql.put_view': {
         path: [
@@ -132,7 +201,8 @@ export default class Esql {
           'tables',
           'include_ccs_metadata',
           'include_execution_metadata',
-          'project_routing'
+          'project_routing',
+          'settings'
         ],
         query: [
           'format',
@@ -196,7 +266,7 @@ export default class Esql {
       name: 'esql.async_query',
       acceptedParams: {
         path: [],
-        body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'wait_for_completion_timeout', 'keep_alive', 'keep_on_completion', 'project_routing'],
+        body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'wait_for_completion_timeout', 'keep_alive', 'keep_on_completion', 'project_routing', 'settings'],
         query: ['allow_partial_results', 'delimiter', 'drop_null_columns', 'format']
       }
     }
@@ -354,6 +424,106 @@ export default class Esql {
   }
 
   /**
+    * Delete ES|QL data sources. Deletes one or more data sources used in ES|QL data federation. Fails with `409` if any dataset references one of the named data sources; delete the dependent datasets first.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async deleteDataSource (this: That, params: T.EsqlDeleteDataSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlDeleteDataSourceResponse>
+  async deleteDataSource (this: That, params: T.EsqlDeleteDataSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlDeleteDataSourceResponse, unknown>>
+  async deleteDataSource (this: That, params: T.EsqlDeleteDataSourceRequest, options?: TransportRequestOptions): Promise<T.EsqlDeleteDataSourceResponse>
+  async deleteDataSource (this: That, params: T.EsqlDeleteDataSourceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['esql.delete_data_source']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_query/data_source/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.delete_data_source',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Delete ES|QL datasets. Deletes one or more datasets used in ES|QL data federation. If any specified dataset does not exist, the request fails and no datasets are deleted.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async deleteDataset (this: That, params: T.EsqlDeleteDatasetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlDeleteDatasetResponse>
+  async deleteDataset (this: That, params: T.EsqlDeleteDatasetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlDeleteDatasetResponse, unknown>>
+  async deleteDataset (this: That, params: T.EsqlDeleteDatasetRequest, options?: TransportRequestOptions): Promise<T.EsqlDeleteDatasetResponse>
+  async deleteDataset (this: That, params: T.EsqlDeleteDatasetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['esql.delete_dataset']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_query/dataset/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.delete_dataset',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout', 'timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Delete an ES|QL view. Deletes a stored ES|QL view.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
@@ -398,6 +568,122 @@ export default class Esql {
         path: ['name'],
         body: [],
         query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get ES|QL data sources. Returns one or more data sources used in ES|QL data federation. A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match returns `200` with an empty array.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async getDataSource (this: That, params?: T.EsqlGetDataSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetDataSourceResponse>
+  async getDataSource (this: That, params?: T.EsqlGetDataSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetDataSourceResponse, unknown>>
+  async getDataSource (this: That, params?: T.EsqlGetDataSourceRequest, options?: TransportRequestOptions): Promise<T.EsqlGetDataSourceResponse>
+  async getDataSource (this: That, params?: T.EsqlGetDataSourceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['esql.get_data_source']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'GET'
+      path = `/_query/data_source/${encodeURIComponent(params.name.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_query/data_source'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'esql.get_data_source',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get ES|QL datasets. Returns one or more datasets used in ES|QL data federation. A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match returns `200` with an empty array.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO | Elasticsearch API documentation}
+    */
+  async getDataset (this: That, params?: T.EsqlGetDatasetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetDatasetResponse>
+  async getDataset (this: That, params?: T.EsqlGetDatasetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetDatasetResponse, unknown>>
+  async getDataset (this: That, params?: T.EsqlGetDatasetRequest, options?: TransportRequestOptions): Promise<T.EsqlGetDatasetResponse>
+  async getDataset (this: That, params?: T.EsqlGetDatasetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['esql.get_dataset']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'GET'
+      path = `/_query/dataset/${encodeURIComponent(params.name.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_query/dataset'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'esql.get_dataset',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: {
+        path: ['name'],
+        body: [],
+        query: ['master_timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -560,6 +846,130 @@ export default class Esql {
   }
 
   /**
+    * Create or update an ES|QL data source. Creates or replaces a named, type-specific data source configuration for ES|QL data federation. Datasets reference data source configurations to access external data. Names must be lowercase and follow index or alias naming rules.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    */
+  async putDataSource (this: That, params: T.EsqlPutDataSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutDataSourceResponse>
+  async putDataSource (this: That, params: T.EsqlPutDataSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlPutDataSourceResponse, unknown>>
+  async putDataSource (this: That, params: T.EsqlPutDataSourceRequest, options?: TransportRequestOptions): Promise<T.EsqlPutDataSourceResponse>
+  async putDataSource (this: That, params: T.EsqlPutDataSourceRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['esql.put_data_source']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_query/data_source/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.put_data_source',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: {
+        path: ['name'],
+        body: ['type', 'description', 'settings'],
+        query: ['master_timeout', 'timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create or update an ES|QL dataset. Creates or replaces a dataset that references a data source in ES|QL data federation. Dataset names participate in the index namespace and must follow index or alias naming rules. Returns `404` if the referenced data source does not exist.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO | Elasticsearch API documentation}
+    */
+  async putDataset (this: That, params: T.EsqlPutDatasetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutDatasetResponse>
+  async putDataset (this: That, params: T.EsqlPutDatasetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlPutDatasetResponse, unknown>>
+  async putDataset (this: That, params: T.EsqlPutDatasetRequest, options?: TransportRequestOptions): Promise<T.EsqlPutDatasetResponse>
+  async putDataset (this: That, params: T.EsqlPutDatasetRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['esql.put_dataset']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_query/dataset/${encodeURIComponent(params.name.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'esql.put_dataset',
+      pathParts: {
+        name: params.name
+      },
+      acceptedParams: {
+        path: ['name'],
+        body: ['data_source', 'resource', 'description', 'mappings', 'settings'],
+        query: ['master_timeout', 'timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Create or update an ES|QL view.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
     */
@@ -673,7 +1083,7 @@ export default class Esql {
       name: 'esql.query',
       acceptedParams: {
         path: [],
-        body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'project_routing'],
+        body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'project_routing', 'settings'],
         query: ['format', 'delimiter', 'drop_null_columns', 'allow_partial_results']
       }
     }

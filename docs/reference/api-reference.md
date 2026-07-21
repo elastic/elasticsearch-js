@@ -142,7 +142,8 @@ client.bulk({ ... })
 - **`list_executed_pipelines` (Optional, boolean)**: If `true`, the response will include the ingest pipelines that were run for each index or create.
 - **`pipeline` (Optional, string)**: The pipeline identifier to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, wait for a refresh to make this operation visible to search. If `false`, do nothing with refreshes. Valid values: `true`, `false`, `wait_for`.
-- **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
@@ -269,8 +270,9 @@ client.count({ ... })
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`min_score` (Optional, number)**: The minimum `_score` value that documents must have to be included in the result.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
 - **`stats` (Optional, string[] \| string)**: Specific `tag` of the request for logging and statistical purposes.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`terminate_after` (Optional, number)**: The maximum number of documents to collect for each shard. If a query reaches this limit, Elasticsearch terminates the query early. Elasticsearch collects documents before sorting. IMPORTANT: Use with caution. Elasticsearch applies this parameter to each shard handling the request. When possible, let Elasticsearch perform early termination automatically. Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
 - **`q` (Optional, string)**: The query in Lucene query string syntax. This parameter cannot be used with a request body.
 
@@ -426,7 +428,8 @@ client.delete({ id, index })
 - **`if_primary_term` (Optional, number)**: Only perform the operation if the document has this primary term.
 - **`if_seq_no` (Optional, number)**: Only perform the operation if the document has this sequence number.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for active shards. This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs. Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation. By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error.
 - **`version` (Optional, number)**: An explicit version number for concurrency control. It must match the current version of the document for the request to succeed.
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
@@ -542,7 +545,8 @@ client.deleteByQuery({ index })
 - **`refresh` (Optional, boolean)**: If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes. This is different than the delete API's `refresh` parameter, which causes just the shard that received the delete request to be refreshed. Unlike the delete API, it does not support `wait_for`.
 - **`request_cache` (Optional, boolean)**: If `true`, the request cache is used for this request. Defaults to the index-level setting.
 - **`requests_per_second` (Optional, float)**: The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`q` (Optional, string)**: A query in the Lucene query string syntax.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
 - **`scroll_size` (Optional, number)**: The size of the scroll request that powers the operation.
@@ -692,7 +696,8 @@ client.explain({ id, index })
 - **`df` (Optional, string)**: The field to use as default where no field prefix is given in the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored. This parameter can be used only when the `q` query string parameter is specified.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`_source` (Optional, boolean \| string \| string[])**: `True` or `false` to return the `_source` field or not or a list of fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
@@ -805,7 +810,8 @@ client.get({ id, index })
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, the operation is randomized between the shard replicas. If it is set to `_local`, the operation will prefer to be run on a local allocated shard when possible. If it is set to a custom value, the value is used to guarantee that the same shards will be used for the same custom value. This can help with "jumping values" when hitting different shards in different refresh states. A sample value can be something like the web session ID or the user name.
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes the relevant shards before retrieving the document. Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`_source` (Optional, boolean \| string \| string[])**: Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
 - **`_source_exclude_vectors` (Optional, boolean)**: Whether vectors should be excluded from _source
@@ -1098,7 +1104,8 @@ client.index({ index })
 - **`op_type` (Optional, Enum("index" \| "create"))**: Set to `create` to only index the document if it does not already exist (put if absent). If a document with the specified `_id` already exists, the indexing operation will fail. The behavior is the same as using the `<index>/_create` endpoint. If a document ID is specified, this paramater defaults to `index`. Otherwise, it defaults to `create`. If the request targets a data stream, an `op_type` of `create` is required.
 - **`pipeline` (Optional, string)**: The ID of the pipeline to use to preprocess incoming documents. If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request. If a final pipeline is configured it will always run, regardless of the value of this parameter.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search. If `wait_for`, it waits for a refresh to make this operation visible to search. If `false`, it does nothing with refreshes.
-- **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards. This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs. Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation. By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error. The actual wait time could be longer, particularly when multiple waits occur.
 - **`version` (Optional, number)**: An explicit version number for concurrency control. It must be a non-negative long number.
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
@@ -1172,7 +1179,8 @@ client.mget({ ... })
 - **`preference` (Optional, string)**: Specifies the node or shard the operation should be performed on. Random by default.
 - **`realtime` (Optional, boolean)**: If `true`, the request is real-time as opposed to near-real-time.
 - **`refresh` (Optional, boolean)**: If `true`, the request refreshes relevant shards before retrieving documents.
-- **`routing` (Optional, string \| string[])**: Custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: Custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`_source` (Optional, boolean \| string \| string[])**: True or false to return the `_source` field or not, or a list of fields to return.
 - **`_source_excludes` (Optional, string \| string[])**: A list of source fields to exclude from the response. You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
 - **`_source_includes` (Optional, string \| string[])**: A list of source fields to include in the response. If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter. If the `_source` parameter is `false`, this parameter is ignored.
@@ -1292,7 +1300,8 @@ client.mtermvectors({ ... })
 - **`positions` (Optional, boolean)**: If `true`, the response includes term positions.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`realtime` (Optional, boolean)**: If true, the request is real-time as opposed to near-real-time.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`term_statistics` (Optional, boolean)**: If true, the response includes term frequency and document frequency.
 - **`version` (Optional, number)**: If `true`, returns the document version as part of a hit.
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
@@ -1469,7 +1478,7 @@ client.reindex({ dest, source })
 
 #### Request (object) [_request_reindex]
 
-- **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination you are copying to.
+- **`dest` ({ index, op_type, pipeline, routing, _slice, version_type })**: The destination you are copying to.
 - **`source` ({ index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source you are copying from.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: Indicates whether to continue reindexing even when there are conflicts.
 - **`max_docs` (Optional, number)**: The maximum number of documents to reindex. By default, all documents are reindexed. If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation. If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
@@ -1480,7 +1489,7 @@ client.reindex({ dest, source })
 - **`slices` (Optional, number \| Enum("auto"))**: The number of slices this task should be divided into. It defaults to one slice, which means the task isn't sliced into subtasks. Reindex supports sliced scroll to parallelize the reindexing process. This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts. NOTE: Reindexing from remote clusters does not support manual or automatic slicing. If set to `auto`, Elasticsearch chooses the number of slices to use. This setting will use one slice per shard, up to a certain limit. If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards. By default, Elasticsearch waits for at least one minute before failing. The actual wait time could be longer, particularly when multiple waits occur.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of shard copies that must be active before proceeding with the operation. Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). The default value is one, which means it waits for each primary shard to be active.
-- **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the operation is complete.
+- **`wait_for_completion` (Optional, boolean)**: If `true`, the request blocks until the operation is complete. If your requested reindex operation is complex or time-consuming, it might timeout due to transport-layer limitations. While the reindex will continue to be processed by the cluster, your client will not receive updates on status automatically after timeout. Set this option `true` if you anticipate a long-running reindex.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 
 ## client.reindexRethrottle [_reindex_rethrottle]
@@ -1675,7 +1684,8 @@ client.search({ ... })
 - **`preference` (Optional, string)**: The nodes and shards used for the search. By default, Elasticsearch selects from eligible nodes and shards using adaptive replica selection, accounting for allocation awareness. Valid values are: * `_only_local` to run the search only on shards on the local node. * `_local` to, if possible, run the search on shards on the local node, or if not, select shards using the default method. * `_only_nodes:<node-id>,<node-id>` to run the search on only the specified nodes IDs. If suitable shards exist on more than one selected node, use shards on those nodes using the default method. If none of the specified nodes are available, select shards from any available node using the default method. * `_prefer_nodes:<node-id>,<node-id>` to if possible, run the search on the specified nodes IDs. If not, select shards using the default method. * `_shards:<shard>,<shard>` to run the search only on the specified shards. You can combine this value with other `preference` values. However, the `_shards` value must come first. For example: `_shards:2,3|_local`. * `<custom-string>` (any string that does not start with `_`) to route searches with the same `<custom-string>` to the same shards in the same order.
 - **`pre_filter_shard_size` (Optional, number)**: A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method (if date filters are mandatory to match but the shard bounds and the query are disjoint). When unspecified, the pre-filter phase is executed if any of these conditions is met: * The request targets more than 128 shards. * The request targets one or more read-only index. * The primary sort of the query targets an indexed field.
 - **`request_cache` (Optional, boolean)**: If `true`, the caching of search results is enabled for requests where `size` is `0`. It defaults to index level settings.
-- **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value that is used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling. By default, this value cannot exceed `1d` (24 hours). You can change this limit by using the `search.max_keep_alive` cluster-level setting.
 - **`search_type` (Optional, Enum("query_then_fetch" \| "dfs_query_then_fetch"))**: Indicates how distributed term frequencies are calculated for relevance scoring.
 - **`suggest_field` (Optional, string)**: The field to use for suggestions.
@@ -1967,6 +1977,7 @@ client.termvectors({ index })
 - **`version_type` (Optional, Enum("internal" \| "external" \| "external_gte"))**: The version type.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. It is random by default.
 - **`realtime` (Optional, boolean)**: If true, the request is real-time as opposed to near-real-time.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 
 ## client.update [_update]
 Update a document.
@@ -2015,7 +2026,8 @@ client.update({ id, index })
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If 'true', Elasticsearch refreshes the affected shards to make this operation visible to search. If 'wait_for', it waits for a refresh to make this operation visible to search. If 'false', it does nothing with refreshes.
 - **`require_alias` (Optional, boolean)**: If `true`, the destination must be an index alias.
 - **`retry_on_conflict` (Optional, number)**: The number of times the operation should be retried when a conflict occurs.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for the following operations: dynamic mapping updates and waiting for active shards. Elasticsearch waits for at least the timeout period before failing. The actual wait time could be longer, particularly when multiple waits occur.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: The number of copies of each shard that must be active before proceeding with the operation. Set to 'all' or any positive integer up to the total number of shards in the index (`number_of_replicas`+1). The default value of `1` means it waits for each primary shard to be active.
 - **`_source_excludes` (Optional, string \| string[])**: The source fields you want to exclude.
@@ -2147,7 +2159,8 @@ client.updateByQuery({ index })
 - **`refresh` (Optional, boolean)**: If `true`, Elasticsearch refreshes affected shards to make the operation visible to search after the request completes. This is different than the update API's `refresh` parameter, which causes just the shard that received the request to be refreshed.
 - **`request_cache` (Optional, boolean)**: If `true`, the request cache is used for this request. It defaults to the index-level setting.
 - **`requests_per_second` (Optional, float)**: The maximum number of documents to update per second, across the entire update_by_query operation (including slices). It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
-- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard. Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice. Use the special value `_all` to target all slices without restricting to a routing value. Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 - **`scroll` (Optional, string \| -1 \| 0)**: The period to retain the search context for scrolling.
 - **`scroll_size` (Optional, number)**: The size of the scroll request that powers the operation.
 - **`search_timeout` (Optional, string \| -1 \| 0)**: An explicit timeout for each search request. By default, there is no timeout.
@@ -4551,6 +4564,38 @@ client.danglingIndices.listDanglingIndices()
 ```
 
 
+## client.encryption.reset [_encryption.reset]
+Reset the project encryption key.
+
+Destroy the current project encryption key (PEK) and generate a new one.
+This is the recovery path for when the on-disk encrypted PEK becomes permanently
+inaccessible, for example because the key encryption material protecting it was lost.
+
+All data that was encrypted under the destroyed key becomes permanently unrecoverable.
+Each feature that stores encrypted data decides how to handle its own data during the
+reset: some features drop the encrypted values entirely, while others preserve the rest
+of the affected data and only clear the values that can no longer be decrypted.
+
+Because this operation causes permanent data loss, it requires the `accept_data_loss`
+query parameter to be set to `true`.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.encryption.reset({ accept_data_loss })
+```
+
+### Arguments [_arguments_encryption.reset]
+
+#### Request (object) [_request_encryption.reset]
+- **`accept_data_loss` (boolean)**: Acknowledge that resetting the project encryption key permanently destroys all data
+that was encrypted under the current key.
+The request fails if this is not set to `true`.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+- **`timeout` (Optional, string \| -1 \| 0)**: The period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+
 ## client.enrich.deletePolicy [_enrich.delete_policy]
 Delete an enrich policy.
 
@@ -4775,7 +4820,7 @@ client.esql.asyncQuery({ query })
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`time_zone` (Optional, string)**: Sets the default timezone of the query.
 - **`locale` (Optional, string)**: Returns results (especially dates) formatted per the conventions of the locale.
-- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[]>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[] \| { value, identifier, pattern }>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -4807,6 +4852,8 @@ Examples:
  _alias:_origin
  _alias:*pr*
 Supported in serverless only.
+- **`settings` (Optional, { time_zone, approximation, column_metadata, project_routing })**: Per-query settings, the request-body equivalent of the in-query `SET` command.
+For example, `time_zone` can be supplied here instead of as a top-level field.
 - **`allow_partial_results` (Optional, boolean)**: If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
 If `false`, the query will fail if there are any failures.
 
@@ -4895,6 +4942,45 @@ A query ID is also provided when the request was submitted with the `keep_on_com
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
 
+## client.esql.deleteDataSource [_esql.delete_data_source]
+Delete ES|QL data sources.
+
+Deletes one or more data sources used in ES|QL data federation.
+Fails with `409` if any dataset references one of the named data sources;
+delete the dependent datasets first.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.deleteDataSource({ name })
+```
+
+### Arguments [_arguments_esql.delete_data_source]
+
+#### Request (object) [_request_esql.delete_data_source]
+- **`name` (string \| string[])**: A list of data source names to delete.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
+## client.esql.deleteDataset [_esql.delete_dataset]
+Delete ES|QL datasets.
+
+Deletes one or more datasets used in ES|QL data federation.
+If any specified dataset does not exist, the request fails and no datasets are deleted.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.deleteDataset({ name })
+```
+
+### Arguments [_arguments_esql.delete_dataset]
+
+#### Request (object) [_request_esql.delete_dataset]
+- **`name` (string \| string[])**: A list of dataset names to delete.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
 ## client.esql.deleteView [_esql.delete_view]
 Delete an ES|QL view.
 
@@ -4910,6 +4996,44 @@ client.esql.deleteView({ name })
 
 #### Request (object) [_request_esql.delete_view]
 - **`name` (string \| string[])**: The view name to remove.
+
+## client.esql.getDataSource [_esql.get_data_source]
+Get ES|QL data sources.
+
+Returns one or more data sources used in ES|QL data federation.
+A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
+returns `200` with an empty array.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.getDataSource({ ... })
+```
+
+### Arguments [_arguments_esql.get_data_source]
+
+#### Request (object) [_request_esql.get_data_source]
+- **`name` (Optional, string \| string[])**: A list of data source names or wildcard patterns. Omit to return all data sources.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+
+## client.esql.getDataset [_esql.get_dataset]
+Get ES|QL datasets.
+
+Returns one or more datasets used in ES|QL data federation.
+A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
+returns `200` with an empty array.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO)
+
+```ts
+client.esql.getDataset({ ... })
+```
+
+### Arguments [_arguments_esql.get_dataset]
+
+#### Request (object) [_request_esql.get_dataset]
+- **`name` (Optional, string \| string[])**: A list of dataset names or wildcard patterns. Omit to return all datasets.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.esql.getQuery [_esql.get_query]
 Get a specific running ES|QL query information.
@@ -4955,6 +5079,62 @@ client.esql.listQueries()
 ```
 
 
+## client.esql.putDataSource [_esql.put_data_source]
+Create or update an ES|QL data source.
+
+Creates or replaces a named, type-specific data source configuration for ES|QL data federation.
+Datasets reference data source configurations to access external data. Names must be lowercase
+and follow index or alias naming rules.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.esql.putDataSource({ name, type })
+```
+
+### Arguments [_arguments_esql.put_data_source]
+
+#### Request (object) [_request_esql.put_data_source]
+- **`name` (string)**: The data source name to create or update.
+- **`type` (string)**: The data source type. Currently, `s3` is supported.
+The value must be lowercase and contain no whitespace.
+- **`description` (Optional, string)**: A free-text description of the data source.
+- **`settings` (Optional, Record<string, User-defined value>)**: Type-specific connection and authentication settings.
+For `s3`, connection settings include `region` and `endpoint`. Authentication settings
+include `auth` and the credentials required by the selected authentication method.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
+## client.esql.putDataset [_esql.put_dataset]
+Create or update an ES|QL dataset.
+
+Creates or replaces a dataset that references a data source in ES|QL data federation.
+Dataset names participate in the index namespace and must follow index or alias naming rules.
+Returns `404` if the referenced data source does not exist.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO)
+
+```ts
+client.esql.putDataset({ name, data_source, resource })
+```
+
+### Arguments [_arguments_esql.put_dataset]
+
+#### Request (object) [_request_esql.put_dataset]
+- **`name` (string)**: The dataset name to create or update.
+- **`data_source` (string)**: The name of the referenced data source. The data source must already exist.
+- **`resource` (string)**: The URI that identifies the data to read, resolved against the referenced data source.
+It can include glob patterns. For example, a recursive pattern can match
+all Parquet files under the `s3://logs-bucket/access` prefix.
+- **`description` (Optional, string)**: A free-text description of the dataset.
+- **`mappings` (Optional, { dynamic, properties, _id })**: User-declared mapping on the dataset definition
+- **`settings` (Optional, Record<string, User-defined value>)**: Format and parsing-specific settings that configure how the resource is read.
+Common keys include `format`, which explicitly selects a registered format, and
+`partition_detection`, which accepts `auto`, `hive`, `template`, or `none`. Additional
+keys depend on the format reader. Compression can be inferred from the resource URI.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
 ## client.esql.putView [_esql.put_view]
 Create or update an ES|QL view.
 
@@ -4989,7 +5169,7 @@ client.esql.query({ query })
 - **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`time_zone` (Optional, string)**: Sets the default timezone of the query.
 - **`locale` (Optional, string)**: Returns results (especially dates) formatted per the conventions of the locale.
-- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[]>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
+- **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[] \| { value, identifier, pattern }>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
 - **`profile` (Optional, boolean)**: If provided and `true` the response will include an extra `profile` object
 with information on how the query was executed. This information is for human debugging
 and its format can change at any time but it can give some insight into the performance
@@ -5011,6 +5191,8 @@ Examples:
  _alias:_origin
  _alias:*pr*
 Supported in serverless only.
+- **`settings` (Optional, { time_zone, approximation, column_metadata, project_routing })**: Per-query settings, the request-body equivalent of the in-query `SET` command.
+For example, `time_zone` can be supplied here instead of as a top-level field.
 - **`format` (Optional, Enum("csv" \| "json" \| "tsv" \| "txt" \| "yaml" \| "cbor" \| "smile" \| "arrow"))**: A short version of the Accept header, e.g. json, yaml.
 
 `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
@@ -6803,7 +6985,7 @@ client.indices.modifyDataStream({ actions })
 ### Arguments [_arguments_indices.modify_data_stream]
 
 #### Request (object) [_request_indices.modify_data_stream]
-- **`actions` ({ add_backing_index, remove_backing_index }[])**: Actions to perform.
+- **`actions` ({ add_backing_index, remove_backing_index, delete_backing_index }[])**: Actions to perform.
 
 ## client.indices.open [_indices.open]
 Open a closed index.
@@ -7156,13 +7338,13 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 - **`numeric_detection` (Optional, boolean)**: Automatically map strings into numeric data types for all fields.
-- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings, fields } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, time_series_metric, type } \| { time_series_metric, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
+- **`properties` (Optional, Record<string, { type } \| { boost, fielddata, index, null_value, ignore_malformed, script, on_script_error, time_series_dimension, type } \| { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } \| { relations, eager_global_ordinals, type } \| { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } \| { type, fields, meta, copy_to } \| { type } \| { positive_score_impact, type } \| { positive_score_impact, type } \| { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } \| { type } \| { type, null_value } \| { boost, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, type } \| { boost, fielddata, format, ignore_malformed, index, script, on_script_error, null_value, precision_step, locale, type } \| { type, default_metric, ignore_malformed, metrics, time_series_metric } \| { type, dims, element_type, index, index_options, similarity } \| { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, preserve_leaf_arrays, similarity, split_queries_on_whitespace, time_series_dimensions, type } \| { enabled, include_in_parent, include_in_root, type } \| { enabled, subobjects, type } \| { type, enabled, priority, time_series_dimension } \| { type, element_type, dims } \| { type, meta, inference_id, search_inference_id, index_options, chunking_settings, fields } \| { store, type, index_options } \| { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } \| { value, type } \| { type, index } \| { path, type } \| { ignore_malformed, time_series_metric, type } \| { time_series_metric, type } \| { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } \| { type } \| { analyzer, boost, index, null_value, enable_position_increments, type } \| { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type, time_series_metric } \| { coerce, ignore_malformed, ignore_z_value, index, orientation, strategy, type } \| { ignore_malformed, ignore_z_value, null_value, type } \| { coerce, ignore_malformed, ignore_z_value, orientation, type } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value } \| { type, null_value, scaling_factor } \| { type, null_value } \| { type, null_value } \| { format, type } \| { type } \| { type } \| { type } \| { type } \| { type } \| { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)**: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
 - Mapping parameters
 - **`_routing` (Optional, { required })**: Enable making a routing value required on indexed documents.
-- **`_source` (Optional, { compress, compress_threshold, enabled, excludes, includes, mode })**: Control whether the _source field is enabled on the index.
+- **`_source` (Optional, { enabled, excludes, includes, mode })**: Control whether the _source field is enabled on the index.
 - **`runtime` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, on_script_error, type }>)**: Mapping of runtime fields for the index.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
@@ -8011,7 +8193,7 @@ client.indices.updateAliases({ ... })
 ### Arguments [_arguments_indices.update_aliases]
 
 #### Request (object) [_request_indices.update_aliases]
-- **`actions` (Optional, { add_backing_index, remove_backing_index }[])**: Actions to perform.
+- **`actions` (Optional, { add_backing_index, remove_backing_index, delete_backing_index }[])**: Actions to perform.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -8058,6 +8240,11 @@ If `true`, unavailable concrete targets are silently ignored.
 - **`lenient` (Optional, boolean)**: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 - **`rewrite` (Optional, boolean)**: If `true`, returns a more detailed explanation showing the actual Lucene query that will be executed.
 - **`q` (Optional, string)**: Query in the Lucene query string syntax.
+- **`routing` (Optional, string \| string[])**: A custom value used to route operations to a specific shard.
+Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+- **`_slice` (Optional, string)**: The slice identifier used to route the operation to a specific slice.
+Use the special value `_all` to target all slices without restricting to a routing value.
+Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
 Perform chat completion inference on the service.
@@ -8127,6 +8314,16 @@ client.inference.delete({ inference_id })
 - **`dry_run` (Optional, boolean)**: When true, checks the semantic_text fields and inference processors that reference the endpoint and returns them in a list, but does not delete the endpoint.
 - **`force` (Optional, boolean)**: When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
 
+## client.inference.deleteRegionPolicy [_inference.delete_region_policy]
+Delete the inference region policy.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete-region-policy)
+
+```ts
+client.inference.deleteRegionPolicy()
+```
+
+
 ## client.inference.embedding [_inference.embedding]
 Perform dense embedding inference on the service.
 
@@ -8160,6 +8357,16 @@ client.inference.get({ ... })
 - **`task_type` (Optional, Enum("sparse_embedding" \| "text_embedding" \| "rerank" \| "completion" \| "chat_completion" \| "embedding"))**: The task type of the endpoint to return
 - **`inference_id` (Optional, string)**: The inference Id of the endpoint to return. Using `_all` or `*` will return all endpoints with the specified
 `task_type` if one is specified, or all endpoints for all task types if no `task_type` is specified
+
+## client.inference.getRegionPolicy [_inference.get_region_policy]
+Get the inference region policy.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get-region-policy)
+
+```ts
+client.inference.getRegionPolicy()
+```
+
 
 ## client.inference.inference [_inference.inference]
 Perform inference on the service.
@@ -8955,6 +9162,23 @@ Not applicable to the `text_embedding`, `completion`, or `chat_completion` task 
 These settings are specific to the task type you specified.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference endpoint to be created.
 
+## client.inference.putRegionPolicy [_inference.put_region_policy]
+Create or update the inference region policy.
+
+The region policy restricts inference to a set of allowed geographic areas or cloud service provider regions.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-region-policy)
+
+```ts
+client.inference.putRegionPolicy({ region_policy })
+```
+
+### Arguments [_arguments_inference.put_region_policy]
+
+#### Request (object) [_request_inference.put_region_policy]
+- **`region_policy` ({ allowed_geos, allowed_regions })**: The region policy configuration.
+- **`force` (Optional, boolean)**: If `true`, the region policy is applied even if it would deny access to inference endpoints that are currently in use by ingest pipeline or indices.
+
 ## client.inference.putVoyageai [_inference.put_voyageai]
 Create a VoyageAI inference endpoint.
 
@@ -9020,8 +9244,63 @@ client.inference.rerank({ inference_id, query, input })
 
 #### Request (object) [_request_inference.rerank]
 - **`inference_id` (string)**: The unique identifier for the inference endpoint.
-- **`query` (string)**: Query input.
-- **`input` (string[])**: The documents to rank.
+- **`query` (string \| { type, format, value })**: Query input.
+The query can be specified as a single string, or as an object.
+The object form additionally allows specifying non-text inputs, such as images.
+
+> info
+> Only the `elastic` service currently supports non-text queries for the `rerank` task. For all other services, the query must be a string.
+
+string example:
+```
+"query": "some query text"
+```
+object example:
+```
+"query": {
+  "type": "image",
+  "format": "base64",
+  "value": "data:image/jpeg;base64,..."
+}
+```
+- **`input` (string \| string[] \| { type, format, value } \| { type, format, value }[])**: The documents to rank.
+The input can be specified as a single string or an array of strings, or as an object or an array of objects.
+The object form additionally allows specifying non-text inputs, such as images.
+
+> info
+> Only the `elastic` service currently supports non-text inputs for the `rerank` task. For all other services, the input must be a string or an array of strings.
+
+string example:
+```
+"input": "some document text"
+```
+string array example:
+```
+"input": ["some document text", "some more document text"]
+```
+object example:
+```
+"input": {
+  "type": "image",
+  "format": "base64",
+  "value": "data:image/jpeg;base64,..."
+}
+```
+object array example:
+```
+"input": [
+  {
+    "type": "text",
+    "format": "text",
+    "value": "some document text"
+  },
+  {
+    "type": "image",
+    "format": "base64",
+    "value": "data:image/jpeg;base64,..."
+  }
+]
+```
 - **`return_documents` (Optional, boolean)**: Include the document text in the response.
 - **`top_n` (Optional, number)**: Limit the response to the top N documents.
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
@@ -16122,6 +16401,12 @@ wildcard expression. You can get information for all transforms by using
 
 If this parameter is false, the request returns a 404 status code when
 there are no matches or only partial matches.
+- **`basic` (Optional, boolean)**: If true, the response includes `id`, `state`, `node`, `stats`, `health`,
+and basic `checkpointing` information (the last and next checkpoint
+numbers, and the next checkpoint's `position` and `progress`). Skips
+statistics that require heavy computations to calculate:
+`operations_behind`, `changes_last_detected_at`, `last_search_time`, and
+the checkpoint timestamps.
 - **`from` (Optional, number)**: Skips the specified number of transforms.
 - **`size` (Optional, number)**: Specifies the maximum number of transforms to obtain.
 - **`timeout` (Optional, string \| -1 \| 0)**: Controls the time to wait for the stats
@@ -16146,7 +16431,7 @@ client.transform.previewTransform({ ... })
 #### Request (object) [_request_transform.preview_transform]
 - **`transform_id` (Optional, string)**: Identifier for the transform to preview. If you specify this path parameter, you cannot provide transform
 configuration details in the request body.
-- **`dest` (Optional, { index, op_type, pipeline, routing, version_type })**: The destination for the transform.
+- **`dest` (Optional, { index, op_type, pipeline, routing, _slice, version_type })**: The destination for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
 - **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the
 transform is running continuously. Also determines the retry interval in
@@ -16201,7 +16486,7 @@ client.transform.putTransform({ transform_id, dest, source })
 #### Request (object) [_request_transform.put_transform]
 - **`transform_id` (string)**: Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9),
 hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters.
-- **`dest` ({ index, op_type, pipeline, routing, version_type })**: The destination for the transform.
+- **`dest` ({ index, op_type, pipeline, routing, _slice, version_type })**: The destination for the transform.
 - **`source` ({ index, query, remote, project_routing, size, slice, sort, _source, runtime_mappings })**: The source of the data for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
 - **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the transform is running continuously. Also
@@ -16382,7 +16667,7 @@ client.transform.updateTransform({ transform_id })
 
 #### Request (object) [_request_transform.update_transform]
 - **`transform_id` (string)**: Identifier for the transform.
-- **`dest` (Optional, { index, op_type, pipeline, routing, version_type })**: The destination for the transform.
+- **`dest` (Optional, { index, op_type, pipeline, routing, _slice, version_type })**: The destination for the transform.
 - **`description` (Optional, string)**: Free text description of the transform.
 - **`frequency` (Optional, string \| -1 \| 0)**: The interval between checks for changes in the source indices when the
 transform is running continuously. Also determines the retry interval in
@@ -16608,9 +16893,9 @@ client.watcher.putWatch({ id })
 
 #### Request (object) [_request_watcher.put_watch]
 - **`id` (string)**: The identifier for the watch.
-- **`actions` (Optional, Record<string, { add_backing_index, remove_backing_index }>)**: The list of actions that will be run if the condition matches.
+- **`actions` (Optional, Record<string, { add_backing_index, remove_backing_index, delete_backing_index }>)**: The list of actions that will be run if the condition matches.
 - **`condition` (Optional, { always, array_compare, compare, never, script })**: The condition that defines if the actions should be run.
-- **`input` (Optional, { chain, http, search, simple })**: The input that defines the input that loads the data for the watch.
+- **`input` (Optional, { chain, http, search, simple, transform })**: The input that defines the input that loads the data for the watch.
 - **`metadata` (Optional, Record<string, User-defined value>)**: Metadata JSON that will be copied into the history entries.
 - **`throttle_period` (Optional, string \| -1 \| 0)**: The minimum time between actions being run.
 The default is 5 seconds.

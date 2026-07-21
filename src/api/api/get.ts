@@ -34,6 +34,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'realtime',
       'refresh',
       'routing',
+      '_slice',
       '_source',
       '_source_excludes',
       '_source_exclude_vectors',
@@ -90,7 +91,7 @@ export default async function GetApi<TDocument = unknown> (this: That, params: T
     acceptedParams: {
       path: ['id', 'index'],
       body: [],
-      query: ['force_synthetic_source', 'preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_exclude_vectors', '_source_includes', 'stored_fields', 'version', 'version_type']
+      query: ['force_synthetic_source', 'preference', 'realtime', 'refresh', 'routing', '_slice', '_source', '_source_excludes', '_source_exclude_vectors', '_source_includes', 'stored_fields', 'version', 'version_type']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
