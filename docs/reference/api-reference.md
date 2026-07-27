@@ -4949,7 +4949,7 @@ Deletes one or more data sources used in ES|QL data federation.
 Fails with `409` if any dataset references one of the named data sources;
 delete the dependent datasets first.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-data-source)
 
 ```ts
 client.esql.deleteDataSource({ name })
@@ -4968,7 +4968,7 @@ Delete ES|QL datasets.
 Deletes one or more datasets used in ES|QL data federation.
 If any specified dataset does not exist, the request fails and no datasets are deleted.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-dataset)
 
 ```ts
 client.esql.deleteDataset({ name })
@@ -5004,7 +5004,7 @@ Returns one or more data sources used in ES|QL data federation.
 A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
 returns `200` with an empty array.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-data-source)
 
 ```ts
 client.esql.getDataSource({ ... })
@@ -5023,7 +5023,7 @@ Returns one or more datasets used in ES|QL data federation.
 A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
 returns `200` with an empty array.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-dataset)
 
 ```ts
 client.esql.getDataset({ ... })
@@ -5086,7 +5086,7 @@ Creates or replaces a named, type-specific data source configuration for ES|QL d
 Datasets reference data source configurations to access external data. Names must be lowercase
 and follow index or alias naming rules.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-data-source)
 
 ```ts
 client.esql.putDataSource({ name, type })
@@ -5112,7 +5112,7 @@ Creates or replaces a dataset that references a data source in ES|QL data federa
 Dataset names participate in the index namespace and must follow index or alias naming rules.
 Returns `404` if the referenced data source does not exist.
 
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO)
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-dataset)
 
 ```ts
 client.esql.putDataset({ name, data_source, resource })
