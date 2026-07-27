@@ -425,7 +425,7 @@ export default class Esql {
 
   /**
     * Delete ES|QL data sources. Deletes one or more data sources used in ES|QL data federation. Fails with `409` if any dataset references one of the named data sources; delete the dependent datasets first.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-data-source | Elasticsearch API documentation}
     */
   async deleteDataSource (this: That, params: T.EsqlDeleteDataSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlDeleteDataSourceResponse>
   async deleteDataSource (this: That, params: T.EsqlDeleteDataSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlDeleteDataSourceResponse, unknown>>
@@ -475,7 +475,7 @@ export default class Esql {
 
   /**
     * Delete ES|QL datasets. Deletes one or more datasets used in ES|QL data federation. If any specified dataset does not exist, the request fails and no datasets are deleted.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-dataset | Elasticsearch API documentation}
     */
   async deleteDataset (this: That, params: T.EsqlDeleteDatasetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlDeleteDatasetResponse>
   async deleteDataset (this: That, params: T.EsqlDeleteDatasetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlDeleteDatasetResponse, unknown>>
@@ -575,7 +575,7 @@ export default class Esql {
 
   /**
     * Get ES|QL data sources. Returns one or more data sources used in ES|QL data federation. A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match returns `200` with an empty array.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-data-source | Elasticsearch API documentation}
     */
   async getDataSource (this: That, params?: T.EsqlGetDataSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetDataSourceResponse>
   async getDataSource (this: That, params?: T.EsqlGetDataSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetDataSourceResponse, unknown>>
@@ -633,7 +633,7 @@ export default class Esql {
 
   /**
     * Get ES|QL datasets. Returns one or more datasets used in ES|QL data federation. A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match returns `200` with an empty array.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-dataset | Elasticsearch API documentation}
     */
   async getDataset (this: That, params?: T.EsqlGetDatasetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetDatasetResponse>
   async getDataset (this: That, params?: T.EsqlGetDatasetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetDatasetResponse, unknown>>
@@ -847,7 +847,7 @@ export default class Esql {
 
   /**
     * Create or update an ES|QL data source. Creates or replaces a named, type-specific data source configuration for ES|QL data federation. Datasets reference data source configurations to access external data. Names must be lowercase and follow index or alias naming rules.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-data-source | Elasticsearch API documentation}
     */
   async putDataSource (this: That, params: T.EsqlPutDataSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutDataSourceResponse>
   async putDataSource (this: That, params: T.EsqlPutDataSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlPutDataSourceResponse, unknown>>
@@ -909,7 +909,7 @@ export default class Esql {
 
   /**
     * Create or update an ES|QL dataset. Creates or replaces a dataset that references a data source in ES|QL data federation. Dataset names participate in the index namespace and must follow index or alias naming rules. Returns `404` if the referenced data source does not exist.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-dataset | Elasticsearch API documentation}
     */
   async putDataset (this: That, params: T.EsqlPutDatasetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutDatasetResponse>
   async putDataset (this: That, params: T.EsqlPutDatasetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlPutDatasetResponse, unknown>>
