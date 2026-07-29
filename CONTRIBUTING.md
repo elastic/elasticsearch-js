@@ -7,6 +7,16 @@ from writing tutorials or blog posts,
 improving the documentation,
 submitting bug reports and feature requests or writing code.
 
+## The one rule
+
+Adapted from [pi's contributing philosophy](https://github.com/earendil-works/pi/blob/main/CONTRIBUTING.md#the-one-rule).
+
+**You must understand your code.** If you cannot explain what your changes do and how they interact with the rest of the codebase, the PR will be closed.
+
+Using AI to write code is fine. Submitting AI-generated code without understanding it is not.
+
+If you use an agent, run it from the repo root so it picks up `AGENTS.md` automatically. Your agent must follow the rules in that file.
+
 ## Repository structure
 The `main` branch is considered unstable, and it's compatible with Elasticsearch main. Unless you are patching an issue, new features should always be sent to the `main` branch, in case of a bugfix, it depends if the bug affects all the release lines.<br/>
 There is a branch for every supported release line, such as `7.x` or `6.x`. We release bugfixes as soon as possible, while minor and major releases are published at the same time of the Elastic Stack.
