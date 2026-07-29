@@ -873,7 +873,7 @@ test('custom transport: disable otel via env var', async t => {
   t.end()
 })
 
-test('Passes maxUrlLength to Transport', t => {
+test('Passes maxPathLength to Transport', t => {
   let captured: Record<string, unknown> | undefined
   class CaptureTransport extends Transport {
     constructor (opts: ConstructorParameters<typeof Transport>[0]) {
@@ -886,9 +886,9 @@ test('Passes maxUrlLength to Transport', t => {
   new Client({
     node: 'http://localhost:9200',
     Transport: CaptureTransport as typeof Transport,
-    maxUrlLength: 3500
+    maxPathLength: 3500
   })
 
-  t.equal(captured?.maxUrlLength, 3500)
+  t.equal(captured?.maxPathLength, 3500)
   t.end()
 })
