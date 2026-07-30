@@ -28,6 +28,7 @@ docker run \
   --env "ELASTIC_PASSWORD=${elastic_password}" \
   --env "ELASTIC_USER=elastic" \
   --env "BUILDKITE=true" \
+  --env BUILDKITE_JOB_ID \
   --volume "/usr/src/app/node_modules" \
   --volume "$repo:/usr/src/app" \
   --volume "$repo/junit-output:/junit-output" \
