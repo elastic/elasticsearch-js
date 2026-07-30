@@ -33,7 +33,7 @@
     "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
     "test:integration-build": "npm run build && node test/integration/index.js",
-    "test:integration": "npm run test:integration-build && c8 --exclude='**/test/**' --check-coverage --statements=80 --branches=20 --functions=65 --lines=80 tap run --jobs=1 --disable-coverage --reporter=junit --reporter-file=report-junit.xml generated-tests/",
+    "test:integration": "npm run test:integration-build && NODE_OPTIONS=--max-old-space-size=4096 c8 --exclude='**/test/**' --exclude='**/generated-tests/**' --check-coverage --statements=80 --branches=20 --functions=65 --lines=80 tap run --jobs=1 --disable-coverage --reporter=junit --reporter-file=report-junit.xml generated-tests/",
     "test:fuzz": "npm run build && node test/fuzz/run.mjs",
     "lint": "eslint",
     "lint:fix": "eslint . --fix ",
