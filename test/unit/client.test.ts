@@ -871,3 +871,23 @@ test('custom transport: disable otel via env var', async t => {
   t.equal(exporter.getFinishedSpans().length, 0)
   t.end()
 })
+
+test('Passes maxPathLength to Transport', t => {
+  let captured: Record<string, unknown> | undefined
+  class CaptureTransport extends Transport {
+    constructor (opts: ConstructorParameters<typeof Transport>[0]) {
+      super(opts)
+      captured = opts as unknown as Record<string, unknown>
+    }
+  }
+
+  // eslint-disable-next-line no-new
+  new Client({
+    node: 'http://localhost:9200',
+    Transport: CaptureTransport as typeof Transport,
+    maxPathLength: 3500
+  })
+
+  t.equal(captured?.maxPathLength, 3500)
+  t.end()
+})
