@@ -181,6 +181,9 @@ export interface ClientOptions {
   /** @property maxCompressedResponseSize When configured, verifies that the compressed response size is lower than the configured number. If it's higher, it will abort the request. It cannot be higher than `buffer.constants.MAX_LENGTH`
     * @defaultValue null */
   maxCompressedResponseSize?: number
+  /** @property maxPathLength Maximum allowed byte length of the request path (`path` + optional `?querystring`). Does not include scheme or hostname. When exceeded, the request is rejected before it is sent. Aligns with Elasticsearch's `http.max_initial_line_length` (default 4kb); leave headroom for the HTTP method and version. Disabled when unset.
+    * @defaultValue null */
+  maxPathLength?: number | null
   /** @property redaction Options for how to redact potentially sensitive data from metadata attached to `Error` objects
     * @remarks Read https://www.elastic.co/docs/reference/elasticsearch/clients/javascript/advanced-config#redaction for more details
     * @defaultValue Configuration that will replace known sources of sensitive data */
@@ -291,6 +294,7 @@ export default class Client extends API {
       enableMetaHeader: true,
       maxResponseSize: null,
       maxCompressedResponseSize: null,
+      maxPathLength: null,
       serverMode: 'stack'
     }, opts, { headers, redaction })
 
@@ -414,6 +418,7 @@ export default class Client extends API {
       productCheck: 'Elasticsearch',
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
+      maxPathLength: options.maxPathLength,
       redaction: options.redaction,
 
       // @ts-ignore enableMetaHeader will be available in transport v9.1.1
