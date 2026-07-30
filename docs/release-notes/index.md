@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.4.3 [elasticsearch-javascript-client-9.4.3]
+
+### Features and enhancements [elasticsearch-javascript-client-9.4.3-features-enhancements]
+
+- **`maxPathLength` option:** Adds a `maxPathLength` client option to reject requests whose path and query string exceed a configurable byte length before they are sent, preventing uncaught errors from HAProxy or Elasticsearch's `http.max_initial_line_length` limit.
+
 ## 9.4.2 [elasticsearch-javascript-client-9.4.2]
 
 ### Fixes [elasticsearch-javascript-client-9.4.2-fixes]
