@@ -418,7 +418,6 @@ export default class Client extends API {
       productCheck: 'Elasticsearch',
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize,
-      // @ts-expect-error maxPathLength lands in @elastic/transport with the paired release
       maxPathLength: options.maxPathLength,
       redaction: options.redaction,
 
