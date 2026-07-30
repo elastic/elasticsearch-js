@@ -114,7 +114,7 @@
     "apache-arrow": "18.x - 21.x"
   },
   "dependencies": {
-    "@elastic/transport": "^9.3.5",
+    "@elastic/transport": "^9.4.0",
     "tslib": "^2.4.0"
   },
   "peerDependencies": {
