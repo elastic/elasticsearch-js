@@ -20877,7 +20877,9 @@ export interface IndicesDataStreamLifecycle {
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
-  /** Only available with feature flag dlm_searchable_snapshots. */
+  /** The period after which data stream backing indices are automatically converted to partially mounted searchable snapshots.
+    * This field is valid only on main data stream lifecycles and cannot be set on failure-store lifecycles.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   frozen_after?: Duration
 }
 
@@ -39735,9 +39737,9 @@ export interface SnapshotStatus {
   snapshot: string
   /** The current snapshot state:
     *
-    * * `FAILED`: The snapshot finished with an error and failed to store any data.
     * * `STARTED`: The snapshot is currently running.
-    * * `SUCCESS`: The snapshot completed. */
+    * * `SUCCESS`: All shard snapshots have completed. The snapshot may or may not have completed finalization.
+    * * `FAILED`: The snapshot finished with an error and failed to store any data. */
   state: string
   /** Details about the number (`file_count`) and size (`size_in_bytes`) of files included in the snapshot. */
   stats: SnapshotSnapshotStats
