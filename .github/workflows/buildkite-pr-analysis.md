@@ -80,11 +80,12 @@ steps:
         while IFS=$'\t' read -r JOB_ID JOB_NAME; do
           echo "=== Failed job: $JOB_NAME ===" >> /tmp/gh-aw/agent/failed-jobs.txt
           curl -sf \
-            "https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds/$BUILD_NUMBER/jobs/$JOB_ID/log" \
+            "https://api.buildkite.com/v2/organizations/elastic/pipelines/elasticsearch-js-integration-tests/builds/$BUILD_NUMBER/jobs/$JOB_ID/log.txt" \
             -H "Authorization: Bearer $BUILDKITE_API_TOKEN" \
-            | jq -r '.content' \
-            | sed 's/\x1b\[[0-9;]*m//g' \
-            | tail -200 >> /tmp/gh-aw/agent/failed-jobs.txt
+            | sed 's/_bk;t=[0-9]*//g' \
+            | sed $'s/\x1b\[[0-9;]*m//g' \
+            | grep -v '^[[:space:]]*$' \
+            | tail -300 >> /tmp/gh-aw/agent/failed-jobs.txt
           echo "" >> /tmp/gh-aw/agent/failed-jobs.txt
         done
 
@@ -119,18 +120,23 @@ Otherwise:
 
 1. Read the PR number from `/tmp/gh-aw/agent/pr-number.txt`.
 2. Read the build URL from `/tmp/gh-aw/agent/build-url.txt`.
-3. Read `/tmp/gh-aw/agent/annotations.txt` — this contains the junit-annotate plugin output with test failure summaries (primary source).
-4. Read `/tmp/gh-aw/agent/failed-jobs.txt` if it exists — raw job logs for additional context.
+3. Read `/tmp/gh-aw/agent/annotations.txt` — junit-annotate plugin output, may be empty if all tests passed.
+4. Read `/tmp/gh-aw/agent/failed-jobs.txt` — last 300 lines of each failed job's log (primary source for diagnosis).
 
-Analyse the failures:
-- Identify distinct error patterns (assertion failures, unhandled rejections, timeout errors, infrastructure errors, etc.).
-- Group related failures by root cause. Failures that share the same underlying problem should be one group.
-- For each group, assess whether it looks like a **regression** introduced by this PR's changes or a **pre-existing flake** (infrastructure noise, transient network errors, unrelated test instability).
+Analyse the failures. Common patterns to look for:
+
+- **Test failures**: `not ok` lines or `JUnit failures: N` (N > 0). Group by error message.
+- **Coverage threshold failure**: `tap exit: 1` with `JUnit failures: 0` alongside a coverage table showing percentages. This means all tests passed but tap's coverage check failed.
+- **Build/infrastructure errors**: Docker failures, ES cluster not starting, network errors, OOM.
+- **Tap "no tests found"**: `No test files found` or `No new tests to run`.
+
+For each distinct root cause, assess: is this a **regression** from this PR's changes, or a **pre-existing issue / flake**?
 
 Post a single PR comment using `safe-outputs.add-comment` (with `repo` set to `elastic/elasticsearch-js` and `item_number` set to the PR number) containing:
 
 - A link to the Buildkite build.
-- A brief summary table or list of failure groups: root cause, affected jobs/tests, and regression vs. flake assessment.
-- Concrete suggested next steps (e.g. "re-run the build to confirm flake", "investigate the serialisation error in test X", "this looks unrelated to the JS changes — check Elasticsearch stack version").
+- Root cause(s), one per bullet. For coverage failures, include the actual percentages from the coverage table.
+- Whether it looks like a regression or pre-existing.
+- One concrete next step per root cause.
 
-Keep the comment concise and actionable. Do not reproduce raw log dumps in the comment — summarise instead.
+Keep the comment under 15 lines. No log dumps.
