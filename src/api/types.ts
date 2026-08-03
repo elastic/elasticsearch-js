@@ -20888,7 +20888,9 @@ export interface IndicesDataStreamLifecycle {
   /** If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle
     * that's disabled (enabled: `false`) will have no effect on the data stream. */
   enabled?: boolean
-  /** Only available with feature flag dlm_searchable_snapshots. */
+  /** The period after which data stream backing indices are automatically converted to partially mounted searchable snapshots.
+    * This field is valid only on main data stream lifecycles and cannot be set on failure-store lifecycles.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   frozen_after?: Duration
 }
 

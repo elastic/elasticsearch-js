@@ -6372,7 +6372,6 @@ Any new requests to force merge the same indices will also block until the ongoi
 If the request contains `wait_for_completion=false`, Elasticsearch performs some preflight checks, launches the request, and returns a task you can use to get the status of the task.
 However, you can not cancel this task as the force merge task is not cancelable.
 Elasticsearch creates a record of this task as a document at `_tasks/<task_id>`.
-When you are done with a task, you should delete the task document so Elasticsearch can reclaim the space.
 
 **Force merging multiple indices**
 
@@ -6383,9 +6382,9 @@ You can force merge multiple indices with a single request by targeting:
 * One or more aliases
 * All data streams and indices in a cluster
 
-Each targeted shard is force-merged separately using the force_merge threadpool.
-By default each node only has a single `force_merge` thread which means that the shards on that node are force-merged one at a time.
-If you expand the `force_merge` threadpool on a node then it will force merge its shards in parallel
+Each targeted shard is force-merged separately using the `force_merge` threadpool.
+The `force_merge` threadpool has a fixed size of `max(1, allocatedProcessors / 8)` per node, which means multiple shards on a node may be force-merged in parallel.
+If you expand the `force_merge` threadpool on a node then it will force merge its shards with more parallelism.
 
 Force merge makes the storage for the shard being merged temporarily increase, as it may require free space up to triple its size in case `max_num_segments parameter` is set to `1`, to rewrite all segments into a new one.
 
