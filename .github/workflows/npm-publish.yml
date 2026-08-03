@@ -25,7 +25,7 @@ jobs:
     outputs:
       src: "${{ steps.changes.outputs.src }}"
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
       - uses: dorny/paths-filter/@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3.0.3
@@ -54,7 +54,7 @@ jobs:
         uses: zachary95/github-actions-debounce@ab7363483e2837992b8aa6be891763da00ac14f9 # v0.1.0
         with:
           wait: 1800
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
           ref: main
@@ -108,7 +108,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: |
           echo "name=${{ github.event.inputs.branch }}" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
           ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || steps.branch.outputs.name }}
