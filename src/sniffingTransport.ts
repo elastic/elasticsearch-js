@@ -29,12 +29,16 @@ export default class SniffingTransport extends Transport {
       })
       .catch(err => {
         this.isSniffing = false
-        err.meta.sniff = { hosts: [], reason: opts.reason }
+        // non-transport errors, like the AssertionError thrown on an
+        // unexpected body, don't have a meta object to attach sniff data to
+        if (isObject(err?.meta)) {
+          err.meta.sniff = { hosts: [], reason: opts.reason }
+        }
         this.diagnostic.emit('sniff', err, null)
       })
   }
 }
 
 function isObject (obj: any): obj is Record<string, any> {
-  return typeof obj === 'object'
+  return typeof obj === 'object' && obj !== null
 }

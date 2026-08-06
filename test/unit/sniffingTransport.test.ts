@@ -60,5 +60,51 @@ test('SniffingTransport', t => {
     transport.sniff({ reason: 'test' })
   })
 
+  t.test('sniff - null body emits sniff event with error', t => {
+    t.plan(2)
+
+    const MockConnection = connection.buildMockConnection({
+      onRequest (_params) {
+        return { body: null }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const transport = client.transport as SniffingTransport
+    transport.diagnostic.once('sniff', (err, result) => {
+      t.ok(err != null, 'the sniff event should carry the error')
+      t.equal(transport.isSniffing, false)
+    })
+
+    transport.sniff({ reason: 'test' })
+  })
+
+  t.test('sniff - body without nodes emits sniff event with error', t => {
+    t.plan(2)
+
+    const MockConnection = connection.buildMockConnection({
+      onRequest (_params) {
+        return { body: { hello: 'world' } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const transport = client.transport as SniffingTransport
+    transport.diagnostic.once('sniff', (err, result) => {
+      t.ok(err != null, 'the sniff event should carry the error')
+      t.equal(transport.isSniffing, false)
+    })
+
+    transport.sniff({ reason: 'test' })
+  })
+
   t.end()
 })
