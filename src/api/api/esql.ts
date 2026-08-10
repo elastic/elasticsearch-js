@@ -184,7 +184,8 @@ export default class Esql {
           'name'
         ],
         body: [
-          'query'
+          'query',
+          'description'
         ],
         query: []
       },
@@ -1024,7 +1025,7 @@ export default class Esql {
       },
       acceptedParams: {
         path: ['name'],
-        body: ['query'],
+        body: ['query', 'description'],
         query: []
       }
     }

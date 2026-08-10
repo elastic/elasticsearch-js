@@ -5002,6 +5002,7 @@ client.esql.putView({ name, query })
 #### Request (object) [_request_esql.put_view]
 - **`name` (string)**: The view name to create or update.
 - **`query` (string)**: The ES|QL query string from which to create a view.
+- **`description` (Optional, string)**: A free-text description of the view.
 
 ## client.esql.query [_esql.query]
 Run an ES|QL query.
