@@ -40466,8 +40466,24 @@ export interface TransformDestination {
     * fields when possible. If alternate mappings are required, use the create index API prior to starting the
     * transform. */
   index?: IndexName
+  /** The aliases that the destination index for the transform should have.
+    * Aliases are manipulated using the stored credentials of the transform, which means the secondary credentials
+    * supplied at creation time (if both primary and secondary credentials are specified).
+    *
+    * The destination index is added to the aliases regardless of whether the destination index was created by the
+    * transform or pre-created by the user. */
+  aliases?: TransformDestinationAlias[]
   /** The unique identifier for an ingest pipeline. */
   pipeline?: string
+}
+
+export interface TransformDestinationAlias {
+  /** The name of the alias. */
+  alias: IndexAlias
+  /** Whether the destination index should be the only index in this alias.
+    * If `true`, all the other indices will be removed from this alias before adding the destination index to this
+    * alias. This does not delete the removed indices; it only removes them from the alias. */
+  move_on_creation?: boolean
 }
 
 export interface TransformLatest {
@@ -40679,7 +40695,7 @@ export interface TransformGetTransformTransformSummary {
   /** Free text description of the transform. */
   description?: string
   /** The destination for the transform. */
-  dest: ReindexDestination
+  dest: TransformDestination
   frequency?: Duration
   id: Id
   latest?: TransformLatest
@@ -41035,7 +41051,7 @@ export interface TransformUpdateTransformResponse {
   authorization?: MlTransformAuthorization
   create_time: long
   description: string
-  dest: ReindexDestination
+  dest: TransformDestination
   frequency?: Duration
   id: Id
   latest?: TransformLatest
