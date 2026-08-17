@@ -4942,6 +4942,45 @@ A query ID is also provided when the request was submitted with the `keep_on_com
 - **`drop_null_columns` (Optional, boolean)**: Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
 If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
 
+## client.esql.deleteDataSource [_esql.delete_data_source]
+Delete ES|QL data sources.
+
+Deletes one or more data sources used in ES|QL data federation.
+Fails with `409` if any dataset references one of the named data sources;
+delete the dependent datasets first.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-data-source)
+
+```ts
+client.esql.deleteDataSource({ name })
+```
+
+### Arguments [_arguments_esql.delete_data_source]
+
+#### Request (object) [_request_esql.delete_data_source]
+- **`name` (string \| string[])**: A list of data source names to delete.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
+## client.esql.deleteDataset [_esql.delete_dataset]
+Delete ES|QL datasets.
+
+Deletes one or more datasets used in ES|QL data federation.
+If any specified dataset does not exist, the request fails and no datasets are deleted.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-dataset)
+
+```ts
+client.esql.deleteDataset({ name })
+```
+
+### Arguments [_arguments_esql.delete_dataset]
+
+#### Request (object) [_request_esql.delete_dataset]
+- **`name` (string \| string[])**: A list of dataset names to delete.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
 ## client.esql.deleteView [_esql.delete_view]
 Delete an ES|QL view.
 
@@ -4957,6 +4996,44 @@ client.esql.deleteView({ name })
 
 #### Request (object) [_request_esql.delete_view]
 - **`name` (string \| string[])**: The view name to remove.
+
+## client.esql.getDataSource [_esql.get_data_source]
+Get ES|QL data sources.
+
+Returns one or more data sources used in ES|QL data federation.
+A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
+returns `200` with an empty array.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-data-source)
+
+```ts
+client.esql.getDataSource({ ... })
+```
+
+### Arguments [_arguments_esql.get_data_source]
+
+#### Request (object) [_request_esql.get_data_source]
+- **`name` (Optional, string \| string[])**: A list of data source names or wildcard patterns. Omit to return all data sources.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+
+## client.esql.getDataset [_esql.get_dataset]
+Get ES|QL datasets.
+
+Returns one or more datasets used in ES|QL data federation.
+A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
+returns `200` with an empty array.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-dataset)
+
+```ts
+client.esql.getDataset({ ... })
+```
+
+### Arguments [_arguments_esql.get_dataset]
+
+#### Request (object) [_request_esql.get_dataset]
+- **`name` (Optional, string \| string[])**: A list of dataset names or wildcard patterns. Omit to return all datasets.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.esql.getQuery [_esql.get_query]
 Get a specific running ES|QL query information.
@@ -5001,6 +5078,62 @@ Returns an object containing IDs and other information about the running ES|QL q
 client.esql.listQueries()
 ```
 
+
+## client.esql.putDataSource [_esql.put_data_source]
+Create or update an ES|QL data source.
+
+Creates or replaces a named, type-specific data source configuration for ES|QL data federation.
+Datasets reference data source configurations to access external data. Names must be lowercase
+and follow index or alias naming rules.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-data-source)
+
+```ts
+client.esql.putDataSource({ name, type })
+```
+
+### Arguments [_arguments_esql.put_data_source]
+
+#### Request (object) [_request_esql.put_data_source]
+- **`name` (string)**: The data source name to create or update.
+- **`type` (string)**: The data source type. Currently, `s3` is supported.
+The value must be lowercase and contain no whitespace.
+- **`description` (Optional, string)**: A free-text description of the data source.
+- **`settings` (Optional, Record<string, User-defined value>)**: Type-specific connection and authentication settings.
+For `s3`, connection settings include `region` and `endpoint`. Authentication settings
+include `auth` and the credentials required by the selected authentication method.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
+
+## client.esql.putDataset [_esql.put_dataset]
+Create or update an ES|QL dataset.
+
+Creates or replaces a dataset that references a data source in ES|QL data federation.
+Dataset names participate in the index namespace and must follow index or alias naming rules.
+Returns `404` if the referenced data source does not exist.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-dataset)
+
+```ts
+client.esql.putDataset({ name, data_source, resource })
+```
+
+### Arguments [_arguments_esql.put_dataset]
+
+#### Request (object) [_request_esql.put_dataset]
+- **`name` (string)**: The dataset name to create or update.
+- **`data_source` (string)**: The name of the referenced data source. The data source must already exist.
+- **`resource` (string)**: The URI that identifies the data to read, resolved against the referenced data source.
+It can include glob patterns. For example, a recursive pattern can match
+all Parquet files under the `s3://logs-bucket/access` prefix.
+- **`description` (Optional, string)**: A free-text description of the dataset.
+- **`mappings` (Optional, { dynamic, properties, _id })**: User-declared mapping on the dataset definition
+- **`settings` (Optional, Record<string, User-defined value>)**: Format and parsing-specific settings that configure how the resource is read.
+Common keys include `format`, which explicitly selects a registered format, and
+`partition_detection`, which accepts `auto`, `hive`, `template`, or `none`. Additional
+keys depend on the format reader. Compression can be inferred from the resource URI.
+- **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
+- **`timeout` (Optional, string \| -1 \| 0)**: The time to wait for the request to be completed.
 
 ## client.esql.putView [_esql.put_view]
 Create or update an ES|QL view.
