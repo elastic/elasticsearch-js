@@ -175,7 +175,8 @@ export default class Transform {
           'source',
           'settings',
           'sync',
-          'retention_policy'
+          'retention_policy',
+          '_force_rekeying'
         ],
         query: [
           'defer_validation',
@@ -834,7 +835,7 @@ export default class Transform {
       },
       acceptedParams: {
         path: ['transform_id'],
-        body: ['dest', 'description', 'frequency', '_meta', 'source', 'settings', 'sync', 'retention_policy'],
+        body: ['dest', 'description', 'frequency', '_meta', 'source', 'settings', 'sync', 'retention_policy', '_force_rekeying'],
         query: ['defer_validation', 'timeout']
       }
     }

@@ -881,7 +881,8 @@ export default class Ml {
           'query_delay',
           'runtime_mappings',
           'script_fields',
-          'scroll_size'
+          'scroll_size',
+          '_force_rekeying'
         ],
         query: [
           'allow_no_indices',
@@ -4862,7 +4863,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['datafeed_id'],
-        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size'],
+        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', '_force_rekeying'],
         query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
       }
     }

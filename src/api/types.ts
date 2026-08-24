@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/array-type */
-/* eslint-disable @typescript-eslint/no-empty-interface */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 /**
  * We are still working on this type, it will arrive soon.
  * If it's critical for you, please open an issue.
@@ -4828,7 +4824,7 @@ export interface KnnRetriever extends RetrieverBase {
   /** Number of nearest neighbors to return as top hits. */
   k: integer
   /** Number of nearest neighbor candidates to consider per shard. */
-  num_candidates: integer
+  num_candidates?: integer
   /** The percentage of vectors to explore per shard while doing knn search with bbq_disk */
   visit_percentage?: float
   /** The minimum similarity required for a document to be considered a match. */
@@ -33706,10 +33702,16 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
   /** The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
     * The maximum value is the value of `index.max_result_window`. */
   scroll_size?: integer
+  /** When true, force reminting of the datafeed's internal cloud API key from the
+    * caller's cloud credential without requiring other configuration changes.
+    * Requires a cloud-authenticated caller and an environment that supports
+    * cross-project calls. Rejected with 400 otherwise. The datafeed must be stopped.
+    * @remarks This property is only supported on Elastic Cloud Serverless. */
+  _force_rekeying?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, _force_rekeying?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, _force_rekeying?: never }
 }
 
 export interface MlUpdateDatafeedResponse {
@@ -42108,10 +42110,16 @@ export interface TransformUpdateTransformRequest extends RequestBase {
   /** Defines a retention policy for the transform. Data that meets the defined
     * criteria is deleted from the destination index. */
   retention_policy?: TransformRetentionPolicyContainer | null
+  /** When true, force reminting of the transform's internal cloud API key from the
+    * caller's cloud credential without requiring other configuration changes.
+    * Requires a cloud-authenticated caller and an environment that supports
+    * cross-project calls. Rejected with 400 otherwise.
+    * @remarks This property is only supported on Elastic Cloud Serverless. */
+  _force_rekeying?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, _meta?: never, source?: never, settings?: never, sync?: never, retention_policy?: never }
+  body?: string | { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, _meta?: never, source?: never, settings?: never, sync?: never, retention_policy?: never, _force_rekeying?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, _meta?: never, source?: never, settings?: never, sync?: never, retention_policy?: never }
+  querystring?: { [key: string]: any } & { transform_id?: never, defer_validation?: never, timeout?: never, dest?: never, description?: never, frequency?: never, _meta?: never, source?: never, settings?: never, sync?: never, retention_policy?: never, _force_rekeying?: never }
 }
 
 export interface TransformUpdateTransformResponse {

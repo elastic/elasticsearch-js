@@ -11716,6 +11716,10 @@ when there are multiple jobs running on the same node.
 The detector configuration objects in a job can contain functions that use these script fields.
 - **`scroll_size` (Optional, number)**: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`.
+- **`_force_rekeying` (Optional, boolean)**: When true, force reminting of the datafeed's internal cloud API key from the
+caller's cloud credential without requiring other configuration changes.
+Requires a cloud-authenticated caller and an environment that supports
+cross-project calls. Rejected with 400 otherwise. The datafeed must be stopped.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
 (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -16666,6 +16670,10 @@ indexing. The minimum value is 1s and the maximum is 1h.
 - **`sync` (Optional, { time })**: Defines the properties transforms require to run continuously.
 - **`retention_policy` (Optional, { time } \| null)**: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
+- **`_force_rekeying` (Optional, boolean)**: When true, force reminting of the transform's internal cloud API key from the
+caller's cloud credential without requiring other configuration changes.
+Requires a cloud-authenticated caller and an environment that supports
+cross-project calls. Rejected with 400 otherwise.
 - **`defer_validation` (Optional, boolean)**: When true, deferrable validations are not run. This behavior may be
 desired if the source index does not exist until after the transform is
 created.
