@@ -15,8 +15,7 @@ docker build \
   --build-arg NODE_VERSION="$NODE_VERSION" \
   .
 
-GITHUB_TOKEN=$(vault read -field=token "$GITHUB_TOKEN_PATH")
-export GITHUB_TOKEN
+export GITHUB_TOKEN="${VAULT_GITHUB_TOKEN}"
 
 echo "--- :javascript: Running tests"
 mkdir -p "$repo/junit-output"
