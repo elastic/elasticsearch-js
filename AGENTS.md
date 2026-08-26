@@ -19,6 +19,8 @@ Always use `npm` commands, not `yarn`, `pnpm` or any other third-party packaging
 - Fix linter issues: `npm run lint:fix`
 - Build TypeScript (outputs both ESM and CommonJS): `npm run build`
 
+Node.js 22+. Do not edit `src/api/`; it is generated from `elastic/elasticsearch-specification`.
+
 ## Testing
 
 **The entire test suite (`npm test`) must pass and exit cleanly before you commit code.**
@@ -51,6 +53,6 @@ node -e "require('fs').writeFileSync('file.json', JSON.stringify({type:'module'}
 
 All markdown instructions authored for other agents must be as concise as possible.
 
-If a specific action you learned to do better will be useful to other agents doing the same task in the future, but may not be needed for ALL agent-related tasks, create or update skills in `.github/skills/`.
+If a specific action you learned to do better will be useful to other agents doing the same task in the future, but may not be needed for ALL agent-related tasks, create or update skills in `.claude/skills/`.
 
 If you learned something that will be useful to any contributor to this project, update `AGENTS.md`.
