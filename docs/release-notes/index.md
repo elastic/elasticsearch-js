@@ -20,6 +20,16 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.5.1 [elasticsearch-javascript-client-9.5.1]
+
+### Fixes [elasticsearch-javascript-client-9.5.1-fixes]
+
+- **`InnerRetriever` type fix:** `weight` and `normalizer` on `InnerRetriever` (used in `LinearRetriever.retrievers[]`) are now optional, matching server behavior. Previously, TypeScript rejected valid requests that omitted these fields.
+- **`KnnRetriever` type fix:** `num_candidates` on `KnnRetriever` is now optional, matching the server change in Elasticsearch 9.5 that defaults it to `Math.min(1.5 * k, 10_000)`.
+- **`bbq_disk` index options:** Added missing `cluster_size`, `default_visit_percentage`, `bits`, `precondition`, and `auto_calibrate` properties to `DenseVectorIndexOptions`.
+- **`confidence_interval` deprecation:** Marked as deprecated since Elasticsearch 9.5 (Lucene 10.4 computes it automatically).
+- **New API types:** Updated specification types for ES|QL data sources, transform destination aliases, and `columnar_stored` source field mode.
+
 ## 9.5.0 [elasticsearch-javascript-client-9.5.0-release-notes]
 
 ### Features and enhancements [elasticsearch-javascript-client-9.5.0-features-enhancements]
