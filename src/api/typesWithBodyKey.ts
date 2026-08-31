@@ -2612,7 +2612,7 @@ export interface KnnRetriever extends RetrieverBase {
   query_vector?: QueryVector
   query_vector_builder?: QueryVectorBuilder
   k: integer
-  num_candidates: integer
+  num_candidates?: integer
   similarity?: float
   rescore_vector?: RescoreVector
 }
