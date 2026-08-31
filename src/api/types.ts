@@ -4616,9 +4616,15 @@ export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 & { [property: string]: any }
 
 export interface InnerRetriever {
+  /** The nested retriever configuration. */
   retriever: RetrieverContainer
-  weight: float
-  normalizer: ScoreNormalizer
+  /** Weight multiplier for this retriever's contribution to the linear combination.
+    * Must be non-negative. */
+  weight?: float
+  /** Score normalizer to apply to this retriever's results before weighting.
+    * Falls back to the top-level `normalizer` on the linear retriever if unset,
+    * then to `none` (identity) if neither is set. */
+  normalizer?: ScoreNormalizer
 }
 
 export type Ip = string
@@ -4656,7 +4662,7 @@ export interface KnnRetriever extends RetrieverBase {
   /** Number of nearest neighbors to return as top hits. */
   k: integer
   /** Number of nearest neighbor candidates to consider per shard. */
-  num_candidates: integer
+  num_candidates?: integer
   /** The percentage of vectors to explore per shard while doing knn search with bbq_disk */
   visit_percentage?: float
   /** The minimum similarity required for a document to be considered a match. */
@@ -8922,9 +8928,27 @@ export interface MappingDenseVectorIndexOptions {
     * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
     * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
     *
-    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, and `bbq_hnsw` index types.
+    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, `bbq_hnsw`, and `bbq_disk` index types.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   flat_index_threshold?: integer
+  /** Only applicable to `bbq_disk`. The number of vectors per cluster. Must be between 64 and 65536.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  cluster_size?: integer
+  /** Only applicable to `bbq_disk`. The percentage of clusters to visit during search. Must be between 0 and 100.
+    * A value of 0 defaults to using `num_candidates` for calculating the visit percentage.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  default_visit_percentage?: float
+  /** Only applicable to `bbq_disk`. The number of bits per dimension for quantization encoding.
+    * Valid values are `1`, `2`, `4`, or `7`. When no `rescore_vector` is explicitly set,
+    * the default oversampling is automatically adjusted based on the bits value.
+    * This setting can be changed without reindexing.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  bits?: integer
+  /** Only applicable to `bbq_disk`. When `true`, transforms indexed vectors using a random orthogonal
+    * projection before quantization, which can improve accuracy when vector components are not normally
+    * distributed. Cannot be changed after the field is created.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  precondition?: boolean
 }
 
 export interface MappingDenseVectorIndexOptionsRescoreVector {
