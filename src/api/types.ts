@@ -4383,9 +4383,15 @@ export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 & { [property: string]: any }
 
 export interface InnerRetriever {
+  /** The nested retriever configuration. */
   retriever: RetrieverContainer
-  weight: float
-  normalizer: ScoreNormalizer
+  /** Weight multiplier for this retriever's contribution to the linear combination.
+    * Must be non-negative. */
+  weight?: float
+  /** Score normalizer to apply to this retriever's results before weighting.
+    * Falls back to the top-level `normalizer` on the linear retriever if unset,
+    * then to `none` (identity) if neither is set. */
+  normalizer?: ScoreNormalizer
 }
 
 export type Ip = string
@@ -8616,6 +8622,20 @@ export interface MappingDenseVectorIndexOptions {
     * @remarks This property is not supported on Elastic Cloud Serverless.
     * @experimental */
   on_disk_rescore?: boolean
+  /** The segment document count threshold below which HNSW graph construction is skipped in favor of brute-force flat
+    * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
+    * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
+    *
+    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, `bbq_hnsw`, and `bbq_disk` index types.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  flat_index_threshold?: integer
+  /** Only applicable to `bbq_disk`. The number of vectors per cluster. Must be between 64 and 65536.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  cluster_size?: integer
+  /** Only applicable to `bbq_disk`. The percentage of clusters to visit during search. Must be between 0 and 100.
+    * A value of 0 defaults to using `num_candidates` for calculating the visit percentage.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  default_visit_percentage?: float
 }
 
 export interface MappingDenseVectorIndexOptionsRescoreVector {
