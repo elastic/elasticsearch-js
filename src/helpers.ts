@@ -7,10 +7,18 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import type { Table, TypeMap, AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow.node'
 import Client from './client'
 import * as T from './api/types'
 import { Id } from './api/types'
+
+// Augmentation seam. apache-arrow is an optional peer dependency, so its types
+// must not be referenced from this always-reachable module: doing so forces every
+// consumer to install apache-arrow to type-check, even when they never touch Arrow.
+// Importing '@elastic/elasticsearch/helpers-arrow' augments this registry with the
+// precise apache-arrow types. Until then, the Arrow helpers resolve to `unknown`.
+export interface EsqlArrowRegistry {}
+type EsqlArrowTable = EsqlArrowRegistry extends { table: infer T } ? T : unknown
+type EsqlArrowReader = EsqlArrowRegistry extends { reader: infer T } ? T : unknown
 
 function loadArrow (): typeof import('apache-arrow/Arrow.node') {
   try {
@@ -143,8 +151,8 @@ export interface EsqlColumn {
 
 export interface EsqlHelper {
   toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
-  toArrowTable: () => Promise<Table<TypeMap>>
-  toArrowReader: () => Promise<AsyncRecordBatchStreamReader>
+  toArrowTable: () => Promise<EsqlArrowTable>
+  toArrowReader: () => Promise<EsqlArrowReader>
 }
 
 export interface EsqlToRecords<TDocument> {
@@ -1017,7 +1025,7 @@ export default class Helpers {
         return { records, columns }
       },
 
-      async toArrowTable (): Promise<Table<TypeMap>> {
+      async toArrowTable (): Promise<EsqlArrowTable> {
         const { tableFromIPC } = loadArrow()
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}
@@ -1031,7 +1039,7 @@ export default class Helpers {
         return tableFromIPC(response)
       },
 
-      async toArrowReader (): Promise<AsyncRecordBatchStreamReader> {
+      async toArrowReader (): Promise<EsqlArrowReader> {
         const { AsyncRecordBatchStreamReader } = loadArrow()
         if (metaHeader !== null) {
           reqOptions.headers = reqOptions.headers ?? {}

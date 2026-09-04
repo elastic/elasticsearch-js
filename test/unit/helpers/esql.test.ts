@@ -7,6 +7,8 @@ import { test } from 'tap'
 import * as arrow from 'apache-arrow'
 import { connection } from '../../utils'
 import { Client, errors } from '../../../'
+// Opt in to precise apache-arrow types for the ES|QL Arrow helpers.
+import '@elastic/elasticsearch/helpers-arrow'
 
 test('ES|QL helper', t => {
   test('toRecords', t => {

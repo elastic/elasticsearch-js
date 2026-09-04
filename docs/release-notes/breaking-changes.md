@@ -15,6 +15,18 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 % **Action**<br> Steps for mitigating deprecation impact.
 % ::::
 
+## 9.6.0 [elasticsearch-javascript-client-960-breaking-changes]
+
+::::{dropdown} ES|QL Arrow types moved to an opt-in module
+The `apache-arrow` type definitions are no longer referenced from the package entrypoint. Previously, `esm/helpers.d.ts` imported them directly, which broke `tsc` type-checking for every ESM consumer under `nodenext` resolution—even those not using the Arrow helpers or without `apache-arrow` installed (error `TS2307`).
+
+For more information, check [#3419](https://github.com/elastic/elasticsearch-js/issues/3419).
+
+**Impact**<br> `esql().toArrowTable()` returns `unknown` and `toArrowReader()` returns `unknown` by default. Runtime behavior is unchanged.
+
+**Action**<br> To restore the precise `Table` and `AsyncRecordBatchStreamReader` types, install `apache-arrow` and add a single side-effect import once in your project: `import '@elastic/elasticsearch/helpers-arrow'`.
+::::
+
 ## 9.4.0 [elasticsearch-javascript-client-940-breaking-changes]
 
 ::::{dropdown} Minimum supported Node.js version raised to 20

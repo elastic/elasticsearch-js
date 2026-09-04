@@ -634,6 +634,27 @@ const result = await client.helpers
   .toRecords<EventLog>()
 ```
 
+#### Loading Arrow type definitions [_arrow-types]
+
+`apache-arrow` is an optional peer dependency, so its type definitions are not wired into the client by default. This keeps projects that never use the Arrow helpers from having to install `apache-arrow` to type-check. Until the definitions are loaded, `toArrowTable` returns `unknown` and `toArrowReader` returns `unknown`; both still work at runtime.
+
+To get precise types (`Table` and `AsyncRecordBatchStreamReader`), install `apache-arrow` and add a single side-effect import once, anywhere in your project:
+
+```ts
+// Loads the apache-arrow type definitions for the ES|QL Arrow helpers.
+// A side-effect import: no bindings are needed, and it is erased at runtime.
+import '@elastic/elasticsearch/helpers-arrow'
+
+import { Client } from '@elastic/elasticsearch'
+
+const client = new Client({ node: 'http://localhost:9200' })
+
+// `table` is now typed as `Table`, and `reader` as `AsyncRecordBatchStreamReader`
+const table = await client.helpers
+  .esql({ query: 'FROM sample_data' })
+  .toArrowTable()
+```
+
 #### `toArrowReader` [_toarrowreader]
 
 Added in `v8.16.0`

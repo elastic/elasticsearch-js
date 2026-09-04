@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-javascript-client-next-fixes]
 % \*
 
+## 9.6.0 [elasticsearch-javascript-client-9.6.0]
+
+### Fixes [elasticsearch-javascript-client-9.6.0-fixes]
+
+- **ES|QL Arrow types no longer break ESM type-checking:** The `apache-arrow` type definitions were removed from the package entrypoint and moved to an opt-in `@elastic/elasticsearch/helpers-arrow` module. Previously, ESM consumers using `nodenext` resolution hit a `TS2307` error even without using the Arrow helpers. See [breaking changes](breaking-changes.md) for details ([#3419](https://github.com/elastic/elasticsearch-js/issues/3419)).
+
 ## 9.5.1 [elasticsearch-javascript-client-9.5.1]
 
 ### Fixes [elasticsearch-javascript-client-9.5.1-fixes]
