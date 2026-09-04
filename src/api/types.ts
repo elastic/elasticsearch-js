@@ -36517,7 +36517,7 @@ export interface SecurityFieldSecurity {
 }
 
 export interface SecurityGlobalPrivilege {
-  application: SecurityApplicationGlobalUserPrivileges
+  application?: SecurityApplicationGlobalUserPrivileges
   /** A list of data source privilege entries, used to grant access to ES|QL data sources.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   data_source?: SecurityDataSourcePrivileges[]
