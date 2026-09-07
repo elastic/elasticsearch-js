@@ -36,7 +36,8 @@ export interface BulkOperationBase {
   _id?: Id
   /** The name of the index or index alias to perform the action on. */
   _index?: IndexName
-  /** A custom value used to route operations to a specific shard, or multiple comma separated values. */
+  /** A custom value used to route operations to a specific shard, or multiple comma separated values.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: string
   if_primary_term?: long
   if_seq_no?: SequenceNumber
@@ -80,7 +81,8 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
     * Valid values: `true`, `false`, `wait_for`. */
   refresh?: Refresh
   /** A custom value that is used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -455,7 +457,8 @@ export interface DeleteRequest extends RequestBase {
     * If `false`, it does nothing with refreshes. */
   refresh?: Refresh
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -537,7 +540,8 @@ export interface DeleteByQueryRequest extends RequestBase {
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -1385,7 +1389,8 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
     * If `false`, it does nothing with refreshes. */
   refresh?: Refresh
   /** A custom value that is used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -4020,7 +4025,8 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   /** The number of times the operation should be retried when a conflict occurs. */
   retry_on_conflict?: integer
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -4124,7 +4130,8 @@ export interface UpdateByQueryRequest extends RequestBase {
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -36634,7 +36641,7 @@ export interface SecurityRoleDescriptor {
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
-  global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
+  global?: SecurityGlobalPrivilege
   /** A list of application privilege entries */
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
@@ -36667,7 +36674,7 @@ export interface SecurityRoleDescriptorRead {
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
-  global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
+  global?: SecurityGlobalPrivilege
   /** A list of application privilege entries */
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
