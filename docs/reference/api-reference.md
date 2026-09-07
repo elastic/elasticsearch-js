@@ -2897,9 +2897,9 @@ client.cat.recovery({ ... })
 #### Request (object) [_request_cat.recovery]
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
+- **`active_only` (Optional, boolean)**: If `true`, the response only includes shard recoveries that have not yet completed (excludes `done` stage).
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "priority" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "priority" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "local_retries" \| "priority" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "local_retries" \| "priority" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -7535,7 +7535,7 @@ client.indices.recovery({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit the request.
 Supports wildcards (`*`).
 To target all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`active_only` (Optional, boolean)**: If `true`, the response only includes ongoing shard recoveries.
+- **`active_only` (Optional, boolean)**: If `true`, the response only includes shard recoveries that have not yet completed (excludes `DONE` stage).
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
@@ -10993,7 +10993,7 @@ client.ml.previewDatafeed({ ... })
 alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric
 characters. NOTE: If you use this path parameter, you cannot provide datafeed or anomaly detection job
 configuration details in the request body.
-- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: The datafeed definition to preview.
+- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, project_routing, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: The datafeed definition to preview.
 - **`job_config` (Optional, { allow_lazy_open, analysis_config, analysis_limits, background_persist_interval, custom_settings, daily_model_snapshot_retention_after_days, data_description, datafeed_config, description, groups, job_id, job_type, model_plot_config, model_snapshot_retention_days, renormalization_window_days, results_index_name, results_retention_days })**: The configuration details for the anomaly detection job that is associated with the datafeed. If the
 `datafeed_config` object does not include a `job_id` that references an existing anomaly detection job, you must
 supply this `job_config` object. If you include both a `job_id` and a `job_config`, the latter information is
@@ -11173,6 +11173,10 @@ when there are multiple jobs running on the same node.
 The detector configuration objects in a job can contain functions that use these script fields.
 - **`scroll_size` (Optional, number)**: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`, which is 10,000 by default.
+- **`project_routing` (Optional, string)**: A Lucene-style expression that limits which linked projects the datafeed
+searches when cross-project search is enabled. Examples: `_alias:_origin`,
+`_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+search scope. Rejected when CPS is not enabled for datafeeds.
 - **`headers` (Optional, Record<string, string \| string[]>)**
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
@@ -11230,7 +11234,7 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 - **`background_persist_interval` (Optional, string \| -1 \| 0)**: Advanced configuration option. The time between each periodic persistence of the model. The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time. The smallest allowed value is 1 hour. For very large models (several GB), persistence could take 10-20 minutes, so do not set the `background_persist_interval` value too low.
 - **`custom_settings` (Optional, User-defined value)**: Advanced configuration option. Contains custom meta data about the job.
 - **`daily_model_snapshot_retention_after_days` (Optional, number)**: Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies a period of time (in days) after which only the first snapshot per day is retained. This period is relative to the timestamp of the most recent snapshot for this job. Valid values range from 0 to `model_snapshot_retention_days`.
-- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: Defines a datafeed for the anomaly detection job. If Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
+- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, project_routing, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: Defines a datafeed for the anomaly detection job. If Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
 - **`description` (Optional, string)**: A description of the job.
 - **`groups` (Optional, string[])**: A list of job groups. A job can belong to no groups or many.
 - **`model_plot_config` (Optional, { annotations_enabled, enabled, terms })**: This advanced configuration option stores model information along with the results. It provides a more detailed view into anomaly detection. If you enable model plot it can add considerable overhead to the performance of the system; it is not feasible for jobs with many entities. Model plot provides a simplified and indicative view of the model and its bounds. It does not display complex features such as multivariate correlations or multimodal data. As such, anomalies may occasionally be reported which cannot be seen in the model plot. Model plot config can be configured when the job is created or updated later. It must be disabled if performance issues are experienced.
@@ -11716,6 +11720,10 @@ when there are multiple jobs running on the same node.
 The detector configuration objects in a job can contain functions that use these script fields.
 - **`scroll_size` (Optional, number)**: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
 The maximum value is the value of `index.max_result_window`.
+- **`project_routing` (Optional, string)**: A Lucene-style expression that limits which linked projects the datafeed
+searches when cross-project search is enabled. Examples: `_alias:_origin`,
+`_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+search scope. Rejected when CPS is not enabled for datafeeds.
 - **`_force_rekeying` (Optional, boolean)**: When true, force reminting of the datafeed's internal cloud API key from the
 caller's cloud credential without requiring other configuration changes.
 Requires a cloud-authenticated caller and an environment that supports
@@ -14903,8 +14911,10 @@ It also accepts wildcards (`*`).
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for the master node.
 If the master node is not available before the timeout expires, the request fails and returns an error.
 To indicate that the request should never timeout, set it to `-1`.
-- **`wait_for_completion` (Optional, boolean)**: If `true`, the request returns a response when the matching snapshots are all deleted.
-If `false`, the request returns a response as soon as the deletes are scheduled.
+- **`wait_for_completion` (Optional, boolean)**: If `false`, the request returns a response as soon as the deletes are scheduled.
+If `true`, the request returns a response when the matching snapshots are all deleted, and the post-deletion cleanup work associated with the request has completed.
+If you make several requests to the delete-snapshots API targetting overlapping collections of snapshots then some of those requests may perform different parts of the associated post-deletion cleanup work, returning their responses at different times.
+For example, if you make two requests to delete the same snapshot then sometimes all of the post-deletion cleanup work will be associated with the first request, delaying its response, while the second request has no associated post-deletion cleanup work and receives its response as soon as the snapshot has been deleted.
 
 ## client.snapshot.deleteRepository [_snapshot.delete_repository]
 Delete snapshot repositories.
