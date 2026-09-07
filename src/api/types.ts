@@ -35789,7 +35789,7 @@ export interface SecurityRoleDescriptor {
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
-  global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
+  global?: SecurityGlobalPrivilege
   /** A list of application privilege entries */
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
@@ -35822,7 +35822,7 @@ export interface SecurityRoleDescriptorRead {
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
-  global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
+  global?: SecurityGlobalPrivilege
   /** A list of application privilege entries */
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
