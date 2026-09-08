@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/array-type */
-/* eslint-disable @typescript-eslint/no-empty-interface */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 /**
  * We are still working on this type, it will arrive soon.
  * If it's critical for you, please open an issue.
@@ -112,7 +108,7 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   require_alias?: boolean
   /** If `true`, the request's actions must target a data stream (existing or to be created). */
   require_data_stream?: boolean
-  operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
+  operations?: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -123,7 +119,7 @@ export interface BulkResponse {
   /** If `true`, one or more of the operations in the bulk request did not complete successfully. */
   errors: boolean
   /** The result of each operation in the bulk request, in the order they were submitted. */
-  items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
+  items: Array<Partial<Record<BulkOperationType, BulkResponseItem>>>
   /** The length of time, in milliseconds, it took to process the bulk request. */
   took: long
   ingest_took?: long
@@ -1460,7 +1456,7 @@ export interface KnnSearchRequest extends RequestBase {
   /** The request returns doc values for field names matching these patterns
     * in the `hits.fields` property of the response.
     * It accepts wildcard (`*`) patterns. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   /** A list of stored fields to return as part of a hit. If no fields are specified,
     * no stored fields are included in the response. If this field is specified, the `_source`
     * parameter defaults to `false`. You can pass `_source: true` to return both source fields
@@ -1597,7 +1593,7 @@ export interface MgetResponse<TDocument = unknown> {
   /** The response includes a docs array that contains the documents in the order specified in the request.
     * The structure of the returned documents is similar to that returned by the get API.
     * If there is a failure getting a particular document, the error is included in place of the document. */
-  docs: MgetResponseItem<TDocument>[]
+  docs: Array<MgetResponseItem<TDocument>>
 }
 
 export type MgetResponseItem<TDocument = unknown> = GetGetResult<TDocument> | MgetMultiGetError
@@ -1608,7 +1604,7 @@ export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchRespo
 
 export interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
   took: long
-  responses: MsearchResponseItem<TDocument>[]
+  responses: Array<MsearchResponseItem<TDocument>>
 }
 
 export interface MsearchMultisearchHeader {
@@ -2566,10 +2562,10 @@ export interface SearchRequest extends RequestBase {
     * The boost value is the factor by which scores are multiplied.
     * A boost value greater than `1.0` increases the score.
     * A boost value between `0` and `1.0` decreases the score. */
-  indices_boost?: Partial<Record<IndexName, double>>[]
+  indices_boost?: Array<Partial<Record<IndexName, double>>>
   /** An array of wildcard (`*`) field patterns.
     * The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   /** The approximate kNN search to run. */
   knn?: KnnSearch | KnnSearch[]
   /** The Reciprocal Rank Fusion (RRF) to use.
@@ -2611,7 +2607,7 @@ export interface SearchRequest extends RequestBase {
   _source?: SearchSourceConfig
   /** An array of wildcard (`*`) field patterns.
     * The request returns values for field names matching these patterns in the `hits.fields` property of the response. */
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   /** Defines a suggester that provides similar looking terms based on a provided text. */
   suggest?: SearchSuggester
   /** The maximum number of documents to collect for each shard.
@@ -2699,7 +2695,7 @@ export interface SearchResponseBody<TDocument = unknown, TAggregations = Record<
     * You can use this scroll ID with the scroll API to retrieve the next batch of search results for the request.
     * This property is returned only if the `scroll` query parameter is specified in the request. */
   _scroll_id?: ScrollId
-  suggest?: Record<SuggestionName, SearchSuggest<TDocument>[]>
+  suggest?: Record<SuggestionName, Array<SearchSuggest<TDocument>>>
   terminated_early?: boolean
 }
 
@@ -2797,7 +2793,7 @@ export interface SearchCompletionContext {
 }
 
 export interface SearchCompletionSuggest<TDocument = unknown> extends SearchSuggestBase {
-  options: SearchCompletionSuggestOption<TDocument> | SearchCompletionSuggestOption<TDocument>[]
+  options: SearchCompletionSuggestOption<TDocument> | Array<SearchCompletionSuggestOption<TDocument>>
 }
 
 export interface SearchCompletionSuggestOption<TDocument = unknown> {
@@ -2815,7 +2811,7 @@ export interface SearchCompletionSuggestOption<TDocument = unknown> {
 
 export interface SearchCompletionSuggester extends SearchSuggesterBase {
   /** A value, geo point object, or a geo hash string to filter or boost the suggestion on. */
-  contexts?: Record<Field, SearchCompletionContext | SearchContext | (SearchCompletionContext | SearchContext)[]>
+  contexts?: Record<Field, SearchCompletionContext | SearchContext | Array<SearchCompletionContext | SearchContext>>
   /** Enables fuzziness, meaning you can have a typo in your search and still get results back. */
   fuzzy?: SearchSuggestFuzziness
   /** A regex query that expresses a prefix as a regular expression. */
@@ -2953,7 +2949,7 @@ export type SearchFieldSuggester = SearchFieldSuggesterCommonProps & ExactlyOne<
 
 export interface SearchHighlight extends SearchHighlightBase {
   encoder?: SearchHighlighterEncoder
-  fields: Partial<Record<Field, SearchHighlightField>> | Partial<Record<Field, SearchHighlightField>>[]
+  fields: Partial<Record<Field, SearchHighlightField>> | Array<Partial<Record<Field, SearchHighlightField>>>
 }
 
 export interface SearchHighlightBase {
@@ -3057,7 +3053,7 @@ export interface SearchHit<TDocument = unknown> {
 export interface SearchHitsMetadata<T = unknown> {
   /** Total hit count information, present only if `track_total_hits` wasn't `false` in the search request. */
   total?: SearchTotalHits | long
-  hits: SearchHit<T>[]
+  hits: Array<SearchHit<T>>
   max_score?: double | null
 }
 
@@ -3070,14 +3066,14 @@ export interface SearchInnerHits {
   /** Inner hit starting document offset. */
   from?: integer
   collapse?: SearchFieldCollapse
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   explain?: boolean
   highlight?: SearchHighlight
   ignore_unmapped?: boolean
   script_fields?: Record<Field, ScriptField>
   seq_no_primary_term?: boolean
   field?: Field[]
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   /** How the inner hits should be sorted per `inner_hits`.
     * By default, inner hits are sorted by score. */
   sort?: Sort
@@ -3333,10 +3329,10 @@ export interface SearchSearchRequestBody {
     * The boost value is the factor by which scores are multiplied.
     * A boost value greater than `1.0` increases the score.
     * A boost value between `0` and `1.0` decreases the score. */
-  indices_boost?: Partial<Record<IndexName, double>>[]
+  indices_boost?: Array<Partial<Record<IndexName, double>>>
   /** An array of wildcard (`*`) field patterns.
     * The request returns doc values for field names matching these patterns in the `hits.fields` property of the response. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   /** The approximate kNN search to run. */
   knn?: KnnSearch | KnnSearch[]
   /** The Reciprocal Rank Fusion (RRF) to use.
@@ -3378,7 +3374,7 @@ export interface SearchSearchRequestBody {
   _source?: SearchSourceConfig
   /** An array of wildcard (`*`) field patterns.
     * The request returns values for field names matching these patterns in the `hits.fields` property of the response. */
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   /** Defines a suggester that provides similar looking terms based on a provided text. */
   suggest?: SearchSuggester
   /** The maximum number of documents to collect for each shard.
@@ -3843,7 +3839,7 @@ export interface SearchTemplateResponse<TDocument = unknown> {
   profile?: SearchProfile
   pit_id?: Id
   _scroll_id?: ScrollId
-  suggest?: Record<SuggestionName, SearchSuggest<TDocument>[]>
+  suggest?: Record<SuggestionName, Array<SearchSuggest<TDocument>>>
   terminated_early?: boolean
 }
 
@@ -5718,7 +5714,7 @@ export interface AggregationsAggregateBase {
   meta?: Metadata
 }
 
-export type AggregationsAggregateOrder = Partial<Record<Field, SortOrder>> | Partial<Record<Field, SortOrder>>[]
+export type AggregationsAggregateOrder = Partial<Record<Field, SortOrder>> | Array<Partial<Record<Field, SortOrder>>>
 
 export interface AggregationsAggregation {
 }
@@ -6216,7 +6212,7 @@ export interface AggregationsCompositeAggregation extends AggregationsBucketAggr
   size?: integer
   /** The value sources used to build composite buckets.
     * Keys are returned in the order of the `sources` definition. */
-  sources?: Partial<Record<string, AggregationsCompositeAggregationSource>>[]
+  sources?: Array<Partial<Record<string, AggregationsCompositeAggregationSource>>>
 }
 
 export interface AggregationsCompositeAggregationBase {
@@ -7611,12 +7607,12 @@ export interface AggregationsTopHitsAggregate extends AggregationsAggregateBase 
 
 export interface AggregationsTopHitsAggregation extends AggregationsMetricAggregationBase {
   /** Fields for which to return doc values. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   /** If `true`, returns detailed information about score computation as part of a hit. */
   explain?: boolean
   /** Array of wildcard (*) patterns. The request returns values for field names
     * matching these patterns in the hits.fields property of the response. */
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   /** Starting document offset. */
   from?: integer
   /** Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in the search results. */
@@ -7641,7 +7637,7 @@ export interface AggregationsTopHitsAggregation extends AggregationsMetricAggreg
 }
 
 export interface AggregationsTopMetrics {
-  sort: (FieldValue | null)[]
+  sort: Array<FieldValue | null>
   metrics: Record<string, FieldValue | null>
 }
 
@@ -9547,7 +9543,7 @@ export interface MappingRuntimeField {
   /** For type `composite` */
   fields?: Record<string, MappingCompositeSubField>
   /** For type `lookup` */
-  fetch_fields?: (MappingRuntimeFieldFetchFields | Field)[]
+  fetch_fields?: Array<MappingRuntimeFieldFetchFields | Field>
   /** A custom format for `date` type runtime fields. */
   format?: string
   /** For type `lookup` */
@@ -9720,7 +9716,7 @@ export interface MappingTypeMapping {
   date_detection?: boolean
   dynamic?: MappingDynamicMapping
   dynamic_date_formats?: string[]
-  dynamic_templates?: Partial<Record<string, MappingDynamicTemplate>>[]
+  dynamic_templates?: Array<Partial<Record<string, MappingDynamicTemplate>>>
   _field_names?: MappingFieldNamesField
   index_field?: MappingIndexField
   _meta?: Metadata
@@ -11081,7 +11077,7 @@ export interface QueryDslUntypedRangeQuery extends QueryDslRangeQueryBase<any> {
 
 export interface QueryDslWeightedTokensQuery extends QueryDslQueryBase {
   /** The tokens representing this query */
-  tokens: Record<string, float> | Record<string, float>[]
+  tokens: Record<string, float> | Array<Record<string, float>>
   /** Token pruning configurations */
   pruning_config?: TokenPruningConfig
 }
@@ -11121,7 +11117,7 @@ export interface AsyncSearchAsyncSearch<TDocument = unknown, TAggregations = Rec
   /** Indicates how many shards have run the query.
     * Note that in order for shard results to be included in the search response, they need to be reduced first. */
   _shards: ShardStatistics
-  suggest?: Record<SuggestionName, SearchSuggest<TDocument>[]>
+  suggest?: Record<SuggestionName, Array<SearchSuggest<TDocument>>>
   terminated_early?: boolean
   timed_out: boolean
   took: long
@@ -11325,10 +11321,10 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     * Defaults to 10,000 hits. */
   track_total_hits?: SearchTrackHits
   /** Boosts the _score of documents from specified indices. */
-  indices_boost?: Partial<Record<IndexName, double>>[]
+  indices_boost?: Array<Partial<Record<IndexName, double>>>
   /** Array of wildcard (*) patterns. The request returns doc values for field
     * names matching these patterns in the hits.fields property of the response. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   /** Defines the approximate kNN search to run. */
   knn?: KnnSearch | KnnSearch[]
   /** Minimum _score for matching documents. Documents with a lower _score are
@@ -11353,7 +11349,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   _source?: SearchSourceConfig
   /** Array of wildcard (*) patterns. The request returns values for field names
     * matching these patterns in the hits.fields property of the response. */
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   suggest?: SearchSuggester
   /** Maximum number of documents to collect for each shard. If a query reaches this
     * limit, Elasticsearch terminates the query early. Elasticsearch collects documents
@@ -19313,9 +19309,9 @@ export interface EqlEqlHits<TEvent = unknown> {
   /** Metadata about the number of matching events or sequences. */
   total?: SearchTotalHits
   /** Contains events matching the query. Each object represents a matching event. */
-  events?: EqlHitsEvent<TEvent>[]
+  events?: Array<EqlHitsEvent<TEvent>>
   /** Contains event sequences matching the query. Each object represents a matching sequence. This parameter is only returned for EQL queries containing a sequence. */
-  sequences?: EqlHitsSequence<TEvent>[]
+  sequences?: Array<EqlHitsSequence<TEvent>>
 }
 
 export interface EqlEqlSearchResponseBase<TEvent = unknown> {
@@ -19349,7 +19345,7 @@ export interface EqlHitsEvent<TEvent = unknown> {
 
 export interface EqlHitsSequence<TEvent = unknown> {
   /** Contains events matching the query. Each object represents a matching event. */
-  events: EqlHitsEvent<TEvent>[]
+  events: Array<EqlHitsEvent<TEvent>>
   /** Shared field values used to constrain matches in the sequence. These are defined using the by keyword in the EQL query syntax. */
   join_keys?: any[]
 }
@@ -19462,7 +19458,7 @@ export interface EqlSearchRequest extends RequestBase {
   /** For basic queries, the maximum number of matching events to return. Defaults to 10 */
   size?: uint
   /** Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit. */
-  fields?: QueryDslFieldAndFormat | Field | (QueryDslFieldAndFormat | Field)[]
+  fields?: QueryDslFieldAndFormat | Field | Array<QueryDslFieldAndFormat | Field>
   result_position?: EqlSearchResultPosition
   runtime_mappings?: MappingRuntimeFields
   /** By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
@@ -20204,7 +20200,7 @@ export interface FleetMsearchRequest extends RequestBase {
 }
 
 export interface FleetMsearchResponse<TDocument = unknown> {
-  docs: MsearchResponseItem<TDocument>[]
+  docs: Array<MsearchResponseItem<TDocument>>
 }
 
 export interface FleetPostSecretRequest extends RequestBase {
@@ -20287,10 +20283,10 @@ export interface FleetSearchRequest extends RequestBase {
     * Defaults to 10,000 hits. */
   track_total_hits?: SearchTrackHits
   /** Boosts the _score of documents from specified indices. */
-  indices_boost?: Partial<Record<IndexName, double>>[]
+  indices_boost?: Array<Partial<Record<IndexName, double>>>
   /** Array of wildcard (*) patterns. The request returns doc values for field
     * names matching these patterns in the hits.fields property of the response. */
-  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
+  docvalue_fields?: Array<QueryDslFieldAndFormat | Field>
   /** Minimum _score for matching documents. Documents with a lower _score are
     * not included in search results and results collected by aggregations. */
   min_score?: double
@@ -20313,7 +20309,7 @@ export interface FleetSearchRequest extends RequestBase {
   _source?: SearchSourceConfig
   /** Array of wildcard (*) patterns. The request returns values for field names
     * matching these patterns in the hits.fields property of the response. */
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   suggest?: SearchSuggester
   /** Maximum number of documents to collect for each shard. If a query reaches this
     * limit, Elasticsearch terminates the query early. Elasticsearch collects documents
@@ -20364,7 +20360,7 @@ export interface FleetSearchResponse<TDocument = unknown> {
   profile?: SearchProfile
   pit_id?: Id
   _scroll_id?: ScrollId
-  suggest?: Record<SuggestionName, SearchSuggest<TDocument>[]>
+  suggest?: Record<SuggestionName, Array<SearchSuggest<TDocument>>>
   terminated_early?: boolean
 }
 
@@ -20419,7 +20415,7 @@ export interface GraphVertexDefinition {
   /** Identifies a field in the documents of interest. */
   field: Field
   /** Identifies the terms of interest that form the starting points from which you want to spider out. */
-  include?: (GraphVertexInclude | string)[]
+  include?: Array<GraphVertexInclude | string>
   /** Specifies how many documents must contain a pair of terms before it is considered to be a useful connection.
     * This setting acts as a certainty threshold. */
   min_doc_count?: long
@@ -23378,7 +23374,7 @@ export interface IndicesPutMappingRequest extends RequestBase {
     * a new date field is added instead of string. */
   dynamic_date_formats?: string[]
   /** Specify dynamic templates for the mapping. */
-  dynamic_templates?: Partial<Record<string, MappingDynamicTemplate>>[]
+  dynamic_templates?: Array<Partial<Record<string, MappingDynamicTemplate>>>
   /** Control whether field names are enabled for the index. */
   _field_names?: MappingFieldNamesField
   /** A mapping type can have custom meta data associated with it. These are
@@ -30906,7 +30902,7 @@ export interface MlJobTimingStats {
 
 export interface MlLearningToRankConfig {
   default_params?: Record<string, any>
-  feature_extractors?: Record<string, MlFeatureExtractor>[]
+  feature_extractors?: Array<Record<string, MlFeatureExtractor>>
   num_top_feature_importance_values: integer
 }
 
@@ -32727,7 +32723,7 @@ export interface MlInferTrainedModelRequest extends RequestBase {
   /** An array of objects to pass to the model for inference. The objects should contain a fields matching your
     * configured trained model input. Typically, for NLP models, the field name is `text_field`.
     * Currently, for NLP models, only a single value is allowed. */
-  docs: Record<string, any>[]
+  docs: Array<Record<string, any>>
   /** The inference configuration updates to apply on the API call */
   inference_config?: MlInferenceConfigUpdateContainer
   /** All values in `body` will be added to the request body. */
@@ -32880,7 +32876,7 @@ export interface MlPreviewDataFrameAnalyticsRequest extends RequestBase {
 
 export interface MlPreviewDataFrameAnalyticsResponse {
   /** An array of objects that contain feature name and value pairs. The features have been processed and indicate what will be sent to the model for training. */
-  feature_values: Record<Field, string>[]
+  feature_values: Array<Record<Field, string>>
 }
 
 export interface MlPreviewDatafeedRequest extends RequestBase {
@@ -34049,7 +34045,7 @@ export interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = u
   system_api_version: string
   /** Collection interval (e.g., '10s' or '10000ms') of the payload */
   interval: Duration
-  operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
+  operations?: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { system_id?: never, system_api_version?: never, interval?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -34441,7 +34437,7 @@ export interface NodesIngestStats {
   /** Total number of failed ingest operations during the lifetime of this node. */
   failed: long
   /** Total number of ingest processors. */
-  processors: Record<string, NodesKeyedProcessor>[]
+  processors: Array<Record<string, NodesKeyedProcessor>>
   /** Total time spent preprocessing ingest documents during the lifetime of this node. */
   time?: Duration
   /** Total time, in milliseconds, spent preprocessing ingest documents during the lifetime of this node. */
@@ -36544,7 +36540,7 @@ export interface SecurityApiKey {
   /** The owner user’s permissions associated with the API key.
     * It is a point-in-time snapshot captured at creation and subsequent updates.
     * An API key’s effective permissions are an intersection of its assigned privileges and the owner user’s permissions. */
-  limited_by?: Record<string, SecurityRoleDescriptor>[]
+  limited_by?: Array<Record<string, SecurityRoleDescriptor>>
   /** The access granted to cross-cluster API keys.
     * The access is composed of permissions for cross cluster search and cross cluster replication.
     * At least one of them must be specified.
@@ -36610,7 +36606,7 @@ export interface SecurityFieldSecurity {
 }
 
 export interface SecurityGlobalPrivilege {
-  application: SecurityApplicationGlobalUserPrivileges
+  application?: SecurityApplicationGlobalUserPrivileges
   /** A list of data source privilege entries, used to grant access to ES|QL data sources.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   data_source?: SecurityDataSourcePrivileges[]
@@ -37889,7 +37885,7 @@ export interface SecurityGrantApiKeyGrantApiKey {
   /** The role descriptors for this API key.
     * When it is not specified or is an empty array, the API key has a point in time snapshot of permissions of the specified user or access token.
     * If you supply role descriptors, the resultant permissions are an intersection of API keys permissions and the permissions of the user or access token. */
-  role_descriptors?: Record<string, SecurityRoleDescriptor> | Record<string, SecurityRoleDescriptor>[]
+  role_descriptors?: Record<string, SecurityRoleDescriptor> | Array<Record<string, SecurityRoleDescriptor>>
   /** Arbitrary metadata that you want to associate with the API key.
     * It supports nested data structure.
     * Within the `metadata` object, keys beginning with `_` are reserved for system usage. */
@@ -39012,7 +39008,7 @@ export interface SimulateIngestIngestDocumentSimulationKeys {
   /** A list of the fields that would be ignored at the indexing step. For example, a field whose
     * value is larger than the allowed limit would make it through all of the pipelines, but
     * would not be indexed into Elasticsearch. */
-  ignored_fields?: Record<string, string>[]
+  ignored_fields?: Array<Record<string, string>>
   /** Any error resulting from simulatng ingest on this doc. This can be an error generated by
     * executing a processor, or a mapping validation error when simulating indexing the resulting
     * doc. */
@@ -39020,7 +39016,7 @@ export interface SimulateIngestIngestDocumentSimulationKeys {
   effective_mapping?: MappingTypeMapping
 }
 export type SimulateIngestIngestDocumentSimulation = SimulateIngestIngestDocumentSimulationKeys
-& { [property: string]: string | Id | IndexName | Record<string, any> | SpecUtilsStringified<VersionNumber> | string[] | Record<string, string>[] | ErrorCause | MappingTypeMapping }
+& { [property: string]: string | Id | IndexName | Record<string, any> | SpecUtilsStringified<VersionNumber> | string[] | Array<Record<string, string>> | ErrorCause | MappingTypeMapping }
 
 export type SimulateIngestMergeType = 'index' | 'template'
 
@@ -40782,7 +40778,7 @@ export interface SqlTranslateResponse {
   aggregations?: Record<string, AggregationsAggregationContainer>
   size?: long
   _source?: SearchSourceConfig
-  fields?: (QueryDslFieldAndFormat | Field)[]
+  fields?: Array<QueryDslFieldAndFormat | Field>
   query?: QueryDslQueryContainer
   sort?: Sort
   track_total_hits?: SearchTrackHits
@@ -42324,7 +42320,7 @@ export interface WatcherArrayCompareOpParams {
 }
 
 export interface WatcherChainInput {
-  inputs: Partial<Record<string, WatcherInputContainer>>[]
+  inputs: Array<Partial<Record<string, WatcherInputContainer>>>
 }
 
 interface WatcherConditionContainerExclusiveProps {
