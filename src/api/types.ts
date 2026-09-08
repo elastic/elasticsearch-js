@@ -8622,13 +8622,6 @@ export interface MappingDenseVectorIndexOptions {
     * @remarks This property is not supported on Elastic Cloud Serverless.
     * @experimental */
   on_disk_rescore?: boolean
-  /** The segment document count threshold below which HNSW graph construction is skipped in favor of brute-force flat
-    * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
-    * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
-    *
-    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, `bbq_hnsw`, and `bbq_disk` index types.
-    * @remarks This property is not supported on Elastic Cloud Serverless. */
-  flat_index_threshold?: integer
   /** Only applicable to `bbq_disk`. The number of vectors per cluster. Must be between 64 and 65536.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   cluster_size?: integer
