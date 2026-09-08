@@ -629,6 +629,7 @@ export default class Ml {
           'runtime_mappings',
           'script_fields',
           'scroll_size',
+          'project_routing',
           'headers'
         ],
         query: [
@@ -882,6 +883,7 @@ export default class Ml {
           'runtime_mappings',
           'script_fields',
           'scroll_size',
+          'project_routing',
           '_force_rekeying'
         ],
         query: [
@@ -3844,7 +3846,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['datafeed_id'],
-        body: ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers'],
+        body: ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'project_routing', 'headers'],
         query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
       }
     }
@@ -4863,7 +4865,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['datafeed_id'],
-        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', '_force_rekeying'],
+        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'project_routing', '_force_rekeying'],
         query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
       }
     }

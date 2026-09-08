@@ -36,7 +36,8 @@ export interface BulkOperationBase {
   _id?: Id
   /** The name of the index or index alias to perform the action on. */
   _index?: IndexName
-  /** A custom value used to route operations to a specific shard, or multiple comma separated values. */
+  /** A custom value used to route operations to a specific shard, or multiple comma separated values.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: string
   if_primary_term?: long
   if_seq_no?: SequenceNumber
@@ -80,7 +81,8 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
     * Valid values: `true`, `false`, `wait_for`. */
   refresh?: Refresh
   /** A custom value that is used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -457,7 +459,8 @@ export interface DeleteRequest extends RequestBase {
     * If `false`, it does nothing with refreshes. */
   refresh?: Refresh
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -540,7 +543,8 @@ export interface DeleteByQueryRequest extends RequestBase {
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -1389,7 +1393,8 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
     * If `false`, it does nothing with refreshes. */
   refresh?: Refresh
   /** A custom value that is used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -4026,7 +4031,8 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   /** The number of times the operation should be retried when a conflict occurs. */
   retry_on_conflict?: integer
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -4131,7 +4137,8 @@ export interface UpdateByQueryRequest extends RequestBase {
     * It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. */
   requests_per_second?: float
   /** A custom value used to route operations to a specific shard.
-    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead. */
+    * Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   routing?: Routing
   /** The slice identifier used to route the operation to a specific slice.
     * Use the special value `_all` to target all slices without restricting to a routing value.
@@ -4788,9 +4795,15 @@ export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 & { [property: string]: any }
 
 export interface InnerRetriever {
+  /** The nested retriever configuration. */
   retriever: RetrieverContainer
-  weight: float
-  normalizer: ScoreNormalizer
+  /** Weight multiplier for this retriever's contribution to the linear combination.
+    * Must be non-negative. */
+  weight?: float
+  /** Score normalizer to apply to this retriever's results before weighting.
+    * Falls back to the top-level `normalizer` on the linear retriever if unset,
+    * then to `none` (identity) if neither is set. */
+  normalizer?: ScoreNormalizer
 }
 
 export type Ip = string
@@ -9105,9 +9118,32 @@ export interface MappingDenseVectorIndexOptions {
     * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
     * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
     *
-    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, and `bbq_hnsw` index types.
+    * Only applicable to `hnsw`, `int8_hnsw`, `int4_hnsw`, `bbq_hnsw`, and `bbq_disk` index types.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   flat_index_threshold?: integer
+  /** Only applicable to `bbq_disk`. The number of vectors per cluster. Must be between 64 and 65536.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  cluster_size?: integer
+  /** Only applicable to `bbq_disk`. The percentage of clusters to visit during search. Must be between 0 and 100.
+    * A value of 0 defaults to using `num_candidates` for calculating the visit percentage.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  default_visit_percentage?: float
+  /** Only applicable to `bbq_disk`. The number of bits per dimension for quantization encoding.
+    * Valid values are `1`, `2`, `4`, or `7`. When no `rescore_vector` is explicitly set,
+    * the default oversampling is automatically adjusted based on the bits value.
+    * This setting can be changed without reindexing.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  bits?: integer
+  /** Only applicable to `bbq_disk`. When `true`, transforms indexed vectors using a random orthogonal
+    * projection before quantization, which can improve accuracy when vector components are not normally
+    * distributed. Cannot be changed after the field is created.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  precondition?: boolean
+  /** Only applicable to `bbq_disk`. When `true`, Elasticsearch automatically selects the optimal
+    * quantization encoding, oversampling factor, and preconditioning for each merged segment based
+    * on estimated recall characteristics. Cannot be changed after the field is created.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  auto_calibrate?: boolean
 }
 
 export interface MappingDenseVectorIndexOptionsRescoreVector {
@@ -9609,7 +9645,7 @@ export interface MappingSourceField {
   mode?: MappingSourceFieldMode
 }
 
-export type MappingSourceFieldMode = 'disabled' | 'stored' | 'synthetic'
+export type MappingSourceFieldMode = 'disabled' | 'stored' | 'columnar_stored' | 'synthetic'
 
 export interface MappingSparseVectorIndexOptions {
   /** Whether to perform pruning, omitting the non-significant tokens from the query to improve query performance.
@@ -11524,7 +11560,7 @@ export type CatCatPluginsColumn = 'id' | 'name' | 'n' | 'component' | 'c' | 'ver
 
 export type CatCatPluginsColumns = CatCatPluginsColumn | CatCatPluginsColumn[]
 
-export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | 'time' | 't' | 'ti' | 'type' | 'ty' | 'stage' | 'st' | 'priority' | 'pr' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'rep' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | string
+export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | 'time' | 't' | 'ti' | 'type' | 'ty' | 'stage' | 'st' | 'local_retries' | 'lr' | 'priority' | 'pr' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'rep' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | string
 
 export type CatCatRecoveryColumns = CatCatRecoveryColumn | CatCatRecoveryColumn[]
 
@@ -14814,32 +14850,43 @@ export interface CatRecoveryRecoveryRecord {
   /** The shard name.
     * @alias shard */
   sh?: string
-  /** The recovery start time. */
+  /** The recovery start time.
+    * For recoveries in the `created` stage (not yet started), this value is the Unix epoch (1970-01-01T00:00:00.000Z). */
   start_time?: DateTime
   /** The recovery start time.
+    * For recoveries in the `created` stage (not yet started), this value is the Unix epoch (1970-01-01T00:00:00.000Z).
     * @alias start_time */
   start?: DateTime
-  /** The recovery start time in epoch milliseconds. */
+  /** The recovery start time in epoch milliseconds.
+    * For recoveries in the `created` stage (not yet started), this value is 0. */
   start_time_millis?: EpochTime<UnitMillis>
   /** The recovery start time in epoch milliseconds.
+    * For recoveries in the `created` stage (not yet started), this value is 0.
     * @alias start_time_millis */
   start_millis?: EpochTime<UnitMillis>
-  /** The recovery stop time. */
+  /** The recovery stop time.
+    * For recoveries that have not yet completed, this value is the Unix epoch (1970-01-01T00:00:00.000Z). */
   stop_time?: DateTime
   /** The recovery stop time.
+    * For recoveries that have not yet completed, this value is the Unix epoch (1970-01-01T00:00:00.000Z).
     * @alias stop_time */
   stop?: DateTime
-  /** The recovery stop time in epoch milliseconds. */
+  /** The recovery stop time in epoch milliseconds.
+    * For recoveries that have not yet completed, this value is 0. */
   stop_time_millis?: EpochTime<UnitMillis>
   /** The recovery stop time in epoch milliseconds.
+    * For recoveries that have not yet completed, this value is 0.
     * @alias stop_time_millis */
   stop_millis?: EpochTime<UnitMillis>
-  /** The recovery time. */
+  /** The recovery time.
+    * For recoveries in the `created` stage (not yet started), this value is 0. */
   time?: Duration
   /** The recovery time.
+    * For recoveries in the `created` stage (not yet started), this value is 0.
     * @alias time */
   t?: Duration
   /** The recovery time.
+    * For recoveries in the `created` stage (not yet started), this value is 0.
     * @alias time */
   ti?: Duration
   /** The recovery type. */
@@ -14852,6 +14899,11 @@ export interface CatRecoveryRecoveryRecord {
   /** The recovery stage.
     * @alias stage */
   st?: string
+  /** The number of times this recovery has failed in a way which is retried locally (i.e. on the data node). */
+  local_retries?: integer
+  /** The number of times this recovery has failed in a way which is retried locally (i.e. on the data node).
+    * @alias local_retries */
+  lr?: integer
   /** The recovery priority. */
   priority?: string
   /** The recovery priority.
@@ -14948,7 +15000,7 @@ export interface CatRecoveryRequest extends CatCatRequestBase {
   /** A comma-separated list of data streams, indices, and aliases used to limit the request.
     * Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `true`, the response only includes ongoing shard recoveries. */
+  /** If `true`, the response only includes shard recoveries that have not yet completed (excludes `done` stage). */
   active_only?: boolean
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
@@ -23492,7 +23544,7 @@ export interface IndicesRecoveryRecoveryOrigin {
 
 export type IndicesRecoveryRecoveryPriority = 'UNASSIGNED_NEW_PRIMARY' | 'UNASSIGNED_UNEXPECTED' | 'UNASSIGNED_EXPECTED' | 'RELOCATION_CAN_REMAIN_NO' | 'RELOCATION_CAN_REMAIN_NOT_PREFERRED' | 'RELOCATE_REBALANCING' | 'UNKNOWN'
 
-export type IndicesRecoveryRecoveryStage = 'INIT' | 'INDEX' | 'VERIFY_INDEX' | 'TRANSLOG' | 'FINALIZE' | 'DONE'
+export type IndicesRecoveryRecoveryStage = 'CREATED' | 'INIT' | 'INDEX' | 'VERIFY_INDEX' | 'TRANSLOG' | 'FINALIZE' | 'DONE'
 
 export interface IndicesRecoveryRecoveryStartStatus {
   check_index_time?: Duration
@@ -23512,7 +23564,7 @@ export interface IndicesRecoveryRequest extends RequestBase {
     * Supports wildcards (`*`).
     * To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** If `true`, the response only includes ongoing shard recoveries. */
+  /** If `true`, the response only includes shard recoveries that have not yet completed (excludes `DONE` stage). */
   active_only?: boolean
   /** If `true`, the response includes detailed information about shard recoveries. */
   detailed?: boolean
@@ -23546,15 +23598,26 @@ export interface IndicesRecoveryShardRecovery {
   source: IndicesRecoveryRecoveryOrigin
   /** The recovery stage. */
   stage: IndicesRecoveryRecoveryStage
+  /** The number of times this recovery has failed in a way which is retried locally (i.e. on the data node). */
+  local_retries?: integer
   /** The recovery priority. */
   priority?: IndicesRecoveryRecoveryPriority
   start?: IndicesRecoveryRecoveryStartStatus
+  /** The time the recovery started.
+    * For recoveries in the `CREATED` stage (not yet started), this value is the Unix epoch (1970-01-01T00:00:00.000Z). */
   start_time?: DateTime
+  /** The time the recovery started, in milliseconds since the Unix epoch.
+    * For recoveries in the `CREATED` stage (not yet started), this value is 0. */
   start_time_in_millis: EpochTime<UnitMillis>
+  /** The time the recovery completed. Only present for completed recoveries (`DONE` stage). */
   stop_time?: DateTime
+  /** The time the recovery completed, in milliseconds since the Unix epoch.
+    * Only present for completed recoveries (`DONE` stage). */
   stop_time_in_millis?: EpochTime<UnitMillis>
   target: IndicesRecoveryRecoveryOrigin
   total_time?: Duration
+  /** The total elapsed recovery time in milliseconds.
+    * For recoveries in the `CREATED` stage (not yet started), this value is 0. */
   total_time_in_millis: DurationValue<UnitMillis>
   translog: IndicesRecoveryTranslogStatus
   /** The recovery source type. */
@@ -29766,6 +29829,11 @@ export interface MlDatafeed {
   delayed_data_check_config: MlDelayedDataCheckConfig
   runtime_mappings?: MappingRuntimeFields
   indices_options?: IndicesOptions
+  /** A Lucene-style expression that limits which linked projects the datafeed
+    * searches when cross-project search is enabled. Examples: `_alias:_origin`,
+    * `_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+    * search scope. Rejected when CPS is not enabled for datafeeds. */
+  project_routing?: string
 }
 
 export interface MlDatafeedAuthorization {
@@ -29798,6 +29866,11 @@ export interface MlDatafeedConfig {
   indexes?: Indices
   /** Specifies index expansion options that are used during search. */
   indices_options?: IndicesOptions
+  /** A Lucene-style expression that limits which linked projects the datafeed
+    * searches when cross-project search is enabled. Examples: `_alias:_origin`,
+    * `_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+    * search scope. Rejected when CPS is not enabled for datafeeds. */
+  project_routing?: string
   job_id?: Id
   /** If a real-time datafeed has never seen any data (including during any initial training period) then it will automatically stop itself and close its associated job after this many real-time searches that return no documents. In other words, it will stop after `frequency` times `max_empty_searches` of real-time operation. If not set then a datafeed with no end time that sees no data will remain started until it is explicitly stopped. */
   max_empty_searches?: integer
@@ -33044,11 +33117,16 @@ export interface MlPutDatafeedRequest extends RequestBase {
   /** The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
     * The maximum value is the value of `index.max_result_window`, which is 10,000 by default. */
   scroll_size?: integer
+  /** A Lucene-style expression that limits which linked projects the datafeed
+    * searches when cross-project search is enabled. Examples: `_alias:_origin`,
+    * `_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+    * search scope. Rejected when CPS is not enabled for datafeeds. */
+  project_routing?: string
   headers?: HttpHeaders
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, headers?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, headers?: never }
 }
 
 export interface MlPutDatafeedResponse {
@@ -33067,6 +33145,11 @@ export interface MlPutDatafeedResponse {
   runtime_mappings?: MappingRuntimeFields
   script_fields?: Record<string, ScriptField>
   scroll_size: integer
+  /** A Lucene-style expression that limits which linked projects the datafeed
+    * searches when cross-project search is enabled. Examples: `_alias:_origin`,
+    * `_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+    * search scope. Rejected when CPS is not enabled for datafeeds. */
+  project_routing?: string
 }
 
 export interface MlPutFilterRequest extends RequestBase {
@@ -33706,6 +33789,11 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
   /** The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
     * The maximum value is the value of `index.max_result_window`. */
   scroll_size?: integer
+  /** A Lucene-style expression that limits which linked projects the datafeed
+    * searches when cross-project search is enabled. Examples: `_alias:_origin`,
+    * `_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+    * search scope. Rejected when CPS is not enabled for datafeeds. */
+  project_routing?: string
   /** When true, force reminting of the datafeed's internal cloud API key from the
     * caller's cloud credential without requiring other configuration changes.
     * Requires a cloud-authenticated caller and an environment that supports
@@ -33713,9 +33801,9 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * @remarks This property is only supported on Elastic Cloud Serverless. */
   _force_rekeying?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, _force_rekeying?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, _force_rekeying?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, _force_rekeying?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, _force_rekeying?: never }
 }
 
 export interface MlUpdateDatafeedResponse {
@@ -33735,6 +33823,11 @@ export interface MlUpdateDatafeedResponse {
   runtime_mappings?: MappingRuntimeFields
   script_fields?: Record<string, ScriptField>
   scroll_size: integer
+  /** A Lucene-style expression that limits which linked projects the datafeed
+    * searches when cross-project search is enabled. Examples: `_alias:_origin`,
+    * `_alias:prod-*`. If omitted, searches all linked projects within the cross-project
+    * search scope. Rejected when CPS is not enabled for datafeeds. */
+  project_routing?: string
 }
 
 export interface MlUpdateFilterRequest extends RequestBase {
@@ -36517,7 +36610,7 @@ export interface SecurityFieldSecurity {
 }
 
 export interface SecurityGlobalPrivilege {
-  application?: SecurityApplicationGlobalUserPrivileges
+  application: SecurityApplicationGlobalUserPrivileges
   /** A list of data source privilege entries, used to grant access to ES|QL data sources.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   data_source?: SecurityDataSourcePrivileges[]
@@ -36642,7 +36735,7 @@ export interface SecurityRoleDescriptor {
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
-  global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
+  global?: SecurityGlobalPrivilege
   /** A list of application privilege entries */
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
@@ -36675,7 +36768,7 @@ export interface SecurityRoleDescriptorRead {
   remote_cluster?: SecurityRemoteClusterPrivileges[]
   /** An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
-  global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
+  global?: SecurityGlobalPrivilege
   /** A list of application privilege entries */
   applications?: SecurityApplicationPrivileges[]
   /** Optional meta-data. Within the metadata object, keys that begin with `_` are reserved for system usage. */
@@ -39937,8 +40030,10 @@ export interface SnapshotDeleteRequest extends RequestBase {
     * If the master node is not available before the timeout expires, the request fails and returns an error.
     * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
-  /** If `true`, the request returns a response when the matching snapshots are all deleted.
-    * If `false`, the request returns a response as soon as the deletes are scheduled. */
+  /** If `false`, the request returns a response as soon as the deletes are scheduled.
+    * If `true`, the request returns a response when the matching snapshots are all deleted, and the post-deletion cleanup work associated with the request has completed.
+    * If you make several requests to the delete-snapshots API targetting overlapping collections of snapshots then some of those requests may perform different parts of the associated post-deletion cleanup work, returning their responses at different times.
+    * For example, if you make two requests to delete the same snapshot then sometimes all of the post-deletion cleanup work will be associated with the first request, delaying its response, while the second request has no associated post-deletion cleanup work and receives its response as soon as the snapshot has been deleted. */
   wait_for_completion?: boolean
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { repository?: never, snapshot?: never, master_timeout?: never, wait_for_completion?: never }
