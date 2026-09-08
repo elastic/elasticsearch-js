@@ -24,7 +24,7 @@ For more information, check [#3419](https://github.com/elastic/elasticsearch-js/
 
 **Impact**<br> `esql().toArrowTable()` returns `unknown` and `toArrowReader()` returns `unknown` by default. Runtime behavior is unchanged.
 
-**Action**<br> To restore the precise `Table` and `AsyncRecordBatchStreamReader` types, install `apache-arrow` and add a single side-effect import once in your project: `import '@elastic/elasticsearch/helpers-arrow'`.
+**Action**<br> To restore the precise `Table` and `AsyncRecordBatchStreamReader` types, install `apache-arrow` and add a single side-effect import once in your project: `import '@elastic/elasticsearch/helpers-arrow'`. This opt-in module resolves through the package `exports` map, so it requires a modern TypeScript module resolution mode (`node16`, `nodenext`, or `bundler`); under the legacy `node`/`node10` mode the import does not resolve and the Arrow helpers stay typed as `unknown`.
 ::::
 
 ## 9.4.0 [elasticsearch-javascript-client-940-breaking-changes]

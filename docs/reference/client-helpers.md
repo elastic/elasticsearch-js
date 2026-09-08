@@ -642,7 +642,8 @@ To get precise types (`Table` and `AsyncRecordBatchStreamReader`), install `apac
 
 ```ts
 // Loads the apache-arrow type definitions for the ES|QL Arrow helpers.
-// A side-effect import: no bindings are needed, and it is erased at runtime.
+// This is a type-only augmentation: at runtime it just loads an empty module.
+// It imports no bindings, so nothing else needs to change.
 import '@elastic/elasticsearch/helpers-arrow'
 
 import { Client } from '@elastic/elasticsearch'
@@ -654,6 +655,8 @@ const table = await client.helpers
   .esql({ query: 'FROM sample_data' })
   .toArrowTable()
 ```
+
+The opt-in module is resolved through the package `exports` map, so your project must use a modern TypeScript module resolution mode: `node16`, `nodenext`, or `bundler`. Under the legacy `node`/`node10` mode, `exports` is ignored and the import does not resolve; the Arrow helpers stay typed as `unknown`.
 
 #### `toArrowReader` [_toarrowreader]
 
