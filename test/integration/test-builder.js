@@ -403,10 +403,27 @@ function indent (str, spaces) {
   return str.replace(/\s+$/, '').split('\n').map(l => `${tabs}${l}`).join('\n') + '\n'
 }
 
+function splitLookupPath (path) {
+  const steps = []
+  let cur = ''
+  for (let i = 0; i < path.length; i++) {
+    if (path[i] === '\\' && i + 1 < path.length) {
+      cur += path[++i]
+    } else if (path[i] === '.') {
+      steps.push(cur)
+      cur = ''
+    } else {
+      cur += path[i]
+    }
+  }
+  steps.push(cur)
+  return steps
+}
+
 function buildLookup (path) {
   if (path === '$body') return '(typeof response.body === "string" ? response.body : JSON.stringify(response.body))'
 
-  const outPath = path.split('.').map(step => {
+  const outPath = splitLookupPath(String(path)).map(step => {
     if (parseInt(step, 10).toString() === step) {
       return `?.[${step}]`
     } else if (step.match(/^\$[a-zA-Z0-9_]+$/)) {
@@ -416,7 +433,7 @@ function buildLookup (path) {
     } else if (step === '') {
       return ''
     } else {
-      return `?.['${step}']`
+      return `?.[${JSON.stringify(step)}]`
     }
   }).join('')
   return `response.body${outPath}`
@@ -470,3 +487,4 @@ function isPlainObject (obj) {
 }
 
 module.exports = build
+module.exports.buildLookup = buildLookup
