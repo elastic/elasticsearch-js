@@ -2,3 +2,7 @@ files:
   - test/unit/
   - test/esm/
 jobs: 1
+statements: 80
+branches: 15
+functions: 20
+lines: 80
