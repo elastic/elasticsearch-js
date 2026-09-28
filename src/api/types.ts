@@ -9704,6 +9704,18 @@ export interface QueryDslIntervalsWildcard {
   use_field?: Field
 }
 
+export interface QueryDslKqlQuery extends QueryDslQueryBase {
+  /** If `true`, performs case-insensitive matching for field names and keyword or text terms. */
+  case_insensitive?: boolean
+  /** Default field, or field pattern with wildcards, to target when a bare term does not specify a field.
+    * Defaults to the `index.query.default_field` index setting, which has a default value of `*`. */
+  default_field?: Field
+  /** The KQL expression to parse. */
+  query: string
+  /** Coordinated Universal Time (UTC) offset or IANA time zone used to interpret date literals in the expression. */
+  time_zone?: TimeZone
+}
+
 export type QueryDslLike = string | QueryDslLikeDocument
 
 export interface QueryDslLikeDocument {
@@ -10032,6 +10044,9 @@ interface QueryDslQueryContainerExclusiveProps {
     * metric. knn query finds nearest vectors through approximate search on indexed
     * dense_vectors. */
   knn?: KnnQuery
+  /** Returns documents matching a provided Kibana Query Language (KQL) expression.
+    * The expression is parsed and rewritten into standard Query DSL. */
+  kql?: QueryDslKqlQuery
   /** Returns documents that match a provided text, number, date or boolean value.
     * The provided text is analyzed before matching. */
   match?: Partial<Record<Field, QueryDslMatchQuery | string | float | boolean>>
