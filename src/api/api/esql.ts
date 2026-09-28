@@ -211,6 +211,14 @@ export default class Esql {
           'drop_null_columns',
           'allow_partial_results'
         ]
+      },
+      'esql.test_data_source_connection': {
+        path: [],
+        body: [
+          'type',
+          'settings'
+        ],
+        query: []
       }
     }
   }
@@ -1086,6 +1094,65 @@ export default class Esql {
         path: [],
         body: ['columnar', 'filter', 'time_zone', 'locale', 'params', 'profile', 'query', 'tables', 'include_ccs_metadata', 'include_execution_metadata', 'project_routing', 'settings'],
         query: ['format', 'delimiter', 'drop_null_columns', 'allow_partial_results']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Test an ES|QL data source connection. Tests whether the supplied data source configuration can establish a live connection. The data source does not need to exist in cluster state: this endpoint is intended for validating a new configuration before saving it. The request body accepts the same `type` and `settings` fields as the create or update data source API.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-data-source-test-connection | Elasticsearch API documentation}
+    */
+  async testDataSourceConnection (this: That, params: T.EsqlTestDataSourceConnectionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlTestDataSourceConnectionResponse>
+  async testDataSourceConnection (this: That, params: T.EsqlTestDataSourceConnectionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlTestDataSourceConnectionResponse, unknown>>
+  async testDataSourceConnection (this: That, params: T.EsqlTestDataSourceConnectionRequest, options?: TransportRequestOptions): Promise<T.EsqlTestDataSourceConnectionResponse>
+  async testDataSourceConnection (this: That, params: T.EsqlTestDataSourceConnectionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['esql.test_data_source_connection']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_query/data_source/_test'
+    const meta: TransportRequestMetadata = {
+      name: 'esql.test_data_source_connection',
+      acceptedParams: {
+        path: [],
+        body: ['type', 'settings'],
+        query: []
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
