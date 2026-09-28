@@ -226,6 +226,17 @@ export default class Security {
           'refresh'
         ]
       },
+      'security.delete_user_managed_service_account': {
+        path: [
+          'namespace',
+          'service'
+        ],
+        body: [],
+        query: [
+          'refresh',
+          'force'
+        ]
+      },
       'security.disable_user': {
         path: [
           'username'
@@ -321,7 +332,9 @@ export default class Security {
           'service'
         ],
         body: [],
-        query: []
+        query: [
+          'type'
+        ]
       },
       'security.get_service_credentials': {
         path: [
@@ -351,6 +364,7 @@ export default class Security {
           'password',
           'kerberos_ticket',
           'refresh_token',
+          'service_account_token',
           'username'
         ],
         query: []
@@ -517,6 +531,19 @@ export default class Security {
           'metadata',
           'password',
           'password_hash',
+          'roles',
+          'enabled'
+        ],
+        query: [
+          'refresh'
+        ]
+      },
+      'security.put_user_managed_service_account': {
+        path: [
+          'namespace',
+          'service'
+        ],
+        body: [
           'roles',
           'enabled'
         ],
@@ -1466,7 +1493,7 @@ export default class Security {
   }
 
   /**
-    * Create a service account token. Create a service accounts token for access without requiring basic authentication. NOTE: Service account tokens never expire. You must actively delete them if they are no longer needed. IMPORTANT: On Serverless, non-operator users can create tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`. Creating tokens for any other service account requires operator privileges.
+    * Create a service account token. Create a service accounts token for access without requiring basic authentication. This route serves both kinds of service account, but the privileges differ: `manage_service_account` authorizes tokens of built-in accounts in the `elastic` namespace only, and tokens of a user-managed account require `manage_security`. NOTE: Service account tokens never expire. You must actively delete them if they are no longer needed. IMPORTANT: On Serverless, non-operator users can create tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`. Creating tokens for any other service account requires operator privileges.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token | Elasticsearch API documentation}
     */
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
@@ -1735,7 +1762,7 @@ export default class Security {
   }
 
   /**
-    * Delete service account tokens. Delete service account tokens for a service in a specified namespace. IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`. Deleting tokens for any other service account requires operator privileges.
+    * Delete service account tokens. Delete service account tokens for a service in a specified namespace. This route serves both kinds of service account, but the privileges differ: `manage_service_account` authorizes tokens of built-in accounts in the `elastic` namespace only, and tokens of a user-managed account require `manage_security`. IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`. Deleting tokens for any other service account requires operator privileges.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token | Elasticsearch API documentation}
     */
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
@@ -1831,6 +1858,57 @@ export default class Security {
         path: ['username'],
         body: [],
         query: ['refresh']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Delete user-managed service accounts. Delete a service account from a namespace of your own. Deleting an account that still has service tokens is rejected unless `force` is `true`. A forced delete leaves the tokens behind: they cannot authenticate while no account of that name exists, and recreating the account is rejected until they are deleted. NOTE: The `elastic` namespace is reserved for the built-in service accounts that ship with Elasticsearch. A name that no user-managed service account could have is rejected rather than reported as not found. The `manage_service_account` privilege does not authorize this API.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-user-managed-service-account | Elasticsearch API documentation}
+    */
+  async deleteUserManagedServiceAccount (this: That, params: T.SecurityDeleteUserManagedServiceAccountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteUserManagedServiceAccountResponse>
+  async deleteUserManagedServiceAccount (this: That, params: T.SecurityDeleteUserManagedServiceAccountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteUserManagedServiceAccountResponse, unknown>>
+  async deleteUserManagedServiceAccount (this: That, params: T.SecurityDeleteUserManagedServiceAccountRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteUserManagedServiceAccountResponse>
+  async deleteUserManagedServiceAccount (this: That, params: T.SecurityDeleteUserManagedServiceAccountRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['security.delete_user_managed_service_account']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_user_managed_service_account',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service
+      },
+      acceptedParams: {
+        path: ['namespace', 'service'],
+        body: [],
+        query: ['refresh', 'force']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -2407,7 +2485,7 @@ export default class Security {
   }
 
   /**
-    * Get service accounts. Get a list of service accounts that match the provided path parameters. NOTE: Currently, only the `elastic/fleet-server` service account is available.
+    * Get service accounts. Get a list of service accounts that match the provided path parameters. Built-in service accounts ship with Elasticsearch in the `elastic` namespace; user-managed service accounts are created with the put user-managed service account API. NOTE: When `type` is omitted, a request without a namespace reports built-in accounts only, which preserves the response of a whole-cluster listing. A request scoped to a namespace reports both kinds, so an account you created is found without naming its kind.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-accounts | Elasticsearch API documentation}
     */
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
@@ -2462,7 +2540,7 @@ export default class Security {
       acceptedParams: {
         path: ['namespace', 'service'],
         body: [],
-        query: []
+        query: ['type']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -2668,7 +2746,7 @@ export default class Security {
       name: 'security.get_token',
       acceptedParams: {
         path: [],
-        body: ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username'],
+        body: ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'service_account_token', 'username'],
         query: []
       }
     }
@@ -3546,6 +3624,69 @@ export default class Security {
       acceptedParams: {
         path: ['username'],
         body: ['email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled'],
+        query: ['refresh']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Create user-managed service accounts. Create a service account in a namespace of your own, or replace one that already exists. A replacement is not a partial update: every write applies the defaults, so an account that was disabled and is then written again without `enabled` comes back enabled. Creating an account whose name still has leftover service tokens is rejected. Delete those tokens first. NOTE: The `elastic` namespace is reserved for the built-in service accounts that ship with Elasticsearch. The `manage_service_account` privilege does not authorize this API.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-user-managed-service-account | Elasticsearch API documentation}
+    */
+  async putUserManagedServiceAccount (this: That, params: T.SecurityPutUserManagedServiceAccountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutUserManagedServiceAccountResponse>
+  async putUserManagedServiceAccount (this: That, params: T.SecurityPutUserManagedServiceAccountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutUserManagedServiceAccountResponse, unknown>>
+  async putUserManagedServiceAccount (this: That, params: T.SecurityPutUserManagedServiceAccountRequest, options?: TransportRequestOptions): Promise<T.SecurityPutUserManagedServiceAccountResponse>
+  async putUserManagedServiceAccount (this: That, params: T.SecurityPutUserManagedServiceAccountRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['security.put_user_managed_service_account']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_user_managed_service_account',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service
+      },
+      acceptedParams: {
+        path: ['namespace', 'service'],
+        body: ['roles', 'enabled'],
         query: ['refresh']
       }
     }

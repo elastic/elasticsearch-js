@@ -21,6 +21,7 @@ import ConnectorApi from './api/connector'
 import countApi from './api/count'
 import createApi from './api/create'
 import DanglingIndicesApi from './api/dangling_indices'
+import DataRecoveryApi from './api/data_recovery'
 import deleteApi from './api/delete'
 import deleteByQueryApi from './api/delete_by_query'
 import deleteByQueryRethrottleApi from './api/delete_by_query_rethrottle'
@@ -116,6 +117,7 @@ export default interface API {
   count: typeof countApi
   create: typeof createApi
   danglingIndices: DanglingIndicesApi
+  dataRecovery: DataRecoveryApi
   delete: typeof deleteApi
   deleteByQuery: typeof deleteByQueryApi
   deleteByQueryRethrottle: typeof deleteByQueryRethrottleApi
@@ -203,6 +205,7 @@ const kCcr = Symbol('Ccr')
 const kCluster = Symbol('Cluster')
 const kConnector = Symbol('Connector')
 const kDanglingIndices = Symbol('DanglingIndices')
+const kDataRecovery = Symbol('DataRecovery')
 const kEncryption = Symbol('Encryption')
 const kEnrich = Symbol('Enrich')
 const kEql = Symbol('Eql')
@@ -249,6 +252,7 @@ export default class API {
   [kCluster]: symbol | null
   [kConnector]: symbol | null
   [kDanglingIndices]: symbol | null
+  [kDataRecovery]: symbol | null
   [kEncryption]: symbol | null
   [kEnrich]: symbol | null
   [kEql]: symbol | null
@@ -294,6 +298,7 @@ export default class API {
     this[kCluster] = null
     this[kConnector] = null
     this[kDanglingIndices] = null
+    this[kDataRecovery] = null
     this[kEncryption] = null
     this[kEnrich] = null
     this[kEql] = null
@@ -404,6 +409,9 @@ Object.defineProperties(API.prototype, {
   },
   danglingIndices: {
     get () { return this[kDanglingIndices] === null ? (this[kDanglingIndices] = new DanglingIndicesApi(this.transport)) : this[kDanglingIndices] }
+  },
+  dataRecovery: {
+    get () { return this[kDataRecovery] === null ? (this[kDataRecovery] = new DataRecoveryApi(this.transport)) : this[kDataRecovery] }
   },
   encryption: {
     get () { return this[kEncryption] === null ? (this[kEncryption] = new EncryptionApi(this.transport)) : this[kEncryption] }

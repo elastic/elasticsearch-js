@@ -10254,6 +10254,18 @@ export interface QueryDslIntervalsWildcard {
   use_field?: Field
 }
 
+export interface QueryDslKqlQuery extends QueryDslQueryBase {
+  /** If `true`, performs case-insensitive matching for field names and keyword or text terms. */
+  case_insensitive?: boolean
+  /** Default field, or field pattern with wildcards, to target when a bare term does not specify a field.
+    * Defaults to the `index.query.default_field` index setting, which has a default value of `*`. */
+  default_field?: Field
+  /** The KQL expression to parse. */
+  query: string
+  /** Coordinated Universal Time (UTC) offset or IANA time zone used to interpret date literals in the expression. */
+  time_zone?: TimeZone
+}
+
 export type QueryDslLike = string | QueryDslLikeDocument
 
 export interface QueryDslLikeDocument {
@@ -10582,6 +10594,9 @@ interface QueryDslQueryContainerExclusiveProps {
     * metric. knn query finds nearest vectors through approximate search on indexed
     * dense_vectors. */
   knn?: KnnQuery
+  /** Returns documents matching a provided Kibana Query Language (KQL) expression.
+    * The expression is parsed and rewritten into standard Query DSL. */
+  kql?: QueryDslKqlQuery
   /** Returns documents that match a provided text, number, date or boolean value.
     * The provided text is analyzed before matching. */
   match?: Partial<Record<Field, QueryDslMatchQuery | string | float | boolean>>
@@ -11567,7 +11582,7 @@ export type CatCatPluginsColumn = 'id' | 'name' | 'n' | 'component' | 'c' | 'ver
 
 export type CatCatPluginsColumns = CatCatPluginsColumn | CatCatPluginsColumn[]
 
-export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | 'time' | 't' | 'ti' | 'type' | 'ty' | 'stage' | 'st' | 'local_retries' | 'lr' | 'priority' | 'pr' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'rep' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | string
+export type CatCatRecoveryColumn = 'index' | 'i' | 'idx' | 'shard' | 's' | 'sh' | 'start_time' | 'start' | 'start_time_millis' | 'start_millis' | 'stop_time' | 'stop' | 'stop_time_millis' | 'stop_millis' | 'time' | 't' | 'ti' | 'type' | 'ty' | 'stage' | 'st' | 'local_retries' | 'lr' | 'priority' | 'pr' | 'gate' | 'g' | 'blocked_for_millis' | 'bf' | 'source_host' | 'shost' | 'source_node' | 'snode' | 'target_host' | 'thost' | 'target_node' | 'tnode' | 'repository' | 'rep' | 'snapshot' | 'snap' | 'files' | 'f' | 'files_recovered' | 'fr' | 'files_percent' | 'fp' | 'files_total' | 'tf' | 'bytes' | 'b' | 'bytes_recovered' | 'br' | 'bytes_percent' | 'bp' | 'bytes_total' | 'tb' | 'translog_ops' | 'to' | 'translog_ops_recovered' | 'tor' | 'translog_ops_percent' | 'top' | string
 
 export type CatCatRecoveryColumns = CatCatRecoveryColumn | CatCatRecoveryColumn[]
 
@@ -14907,15 +14922,33 @@ export interface CatRecoveryRecoveryRecord {
     * @alias stage */
   st?: string
   /** The number of times this recovery has failed in a way which is retried locally (i.e. on the data node). */
-  local_retries?: integer
+  local_retries?: string
   /** The number of times this recovery has failed in a way which is retried locally (i.e. on the data node).
     * @alias local_retries */
-  lr?: integer
+  lr?: string
   /** The recovery priority. */
   priority?: string
   /** The recovery priority.
     * @alias priority */
   pr?: string
+  /** The name of the recovery gate that blocked recovery on the target node.
+    *
+    * The value is `n/a` unless the recovery is queued in the `created` stage and blocked by a recovery gate. */
+  gate?: string
+  /** The name of the recovery gate that blocked recovery on the target node.
+    *
+    * The value is `n/a` unless the recovery is queued in the `created` stage and blocked by a recovery gate.
+    * @alias gate */
+  g?: string
+  /** The elapsed time in milliseconds recovery is blocked for.
+    *
+    * The value is `n/a` when the recovery is not blocked by a recovery gate. */
+  blocked_for_millis?: string
+  /** The elapsed time in milliseconds recovery is blocked for.
+    *
+    * The value is `n/a` when the recovery is not blocked by a recovery gate.
+    * @alias blocked_for_millis */
+  bf?: string
   /** The source host. */
   source_host?: string
   /** The source host.
@@ -19167,6 +19200,34 @@ export interface DanglingIndicesListDanglingIndicesResponse {
   dangling_indices: DanglingIndicesListDanglingIndicesDanglingIndex[]
 }
 
+export interface DataRecoveryGetRecoveryPointsRecoveryPoint {
+  /** The time when creation of the recovery point started. */
+  start_time: DateTime
+  /** The time when creation of the recovery point completed. */
+  end_time: DateTime
+}
+
+export interface DataRecoveryGetRecoveryPointsRequest extends RequestBase {
+  /** Return only recovery points whose end time is earlier than this value.
+    * The boundary is exclusive and can be set to the last recovery point's
+    * end time to retrieve the next page. */
+  end_time_before?: DateTime
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The maximum number of recovery points to return. The value must be between 1 and 1000. */
+  size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { end_time_before?: never, master_timeout?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { end_time_before?: never, master_timeout?: never, size?: never }
+}
+
+export interface DataRecoveryGetRecoveryPointsResponse {
+  /** Recovery points in descending order by end time. */
+  recovery_points: DataRecoveryGetRecoveryPointsRecoveryPoint[]
+}
+
 export interface EncryptionResetRequest extends RequestBase {
   /** Acknowledge that resetting the project encryption key permanently destroys all data
     * that was encrypted under the current key.
@@ -20076,6 +20137,32 @@ export interface EsqlQueryRequest extends RequestBase {
 }
 
 export type EsqlQueryResponse = EsqlEsqlResult
+
+export type EsqlTestDataSourceConnectionDataSourceTestStatus = 'success' | 'failure' | 'untestable'
+
+export interface EsqlTestDataSourceConnectionRequest extends RequestBase {
+  /** The data source type to test. Must be a known, registered type such as `s3`, `gcs`, or `azure`.
+    * Unknown types return a `400` error. */
+  type: string
+  /** Type-specific connection and authentication settings to test.
+    * Uses the same structure as the `settings` field in the create or update data source API. */
+  settings?: Record<string, any>
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { type?: never, settings?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { type?: never, settings?: never }
+}
+
+export interface EsqlTestDataSourceConnectionResponse {
+  /** The outcome of the connection test. */
+  status: EsqlTestDataSourceConnectionDataSourceTestStatus
+  /** A human-readable description of why the connection failed.
+    * Present only when `status` is `failure`. */
+  error?: string
+  /** Optional user-visible guidance explaining why the connection could not be tested.
+    * Present only when `status` is `untestable` and additional context is available. */
+  message?: string
+}
 
 export interface FeaturesFeature {
   name: string
@@ -23609,6 +23696,14 @@ export interface IndicesRecoveryShardRecovery {
   local_retries?: integer
   /** The recovery priority. */
   priority?: IndicesRecoveryRecoveryPriority
+  /** The name of the recovery gate that blocked recovery on the target node.
+    *
+    * Only present for queued recoveries in the `CREATED` stage that are blocked by a recovery gate. */
+  gate?: string
+  /** The elapsed time in milliseconds recovery is blocked for.
+    *
+    * Only present with `gate`. */
+  blocked_for_millis?: DurationValue<UnitMillis>
   start?: IndicesRecoveryRecoveryStartStatus
   /** The time the recovery started.
     * For recoveries in the `CREATED` stage (not yet started), this value is the Unix epoch (1970-01-01T00:00:00.000Z). */
@@ -24984,6 +25079,93 @@ export interface InferenceBaseReasoningDetail {
   /** The index of the reasoning detail,
     * which indicates its position in the sequence of reasoning details generated by the model. */
   index?: integer
+}
+
+export interface InferenceChatCompletionChoice {
+  /** The message generated by the model for this choice. */
+  message: InferenceChatCompletionMessage
+  /** The reason the model stopped generating tokens.
+    * Common values are `stop` (natural stopping point) and `tool_calls` (the model called a tool).
+    * Omitted when the reason is not available. */
+  finish_reason?: string
+  /** The index of this choice in the list of choices. */
+  index: integer
+}
+
+export interface InferenceChatCompletionCompletionTokensDetails {
+  /** The number of tokens used for reasoning by the model. */
+  reasoning_tokens?: integer
+}
+
+export interface InferenceChatCompletionInferenceResult {
+  /** The unique identifier for the completion. */
+  id: string
+  /** The list of completion choices the model generated for the input message. */
+  choices?: InferenceChatCompletionChoice[]
+  /** The model used to generate the completion. */
+  model: string
+  /** The object type. */
+  object: string
+  /** The token usage statistics for the completion request.
+    * Omitted when usage information is not available. */
+  usage?: InferenceChatCompletionUsage
+}
+
+export interface InferenceChatCompletionMessage {
+  /** The content of the message. */
+  content?: string
+  /** The refusal message generated by the model. */
+  refusal?: string
+  /** The role of the message author. */
+  role?: string
+  /** The reasoning generated by the model as plaintext.
+    * Currently supported only for the `elastic` provider. */
+  reasoning?: string
+  /** The tool calls generated by the model. */
+  tool_calls?: InferenceChatCompletionToolCall[]
+  /** The reasoning details generated by the model as structured data.
+    * Currently supported only for the `elastic` provider. */
+  reasoning_details?: InferenceReasoningDetail[]
+}
+
+export interface InferenceChatCompletionPromptTokensDetails {
+  /** The number of tokens that were cached from a previous request. */
+  cached_tokens?: integer
+  /** The number of tokens written to the cache. */
+  cache_write_tokens?: integer
+}
+
+export interface InferenceChatCompletionToolCall {
+  /** The index of the tool call in the list of tool calls generated by the model. */
+  index: integer
+  /** The identifier of the tool call. */
+  id?: string
+  /** The function that the model called. */
+  function?: InferenceChatCompletionToolCallFunction
+  /** The type of the tool call. */
+  type: string
+}
+
+export interface InferenceChatCompletionToolCallFunction {
+  /** The arguments to call the function with, as a JSON string. */
+  arguments?: string
+  /** The name of the function. */
+  name?: string
+}
+
+export interface InferenceChatCompletionUsage {
+  /** The number of tokens in the generated completion. */
+  completion_tokens: integer
+  /** The number of tokens in the prompt. */
+  prompt_tokens: integer
+  /** The total number of tokens used (prompt + completion). */
+  total_tokens: integer
+  /** Breakdown of the tokens used in the prompt.
+    * Omitted when no details are available. */
+  prompt_tokens_details?: InferenceChatCompletionPromptTokensDetails
+  /** Breakdown of the tokens used in the completion.
+    * Omitted when no details are available. */
+  completion_tokens_details?: InferenceChatCompletionCompletionTokensDetails
 }
 
 export type InferenceCohereEmbeddingType = 'binary' | 'bit' | 'byte' | 'float' | 'int8'
@@ -26966,6 +27148,20 @@ export interface InferenceInferenceRequest extends RequestBase {
 }
 
 export type InferenceInferenceResponse = InferenceInferenceResult
+
+export interface InferenceNonStreamingChatCompletionRequest extends RequestBase {
+  /** The inference Id */
+  inference_id: Id
+  /** Specifies the amount of time to wait for the inference request to complete. */
+  timeout?: Duration
+  chat_completion_request?: InferenceRequestChatCompletion
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, chat_completion_request?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { inference_id?: never, timeout?: never, chat_completion_request?: never }
+}
+
+export type InferenceNonStreamingChatCompletionResponse = InferenceChatCompletionInferenceResult
 
 export interface InferencePutRequest extends RequestBase {
   /** The task type. Refer to the integration list in the API description for the available task types. */
@@ -29881,6 +30077,8 @@ export interface MlDatafeedConfig {
   job_id?: Id
   /** If a real-time datafeed has never seen any data (including during any initial training period) then it will automatically stop itself and close its associated job after this many real-time searches that return no documents. In other words, it will stop after `frequency` times `max_empty_searches` of real-time operation. If not set then a datafeed with no end time that sees no data will remain started until it is explicitly stopped. */
   max_empty_searches?: integer
+  /** The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop and retry indefinitely. Values of `0` or less than `-1` are rejected. */
+  max_consecutive_extraction_failures?: integer
   /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this object is passed verbatim to Elasticsearch. */
   query?: QueryDslQueryContainer
   /** The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default value is randomly selected between `60s` and `120s`. This randomness improves the query performance when there are multiple jobs running on the same node. */
@@ -33107,6 +33305,12 @@ export interface MlPutDatafeedRequest extends RequestBase {
     * it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
     * end time that sees no data remains started until it is explicitly stopped. By default, it is not set. */
   max_empty_searches?: integer
+  /** The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it
+    * automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any
+    * cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly
+    * one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop
+    * and retry indefinitely. Values of `0` or less than `-1` are rejected. */
+  max_consecutive_extraction_failures?: integer
   /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
     * Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
     * object is passed verbatim to Elasticsearch. */
@@ -33131,9 +33335,9 @@ export interface MlPutDatafeedRequest extends RequestBase {
   project_routing?: string
   headers?: HttpHeaders
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, headers?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, headers?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, headers?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, headers?: never }
 }
 
 export interface MlPutDatafeedResponse {
@@ -33147,6 +33351,7 @@ export interface MlPutDatafeedResponse {
   job_id: Id
   indices_options?: IndicesOptions
   max_empty_searches?: integer
+  max_consecutive_extraction_failures?: integer
   query: QueryDslQueryContainer
   query_delay: Duration
   runtime_mappings?: MappingRuntimeFields
@@ -33775,6 +33980,12 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
     * end time that sees no data remains started until it is explicitly stopped. By default, it is not set. */
   max_empty_searches?: integer
+  /** The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it
+    * automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any
+    * cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly
+    * one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop
+    * and retry indefinitely. Values of `0` or less than `-1` are rejected. */
+  max_consecutive_extraction_failures?: integer
   /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
     * Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
     * object is passed verbatim to Elasticsearch. Note that if you change the query, the analyzed data is also
@@ -33808,9 +34019,9 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * @remarks This property is only supported on Elastic Cloud Serverless. */
   _force_rekeying?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, _force_rekeying?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, _force_rekeying?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, _force_rekeying?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, project_routing?: never, _force_rekeying?: never }
 }
 
 export interface MlUpdateDatafeedResponse {
@@ -33825,6 +34036,7 @@ export interface MlUpdateDatafeedResponse {
   indices_options?: IndicesOptions
   job_id: Id
   max_empty_searches?: integer
+  max_consecutive_extraction_failures?: integer
   query: QueryDslQueryContainer
   query_delay: Duration
   runtime_mappings?: MappingRuntimeFields
@@ -36763,9 +36975,6 @@ export interface SecurityRoleDescriptorRead {
   cluster: SecurityClusterPrivilege[]
   /** A list of indices permissions entries. */
   indices: SecurityIndicesPrivileges[]
-  /** A list of indices permissions entries.
-    * @alias indices */
-  index: SecurityIndicesPrivileges[]
   /** A list of indices permissions for remote clusters.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   remote_indices?: SecurityRemoteIndicesPrivileges[]
@@ -37457,6 +37666,31 @@ export interface SecurityDeleteUserResponse {
   found: boolean
 }
 
+export interface SecurityDeleteUserManagedServiceAccountRequest extends RequestBase {
+  /** The namespace, which is a top-level grouping of service accounts.
+    * It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+    * It cannot be `elastic`, which is reserved for built-in service accounts. */
+  namespace: Namespace
+  /** The service name.
+    * It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters. */
+  service: Service
+  /** If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes. */
+  refresh?: Refresh
+  /** If `false` (the default), deleting a service account that still has service tokens is rejected.
+    * If `true`, the account is deleted and its tokens are left in place. */
+  force?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, force?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, force?: never }
+}
+
+export interface SecurityDeleteUserManagedServiceAccountResponse {
+  /** If the service account is successfully deleted, the request returns `{"found": true}`.
+    * Otherwise, the response will have status code 404 and `found` is set to `false`. */
+  found: boolean
+}
+
 export interface SecurityDisableUserRequest extends RequestBase {
   /** An identifier for the user. */
   username: Username
@@ -37691,6 +37925,13 @@ export interface SecurityGetRoleMappingRequest extends RequestBase {
 
 export type SecurityGetRoleMappingResponse = Record<string, SecurityRoleMapping>
 
+export interface SecurityGetServiceAccountsBuiltInServiceAccount {
+  /** The account ships with Elasticsearch. */
+  type: 'built_in'
+  /** The role descriptor declared for the account in the Elasticsearch distribution. */
+  role_descriptor: SecurityRoleDescriptorRead
+}
+
 export interface SecurityGetServiceAccountsRequest extends RequestBase {
   /** The name of the namespace.
     * Omit this parameter to retrieve information about all service accounts.
@@ -37699,16 +37940,30 @@ export interface SecurityGetServiceAccountsRequest extends RequestBase {
   /** The service name.
     * Omit this parameter to retrieve information about all service accounts that belong to the specified `namespace`. */
   service?: Service
+  /** A comma-separated list of the kinds of service account to return.
+    * If it is omitted, it defaults to `built_in` when no namespace is given and to `built_in,user_managed` otherwise. */
+  type?: SecurityGetServiceAccountsServiceAccountType | SecurityGetServiceAccountsServiceAccountType[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { namespace?: never, service?: never }
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, type?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { namespace?: never, service?: never }
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, type?: never }
 }
 
-export type SecurityGetServiceAccountsResponse = Record<string, SecurityGetServiceAccountsRoleDescriptorWrapper>
+export type SecurityGetServiceAccountsResponse = Record<string, SecurityGetServiceAccountsServiceAccountInfo>
 
-export interface SecurityGetServiceAccountsRoleDescriptorWrapper {
-  role_descriptor: SecurityRoleDescriptorRead
+export type SecurityGetServiceAccountsServiceAccountInfo = SecurityGetServiceAccountsBuiltInServiceAccount | SecurityGetServiceAccountsUserManagedServiceAccount
+
+export type SecurityGetServiceAccountsServiceAccountType = 'built_in' | 'user_managed'
+
+export interface SecurityGetServiceAccountsUserManagedServiceAccount {
+  /** The account was created with the put user-managed service account API.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  type: 'user_managed'
+  /** The names of the roles granted to the account, as they were given when it was created.
+    * They are resolved when the account authenticates. */
+  roles: string[]
+  /** Whether the account can authenticate. */
+  enabled: boolean
 }
 
 export interface SecurityGetServiceCredentialsNodesCredentials {
@@ -37772,7 +38027,7 @@ export interface SecurityGetStatsResponse {
   nodes: Record<string, SecurityNodeSecurityStats>
 }
 
-export type SecurityGetTokenAccessTokenGrantType = 'password' | 'client_credentials' | '_kerberos' | 'refresh_token'
+export type SecurityGetTokenAccessTokenGrantType = 'password' | 'client_credentials' | '_kerberos' | 'refresh_token' | '_user_managed_service_account'
 
 export interface SecurityGetTokenAuthenticatedUser extends SecurityUser {
   authentication_realm: SecurityGetTokenUserRealm
@@ -37788,7 +38043,7 @@ export interface SecurityGetTokenAuthenticationProvider {
 
 export interface SecurityGetTokenRequest extends RequestBase {
   /** The type of grant.
-    * Supported grant types are: `password`, `_kerberos`, `client_credentials`, and `refresh_token`. */
+    * Supported grant types are: `password`, `_kerberos`, `client_credentials`, `refresh_token`, and `_user_managed_service_account`. */
   grant_type?: SecurityGetTokenAccessTokenGrantType
   /** The scope of the token.
     * Currently tokens are only issued for a scope of FULL regardless of the value sent with the request. */
@@ -37805,14 +38060,19 @@ export interface SecurityGetTokenRequest extends RequestBase {
     * If you specify the `refresh_token` grant type, this parameter is required.
     * This parameter is not valid with any other supported grant type. */
   refresh_token?: string
+  /** The service account token of a user-managed service account, as returned by the create service account token API.
+    * If you specify the `_user_managed_service_account` grant type, this parameter is required.
+    * This parameter is not valid with any other supported grant type.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  service_account_token?: string
   /** The username that identifies the user.
     * If you specify the `password` grant type, this parameter is required.
     * This parameter is not valid with any other supported grant type. */
   username?: Username
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { grant_type?: never, scope?: never, password?: never, kerberos_ticket?: never, refresh_token?: never, username?: never }
+  body?: string | { [key: string]: any } & { grant_type?: never, scope?: never, password?: never, kerberos_ticket?: never, refresh_token?: never, service_account_token?: never, username?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { grant_type?: never, scope?: never, password?: never, kerberos_ticket?: never, refresh_token?: never, username?: never }
+  querystring?: { [key: string]: any } & { grant_type?: never, scope?: never, password?: never, kerberos_ticket?: never, refresh_token?: never, service_account_token?: never, username?: never }
 }
 
 export interface SecurityGetTokenResponse {
@@ -38304,6 +38564,34 @@ export interface SecurityPutUserRequest extends RequestBase {
 export interface SecurityPutUserResponse {
   /** A successful call returns a JSON structure that shows whether the user has been created or updated.
     * When an existing user is updated, `created` is set to `false`. */
+  created: boolean
+}
+
+export interface SecurityPutUserManagedServiceAccountRequest extends RequestBase {
+  /** The namespace, which is a top-level grouping of service accounts.
+    * It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+    * It cannot be `elastic`, which is reserved for built-in service accounts. */
+  namespace: Namespace
+  /** The service name.
+    * It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters. */
+  service: Service
+  /** If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes. */
+  refresh?: Refresh
+  /** The names of the roles to grant to the service account, up to a maximum of 1000.
+    * The roles are resolved when the account authenticates, so they do not have to exist yet. */
+  roles: string[]
+  /** Whether the account can authenticate.
+    * Tokens can still be created for a disabled account; they just cannot be used until the account is enabled. */
+  enabled?: boolean
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, roles?: never, enabled?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, roles?: never, enabled?: never }
+}
+
+export interface SecurityPutUserManagedServiceAccountResponse {
+  /** A successful call returns a JSON structure that shows whether the service account has been created or updated.
+    * When an existing service account is replaced, `created` is set to `false`. */
   created: boolean
 }
 

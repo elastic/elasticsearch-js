@@ -253,7 +253,7 @@ client.count({ ... })
 #### Request (object) [_request_count]
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams and indices, omit this parameter or use `*` or `_all`.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search query using Query DSL. A request body query cannot be used with the `q` query string parameter.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
@@ -524,7 +524,7 @@ client.deleteByQuery({ index })
 
 - **`index` (string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`max_docs` (Optional, number)**: The maximum number of documents to delete.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to delete specified with Query DSL.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to delete specified with Query DSL.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: A sort object that specifies the order of deleted documents.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
@@ -685,7 +685,7 @@ client.explain({ id, index })
 
 - **`id` (string)**: The document identifier.
 - **`index` (string)**: Index names that are used to limit the request. Only a single index name can be provided to this parameter.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
 - **`analyzer` (Optional, string)**: The analyzer to use for the query string. This parameter can be used only when the `q` query string parameter is specified.
 - **`analyze_wildcard` (Optional, boolean)**: If `true`, wildcard and prefix queries are analyzed. This parameter can be used only when the `q` query string parameter is specified.
 - **`default_operator` (Optional, Enum("and" \| "or"))**: The default operator for query string query: `and` or `or`. This parameter can be used only when the `q` query string parameter is specified.
@@ -720,7 +720,7 @@ client.fieldCaps({ ... })
 
 - **`index` (Optional, string \| string[])**: A list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
 - **`fields` (Optional, string \| string[])**: A list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
-- **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard. IMPORTANT: The filtering is done on a best-effort basis, it uses index statistics and mappings to rewrite queries to `match_none` instead of fully running the request. For instance a range query over a date field can rewrite to `match_none` if all documents within a shard (including deleted documents) are outside of the provided range. However, not all queries can rewrite to `match_none` so this API may return an index even if the provided filter matches no document.
+- **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard. IMPORTANT: The filtering is done on a best-effort basis, it uses index statistics and mappings to rewrite queries to `match_none` instead of fully running the request. For instance a range query over a date field can rewrite to `match_none` if all documents within a shard (including deleted documents) are outside of the provided range. However, not all queries can rewrite to `match_none` so this API may return an index even if the provided filter matches no document.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, on_script_error, type }>)**: Define ad-hoc runtime fields in the request similar to the way it is done in search requests. These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the field-caps query using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression. If `false`, the request returns an error (1) if any wildcard expression (including `_all` and `*`) resolves to zero matching indices or (2) if the complete set of resolved indices, aliases or data streams is empty after all expressions are evaluated. If `true`, index expressions that resolve to no indices are allowed and the request returns an empty result.
@@ -1355,7 +1355,7 @@ client.openPointInTime({ index, keep_alive })
 
 - **`index` (string \| string[])**: A list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
 - **`keep_alive` (string \| -1 \| 0)**: Extend the length of time that the point in time persists.
-- **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard.
+- **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter indices if the provided query rewrites to `match_none` on every shard.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the PIT request using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
 - **`ignore_unavailable` (Optional, boolean)**: If `false`, the request returns an error if it targets a concrete (non-wildcarded) index, alias, or data stream that is missing, closed, or otherwise unavailable. If `true`, unavailable concrete targets are silently ignored.
 - **`preference` (Optional, string)**: The node or shard the operation should be performed on. By default, it is random.
@@ -1643,9 +1643,9 @@ client.search({ ... })
 - **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector, _name } \| { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector, _name }[])**: The approximate kNN search to run.
 - **`rank` (Optional, { rrf })**: The Reciprocal Rank Fusion (RRF) to use.
 - **`min_score` (Optional, number)**: The minimum `_score` for matching documents. Documents with a lower `_score` are not included in search results and results collected by aggregations.
-- **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results.
+- **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Use the `post_filter` parameter to filter search results. The search hits are filtered after the aggregations are calculated. A post filter has no impact on the aggregation results.
 - **`profile` (Optional, boolean)**: Set to `true` to return detailed timing information about the execution of individual components in a search request. NOTE: This is a debugging tool and adds significant overhead to search execution.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The search definition using the Query DSL.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The search definition using the Query DSL.
 - **`rescore` (Optional, { window_size, query, learning_to_rank, script } \| { window_size, query, learning_to_rank, script }[])**: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
 - **`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker, rule, rescorer, linear, pinned, diversify })**: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as `query` and `knn`.
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
@@ -1812,7 +1812,7 @@ client.searchMvt({ index, field, zoom, x, y })
 - **`grid_agg` (Optional, Enum("geotile" \| "geohex"))**: The aggregation used to create a grid for the `field`.
 - **`grid_precision` (Optional, number)**: Additional zoom levels available through the aggs layer. For example, if `<zoom>` is `7` and `grid_precision` is `8`, you can zoom in up to level 15. Accepts 0-8. If 0, results don't include the aggs layer.
 - **`grid_type` (Optional, Enum("grid" \| "point" \| "centroid"))**: Determines the geometry type for features in the aggs layer. In the aggs layer, each feature represents a `geotile_grid` cell. If `grid, each feature is a polygon of the cells bounding box. If `point`, each feature is a Point that is the centroid of the cell.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The query DSL used to filter documents for the search.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The query DSL used to filter documents for the search.
 - **`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, on_script_error, type }>)**: Defines one or more runtime fields in the search request. These fields take precedence over mapped fields with the same name.
 - **`size` (Optional, number)**: The maximum number of features to return in the hits layer. Accepts 0-10000. If 0, results don't include the hits layer.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: Sort the features in the hits layer. By default, the API calculates a bounding box for each feature. It sorts features based on this box's diagonal length, from longest to shortest.
@@ -1902,7 +1902,7 @@ client.termsEnum({ index, field })
 - **`size` (Optional, number)**: The number of matching terms to return.
 - **`timeout` (Optional, string \| -1 \| 0)**: The maximum length of time to spend collecting results. If the timeout is exceeded the `complete` flag set to `false` in the response and the results may be partial or empty.
 - **`case_insensitive` (Optional, boolean)**: When `true`, the provided search string is matched against index terms without case sensitivity.
-- **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter an index shard if the provided query rewrites to `match_none`.
+- **`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Filter an index shard if the provided query rewrites to `match_none`.
 - **`string` (Optional, string)**: The string to match at the start of indexed terms. If it is not provided, all terms in the field are considered. > info > The prefix string cannot be larger than the largest possible keyword value, which is Lucene's term byte-length limit of 32766.
 - **`search_after` (Optional, string)**: The string after which terms in the index should be returned. It allows for a form of pagination if the last result from one request is passed as the `search_after` parameter for a subsequent request.
 - **`project_routing` (Optional, string)**: Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded). Examples: _alias:my-project _alias:_origin _alias:*pr* Supported in serverless only.
@@ -2129,7 +2129,7 @@ client.updateByQuery({ index })
 
 - **`index` (string \| string[])**: A list of data streams, indices, and aliases to search. It supports wildcards (`*`). To search all data streams or indices, omit this parameter or use `*` or `_all`.
 - **`max_docs` (Optional, number)**: The maximum number of documents to update.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to update using the Query DSL.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The documents to update using the Query DSL.
 - **`script` (Optional, { source, id, params, lang, options })**: The script to run to update the document source or metadata when updating.
 - **`slice` (Optional, { field, id, max })**: Slice the request manually using the provided slice ID and total number of slices.
 - **`conflicts` (Optional, Enum("abort" \| "proceed"))**: The preferred behavior when update by query hits version conflicts: `abort` or `proceed`.
@@ -2293,9 +2293,9 @@ names matching these patterns in the hits.fields property of the response.
 - **`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector, _name } \| { field, query_vector, query_vector_builder, k, num_candidates, visit_percentage, boost, filter, similarity, inner_hits, rescore_vector, _name }[])**: Defines the approximate kNN search to run.
 - **`min_score` (Optional, number)**: Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations.
-- **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
+- **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
 - **`profile` (Optional, boolean)**
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
 - **`rescore` (Optional, { window_size, query, learning_to_rank, script } \| { window_size, query, learning_to_rank, script }[])**
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**
@@ -2902,7 +2902,7 @@ client.cat.recovery({ ... })
 Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
 - **`active_only` (Optional, boolean)**: If `true`, the response only includes shard recoveries that have not yet completed (excludes `done` stage).
 - **`detailed` (Optional, boolean)**: If `true`, the response includes detailed information about shard recoveries.
-- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "local_retries" \| "priority" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "local_retries" \| "priority" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
+- **`h` (Optional, Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "local_retries" \| "priority" \| "gate" \| "blocked_for_millis" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent") \| Enum("index" \| "shard" \| "start_time" \| "start_time_millis" \| "stop_time" \| "stop_time_millis" \| "time" \| "type" \| "stage" \| "local_retries" \| "priority" \| "gate" \| "blocked_for_millis" \| "source_host" \| "source_node" \| "target_host" \| "target_node" \| "repository" \| "snapshot" \| "files" \| "files_recovered" \| "files_percent" \| "files_total" \| "bytes" \| "bytes_recovered" \| "bytes_percent" \| "bytes_total" \| "translog_ops" \| "translog_ops_recovered" \| "translog_ops_percent")[])**: A list of columns names to display.
 It supports simple wildcards.
 - **`s` (Optional, string \| string[])**: A list of column names or aliases that determines the sort order.
 Sorting defaults to ascending and can be changed by setting `:asc`
@@ -4759,7 +4759,7 @@ Supported in serverless only.
 - **`tiebreaker_field` (Optional, string)**: Field used to sort hits with the same timestamp in ascending order
 - **`timestamp_field` (Optional, string)**: Field containing event timestamp.
 - **`fetch_size` (Optional, number)**: Maximum number of events to search at a time for sequence queries.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } \| { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])**: Query, written in Query DSL, used to filter the events on which the EQL query runs.
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type } \| { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type }[])**: Query, written in Query DSL, used to filter the events on which the EQL query runs.
 - **`keep_alive` (Optional, string \| -1 \| 0)**
 - **`keep_on_completion` (Optional, boolean)**
 - **`wait_for_completion_timeout` (Optional, string \| -1 \| 0)**
@@ -4806,7 +4806,7 @@ client.esql.asyncQuery({ query })
 #### Request (object) [_request_esql.async_query]
 - **`query` (string)**: The ES|QL query API accepts an ES|QL query string in the query parameter, runs it, and returns the results.
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`time_zone` (Optional, string)**: Sets the default timezone of the query.
 - **`locale` (Optional, string)**: Returns results (especially dates) formatted per the conventions of the locale.
 - **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[] \| { value, identifier, pattern }>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
@@ -5156,7 +5156,7 @@ client.esql.query({ query })
 #### Request (object) [_request_esql.query]
 - **`query` (string)**: The ES|QL query API accepts an ES|QL query string in the query parameter, runs it, and returns the results.
 - **`columnar` (Optional, boolean)**: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 - **`time_zone` (Optional, string)**: Sets the default timezone of the query.
 - **`locale` (Optional, string)**: Returns results (especially dates) formatted per the conventions of the locale.
 - **`params` (Optional, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[][] \| Record<string, number \| number \| string \| boolean \| null \| number \| number \| string \| boolean \| null[] \| { value, identifier, pattern }>[])**: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
@@ -5193,6 +5193,29 @@ Defaults to `false`. If `true` then the response will include an extra section u
 If `false`, the query will fail if there are any failures.
 
 To override the default behavior, you can set the `esql.query.allow_partial_results` cluster setting to `false`.
+
+## client.esql.testDataSourceConnection [_esql.test_data_source_connection]
+Test an ES|QL data source connection.
+
+Tests whether the supplied data source configuration can establish a live connection.
+The data source does not need to exist in cluster state: this endpoint is intended for
+validating a new configuration before saving it.
+The request body accepts the same `type` and `settings` fields as the create or update data
+source API.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-data-source-test-connection)
+
+```ts
+client.esql.testDataSourceConnection({ type })
+```
+
+### Arguments [_arguments_esql.test_data_source_connection]
+
+#### Request (object) [_request_esql.test_data_source_connection]
+- **`type` (string)**: The data source type to test. Must be a known, registered type such as `s3`, `gcs`, or `azure`.
+Unknown types return a `400` error.
+- **`settings` (Optional, Record<string, User-defined value>)**: Type-specific connection and authentication settings to test.
+Uses the same structure as the `settings` field in the create or update data source API.
 
 ## client.features.getFeatures [_features.get_features]
 Get the features.
@@ -5350,9 +5373,9 @@ Defaults to 10,000 hits.
 names matching these patterns in the hits.fields property of the response.
 - **`min_score` (Optional, number)**: Minimum _score for matching documents. Documents with a lower _score are
 not included in search results and results collected by aggregations.
-- **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
+- **`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**
 - **`profile` (Optional, boolean)**
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Defines the search definition using the Query DSL.
 - **`rescore` (Optional, { window_size, query, learning_to_rank, script } \| { window_size, query, learning_to_rank, script }[])**
 - **`script_fields` (Optional, Record<string, { script, ignore_failure }>)**: Retrieve a script evaluation (based on different fields) for each hit.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**
@@ -5449,7 +5472,7 @@ client.graph.explore({ index })
 - **`index` (string \| string[])**: Name of the index.
 - **`connections` (Optional, { connections, query, vertices })**: Specifies or more fields from which you want to extract terms that are associated with the specified vertices.
 - **`controls` (Optional, { sample_diversity, sample_size, timeout, use_significance })**: Direct the Graph API how to build the graph.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A seed query that identifies the documents of interest. Can be any valid Elasticsearch query.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A seed query that identifies the documents of interest. Can be any valid Elasticsearch query.
 - **`vertices` (Optional, { exclude, field, include, min_doc_count, shard_min_doc_count, size }[])**: Specifies one or more fields that contain the terms you want to include in the graph as vertices.
 - **`routing` (Optional, string \| string[])**: Custom value used to route operations to a specific shard.
 - **`timeout` (Optional, string \| -1 \| 0)**: Specifies the period of time to wait for a response from each shard.
@@ -7081,7 +7104,7 @@ Wildcard patterns that match both data streams and indices return an error.
 - **`name` (string)**: Alias to update.
 If the alias doesn’t exist, the request creates it.
 Index alias names support date math.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query used to limit documents the alias can access.
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query used to limit documents the alias can access.
 - **`index_routing` (Optional, string)**: Value used to route indexing operations to a specific shard.
 If specified, this overwrites the `routing` value for indexing operations.
 Data stream aliases don’t support this parameter.
@@ -8205,7 +8228,7 @@ client.indices.validateQuery({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases to search.
 Supports wildcards (`*`).
 To search all data streams or indices, omit this parameter or use `*` or `_all`.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query in the Lucene query string syntax.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Query in the Lucene query string syntax.
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
 (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -8236,12 +8259,12 @@ Use the special value `_all` to target all slices without restricting to a routi
 Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
 
 ## client.inference.chatCompletionUnified [_inference.chat_completion_unified]
-Perform chat completion inference on the service.
+Perform streaming chat completion inference on the service.
 
 The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
 It only works with the `chat_completion` task type.
 
-NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
+NOTE: The `chat_completion` task type supports both streaming and non-streaming.
 The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
 The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
 To determine whether a given inference service supports this task type, please see the page for that service.
@@ -8400,6 +8423,44 @@ Accepted values depend on the configured inference service, refer to the relevan
 - **`task_settings` (Optional, User-defined value)**: Task settings for the individual inference request.
 These settings are specific to the task type you specified and override the task settings specified when initializing the service.
 - **`timeout` (Optional, string \| -1 \| 0)**: The amount of time to wait for the inference request to complete.
+
+## client.inference.nonStreamingChatCompletion [_inference.non_streaming_chat_completion]
+Perform non-streaming chat completion inference on the service.
+
+The chat completion inference API enables rich responses for chat completion tasks.
+It only works with the `chat_completion` task type.
+
+NOTE: The `chat_completion` task type supports both streaming and non-streaming.
+The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
+To determine whether a given inference service supports this task type, please see the page for that service.
+
+These services support non-streaming chat completion inference:
+- AI21
+- Azure OpenAI
+- Deepseek
+- Elastic
+- FireworksAI
+- Groq
+- Huggingface
+- IBMWatsonX
+- Llama
+- Mistral
+- NVIDIA
+- OpenAI
+- OpenShiftAI
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-non-streaming-chat-completion)
+
+```ts
+client.inference.nonStreamingChatCompletion({ inference_id })
+```
+
+### Arguments [_arguments_inference.non_streaming_chat_completion]
+
+#### Request (object) [_request_inference.non_streaming_chat_completion]
+- **`inference_id` (string)**: The inference Id
+- **`chat_completion_request` (Optional, { messages, model, max_completion_tokens, reasoning, stop, temperature, tool_choice, tools, top_p })**
+- **`timeout` (Optional, string \| -1 \| 0)**: Specifies the amount of time to wait for the inference request to complete.
 
 ## client.inference.put [_inference.put]
 Create an inference endpoint.
@@ -10207,7 +10268,7 @@ client.ml.evaluateDataFrame({ evaluation, index })
 #### Request (object) [_request_ml.evaluate_data_frame]
 - **`evaluation` ({ classification, outlier_detection, regression })**: Defines the type of evaluation you want to perform.
 - **`index` (string)**: Defines the `index` in which the evaluation will be performed.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A query clause that retrieves a subset of data from the source index.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A query clause that retrieves a subset of data from the source index.
 
 ## client.ml.explainDataFrameAnalytics [_ml.explain_data_frame_analytics]
 Explain data frame analytics config.
@@ -10996,7 +11057,7 @@ client.ml.previewDatafeed({ ... })
 alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric
 characters. NOTE: If you use this path parameter, you cannot provide datafeed or anomaly detection job
 configuration details in the request body.
-- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, project_routing, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: The datafeed definition to preview.
+- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, project_routing, job_id, max_empty_searches, max_consecutive_extraction_failures, query, query_delay, runtime_mappings, script_fields, scroll_size })**: The datafeed definition to preview.
 - **`job_config` (Optional, { allow_lazy_open, analysis_config, analysis_limits, background_persist_interval, custom_settings, daily_model_snapshot_retention_after_days, data_description, datafeed_config, description, groups, job_id, job_type, model_plot_config, model_snapshot_retention_days, renormalization_window_days, results_index_name, results_retention_days })**: The configuration details for the anomaly detection job that is associated with the datafeed. If the
 `datafeed_config` object does not include a `job_id` that references an existing anomaly detection job, you must
 supply this `job_config` object. If you include both a `job_id` and a `job_config`, the latter information is
@@ -11164,7 +11225,12 @@ nodes and the machine learning nodes must have the `remote_cluster_client` role.
 stops and closes the associated job after this many real-time searches return no documents. In other words,
 it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
 end time that sees no data remains started until it is explicitly stopped. By default, it is not set.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
+- **`max_consecutive_extraction_failures` (Optional, number)**: The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it
+automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any
+cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly
+one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop
+and retry indefinitely. Values of `0` or less than `-1` are rejected.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
 Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
 object is passed verbatim to Elasticsearch.
 - **`query_delay` (Optional, string \| -1 \| 0)**: The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might
@@ -11237,7 +11303,7 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 - **`background_persist_interval` (Optional, string \| -1 \| 0)**: Advanced configuration option. The time between each periodic persistence of the model. The default value is a randomized value between 3 to 4 hours, which avoids all jobs persisting at exactly the same time. The smallest allowed value is 1 hour. For very large models (several GB), persistence could take 10-20 minutes, so do not set the `background_persist_interval` value too low.
 - **`custom_settings` (Optional, User-defined value)**: Advanced configuration option. Contains custom meta data about the job.
 - **`daily_model_snapshot_retention_after_days` (Optional, number)**: Advanced configuration option, which affects the automatic removal of old model snapshots for this job. It specifies a period of time (in days) after which only the first snapshot per day is retained. This period is relative to the timestamp of the most recent snapshot for this job. Valid values range from 0 to `model_snapshot_retention_days`.
-- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, project_routing, job_id, max_empty_searches, query, query_delay, runtime_mappings, script_fields, scroll_size })**: Defines a datafeed for the anomaly detection job. If Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
+- **`datafeed_config` (Optional, { aggregations, chunking_config, datafeed_id, delayed_data_check_config, frequency, indices, indices_options, project_routing, job_id, max_empty_searches, max_consecutive_extraction_failures, query, query_delay, runtime_mappings, script_fields, scroll_size })**: Defines a datafeed for the anomaly detection job. If Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
 - **`description` (Optional, string)**: A description of the job.
 - **`groups` (Optional, string[])**: A list of job groups. A job can belong to no groups or many.
 - **`model_plot_config` (Optional, { annotations_enabled, enabled, terms })**: This advanced configuration option stores model information along with the results. It provides a more detailed view into anomaly detection. If you enable model plot it can add considerable overhead to the performance of the system; it is not feasible for jobs with many entities. Model plot provides a simplified and indicative view of the model and its bounds. It does not display complex features such as multivariate correlations or multimodal data. As such, anomalies may occasionally be reported which cannot be seen in the model plot. Model plot config can be configured when the job is created or updated later. It must be disabled if performance issues are experienced.
@@ -11707,7 +11773,12 @@ learning nodes must have the `remote_cluster_client` role.
 stops and closes the associated job after this many real-time searches return no documents. In other words,
 it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
 end time that sees no data remains started until it is explicitly stopped. By default, it is not set.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
+- **`max_consecutive_extraction_failures` (Optional, number)**: The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it
+automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any
+cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly
+one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop
+and retry indefinitely. Values of `0` or less than `-1` are rejected.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
 Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
 object is passed verbatim to Elasticsearch. Note that if you change the query, the analyzed data is also
 changed. Therefore, the time required to learn might be long and the understandability of the results is
@@ -12388,7 +12459,7 @@ This parameter has the following rules:
 * Only one rollup index may be specified. If more than one are supplied, an exception occurs.
 * Wildcard expressions (`*`) may be used. If they match more than one rollup index, an exception occurs. However, you can use an expression to match multiple non-rollup indices or data streams.
 - **`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, cartesian_bounds, cartesian_centroid, categorize_text, change_point, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)**: Specifies aggregations.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specifies a DSL query that is subject to some limitations.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: Specifies a DSL query that is subject to some limitations.
 - **`size` (Optional, number)**: Must be zero if set, as rollups work on pre-aggregated data.
 - **`rest_total_hits_as_int` (Optional, boolean)**: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
 - **`typed_keys` (Optional, boolean)**: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -13073,6 +13144,7 @@ The value should match the certificate's distinguished name (DN) pattern.
 Create a service account token.
 
 Create a service accounts token for access without requiring basic authentication.
+This route serves both kinds of service account, but the privileges differ: `manage_service_account` authorizes tokens of built-in accounts in the `elastic` namespace only, and tokens of a user-managed account require `manage_security`.
 
 NOTE: Service account tokens never expire.
 You must actively delete them if they are no longer needed.
@@ -13194,6 +13266,7 @@ The name is used solely as an identifier to facilitate interaction via the API; 
 Delete service account tokens.
 
 Delete service account tokens for a service in a specified namespace.
+This route serves both kinds of service account, but the privileges differ: `manage_service_account` authorizes tokens of built-in accounts in the `elastic` namespace only, and tokens of a user-managed account require `manage_security`.
 
 IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
 Deleting tokens for any other service account requires operator privileges.
@@ -13228,6 +13301,36 @@ client.security.deleteUser({ username })
 #### Request (object) [_request_security.delete_user]
 - **`username` (string)**: An identifier for the user.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+## client.security.deleteUserManagedServiceAccount [_security.delete_user_managed_service_account]
+Delete user-managed service accounts.
+
+Delete a service account from a namespace of your own.
+
+Deleting an account that still has service tokens is rejected unless `force` is `true`.
+A forced delete leaves the tokens behind: they cannot authenticate while no account of that name exists, and recreating the account is rejected until they are deleted.
+
+NOTE: The `elastic` namespace is reserved for the built-in service accounts that ship with Elasticsearch.
+A name that no user-managed service account could have is rejected rather than reported as not found.
+The `manage_service_account` privilege does not authorize this API.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-user-managed-service-account)
+
+```ts
+client.security.deleteUserManagedServiceAccount({ namespace, service })
+```
+
+### Arguments [_arguments_security.delete_user_managed_service_account]
+
+#### Request (object) [_request_security.delete_user_managed_service_account]
+- **`namespace` (string)**: The namespace, which is a top-level grouping of service accounts.
+It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+It cannot be `elastic`, which is reserved for built-in service accounts.
+- **`service` (string)**: The service name.
+It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes.
+- **`force` (Optional, boolean)**: If `false` (the default), deleting a service account that still has service tokens is rejected.
+If `true`, the account is deleted and its tokens are left in place.
 
 ## client.security.disableUser [_security.disable_user]
 Disable users.
@@ -13462,8 +13565,10 @@ client.security.getRoleMapping({ ... })
 Get service accounts.
 
 Get a list of service accounts that match the provided path parameters.
+Built-in service accounts ship with Elasticsearch in the `elastic` namespace; user-managed service accounts are created with the put user-managed service account API.
 
-NOTE: Currently, only the `elastic/fleet-server` service account is available.
+NOTE: When `type` is omitted, a request without a namespace reports built-in accounts only, which preserves the response of a whole-cluster listing.
+A request scoped to a namespace reports both kinds, so an account you created is found without naming its kind.
 
 [Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-accounts)
 
@@ -13479,6 +13584,8 @@ Omit this parameter to retrieve information about all service accounts.
 If you omit this parameter, you must also omit the `service` parameter.
 - **`service` (Optional, string)**: The service name.
 Omit this parameter to retrieve information about all service accounts that belong to the specified `namespace`.
+- **`type` (Optional, Enum("built_in" \| "user_managed") \| Enum("built_in" \| "user_managed")[])**: A list of the kinds of service account to return.
+If it is omitted, it defaults to `built_in` when no namespace is given and to `built_in,user_managed` otherwise.
 
 ## client.security.getServiceCredentials [_security.get_service_credentials]
 Get service account credentials.
@@ -13561,8 +13668,8 @@ client.security.getToken({ ... })
 ### Arguments [_arguments_security.get_token]
 
 #### Request (object) [_request_security.get_token]
-- **`grant_type` (Optional, Enum("password" \| "client_credentials" \| "_kerberos" \| "refresh_token"))**: The type of grant.
-Supported grant types are: `password`, `_kerberos`, `client_credentials`, and `refresh_token`.
+- **`grant_type` (Optional, Enum("password" \| "client_credentials" \| "_kerberos" \| "refresh_token" \| "_user_managed_service_account"))**: The type of grant.
+Supported grant types are: `password`, `_kerberos`, `client_credentials`, `refresh_token`, and `_user_managed_service_account`.
 - **`scope` (Optional, string)**: The scope of the token.
 Currently tokens are only issued for a scope of FULL regardless of the value sent with the request.
 - **`password` (Optional, string)**: The user's password.
@@ -13573,6 +13680,9 @@ If you specify the `_kerberos` grant type, this parameter is required.
 This parameter is not valid with any other supported grant type.
 - **`refresh_token` (Optional, string)**: The string that was returned when you created the token, which enables you to extend its life.
 If you specify the `refresh_token` grant type, this parameter is required.
+This parameter is not valid with any other supported grant type.
+- **`service_account_token` (Optional, string)**: The service account token of a user-managed service account, as returned by the create service account token API.
+If you specify the `_user_managed_service_account` grant type, this parameter is required.
 This parameter is not valid with any other supported grant type.
 - **`username` (Optional, string)**: The username that identifies the user.
 If you specify the `password` grant type, this parameter is required.
@@ -14032,6 +14142,38 @@ To create a user without any roles, specify an empty list (`[]`).
 - **`enabled` (Optional, boolean)**: Specifies whether the user is enabled.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: Valid values are `true`, `false`, and `wait_for`.
 These values have the same meaning as in the index API, but the default value for this API is true.
+
+## client.security.putUserManagedServiceAccount [_security.put_user_managed_service_account]
+Create user-managed service accounts.
+
+Create a service account in a namespace of your own, or replace one that already exists.
+A replacement is not a partial update: every write applies the defaults, so an account that was disabled and is then written again without `enabled` comes back enabled.
+
+Creating an account whose name still has leftover service tokens is rejected.
+Delete those tokens first.
+
+NOTE: The `elastic` namespace is reserved for the built-in service accounts that ship with Elasticsearch.
+The `manage_service_account` privilege does not authorize this API.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-user-managed-service-account)
+
+```ts
+client.security.putUserManagedServiceAccount({ namespace, service, roles })
+```
+
+### Arguments [_arguments_security.put_user_managed_service_account]
+
+#### Request (object) [_request_security.put_user_managed_service_account]
+- **`namespace` (string)**: The namespace, which is a top-level grouping of service accounts.
+It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+It cannot be `elastic`, which is reserved for built-in service accounts.
+- **`service` (string)**: The service name.
+It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+- **`roles` (string[])**: The names of the roles to grant to the service account, up to a maximum of 1000.
+The roles are resolved when the account authenticates, so they do not have to exist yet.
+- **`enabled` (Optional, boolean)**: Whether the account can authenticate.
+Tokens can still be created for a disabled account; they just cannot be used until the account is enabled.
+- **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.queryApiKeys [_security.query_api_keys]
 Find API keys with a query.
@@ -15498,7 +15640,7 @@ It ignores other request body parameters.
 - **`fetch_size` (Optional, number)**: The maximum number of rows (or entries) to return in one response.
 - **`field_multi_value_leniency` (Optional, boolean)**: If `false`, the API returns an exception when encountering multiple values for a field.
 If `true`, the API is lenient and returns the first value from the array with no guarantee of consistent results.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query DSL for additional filtering.
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query DSL for additional filtering.
 - **`index_using_frozen` (Optional, boolean)**: If `true`, the search can run on frozen indices.
 - **`keep_alive` (Optional, string \| -1 \| 0)**: The retention period for an async or saved synchronous search.
 - **`keep_on_completion` (Optional, boolean)**: If `true`, Elasticsearch stores synchronous searches if you also specify the `wait_for_completion_timeout` parameter.
@@ -15546,7 +15688,7 @@ client.sql.translate({ query })
 #### Request (object) [_request_sql.translate]
 - **`query` (string)**: The SQL query to run.
 - **`fetch_size` (Optional, number)**: The maximum number of rows (or entries) to return in one response.
-- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query DSL for additional filtering.
+- **`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: The Elasticsearch query DSL for additional filtering.
 - **`time_zone` (Optional, string)**: The ISO-8601 time zone ID for the search.
 
 ## client.ssl.certificates [_ssl.certificates]
@@ -16938,7 +17080,7 @@ client.watcher.queryWatches({ ... })
 It must be non-negative.
 - **`size` (Optional, number)**: The number of hits to return.
 It must be non-negative.
-- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A query that filters the watches to be returned.
+- **`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_grid, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, kql, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })**: A query that filters the watches to be returned.
 - **`sort` (Optional, string \| { _score, _doc, _geo_distance, _script } \| string \| { _score, _doc, _geo_distance, _script }[])**: One or more fields used to sort the search results.
 - **`search_after` (Optional, number \| number \| string \| boolean \| null[])**: Retrieve the next page of hits using a set of sort values from the previous page.
 
