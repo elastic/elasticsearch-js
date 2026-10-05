@@ -1195,6 +1195,28 @@ export interface HealthReportDiskIndicatorDetails {
   nodes_with_unknown_disk_status: long
 }
 
+export interface HealthReportDlmFrozenTransitionOverdueIndex {
+  index_name: IndexName
+  transition_state: HealthReportDlmFrozenTransitionState
+}
+
+export type HealthReportDlmFrozenTransitionState = 'unmarked' | 'marked' | 'queued' | 'running'
+
+export interface HealthReportDlmFrozenTransitionsIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportDlmFrozenTransitionsIndicatorDetails
+}
+
+export interface HealthReportDlmFrozenTransitionsIndicatorDetails {
+  transitions_enabled?: boolean
+  service_running?: boolean
+  default_repository_configured?: boolean
+  overdue_indices_count?: integer
+  overdue_indices_count_by_state?: Record<HealthReportDlmFrozenTransitionState, integer>
+  overdue_indices_sample?: HealthReportDlmFrozenTransitionOverdueIndex[]
+  /** Only present when the indicator status is `unknown`, meaning the health snapshot is stale. */
+  generated_at_millis?: long
+}
+
 export interface HealthReportFileSettingsIndicator extends HealthReportBaseIndicator {
   details?: HealthReportFileSettingsIndicatorDetails
 }
@@ -1241,6 +1263,8 @@ export interface HealthReportIndicators {
   shards_capacity?: HealthReportShardsCapacityIndicator
   file_settings?: HealthReportFileSettingsIndicator
   project_encryption_key?: HealthReportProjectEncryptionKeyIndicator
+  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  dlm_frozen_transitions?: HealthReportDlmFrozenTransitionsIndicator
 }
 
 export interface HealthReportMasterIsStableIndicator extends HealthReportBaseIndicator {
@@ -4784,7 +4808,7 @@ export interface InferenceString {
   type: InferenceEmbeddingContentType
   /** The format of the data. If null, the default data format for the given type is used. */
   format?: InferenceEmbeddingContentFormat | null
-  /** String which may be raw text, or the string representation of some other data such as an image in base64. */
+  /** String which may be raw text, the string representation of some other data such as an image in base64, or a URL that points to the data. */
   value: string
 }
 
@@ -25685,7 +25709,7 @@ export type InferenceElserServiceType = 'elser'
 
 export type InferenceElserTaskType = 'sparse_embedding'
 
-export type InferenceEmbeddingContentFormat = 'text' | 'base64'
+export type InferenceEmbeddingContentFormat = 'text' | 'base64' | 'url'
 
 export type InferenceEmbeddingContentInput = InferenceEmbeddingContentObject | InferenceEmbeddingContentObject[]
 
@@ -25700,10 +25724,13 @@ export interface InferenceEmbeddingContentObjectItem {
   /** The type of input to embed. Not all models support all input types.
     * The `audio`, `video`, and `pdf` types are available in Elasticsearch 9.5.0 and later. */
   type: InferenceEmbeddingContentType
-  /** The format of the input. For the `text` type this must be `text`. For all other types, this must be `base64`.
-    * If not specified, this will default to `text` for the `text` type and `base64` for all other types. */
+  /** The format of the input. For the `text` type this must be `text`. For all other types, this must be `base64` or `url`.
+    * If not specified, this will default to `text` for the `text` type and `base64` for all other types.
+    * The `url` format is available in Elasticsearch 9.6.0 and later.
+    * Not all services and models support all formats. */
   format?: InferenceEmbeddingContentFormat
-  /** The value of the input to embed. For images, this must be a base64-encoded data URI, i.e. "data:content/type;base64,..." */
+  /** The value of the input to embed. For the `base64` format, this must be a base64-encoded data URI, i.e. "data:content/type;base64,...".
+    * For the `url` format, this must be a URL that points to the content, i.e. "https://example.com/image.jpg". */
   value: string
 }
 
@@ -26791,6 +26818,16 @@ export interface InferenceRequestEmbedding {
     *   }
     * ]
     * ```
+    * `content` object using the `url` format example (available in Elasticsearch 9.6.0 and later):
+    * ```
+    * "input": {
+    *     "content": {
+    *       "type": "image",
+    *       "format": "url",
+    *       "value": "https://example.com/image.jpg"
+    *     }
+    *   }
+    * ```
     * Multiple items in one `content` object example (available in Elasticsearch 9.5.0 and later):
     * ```
     * "input": [
@@ -27862,6 +27899,14 @@ export interface InferenceRerankRequest extends RequestBase {
     *   "format": "base64",
     *   "value": "data:image/jpeg;base64,..."
     * }
+    * ```
+    * object example using the `url` format (available in Elasticsearch 9.6.0 and later):
+    * ```
+    * "query": {
+    *   "type": "image",
+    *   "format": "url",
+    *   "value": "https://example.com/image.jpg"
+    * }
     * ``` */
   query: InferenceRerankRerankQuery
   /** The documents to rank.
@@ -27901,6 +27946,16 @@ export interface InferenceRerankRequest extends RequestBase {
     *     "value": "data:image/jpeg;base64,..."
     *   }
     * ]
+    * ```
+    * object array example using the `url` format (available in Elasticsearch 9.6.0 and later):
+    * ```
+    * "input": [
+    *   {
+    *     "type": "image",
+    *     "format": "url",
+    *     "value": "https://example.com/image.jpg"
+    *   }
+    * ]
     * ``` */
   input: InferenceRerankRerankInput
   /** Include the document text in the response. */
@@ -27918,15 +27973,18 @@ export interface InferenceRerankRequest extends RequestBase {
 
 export type InferenceRerankRerankInput = InferenceRerankRerankStringInput | InferenceRerankRerankObjectInput
 
-export type InferenceRerankRerankInputFormat = 'text' | 'base64'
+export type InferenceRerankRerankInputFormat = 'text' | 'base64' | 'url'
 
 export interface InferenceRerankRerankInputObject {
   /** The type of input. Not all services and models support all input types. */
   type: InferenceRerankRerankInputType
-  /** The format of the input. For the `text` type this must be `text`. For the `image` type this must be `base64`.
-    * If not specified, this defaults to `text` for the `text` type and `base64` for the `image` type. */
+  /** The format of the input. For the `text` type this must be `text`. For the `image` type this must be `base64` or `url`.
+    * If not specified, this defaults to `text` for the `text` type and `base64` for the `image` type.
+    * The `url` format is available in Elasticsearch 9.6.0 and later.
+    * Not all services and models support all formats. */
   format?: InferenceRerankRerankInputFormat
-  /** The value of the input. For images, this must be a base64-encoded data URI, that is, "data:content/type;base64,...". */
+  /** The value of the input. For the `base64` format, this must be a base64-encoded data URI, that is, "data:content/type;base64,...".
+    * For the `url` format, this must be a URL that points to the content, that is, "https://example.com/image.jpg". */
   value: string
 }
 
@@ -36830,6 +36888,10 @@ export interface SecurityFieldSecurity {
 
 export interface SecurityGlobalPrivilege {
   application?: SecurityApplicationGlobalUserPrivileges
+  /** A privilege that grants the ability to write the `data` and `access` sections of user profiles for the specified applications. */
+  profile?: SecurityWriteProfileGlobalUserPrivileges
+  /** A privilege that grants the ability to manage roles that are scoped to the specified indices. */
+  role?: SecurityManageRolesGlobalUserPrivileges
   /** A list of data source privilege entries, used to grant access to ES|QL data sources.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   data_source?: SecurityDataSourcePrivileges[]
@@ -36868,6 +36930,23 @@ export interface SecurityIndicesPrivilegesBase {
 }
 
 export type SecurityIndicesPrivilegesQuery = string | QueryDslQueryContainer | SecurityRoleTemplateQuery
+
+export interface SecurityManageRolesGlobalUserPrivileges {
+  /** The index-scoped role management privileges.
+    * Absent when the `role` section is present but grants no privileges. */
+  manage?: SecurityManageRolesPrivileges
+}
+
+export interface SecurityManageRolesIndexPermissions {
+  /** A list of indices (or index name patterns) that the owners of the role can manage roles for. */
+  names: string[]
+  /** The index privileges that the managed roles are allowed to grant on the specified indices. */
+  privileges: string[]
+}
+
+export interface SecurityManageRolesPrivileges {
+  indices: SecurityManageRolesIndexPermissions[]
+}
 
 export interface SecurityManageUserPrivileges {
   applications: string[]
@@ -37130,6 +37209,12 @@ export interface SecurityUserProfileUser {
 export interface SecurityUserProfileWithMetadata extends SecurityUserProfile {
   last_synchronized: long
   _doc: SecurityUserProfileHitMetadata
+}
+
+export interface SecurityWriteProfileGlobalUserPrivileges {
+  /** The applications for which user profile data can be written.
+    * Absent when the `profile` section is present but grants no privileges. */
+  write?: SecurityManageUserPrivileges
 }
 
 export interface SecurityActivateUserProfileRequest extends RequestBase {
@@ -37959,11 +38044,14 @@ export interface SecurityGetServiceAccountsUserManagedServiceAccount {
   /** The account was created with the put user-managed service account API.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
   type: 'user_managed'
-  /** The names of the roles granted to the account, as they were given when it was created.
+  /** The names of the roles granted to the account, as sent on the last PUT of the account.
     * They are resolved when the account authenticates. */
   roles: string[]
   /** Whether the account can authenticate. */
   enabled: boolean
+  /** A free-text description of the account, as sent on the last PUT of the account.
+    * It has no meaning to Elasticsearch. Absent when the account has no description. */
+  description?: string
 }
 
 export interface SecurityGetServiceCredentialsNodesCredentials {
@@ -38583,10 +38671,13 @@ export interface SecurityPutUserManagedServiceAccountRequest extends RequestBase
   /** Whether the account can authenticate.
     * Tokens can still be created for a disabled account; they just cannot be used until the account is enabled. */
   enabled?: boolean
+  /** A free-text description of the account, as sent on the last PUT of the account.
+    * It has no meaning to Elasticsearch. Absent when the account has no description. */
+  description?: string
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, roles?: never, enabled?: never }
+  body?: string | { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, roles?: never, enabled?: never, description?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, roles?: never, enabled?: never }
+  querystring?: { [key: string]: any } & { namespace?: never, service?: never, refresh?: never, roles?: never, enabled?: never, description?: never }
 }
 
 export interface SecurityPutUserManagedServiceAccountResponse {
