@@ -624,7 +624,6 @@ export default class Ml {
           'indices_options',
           'job_id',
           'max_empty_searches',
-          'max_consecutive_extraction_failures',
           'query',
           'query_delay',
           'runtime_mappings',
@@ -878,7 +877,6 @@ export default class Ml {
           'indices_options',
           'job_id',
           'max_empty_searches',
-          'max_consecutive_extraction_failures',
           'query',
           'query_delay',
           'runtime_mappings',
@@ -3845,7 +3843,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['datafeed_id'],
-        body: ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'max_consecutive_extraction_failures', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers'],
+        body: ['aggregations', 'aggs', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers'],
         query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
       }
     }
@@ -4864,7 +4862,7 @@ export default class Ml {
       },
       acceptedParams: {
         path: ['datafeed_id'],
-        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'max_consecutive_extraction_failures', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size'],
+        body: ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size'],
         query: ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable']
       }
     }
