@@ -29127,8 +29127,6 @@ export interface MlDatafeedConfig {
   job_id?: Id
   /** If a real-time datafeed has never seen any data (including during any initial training period) then it will automatically stop itself and close its associated job after this many real-time searches that return no documents. In other words, it will stop after `frequency` times `max_empty_searches` of real-time operation. If not set then a datafeed with no end time that sees no data will remain started until it is explicitly stopped. */
   max_empty_searches?: integer
-  /** The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop and retry indefinitely. Values of `0` or less than `-1` are rejected. */
-  max_consecutive_extraction_failures?: integer
   /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this object is passed verbatim to Elasticsearch. */
   query?: QueryDslQueryContainer
   /** The number of seconds behind real time that data is queried. For example, if data from 10:04 a.m. might not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default value is randomly selected between `60s` and `120s`. This randomness improves the query performance when there are multiple jobs running on the same node. */
@@ -32350,12 +32348,6 @@ export interface MlPutDatafeedRequest extends RequestBase {
     * it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
     * end time that sees no data remains started until it is explicitly stopped. By default, it is not set. */
   max_empty_searches?: integer
-  /** The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it
-    * automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any
-    * cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly
-    * one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop
-    * and retry indefinitely. Values of `0` or less than `-1` are rejected. */
-  max_consecutive_extraction_failures?: integer
   /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
     * Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
     * object is passed verbatim to Elasticsearch. */
@@ -32375,9 +32367,9 @@ export interface MlPutDatafeedRequest extends RequestBase {
   scroll_size?: integer
   headers?: HttpHeaders
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, aggs?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never, headers?: never }
 }
 
 export interface MlPutDatafeedResponse {
@@ -32391,7 +32383,6 @@ export interface MlPutDatafeedResponse {
   job_id: Id
   indices_options?: IndicesOptions
   max_empty_searches?: integer
-  max_consecutive_extraction_failures?: integer
   query: QueryDslQueryContainer
   query_delay: Duration
   runtime_mappings?: MappingRuntimeFields
@@ -33015,12 +33006,6 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * it stops after `frequency` times `max_empty_searches` of real-time operation. If not set, a datafeed with no
     * end time that sees no data remains started until it is explicitly stopped. By default, it is not set. */
   max_empty_searches?: integer
-  /** The maximum number of consecutive real-time data extraction failures the datafeed tolerates before it
-    * automatically stops itself, leaving the associated job open. The consecutive-failure counter resets on any
-    * cycle that extracts successfully, including empty-data cycles. If not set, the threshold defaults to roughly
-    * one day's worth of searches based on the datafeed `frequency` (floored at 1). Set to `-1` to disable auto-stop
-    * and retry indefinitely. Values of `0` or less than `-1` are rejected. */
-  max_consecutive_extraction_failures?: integer
   /** The Elasticsearch query domain-specific language (DSL). This value corresponds to the query object in an
     * Elasticsearch search POST body. All the options that are supported by Elasticsearch can be used, as this
     * object is passed verbatim to Elasticsearch. Note that if you change the query, the analyzed data is also
@@ -33043,9 +33028,9 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     * The maximum value is the value of `index.max_result_window`. */
   scroll_size?: integer
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
+  body?: string | { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, max_consecutive_extraction_failures?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
+  querystring?: { [key: string]: any } & { datafeed_id?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, aggregations?: never, chunking_config?: never, delayed_data_check_config?: never, frequency?: never, indices?: never, indexes?: never, indices_options?: never, job_id?: never, max_empty_searches?: never, query?: never, query_delay?: never, runtime_mappings?: never, script_fields?: never, scroll_size?: never }
 }
 
 export interface MlUpdateDatafeedResponse {
@@ -33060,7 +33045,6 @@ export interface MlUpdateDatafeedResponse {
   indices_options?: IndicesOptions
   job_id: Id
   max_empty_searches?: integer
-  max_consecutive_extraction_failures?: integer
   query: QueryDslQueryContainer
   query_delay: Duration
   runtime_mappings?: MappingRuntimeFields
