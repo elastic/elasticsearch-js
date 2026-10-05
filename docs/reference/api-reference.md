@@ -5194,29 +5194,6 @@ If `false`, the query will fail if there are any failures.
 
 To override the default behavior, you can set the `esql.query.allow_partial_results` cluster setting to `false`.
 
-## client.esql.testDataSourceConnection [_esql.test_data_source_connection]
-Test an ES|QL data source connection.
-
-Tests whether the supplied data source configuration can establish a live connection.
-The data source does not need to exist in cluster state: this endpoint is intended for
-validating a new configuration before saving it.
-The request body accepts the same `type` and `settings` fields as the create or update data
-source API.
-
-[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-data-source-test-connection)
-
-```ts
-client.esql.testDataSourceConnection({ type })
-```
-
-### Arguments [_arguments_esql.test_data_source_connection]
-
-#### Request (object) [_request_esql.test_data_source_connection]
-- **`type` (string)**: The data source type to test. Must be a known, registered type such as `s3`, `gcs`, or `azure`.
-Unknown types return a `400` error.
-- **`settings` (Optional, Record<string, User-defined value>)**: Type-specific connection and authentication settings to test.
-Uses the same structure as the `settings` field in the create or update data source API.
-
 ## client.features.getFeatures [_features.get_features]
 Get the features.
 
@@ -9313,6 +9290,14 @@ object example:
   "value": "data:image/jpeg;base64,..."
 }
 ```
+object example using the `url` format (available in Elasticsearch 9.6.0 and later):
+```
+"query": {
+  "type": "image",
+  "format": "url",
+  "value": "https://example.com/image.jpg"
+}
+```
 - **`input` (string \| string[] \| { type, format, value } \| { type, format, value }[])**: The documents to rank.
 The input can be specified as a single string or an array of strings, or as an object or an array of objects.
 The object form additionally allows specifying non-text inputs, such as images.
@@ -9348,6 +9333,16 @@ object array example:
     "type": "image",
     "format": "base64",
     "value": "data:image/jpeg;base64,..."
+  }
+]
+```
+object array example using the `url` format (available in Elasticsearch 9.6.0 and later):
+```
+"input": [
+  {
+    "type": "image",
+    "format": "url",
+    "value": "https://example.com/image.jpg"
   }
 ]
 ```
@@ -14173,6 +14168,8 @@ It must start with a letter or digit and can contain only letters, digits, hyphe
 The roles are resolved when the account authenticates, so they do not have to exist yet.
 - **`enabled` (Optional, boolean)**: Whether the account can authenticate.
 Tokens can still be created for a disabled account; they just cannot be used until the account is enabled.
+- **`description` (Optional, string)**: A free-text description of the account, as sent on the last PUT of the account.
+It has no meaning to Elasticsearch. Absent when the account has no description.
 - **`refresh` (Optional, Enum(true \| false \| "wait_for"))**: If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes.
 
 ## client.security.queryApiKeys [_security.query_api_keys]

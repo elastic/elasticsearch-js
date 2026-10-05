@@ -545,7 +545,8 @@ export default class Security {
         ],
         body: [
           'roles',
-          'enabled'
+          'enabled',
+          'description'
         ],
         query: [
           'refresh'
@@ -3686,7 +3687,7 @@ export default class Security {
       },
       acceptedParams: {
         path: ['namespace', 'service'],
-        body: ['roles', 'enabled'],
+        body: ['roles', 'enabled', 'description'],
         query: ['refresh']
       }
     }
