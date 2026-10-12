@@ -37,6 +37,27 @@ export default class DataRecovery {
           'master_timeout',
           'size'
         ]
+      },
+      'data_recovery.get_recovery_sources': {
+        path: [],
+        body: [],
+        query: [
+          'expression',
+          'include_incomplete_sources',
+          'master_timeout',
+          'recovery_point_end_time',
+          'size'
+        ]
+      },
+      'data_recovery.get_rpo_series': {
+        path: [],
+        body: [],
+        query: [
+          'start',
+          'end',
+          'bucket_duration',
+          'master_timeout'
+        ]
       }
     }
   }
@@ -83,6 +104,99 @@ export default class DataRecovery {
         path: [],
         body: [],
         query: ['end_time_before', 'master_timeout', 'size']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get recovery sources. Get the logical sources captured at an exact recovery point in the platform-managed data recovery repository. This API is intended for internal operator use. Repository, snapshot, and policy identifiers are not exposed.
+    */
+  async getRecoverySources (this: That, params: T.DataRecoveryGetRecoverySourcesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DataRecoveryGetRecoverySourcesResponse>
+  async getRecoverySources (this: That, params: T.DataRecoveryGetRecoverySourcesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DataRecoveryGetRecoverySourcesResponse, unknown>>
+  async getRecoverySources (this: That, params: T.DataRecoveryGetRecoverySourcesRequest, options?: TransportRequestOptions): Promise<T.DataRecoveryGetRecoverySourcesResponse>
+  async getRecoverySources (this: That, params: T.DataRecoveryGetRecoverySourcesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['data_recovery.get_recovery_sources']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_data_recovery/sources'
+    const meta: TransportRequestMetadata = {
+      name: 'data_recovery.get_recovery_sources',
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['expression', 'include_incomplete_sources', 'master_timeout', 'recovery_point_end_time', 'size']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Get the recovery point objective series. Get, for each bucket in the half-open range `[start, end)`, the maximum age that the newest recoverable state reached during that bucket. This API is intended for internal operator use. The range is divided into at most 1,000 buckets. A bucket has no value if no retained recovery point covers its start.
+    */
+  async getRpoSeries (this: That, params?: T.DataRecoveryGetRpoSeriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DataRecoveryGetRpoSeriesResponse>
+  async getRpoSeries (this: That, params?: T.DataRecoveryGetRpoSeriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DataRecoveryGetRpoSeriesResponse, unknown>>
+  async getRpoSeries (this: That, params?: T.DataRecoveryGetRpoSeriesRequest, options?: TransportRequestOptions): Promise<T.DataRecoveryGetRpoSeriesResponse>
+  async getRpoSeries (this: That, params?: T.DataRecoveryGetRpoSeriesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['data_recovery.get_rpo_series']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_data_recovery/rpo'
+    const meta: TransportRequestMetadata = {
+      name: 'data_recovery.get_rpo_series',
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['start', 'end', 'bucket_duration', 'master_timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
