@@ -851,6 +851,11 @@ export interface FieldCapsFieldCapability {
   inference?: boolean
   /** The list of indices where this field is not an inference field, or null if all indices have the same definition for the field. */
   non_inference_indices?: Indices
+  /** Whether this field is a passthrough source on all indices.
+    * This property is present only for field types that support passthrough. */
+  passthrough?: boolean
+  /** The list of indices where this field is not a passthrough source, or null if all indices have the same definition for the field. */
+  non_passthrough_indices?: Indices
   /** Whether this field is registered as a metadata field. */
   metadata_field?: boolean
   /** Whether this field is used as a time series dimension.
@@ -19250,6 +19255,86 @@ export interface DataRecoveryGetRecoveryPointsRequest extends RequestBase {
 export interface DataRecoveryGetRecoveryPointsResponse {
   /** Recovery points in descending order by end time. */
   recovery_points: DataRecoveryGetRecoveryPointsRecoveryPoint[]
+}
+
+export interface DataRecoveryGetRecoverySourcesRecoverySource {
+  /** Whether the logical source was completely captured in the recovery point.
+    * For a data stream, this includes its backing and failure-store indices. */
+  complete: boolean
+  /** The name of the index or data stream. */
+  name: string
+  /** The type of logical source. */
+  type: DataRecoveryGetRecoverySourcesRecoverySourceType
+}
+
+export type DataRecoveryGetRecoverySourcesRecoverySourceType = 'index' | 'data_stream'
+
+export interface DataRecoveryGetRecoverySourcesRequest extends RequestBase {
+  /** A comma-separated list of source expressions to match. Wildcards and exclusions prefixed with `-` are supported. */
+  expression: string | string[]
+  /** If `true`, include logical sources that were not completely captured in the recovery point. */
+  include_incomplete_sources?: boolean
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** The exact end time of the recovery point. */
+  recovery_point_end_time: DateTime
+  /** The maximum number of matching sources to return. The value must be between 1 and 1000. */
+  size?: integer
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { expression?: never, include_incomplete_sources?: never, master_timeout?: never, recovery_point_end_time?: never, size?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { expression?: never, include_incomplete_sources?: never, master_timeout?: never, recovery_point_end_time?: never, size?: never }
+}
+
+export interface DataRecoveryGetRecoverySourcesResponse {
+  /** Whether more matching sources are available than were returned. */
+  has_more: boolean
+  /** The selected recovery point. */
+  recovery_point: DataRecoveryGetRecoveryPointsRecoveryPoint
+  /** Matching logical recovery sources ordered by name. */
+  sources: DataRecoveryGetRecoverySourcesRecoverySource[]
+}
+
+export interface DataRecoveryGetRpoSeriesRequest extends RequestBase {
+  /** The inclusive start of the range, as a date or epoch milliseconds.
+    * When omitted, it is seven days before `end`, rounded down to a whole multiple of `bucket_duration`,
+    * so that repeated requests with default parameters return the same bucket boundaries. */
+  start?: DateTime
+  /** The exclusive end of the range, as a date or epoch milliseconds. */
+  end?: DateTime
+  /** The duration of each bucket. It must be greater than zero, and the range must divide into at most 1,000 buckets. */
+  bucket_duration?: Duration
+  /** The period to wait for a connection to the master node.
+    * If no response is received before the timeout expires, the request fails and returns an error. */
+  master_timeout?: Duration
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { start?: never, end?: never, bucket_duration?: never, master_timeout?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { start?: never, end?: never, bucket_duration?: never, master_timeout?: never }
+}
+
+export interface DataRecoveryGetRpoSeriesResponse {
+  /** The inclusive start of the range. */
+  start: DateTime
+  /** The exclusive end of the range. */
+  end: DateTime
+  /** The duration of each bucket. */
+  bucket_duration: Duration
+  /** The number of buckets in the series. */
+  bucket_count: integer
+  /** The buckets in ascending order by start time. */
+  buckets: DataRecoveryGetRpoSeriesRpoBucket[]
+}
+
+export interface DataRecoveryGetRpoSeriesRpoBucket {
+  /** The inclusive start of the bucket. */
+  start: DateTime
+  /** The exclusive end of the bucket. The last bucket is clipped to the end of the range. */
+  end: DateTime
+  /** The greatest age, in milliseconds, that the newest recoverable state reached during the bucket.
+    * It is `null` if no retained recovery point covers the start of the bucket or the bucket starts in the future. */
+  max_recovery_point_age_millis: long | null
 }
 
 export interface EncryptionResetRequest extends RequestBase {
