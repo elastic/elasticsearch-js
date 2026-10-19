@@ -1201,7 +1201,9 @@ export interface HealthReportDiskIndicatorDetails {
 }
 
 export interface HealthReportDlmFrozenTransitionOverdueIndex {
+  /** The name of the overdue index. */
   index_name: IndexName
+  /** The transition state of the overdue index. */
   transition_state: HealthReportDlmFrozenTransitionState
 }
 
@@ -1212,13 +1214,23 @@ export interface HealthReportDlmFrozenTransitionsIndicator extends HealthReportB
 }
 
 export interface HealthReportDlmFrozenTransitionsIndicatorDetails {
+  /** Indicates whether frozen-tier transitions are enabled by the `dlm.frozen_transitions.enabled` cluster setting. */
   transitions_enabled?: boolean
+  /** Indicates whether the frozen transition service is running on the current master node. */
   service_running?: boolean
+  /** Indicates whether a default snapshot repository is configured with the `repositories.default_repository` cluster setting. */
   default_repository_configured?: boolean
+  /** The total number of overdue indices in the cluster. */
   overdue_indices_count?: integer
+  /** The number of overdue indices in the cluster for each transition state.
+    * Only present when there are overdue indices. */
   overdue_indices_count_by_state?: Record<HealthReportDlmFrozenTransitionState, integer>
+  /** A sample of the overdue indices and their transition states, sorted by index name.
+    * The sample is limited to 100 indices for each transition state, so it can contain fewer indices than `overdue_indices_count`.
+    * Only present when there are overdue indices. */
   overdue_indices_sample?: HealthReportDlmFrozenTransitionOverdueIndex[]
-  /** Only present when the indicator status is `unknown`, meaning the health snapshot is stale. */
+  /** The time, in milliseconds since the Unix epoch, when the master node generated the health snapshot.
+    * Only present when the indicator status is `unknown`, meaning the health snapshot is stale. */
   generated_at_millis?: long
 }
 
@@ -1268,7 +1280,8 @@ export interface HealthReportIndicators {
   shards_capacity?: HealthReportShardsCapacityIndicator
   file_settings?: HealthReportFileSettingsIndicator
   project_encryption_key?: HealthReportProjectEncryptionKeyIndicator
-  /** @remarks This property is not supported on Elastic Cloud Serverless. */
+  /** Reports the health of data stream lifecycle transitions of backing indices to the frozen tier.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
   dlm_frozen_transitions?: HealthReportDlmFrozenTransitionsIndicator
 }
 
@@ -2002,6 +2015,8 @@ export interface RankEvalRankEvalMetricBase {
 export interface RankEvalRankEvalMetricDetail {
   /** The metric_score in the details section shows the contribution of this query to the global quality metric score */
   metric_score: double
+  /** The time in milliseconds it took to execute the search request for this query */
+  took: long
   /** The unrated_docs section contains an _index and _id entry for each document in the search result for this query that didn’t have a ratings value. This can be used to ask the user to supply ratings for these documents */
   unrated_docs: RankEvalUnratedDocument[]
   /** The hits section shows a grouping of the search results with their supplied ratings */
