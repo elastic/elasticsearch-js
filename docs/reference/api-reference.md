@@ -7809,7 +7809,8 @@ indices are allowed and the request returns an empty result.
 ## client.indices.rollover [_indices.rollover]
 Roll over to a new index.
 
-TIP: We recommend using the index lifecycle rollover action to automate rollovers. However, Serverless does not support Index Lifecycle Management (ILM), so don't use this approach in the Serverless context.
+TIP: To automate rollovers, use index lifecycle management (ILM) in deployments that support it.
+Serverless does not support ILM. For data streams in Serverless, use data stream lifecycle instead.
 
 The rollover API creates a new index for a data stream or index alias.
 The API behavior depends on the rollover target.
