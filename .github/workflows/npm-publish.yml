@@ -90,7 +90,7 @@ jobs:
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - name: Derive branch from release tag
@@ -141,4 +141,33 @@ jobs:
             # publish as a non-stable release using the meta name (e.g. 'alpha') as the tag
             tag=$(echo "$tag_meta" | cut -d '.' -f1)
             npm publish --provenance --access public --tag "$tag"
+          fi
+      - name: Fetch ephemeral GitHub token
+        id: fetch-token
+        uses: elastic/ci-gh-actions/fetch-github-token@8a7604dfdd4e7fe21f969bfe9ff96e17635ea577 # v1.0.0
+        with:
+          vault-instance: "ci-prod"
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ steps.fetch-token.outputs.token }}
+          BRANCH_NAME: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || steps.branch.outputs.name }}
+        run: |
+          version=$(jq -r .version package.json)
+          tag_meta=$(echo "$version" | cut -s -d '-' -f2)
+          if [[ -z "$tag_meta" ]]; then
+            gh release create \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$BRANCH_NAME" \
+              --title "v$version" \
+              --notes "[Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/changelog-client.html)" \
+              "v$version"
+          else
+            gh release create \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$BRANCH_NAME" \
+              --title "v$version" \
+              --notes "This is a pre-release. Changes may not be stable." \
+              --latest=false \
+              --prerelease \
+              "v$version"
           fi
