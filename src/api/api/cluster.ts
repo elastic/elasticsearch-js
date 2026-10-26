@@ -594,7 +594,7 @@ export default class Cluster {
   }
 
   /**
-    * Get cluster info. Returns basic information about the cluster.
+    * Get cluster subsystem info. Returns basic information about the cluster.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-info | Elasticsearch API documentation}
     */
   async info (this: That, params: T.ClusterInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterInfoResponse>
