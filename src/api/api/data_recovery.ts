@@ -23,12 +23,21 @@ interface That {
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
 }
 
+const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
+
 export default class DataRecovery {
   transport: Transport
   [kAcceptedParams]: Record<string, { path: string[], body: string[], query: string[] }>
   constructor (transport: Transport) {
     this.transport = transport
     this[kAcceptedParams] = {
+      'data_recovery.get_recovery': {
+        path: [
+          'recovery_id'
+        ],
+        body: [],
+        query: []
+      },
       'data_recovery.get_recovery_points': {
         path: [],
         body: [],
@@ -58,8 +67,83 @@ export default class DataRecovery {
           'bucket_duration',
           'master_timeout'
         ]
+      },
+      'data_recovery.list_recoveries': {
+        path: [],
+        body: [],
+        query: [
+          'size',
+          'started_at_gte',
+          'started_at_lt',
+          'order',
+          'search_after_started_at',
+          'search_after_recovery_id',
+          'status'
+        ]
+      },
+      'data_recovery.start_recovery': {
+        path: [],
+        body: [
+          'recovery_point_end_time',
+          'sources',
+          'mode',
+          'rename_strategy',
+          'metadata'
+        ],
+        query: [
+          'master_timeout'
+        ]
       }
     }
+  }
+
+  /**
+    * Get a recovery. Get the status and details of a recovery that was started with the start recovery API. This API is intended for internal operator use. The progress of a running recovery is reported as a percentage, and the repository and audit details of the recovery are not exposed.
+    */
+  async getRecovery (this: That, params: T.DataRecoveryGetRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DataRecoveryGetRecoveryResponse>
+  async getRecovery (this: That, params: T.DataRecoveryGetRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DataRecoveryGetRecoveryResponse, unknown>>
+  async getRecovery (this: That, params: T.DataRecoveryGetRecoveryRequest, options?: TransportRequestOptions): Promise<T.DataRecoveryGetRecoveryResponse>
+  async getRecovery (this: That, params: T.DataRecoveryGetRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['data_recovery.get_recovery']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_data_recovery/recoveries/${encodeURIComponent(params.recovery_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'data_recovery.get_recovery',
+      pathParts: {
+        recovery_id: params.recovery_id
+      },
+      acceptedParams: {
+        path: ['recovery_id'],
+        body: [],
+        query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -197,6 +281,111 @@ export default class DataRecovery {
         path: [],
         body: [],
         query: ['start', 'end', 'bucket_duration', 'master_timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * List recoveries. List the recoveries that were started with the start recovery API, including those that have finished. This API is intended for internal operator use. Recoveries are ordered by start time, and the most recent are returned first by default. To retrieve further pages, pass the start time and identifier of the last recovery of a page as `search_after_started_at` and `search_after_recovery_id`.
+    */
+  async listRecoveries (this: That, params?: T.DataRecoveryListRecoveriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DataRecoveryListRecoveriesResponse>
+  async listRecoveries (this: That, params?: T.DataRecoveryListRecoveriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DataRecoveryListRecoveriesResponse, unknown>>
+  async listRecoveries (this: That, params?: T.DataRecoveryListRecoveriesRequest, options?: TransportRequestOptions): Promise<T.DataRecoveryListRecoveriesResponse>
+  async listRecoveries (this: That, params?: T.DataRecoveryListRecoveriesRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath
+    } = this[kAcceptedParams]['data_recovery.list_recoveries']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_data_recovery/recoveries'
+    const meta: TransportRequestMetadata = {
+      name: 'data_recovery.list_recoveries',
+      acceptedParams: {
+        path: [],
+        body: [],
+        query: ['size', 'started_at_gte', 'started_at_lt', 'order', 'search_after_started_at', 'search_after_recovery_id', 'status']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Start a recovery. Start recovering indices and data streams from a recovery point. This API is intended for internal operator use. Depending on the mode, the sources are either replaced with their state at the recovery point, over the data that currently exists, or recovered under new names. The recovery runs in the background, so the API returns with a `202 Accepted` status once it has started.
+    */
+  async startRecovery (this: That, params: T.DataRecoveryStartRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DataRecoveryStartRecoveryResponse>
+  async startRecovery (this: That, params: T.DataRecoveryStartRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DataRecoveryStartRecoveryResponse, unknown>>
+  async startRecovery (this: That, params: T.DataRecoveryStartRecoveryRequest, options?: TransportRequestOptions): Promise<T.DataRecoveryStartRecoveryResponse>
+  async startRecovery (this: That, params: T.DataRecoveryStartRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['data_recovery.start_recovery']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_data_recovery/recoveries'
+    const meta: TransportRequestMetadata = {
+      name: 'data_recovery.start_recovery',
+      acceptedParams: {
+        path: [],
+        body: ['recovery_point_end_time', 'sources', 'mode', 'rename_strategy', 'metadata'],
+        query: ['master_timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
