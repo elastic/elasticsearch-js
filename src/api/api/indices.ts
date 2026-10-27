@@ -1260,7 +1260,7 @@ export default class Indices {
   }
 
   /**
-    * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
+    * Get field mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices. This API is useful if you don't need a complete mapping or if an index mapping contains a large number of fields.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-field-mapping.html | Elasticsearch API documentation}
     */
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
@@ -2597,7 +2597,7 @@ export default class Indices {
   }
 
   /**
-    * Create or update an alias. Adds a data stream or index to an alias.
+    * Update aliases and delete indices atomically. Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-update-aliases | Elasticsearch API documentation}
     */
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
