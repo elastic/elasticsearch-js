@@ -137,7 +137,7 @@ export default class SearchableSnapshots {
   }
 
   /**
-    * Clear the cache. Clear indices and data streams from the shared cache for partially mounted indices.
+    * Clear the searchable snapshots shared cache. Clear indices and data streams from the shared cache for partially mounted indices.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-clear-cache | Elasticsearch API documentation}
     */
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsClearCacheResponse>

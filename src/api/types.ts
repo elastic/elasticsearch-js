@@ -19244,20 +19244,87 @@ export interface DanglingIndicesListDanglingIndicesResponse {
   dangling_indices: DanglingIndicesListDanglingIndicesDanglingIndex[]
 }
 
-export interface DataRecoveryGetRecoveryPointsRecoveryPoint {
+export interface DataRecoveryPoint {
   /** The time when creation of the recovery point started. */
   start_time: DateTime
   /** The time when creation of the recovery point completed. */
   end_time: DateTime
 }
 
+export interface DataRecoveryRecovery {
+  /** The identifier of the recovery. */
+  recovery_id: string
+  /** The status of the recovery. */
+  status: DataRecoveryRecoveryRunStatus
+  /** The recovery point that the sources are recovered from. */
+  recovery_point: DataRecoveryPoint
+  /** Whether the sources are recovered in place (`replace`) or under new names (`rename`). */
+  destination_mode: DataRecoveryStartRecoveryRecoveryMode
+  /** The sources that the requested source expressions resolved to, with the destinations that they are recovered to. */
+  sources: DataRecoveryResolvedRecoverySource[]
+  /** The custom metadata that was provided when the recovery was started. */
+  metadata: Metadata
+  /** The time when the recovery started. */
+  started_at: DateTime
+  /** The time when the recovery finished. It is omitted while the recovery is running. */
+  completed_at?: DateTime
+  /** The progress of the recovery. */
+  progress: DataRecoveryRecoveryProgress
+  /** The sources that could not be recovered.
+    * The list is capped, so it can be shorter than `total_failure_count`. */
+  failures: DataRecoveryRecoveryFailure[]
+  /** The total number of sources that could not be recovered, including any that are not listed in `failures`. */
+  total_failure_count: integer
+}
+
+export interface DataRecoveryRecoveryFailure {
+  /** The name of the source that could not be recovered. */
+  source: string
+  /** A stable, machine-readable code for the reason that the source could not be recovered. */
+  reason: string
+  /** Human-readable detail about the failure, which can be truncated. */
+  detail?: string
+}
+
+export interface DataRecoveryRecoveryProgress {
+  /** The estimated percentage of the recovery that has completed, from `0` to `100`.
+    * It is omitted when the progress cannot currently be determined, for example before the recovery starts moving data.
+    * It is `100` once the recovery has completed. */
+  percent_complete?: integer
+}
+
+export type DataRecoveryRecoveryRunStatus = 'running' | 'completed' | 'failed'
+
+export interface DataRecoveryResolvedRecoverySource {
+  /** The name of the index or data stream in the recovery point. */
+  source: string
+  /** The type of the source. */
+  type: DataRecoverySourceType
+  /** The name of the index or data stream that the source is recovered to. */
+  destination: string
+}
+
+export type DataRecoverySourceType = 'index' | 'data_stream'
+
+export interface DataRecoveryGetRecoveryRequest extends RequestBase {
+  /** The identifier of the recovery, as returned when the recovery was started. */
+  recovery_id: Id
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { recovery_id?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { recovery_id?: never }
+}
+
+export type DataRecoveryGetRecoveryResponse = DataRecoveryRecovery
+
 export interface DataRecoveryGetRecoveryPointsRequest extends RequestBase {
   /** Return only recovery points whose end time is earlier than this value.
     * The boundary is exclusive and can be set to the last recovery point's
     * end time to retrieve the next page. */
   end_time_before?: DateTime
-  /** The period to wait for a connection to the master node.
-    * If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for the master node.
+    * If the master node is not available before the timeout expires, the request fails and returns an error.
+    * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
   /** The maximum number of recovery points to return. The value must be between 1 and 1000. */
   size?: integer
@@ -19269,7 +19336,7 @@ export interface DataRecoveryGetRecoveryPointsRequest extends RequestBase {
 
 export interface DataRecoveryGetRecoveryPointsResponse {
   /** Recovery points in descending order by end time. */
-  recovery_points: DataRecoveryGetRecoveryPointsRecoveryPoint[]
+  recovery_points: DataRecoveryPoint[]
 }
 
 export interface DataRecoveryGetRecoverySourcesRecoverySource {
@@ -19279,18 +19346,17 @@ export interface DataRecoveryGetRecoverySourcesRecoverySource {
   /** The name of the index or data stream. */
   name: string
   /** The type of logical source. */
-  type: DataRecoveryGetRecoverySourcesRecoverySourceType
+  type: DataRecoverySourceType
 }
-
-export type DataRecoveryGetRecoverySourcesRecoverySourceType = 'index' | 'data_stream'
 
 export interface DataRecoveryGetRecoverySourcesRequest extends RequestBase {
   /** A comma-separated list of source expressions to match. Wildcards and exclusions prefixed with `-` are supported. */
   expression: string | string[]
   /** If `true`, include logical sources that were not completely captured in the recovery point. */
   include_incomplete_sources?: boolean
-  /** The period to wait for a connection to the master node.
-    * If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for the master node.
+    * If the master node is not available before the timeout expires, the request fails and returns an error.
+    * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
   /** The exact end time of the recovery point. */
   recovery_point_end_time: DateTime
@@ -19306,7 +19372,7 @@ export interface DataRecoveryGetRecoverySourcesResponse {
   /** Whether more matching sources are available than were returned. */
   has_more: boolean
   /** The selected recovery point. */
-  recovery_point: DataRecoveryGetRecoveryPointsRecoveryPoint
+  recovery_point: DataRecoveryPoint
   /** Matching logical recovery sources ordered by name. */
   sources: DataRecoveryGetRecoverySourcesRecoverySource[]
 }
@@ -19320,8 +19386,9 @@ export interface DataRecoveryGetRpoSeriesRequest extends RequestBase {
   end?: DateTime
   /** The duration of each bucket. It must be greater than zero, and the range must divide into at most 1,000 buckets. */
   bucket_duration?: Duration
-  /** The period to wait for a connection to the master node.
-    * If no response is received before the timeout expires, the request fails and returns an error. */
+  /** The period to wait for the master node.
+    * If the master node is not available before the timeout expires, the request fails and returns an error.
+    * To indicate that the request should never timeout, set it to `-1`. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { start?: never, end?: never, bucket_duration?: never, master_timeout?: never }
@@ -19350,6 +19417,80 @@ export interface DataRecoveryGetRpoSeriesRpoBucket {
   /** The greatest age, in milliseconds, that the newest recoverable state reached during the bucket.
     * It is `null` if no retained recovery point covers the start of the bucket or the bucket starts in the future. */
   max_recovery_point_age_millis: long | null
+}
+
+export interface DataRecoveryListRecoveriesRequest extends RequestBase {
+  /** The maximum number of recoveries to return. The value must be between 1 and 1000. */
+  size?: integer
+  /** Return only recoveries that started at or after this time, as an ISO-8601 timestamp. */
+  started_at_gte?: DateTime
+  /** Return only recoveries that started before this time, as an ISO-8601 timestamp. It must not be earlier than `started_at_gte`. */
+  started_at_lt?: DateTime
+  /** The order of the recoveries by start time. */
+  order?: SortOrder
+  /** Return only recoveries after this start time in the sort order, to retrieve the next page.
+    * It must be provided together with `search_after_recovery_id`. */
+  search_after_started_at?: DateTime
+  /** Return only recoveries after this identifier in the sort order for recoveries with the same start time, to retrieve the next page.
+    * It must be provided together with `search_after_started_at`. */
+  search_after_recovery_id?: Id
+  /** A comma-separated list of statuses. Return only recoveries with one of these statuses. By default, recoveries with any status are returned. */
+  status?: DataRecoveryRecoveryRunStatus | DataRecoveryRecoveryRunStatus[]
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { size?: never, started_at_gte?: never, started_at_lt?: never, order?: never, search_after_started_at?: never, search_after_recovery_id?: never, status?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { size?: never, started_at_gte?: never, started_at_lt?: never, order?: never, search_after_started_at?: never, search_after_recovery_id?: never, status?: never }
+}
+
+export interface DataRecoveryListRecoveriesResponse {
+  /** The recoveries, in the requested order. */
+  recoveries: DataRecoveryRecovery[]
+  /** Whether there are more recoveries after the last one in this page. */
+  has_more: boolean
+}
+
+export type DataRecoveryStartRecoveryRecoveryMode = 'replace' | 'rename'
+
+export interface DataRecoveryStartRecoveryRenameStrategy {
+  /** Text to add at the start of the name of each recovered source.
+    * At least one of `prefix` and `suffix` must be set to a non-empty value, and both can be set together. */
+  prefix?: string
+  /** Text to add at the end of the name of each recovered source.
+    * At least one of `prefix` and `suffix` must be set to a non-empty value, and both can be set together. */
+  suffix?: string
+}
+
+export interface DataRecoveryStartRecoveryRequest extends RequestBase {
+  /** The period to wait for the master node.
+    * If the master node is not available before the timeout expires, the request fails and returns an error.
+    * To indicate that the request should never timeout, set it to `-1`. */
+  master_timeout?: Duration
+  /** The exact end time of the recovery point to recover from, as a date or epoch milliseconds.
+    * An `end_time` returned when listing recovery points can be passed back as it is. */
+  recovery_point_end_time: DateTime
+  /** The sources to recover. Each value is an index or data stream expression. Wildcards and exclusions prefixed with `-` are supported.
+    * The list must not be empty and must not contain blank values. */
+  sources: string[]
+  /** How to recover the sources: `replace` recovers them in place, over the data that currently exists, and `rename` recovers them under new names. */
+  mode: DataRecoveryStartRecoveryRecoveryMode
+  /** How to derive the new name of each recovered source from its name.
+    * Required when `mode` is `rename`, and not allowed when `mode` is `replace`. */
+  rename_strategy?: DataRecoveryStartRecoveryRenameStrategy
+  /** Custom metadata for the recovery. */
+  metadata?: Metadata
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { master_timeout?: never, recovery_point_end_time?: never, sources?: never, mode?: never, rename_strategy?: never, metadata?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { master_timeout?: never, recovery_point_end_time?: never, sources?: never, mode?: never, rename_strategy?: never, metadata?: never }
+}
+
+export interface DataRecoveryStartRecoveryResponse {
+  /** The identifier of the recovery that was started. */
+  recovery_id: string
+  /** The recovery point that the sources are recovered from. */
+  recovery_point: DataRecoveryPoint
+  /** The sources that the requested source expressions resolved to, with the destinations that they are recovered to. */
+  resolved_sources: DataRecoveryResolvedRecoverySource[]
 }
 
 export interface EncryptionResetRequest extends RequestBase {
@@ -22554,6 +22695,8 @@ export interface IndicesExplainDataLifecycleDataStreamLifecycleExplain {
   lifecycle?: IndicesDataStreamLifecycleWithRollover
   generation_time?: Duration
   error?: string
+  frozen_transition_status?: string
+  unmanaged_reason?: string
 }
 
 export interface IndicesExplainDataLifecycleRequest extends RequestBase {
