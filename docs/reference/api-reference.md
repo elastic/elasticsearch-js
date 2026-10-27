@@ -2391,7 +2391,7 @@ This value should be used to limit the impact of the search on the cluster in or
 - **`q` (Optional, string)**: Query in the Lucene query string syntax
 
 ## client.cat.aliases [_cat.aliases]
-Get aliases.
+Get a compact list of aliases.
 
 Get the cluster's index aliases, including filter and routing information.
 This API does not return data stream aliases.
@@ -2473,7 +2473,7 @@ node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.componentTemplates [_cat.component_templates]
-Get component templates.
+Get a compact list of component templates.
 
 Get information about component templates in a cluster.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
@@ -2564,7 +2564,7 @@ Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 
 ## client.cat.health [_cat.health]
-Get the cluster health status.
+Get a compact cluster health summary.
 
 IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
 They are not intended for use by applications. For application consumption, use the cluster health API.
@@ -2604,7 +2604,7 @@ client.cat.help()
 
 
 ## client.cat.indices [_cat.indices]
-Get index information.
+Get a compact list of indices.
 
 Get high-level information about indices in a cluster, including backing indices for data streams.
 
@@ -2818,7 +2818,7 @@ node will send requests for further information to each selected node.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.nodes [_cat.nodes]
-Get node information.
+Get a compact list of nodes.
 
 Get information about the nodes in a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
@@ -2920,7 +2920,7 @@ Sorting defaults to ascending and can be changed by setting `:asc`
 or `:desc` as a suffix to the column name.
 
 ## client.cat.repositories [_cat.repositories]
-Get snapshot repository information.
+Get a compact list of snapshot repositories.
 
 Get a list of snapshot repositories for a cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the get snapshot repository API.
@@ -3015,7 +3015,7 @@ or `:desc` as a suffix to the column name.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: The period to wait for a connection to the master node.
 
 ## client.cat.snapshots [_cat.snapshots]
-Get snapshot information.
+Get a compact list of snapshots.
 
 Get information about the snapshots stored in one or more repositories.
 A snapshot is a backup of an index or running Elasticsearch cluster.
@@ -3043,7 +3043,7 @@ or `:desc` as a suffix to the column name.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 
 ## client.cat.tasks [_cat.tasks]
-Get task information.
+Get a compact list of running tasks.
 
 Get information about tasks currently running in the cluster.
 IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
@@ -3671,7 +3671,7 @@ A green status is better than yellow and yellow is better than red.
 By default, the request does not wait for a particular status.
 
 ## client.cluster.info [_cluster.info]
-Get cluster info.
+Get cluster subsystem info.
 
 Returns basic information about the cluster.
 
@@ -6759,7 +6759,7 @@ received before the timeout expires, the request fails and returns an
 error.
 
 ## client.indices.getFieldMapping [_indices.get_field_mapping]
-Get mapping definitions.
+Get field mapping definitions.
 
 Retrieves mapping definitions for one or more fields.
 For data streams, the API retrieves field mappings for the stream’s backing indices.
@@ -8180,7 +8180,7 @@ such as `open,hidden`.
 - **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, indices, or shards level.
 
 ## client.indices.updateAliases [_indices.update_aliases]
-Create or update an alias.
+Update aliases and delete indices atomically.
 
 Adds a data stream or index to an alias.
 
@@ -12633,7 +12633,7 @@ client.searchableSnapshots.cacheStats({ ... })
 - **`node_id` (Optional, string \| string[])**: The names of the nodes in the cluster to target.
 
 ## client.searchableSnapshots.clearCache [_searchable_snapshots.clear_cache]
-Clear the cache.
+Clear the searchable snapshots shared cache.
 
 Clear indices and data streams from the shared cache for partially mounted indices.
 
