@@ -6,7 +6,7 @@ on:
 jobs:
   auto-pr:
     if: startsWith(github.event.label.name, 'auto-pr')
-    uses: elastic/clients-team-automations/.github/workflows/auto-pr.yml@main
+    uses: elastic/clients-team-automations/.github/workflows/auto-pr.yml@e1f9f004bf69bc295529417b002270216be143e9 # main
     with:
       issue_number: ${{ github.event.issue.number }}
       search_directory: src
