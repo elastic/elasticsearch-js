@@ -129,6 +129,7 @@ export interface BulkHelperOptions<TDocument = unknown> extends T.BulkRequest {
   datasource: TDocument[] | Buffer | Readable | AsyncIterator<TDocument>
   onDocument: (doc: TDocument) => Action
   flushBytes?: number
+  maxRequestBytes?: number
   flushInterval?: number
   concurrency?: number
   retries?: number
@@ -592,6 +593,7 @@ export default class Helpers {
       datasource,
       onDocument,
       flushBytes = 5000000,
+      maxRequestBytes,
       flushInterval = 30000,
       concurrency = 5,
       retries = this[kMaxRetries],
@@ -687,6 +689,7 @@ export default class Helpers {
             payloadBody = typeof payload === 'string'
               ? payload
               : serializer.serialize(payload)
+            await flushBeforeMaxRequestBytes(actionBody, payloadBody)
             chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
             bulkBody.push(actionBody, payloadBody)
           } else if (operation === 'update') {
@@ -694,10 +697,12 @@ export default class Helpers {
             payloadBody = typeof chunk === 'string'
               ? `{"doc":${chunk}}`
               : serializer.serialize({ doc: chunk, ...payload })
+            await flushBeforeMaxRequestBytes(actionBody, payloadBody)
             chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
             bulkBody.push(actionBody, payloadBody)
           } else if (operation === 'delete') {
             actionBody = serializer.serialize(action)
+            await flushBeforeMaxRequestBytes(actionBody)
             chunkBytes += Buffer.byteLength(actionBody)
             bulkBody.push(actionBody)
           } else {
@@ -705,14 +710,7 @@ export default class Helpers {
             throw new ConfigurationError(`Bulk helper invalid action: '${operation}'`)
           }
 
-          if (chunkBytes >= flushBytes) {
-            stats.bytes += chunkBytes
-            const bulkBodyCopy = bulkBody.slice()
-            bulkBody.length = 0
-            chunkBytes = 0
-            const send = await semaphore()
-            send(bulkBodyCopy)
-          }
+          if (chunkBytes >= flushBytes) await flush()
         }
       } catch (err) {
         // when we destroy a stream datasource to abort, the for-await loop
@@ -724,11 +722,7 @@ export default class Helpers {
       clearTimeout(timeoutRef)
       // In some cases the previous http call has not finished,
       // or we didn't reach the flush bytes threshold, so we force one last operation.
-      if (!shouldAbort && chunkBytes > 0) {
-        const send = await semaphore()
-        stats.bytes += chunkBytes
-        send(bulkBody)
-      }
+      if (!shouldAbort && chunkBytes > 0) await flush()
 
       await finish()
 
@@ -745,15 +739,31 @@ export default class Helpers {
 
       return stats
 
-      async function onFlushTimeout (): Promise<void> {
-        if (chunkBytes === 0) return
+      async function flush (): Promise<void> {
         stats.bytes += chunkBytes
         const bulkBodyCopy = bulkBody.slice()
         bulkBody.length = 0
         chunkBytes = 0
+        const send = await semaphore()
+        send(bulkBodyCopy)
+      }
+
+      // Sends the buffer first if appending the given NDJSON lines (each followed
+      // by a newline) would exceed maxRequestBytes. An operation larger than the
+      // limit is not split and goes out alone.
+      async function flushBeforeMaxRequestBytes (...lines: string[]): Promise<void> {
+        if (maxRequestBytes == null || bulkBody.length === 0) return
+        const operationBytes = lines.reduce((bytes, line) => bytes + Buffer.byteLength(line) + 1, 0)
+        if (chunkBytes + bulkBody.length + operationBytes <= maxRequestBytes) return
+        await flush()
+        // the flush may have waited for a free slot while the timer fired on an empty buffer
+        timeoutRef.refresh()
+      }
+
+      async function onFlushTimeout (): Promise<void> {
+        if (chunkBytes === 0) return
         try {
-          const send = await semaphore()
-          send(bulkBodyCopy)
+          await flush()
         } catch (err: any) {
           /* istanbul ignore next */
           helper.abort()
