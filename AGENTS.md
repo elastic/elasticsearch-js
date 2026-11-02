@@ -36,6 +36,7 @@ Node.js 22+. Do not edit `src/api/`; it is generated from `elastic/elasticsearch
 
 1. Make changes to `src/**/*.ts` files
 2. Run `npm test` (which will also rebuild all code changes first) to verify all tests pass
+3. While iterating, prefer the fast narrow checks (`npm run test:unit`, `npm run lint`) over a full `npm test`/build; run the full suite once before committing. Capture long test output to `/tmp` and `rg` for failures.
 
 ## OS Compatibility
 
