@@ -9,4 +9,4 @@ permissions:
   id-token: write
 jobs:
   cleanup:
-    uses: elastic/docs-actions/.github/workflows/docs-preview-cleanup.yml@e1608f9d7c62bc4c59ab21fc691809351b1a31aa # v1
+    uses: elastic/docs-actions/.github/workflows/docs-preview-cleanup.yml@6ce1eb52f61355a4476d7b7e9fb5320feb053372 # v1
