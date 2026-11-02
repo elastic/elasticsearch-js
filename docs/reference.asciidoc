@@ -11573,7 +11573,7 @@ bucket result. If this property has a non-null value, once per day at
 than the latest bucket result are deleted from Elasticsearch. The default
 value is null, which means all results are retained.
 ** *`groups` (Optional, string[])*: A list of job groups. A job can belong to no groups or many.
-** *`detectors` (Optional, { detector_index, description, custom_rules }[])*: An array of detector update objects.
+** *`detectors` (Optional, { detector_index, description, custom_rules } | { detector_index, description, custom_rules }[])*: A detector update object or an array of detector update objects.
 ** *`per_partition_categorization` (Optional, { enabled, stop_on_warn })*: Settings related to how categorization interacts with partition fields.
 
 [discrete]
@@ -16312,7 +16312,7 @@ indexing. The minimum value is 1s and the maximum is 1h.
 These objects define the group by fields and the aggregation to reduce
 the data.
 ** *`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })*: The source of the data for the transform.
-** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })*: Defines optional transform settings.
+** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended, indexer_request_timeout })*: Defines optional transform settings.
 ** *`sync` (Optional, { time })*: Defines the properties transforms require to run continuously.
 ** *`retention_policy` (Optional, { time })*: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
@@ -16370,7 +16370,7 @@ The minimum value is `1s` and the maximum is `1h`.
 and the aggregation to reduce the data.
 ** *`retention_policy` (Optional, { time })*: Defines a retention policy for the transform. Data that meets the defined criteria is deleted from the
 destination index.
-** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })*: Defines optional transform settings.
+** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended, indexer_request_timeout })*: Defines optional transform settings.
 ** *`sync` (Optional, { time })*: Defines the properties transforms require to run continuously.
 ** *`defer_validation` (Optional, boolean)*: When the transform is created, a series of validations occur to ensure its success. For example, there is a
 check for the existence of the source indices and a check that the destination index is not part of the source
@@ -16553,7 +16553,7 @@ the event of transient failures while the transform is searching or
 indexing. The minimum value is 1s and the maximum is 1h.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Defines optional transform metadata.
 ** *`source` (Optional, { index, query, remote, size, slice, sort, _source, runtime_mappings })*: The source of the data for the transform.
-** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended })*: Defines optional transform settings.
+** *`settings` (Optional, { align_checkpoints, dates_as_epoch_millis, deduce_mappings, docs_per_second, max_page_search_size, use_point_in_time, num_failure_retries, unattended, indexer_request_timeout })*: Defines optional transform settings.
 ** *`sync` (Optional, { time })*: Defines the properties transforms require to run continuously.
 ** *`retention_policy` (Optional, { time } | null)*: Defines a retention policy for the transform. Data that meets the defined
 criteria is deleted from the destination index.
