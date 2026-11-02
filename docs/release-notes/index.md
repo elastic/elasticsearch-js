@@ -22,6 +22,10 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 ## 9.6.0 [elasticsearch-javascript-client-9.6.0]
 
+### Features and enhancements [elasticsearch-javascript-client-9.6.0-features-enhancements]
+
+- **Bulk helper `maxRequestBytes` option:** Adds a `maxRequestBytes` option to the bulk helper that caps the size of each bulk request body, including newlines. Buffered operations are sent before adding an operation that would exceed the limit. Unlike `flushBytes`, which is a threshold, this is a ceiling.
+
 ### Fixes [elasticsearch-javascript-client-9.6.0-fixes]
 
 - **Msearch helper accepts empty options:** `helpers.msearch()` can be created without `searches`. Searches are queued afterward with `search()`. Generated `MsearchRequest.searches` is required, so the helper type keeps that field optional.
