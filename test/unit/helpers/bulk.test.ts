@@ -2195,6 +2195,33 @@ test('bulk request size', t => {
       t.same((await run({ maxRequestBytes: null })).sizes, [132])
     })
 
+    t.test('flushInterval still applies after waiting for a free slot', async t => {
+      const sizes: number[] = []
+      const [{ port }, server] = await buildServer((req: http.IncomingMessage, res: http.ServerResponse) => {
+        let body = ''
+        req.on('data', chunk => { body += chunk })
+        req.on('end', () => {
+          sizes.push(Buffer.byteLength(body))
+          setTimeout(() => {
+            res.writeHead(200, { 'content-type': 'application/json' })
+            res.end(JSON.stringify({ errors: false, items: [{}] }))
+          }, 200)
+        })
+      })
+      const client = new Client({ node: `http://localhost:${port}` })
+      const datasource = new Readable({ objectMode: true, read () {} })
+      docs.forEach(doc => datasource.push(doc))
+
+      const bulk = client.helpers.bulk({ datasource, onDocument: indexOp, maxRequestBytes: 50, flushInterval: 50, concurrency: 1 })
+      // the datasource stays open but idle, so only the timer can send the last operation
+      await sleep(700)
+      t.same(sizes, [44, 44, 44])
+
+      datasource.push(null)
+      await bulk
+      server.stop()
+    })
+
     t.end()
   })
 

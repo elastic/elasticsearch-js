@@ -754,7 +754,10 @@ export default class Helpers {
       async function flushBeforeMaxRequestBytes (...lines: string[]): Promise<void> {
         if (maxRequestBytes == null || bulkBody.length === 0) return
         const operationBytes = lines.reduce((bytes, line) => bytes + Buffer.byteLength(line) + 1, 0)
-        if (chunkBytes + bulkBody.length + operationBytes > maxRequestBytes) await flush()
+        if (chunkBytes + bulkBody.length + operationBytes <= maxRequestBytes) return
+        await flush()
+        // the flush may have waited for a free slot while the timer fired on an empty buffer
+        timeoutRef.refresh()
       }
 
       async function onFlushTimeout (): Promise<void> {
