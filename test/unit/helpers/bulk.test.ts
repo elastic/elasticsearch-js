@@ -2110,3 +2110,93 @@ test('finally', async t => {
   t.equal(finallyCalled, true)
   t.end()
 })
+
+test('bulk request size', t => {
+  // operation sizes in a request body, including newlines:
+  // index 44 (27 + 15 + 2), update 63 (38 + 23 + 2), delete 39 (38 + 1)
+  const docs = [{ v: 'aaaaaaa' }, { v: 'bbbbbbb' }, { v: 'ccccccc' }]
+  const indexOp = (): any => ({ index: { _index: 'test' } })
+  const mixedOps = [indexOp(), [{ update: { _index: 'test', _id: '1' } }, {}], { delete: { _index: 'test', _id: '1' } }]
+  const mixedOp = (doc: unknown): any => mixedOps[docs.indexOf(doc as any)]
+
+  interface SizeResult {
+    sizes: number[]
+    bytes: number
+  }
+
+  async function run (options: { flushBytes?: number, maxRequestBytes?: number | null }, onDocument: (doc: unknown) => any = indexOp, datasource = docs): Promise<SizeResult> {
+    const sizes: number[] = []
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        sizes.push(Buffer.byteLength(params.body as string))
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+    const client = new Client({ node: 'http://localhost:9200', Connection: MockConnection })
+    // @ts-expect-error null is not in the type, but plain JS callers can pass it
+    const { bytes } = await client.helpers.bulk({ datasource, onDocument, ...options })
+    return { sizes, bytes }
+  }
+
+  // a ceiling that never binds must not change flushBytes behavior
+  for (const maxRequestBytes of [undefined, Number.MAX_SAFE_INTEGER]) {
+    t.test(`flushBytes with maxRequestBytes: ${maxRequestBytes}`, t => {
+      t.test('flushes once buffered bytes, excluding newlines, reach the threshold', async t => {
+        t.same((await run({ flushBytes: 84, maxRequestBytes })).sizes, [88, 44])
+      })
+
+      t.test('does not flush below the threshold', async t => {
+        t.same((await run({ flushBytes: 85, maxRequestBytes })).sizes, [132])
+      })
+
+      t.test('sends each operation alone with a tiny threshold', async t => {
+        t.same((await run({ flushBytes: 1, maxRequestBytes })).sizes, [44, 44, 44])
+      })
+
+      t.test('counts update and delete operations', async t => {
+        t.same((await run({ flushBytes: 103, maxRequestBytes }, mixedOp)).sizes, [107, 39])
+      })
+
+      t.test('stats.bytes excludes newlines', async t => {
+        t.equal((await run({ flushBytes: 84, maxRequestBytes })).bytes, 126)
+      })
+
+      t.end()
+    })
+  }
+
+  t.test('maxRequestBytes', t => {
+    t.test('allows a request exactly at the limit', async t => {
+      t.same((await run({ maxRequestBytes: 88 })).sizes, [88, 44])
+    })
+
+    t.test('flushes before exceeding the limit', async t => {
+      t.same((await run({ maxRequestBytes: 87 })).sizes, [44, 44, 44])
+    })
+
+    t.test('sends an oversized operation alone', async t => {
+      const datasource = [docs[0], { v: 'x'.repeat(100) }, docs[2]]
+      t.same((await run({ maxRequestBytes: 50 }, indexOp, datasource)).sizes, [44, 137, 44])
+    })
+
+    t.test('applies to update and delete operations', async t => {
+      t.same((await run({ maxRequestBytes: 106 }, mixedOp)).sizes, [44, 102])
+    })
+
+    t.test('flushBytes still flushes below the limit', async t => {
+      t.same((await run({ flushBytes: 1, maxRequestBytes: 88 })).sizes, [44, 44, 44])
+    })
+
+    t.test('does not change stats.bytes', async t => {
+      t.equal((await run({ maxRequestBytes: 87 })).bytes, 126)
+    })
+
+    t.test('null behaves like unset', async t => {
+      t.same((await run({ maxRequestBytes: null })).sizes, [132])
+    })
+
+    t.end()
+  })
+
+  t.end()
+})
