@@ -26,7 +26,8 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   mtermvectors: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'docs',
@@ -42,7 +43,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'preference',
       'realtime',
       'routing',
-      '_slice',
       'term_statistics',
       'version',
       'version_type'
@@ -99,7 +99,10 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
 
   let method = ''
   let path = ''
-  if (params.index != null) {
+  if (params.index != null && params.route_slice != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_mtermvectors`
+  } else if (params.index != null) {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_mtermvectors`
   } else {
@@ -109,12 +112,13 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
   const meta: TransportRequestMetadata = {
     name: 'mtermvectors',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
+      path: ['index', '_slice'],
       body: ['docs', 'ids'],
-      query: ['ids', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', '_slice', 'term_statistics', 'version', 'version_type']
+      query: ['ids', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

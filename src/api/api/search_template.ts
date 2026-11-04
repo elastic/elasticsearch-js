@@ -26,7 +26,8 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   search_template: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'explain',
@@ -103,7 +104,10 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
 
   let method = ''
   let path = ''
-  if (params.index != null) {
+  if (params.index != null && params.route_slice != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_search/template`
+  } else if (params.index != null) {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_search/template`
   } else {
@@ -113,10 +117,11 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
   const meta: TransportRequestMetadata = {
     name: 'search_template',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
+      path: ['index', '_slice'],
       body: ['explain', 'id', 'params', 'profile', 'source', 'project_routing'],
       query: ['allow_no_indices', 'ccs_minimize_roundtrips', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'preference', 'profile', 'routing', 'scroll', 'search_type', 'rest_total_hits_as_int', 'typed_keys']
     }

@@ -26,7 +26,8 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   mget: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'docs',
@@ -38,7 +39,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'realtime',
       'refresh',
       'routing',
-      '_slice',
       '_source',
       '_source_excludes',
       '_source_includes',
@@ -96,7 +96,10 @@ export default async function MgetApi<TDocument = unknown> (this: That, params?:
 
   let method = ''
   let path = ''
-  if (params.index != null) {
+  if (params.index != null && params.route_slice != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_mget`
+  } else if (params.index != null) {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_mget`
   } else {
@@ -106,12 +109,13 @@ export default async function MgetApi<TDocument = unknown> (this: That, params?:
   const meta: TransportRequestMetadata = {
     name: 'mget',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
+      path: ['index', '_slice'],
       body: ['docs', 'ids'],
-      query: ['force_synthetic_source', 'preference', 'realtime', 'refresh', 'routing', '_slice', '_source', '_source_excludes', '_source_includes', 'stored_fields']
+      query: ['force_synthetic_source', 'preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

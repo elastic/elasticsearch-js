@@ -27,7 +27,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   update: {
     path: [
       'id',
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'detect_noop',
@@ -47,7 +48,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'require_alias',
       'retry_on_conflict',
       'routing',
-      '_slice',
       'timeout',
       'wait_for_active_shards',
       '_source',
@@ -103,18 +103,26 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
     }
   }
 
-  const method = 'POST'
-  const path = `/${encodeURIComponent(params.index.toString())}/_update/${encodeURIComponent(params.id.toString())}`
+  let method = ''
+  let path = ''
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = 'POST'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_update/${encodeURIComponent(params.id.toString())}`
+  } else {
+    method = 'POST'
+    path = `/${encodeURIComponent(params.index.toString())}/_update/${encodeURIComponent(params.id.toString())}`
+  }
   const meta: TransportRequestMetadata = {
     name: 'update',
     pathParts: {
       id: params.id,
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['id', 'index'],
+      path: ['id', 'index', '_slice'],
       body: ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', '_source', 'upsert'],
-      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'lang', 'refresh', 'require_alias', 'retry_on_conflict', 'routing', '_slice', 'timeout', 'wait_for_active_shards', '_source', '_source_excludes', '_source_includes']
+      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'lang', 'refresh', 'require_alias', 'retry_on_conflict', 'routing', 'timeout', 'wait_for_active_shards', '_source', '_source_excludes', '_source_includes']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

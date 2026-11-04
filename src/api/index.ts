@@ -50,6 +50,7 @@ import IndicesApi from './api/indices'
 import InferenceApi from './api/inference'
 import infoApi from './api/info'
 import IngestApi from './api/ingest'
+import knnEvalApi from './api/knn_eval'
 import knnSearchApi from './api/knn_search'
 import LicenseApi from './api/license'
 import listReindexApi from './api/list_reindex'
@@ -146,6 +147,7 @@ export default interface API {
   inference: InferenceApi
   info: typeof infoApi
   ingest: IngestApi
+  knnEval: typeof knnEvalApi
   knnSearch: typeof knnSearchApi
   license: LicenseApi
   listReindex: typeof listReindexApi
@@ -363,6 +365,7 @@ API.prototype.getSource = getSourceApi
 API.prototype.healthReport = healthReportApi
 API.prototype.index = indexApi
 API.prototype.info = infoApi
+API.prototype.knnEval = knnEvalApi
 API.prototype.knnSearch = knnSearchApi
 API.prototype.listReindex = listReindexApi
 API.prototype.mget = mgetApi
