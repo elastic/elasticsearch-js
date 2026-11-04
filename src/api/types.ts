@@ -246,6 +246,7 @@ export interface DeleteByQueryRequest extends RequestBase {
   wait_for_completion?: boolean
   max_docs?: long
   query?: QueryDslQueryContainer
+  runtime_mappings?: MappingRuntimeFields
   slice?: SlicedScroll
   sort?: Sort
 }
@@ -4552,6 +4553,7 @@ export interface AggregationsTopMetricsAggregation extends AggregationsMetricAgg
 
 export interface AggregationsTopMetricsValue {
   field: Field
+  missing?: AggregationsMissing
 }
 
 export interface AggregationsTrendChange {
@@ -5775,8 +5777,11 @@ export interface MappingDynamicProperty extends MappingDocValuesPropertyBase {
   on_script_error?: MappingOnScriptError
   ignore_malformed?: boolean
   time_series_metric?: MappingTimeSeriesMetricType
+  time_series_dimension?: boolean
   analyzer?: string
   eager_global_ordinals?: boolean
+  fielddata?: boolean
+  fielddata_frequency_filter?: IndicesFielddataFrequencyFilter
   index?: boolean
   index_options?: MappingIndexOptions
   index_phrases?: boolean
@@ -5785,10 +5790,12 @@ export interface MappingDynamicProperty extends MappingDocValuesPropertyBase {
   position_increment_gap?: integer
   search_analyzer?: string
   search_quote_analyzer?: string
+  similarity?: string | null
   term_vector?: MappingTermVectorOption
   format?: string
   precision_step?: integer
   locale?: string
+  subobjects?: MappingSubobjects
 }
 
 export interface MappingDynamicTemplate {
@@ -11140,7 +11147,7 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
   drop_null_columns?: boolean
 }
 
-export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
+export type EsqlAsyncQueryStopResponse = EsqlAsyncEsqlResult
 
 export type EsqlQueryEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
 
@@ -11468,6 +11475,8 @@ export interface IlmRolloverAction {
 export interface IlmSearchableSnapshotAction {
   snapshot_repository: string
   force_merge_index?: boolean
+  total_shards_per_node?: integer
+  replicate_for?: Duration
 }
 
 export interface IlmSetPriorityAction {
@@ -11842,7 +11851,7 @@ export interface IndicesIndexSettingsKeys {
   merge?: IndicesMerge
   search?: IndicesSettingsSearch
   refresh_interval?: Duration
-  max_result_window?: integer
+  max_result_window?: SpecUtilsStringified<integer>
   max_inner_result_window?: integer
   max_rescore_window?: integer
   max_docvalue_fields_search?: integer
@@ -12150,7 +12159,7 @@ export interface IndicesSoftDeletes {
 export type IndicesSourceMode = 'disabled' | 'stored' | 'synthetic'
 
 export interface IndicesStorage {
-  type: IndicesStorageType
+  type?: IndicesStorageType
   allow_mmap?: boolean
   stats_refresh_interval?: Duration
 }
@@ -20234,6 +20243,8 @@ export interface SecurityGetTokenAuthenticatedUser extends SecurityUser {
   lookup_realm: SecurityGetTokenUserRealm
   authentication_provider?: SecurityGetTokenAuthenticationProvider
   authentication_type: string
+  api_key?: SecurityAuthenticateAuthenticateApiKey
+  token?: SecurityAuthenticateToken
 }
 
 export interface SecurityGetTokenAuthenticationProvider {
@@ -22011,7 +22022,7 @@ export interface TransformSettings {
   use_point_in_time?: boolean
   num_failure_retries?: integer
   unattended?: boolean
-  indexer_request_timeout?: Duration
+  indexer_request_timeout?: Duration | null
 }
 
 export interface TransformSource {
@@ -22269,7 +22280,7 @@ export interface TransformUpdateTransformRequest extends RequestBase {
 export interface TransformUpdateTransformResponse {
   authorization?: MlTransformAuthorization
   create_time: long
-  description: string
+  description?: string
   dest: TransformDestination
   frequency?: Duration
   id: Id
