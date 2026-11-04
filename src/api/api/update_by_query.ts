@@ -26,11 +26,13 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   update_by_query: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'max_docs',
       'query',
+      'runtime_mappings',
       'script',
       'slice',
       'conflicts'
@@ -54,7 +56,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'request_cache',
       'requests_per_second',
       'routing',
-      '_slice',
       'scroll',
       'scroll_size',
       'search_timeout',
@@ -118,17 +119,25 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
     }
   }
 
-  const method = 'POST'
-  const path = `/${encodeURIComponent(params.index.toString())}/_update_by_query`
+  let method = ''
+  let path = ''
+  if (params.index != null && params.route_slice != null) {
+    method = 'POST'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_update_by_query`
+  } else {
+    method = 'POST'
+    path = `/${encodeURIComponent(params.index.toString())}/_update_by_query`
+  }
   const meta: TransportRequestMetadata = {
     name: 'update_by_query',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
-      body: ['max_docs', 'query', 'script', 'slice', 'conflicts'],
-      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'conflicts', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'max_docs', 'pipeline', 'preference', 'q', 'refresh', 'request_cache', 'requests_per_second', 'routing', '_slice', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'slices', 'sort', 'stats', 'terminate_after', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'wait_for_completion']
+      path: ['index', '_slice'],
+      body: ['max_docs', 'query', 'runtime_mappings', 'script', 'slice', 'conflicts'],
+      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'conflicts', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'max_docs', 'pipeline', 'preference', 'q', 'refresh', 'request_cache', 'requests_per_second', 'routing', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'slices', 'sort', 'stats', 'terminate_after', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'wait_for_completion']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -25,7 +25,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   delete: {
     path: [
       'id',
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [],
     query: [
@@ -33,7 +34,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'if_seq_no',
       'refresh',
       'routing',
-      '_slice',
       'timeout',
       'version',
       'version_type',
@@ -76,18 +76,26 @@ export default async function DeleteApi (this: That, params: T.DeleteRequest, op
     }
   }
 
-  const method = 'DELETE'
-  const path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  let method = ''
+  let path = ''
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = 'DELETE'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  } else {
+    method = 'DELETE'
+    path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  }
   const meta: TransportRequestMetadata = {
     name: 'delete',
     pathParts: {
       id: params.id,
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['id', 'index'],
+      path: ['id', 'index', '_slice'],
       body: [],
-      query: ['if_primary_term', 'if_seq_no', 'refresh', 'routing', '_slice', 'timeout', 'version', 'version_type', 'wait_for_active_shards']
+      query: ['if_primary_term', 'if_seq_no', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

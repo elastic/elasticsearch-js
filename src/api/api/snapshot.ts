@@ -192,7 +192,8 @@ export default class Snapshot {
           'indices',
           'partial',
           'rename_pattern',
-          'rename_replacement'
+          'rename_replacement',
+          'restore_over_existing'
         ],
         query: [
           'master_timeout',
@@ -818,7 +819,7 @@ export default class Snapshot {
       },
       acceptedParams: {
         path: ['repository', 'snapshot'],
-        body: ['feature_states', 'ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement'],
+        body: ['feature_states', 'ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement', 'restore_over_existing'],
         query: ['master_timeout', 'wait_for_completion']
       }
     }
