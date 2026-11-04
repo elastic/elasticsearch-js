@@ -25,7 +25,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   exists: {
     path: [
       'id',
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [],
     query: [
@@ -77,16 +78,24 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest, op
     }
   }
 
-  const method = 'HEAD'
-  const path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  let method = ''
+  let path = ''
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = 'HEAD'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  } else {
+    method = 'HEAD'
+    path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  }
   const meta: TransportRequestMetadata = {
     name: 'exists',
     pathParts: {
       id: params.id,
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['id', 'index'],
+      path: ['id', 'index', '_slice'],
       body: [],
       query: ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'version', 'version_type']
     }

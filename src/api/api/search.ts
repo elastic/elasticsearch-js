@@ -26,7 +26,8 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   search: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'aggregations',
@@ -87,7 +88,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'pre_filter_shard_size',
       'request_cache',
       'routing',
-      '_slice',
       'scroll',
       'search_type',
       'stats',
@@ -170,7 +170,10 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
 
   let method = ''
   let path = ''
-  if (params.index != null) {
+  if (params.index != null && params.route_slice != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_search`
+  } else if (params.index != null) {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_search`
   } else {
@@ -180,12 +183,13 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
   const meta: TransportRequestMetadata = {
     name: 'search',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
+      path: ['index', '_slice'],
       body: ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'knn', 'rank', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'retriever', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats', 'project_routing'],
-      query: ['allow_no_indices', 'allow_partial_search_results', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'include_named_queries_score', 'lenient', 'max_concurrent_shard_requests', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', '_slice', 'scroll', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_exclude_vectors', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort', 'force_synthetic_source']
+      query: ['allow_no_indices', 'allow_partial_search_results', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'include_named_queries_score', 'lenient', 'max_concurrent_shard_requests', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_exclude_vectors', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort', 'force_synthetic_source']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

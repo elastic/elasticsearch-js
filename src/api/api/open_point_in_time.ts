@@ -37,6 +37,7 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'ignore_unavailable',
       'preference',
       'routing',
+      '_slice',
       'expand_wildcards',
       'allow_partial_search_results',
       'max_concurrent_shard_requests'
@@ -100,7 +101,7 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
     acceptedParams: {
       path: ['index'],
       body: ['index_filter', 'project_routing'],
-      query: ['keep_alive', 'ignore_unavailable', 'preference', 'routing', 'expand_wildcards', 'allow_partial_search_results', 'max_concurrent_shard_requests']
+      query: ['keep_alive', 'ignore_unavailable', 'preference', 'routing', '_slice', 'expand_wildcards', 'allow_partial_search_results', 'max_concurrent_shard_requests']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

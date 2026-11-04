@@ -27,7 +27,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   termvectors: {
     path: [
       'index',
-      'id'
+      'id',
+      'route_slice'
     ],
     body: [
       'doc',
@@ -52,7 +53,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'preference',
       'realtime',
       'routing',
-      '_slice',
       'term_statistics',
       'version',
       'version_type'
@@ -108,9 +108,15 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
 
   let method = ''
   let path = ''
-  if (params.index != null && params.id != null) {
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_termvectors/${encodeURIComponent(params.id.toString())}`
+  } else if (params.index != null && params.id != null) {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_termvectors/${encodeURIComponent(params.id.toString())}`
+  } else if (params.index != null && params.route_slice != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_termvectors`
   } else {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_termvectors`
@@ -119,12 +125,13 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
     name: 'termvectors',
     pathParts: {
       index: params.index,
-      id: params.id
+      id: params.id,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index', 'id'],
+      path: ['index', 'id', '_slice'],
       body: ['doc', 'filter', 'per_field_analyzer', 'fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'term_statistics', 'routing', 'version', 'version_type'],
-      query: ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', '_slice', 'term_statistics', 'version', 'version_type']
+      query: ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

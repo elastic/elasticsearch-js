@@ -27,7 +27,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   index: {
     path: [
       'id',
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'document'
@@ -40,7 +41,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'pipeline',
       'refresh',
       'routing',
-      '_slice',
       'timeout',
       'version',
       'version_type',
@@ -89,9 +89,15 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
 
   let method = ''
   let path = ''
-  if (params.index != null && params.id != null) {
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = 'PUT'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  } else if (params.index != null && params.id != null) {
     method = 'PUT'
     path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
+  } else if (params.index != null && params.route_slice != null) {
+    method = 'POST'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_doc`
   } else {
     method = 'POST'
     path = `/${encodeURIComponent(params.index.toString())}/_doc`
@@ -100,12 +106,13 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
     name: 'index',
     pathParts: {
       id: params.id,
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['id', 'index'],
+      path: ['id', 'index', '_slice'],
       body: ['document'],
-      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'op_type', 'pipeline', 'refresh', 'routing', '_slice', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
+      query: ['if_primary_term', 'if_seq_no', 'include_source_on_error', 'op_type', 'pipeline', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

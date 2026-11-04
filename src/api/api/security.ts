@@ -333,7 +333,8 @@ export default class Security {
         ],
         body: [],
         query: [
-          'type'
+          'type',
+          'with_profile_uid'
         ]
       },
       'security.get_service_credentials': {
@@ -398,6 +399,8 @@ export default class Security {
           'api_key',
           'grant_type',
           'access_token',
+          'client_authentication',
+          'service_account_token',
           'username',
           'password',
           'run_as'
@@ -579,6 +582,19 @@ export default class Security {
           'search_after'
         ],
         query: []
+      },
+      'security.query_service_accounts': {
+        path: [],
+        body: [
+          'query',
+          'from',
+          'sort',
+          'size',
+          'search_after'
+        ],
+        query: [
+          'with_profile_uid'
+        ]
       },
       'security.query_user': {
         path: [],
@@ -1378,10 +1394,10 @@ export default class Security {
     * Create an API key. Create an API key for access without requiring basic authentication. IMPORTANT: If the credential that is used to authenticate this request is an API key, the derived API key cannot have any privileges. If you specify privileges, the API returns an error. A successful request returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys. The API keys are created by the Elasticsearch API key service, which is automatically enabled. To configure or turn off the API key service, refer to API key service setting documentation.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-api-key | Elasticsearch API documentation}
     */
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateApiKeyResponse, unknown>>
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateApiKeyResponse>
-  async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
+  async createApiKey (this: That, params: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
+  async createApiKey (this: That, params: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateApiKeyResponse, unknown>>
+  async createApiKey (this: That, params: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateApiKeyResponse>
+  async createApiKey (this: That, params: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const {
       path: acceptedPath,
       body: acceptedBody,
@@ -1401,7 +1417,6 @@ export default class Security {
       }
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         body = body ?? {}
@@ -2541,7 +2556,7 @@ export default class Security {
       acceptedParams: {
         path: ['namespace', 'service'],
         body: [],
-        query: ['type']
+        query: ['type', 'with_profile_uid']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -2911,7 +2926,7 @@ export default class Security {
   }
 
   /**
-    * Grant an API key. Create an API key on behalf of another user. This API is similar to the create API keys API, however it creates the API key for a user that is different than the user that runs the API. The caller must have authentication credentials for the user on whose behalf the API key will be created. It is not possible to use this API to create an API key without that user's credentials. The supported user authentication credential types are: * username and password * Elasticsearch access tokens * JWTs The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user. In this case, the API key will be created on behalf of the impersonated user. This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf. The API keys are created by the Elasticsearch API key service, which is automatically enabled. A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys.
+    * Grant an API key. Create an API key on behalf of another user. This API is similar to the create API keys API, however it creates the API key for a user that is different than the user that runs the API. The caller must have authentication credentials for the user on whose behalf the API key will be created. It is not possible to use this API to create an API key without that user's credentials. The supported user authentication credential types are: * username and password * Elasticsearch access tokens * JWTs * service account tokens of user-managed service accounts The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user. In this case, the API key will be created on behalf of the impersonated user. Run as is not supported with the `_user_managed_service_account` grant type. This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf. The API keys are created by the Elasticsearch API key service, which is automatically enabled. A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-grant-api-key | Elasticsearch API documentation}
     */
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGrantApiKeyResponse>
@@ -2962,7 +2977,7 @@ export default class Security {
       name: 'security.grant_api_key',
       acceptedParams: {
         path: [],
-        body: ['api_key', 'grant_type', 'access_token', 'username', 'password', 'run_as'],
+        body: ['api_key', 'grant_type', 'access_token', 'client_authentication', 'service_account_token', 'username', 'password', 'run_as'],
         query: ['refresh']
       }
     }
@@ -3809,6 +3824,65 @@ export default class Security {
         path: [],
         body: ['query', 'from', 'sort', 'size', 'search_after'],
         query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Find user-managed service accounts with a query. Get a paginated list of user-managed service accounts and their information. You can optionally filter the results with a query. NOTE: Built-in service accounts are not stored in the security index, so this API never returns them. Use the get service accounts API to list them.
+    */
+  async queryServiceAccounts (this: That, params?: T.SecurityQueryServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryServiceAccountsResponse>
+  async queryServiceAccounts (this: That, params?: T.SecurityQueryServiceAccountsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryServiceAccountsResponse, unknown>>
+  async queryServiceAccounts (this: That, params?: T.SecurityQueryServiceAccountsRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryServiceAccountsResponse>
+  async queryServiceAccounts (this: That, params?: T.SecurityQueryServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['security.query_service_accounts']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_security/_query/service'
+    const meta: TransportRequestMetadata = {
+      name: 'security.query_service_accounts',
+      acceptedParams: {
+        path: [],
+        body: ['query', 'from', 'sort', 'size', 'search_after'],
+        query: ['with_profile_uid']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
