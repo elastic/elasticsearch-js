@@ -47,7 +47,7 @@ export interface ScrollSearchResponse<TDocument, TAggregations> extends Transpor
   documents: TDocument[]
 }
 
-export interface MsearchHelperOptions extends T.MsearchRequest {
+export interface MsearchHelperOptions extends Omit<T.MsearchRequest, 'searches'> {
   operations?: number
   flushInterval?: number
   concurrency?: number
