@@ -24,6 +24,7 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 ### Fixes [elasticsearch-javascript-client-9.6.0-fixes]
 
+- **Msearch helper accepts empty options:** `helpers.msearch()` can be created without `searches`. Searches are queued afterward with `search()`. Generated `MsearchRequest.searches` is required, so the helper type keeps that field optional.
 - **ES|QL Arrow types no longer break ESM type-checking:** The `apache-arrow` type definitions were removed from the package entrypoint and moved to an opt-in `@elastic/elasticsearch/helpers-arrow` module. Previously, ESM consumers using `nodenext` resolution hit a `TS2307` error even without using the Arrow helpers. See [breaking changes](breaking-changes.md) for details ([#3419](https://github.com/elastic/elasticsearch-js/issues/3419)).
 
 ## 9.5.1 [elasticsearch-javascript-client-9.5.1]
