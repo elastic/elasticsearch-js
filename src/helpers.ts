@@ -26,7 +26,8 @@ export interface ScrollSearchResponse<TDocument, TAggregations> extends Transpor
   documents: TDocument[]
 }
 
-export interface MsearchHelperOptions extends T.MsearchRequest {
+export interface MsearchHelperOptions extends Omit<T.MsearchRequest, 'searches'> {
+  searches?: T.MsearchRequest['searches']
   operations?: number
   flushInterval?: number
   concurrency?: number
@@ -515,7 +516,7 @@ export default class Helpers {
       // This function never returns an error, if the msearch operation fails,
       // the error is dispatched to all search executors.
       function tryMsearch (msearchBody: Array<T.MsearchMultisearchHeader | T.SearchSearchRequestBody>, callbacks: any[], done: (msearchBody: Array<T.MsearchMultisearchHeader | T.SearchSearchRequestBody>, callbacks: any[]) => void): void {
-        client.msearch(Object.assign({}, msearchOptions, { body: msearchBody }), reqOptions as TransportRequestOptionsWithMeta)
+        client.msearch(Object.assign({ searches: msearchBody }, msearchOptions, { body: msearchBody }), reqOptions as TransportRequestOptionsWithMeta)
           .then(results => {
             const retryBody = []
             const retryCallbacks = []
