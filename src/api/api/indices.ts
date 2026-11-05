@@ -823,7 +823,9 @@ export default class Indices {
         query: [
           'allow_no_indices',
           'expand_wildcards',
-          'ignore_unavailable'
+          'ignore_unavailable',
+          'include_auto_calibration',
+          'vector_formats'
         ]
       },
       'indices.shard_stores': {
@@ -4438,7 +4440,7 @@ export default class Indices {
       acceptedParams: {
         path: ['index'],
         body: [],
-        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable']
+        query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'include_auto_calibration', 'vector_formats']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -4816,7 +4818,7 @@ export default class Indices {
   }
 
   /**
-    * Update aliases and delete indices atomically. Adds a data stream or index to an alias.
+    * Update aliases and delete indices atomically. Applies one or more actions in a single request: - Add a data stream or index to an alias. - Remove a data stream or index from an alias. - Delete an index in that same request, so the deletion and the alias changes are applied together. For example, you can replace an index with an alias of the same name. NOTE: Every `remove_index` action in the request runs first, before any `add` or `remove` actions, no matter where it sits in the `actions` array.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-update-aliases | Elasticsearch API documentation}
     */
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>

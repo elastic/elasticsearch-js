@@ -54,6 +54,18 @@ export default class Inference {
           'timeout'
         ]
       },
+      'inference.decision': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.delete': {
         path: [
           'task_type',
@@ -69,6 +81,18 @@ export default class Inference {
         path: [],
         body: [],
         query: []
+      },
+      'inference.document_extraction': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'input',
+          'task_settings'
+        ],
+        query: [
+          'timeout'
+        ]
       },
       'inference.embedding': {
         path: [
@@ -698,6 +722,68 @@ export default class Inference {
   }
 
   /**
+    * Perform decision inference on the service. Answer a set of named questions about an input, such as whether a customer is complaining, which team should handle a request, or how angry a customer is. The questions are defined in the task settings of the inference endpoint, and can be replaced for a single request through `task_settings`. > info > Only the `elastic` service currently supports the `decision` task.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    */
+  async decision (this: That, params: T.InferenceDecisionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDecisionResponse>
+  async decision (this: That, params: T.InferenceDecisionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDecisionResponse, unknown>>
+  async decision (this: That, params: T.InferenceDecisionRequest, options?: TransportRequestOptions): Promise<T.InferenceDecisionResponse>
+  async decision (this: That, params: T.InferenceDecisionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.decision']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_inference/decision/${encodeURIComponent(params.inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.decision',
+      pathParts: {
+        inference_id: params.inference_id
+      },
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['input', 'task_settings'],
+        query: ['timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Delete an inference endpoint. This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete | Elasticsearch API documentation}
     */
@@ -798,6 +884,68 @@ export default class Inference {
         path: [],
         body: [],
         query: []
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Perform document extraction inference on the service. Extract the content of documents, such as PDFs or images of documents, into a textual format.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference | Elasticsearch API documentation}
+    */
+  async documentExtraction (this: That, params: T.InferenceDocumentExtractionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDocumentExtractionResponse>
+  async documentExtraction (this: That, params: T.InferenceDocumentExtractionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDocumentExtractionResponse, unknown>>
+  async documentExtraction (this: That, params: T.InferenceDocumentExtractionRequest, options?: TransportRequestOptions): Promise<T.InferenceDocumentExtractionResponse>
+  async documentExtraction (this: That, params: T.InferenceDocumentExtractionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.document_extraction']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: Record<string, any> | string | undefined
+    const userBody = params?.body
+    if (userBody != null) {
+      if (typeof userBody === 'string') {
+        body = userBody
+      } else {
+        body = { ...userBody }
+      }
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_inference/document_extraction/${encodeURIComponent(params.inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.document_extraction',
+      pathParts: {
+        inference_id: params.inference_id
+      },
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['input', 'task_settings'],
+        query: ['timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

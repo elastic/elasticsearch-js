@@ -27,7 +27,8 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   bulk: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'operations'
@@ -38,7 +39,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'pipeline',
       'refresh',
       'routing',
-      '_slice',
       '_source',
       '_source_excludes',
       '_source_includes',
@@ -93,7 +93,10 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
 
   let method = ''
   let path = ''
-  if (params.index != null) {
+  if (params.index != null && params.route_slice != null) {
+    method = 'POST'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_bulk`
+  } else if (params.index != null) {
     method = 'POST'
     path = `/${encodeURIComponent(params.index.toString())}/_bulk`
   } else {
@@ -103,12 +106,13 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
   const meta: TransportRequestMetadata = {
     name: 'bulk',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
+      path: ['index', '_slice'],
       body: ['operations'],
-      query: ['include_source_on_error', 'list_executed_pipelines', 'pipeline', 'refresh', 'routing', '_slice', '_source', '_source_excludes', '_source_includes', 'timeout', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
+      query: ['include_source_on_error', 'list_executed_pipelines', 'pipeline', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'timeout', 'wait_for_active_shards', 'require_alias', 'require_data_stream']
     }
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)

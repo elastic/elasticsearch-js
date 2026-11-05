@@ -89,7 +89,8 @@ export default class Fleet {
       },
       'fleet.search': {
         path: [
-          'index'
+          'index',
+          'route_slice'
         ],
         body: [
           'aggregations',
@@ -485,15 +486,23 @@ export default class Fleet {
       }
     }
 
-    const method = body != null ? 'POST' : 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_fleet/_fleet_search`
+    let method = ''
+    let path = ''
+    if (params.index != null && params.route_slice != null) {
+      method = body != null ? 'POST' : 'GET'
+      path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_fleet/_fleet_search`
+    } else {
+      method = body != null ? 'POST' : 'GET'
+      path = `/${encodeURIComponent(params.index.toString())}/_fleet/_fleet_search`
+    }
     const meta: TransportRequestMetadata = {
       name: 'fleet.search',
       pathParts: {
-        index: params.index
+        index: params.index,
+        route_slice: params.route_slice
       },
       acceptedParams: {
-        path: ['index'],
+        path: ['index', '_slice'],
         body: ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats'],
         query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort', 'wait_for_checkpoints', 'allow_partial_search_results']
       }

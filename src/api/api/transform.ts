@@ -147,7 +147,8 @@ export default class Transform {
         body: [],
         query: [
           'timeout',
-          'from'
+          'from',
+          'initial_delay'
         ]
       },
       'transform.stop_transform': {
@@ -724,7 +725,7 @@ export default class Transform {
       acceptedParams: {
         path: ['transform_id'],
         body: [],
-        query: ['timeout', 'from']
+        query: ['timeout', 'from', 'initial_delay']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

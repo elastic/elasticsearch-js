@@ -26,7 +26,8 @@ const commonQueryParams = ['error_trace', 'filter_path', 'human', 'pretty']
 const acceptedParams: Record<string, { path: string[], body: string[], query: string[] }> = {
   count: {
     path: [
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'query',
@@ -46,7 +47,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'preference',
       'routing',
       'stats',
-      '_slice',
       'terminate_after',
       'q'
     ]
@@ -102,7 +102,10 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
 
   let method = ''
   let path = ''
-  if (params.index != null) {
+  if (params.index != null && params.route_slice != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_count`
+  } else if (params.index != null) {
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_count`
   } else {
@@ -112,12 +115,13 @@ export default async function CountApi (this: That, params?: T.CountRequest, opt
   const meta: TransportRequestMetadata = {
     name: 'count',
     pathParts: {
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['index'],
+      path: ['index', '_slice'],
       body: ['query', 'project_routing'],
-      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'min_score', 'preference', 'routing', 'stats', '_slice', 'terminate_after', 'q']
+      query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'min_score', 'preference', 'routing', 'stats', 'terminate_after', 'q']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

@@ -27,7 +27,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   create: {
     path: [
       'id',
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'document'
@@ -83,16 +84,24 @@ export default async function CreateApi<TDocument = unknown> (this: That, params
     }
   }
 
-  const method = 'PUT'
-  const path = `/${encodeURIComponent(params.index.toString())}/_create/${encodeURIComponent(params.id.toString())}`
+  let method = ''
+  let path = ''
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = 'PUT'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_create/${encodeURIComponent(params.id.toString())}`
+  } else {
+    method = 'PUT'
+    path = `/${encodeURIComponent(params.index.toString())}/_create/${encodeURIComponent(params.id.toString())}`
+  }
   const meta: TransportRequestMetadata = {
     name: 'create',
     pathParts: {
       id: params.id,
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['id', 'index'],
+      path: ['id', 'index', '_slice'],
       body: ['document'],
       query: ['include_source_on_error', 'pipeline', 'refresh', 'require_alias', 'require_data_stream', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards']
     }

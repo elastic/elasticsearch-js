@@ -27,7 +27,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
   explain: {
     path: [
       'id',
-      'index'
+      'index',
+      'route_slice'
     ],
     body: [
       'query'
@@ -40,7 +41,6 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
       'lenient',
       'preference',
       'routing',
-      '_slice',
       '_source',
       '_source_excludes',
       '_source_includes',
@@ -96,18 +96,26 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
     }
   }
 
-  const method = body != null ? 'POST' : 'GET'
-  const path = `/${encodeURIComponent(params.index.toString())}/_explain/${encodeURIComponent(params.id.toString())}`
+  let method = ''
+  let path = ''
+  if (params.index != null && params.route_slice != null && params.id != null) {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.route_slice.toString())}/_explain/${encodeURIComponent(params.id.toString())}`
+  } else {
+    method = body != null ? 'POST' : 'GET'
+    path = `/${encodeURIComponent(params.index.toString())}/_explain/${encodeURIComponent(params.id.toString())}`
+  }
   const meta: TransportRequestMetadata = {
     name: 'explain',
     pathParts: {
       id: params.id,
-      index: params.index
+      index: params.index,
+      route_slice: params.route_slice
     },
     acceptedParams: {
-      path: ['id', 'index'],
+      path: ['id', 'index', '_slice'],
       body: ['query'],
-      query: ['analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'preference', 'routing', '_slice', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'q']
+      query: ['analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'preference', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'q']
     }
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)

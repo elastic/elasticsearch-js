@@ -187,7 +187,9 @@ export default class Esql {
           'query',
           'description'
         ],
-        query: []
+        query: [
+          'validate'
+        ]
       },
       'esql.query': {
         path: [],
@@ -533,8 +535,8 @@ export default class Esql {
   }
 
   /**
-    * Delete an ES|QL view. Deletes a stored ES|QL view.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Delete an ES|QL view. Deletes a stored ES|QL view. Deleting a reserved view fails.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-delete-view | Elasticsearch API documentation}
     */
   async deleteView (this: That, params: T.EsqlDeleteViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlDeleteViewResponse>
   async deleteView (this: That, params: T.EsqlDeleteViewRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlDeleteViewResponse, unknown>>
@@ -749,8 +751,8 @@ export default class Esql {
   }
 
   /**
-    * Get an ES|QL view. Returns a stored ES|QL view.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Get an ES|QL view. Returns one or more stored views. A reserved view includes `reserved` set to `true`.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-view | Elasticsearch API documentation}
     */
   async getView (this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlGetViewResponse>
   async getView (this: That, params?: T.EsqlGetViewRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlGetViewResponse, unknown>>
@@ -979,8 +981,8 @@ export default class Esql {
   }
 
   /**
-    * Create or update an ES|QL view.
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch#TODO | Elasticsearch API documentation}
+    * Create or update an ES|QL view. Stores an ES|QL query that runs whenever the view is referenced. A query that cannot be parsed is rejected. Replacing a reserved view fails.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-view | Elasticsearch API documentation}
     */
   async putView (this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlPutViewResponse>
   async putView (this: That, params: T.EsqlPutViewRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlPutViewResponse, unknown>>
@@ -1034,7 +1036,7 @@ export default class Esql {
       acceptedParams: {
         path: ['name'],
         body: ['query', 'description'],
-        query: []
+        query: ['validate']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
