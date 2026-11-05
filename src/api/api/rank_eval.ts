@@ -30,7 +30,8 @@ const acceptedParams: Record<string, { path: string[], body: string[], query: st
     ],
     body: [
       'requests',
-      'metric'
+      'metric',
+      'templates'
     ],
     query: [
       'allow_no_indices',
@@ -103,7 +104,7 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
     },
     acceptedParams: {
       path: ['index'],
-      body: ['requests', 'metric'],
+      body: ['requests', 'metric', 'templates'],
       query: ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'search_type']
     }
   }
