@@ -107,7 +107,7 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   require_alias?: boolean
   /** If `true`, the request's actions must target a data stream (existing or to be created). */
   require_data_stream?: boolean
-  operations?: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
+  operations: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -430,7 +430,7 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
     * You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
     * The default value of `1` means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
-  document?: TDocument
+  document: TDocument
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, require_alias?: never, require_data_stream?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -583,14 +583,17 @@ export interface DeleteByQueryRequest extends RequestBase {
   max_docs?: long
   /** The documents to delete specified with Query DSL. */
   query?: QueryDslQueryContainer
+  /** One or more runtime fields in the search request.
+    * These fields take precedence over mapped fields with the same name. */
+  runtime_mappings?: MappingRuntimeFields
   /** Slice the request manually using the provided slice ID and total number of slices. */
   slice?: SlicedScroll
   /** A sort object that specifies the order of deleted documents. */
   sort?: Sort
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, runtime_mappings?: never, slice?: never, sort?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, slice?: never, sort?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, conflicts?: never, default_operator?: never, df?: never, expand_wildcards?: never, from?: never, ignore_unavailable?: never, lenient?: never, preference?: never, refresh?: never, request_cache?: never, requests_per_second?: never, routing?: never, _slice?: never, q?: never, scroll?: never, scroll_size?: never, search_timeout?: never, search_type?: never, slices?: never, stats?: never, terminate_after?: never, timeout?: never, version?: never, wait_for_active_shards?: never, wait_for_completion?: never, max_docs?: never, query?: never, runtime_mappings?: never, slice?: never, sort?: never }
 }
 
 export interface DeleteByQueryResponse {
@@ -1231,7 +1234,7 @@ export interface HealthReportIndicators {
   slm?: HealthReportSlmIndicator
   shards_capacity?: HealthReportShardsCapacityIndicator
   file_settings?: HealthReportFileSettingsIndicator
-  project_encryption_key?: HealthReportProjectEncryptionKeyIndicator
+  cluster_state_encryption?: HealthReportProjectEncryptionKeyIndicator
 }
 
 export interface HealthReportMasterIsStableIndicator extends HealthReportBaseIndicator {
@@ -1412,7 +1415,7 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   require_alias?: boolean
   /** If `true`, the request's actions must target a data stream (existing or to be created). */
   require_data_stream?: boolean
-  document?: TDocument
+  document: TDocument
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, _slice?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -1689,7 +1692,7 @@ export interface MsearchRequest extends RequestBase {
   _slice?: string
   /** Specifies whether aggregation and suggester names should be prefixed by their respective types in the response. */
   typed_keys?: boolean
-  searches?: MsearchRequestItem[]
+  searches: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, _slice?: never, typed_keys?: never, searches?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -1727,7 +1730,7 @@ export interface MsearchTemplateRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
   /** If `true`, the response prefixes aggregation and suggester names with their respective types. */
   typed_keys?: boolean
-  search_templates?: MsearchTemplateRequestItem[]
+  search_templates: MsearchTemplateRequestItem[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, project_routing?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -2015,6 +2018,15 @@ export interface RankEvalRankEvalRequestItem {
   params?: Record<string, any>
 }
 
+export interface RankEvalRankEvalTemplate {
+  /** The ID of the template. A rated request refers to it by this ID in its `template_id`. */
+  id: Id
+  /** The search template, either an inline `source` or the `id` of a stored search template.
+    * It must be a `mustache` template (the default `lang`), and it must render to a search request body.
+    * Any `params` set here are ignored: each rated request provides its own `params`, which are used to render the template. */
+  template: Script | ScriptSource
+}
+
 export interface RankEvalRequest extends RequestBase {
   /** A  comma-separated list of data streams, indices, and index aliases used to limit the request.
     * Wildcard (`*`) expressions are supported.
@@ -2039,10 +2051,13 @@ export interface RankEvalRequest extends RequestBase {
   requests: RankEvalRankEvalRequestItem[]
   /** Definition of the evaluation metric to calculate. */
   metric?: RankEvalRankEvalMetric
+  /** Query templates that the rated requests can refer to by their `template_id`.
+    * This way, queries that differ only in their parameters don't have to be repeated in `requests`. */
+  templates?: RankEvalRankEvalTemplate[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, search_type?: never, requests?: never, metric?: never }
+  body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, search_type?: never, requests?: never, metric?: never, templates?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, search_type?: never, requests?: never, metric?: never }
+  querystring?: { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, ignore_unavailable?: never, search_type?: never, requests?: never, metric?: never, templates?: never }
 }
 
 export interface RankEvalResponse {
@@ -7648,6 +7663,9 @@ export interface AggregationsTopMetricsAggregation extends AggregationsMetricAgg
 export interface AggregationsTopMetricsValue {
   /** A field to return as a metric. */
   field: Field
+  /** The value to treat a document as having when it has no value for the field.
+    * By default, a document that is missing any of the metrics or the sort value is ignored. */
+  missing?: AggregationsMissing
 }
 
 export interface AggregationsTrendChange {
@@ -9216,8 +9234,11 @@ export interface MappingDynamicProperty extends MappingDocValuesPropertyBase {
   on_script_error?: MappingOnScriptError
   ignore_malformed?: boolean
   time_series_metric?: MappingTimeSeriesMetricType
+  time_series_dimension?: boolean
   analyzer?: string
   eager_global_ordinals?: boolean
+  fielddata?: boolean
+  fielddata_frequency_filter?: IndicesFielddataFrequencyFilter
   index?: boolean
   index_options?: MappingIndexOptions
   index_phrases?: boolean
@@ -9226,10 +9247,12 @@ export interface MappingDynamicProperty extends MappingDocValuesPropertyBase {
   position_increment_gap?: integer
   search_analyzer?: string
   search_quote_analyzer?: string
+  similarity?: string | null
   term_vector?: MappingTermVectorOption
   format?: string
   precision_step?: integer
   locale?: string
+  subobjects?: MappingSubobjects
 }
 
 interface MappingDynamicTemplateCommonProps {
@@ -11489,7 +11512,7 @@ export interface AutoscalingPutAutoscalingPolicyRequest extends RequestBase {
   master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  policy?: AutoscalingAutoscalingPolicy
+  policy: AutoscalingAutoscalingPolicy
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, policy?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -12922,7 +12945,9 @@ export interface CatIndicesRequest extends CatCatRequestBase {
   /** Comma-separated list of data streams, indices, and aliases used to limit the request.
     * Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`. */
   index?: Indices
-  /** The type of index that wildcard patterns can match. */
+  /** The type of index that wildcard patterns can match.
+    * Note that `closed` also matches non-hidden data streams, so their open backing indices are returned as well.
+    * It does not restrict the response to closed indices only. */
   expand_wildcards?: ExpandWildcards
   /** The health status used to limit returned indices. By default, the response includes indices of any health status. */
   health?: HealthStatus
@@ -19787,7 +19812,7 @@ export interface EsqlAsyncQueryStopRequest extends RequestBase {
   querystring?: { [key: string]: any } & { id?: never, drop_null_columns?: never }
 }
 
-export type EsqlAsyncQueryStopResponse = EsqlEsqlResult
+export type EsqlAsyncQueryStopResponse = EsqlAsyncEsqlResult
 
 export interface EsqlDeleteDataSourceRequest extends RequestBase {
   /** A comma-separated list of data source names to delete. */
@@ -19884,7 +19909,7 @@ export interface EsqlGetQueryResponse {
 
 export interface EsqlGetViewRequest extends RequestBase {
   /** The comma-separated view names to retrieve. */
-  name?: Id
+  name?: Ids
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -20171,7 +20196,7 @@ export interface FleetMsearchRequest extends RequestBase {
     * If false, returns an error with no partial results.
     * Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default. */
   allow_partial_search_results?: boolean
-  searches?: MsearchRequestItem[]
+  searches: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, searches?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -20531,6 +20556,17 @@ export interface IlmRolloverAction {
 export interface IlmSearchableSnapshotAction {
   snapshot_repository: string
   force_merge_index?: boolean
+  /** The maximum number of shards, including primaries and replicas, that can be allocated to any single node for the mounted index.
+    * Must be at least 1.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  total_shards_per_node?: integer
+  /** The period for which the mounted index keeps one replica before the replica is removed.
+    * By default, the index is mounted without replicas.
+    * Must be positive.
+    * Only the first `searchable_snapshot` action in a policy may set this.
+    * It must fit before the next phase starts: for example, if this phase has a `min_age` of 5d and the next phase has 12d, it can be at most 7d.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  replicate_for?: Duration
 }
 
 export interface IlmSetPriorityAction {
@@ -21030,6 +21066,10 @@ export interface IndicesIndexRouting {
 export interface IndicesIndexRoutingAllocation {
   enable?: IndicesIndexRoutingAllocationOptions
   include?: IndicesIndexRoutingAllocationInclude
+  /** Assign the index to a node whose attribute has all of the given values.
+    * Each key is a node attribute: one of the built-in attributes `_name`, `_host_ip`, `_publish_ip`, `_ip`, `_host`, `_id` and `_tier`, or a custom node attribute.
+    * Each value is a comma-separated string or an array of strings, and can use wildcards. */
+  require?: IndicesIndexRoutingAllocationRequire
   initial_recovery?: IndicesIndexRoutingAllocationInitialRecovery
   disk?: IndicesIndexRoutingAllocationDisk
 }
@@ -21048,6 +21088,8 @@ export interface IndicesIndexRoutingAllocationInitialRecovery {
 }
 
 export type IndicesIndexRoutingAllocationOptions = 'all' | 'primaries' | 'new_primaries' | 'none'
+
+export type IndicesIndexRoutingAllocationRequire = Record<string, string | string[]>
 
 export interface IndicesIndexRoutingRebalance {
   enable: IndicesIndexRoutingRebalanceOptions
@@ -21090,7 +21132,7 @@ export interface IndicesIndexSettingsKeys {
   merge?: IndicesMerge
   search?: IndicesSettingsSearch
   refresh_interval?: Duration
-  max_result_window?: integer
+  max_result_window?: SpecUtilsStringified<integer>
   max_inner_result_window?: integer
   max_rescore_window?: integer
   max_docvalue_fields_search?: integer
@@ -21556,7 +21598,7 @@ export interface IndicesSoftDeletes {
 export type IndicesSourceMode = 'disabled' | 'stored' | 'synthetic'
 
 export interface IndicesStorage {
-  type: IndicesStorageType
+  type?: IndicesStorageType
   /** You can restrict the use of the mmapfs and the related hybridfs store type via the setting node.store.allow_mmap.
     * This is a boolean setting indicating whether or not memory-mapping is allowed. The default is to allow it. This
     * setting is useful, for example, if you are in an environment where you can not control the ability to create a lot
@@ -22188,7 +22230,7 @@ export interface IndicesDownsampleRequest extends RequestBase {
   index: IndexName
   /** Name of the index to create. */
   target_index: IndexName
-  config?: IndicesDownsampleConfig
+  config: IndicesDownsampleConfig
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, target_index?: never, config?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -22924,7 +22966,7 @@ export interface IndicesMigrateReindexMigrateReindex {
 export type IndicesMigrateReindexModeEnum = 'upgrade'
 
 export interface IndicesMigrateReindexRequest extends RequestBase {
-  reindex?: IndicesMigrateReindexMigrateReindex
+  reindex: IndicesMigrateReindexMigrateReindex
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { reindex?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -23133,7 +23175,7 @@ export interface IndicesPutDataStreamMappingsRequest extends RequestBase {
   /** The period to wait for a response. If no response is received before the
     *  timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  mappings?: MappingTypeMapping
+  mappings: MappingTypeMapping
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, mappings?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -23214,7 +23256,7 @@ export interface IndicesPutDataStreamSettingsRequest extends RequestBase {
   /** The period to wait for a response. If no response is received before the
     *  timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  settings?: IndicesIndexSettings
+  settings: IndicesIndexSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -23414,7 +23456,7 @@ export interface IndicesPutSettingsRequest extends RequestBase {
   /** Period to wait for a response. If no response is received before the
     *  timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  settings?: IndicesIndexSettings
+  settings: IndicesIndexSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, reopen?: never, timeout?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -24208,6 +24250,8 @@ export type IndicesStatsIndexMetadataState = 'open' | 'close'
 export interface IndicesStatsIndexStats {
   /** Contains statistics about completions across all shards assigned to the node. */
   completion?: CompletionStats
+  /** Contains statistics about the dense vectors in the index. */
+  dense_vector?: ClusterStatsDenseVectorStats
   /** Contains statistics about documents across all primary shards assigned to the node. */
   docs?: DocStats
   /** Contains statistics about the field data cache across all shards assigned to the node. */
@@ -24234,6 +24278,8 @@ export interface IndicesStatsIndexStats {
   search?: SearchStats
   /** Contains statistics about segments across all shards assigned to the node. */
   segments?: SegmentsStats
+  /** Contains statistics about the sparse vectors in the index. */
+  sparse_vector?: ClusterStatsSparseVectorStats
   /** Contains statistics about the size of shards assigned to the node. */
   store?: StoreStats
   /** Contains statistics about transaction log operations for the node. */
@@ -26783,7 +26829,7 @@ export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
   inference_id: Id
   /** Specifies the amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  chat_completion_request?: InferenceRequestChatCompletion
+  chat_completion_request: InferenceRequestChatCompletion
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, chat_completion_request?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -26841,7 +26887,7 @@ export interface InferenceEmbeddingRequest extends RequestBase {
   inference_id: Id
   /** Specifies the amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  embedding?: InferenceRequestEmbedding
+  embedding: InferenceRequestEmbedding
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, embedding?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -26921,7 +26967,7 @@ export interface InferencePutRequest extends RequestBase {
   /** Specifies the amount of time to wait for the inference endpoint to be created.
     * The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types. */
   timeout?: Duration
-  inference_config?: InferenceInferenceEndpoint
+  inference_config: InferenceInferenceEndpoint
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, inference_config?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -27765,7 +27811,7 @@ export interface InferenceUpdateRequest extends RequestBase {
   /** Specifies the amount of time to wait for the inference endpoint to be updated.
     * The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types. */
   timeout?: Duration
-  inference_config?: InferenceInferenceEndpoint
+  inference_config: InferenceInferenceEndpoint
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, timeout?: never, inference_config?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -28368,6 +28414,9 @@ export interface IngestNetworkDirectionProcessor extends IngestProcessorBase {
   ignore_missing?: boolean
 }
 
+export interface IngestNormalizeForStreamProcessor extends IngestProcessorBase {
+}
+
 export interface IngestPipeline {
   /** Description of the ingest pipeline. */
   description?: string
@@ -28523,8 +28572,14 @@ interface IngestProcessorContainerExclusiveProps {
   /** Calculates the network direction given a source IP address, destination IP
     * address, and a list of internal networks. */
   network_direction?: IngestNetworkDirectionProcessor
+  /** Detects whether a document is OpenTelemetry-compliant and, if not, normalizes it so that it can be queried by clients that expect either ECS or OpenTelemetry Semantic Conventions formats.
+    * @remarks This property is not supported on Elastic Cloud Serverless.
+    * @experimental */
+  normalize_for_stream?: IngestNormalizeForStreamProcessor
   /** Executes another pipeline. */
   pipeline?: IngestPipelineProcessor
+  /** Recovers documents that have been stored in a data stream's failure store by restoring them to their original format. */
+  recover_failure_document?: IngestRecoverFailureDocumentProcessor
   /** The Redact processor uses the Grok rules engine to obscure text in the input document matching the given Grok patterns.
     * The processor can be used to obscure Personal Identifying Information (PII) by configuring it to detect known patterns such as email or IP addresses.
     * Text that matches a Grok pattern is replaced with a configurable string such as `<EMAIL>` where an email address is matched or simply replace all matches with the text `<REDACTED>` if preferred. */
@@ -28582,6 +28637,9 @@ interface IngestProcessorContainerExclusiveProps {
 
 export type IngestProcessorContainer = ExactlyOne<IngestProcessorContainerExclusiveProps>
 
+export interface IngestRecoverFailureDocumentProcessor extends IngestProcessorBase {
+}
+
 export interface IngestRedact {
   /** indicates if document has been redacted */
   _is_redacted: boolean
@@ -28631,6 +28689,9 @@ export interface IngestRenameProcessor extends IngestProcessorBase {
   field: Field
   /** If `true` and `field` does not exist, the processor quietly exits without modifying the document. */
   ignore_missing?: boolean
+  /** If `true`, the processor overwrites `target_field` if it already exists.
+    * If `false`, the processor fails when `target_field` already exists. */
+  override?: boolean
   /** The new name of the field.
     * Supports template snippets. */
   target_field: Field
@@ -29003,7 +29064,7 @@ export interface IngestPutIpLocationDatabaseRequest extends RequestBase {
     * If no response is received before the timeout expires, the cluster metadata update still applies but the response indicates that it was not completely acknowledged.
     * A value of `-1` indicates that the request should never time out. */
   timeout?: Duration
-  configuration?: IngestDatabaseConfiguration
+  configuration: IngestDatabaseConfiguration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, configuration?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -29297,7 +29358,7 @@ export interface LogstashPutPipelineRequest extends RequestBase {
   /** An identifier for the pipeline.
     * Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers. */
   id: Id
-  pipeline?: LogstashPipeline
+  pipeline: LogstashPipeline
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, pipeline?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -32774,7 +32835,7 @@ export interface MlPostDataRequest<TData = unknown> extends RequestBase {
   reset_end?: DateTime
   /** Specifies the start of the bucket resetting range. */
   reset_start?: DateTime
-  data?: TData[]
+  data: TData[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { job_id?: never, reset_end?: never, reset_start?: never, data?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -33843,8 +33904,8 @@ export interface MlUpdateJobRequest extends RequestBase {
   results_retention_days?: long
   /** A list of job groups. A job can belong to no groups or many. */
   groups?: string[]
-  /** An array of detector update objects. */
-  detectors?: MlDetectorUpdate[]
+  /** A detector update object or an array of detector update objects. */
+  detectors?: MlDetectorUpdate | MlDetectorUpdate[]
   /** Settings related to how categorization interacts with partition fields. */
   per_partition_categorization?: MlPerPartitionCategorization
   /** All values in `body` will be added to the request body. */
@@ -33966,7 +34027,7 @@ export interface MlValidateRequest extends RequestBase {
 export type MlValidateResponse = AcknowledgedResponseBase
 
 export interface MlValidateDetectorRequest extends RequestBase {
-  detector?: MlDetector
+  detector: MlDetector
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { detector?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -33982,7 +34043,7 @@ export interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = u
   system_api_version: string
   /** Collection interval (e.g., '10s' or '10000ms') of the payload */
   interval: Duration
-  operations?: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
+  operations: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { system_id?: never, system_api_version?: never, interval?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35504,7 +35565,7 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
 }
 
 export interface ProfilingFlamegraphRequest extends RequestBase {
-  conditions?: any
+  conditions: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { conditions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35514,7 +35575,7 @@ export interface ProfilingFlamegraphRequest extends RequestBase {
 export type ProfilingFlamegraphResponse = any
 
 export interface ProfilingStacktracesRequest extends RequestBase {
-  conditions?: any
+  conditions: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { conditions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35545,7 +35606,7 @@ export interface ProfilingStatusResponse {
 }
 
 export interface ProfilingTopnFunctionsRequest extends RequestBase {
-  conditions?: any
+  conditions: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { conditions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35563,7 +35624,7 @@ export interface ProjectProjectRoutingExpression {
 export type ProjectRoutingExpression = string
 
 export interface ProjectCreateManyRoutingRequest extends RequestBase {
-  expressions?: ProjectNamedProjectRoutingExpressions
+  expressions: ProjectNamedProjectRoutingExpressions
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { expressions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -35575,7 +35636,7 @@ export type ProjectCreateManyRoutingResponse = AcknowledgedResponseBase
 export interface ProjectCreateRoutingRequest extends RequestBase {
   /** The name of project routing expression */
   name: string
-  expressions?: ProjectProjectRoutingExpression
+  expressions: ProjectProjectRoutingExpression
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, expressions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -36256,7 +36317,7 @@ export interface SearchApplicationPostBehavioralAnalyticsEventRequest extends Re
   event_type: SearchApplicationEventType
   /** Whether the response type has to include more details */
   debug?: boolean
-  payload?: any
+  payload: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { collection_name?: never, event_type?: never, debug?: never, payload?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -36273,7 +36334,7 @@ export interface SearchApplicationPutRequest extends RequestBase {
   name: Name
   /** If `true`, this request cannot replace or update existing Search Applications. */
   create?: boolean
-  search_application?: SearchApplicationSearchApplicationParameters
+  search_application: SearchApplicationSearchApplicationParameters
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, create?: never, search_application?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -37705,6 +37766,10 @@ export interface SecurityGetTokenAuthenticatedUser extends SecurityUser {
   lookup_realm: SecurityGetTokenUserRealm
   authentication_provider?: SecurityGetTokenAuthenticationProvider
   authentication_type: string
+  /** Present when the authenticated user is an API key. */
+  api_key?: SecurityAuthenticateAuthenticateApiKey
+  /** Present when the authenticated user is a service account, or authenticated with a token. */
+  token?: SecurityAuthenticateToken
 }
 
 export interface SecurityGetTokenAuthenticationProvider {
@@ -38105,7 +38170,7 @@ export interface SecurityPutPrivilegesActions {
 export interface SecurityPutPrivilegesRequest extends RequestBase {
   /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
-  privileges?: Record<string, Record<string, SecurityPutPrivilegesActions>>
+  privileges: Record<string, Record<string, SecurityPutPrivilegesActions>>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { refresh?: never, privileges?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -39279,6 +39344,11 @@ export interface SnapshotAzureRepositorySettings extends SnapshotRepositorySetti
   client?: string
   /** The Azure container. */
   container?: string
+  /** The Azure access tier applied to the data blobs of the repository, which hold the files that make up each snapshotted shard.
+    * Accepted values are `hot`, `cool` and `cold`, in any letter case.
+    * If not set, no access tier is requested and Azure applies the default tier of the storage account.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  data_access_tier?: string
   /** The maxmimum batch size, between 1 and 256, used for `BlobBatch` requests.
     * Defaults to 256 which is the maximum number supported by the Azure blob batch API. */
   delete_objects_max_size?: integer
@@ -39289,6 +39359,12 @@ export interface SnapshotAzureRepositorySettings extends SnapshotRepositorySetti
     * Note that the effective number of concurrent deletes is further limited by the Azure client connection and event loop thread limits.
     * Defaults to 10, minimum is 1, maximum is 100. */
   max_concurrent_batch_deletes?: integer
+  /** The Azure access tier applied to the metadata blobs of the repository.
+    * These are generally smaller than the data blobs but can be read more often, for example to list the repository contents or to take snapshots.
+    * Accepted values are `hot`, `cool` and `cold`, in any letter case.
+    * If not set, no access tier is requested and Azure applies the default tier of the storage account.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  metadata_access_tier?: string
   /** If `true`, the repository is read-only.
     * The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
     *
@@ -39626,6 +39702,11 @@ export interface SnapshotSourceOnlyRepositorySettingsForAzure {
   client?: string
   /** The Azure container. */
   container?: string
+  /** The Azure access tier applied to the data blobs of the repository, which hold the files that make up each snapshotted shard.
+    * Accepted values are `hot`, `cool` and `cold`, in any letter case.
+    * If not set, no access tier is requested and Azure applies the default tier of the storage account.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  data_access_tier?: string
   /** The maxmimum batch size, between 1 and 256, used for `BlobBatch` requests.
     * Defaults to 256 which is the maximum number supported by the Azure blob batch API. */
   delete_objects_max_size?: integer
@@ -39636,6 +39717,12 @@ export interface SnapshotSourceOnlyRepositorySettingsForAzure {
     * Note that the effective number of concurrent deletes is further limited by the Azure client connection and event loop thread limits.
     * Defaults to 10, minimum is 1, maximum is 100. */
   max_concurrent_batch_deletes?: integer
+  /** The Azure access tier applied to the metadata blobs of the repository.
+    * These are generally smaller than the data blobs but can be read more often, for example to list the repository contents or to take snapshots.
+    * Accepted values are `hot`, `cool` and `cold`, in any letter case.
+    * If not set, no access tier is requested and Azure applies the default tier of the storage account.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  metadata_access_tier?: string
   /** If `true`, the repository is read-only.
     * The cluster can retrieve and restore snapshots from the repository but not write to the repository or create snapshots in it.
     *
@@ -39943,7 +40030,7 @@ export interface SnapshotCreateRepositoryRequest extends RequestBase {
     * If `false`, this verification is skipped.
     * You can also perform this verification with the verify snapshot repository API. */
   verify?: boolean
-  repository?: SnapshotRepository
+  repository: SnapshotRepository
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, verify?: never, repository?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -41474,7 +41561,7 @@ export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
     * If the special value `null` is specified the structure finder will not look for a primary timestamp in the text.
     * When the format is semi-structured text this will result in the structure finder treating the text as single-line messages. */
   timestamp_format?: string
-  text_files?: TJsonDocument[]
+  text_files: TJsonDocument[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, should_parse_recursively?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -41634,7 +41721,7 @@ export interface TransformSettings {
     * transform config. As a result, less document updates in the destination index will be performed thus improving
     * overall performance. */
   align_checkpoints?: boolean
-  /** Defines if dates in the ouput should be written as ISO formatted string or as millis since epoch. epoch_millis was
+  /** Defines if dates in the output should be written as ISO formatted string or as millis since epoch. epoch_millis was
     * the default for transforms created before version 7.11. For compatible output set this value to `true`. */
   dates_as_epoch_millis?: boolean
   /** Specifies whether the transform should deduce the destination index mappings from the transform configuration. */
@@ -41663,6 +41750,10 @@ export interface TransformSettings {
     * of an error which means the transform never fails. Setting the number of retries other than infinite fails in
     * validation. */
   unattended?: boolean
+  /** The initial timeout for the requests the transform sends to nodes to retrieve checkpoint information.
+    * Each consecutive failure doubles the timeout, up to a maximum of `12h`. The minimum value is `1ms` and the
+    * maximum is `12h`. Defaults to `30s`. */
+  indexer_request_timeout?: Duration | null
 }
 
 export interface TransformSource {
@@ -42148,7 +42239,7 @@ export interface TransformUpdateTransformRequest extends RequestBase {
 export interface TransformUpdateTransformResponse {
   authorization?: MlTransformAuthorization
   create_time: long
-  description: string
+  description?: string
   dest: TransformDestination
   frequency?: Duration
   id: Id
