@@ -7933,7 +7933,7 @@ export interface AggregationsTopMetricsAggregate extends AggregationsAggregateBa
   top: AggregationsTopMetrics[]
 }
 
-export interface AggregationsTopMetricsAggregation extends AggregationsMetricAggregationBase {
+export interface AggregationsTopMetricsAggregation {
   /** The fields of the top document to return. */
   metrics?: AggregationsTopMetricsValue | AggregationsTopMetricsValue[]
   /** The number of top documents from which to return metrics. */
@@ -18406,6 +18406,21 @@ export interface ClusterStatsClusterSnapshotStats {
   repositories: Record<Name, ClusterStatsPerRepositoryStats>
 }
 
+export type ClusterStatsDenseVectorAutoCalibration = ClusterStatsOsqDenseVectorAutoCalibration
+
+export interface ClusterStatsDenseVectorAutoCalibrationBase extends IndicesSegmentsSegmentAutoCalibrationBase {
+  /** The number of segments that share these parameters. */
+  number_of_segments: integer
+}
+
+export interface ClusterStatsDenseVectorFieldOffHeapStatsKeys {
+  /** The auto-calibration information of the field, aggregated by distinct set of parameters.
+    * Only returned when `include_auto_calibration` is `true`. */
+  auto_calibration?: ClusterStatsDenseVectorAutoCalibration[]
+}
+export type ClusterStatsDenseVectorFieldOffHeapStats = ClusterStatsDenseVectorFieldOffHeapStatsKeys
+& { [property: string]: long | ClusterStatsDenseVectorAutoCalibration[] }
+
 export interface ClusterStatsDenseVectorOffHeapStats {
   total_size_bytes: long
   total_size?: ByteSize
@@ -18421,7 +18436,7 @@ export interface ClusterStatsDenseVectorOffHeapStats {
   total_cenivf_size?: ByteSize
   total_clivf_size_bytes: long
   total_clivf_size?: ByteSize
-  fielddata?: Record<string, Record<string, long>>
+  fielddata?: Record<string, ClusterStatsDenseVectorFieldOffHeapStats>
 }
 
 export interface ClusterStatsDenseVectorStats {
@@ -18535,6 +18550,12 @@ export interface ClusterStatsOperatingSystemMemoryInfo {
   used?: ByteSize
   /** Percentage of physical memory in use across all selected nodes. */
   used_percent: integer
+}
+
+export interface ClusterStatsOsqDenseVectorAutoCalibration extends ClusterStatsDenseVectorAutoCalibrationBase {
+  type: 'osq'
+  /** The calibration parameters. */
+  parameters?: IndicesSegmentsOsqSegmentAutoCalibrationParameters
 }
 
 export interface ClusterStatsPerRepositoryStats {
@@ -25068,6 +25089,9 @@ export interface IndicesStatsRequest extends RequestBase {
   forbid_closed_indices?: boolean
   /** Comma-separated list of search groups to include in the search statistics. */
   groups?: string | string[]
+  /** If `true`, the response includes the auto-calibration information of each `dense_vector` field that supports auto-calibration.
+    * Only applies at the `indices` and `shards` levels. */
+  include_auto_calibration?: boolean
   /** If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). */
   include_segment_file_sizes?: boolean
   /** If true, the response includes information from segments that are not loaded into memory. */
@@ -25075,9 +25099,9 @@ export interface IndicesStatsRequest extends RequestBase {
   /** Indicates whether statistics are aggregated at the cluster, indices, or shards level. */
   level?: Level
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
+  body?: string | { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_auto_calibration?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
+  querystring?: { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_auto_calibration?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
 }
 
 export interface IndicesStatsResponse {
