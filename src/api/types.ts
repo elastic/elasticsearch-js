@@ -100,7 +100,7 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   require_alias?: boolean
   /** If `true`, the request's actions must target a data stream (existing or to be created). */
   require_data_stream?: boolean
-  operations?: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
+  operations: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, include_source_on_error?: never, list_executed_pipelines?: never, pipeline?: never, refresh?: never, routing?: never, _source?: never, _source_excludes?: never, _source_includes?: never, timeout?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -371,7 +371,7 @@ export interface CreateRequest<TDocument = unknown> extends RequestBase {
     * You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
     * The default value of `1` means it waits for each primary shard to be active. */
   wait_for_active_shards?: WaitForActiveShards
-  document?: TDocument
+  document: TDocument
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, index?: never, include_source_on_error?: never, pipeline?: never, refresh?: never, require_alias?: never, require_data_stream?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -1254,7 +1254,7 @@ export interface IndexRequest<TDocument = unknown> extends RequestBase {
   require_alias?: boolean
   /** If `true`, the request's actions must target a data stream (existing or to be created). */
   require_data_stream?: boolean
-  document?: TDocument
+  document: TDocument
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, index?: never, if_primary_term?: never, if_seq_no?: never, include_source_on_error?: never, op_type?: never, pipeline?: never, refresh?: never, routing?: never, timeout?: never, version?: never, version_type?: never, wait_for_active_shards?: never, require_alias?: never, require_data_stream?: never, document?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -1477,7 +1477,7 @@ export interface MsearchRequest extends RequestBase {
   search_type?: SearchType
   /** Specifies whether aggregation and suggester names should be prefixed by their respective types in the response. */
   typed_keys?: boolean
-  searches?: MsearchRequestItem[]
+  searches: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, include_named_queries_score?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, project_routing?: never, rest_total_hits_as_int?: never, routing?: never, search_type?: never, typed_keys?: never, searches?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -1515,7 +1515,7 @@ export interface MsearchTemplateRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
   /** If `true`, the response prefixes aggregation and suggester names with their respective types. */
   typed_keys?: boolean
-  search_templates?: MsearchTemplateRequestItem[]
+  search_templates: MsearchTemplateRequestItem[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, ccs_minimize_roundtrips?: never, max_concurrent_searches?: never, project_routing?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, search_templates?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -10945,7 +10945,7 @@ export interface AutoscalingPutAutoscalingPolicyRequest extends RequestBase {
   master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  policy?: AutoscalingAutoscalingPolicy
+  policy: AutoscalingAutoscalingPolicy
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, policy?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -19307,7 +19307,7 @@ export interface FleetMsearchRequest extends RequestBase {
     * If false, returns an error with no partial results.
     * Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default. */
   allow_partial_search_results?: boolean
-  searches?: MsearchRequestItem[]
+  searches: MsearchRequestItem[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, ccs_minimize_roundtrips?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, max_concurrent_searches?: never, max_concurrent_shard_requests?: never, pre_filter_shard_size?: never, search_type?: never, rest_total_hits_as_int?: never, typed_keys?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, searches?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -21261,7 +21261,7 @@ export interface IndicesDownsampleRequest extends RequestBase {
   index: IndexName
   /** Name of the index to create. */
   target_index: IndexName
-  config?: IndicesDownsampleConfig
+  config: IndicesDownsampleConfig
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, target_index?: never, config?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -22026,7 +22026,7 @@ export interface IndicesMigrateReindexMigrateReindex {
 export type IndicesMigrateReindexModeEnum = 'upgrade'
 
 export interface IndicesMigrateReindexRequest extends RequestBase {
-  reindex?: IndicesMigrateReindexMigrateReindex
+  reindex: IndicesMigrateReindexMigrateReindex
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { reindex?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -22225,7 +22225,7 @@ export interface IndicesPutDataStreamMappingsRequest extends RequestBase {
   /** The period to wait for a response. If no response is received before the
     *  timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  mappings?: MappingTypeMapping
+  mappings: MappingTypeMapping
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, mappings?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -22306,7 +22306,7 @@ export interface IndicesPutDataStreamSettingsRequest extends RequestBase {
   /** The period to wait for a response. If no response is received before the
     *  timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  settings?: IndicesIndexSettings
+  settings: IndicesIndexSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, dry_run?: never, master_timeout?: never, timeout?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -22527,7 +22527,7 @@ export interface IndicesPutSettingsRequest extends RequestBase {
   /** Period to wait for a response. If no response is received before the
     *  timeout expires, the request fails and returns an error. */
   timeout?: Duration
-  settings?: IndicesIndexSettings
+  settings: IndicesIndexSettings
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { index?: never, allow_no_indices?: never, expand_wildcards?: never, flat_settings?: never, ignore_unavailable?: never, master_timeout?: never, preserve_existing?: never, reopen?: never, timeout?: never, settings?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -25354,7 +25354,7 @@ export interface InferenceChatCompletionUnifiedRequest extends RequestBase {
   inference_id: Id
   /** Specifies the amount of time to wait for the inference request to complete. */
   timeout?: Duration
-  chat_completion_request?: InferenceRequestChatCompletion
+  chat_completion_request: InferenceRequestChatCompletion
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, timeout?: never, chat_completion_request?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -25459,7 +25459,7 @@ export interface InferencePutRequest extends RequestBase {
   inference_id: Id
   /** Specifies the amount of time to wait for the inference endpoint to be created. */
   timeout?: Duration
-  inference_config?: InferenceInferenceEndpoint
+  inference_config: InferenceInferenceEndpoint
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { task_type?: never, inference_id?: never, timeout?: never, inference_config?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -26181,7 +26181,7 @@ export interface InferenceUpdateRequest extends RequestBase {
   inference_id: Id
   /** The type of inference task that the model performs. */
   task_type?: InferenceTaskType
-  inference_config?: InferenceInferenceEndpoint
+  inference_config: InferenceInferenceEndpoint
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { inference_id?: never, task_type?: never, inference_config?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -27412,7 +27412,7 @@ export interface IngestPutIpLocationDatabaseRequest extends RequestBase {
     * If no response is received before the timeout expires, the cluster metadata update still applies but the response indicates that it was not completely acknowledged.
     * A value of `-1` indicates that the request should never time out. */
   timeout?: Duration
-  configuration?: IngestDatabaseConfiguration
+  configuration: IngestDatabaseConfiguration
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, master_timeout?: never, timeout?: never, configuration?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -27706,7 +27706,7 @@ export interface LogstashPutPipelineRequest extends RequestBase {
   /** An identifier for the pipeline.
     * Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers. */
   id: Id
-  pipeline?: LogstashPipeline
+  pipeline: LogstashPipeline
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { id?: never, pipeline?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -31175,7 +31175,7 @@ export interface MlPostDataRequest<TData = unknown> extends RequestBase {
   reset_end?: DateTime
   /** Specifies the start of the bucket resetting range. */
   reset_start?: DateTime
-  data?: TData[]
+  data: TData[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { job_id?: never, reset_end?: never, reset_start?: never, data?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -32335,7 +32335,7 @@ export interface MlValidateRequest extends RequestBase {
 export type MlValidateResponse = AcknowledgedResponseBase
 
 export interface MlValidateDetectorRequest extends RequestBase {
-  detector?: MlDetector
+  detector: MlDetector
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { detector?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -32351,7 +32351,7 @@ export interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = u
   system_api_version: string
   /** Collection interval (e.g., '10s' or '10000ms') of the payload */
   interval: Duration
-  operations?: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
+  operations: Array<BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { system_id?: never, system_api_version?: never, interval?: never, operations?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -33728,7 +33728,7 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
 }
 
 export interface ProfilingFlamegraphRequest extends RequestBase {
-  conditions?: any
+  conditions: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { conditions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -33738,7 +33738,7 @@ export interface ProfilingFlamegraphRequest extends RequestBase {
 export type ProfilingFlamegraphResponse = any
 
 export interface ProfilingStacktracesRequest extends RequestBase {
-  conditions?: any
+  conditions: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { conditions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -33769,7 +33769,7 @@ export interface ProfilingStatusResponse {
 }
 
 export interface ProfilingTopnFunctionsRequest extends RequestBase {
-  conditions?: any
+  conditions: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { conditions?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -34415,7 +34415,7 @@ export interface SearchApplicationPostBehavioralAnalyticsEventRequest extends Re
   event_type: SearchApplicationEventType
   /** Whether the response type has to include more details */
   debug?: boolean
-  payload?: any
+  payload: any
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { collection_name?: never, event_type?: never, debug?: never, payload?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -34432,7 +34432,7 @@ export interface SearchApplicationPutRequest extends RequestBase {
   name: Name
   /** If `true`, this request cannot replace or update existing Search Applications. */
   create?: boolean
-  search_application?: SearchApplicationSearchApplicationParameters
+  search_application: SearchApplicationSearchApplicationParameters
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, create?: never, search_application?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -36182,7 +36182,7 @@ export interface SecurityPutPrivilegesActions {
 export interface SecurityPutPrivilegesRequest extends RequestBase {
   /** If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. */
   refresh?: Refresh
-  privileges?: Record<string, Record<string, SecurityPutPrivilegesActions>>
+  privileges: Record<string, Record<string, SecurityPutPrivilegesActions>>
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { refresh?: never, privileges?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -37874,7 +37874,7 @@ export interface SnapshotCreateRepositoryRequest extends RequestBase {
     * If `false`, this verification is skipped.
     * You can also perform this verification with the verify snapshot repository API. */
   verify?: boolean
-  repository?: SnapshotRepository
+  repository: SnapshotRepository
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { name?: never, master_timeout?: never, timeout?: never, verify?: never, repository?: never }
   /** All values in `querystring` will be added to the request querystring. */
@@ -39361,7 +39361,7 @@ export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
     * If the special value `null` is specified the structure finder will not look for a primary timestamp in the text.
     * When the format is semi-structured text this will result in the structure finder treating the text as single-line messages. */
   timestamp_format?: string
-  text_files?: TJsonDocument[]
+  text_files: TJsonDocument[]
   /** All values in `body` will be added to the request body. */
   body?: string | { [key: string]: any } & { charset?: never, column_names?: never, delimiter?: never, ecs_compatibility?: never, explain?: never, format?: never, grok_pattern?: never, has_header_row?: never, line_merge_size_limit?: never, lines_to_sample?: never, quote?: never, should_trim_fields?: never, timeout?: never, timestamp_field?: never, timestamp_format?: never, text_files?: never }
   /** All values in `querystring` will be added to the request querystring. */
