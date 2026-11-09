@@ -8224,6 +8224,8 @@ such as `open,hidden`.
 - **`fields` (Optional, string \| string[])**: List or wildcard expressions of fields to include in the statistics.
 - **`forbid_closed_indices` (Optional, boolean)**: If true, statistics are not collected from closed indices.
 - **`groups` (Optional, string \| string[])**: List of search groups to include in the search statistics.
+- **`include_auto_calibration` (Optional, boolean)**: If `true`, the response includes the auto-calibration information of each `dense_vector` field that supports auto-calibration.
+Only applies at the `indices` and `shards` levels.
 - **`include_segment_file_sizes` (Optional, boolean)**: If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
 - **`include_unloaded_segments` (Optional, boolean)**: If true, the response includes information from segments that are not loaded into memory.
 - **`level` (Optional, Enum("cluster" \| "indices" \| "shards"))**: Indicates whether statistics are aggregated at the cluster, indices, or shards level.
