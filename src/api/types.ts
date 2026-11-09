@@ -23794,6 +23794,8 @@ export type IndicesStatsIndexMetadataState = 'open' | 'close'
 export interface IndicesStatsIndexStats {
   /** Contains statistics about completions across all shards assigned to the node. */
   completion?: CompletionStats
+  /** Contains statistics about the dense vectors in the index. */
+  dense_vector?: ClusterStatsDenseVectorStats
   /** Contains statistics about documents across all primary shards assigned to the node. */
   docs?: DocStats
   /** Contains statistics about the field data cache across all shards assigned to the node. */
@@ -23820,6 +23822,8 @@ export interface IndicesStatsIndexStats {
   search?: SearchStats
   /** Contains statistics about segments across all shards assigned to the node. */
   segments?: SegmentsStats
+  /** Contains statistics about the sparse vectors in the index. */
+  sparse_vector?: ClusterStatsSparseVectorStats
   /** Contains statistics about the size of shards assigned to the node. */
   store?: StoreStats
   /** Contains statistics about transaction log operations for the node. */
@@ -27720,6 +27724,9 @@ export interface IngestNetworkDirectionProcessor extends IngestProcessorBase {
   ignore_missing?: boolean
 }
 
+export interface IngestNormalizeForStreamProcessor extends IngestProcessorBase {
+}
+
 export interface IngestPipeline {
   /** Description of the ingest pipeline. */
   description?: string
@@ -27875,8 +27882,14 @@ interface IngestProcessorContainerExclusiveProps {
   /** Calculates the network direction given a source IP address, destination IP
     * address, and a list of internal networks. */
   network_direction?: IngestNetworkDirectionProcessor
+  /** Detects whether a document is OpenTelemetry-compliant and, if not, normalizes it so that it can be queried by clients that expect either ECS or OpenTelemetry Semantic Conventions formats.
+    * @remarks This property is not supported on Elastic Cloud Serverless.
+    * @experimental */
+  normalize_for_stream?: IngestNormalizeForStreamProcessor
   /** Executes another pipeline. */
   pipeline?: IngestPipelineProcessor
+  /** Recovers documents that have been stored in a data stream's failure store by restoring them to their original format. */
+  recover_failure_document?: IngestRecoverFailureDocumentProcessor
   /** The Redact processor uses the Grok rules engine to obscure text in the input document matching the given Grok patterns.
     * The processor can be used to obscure Personal Identifying Information (PII) by configuring it to detect known patterns such as email or IP addresses.
     * Text that matches a Grok pattern is replaced with a configurable string such as `<EMAIL>` where an email address is matched or simply replace all matches with the text `<REDACTED>` if preferred. */
@@ -27933,6 +27946,9 @@ interface IngestProcessorContainerExclusiveProps {
 }
 
 export type IngestProcessorContainer = ExactlyOne<IngestProcessorContainerExclusiveProps>
+
+export interface IngestRecoverFailureDocumentProcessor extends IngestProcessorBase {
+}
 
 export interface IngestRedact {
   /** indicates if document has been redacted */
