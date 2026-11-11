@@ -15,6 +15,18 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 % **Action**<br> Steps for mitigating deprecation impact.
 % ::::
 
+## Next version [elasticsearch-javascript-client-versionnext-breaking-changes]
+
+::::{dropdown} `caFingerprint` pins the matching certificate
+`@elastic/transport` 9.6.0 changes how `caFingerprint` works. Before, a matching fingerprint accepted the connection without other checks. Now the matching certificate is the only trust anchor. Signature, expiry, and hostname checks stay on, and `tls.rejectUnauthorized: false` is ignored when `caFingerprint` is set.
+
+For more information, check [#3487](https://github.com/elastic/elasticsearch-js/pull/3487).
+
+**Impact**<br> Connections fail if the server certificate does not match the node hostname or IP address, or if the certificate has expired. A function `agent` combined with `caFingerprint` now makes the client constructor throw a `ConfigurationError`.
+
+**Action**<br> Make sure the server certificate is valid for the hostname or IP address in `node`. If you use a function `agent`, remove `caFingerprint` and verify HTTPS in your agent, or use `tls.ca` instead.
+::::
+
 ## 9.6.0 [elasticsearch-javascript-client-960-breaking-changes]
 
 ::::{dropdown} ES|QL Arrow types moved to an opt-in module

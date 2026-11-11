@@ -172,7 +172,7 @@ export interface ClientOptions {
   /** @property disablePrototypePoisoningProtection Disables safe JSON parsing that protects execution of prototype poisoning attacks; disabled by default, as it can introduce a performance penalty
     * @defaultValue true */
   disablePrototypePoisoningProtection?: boolean | 'proto' | 'constructor'
-  /** @property caFingerprint If configured, verifies that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied fingerprint; only accepts SHA256 digest fingerprints
+  /** @property caFingerprint Pins the certificate matching this SHA256 fingerprint as the only trust anchor; signature, expiry, and hostname checks stay on
     * @defaultValue null */
   caFingerprint?: string
   /** @property maxResponseSize When configured, verifies that the uncompressed response size is lower than the configured number. If it's higher, it will abort the request. It cannot be higher than `buffer.constants.MAX_STRING_LENGTH`
