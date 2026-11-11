@@ -221,7 +221,7 @@ const client = new Client({
 ```
 
 ::::{warning}
-If you have set [the `agent` option](/reference/basic-config.md#agent-config) on your client instance to a function and are using `UndiciConnection`&mdash;the default [`Connection`](/reference/advanced-config.md#_connection) value starting in 8.0&mdash;all `caFingerprint` and `tls` options will be ignored. It is your responsibility to ensure that your custom agent will properly verify HTTPS connections.
+A function [`agent`](/reference/basic-config.md#agent-config) cannot be combined with `caFingerprint`. The client throws. A function agent also skips built-in `tls` handling, so that agent must verify HTTPS itself.
 ::::
 
 ### `nodeFilter`
@@ -346,7 +346,7 @@ Default: `true`
 Type: `string`<br>
 Default: `null`
 
-If configured, verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied fingerprint. Only accepts SHA256 digest fingerprints.
+Pins the matching certificate as the only trust anchor. Signature, expiry, and hostname checks stay on. Only a SHA256 digest is accepted. Pin the CA fingerprint Elasticsearch prints at startup.
 
 ### `maxResponseSize`
 
