@@ -417,6 +417,20 @@ test('Override default Elastic Cloud options', t => {
   t.end()
 })
 
+test('Configure retryOnTimeout and retryBackoff', t => {
+  const retryBackoff = (): number => 0
+  const client = new Client({
+    node: 'http://localhost:9200',
+    retryOnTimeout: true,
+    retryBackoff
+  })
+
+  t.equal(client.transport[symbols.kRetryOnTimeout], true)
+  t.equal(client.transport[symbols.kRetryBackoff], retryBackoff)
+
+  t.end()
+})
+
 test('Configure opaqueIdPrefix', t => {
   const client = new Client({
     node: 'http://localhost:9200',
