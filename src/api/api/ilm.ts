@@ -49,6 +49,7 @@ export default class Ilm {
         query: [
           'only_errors',
           'only_managed',
+          'expand_wildcards',
           'master_timeout'
         ]
       },
@@ -227,7 +228,7 @@ export default class Ilm {
       acceptedParams: {
         path: ['index'],
         body: [],
-        query: ['only_errors', 'only_managed', 'master_timeout']
+        query: ['only_errors', 'only_managed', 'expand_wildcards', 'master_timeout']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
