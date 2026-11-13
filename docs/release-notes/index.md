@@ -24,11 +24,13 @@ To check for security updates, go to [Security announcements for the Elastic sta
 
 ### Features and enhancements [elasticsearch-javascript-client-9.6.0-features-enhancements]
 
+- **Compatibility with Elasticsearch 9.6:** All changes and additions to Elasticsearch APIs for its 9.6 release are reflected in this release.
 - **Bulk helper `maxRequestBytes` option:** Adds a `maxRequestBytes` option to the bulk helper that caps the size of each bulk request body, including newlines. Buffered operations are sent before adding an operation that would exceed the limit. Unlike `flushBytes`, which is a threshold, this is a ceiling.
 
 ### Fixes [elasticsearch-javascript-client-9.6.0-fixes]
 
 - **Msearch helper accepts empty options:** `helpers.msearch()` can be created without `searches`. Searches are queued afterward with `search()`. Generated `MsearchRequest.searches` is required, so the helper type keeps that field optional.
+- **`retryOnTimeout` and `retryBackoff` client options are now applied:** Both options are now accepted by `ClientOptions` and forwarded to the transport. Previously, they were ignored.
 - **ES|QL Arrow types no longer break ESM type-checking:** The `apache-arrow` type definitions were removed from the package entrypoint and moved to an opt-in `@elastic/elasticsearch/helpers-arrow` module. Previously, ESM consumers using `nodenext` resolution hit a `TS2307` error even without using the Arrow helpers. See [breaking changes](breaking-changes.md) for details ([#3419](https://github.com/elastic/elasticsearch-js/issues/3419)).
 
 ## 9.5.1 [elasticsearch-javascript-client-9.5.1]
