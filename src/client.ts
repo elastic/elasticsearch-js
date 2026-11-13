@@ -102,6 +102,12 @@ export interface ClientOptions {
     * @defaultValue No timeout
     * @remarks Read [the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html#_http_client_configuration) about HTTP client configuration for details. */
   requestTimeout?: number
+  /** @property retryOnTimeout Retry a request on another node when it times out
+    * @defaultValue false */
+  retryOnTimeout?: boolean
+  /** @property retryBackoff Function that returns the number of seconds to wait before a retry, given the minimum and maximum delay and the attempt number
+    * @defaultValue Exponential backoff with jitter */
+  retryBackoff?: (min: number, max: number, attempt: number) => number
   /** @property pingTimeout Max number of milliseconds a `ClusterConnectionPool` will wait when pinging nodes before marking them dead
     * @defaultValue 3000 */
   pingTimeout?: number
@@ -409,6 +415,8 @@ export default class Client extends API {
       serializer: this.serializer,
       maxRetries: options.maxRetries,
       requestTimeout: options.requestTimeout,
+      retryOnTimeout: options.retryOnTimeout,
+      retryBackoff: options.retryBackoff,
       compression: options.compression,
       headers: options.headers,
       generateRequestId: options.generateRequestId,
