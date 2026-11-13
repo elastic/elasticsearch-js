@@ -20,11 +20,20 @@ export interface BulkCreateOperation extends BulkWriteOperation {
 }
 
 export interface BulkDeleteOperation extends BulkOperationBase {
+  /** The explicit version number for concurrency control.
+    * It must be a non-negative long number.
+    * This parameter is not supported for `update` actions. */
+  version?: VersionNumber
+  /** The version type.
+    * This parameter is not supported for `update` actions. */
+  version_type?: VersionType
 }
 
 export type BulkFailureStoreStatus = 'not_applicable_or_unknown' | 'used' | 'not_enabled' | 'failed'
 
 export interface BulkIndexOperation extends BulkWriteOperation {
+  /** Set to `create` to only index the document if it does not already exist. */
+  op_type?: OpType
 }
 
 export interface BulkOperationBase {
@@ -41,8 +50,6 @@ export interface BulkOperationBase {
   _slice?: SliceId
   if_primary_term?: long
   if_seq_no?: SequenceNumber
-  version?: VersionNumber
-  version_type?: VersionType
 }
 
 interface BulkOperationContainerExclusiveProps {
@@ -128,7 +135,10 @@ export interface BulkResponse {
 }
 
 export interface BulkResponseItem {
-  /** The document ID associated with the operation. */
+  /** The document ID associated with the operation.
+    * It is `null` when an `index` or `create` operation without an explicit `_id` fails before Elasticsearch generates an ID for the document.
+    * Elasticsearch generates the ID when it routes the document to a shard, so the ID is still `null` for failures that happen earlier, such as an ingest pipeline error, a missing or closed target index, a failed `require_alias` or `require_data_stream` check, or missing required routing.
+    * `update` and `delete` operations always include an ID. */
   _id?: string | null
   /** The name of the index associated with the operation.
     * If the operation targeted a data stream, this is the backing index into which the document was written. */
@@ -169,6 +179,10 @@ export interface BulkUpdateAction<TDocument = unknown, TPartialDocument = unknow
   script?: Script | ScriptSource
   /** Set to `true` to run the script whether or not the document exists. */
   scripted_upsert?: boolean
+  /** Only perform the update if the document has this sequence number. */
+  if_seq_no?: SequenceNumber
+  /** Only perform the update if the document has this primary term. */
+  if_primary_term?: long
   /** If `false`, source retrieval is turned off.
     * You can also specify a comma-separated list of the fields you want to retrieve. */
   _source?: SearchSourceConfig
@@ -182,20 +196,45 @@ export interface BulkUpdateOperation extends BulkOperationBase {
   require_alias?: boolean
   /** The number of times an update should be retried in the case of a version conflict. */
   retry_on_conflict?: integer
+  /** The ID of the pipeline to use to preprocess the `upsert` document, if one is created.
+    * If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request.
+    * If a final pipeline is configured, it will always run regardless of the value of this parameter. */
+  pipeline?: string
+  /** If `true`, the response includes the ingest pipelines that were run for the `upsert` document, if one is created. */
+  list_executed_pipelines?: boolean
+  /** If `false`, source retrieval is turned off.
+    * You can also specify a comma-separated list of the fields you want to retrieve.
+    * If set, it overrides the `_source` value in the update source line. */
+  _source?: SearchSourceConfig
 }
 
 export interface BulkWriteOperation extends BulkOperationBase {
+  /** The explicit version number for concurrency control.
+    * It must be a non-negative long number.
+    * This parameter is not supported for `update` actions. */
+  version?: VersionNumber
+  /** The version type.
+    * This parameter is not supported for `update` actions. */
+  version_type?: VersionType
   /** A map from the full name of fields to the name of dynamic templates.
     * It defaults to an empty map.
     * If a name matches a dynamic template, that template will be applied regardless of other match predicates defined in the template.
     * If a field is already defined in the mapping, then this parameter won't be used. */
   dynamic_templates?: Record<string, string>
+  /** A map from the full name of fields to the parameters to pass to the dynamic template selected for that field in `dynamic_templates`.
+    * Each value is a map from parameter names to parameter values.
+    * The dynamic template can reference a parameter with a placeholder such as `{unit:}`, where the text after the colon is the default value. */
+  dynamic_template_params?: Record<string, Record<string, string>>
   /** The ID of the pipeline to use to preprocess incoming documents.
     * If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request.
     * If a final pipeline is configured, it will always run regardless of the value of this parameter. */
   pipeline?: string
   /** If `true`, the request's actions must target an index alias. */
   require_alias?: boolean
+  /** If `true`, the action must target a data stream (existing or to be created). */
+  require_data_stream?: boolean
+  /** If `true`, the response includes the ingest pipelines that were run for this action. */
+  list_executed_pipelines?: boolean
 }
 
 export interface CancelReindexRequest extends RequestBase {
@@ -3327,6 +3366,8 @@ export interface SearchKnnQueryProfileBreakdown {
   count_weight_count: long
   create_weight: long
   create_weight_count: long
+  into_bit_set: long
+  into_bit_set_count: long
   match: long
   match_count: long
   next_doc: long
@@ -4587,12 +4628,15 @@ export interface InternalGetDesiredNodesRequest extends RequestBase {
 export type InternalGetDesiredNodesResponse = any
 
 export interface InternalPrevalidateNodeRemovalRequest extends RequestBase {
-  /** A comma-separated list of node names to prevalidate */
-  names?: string[]
-  /** A comma-separated list of node IDs to prevalidate */
-  ids?: string[]
-  /** A comma-separated list of node external IDs to prevalidate */
-  external_ids?: string[]
+  /** A comma-separated list of node names to prevalidate.
+    * Defaults to an empty array. */
+  names?: string[] | string
+  /** A comma-separated list of node IDs to prevalidate
+    * Defaults to an empty array. */
+  ids?: string[] | string
+  /** A comma-separated list of node external IDs to prevalidate
+    * Defaults to an empty array. */
+  external_ids?: string[] | string
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -5996,7 +6040,7 @@ export interface AggregationsAdjacencyMatrixBucketKeys extends AggregationsMulti
 export type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
 & { [property: string]: AggregationsAggregate | string | long }
 
-export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsChangePointAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsCartesianBoundsAggregate | AggregationsCartesianCentroidAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
+export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsChangePointAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsCartesianBoundsAggregate | AggregationsCartesianCentroidAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsRoaringBitmapAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
 
 export interface AggregationsAggregateBase {
   meta?: Metadata
@@ -6163,6 +6207,10 @@ interface AggregationsAggregationContainerExclusiveProps {
   /** Calculates a rate of documents or a field in each bucket.
     * Can only be used inside a `date_histogram` or `composite` aggregation. */
   rate?: AggregationsRateAggregation
+  /** Returns the exact distinct values of an `integer` or `long` field across the matching documents, as a base64-encoded portable roaring bitmap.
+    * The result can be passed to the `bitmap_terms` query.
+    * It can't be placed inside an aggregation that produces more than one bucket, such as `terms` or `histogram`. */
+  roaring_bitmap?: AggregationsRoaringBitmapAggregation
   /** A special single bucket aggregation that enables aggregating on parent documents from nested documents.
     * Should only be defined inside a `nested` aggregation. */
   reverse_nested?: AggregationsReverseNestedAggregation
@@ -7504,6 +7552,22 @@ export interface AggregationsReverseNestedAggregation extends AggregationsBucket
   path?: Field
 }
 
+export interface AggregationsRoaringBitmapAggregate extends AggregationsAggregateBase {
+  /** The distinct values of the field, as a base64-encoded portable roaring bitmap.
+    * It is `null` if the field is unmapped. */
+  value: string | null
+}
+
+export interface AggregationsRoaringBitmapAggregation {
+  /** The `integer` or `long` field from which to collect the distinct values.
+    * Scripts are not supported, so the field must be mapped. */
+  field: Field
+  /** The value to use for documents that do not have a value for the field.
+    * It must be non-negative and fit the `integer` or `long` type of the field.
+    * By default, documents without a value are ignored. */
+  missing?: long
+}
+
 export interface AggregationsSamplerAggregateKeys extends AggregationsSingleBucketAggregateBase {
 }
 export type AggregationsSamplerAggregate = AggregationsSamplerAggregateKeys
@@ -7933,7 +7997,7 @@ export interface AggregationsTopMetricsAggregate extends AggregationsAggregateBa
   top: AggregationsTopMetrics[]
 }
 
-export interface AggregationsTopMetricsAggregation extends AggregationsMetricAggregationBase {
+export interface AggregationsTopMetricsAggregation {
   /** The fields of the top document to return. */
   metrics?: AggregationsTopMetricsValue | AggregationsTopMetricsValue[]
   /** The number of top documents from which to return metrics. */
@@ -9401,6 +9465,11 @@ export interface MappingDenseVectorIndexOptions {
     * @remarks This property is not supported on Elastic Cloud Serverless.
     * @experimental */
   on_disk_rescore?: boolean
+  /** If `true`, direct I/O is used where possible while merging the vector data of the field, so that a merge does not displace what searches keep in memory.
+    * It can be changed with a mapping update, which applies to later merges.
+    * @remarks This property is not supported on Elastic Cloud Serverless.
+    * @experimental */
+  on_disk_merge?: boolean
   /** The segment document count threshold below which HNSW graph construction is skipped in favor of brute-force flat
     * search. `-1` (default) defers to format defaults: `300` for `bbq_hnsw`, `150` for `hnsw`, `int8_hnsw`, and
     * `int4_hnsw`. `0` always builds the graph. A positive value overrides the format default.
@@ -9671,6 +9740,10 @@ export type MappingIndexOptions = 'docs' | 'freqs' | 'positions' | 'offsets'
 export interface MappingIntegerNumberProperty extends MappingNumberPropertyBase {
   type: 'integer'
   null_value?: integer
+  /** If `true`, the field's values are indexed in an inverted index instead of a BKD tree.
+    * This speeds up queries that match a field against many values, such as `terms` queries, but wide range queries are typically slower than on a BKD tree.
+    * Requires `index` to be `true`. */
+  index_terms?: boolean
 }
 
 export interface MappingIntegerRangeProperty extends MappingRangePropertyBase {
@@ -9721,6 +9794,10 @@ export interface MappingKeywordProperty extends MappingDocValuesPropertyBase {
 export interface MappingLongNumberProperty extends MappingNumberPropertyBase {
   type: 'long'
   null_value?: long
+  /** If `true`, the field's values are indexed in an inverted index instead of a BKD tree.
+    * This speeds up queries that match a field against many values, such as `terms` queries, but wide range queries are typically slower than on a BKD tree.
+    * Requires `index` to be `true`. */
+  index_terms?: boolean
 }
 
 export interface MappingLongRangeProperty extends MappingRangePropertyBase {
@@ -9883,10 +9960,12 @@ export interface MappingSearchAsYouTypeProperty extends MappingCorePropertyBase 
   type: 'search_as_you_type'
 }
 
-export interface MappingSemanticTextIndexOptions {
+interface MappingSemanticTextIndexOptionsExclusiveProps {
   dense_vector?: MappingDenseVectorIndexOptions
   sparse_vector?: MappingSparseVectorIndexOptions
 }
+
+export type MappingSemanticTextIndexOptions = ExactlyOne<MappingSemanticTextIndexOptionsExclusiveProps>
 
 export interface MappingSemanticTextProperty {
   type: 'semantic_text'
@@ -10039,6 +10118,16 @@ export interface MappingVersionProperty extends MappingDocValuesPropertyBase {
 export interface MappingWildcardProperty extends MappingDocValuesPropertyBase {
   type: 'wildcard'
   null_value?: string
+}
+
+export interface QueryDslBitmapTermsQuery extends QueryDslQueryBase {
+  /** The name of the field to search against.
+    * It must be an `integer` or a `long` field with `index` enabled. */
+  field: Field
+  /** The values to match, as a base64-encoded serialized roaring bitmap in little-endian byte order.
+    * The type of the field determines the expected format: an `integer` field expects a 32-bit roaring bitmap, and a `long` field expects a 64-bit roaring bitmap in the portable format.
+    * The bitmap can only contain non-negative values: from `0` to `2^31 - 1` for an `integer` field and from `0` to `2^63 - 1` for a `long` field. */
+  value: string
 }
 
 export interface QueryDslBoolQuery extends QueryDslQueryBase {
@@ -10711,14 +10800,11 @@ export interface QueryDslMoreLikeThisQuery extends QueryDslQueryBase {
   min_term_freq?: integer
   /** The minimum word length below which the terms are ignored. */
   min_word_length?: integer
-  routing?: string
   /** An array of stop words.
     * Any word in this set is ignored. */
   stop_words?: AnalysisStopWords
   /** Used in combination with `like` to exclude documents that match a set of terms. */
   unlike?: QueryDslLike | QueryDslLike[]
-  version?: VersionNumber
-  version_type?: VersionType
 }
 
 export interface QueryDslMultiMatchQuery extends QueryDslQueryBase {
@@ -10857,6 +10943,9 @@ export interface QueryDslQueryBase {
 }
 
 interface QueryDslQueryContainerExclusiveProps {
+  /** Returns documents whose `integer` or `long` field value is contained in a roaring bitmap that is provided as a base64-encoded string.
+    * It is the counterpart of the `terms` query for very large sets of numeric values. */
+  bitmap_terms?: QueryDslBitmapTermsQuery
   /** matches documents matching boolean combinations of other queries. */
   bool?: QueryDslBoolQuery
   /** Returns documents matching a `positive` query while reducing the relevance score of documents that also match a `negative` query. */
@@ -11835,7 +11924,7 @@ export type CatCatAllocationColumn = 'shards' | 's' | 'shards.undesired' | 'writ
 
 export type CatCatAllocationColumns = CatCatAllocationColumn | CatCatAllocationColumn[]
 
-export type CatCatAnomalyDetectorColumn = 'assignment_explanation' | 'ae' | 'buckets.count' | 'bc' | 'bucketsCount' | 'buckets.time.exp_avg' | 'btea' | 'bucketsTimeExpAvg' | 'buckets.time.exp_avg_hour' | 'bteah' | 'bucketsTimeExpAvgHour' | 'buckets.time.max' | 'btmax' | 'bucketsTimeMax' | 'buckets.time.min' | 'btmin' | 'bucketsTimeMin' | 'buckets.time.total' | 'btt' | 'bucketsTimeTotal' | 'data.buckets' | 'db' | 'dataBuckets' | 'data.earliest_record' | 'der' | 'dataEarliestRecord' | 'data.empty_buckets' | 'deb' | 'dataEmptyBuckets' | 'data.input_bytes' | 'dib' | 'dataInputBytes' | 'data.input_fields' | 'dif' | 'dataInputFields' | 'data.input_records' | 'dir' | 'dataInputRecords' | 'data.invalid_dates' | 'did' | 'dataInvalidDates' | 'data.last' | 'dl' | 'dataLast' | 'data.last_empty_bucket' | 'dleb' | 'dataLastEmptyBucket' | 'data.last_sparse_bucket' | 'dlsb' | 'dataLastSparseBucket' | 'data.latest_record' | 'dlr' | 'dataLatestRecord' | 'data.missing_fields' | 'dmf' | 'dataMissingFields' | 'data.out_of_order_timestamps' | 'doot' | 'dataOutOfOrderTimestamps' | 'data.processed_fields' | 'dpf' | 'dataProcessedFields' | 'data.processed_records' | 'dpr' | 'dataProcessedRecords' | 'data.sparse_buckets' | 'dsb' | 'dataSparseBuckets' | 'forecasts.memory.avg' | 'fmavg' | 'forecastsMemoryAvg' | 'forecasts.memory.max' | 'fmmax' | 'forecastsMemoryMax' | 'forecasts.memory.min' | 'fmmin' | 'forecastsMemoryMin' | 'forecasts.memory.total' | 'fmt' | 'forecastsMemoryTotal' | 'forecasts.records.avg' | 'fravg' | 'forecastsRecordsAvg' | 'forecasts.records.max' | 'frmax' | 'forecastsRecordsMax' | 'forecasts.records.min' | 'frmin' | 'forecastsRecordsMin' | 'forecasts.records.total' | 'frt' | 'forecastsRecordsTotal' | 'forecasts.time.avg' | 'ftavg' | 'forecastsTimeAvg' | 'forecasts.time.max' | 'ftmax' | 'forecastsTimeMax' | 'forecasts.time.min' | 'ftmin' | 'forecastsTimeMin' | 'forecasts.time.total' | 'ftt' | 'forecastsTimeTotal' | 'forecasts.total' | 'ft' | 'forecastsTotal' | 'id' | 'model.bucket_allocation_failures' | 'mbaf' | 'modelBucketAllocationFailures' | 'model.by_fields' | 'mbf' | 'modelByFields' | 'model.bytes' | 'mb' | 'modelBytes' | 'model.bytes_exceeded' | 'mbe' | 'modelBytesExceeded' | 'model.categorization_status' | 'mcs' | 'modelCategorizationStatus' | 'model.categorized_doc_count' | 'mcdc' | 'modelCategorizedDocCount' | 'model.dead_category_count' | 'mdcc' | 'modelDeadCategoryCount' | 'model.failed_category_count' | 'mdcc' | 'modelFailedCategoryCount' | 'model.frequent_category_count' | 'mfcc' | 'modelFrequentCategoryCount' | 'model.log_time' | 'mlt' | 'modelLogTime' | 'model.memory_limit' | 'mml' | 'modelMemoryLimit' | 'model.memory_status' | 'mms' | 'modelMemoryStatus' | 'model.over_fields' | 'mof' | 'modelOverFields' | 'model.partition_fields' | 'mpf' | 'modelPartitionFields' | 'model.rare_category_count' | 'mrcc' | 'modelRareCategoryCount' | 'model.timestamp' | 'mt' | 'modelTimestamp' | 'model.total_category_count' | 'mtcc' | 'modelTotalCategoryCount' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'opened_time' | 'ot' | 'state' | 's'
+export type CatCatAnomalyDetectorColumn = 'assignment_explanation' | 'ae' | 'buckets.count' | 'bc' | 'bucketsCount' | 'buckets.time.exp_avg' | 'btea' | 'bucketsTimeExpAvg' | 'buckets.time.exp_avg_hour' | 'bteah' | 'bucketsTimeExpAvgHour' | 'buckets.time.max' | 'btmax' | 'bucketsTimeMax' | 'buckets.time.min' | 'btmin' | 'bucketsTimeMin' | 'buckets.time.total' | 'btt' | 'bucketsTimeTotal' | 'data.buckets' | 'db' | 'dataBuckets' | 'data.earliest_record' | 'der' | 'dataEarliestRecord' | 'data.empty_buckets' | 'deb' | 'dataEmptyBuckets' | 'data.input_bytes' | 'dib' | 'dataInputBytes' | 'data.input_fields' | 'dif' | 'dataInputFields' | 'data.input_records' | 'dir' | 'dataInputRecords' | 'data.invalid_dates' | 'did' | 'dataInvalidDates' | 'data.last' | 'dl' | 'dataLast' | 'data.last_empty_bucket' | 'dleb' | 'dataLastEmptyBucket' | 'data.last_sparse_bucket' | 'dlsb' | 'dataLastSparseBucket' | 'data.latest_record' | 'dlr' | 'dataLatestRecord' | 'data.missing_fields' | 'dmf' | 'dataMissingFields' | 'data.out_of_order_timestamps' | 'doot' | 'dataOutOfOrderTimestamps' | 'data.processed_fields' | 'dpf' | 'dataProcessedFields' | 'data.processed_records' | 'dpr' | 'dataProcessedRecords' | 'data.sparse_buckets' | 'dsb' | 'dataSparseBuckets' | 'forecasts.memory.avg' | 'fmavg' | 'forecastsMemoryAvg' | 'forecasts.memory.max' | 'fmmax' | 'forecastsMemoryMax' | 'forecasts.memory.min' | 'fmmin' | 'forecastsMemoryMin' | 'forecasts.memory.total' | 'fmt' | 'forecastsMemoryTotal' | 'forecasts.records.avg' | 'fravg' | 'forecastsRecordsAvg' | 'forecasts.records.max' | 'frmax' | 'forecastsRecordsMax' | 'forecasts.records.min' | 'frmin' | 'forecastsRecordsMin' | 'forecasts.records.total' | 'frt' | 'forecastsRecordsTotal' | 'forecasts.time.avg' | 'ftavg' | 'forecastsTimeAvg' | 'forecasts.time.max' | 'ftmax' | 'forecastsTimeMax' | 'forecasts.time.min' | 'ftmin' | 'forecastsTimeMin' | 'forecasts.time.total' | 'ftt' | 'forecastsTimeTotal' | 'forecasts.total' | 'ft' | 'forecastsTotal' | 'id' | 'model.bucket_allocation_failures' | 'mbaf' | 'modelBucketAllocationFailures' | 'model.by_fields' | 'mbf' | 'modelByFields' | 'model.bytes' | 'mb' | 'modelBytes' | 'model.bytes_exceeded' | 'mbe' | 'modelBytesExceeded' | 'model.categorization_status' | 'mcs' | 'modelCategorizationStatus' | 'model.categorized_doc_count' | 'mcdc' | 'modelCategorizedDocCount' | 'model.dead_category_count' | 'mdcc' | 'modelDeadCategoryCount' | 'model.failed_category_count' | 'mfcc' | 'modelFailedCategoryCount' | 'model.frequent_category_count' | 'mfcc' | 'modelFrequentCategoryCount' | 'model.log_time' | 'mlt' | 'modelLogTime' | 'model.memory_limit' | 'mml' | 'modelMemoryLimit' | 'model.memory_status' | 'mms' | 'modelMemoryStatus' | 'model.over_fields' | 'mof' | 'modelOverFields' | 'model.partition_fields' | 'mpf' | 'modelPartitionFields' | 'model.rare_category_count' | 'mrcc' | 'modelRareCategoryCount' | 'model.timestamp' | 'mt' | 'modelTimestamp' | 'model.total_category_count' | 'mtcc' | 'modelTotalCategoryCount' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'opened_time' | 'ot' | 'state' | 's'
 
 export type CatCatAnomalyDetectorColumns = CatCatAnomalyDetectorColumn | CatCatAnomalyDetectorColumn[]
 
@@ -18406,6 +18495,21 @@ export interface ClusterStatsClusterSnapshotStats {
   repositories: Record<Name, ClusterStatsPerRepositoryStats>
 }
 
+export type ClusterStatsDenseVectorAutoCalibration = ClusterStatsOsqDenseVectorAutoCalibration
+
+export interface ClusterStatsDenseVectorAutoCalibrationBase extends IndicesSegmentsSegmentAutoCalibrationBase {
+  /** The number of segments that share these parameters. */
+  number_of_segments: integer
+}
+
+export interface ClusterStatsDenseVectorFieldOffHeapStatsKeys {
+  /** The auto-calibration information of the field, aggregated by distinct set of parameters.
+    * Only returned when `include_auto_calibration` is `true`. */
+  auto_calibration?: ClusterStatsDenseVectorAutoCalibration[]
+}
+export type ClusterStatsDenseVectorFieldOffHeapStats = ClusterStatsDenseVectorFieldOffHeapStatsKeys
+& { [property: string]: long | ClusterStatsDenseVectorAutoCalibration[] }
+
 export interface ClusterStatsDenseVectorOffHeapStats {
   total_size_bytes: long
   total_size?: ByteSize
@@ -18421,7 +18525,7 @@ export interface ClusterStatsDenseVectorOffHeapStats {
   total_cenivf_size?: ByteSize
   total_clivf_size_bytes: long
   total_clivf_size?: ByteSize
-  fielddata?: Record<string, Record<string, long>>
+  fielddata?: Record<string, ClusterStatsDenseVectorFieldOffHeapStats>
 }
 
 export interface ClusterStatsDenseVectorStats {
@@ -18535,6 +18639,12 @@ export interface ClusterStatsOperatingSystemMemoryInfo {
   used?: ByteSize
   /** Percentage of physical memory in use across all selected nodes. */
   used_percent: integer
+}
+
+export interface ClusterStatsOsqDenseVectorAutoCalibration extends ClusterStatsDenseVectorAutoCalibrationBase {
+  type: 'osq'
+  /** The calibration parameters. */
+  parameters?: IndicesSegmentsOsqSegmentAutoCalibrationParameters
 }
 
 export interface ClusterStatsPerRepositoryStats {
@@ -20915,6 +21025,8 @@ export interface FleetSearchRequest extends RequestBase {
     * after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
     * Elasticsearch to immediately execute the search. */
   wait_for_checkpoints?: FleetCheckpoint[]
+  /** The maximum time to wait for the checkpoints specified in `wait_for_checkpoints` to become visible for search. */
+  wait_for_checkpoints_timeout?: Duration
   /** If true, returns partial results if there are shard request timeouts or shard failures.
     * If false, returns an error with no partial results.
     * Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default. */
@@ -20997,9 +21109,9 @@ export interface FleetSearchRequest extends RequestBase {
     * the indices stats API. */
   stats?: string[]
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, route_slice?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  body?: string | { [key: string]: any } & { index?: never, route_slice?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, wait_for_checkpoints_timeout?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, route_slice?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
+  querystring?: { [key: string]: any } & { index?: never, route_slice?: never, allow_no_indices?: never, analyzer?: never, analyze_wildcard?: never, batched_reduce_size?: never, ccs_minimize_roundtrips?: never, default_operator?: never, df?: never, expand_wildcards?: never, ignore_throttled?: never, ignore_unavailable?: never, lenient?: never, max_concurrent_shard_requests?: never, preference?: never, pre_filter_shard_size?: never, request_cache?: never, routing?: never, scroll?: never, search_type?: never, suggest_field?: never, suggest_mode?: never, suggest_size?: never, suggest_text?: never, typed_keys?: never, rest_total_hits_as_int?: never, _source_excludes?: never, _source_includes?: never, q?: never, wait_for_checkpoints?: never, wait_for_checkpoints_timeout?: never, allow_partial_search_results?: never, aggregations?: never, aggs?: never, collapse?: never, explain?: never, ext?: never, from?: never, highlight?: never, track_total_hits?: never, indices_boost?: never, docvalue_fields?: never, min_score?: never, post_filter?: never, profile?: never, query?: never, rescore?: never, script_fields?: never, search_after?: never, size?: never, slice?: never, sort?: never, _source?: never, fields?: never, suggest?: never, terminate_after?: never, timeout?: never, track_scores?: never, version?: never, seq_no_primary_term?: never, stored_fields?: never, pit?: never, runtime_mappings?: never, stats?: never }
 }
 
 export interface FleetSearchResponse<TDocument = unknown> {
@@ -21207,6 +21319,11 @@ export interface IlmRolloverAction {
 export interface IlmSearchableSnapshotAction {
   snapshot_repository: string
   force_merge_index?: boolean
+  /** If `true`, and the index has replicas, ILM first clones the index with zero replicas and force merges the clone, so that replicas are not merged redundantly.
+    * If `false`, the managed index is force merged directly.
+    * Not allowed when `force_merge_index` is `false`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  force_merge_on_clone?: boolean
   /** The maximum number of shards, including primaries and replicas, that can be allocated to any single node for the mounted index.
     * Must be at least 1.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
@@ -21304,12 +21421,16 @@ export interface IlmExplainLifecycleRequest extends RequestBase {
   only_errors?: boolean
   /** Filters the returned indices to only indices that are managed by ILM. */
   only_managed?: boolean
+  /** Type of index that wildcard patterns can match.
+    * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+    * Supports comma-separated values, such as `open,hidden`. */
+  expand_wildcards?: ExpandWildcards
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, expand_wildcards?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, expand_wildcards?: never, master_timeout?: never }
 }
 
 export interface IlmExplainLifecycleResponse {
@@ -21517,6 +21638,12 @@ export interface IndicesCacheQueries {
   enabled: boolean
 }
 
+export interface IndicesCacheRequests {
+  /** Whether the shard request cache is enabled for the index.
+    * This setting is dynamic and can be updated on an existing index. */
+  enable?: SpecUtilsStringified<boolean>
+}
+
 export interface IndicesDataStream {
   /** Custom metadata for the stream, copied from the `_meta` object of the stream’s matching index template.
     * If empty, the response omits this property. */
@@ -21561,8 +21688,10 @@ export interface IndicesDataStream {
   /** If `true`, the data stream is created and managed by an Elastic stack component and cannot be modified through normal user interaction. */
   system?: boolean
   /** Name of the index template used to create the data stream’s backing indices.
-    * The template’s index pattern must match the name of this data stream. */
-  template: Name
+    * The template’s index pattern must match the name of this data stream.
+    * This property is omitted if no index template currently matches the data stream, for example on a cross-cluster replication follower cluster that has no matching local template.
+    * For replicated data streams (`replicated` is `true`), the value is the local index template that matches the data stream name, which might not be the template that created the backing indices on the leader cluster. */
+  template?: Name
   /** Information about the `@timestamp` field in the data stream. */
   timestamp_field: IndicesDataStreamTimestampField
   /** The index mode for the data stream that will be used for newly created backing indices. */
@@ -21826,6 +21955,7 @@ export interface IndicesIndexSettingsKeys {
   settings?: IndicesIndexSettings
   time_series?: IndicesIndexSettingsTimeSeries
   queries?: IndicesQueries
+  requests?: IndicesRequests
   /** Configure custom similarity settings to customize how search results are scored. */
   similarity?: Record<string, IndicesSettingsSimilarity>
   /** Enable or disable dynamic mapping for an index. */
@@ -21990,6 +22120,10 @@ export interface IndicesIndexTemplateWithRollover {
   /** Template to be applied.
     * It may optionally include an `aliases`, `mappings`, or `settings` configuration. */
   template?: IndicesIndexTemplateSummaryWithRollover
+  /** Marks an index template that was installed by one of the internal registries.
+    * This field is returned only when the get index template API is called with `include_managed_fields` set to `true`.
+    * It can't be set in a request: the create and simulate index template APIs reject it. */
+  registry_installed?: boolean
   /** Array of wildcard (`*`) expressions used to match the names of data streams and indices during creation. */
   index_patterns: Names
   /** An ordered list of component template names.
@@ -22138,6 +22272,10 @@ export type IndicesNumericFielddataFormat = 'array' | 'disabled'
 
 export interface IndicesQueries {
   cache?: IndicesCacheQueries
+}
+
+export interface IndicesRequests {
+  cache?: IndicesCacheRequests
 }
 
 export interface IndicesRetentionLease {
@@ -23007,6 +23145,12 @@ export interface IndicesExplainDataLifecycleDataStreamLifecycleExplain {
   generation_time?: Duration
   error?: string
   frozen_transition_status?: string
+  /** The date the index tail was last merged, in milliseconds since the epoch.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  tail_merge_date_millis?: EpochTime<UnitMillis>
+  /** The date the index tail was last merged. Only returned if the `human` query parameter is `true`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  tail_merge_date?: DateTime
   unmanaged_reason?: string
 }
 
@@ -23473,10 +23617,12 @@ export interface IndicesGetIndexTemplateRequest extends RequestBase {
   master_timeout?: Duration
   /** If true, returns all relevant default configurations for the index template. */
   include_defaults?: boolean
+  /** If true, the response includes internally managed fields, such as `registry_installed`, that are hidden by default. */
+  include_managed_fields?: boolean
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never, include_defaults?: never }
+  body?: string | { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never, include_defaults?: never, include_managed_fields?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never, include_defaults?: never }
+  querystring?: { [key: string]: any } & { name?: never, local?: never, flat_settings?: never, master_timeout?: never, include_defaults?: never, include_managed_fields?: never }
 }
 
 export interface IndicesGetIndexTemplateResponse {
@@ -25068,6 +25214,9 @@ export interface IndicesStatsRequest extends RequestBase {
   forbid_closed_indices?: boolean
   /** Comma-separated list of search groups to include in the search statistics. */
   groups?: string | string[]
+  /** If `true`, the response includes the auto-calibration information of each `dense_vector` field that supports auto-calibration.
+    * Only applies at the `indices` and `shards` levels. */
+  include_auto_calibration?: boolean
   /** If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested). */
   include_segment_file_sizes?: boolean
   /** If true, the response includes information from segments that are not loaded into memory. */
@@ -25075,9 +25224,9 @@ export interface IndicesStatsRequest extends RequestBase {
   /** Indicates whether statistics are aggregated at the cluster, indices, or shards level. */
   level?: Level
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
+  body?: string | { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_auto_calibration?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
+  querystring?: { [key: string]: any } & { metric?: never, index?: never, completion_fields?: never, expand_wildcards?: never, fielddata_fields?: never, fields?: never, forbid_closed_indices?: never, groups?: never, include_auto_calibration?: never, include_segment_file_sizes?: never, include_unloaded_segments?: never, level?: never }
 }
 
 export interface IndicesStatsResponse {
@@ -26447,6 +26596,96 @@ export interface InferenceEncryptedReasoningDetail extends InferenceBaseReasonin
   data: string
 }
 
+export interface InferenceEndpointMetadata {
+  /** Properties of the endpoint that help clients to determine which model to use. */
+  heuristics: InferenceEndpointMetadataHeuristics
+  /** Information to display for the endpoint. */
+  display: InferenceEndpointMetadataDisplay
+  /** The identity of the model that the endpoint serves. */
+  model_identity?: InferenceEndpointMetadataModelIdentity
+  /** The regions in which the endpoint is available. */
+  regions?: InferenceEndpointMetadataRegion[]
+  /** If `true`, the region policy of the caller prohibits access to the endpoint. */
+  denied_by_region_policy?: boolean
+  /** The capabilities of the endpoint. */
+  capabilities?: InferenceEndpointMetadataCapabilities
+}
+
+export interface InferenceEndpointMetadataCapabilities {
+  /** The reasoning support of the endpoint. */
+  reasoning?: InferenceEndpointMetadataReasoningCapability
+  /** The context window of the model. */
+  context_window?: InferenceEndpointMetadataContextWindow
+  /** The prompt template support of the endpoint.
+    * It is returned only for chat completion endpoints that require a template instead of caller-authored messages. */
+  templates?: InferenceEndpointMetadataTemplatesCapability
+}
+
+export interface InferenceEndpointMetadataContextWindow {
+  /** The maximum number of input tokens that the model accepts. */
+  max_input_tokens?: integer
+  /** The maximum number of output tokens that the model generates. */
+  max_output_tokens?: integer
+}
+
+export interface InferenceEndpointMetadataDisplay {
+  /** The name to display for the endpoint. */
+  name?: string
+  /** The creator of the model, for display purposes. */
+  model_creator?: string
+}
+
+export interface InferenceEndpointMetadataHeuristics {
+  /** Tags that describe the properties of the model, for example `multilingual`, `english` or `multimodal`. */
+  properties: string[]
+  /** The release status of the model. */
+  status?: InferenceEndpointMetadataStatus
+  /** The date on which the model was released, in `yyyy-MM-dd` format. */
+  release_date?: string
+  /** The date on which the model reaches the end of its life, in `yyyy-MM-dd` format. */
+  end_of_life_date?: string
+}
+
+export interface InferenceEndpointMetadataModelIdentity {
+  /** The model creator or lab, for example `anthropic`, `openai` or `jina`. */
+  creator?: string
+  /** The model family within the creator, for example `claude`, `gpt` or `gemini`. */
+  family?: string
+  /** The performance or size tier within the family, for example `sonnet` or `mini`.
+    * It is not set if the model has no tier variants. */
+  tier?: string
+  /** The version of the model. */
+  version?: string
+}
+
+export interface InferenceEndpointMetadataReasoningCapability {
+  /** The reasoning effort levels that the endpoint supports. */
+  supported_effort_levels: InferenceReasoningEffort[]
+  /** The reasoning effort level that the endpoint uses by default. */
+  default_effort_level?: InferenceReasoningEffort
+}
+
+export interface InferenceEndpointMetadataRegion {
+  /** The cloud service provider, for example `aws`, `gcp` or `azure`. */
+  csp?: string
+  /** The region of the cloud service provider, for example `us-east-1`. */
+  region?: string
+  /** The geographic area, for example `us` or `eu`. */
+  geo?: string
+  /** The human-readable name of the region. */
+  region_display_name?: string
+}
+
+export type InferenceEndpointMetadataStatus = 'beta' | 'preview' | 'ga' | 'deprecated'
+
+export type InferenceEndpointMetadataTemplatePolicy = 'required'
+
+export interface InferenceEndpointMetadataTemplatesCapability {
+  /** Whether the endpoint requires chat completion requests to carry a prompt template.
+    * Elasticsearch displays the policy so that clients can choose the request shape, but it doesn't enforce it. */
+  policy: InferenceEndpointMetadataTemplatePolicy
+}
+
 export interface InferenceFileContent {
   /** The base64 encoded file data */
   file_data: string
@@ -26723,6 +26962,9 @@ export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoi
   inference_id: string
   /** The task type */
   task_type: InferenceTaskType
+  /** Metadata about the endpoint, such as the model it serves, where it is available and what it supports.
+    * It is returned for the endpoints of the Elastic Inference Service. */
+  metadata?: InferenceEndpointMetadata
 }
 
 export interface InferenceInferenceEndpointInfoAi21 extends InferenceInferenceEndpoint {
@@ -32565,6 +32807,8 @@ export interface MlTrainedModelDeploymentNodesStats {
   /** The average time for each inference call to complete on this node, excluding cache */
   average_inference_time_ms_excluding_cache_hits?: DurationValue<UnitFloatMillis>
   average_inference_process_memory_rss_bytes?: ByteSize
+  /** The peak native memory (resident set size) of the inference process on this node. */
+  peak_inference_process_memory_rss_bytes?: ByteSize
   /** The number of errors when evaluating the trained model. */
   error_count?: integer
   /** The total number of inference calls made against this node for this model. */
@@ -32690,6 +32934,13 @@ export interface MlTrainedModelSizeStats {
   model_size_bytes: ByteSize
   /** The amount of memory required to load the model in bytes. */
   required_native_memory_bytes: ByteSize
+  /** The sum, across the nodes the deployment runs on, of the average memory of each node's inference process since it started.
+    * Unlike `required_native_memory_bytes`, which is an estimate, this is a measured value.
+    * It is returned only after the native process has reported a measurement. */
+  runtime_native_memory_bytes?: ByteSize
+  /** The sum, across the nodes the deployment runs on, of the peak native memory (resident set size) of each node's inference process since it started.
+    * It is returned only after the native process has reported a measurement. */
+  peak_runtime_native_memory_bytes?: ByteSize
 }
 
 export interface MlTrainedModelStats {
@@ -36897,6 +37148,34 @@ export interface ProjectTagsTagsKeys {
 export type ProjectTagsTags = ProjectTagsTagsKeys
 & { [property: string]: string }
 
+export interface PrometheusStatusBuildinfoBuildInfo {
+  /** The name of the application. It is always `Elasticsearch`. */
+  application: string
+  /** The Elasticsearch version. */
+  version: VersionString
+  /** The commit hash of the Elasticsearch build. */
+  revision: string
+  /** The date of the Elasticsearch build. */
+  buildDate: DateTime
+}
+
+export interface PrometheusStatusBuildinfoRequest extends RequestBase {
+  /** An index pattern, accepted for consistency with the other Prometheus endpoints.
+    * The response doesn't depend on it. */
+  index?: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
+}
+
+export interface PrometheusStatusBuildinfoResponse {
+  /** The status of the request. It is always `success`. */
+  status: string
+  /** The Elasticsearch build information. */
+  data: PrometheusStatusBuildinfoBuildInfo
+}
+
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
   rule_id: Id
@@ -37132,7 +37411,7 @@ export interface RollupFieldMetric {
 export interface RollupGroupings {
   /** A date histogram group aggregates a date field into time-based buckets.
     * This group is mandatory; you currently cannot roll up documents without a timestamp and a `date_histogram` group. */
-  date_histogram?: RollupDateHistogramGrouping
+  date_histogram: RollupDateHistogramGrouping
   /** The histogram group aggregates one or more numeric fields into numeric histogram intervals. */
   histogram?: RollupHistogramGrouping
   /** The terms group can be used on keyword or numeric fields to allow bucketing via the terms aggregation at a later point.
