@@ -137,7 +137,7 @@ client.bulk({ ... })
 #### Request (object) [_request_bulk]
 
 - **`index` (Optional, string)**: The name of the data stream, index, or index alias to perform bulk actions on.
-- **`operations` (Optional, { index, create, update, delete } \| { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } \| object[])**
+- **`operations` (Optional, { index, create, update, delete } \| { detect_noop, doc, doc_as_upsert, script, scripted_upsert, if_seq_no, if_primary_term, _source, upsert } \| object[])**
 - **`include_source_on_error` (Optional, boolean)**: True or false if to include the document source in the error message in case of parsing errors.
 - **`list_executed_pipelines` (Optional, boolean)**: If `true`, the response will include the ingest pipelines that were run for each index or create.
 - **`pipeline` (Optional, string)**: The pipeline identifier to use to preprocess incoming documents. If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request. If a final pipeline is configured, it will always run regardless of the value of this parameter.
@@ -3210,7 +3210,7 @@ be deferred until the total bytes of queued operations goes below the limit.
 - **`read_poll_timeout` (Optional, string \| -1 \| 0)**: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index.
 When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics.
 Then the follower will immediately attempt to read from the leader again.
-- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Settings to override from the leader index.
+- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, requests, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Settings to override from the leader index.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 - **`wait_for_active_shards` (Optional, number \| Enum("all" \| "index-setting"))**: Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
 active.
@@ -5509,6 +5509,9 @@ client.ilm.explainLifecycle({ index })
 To target all data streams and indices, use `*` or `_all`.
 - **`only_errors` (Optional, boolean)**: Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist.
 - **`only_managed` (Optional, boolean)**: Filters the returned indices to only indices that are managed by ILM.
+- **`expand_wildcards` (Optional, Enum("all" \| "open" \| "closed" \| "hidden" \| "none") \| Enum("all" \| "open" \| "closed" \| "hidden" \| "none")[])**: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 ## client.ilm.getLifecycle [_ilm.get_lifecycle]
@@ -5994,7 +5997,7 @@ Index names must meet the following criteria:
 - Field names
 - Field data types
 - Mapping parameters
-- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Configuration options for the index.
+- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, requests, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Configuration options for the index.
 - **`master_timeout` (Optional, string \| -1 \| 0)**: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
@@ -7220,7 +7223,7 @@ client.indices.putDataStreamSettings({ name })
 
 #### Request (object) [_request_indices.put_data_stream_settings]
 - **`name` (string \| string[])**: A list of data streams or data stream patterns.
-- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
+- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, requests, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
 - **`dry_run` (Optional, boolean)**: If `true`, the request does not actually change the settings on any data streams or indices. Instead, it
 simulates changing the settings and reports back to the user what would have happened had these settings
 actually been applied.
@@ -7438,7 +7441,7 @@ client.indices.putSettings({ ... })
 - **`index` (Optional, string \| string[])**: List of data streams, indices, and aliases used to limit
 the request. Supports wildcards (`*`). To target all data streams and
 indices, omit this parameter or use `*` or `_all`.
-- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
+- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, requests, similarity, mapping, indexing.slowlog, indexing_pressure, store })**
 - **`allow_no_indices` (Optional, boolean)**: A setting that does two separate checks on the index expression.
 If `false`, the request returns an error (1) if any wildcard expression
 (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -7506,7 +7509,7 @@ matches multiple templates.
 
 Templates with lower 'order' values are merged first. Templates with higher
 'order' values are merged later, overriding templates with lower values.
-- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Configuration options for the index.
+- **`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, requests, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Configuration options for the index.
 - **`version` (Optional, number)**: Version number used to manage index templates externally. This number
 is not automatically generated by Elasticsearch.
 To unset a version, replace the template without specifying one.
@@ -12066,6 +12069,24 @@ A list of the following options: `_all`, `rest_actions`, `aggregations`.
 - **`timeout` (Optional, string \| -1 \| 0)**: Period to wait for a response.
 If no response is received before the timeout expires, the request fails and returns an error.
 
+## client.prometheus.statusBuildinfo [_prometheus.status_buildinfo]
+Get Prometheus build information.
+
+Get Elasticsearch build information in the format of the Prometheus `/api/v1/status/buildinfo` endpoint.
+Prometheus-compatible clients, such as Grafana, call this endpoint to identify the backend and the features it supports.
+
+[Endpoint documentation](https://www.elastic.co/docs/api/doc/elasticsearch#TODO)
+
+```ts
+client.prometheus.statusBuildinfo({ ... })
+```
+
+### Arguments [_arguments_prometheus.status_buildinfo]
+
+#### Request (object) [_request_prometheus.status_buildinfo]
+- **`index` (Optional, string)**: An index pattern, accepted for consistency with the other Prometheus endpoints.
+The response doesn't depend on it.
+
 ## client.queryRules.deleteRule [_query_rules.delete_rule]
 Delete a query rule.
 
@@ -15306,7 +15327,7 @@ It completely removes all persistent settings, non-legacy index templates, inges
 Use the `feature_states` parameter to configure how feature states are restored.
 
 If `include_global_state` is `true` and a snapshot was created without a global state then the restore request will fail.
-- **`index_settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Index settings to add or change in restored indices, including backing indices.
+- **`index_settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, unassigned, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, requests, similarity, mapping, indexing.slowlog, indexing_pressure, store })**: Index settings to add or change in restored indices, including backing indices.
 You can't use this option to change `index.number_of_shards`.
 
 For data streams, this option applies only to restored backing indices.
