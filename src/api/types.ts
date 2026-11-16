@@ -20,11 +20,20 @@ export interface BulkCreateOperation extends BulkWriteOperation {
 }
 
 export interface BulkDeleteOperation extends BulkOperationBase {
+  /** The explicit version number for concurrency control.
+    * It must be a non-negative long number.
+    * This parameter is not supported for `update` actions. */
+  version?: VersionNumber
+  /** The version type.
+    * This parameter is not supported for `update` actions. */
+  version_type?: VersionType
 }
 
 export type BulkFailureStoreStatus = 'not_applicable_or_unknown' | 'used' | 'not_enabled' | 'failed'
 
 export interface BulkIndexOperation extends BulkWriteOperation {
+  /** Set to `create` to only index the document if it does not already exist. */
+  op_type?: OpType
 }
 
 export interface BulkOperationBase {
@@ -37,8 +46,6 @@ export interface BulkOperationBase {
   routing?: string
   if_primary_term?: long
   if_seq_no?: SequenceNumber
-  version?: VersionNumber
-  version_type?: VersionType
 }
 
 interface BulkOperationContainerExclusiveProps {
@@ -125,7 +132,10 @@ export interface BulkResponse {
 }
 
 export interface BulkResponseItem {
-  /** The document ID associated with the operation. */
+  /** The document ID associated with the operation.
+    * It is `null` when an `index` or `create` operation without an explicit `_id` fails before Elasticsearch generates an ID for the document.
+    * Elasticsearch generates the ID when it routes the document to a shard, so the ID is still `null` for failures that happen earlier, such as an ingest pipeline error, a missing or closed target index, a failed `require_alias` or `require_data_stream` check, or missing required routing.
+    * `update` and `delete` operations always include an ID. */
   _id?: string | null
   /** The name of the index associated with the operation.
     * If the operation targeted a data stream, this is the backing index into which the document was written. */
@@ -166,6 +176,10 @@ export interface BulkUpdateAction<TDocument = unknown, TPartialDocument = unknow
   script?: Script | ScriptSource
   /** Set to `true` to run the script whether or not the document exists. */
   scripted_upsert?: boolean
+  /** Only perform the update if the document has this sequence number. */
+  if_seq_no?: SequenceNumber
+  /** Only perform the update if the document has this primary term. */
+  if_primary_term?: long
   /** If `false`, source retrieval is turned off.
     * You can also specify a comma-separated list of the fields you want to retrieve. */
   _source?: SearchSourceConfig
@@ -179,20 +193,45 @@ export interface BulkUpdateOperation extends BulkOperationBase {
   require_alias?: boolean
   /** The number of times an update should be retried in the case of a version conflict. */
   retry_on_conflict?: integer
+  /** The ID of the pipeline to use to preprocess the `upsert` document, if one is created.
+    * If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request.
+    * If a final pipeline is configured, it will always run regardless of the value of this parameter. */
+  pipeline?: string
+  /** If `true`, the response includes the ingest pipelines that were run for the `upsert` document, if one is created. */
+  list_executed_pipelines?: boolean
+  /** If `false`, source retrieval is turned off.
+    * You can also specify a comma-separated list of the fields you want to retrieve.
+    * If set, it overrides the `_source` value in the update source line. */
+  _source?: SearchSourceConfig
 }
 
 export interface BulkWriteOperation extends BulkOperationBase {
+  /** The explicit version number for concurrency control.
+    * It must be a non-negative long number.
+    * This parameter is not supported for `update` actions. */
+  version?: VersionNumber
+  /** The version type.
+    * This parameter is not supported for `update` actions. */
+  version_type?: VersionType
   /** A map from the full name of fields to the name of dynamic templates.
     * It defaults to an empty map.
     * If a name matches a dynamic template, that template will be applied regardless of other match predicates defined in the template.
     * If a field is already defined in the mapping, then this parameter won't be used. */
   dynamic_templates?: Record<string, string>
+  /** A map from the full name of fields to the parameters to pass to the dynamic template selected for that field in `dynamic_templates`.
+    * Each value is a map from parameter names to parameter values.
+    * The dynamic template can reference a parameter with a placeholder such as `{unit:}`, where the text after the colon is the default value. */
+  dynamic_template_params?: Record<string, Record<string, string>>
   /** The ID of the pipeline to use to preprocess incoming documents.
     * If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request.
     * If a final pipeline is configured, it will always run regardless of the value of this parameter. */
   pipeline?: string
   /** If `true`, the request's actions must target an index alias. */
   require_alias?: boolean
+  /** If `true`, the action must target a data stream (existing or to be created). */
+  require_data_stream?: boolean
+  /** If `true`, the response includes the ingest pipelines that were run for this action. */
+  list_executed_pipelines?: boolean
 }
 
 export interface CancelReindexRequest extends RequestBase {
@@ -4314,12 +4353,15 @@ export interface InternalGetDesiredNodesRequest extends RequestBase {
 export type InternalGetDesiredNodesResponse = any
 
 export interface InternalPrevalidateNodeRemovalRequest extends RequestBase {
-  /** A comma-separated list of node names to prevalidate */
-  names?: string[]
-  /** A comma-separated list of node IDs to prevalidate */
-  ids?: string[]
-  /** A comma-separated list of node external IDs to prevalidate */
-  external_ids?: string[]
+  /** A comma-separated list of node names to prevalidate.
+    * Defaults to an empty array. */
+  names?: string[] | string
+  /** A comma-separated list of node IDs to prevalidate
+    * Defaults to an empty array. */
+  ids?: string[] | string
+  /** A comma-separated list of node external IDs to prevalidate
+    * Defaults to an empty array. */
+  external_ids?: string[] | string
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -10408,14 +10450,11 @@ export interface QueryDslMoreLikeThisQuery extends QueryDslQueryBase {
   min_term_freq?: integer
   /** The minimum word length below which the terms are ignored. */
   min_word_length?: integer
-  routing?: string
   /** An array of stop words.
     * Any word in this set is ignored. */
   stop_words?: AnalysisStopWords
   /** Used in combination with `like` to exclude documents that match a set of terms. */
   unlike?: QueryDslLike | QueryDslLike[]
-  version?: VersionNumber
-  version_type?: VersionType
 }
 
 export interface QueryDslMultiMatchQuery extends QueryDslQueryBase {
@@ -11529,7 +11568,7 @@ export type CatCatAllocationColumn = 'shards' | 's' | 'shards.undesired' | 'writ
 
 export type CatCatAllocationColumns = CatCatAllocationColumn | CatCatAllocationColumn[]
 
-export type CatCatAnomalyDetectorColumn = 'assignment_explanation' | 'ae' | 'buckets.count' | 'bc' | 'bucketsCount' | 'buckets.time.exp_avg' | 'btea' | 'bucketsTimeExpAvg' | 'buckets.time.exp_avg_hour' | 'bteah' | 'bucketsTimeExpAvgHour' | 'buckets.time.max' | 'btmax' | 'bucketsTimeMax' | 'buckets.time.min' | 'btmin' | 'bucketsTimeMin' | 'buckets.time.total' | 'btt' | 'bucketsTimeTotal' | 'data.buckets' | 'db' | 'dataBuckets' | 'data.earliest_record' | 'der' | 'dataEarliestRecord' | 'data.empty_buckets' | 'deb' | 'dataEmptyBuckets' | 'data.input_bytes' | 'dib' | 'dataInputBytes' | 'data.input_fields' | 'dif' | 'dataInputFields' | 'data.input_records' | 'dir' | 'dataInputRecords' | 'data.invalid_dates' | 'did' | 'dataInvalidDates' | 'data.last' | 'dl' | 'dataLast' | 'data.last_empty_bucket' | 'dleb' | 'dataLastEmptyBucket' | 'data.last_sparse_bucket' | 'dlsb' | 'dataLastSparseBucket' | 'data.latest_record' | 'dlr' | 'dataLatestRecord' | 'data.missing_fields' | 'dmf' | 'dataMissingFields' | 'data.out_of_order_timestamps' | 'doot' | 'dataOutOfOrderTimestamps' | 'data.processed_fields' | 'dpf' | 'dataProcessedFields' | 'data.processed_records' | 'dpr' | 'dataProcessedRecords' | 'data.sparse_buckets' | 'dsb' | 'dataSparseBuckets' | 'forecasts.memory.avg' | 'fmavg' | 'forecastsMemoryAvg' | 'forecasts.memory.max' | 'fmmax' | 'forecastsMemoryMax' | 'forecasts.memory.min' | 'fmmin' | 'forecastsMemoryMin' | 'forecasts.memory.total' | 'fmt' | 'forecastsMemoryTotal' | 'forecasts.records.avg' | 'fravg' | 'forecastsRecordsAvg' | 'forecasts.records.max' | 'frmax' | 'forecastsRecordsMax' | 'forecasts.records.min' | 'frmin' | 'forecastsRecordsMin' | 'forecasts.records.total' | 'frt' | 'forecastsRecordsTotal' | 'forecasts.time.avg' | 'ftavg' | 'forecastsTimeAvg' | 'forecasts.time.max' | 'ftmax' | 'forecastsTimeMax' | 'forecasts.time.min' | 'ftmin' | 'forecastsTimeMin' | 'forecasts.time.total' | 'ftt' | 'forecastsTimeTotal' | 'forecasts.total' | 'ft' | 'forecastsTotal' | 'id' | 'model.bucket_allocation_failures' | 'mbaf' | 'modelBucketAllocationFailures' | 'model.by_fields' | 'mbf' | 'modelByFields' | 'model.bytes' | 'mb' | 'modelBytes' | 'model.bytes_exceeded' | 'mbe' | 'modelBytesExceeded' | 'model.categorization_status' | 'mcs' | 'modelCategorizationStatus' | 'model.categorized_doc_count' | 'mcdc' | 'modelCategorizedDocCount' | 'model.dead_category_count' | 'mdcc' | 'modelDeadCategoryCount' | 'model.failed_category_count' | 'mdcc' | 'modelFailedCategoryCount' | 'model.frequent_category_count' | 'mfcc' | 'modelFrequentCategoryCount' | 'model.log_time' | 'mlt' | 'modelLogTime' | 'model.memory_limit' | 'mml' | 'modelMemoryLimit' | 'model.memory_status' | 'mms' | 'modelMemoryStatus' | 'model.over_fields' | 'mof' | 'modelOverFields' | 'model.partition_fields' | 'mpf' | 'modelPartitionFields' | 'model.rare_category_count' | 'mrcc' | 'modelRareCategoryCount' | 'model.timestamp' | 'mt' | 'modelTimestamp' | 'model.total_category_count' | 'mtcc' | 'modelTotalCategoryCount' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'opened_time' | 'ot' | 'state' | 's'
+export type CatCatAnomalyDetectorColumn = 'assignment_explanation' | 'ae' | 'buckets.count' | 'bc' | 'bucketsCount' | 'buckets.time.exp_avg' | 'btea' | 'bucketsTimeExpAvg' | 'buckets.time.exp_avg_hour' | 'bteah' | 'bucketsTimeExpAvgHour' | 'buckets.time.max' | 'btmax' | 'bucketsTimeMax' | 'buckets.time.min' | 'btmin' | 'bucketsTimeMin' | 'buckets.time.total' | 'btt' | 'bucketsTimeTotal' | 'data.buckets' | 'db' | 'dataBuckets' | 'data.earliest_record' | 'der' | 'dataEarliestRecord' | 'data.empty_buckets' | 'deb' | 'dataEmptyBuckets' | 'data.input_bytes' | 'dib' | 'dataInputBytes' | 'data.input_fields' | 'dif' | 'dataInputFields' | 'data.input_records' | 'dir' | 'dataInputRecords' | 'data.invalid_dates' | 'did' | 'dataInvalidDates' | 'data.last' | 'dl' | 'dataLast' | 'data.last_empty_bucket' | 'dleb' | 'dataLastEmptyBucket' | 'data.last_sparse_bucket' | 'dlsb' | 'dataLastSparseBucket' | 'data.latest_record' | 'dlr' | 'dataLatestRecord' | 'data.missing_fields' | 'dmf' | 'dataMissingFields' | 'data.out_of_order_timestamps' | 'doot' | 'dataOutOfOrderTimestamps' | 'data.processed_fields' | 'dpf' | 'dataProcessedFields' | 'data.processed_records' | 'dpr' | 'dataProcessedRecords' | 'data.sparse_buckets' | 'dsb' | 'dataSparseBuckets' | 'forecasts.memory.avg' | 'fmavg' | 'forecastsMemoryAvg' | 'forecasts.memory.max' | 'fmmax' | 'forecastsMemoryMax' | 'forecasts.memory.min' | 'fmmin' | 'forecastsMemoryMin' | 'forecasts.memory.total' | 'fmt' | 'forecastsMemoryTotal' | 'forecasts.records.avg' | 'fravg' | 'forecastsRecordsAvg' | 'forecasts.records.max' | 'frmax' | 'forecastsRecordsMax' | 'forecasts.records.min' | 'frmin' | 'forecastsRecordsMin' | 'forecasts.records.total' | 'frt' | 'forecastsRecordsTotal' | 'forecasts.time.avg' | 'ftavg' | 'forecastsTimeAvg' | 'forecasts.time.max' | 'ftmax' | 'forecastsTimeMax' | 'forecasts.time.min' | 'ftmin' | 'forecastsTimeMin' | 'forecasts.time.total' | 'ftt' | 'forecastsTimeTotal' | 'forecasts.total' | 'ft' | 'forecastsTotal' | 'id' | 'model.bucket_allocation_failures' | 'mbaf' | 'modelBucketAllocationFailures' | 'model.by_fields' | 'mbf' | 'modelByFields' | 'model.bytes' | 'mb' | 'modelBytes' | 'model.bytes_exceeded' | 'mbe' | 'modelBytesExceeded' | 'model.categorization_status' | 'mcs' | 'modelCategorizationStatus' | 'model.categorized_doc_count' | 'mcdc' | 'modelCategorizedDocCount' | 'model.dead_category_count' | 'mdcc' | 'modelDeadCategoryCount' | 'model.failed_category_count' | 'mfcc' | 'modelFailedCategoryCount' | 'model.frequent_category_count' | 'mfcc' | 'modelFrequentCategoryCount' | 'model.log_time' | 'mlt' | 'modelLogTime' | 'model.memory_limit' | 'mml' | 'modelMemoryLimit' | 'model.memory_status' | 'mms' | 'modelMemoryStatus' | 'model.over_fields' | 'mof' | 'modelOverFields' | 'model.partition_fields' | 'mpf' | 'modelPartitionFields' | 'model.rare_category_count' | 'mrcc' | 'modelRareCategoryCount' | 'model.timestamp' | 'mt' | 'modelTimestamp' | 'model.total_category_count' | 'mtcc' | 'modelTotalCategoryCount' | 'node.address' | 'na' | 'nodeAddress' | 'node.ephemeral_id' | 'ne' | 'nodeEphemeralId' | 'node.id' | 'ni' | 'nodeId' | 'node.name' | 'nn' | 'nodeName' | 'opened_time' | 'ot' | 'state' | 's'
 
 export type CatCatAnomalyDetectorColumns = CatCatAnomalyDetectorColumn | CatCatAnomalyDetectorColumn[]
 
@@ -20556,6 +20595,11 @@ export interface IlmRolloverAction {
 export interface IlmSearchableSnapshotAction {
   snapshot_repository: string
   force_merge_index?: boolean
+  /** If `true`, and the index has replicas, ILM first clones the index with zero replicas and force merges the clone, so that replicas are not merged redundantly.
+    * If `false`, the managed index is force merged directly.
+    * Not allowed when `force_merge_index` is `false`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  force_merge_on_clone?: boolean
   /** The maximum number of shards, including primaries and replicas, that can be allocated to any single node for the mounted index.
     * Must be at least 1.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
@@ -20653,12 +20697,16 @@ export interface IlmExplainLifecycleRequest extends RequestBase {
   only_errors?: boolean
   /** Filters the returned indices to only indices that are managed by ILM. */
   only_managed?: boolean
+  /** Type of index that wildcard patterns can match.
+    * If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+    * Supports comma-separated values, such as `open,hidden`. */
+  expand_wildcards?: ExpandWildcards
   /** Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. */
   master_timeout?: Duration
   /** All values in `body` will be added to the request body. */
-  body?: string | { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, master_timeout?: never }
+  body?: string | { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, expand_wildcards?: never, master_timeout?: never }
   /** All values in `querystring` will be added to the request querystring. */
-  querystring?: { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, master_timeout?: never }
+  querystring?: { [key: string]: any } & { index?: never, only_errors?: never, only_managed?: never, expand_wildcards?: never, master_timeout?: never }
 }
 
 export interface IlmExplainLifecycleResponse {
@@ -20860,6 +20908,12 @@ export interface IndicesCacheQueries {
   enabled: boolean
 }
 
+export interface IndicesCacheRequests {
+  /** Whether the shard request cache is enabled for the index.
+    * This setting is dynamic and can be updated on an existing index. */
+  enable?: SpecUtilsStringified<boolean>
+}
+
 export interface IndicesDataStream {
   /** Custom metadata for the stream, copied from the `_meta` object of the stream’s matching index template.
     * If empty, the response omits this property. */
@@ -20904,8 +20958,10 @@ export interface IndicesDataStream {
   /** If `true`, the data stream is created and managed by an Elastic stack component and cannot be modified through normal user interaction. */
   system?: boolean
   /** Name of the index template used to create the data stream’s backing indices.
-    * The template’s index pattern must match the name of this data stream. */
-  template: Name
+    * The template’s index pattern must match the name of this data stream.
+    * This property is omitted if no index template currently matches the data stream, for example on a cross-cluster replication follower cluster that has no matching local template.
+    * For replicated data streams (`replicated` is `true`), the value is the local index template that matches the data stream name, which might not be the template that created the backing indices on the leader cluster. */
+  template?: Name
   /** Information about the `@timestamp` field in the data stream. */
   timestamp_field: IndicesDataStreamTimestampField
   /** The index mode for the data stream that will be used for newly created backing indices. */
@@ -21169,6 +21225,7 @@ export interface IndicesIndexSettingsKeys {
   settings?: IndicesIndexSettings
   time_series?: IndicesIndexSettingsTimeSeries
   queries?: IndicesQueries
+  requests?: IndicesRequests
   /** Configure custom similarity settings to customize how search results are scored. */
   similarity?: Record<string, IndicesSettingsSimilarity>
   /** Enable or disable dynamic mapping for an index. */
@@ -21481,6 +21538,10 @@ export type IndicesNumericFielddataFormat = 'array' | 'disabled'
 
 export interface IndicesQueries {
   cache?: IndicesCacheQueries
+}
+
+export interface IndicesRequests {
+  cache?: IndicesCacheRequests
 }
 
 export interface IndicesRetentionLease {
@@ -25086,19 +25147,7 @@ export interface InferenceCompletionToolFunction {
 
 export type InferenceCompletionToolType = string | InferenceCompletionToolChoice
 
-export interface InferenceContentObject {
-  /** The type of content. Must be one of `text`, `image_url` or `file`. Not all services/models support content
-    * types other than "text" */
-  type: InferenceContentType
-  /** The text content. Only applicable for the `text` type */
-  text: string
-  /** The image content. Only applicable for the `image_url` type */
-  image_url: InferenceImageUrl
-  /** The file content. Only applicable for the `file` type */
-  file: InferenceFileContent
-}
-
-export type InferenceContentType = 'text' | 'image_url' | 'file'
+export type InferenceContentObject = InferenceTextContent | InferenceImageUrlContent | InferenceFileContentPart
 
 export interface InferenceContextualAIServiceSettings {
   /** A valid API key for your Contexutual AI account.
@@ -25545,6 +25594,12 @@ export interface InferenceFileContent {
   filename: string
 }
 
+export interface InferenceFileContentPart {
+  type: 'file'
+  /** The file content. */
+  file: InferenceFileContent
+}
+
 export interface InferenceFireworksAIServiceSettings {
   /** A valid API key for your Fireworks AI account.
     * You can find or create your API keys in the Fireworks AI dashboard.
@@ -25751,6 +25806,12 @@ export interface InferenceImageUrl {
   url: string
   /** Specifies the detail level of the image */
   detail?: InferenceImageUrlDetail
+}
+
+export interface InferenceImageUrlContent {
+  type: 'image_url'
+  /** The image content. */
+  image_url: InferenceImageUrl
 }
 
 export type InferenceImageUrlDetail = 'auto' | 'low' | 'high'
@@ -26716,6 +26777,12 @@ export type InferenceTaskTypeOpenShiftAi = 'text_embedding' | 'chat_completion' 
 export type InferenceTaskTypeVoyageAI = 'text_embedding' | 'rerank'
 
 export type InferenceTaskTypeWatsonx = 'text_embedding' | 'chat_completion' | 'completion'
+
+export interface InferenceTextContent {
+  type: 'text'
+  /** The text content. */
+  text: string
+}
 
 interface InferenceTextEmbeddingInferenceResultExclusiveProps {
   text_embedding_bytes?: InferenceDenseEmbeddingByteResult[]
@@ -35706,6 +35773,34 @@ export interface ProjectTagsTagsKeys {
 export type ProjectTagsTags = ProjectTagsTagsKeys
 & { [property: string]: string }
 
+export interface PrometheusStatusBuildinfoBuildInfo {
+  /** The name of the application. It is always `Elasticsearch`. */
+  application: string
+  /** The Elasticsearch version. */
+  version: VersionString
+  /** The commit hash of the Elasticsearch build. */
+  revision: string
+  /** The date of the Elasticsearch build. */
+  buildDate: DateTime
+}
+
+export interface PrometheusStatusBuildinfoRequest extends RequestBase {
+  /** An index pattern, accepted for consistency with the other Prometheus endpoints.
+    * The response doesn't depend on it. */
+  index?: IndexName
+  /** All values in `body` will be added to the request body. */
+  body?: string | { [key: string]: any } & { index?: never }
+  /** All values in `querystring` will be added to the request querystring. */
+  querystring?: { [key: string]: any } & { index?: never }
+}
+
+export interface PrometheusStatusBuildinfoResponse {
+  /** The status of the request. It is always `success`. */
+  status: string
+  /** The Elasticsearch build information. */
+  data: PrometheusStatusBuildinfoBuildInfo
+}
+
 export interface QueryRulesQueryRule {
   /** A unique identifier for the rule. */
   rule_id: Id
@@ -35941,7 +36036,7 @@ export interface RollupFieldMetric {
 export interface RollupGroupings {
   /** A date histogram group aggregates a date field into time-based buckets.
     * This group is mandatory; you currently cannot roll up documents without a timestamp and a `date_histogram` group. */
-  date_histogram?: RollupDateHistogramGrouping
+  date_histogram: RollupDateHistogramGrouping
   /** The histogram group aggregates one or more numeric fields into numeric histogram intervals. */
   histogram?: RollupHistogramGrouping
   /** The terms group can be used on keyword or numeric fields to allow bucketing via the terms aggregation at a later point.
