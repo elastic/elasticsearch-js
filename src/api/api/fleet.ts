@@ -169,6 +169,7 @@ export default class Fleet {
           'from',
           'sort',
           'wait_for_checkpoints',
+          'wait_for_checkpoints_timeout',
           'allow_partial_search_results'
         ]
       }
@@ -504,7 +505,7 @@ export default class Fleet {
       acceptedParams: {
         path: ['index', '_slice'],
         body: ['aggregations', 'aggs', 'collapse', 'explain', 'ext', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats'],
-        query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort', 'wait_for_checkpoints', 'allow_partial_search_results']
+        query: ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'docvalue_fields', 'expand_wildcards', 'explain', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'stats', 'stored_fields', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'terminate_after', 'timeout', 'track_total_hits', 'track_scores', 'typed_keys', 'rest_total_hits_as_int', 'version', '_source', '_source_excludes', '_source_includes', 'seq_no_primary_term', 'q', 'size', 'from', 'sort', 'wait_for_checkpoints', 'wait_for_checkpoints_timeout', 'allow_partial_search_results']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)

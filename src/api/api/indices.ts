@@ -465,7 +465,8 @@ export default class Indices {
           'local',
           'flat_settings',
           'master_timeout',
-          'include_defaults'
+          'include_defaults',
+          'include_managed_fields'
         ]
       },
       'indices.get_mapping': {
@@ -920,6 +921,7 @@ export default class Indices {
           'fields',
           'forbid_closed_indices',
           'groups',
+          'include_auto_calibration',
           'include_segment_file_sizes',
           'include_unloaded_segments',
           'level'
@@ -2943,7 +2945,7 @@ export default class Indices {
       acceptedParams: {
         path: ['name'],
         body: [],
-        query: ['local', 'flat_settings', 'master_timeout', 'include_defaults']
+        query: ['local', 'flat_settings', 'master_timeout', 'include_defaults', 'include_managed_fields']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
@@ -4811,7 +4813,7 @@ export default class Indices {
       acceptedParams: {
         path: ['metric', 'index'],
         body: [],
-        query: ['completion_fields', 'expand_wildcards', 'fielddata_fields', 'fields', 'forbid_closed_indices', 'groups', 'include_segment_file_sizes', 'include_unloaded_segments', 'level']
+        query: ['completion_fields', 'expand_wildcards', 'fielddata_fields', 'fields', 'forbid_closed_indices', 'groups', 'include_auto_calibration', 'include_segment_file_sizes', 'include_unloaded_segments', 'level']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
