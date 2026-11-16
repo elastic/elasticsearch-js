@@ -31,6 +31,28 @@ export default class Inference {
   constructor (transport: Transport) {
     this.transport = transport
     this[kAcceptedParams] = {
+      'inference.chat_completion': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'chat_completion_request'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
+      'inference.chat_completion_streaming': {
+        path: [
+          'inference_id'
+        ],
+        body: [
+          'chat_completion_request'
+        ],
+        query: [
+          'timeout'
+        ]
+      },
       'inference.chat_completion_unified': {
         path: [
           'inference_id'
@@ -128,17 +150,6 @@ export default class Inference {
           'input',
           'input_type',
           'task_settings'
-        ],
-        query: [
-          'timeout'
-        ]
-      },
-      'inference.non_streaming_chat_completion': {
-        path: [
-          'inference_id'
-        ],
-        body: [
-          'chat_completion_request'
         ],
         query: [
           'timeout'
@@ -608,7 +619,111 @@ export default class Inference {
   }
 
   /**
-    * Perform streaming chat completion inference on the service. The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type. NOTE: The `chat_completion` task type supports both streaming and non-streaming. The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. To determine whether a given inference service supports this task type, please see the page for that service.
+    * Perform non-streaming chat completion inference on the service. The chat completion inference API enables rich responses for chat completion tasks. It only works with the `chat_completion` task type. NOTE: The `chat_completion` task type supports both streaming and non-streaming. To stream the response, use the streaming chat completion API (`POST _inference/chat_completion/{inference_id}/_stream`). The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. To determine whether a given inference service supports this task type, please see the page for that service. These services support non-streaming chat completion inference: - AI21 - Azure OpenAI - Deepseek - Elastic - FireworksAI - Groq - Huggingface - IBMWatsonX - Llama - Mistral - NVIDIA - OpenAI - OpenShiftAI
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-chat-completion | Elasticsearch API documentation}
+    */
+  async chatCompletion (this: That, params: T.InferenceChatCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionResponse>
+  async chatCompletion (this: That, params: T.InferenceChatCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceChatCompletionResponse, unknown>>
+  async chatCompletion (this: That, params: T.InferenceChatCompletionRequest, options?: TransportRequestOptions): Promise<T.InferenceChatCompletionResponse>
+  async chatCompletion (this: That, params: T.InferenceChatCompletionRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.chat_completion']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_inference/chat_completion/${encodeURIComponent(params.inference_id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.chat_completion',
+      pathParts: {
+        inference_id: params.inference_id
+      },
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['chat_completion_request'],
+        query: ['timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Perform streaming chat completion inference on the service. The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type. NOTE: The `chat_completion` task type supports both streaming and non-streaming. For a single, non-streamed response, use the chat completion API (`POST _inference/chat_completion/{inference_id}`). The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. To determine whether a given inference service supports this task type, please see the page for that service.
+    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-chat-completion-streaming | Elasticsearch API documentation}
+    */
+  async chatCompletionStreaming (this: That, params: T.InferenceChatCompletionStreamingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionStreamingResponse>
+  async chatCompletionStreaming (this: That, params: T.InferenceChatCompletionStreamingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceChatCompletionStreamingResponse, unknown>>
+  async chatCompletionStreaming (this: That, params: T.InferenceChatCompletionStreamingRequest, options?: TransportRequestOptions): Promise<T.InferenceChatCompletionStreamingResponse>
+  async chatCompletionStreaming (this: That, params: T.InferenceChatCompletionStreamingRequest, options?: TransportRequestOptions): Promise<any> {
+    const {
+      path: acceptedPath,
+      body: acceptedBody,
+      query: acceptedQuery
+    } = this[kAcceptedParams]['inference.chat_completion_streaming']
+
+    const userQuery = params?.querystring
+    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
+
+    let body: any = params.body ?? undefined
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body' && key !== 'querystring') {
+        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
+          // @ts-expect-error
+          querystring[key] = params[key]
+        } else {
+          body = body ?? {}
+          // @ts-expect-error
+          body[key] = params[key]
+        }
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_inference/chat_completion/${encodeURIComponent(params.inference_id.toString())}/_stream`
+    const meta: TransportRequestMetadata = {
+      name: 'inference.chat_completion_streaming',
+      pathParts: {
+        inference_id: params.inference_id
+      },
+      acceptedParams: {
+        path: ['inference_id'],
+        body: ['chat_completion_request'],
+        query: ['timeout']
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Perform streaming chat completion inference on the service. The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. It only works with the `chat_completion` task type. NOTE: The `chat_completion` task type supports both streaming and non-streaming. For a single, non-streamed response, use the chat completion API (`POST _inference/chat_completion/{inference_id}`). The Chat completion inference API and the Stream inference API differ in their response structure and capabilities. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. To determine whether a given inference service supports this task type, please see the page for that service.
     * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference | Elasticsearch API documentation}
     */
   async chatCompletionUnified (this: That, params: T.InferenceChatCompletionUnifiedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceChatCompletionUnifiedResponse>
@@ -1180,58 +1295,6 @@ export default class Inference {
       acceptedParams: {
         path: ['task_type', 'inference_id'],
         body: ['query', 'input', 'input_type', 'task_settings'],
-        query: ['timeout']
-      }
-    }
-    return await this.transport.request({ path, method, querystring, body, meta }, options)
-  }
-
-  /**
-    * Perform non-streaming chat completion inference on the service. The chat completion inference API enables rich responses for chat completion tasks. It only works with the `chat_completion` task type. NOTE: The `chat_completion` task type supports both streaming and non-streaming. The Chat completion inference API provides more comprehensive customization options through more fields and function calling support. To determine whether a given inference service supports this task type, please see the page for that service. These services support non-streaming chat completion inference: - AI21 - Azure OpenAI - Deepseek - Elastic - FireworksAI - Groq - Huggingface - IBMWatsonX - Llama - Mistral - NVIDIA - OpenAI - OpenShiftAI
-    * @see {@link https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-non-streaming-chat-completion | Elasticsearch API documentation}
-    */
-  async nonStreamingChatCompletion (this: That, params: T.InferenceNonStreamingChatCompletionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceNonStreamingChatCompletionResponse>
-  async nonStreamingChatCompletion (this: That, params: T.InferenceNonStreamingChatCompletionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceNonStreamingChatCompletionResponse, unknown>>
-  async nonStreamingChatCompletion (this: That, params: T.InferenceNonStreamingChatCompletionRequest, options?: TransportRequestOptions): Promise<T.InferenceNonStreamingChatCompletionResponse>
-  async nonStreamingChatCompletion (this: That, params: T.InferenceNonStreamingChatCompletionRequest, options?: TransportRequestOptions): Promise<any> {
-    const {
-      path: acceptedPath,
-      body: acceptedBody,
-      query: acceptedQuery
-    } = this[kAcceptedParams]['inference.non_streaming_chat_completion']
-
-    const userQuery = params?.querystring
-    const querystring: Record<string, any> = userQuery != null ? { ...userQuery } : {}
-
-    let body: any = params.body ?? undefined
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body' && key !== 'querystring') {
-        if (acceptedQuery.includes(key) || commonQueryParams.includes(key)) {
-          // @ts-expect-error
-          querystring[key] = params[key]
-        } else {
-          body = body ?? {}
-          // @ts-expect-error
-          body[key] = params[key]
-        }
-      }
-    }
-
-    const method = 'POST'
-    const path = `/_inference/chat_completion/${encodeURIComponent(params.inference_id.toString())}`
-    const meta: TransportRequestMetadata = {
-      name: 'inference.non_streaming_chat_completion',
-      pathParts: {
-        inference_id: params.inference_id
-      },
-      acceptedParams: {
-        path: ['inference_id'],
-        body: ['chat_completion_request'],
         query: ['timeout']
       }
     }

@@ -76,7 +76,6 @@ export default class DataRecovery {
           'started_at_gte',
           'started_at_lt',
           'order',
-          'search_after_started_at',
           'search_after_recovery_id',
           'status'
         ]
@@ -287,7 +286,7 @@ export default class DataRecovery {
   }
 
   /**
-    * List recoveries. List the recoveries that were started with the start recovery API, including those that have finished. This API is intended for internal operator use. Recoveries are ordered by start time, and the most recent are returned first by default. To retrieve further pages, pass the start time and identifier of the last recovery of a page as `search_after_started_at` and `search_after_recovery_id`.
+    * List recoveries. List the recoveries that were started with the start recovery API, including those that have finished. This API is intended for internal operator use. Recoveries are ordered by start time, and the most recent are returned first by default. To retrieve further pages, pass the identifier of the last recovery of a page as `search_after_recovery_id`. To restrict the results to a period instead, use `started_at_gte` and `started_at_lt`.
     */
   async listRecoveries (this: That, params?: T.DataRecoveryListRecoveriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DataRecoveryListRecoveriesResponse>
   async listRecoveries (this: That, params?: T.DataRecoveryListRecoveriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DataRecoveryListRecoveriesResponse, unknown>>
@@ -327,7 +326,7 @@ export default class DataRecovery {
       acceptedParams: {
         path: [],
         body: [],
-        query: ['size', 'started_at_gte', 'started_at_lt', 'order', 'search_after_started_at', 'search_after_recovery_id', 'status']
+        query: ['size', 'started_at_gte', 'started_at_lt', 'order', 'search_after_recovery_id', 'status']
       }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
