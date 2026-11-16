@@ -4147,12 +4147,15 @@ export interface InternalGetDesiredNodesRequest extends RequestBase {
 export type InternalGetDesiredNodesResponse = any
 
 export interface InternalPrevalidateNodeRemovalRequest extends RequestBase {
-  /** A comma-separated list of node names to prevalidate */
-  names?: string[]
-  /** A comma-separated list of node IDs to prevalidate */
-  ids?: string[]
-  /** A comma-separated list of node external IDs to prevalidate */
-  external_ids?: string[]
+  /** A comma-separated list of node names to prevalidate.
+    * Defaults to an empty array. */
+  names?: string[] | string
+  /** A comma-separated list of node IDs to prevalidate
+    * Defaults to an empty array. */
+  ids?: string[] | string
+  /** A comma-separated list of node external IDs to prevalidate
+    * Defaults to an empty array. */
+  external_ids?: string[] | string
   /** Period to wait for a connection to the master node. */
   master_timeout?: Duration
   /** Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. */
@@ -20106,6 +20109,11 @@ export interface IlmRolloverAction {
 export interface IlmSearchableSnapshotAction {
   snapshot_repository: string
   force_merge_index?: boolean
+  /** If `true`, and the index has replicas, ILM first clones the index with zero replicas and force merges the clone, so that replicas are not merged redundantly.
+    * If `false`, the managed index is force merged directly.
+    * Not allowed when `force_merge_index` is `false`.
+    * @remarks This property is not supported on Elastic Cloud Serverless. */
+  force_merge_on_clone?: boolean
   /** The maximum number of shards, including primaries and replicas, that can be allocated to any single node for the mounted index.
     * Must be at least 1.
     * @remarks This property is not supported on Elastic Cloud Serverless. */
@@ -20408,6 +20416,12 @@ export interface IndicesAliasDefinition {
 
 export interface IndicesCacheQueries {
   enabled: boolean
+}
+
+export interface IndicesCacheRequests {
+  /** Whether the shard request cache is enabled for the index.
+    * This setting is dynamic and can be updated on an existing index. */
+  enable?: SpecUtilsStringified<boolean>
 }
 
 export interface IndicesDataStream {
@@ -20717,6 +20731,7 @@ export interface IndicesIndexSettingsKeys {
   settings?: IndicesIndexSettings
   time_series?: IndicesIndexSettingsTimeSeries
   queries?: IndicesQueries
+  requests?: IndicesRequests
   /** Configure custom similarity settings to customize how search results are scored. */
   similarity?: Record<string, IndicesSettingsSimilarity>
   /** Enable or disable dynamic mapping for an index. */
@@ -21029,6 +21044,10 @@ export type IndicesNumericFielddataFormat = 'array' | 'disabled'
 
 export interface IndicesQueries {
   cache?: IndicesCacheQueries
+}
+
+export interface IndicesRequests {
+  cache?: IndicesCacheRequests
 }
 
 export interface IndicesRetentionLease {
