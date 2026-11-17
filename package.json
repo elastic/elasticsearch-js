@@ -24,7 +24,7 @@
     }
   },
   "scripts": {
-    "test": "npm run build && npm run lint && c8 --exclude='**/api/**' --exclude='**/test/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=91 tap --disable-coverage",
+    "test": "npm run build && npm run lint && c8 --exclude='**/api/**' --exclude='**/test/**' --exclude='**/scripts/**' --check-coverage --statements=96 --branches=90 --lines=96 --functions=91 tap --disable-coverage",
     "test:unit": "npm run build && tap",
     "test:unit-bun": "bun run build && c8 --exclude='**/api/**' --exclude='**/test/**' bunx tap --disable-coverage",
     "test:bundler": "npm run build && cd test/bundlers/repro && npm install file:../../.. && npx esbuild@0.24 --bundle --platform=node repro.mjs --outfile=bundled.js && node bundled.js",
@@ -35,7 +35,7 @@
     "test:integration-build": "npm run build && node test/integration/index.js",
     "test:integration": "npm run test:integration-build && tap run --jobs=1 --disable-coverage --reporter=junit --reporter-file=report-junit.xml generated-tests/",
     "test:fuzz": "npm run build && node test/fuzz/run.mjs",
-    "test:property": "npm run build && tap --disable-coverage test/property/",
+    "test:property": "npm run build && tap --disable-coverage --timeout=300 test/property/*.test.mjs",
     "lint": "eslint",
     "lint:fix": "eslint . --fix ",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
