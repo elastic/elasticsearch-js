@@ -35,6 +35,7 @@
     "test:integration-build": "npm run build && node test/integration/index.js",
     "test:integration": "npm run test:integration-build && tap run --jobs=1 --disable-coverage --reporter=junit --reporter-file=report-junit.xml generated-tests/",
     "test:fuzz": "npm run build && node test/fuzz/run.mjs",
+    "test:property": "npm run build && tap --disable-coverage test/property/",
     "lint": "eslint",
     "lint:fix": "eslint . --fix ",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
@@ -79,6 +80,7 @@
   },
   "devDependencies": {
     "@elastic/request-converter": "9.3.0",
+    "@hegeldev/hegel": "0.5.8",
     "@opentelemetry/sdk-trace-base": "1.30.1",
     "@sinonjs/fake-timers": "14.0.0",
     "@types/debug": "4.1.13",

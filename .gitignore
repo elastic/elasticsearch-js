@@ -76,3 +76,6 @@ yaml-rest-tests
 generated-tests
 schema
 base64-data
+
+# Hegel property-test example database
+.hegel
