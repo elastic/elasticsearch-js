@@ -242,6 +242,13 @@ export default class Client extends API {
         }
 
         opts.node = `https://${cloudUrls[1]}.${cloudUrls[0]}`
+        if (!URL.canParse(opts.node)) {
+          throw new errors.ConfigurationError('Cloud ID does not decode to a valid URL.')
+        }
+        const { username, password } = new URL(opts.node)
+        if (username !== '' || password !== '') {
+          throw new errors.ConfigurationError('Cloud ID must not contain credentials.')
+        }
       }
 
       // Cloud has better performance with compression enabled
