@@ -1,0 +1,54 @@
+---
+name: Weekly property tests
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+# runs read then create issues, so overlapping runs could file duplicates
+concurrency:
+  group: property-test-issues
+  cancel-in-progress: false
+
+jobs:
+  property:
+    name: Property tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.x
+
+      - name: Install
+        run: |
+          npm install
+
+      - name: Build
+        run: |
+          npm run build
+
+      # Hegel derandomizes on CI, so without an explicit seed every run would test
+      # the same inputs. The ISO week (e.g. 202647) gives new inputs each week
+      # and a seed anyone can replay.
+      - name: Seed from ISO week
+        run: |
+          echo "HEGEL_SEED=$(date -u +%G%V)" >> "$GITHUB_ENV"
+
+      - name: Run property tests and file issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          node scripts/property-test-issues.mjs
