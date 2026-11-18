@@ -475,10 +475,12 @@ export default class Client extends API {
     // @ts-expect-error kChild symbol is for internal use only
     const options: ClientOptions = Object.assign({}, this[kInitialOptions], opts)
 
-    // Clone headers to avoid mutating the parent's headers objectwhen prepareHeaders adds authorization
-    if (options.headers != null) {
-      options.headers = { ...options.headers }
-    }
+    // new object so prepareHeaders can't mutate the parent's headers
+    // @ts-expect-error kInitialOptions symbol is for internal use only
+    const headers: Record<string, any> = { ...this[kInitialOptions].headers, ...opts.headers }
+    // inherited authorization would block prepareHeaders from applying the child's auth
+    if (opts.auth !== undefined && opts.headers?.authorization === undefined) delete headers.authorization
+    options.headers = headers
 
     // Pass to the child client the parent instances that cannot be overridden
     // @ts-expect-error kInitialOptions symbol is for internal use only
