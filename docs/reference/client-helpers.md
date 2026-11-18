@@ -135,6 +135,17 @@ To create a new instance of the Bulk helper, access it as shown in the example a
     })
     ```
 
+`maxRequestBytes`
+:   Upper limit in bytes for each bulk request body, including newlines. If adding the next operation would exceed it, the buffered operations are sent first. An operation larger than the limit on its own is sent alone. Unlike `flushBytes`, which is a threshold, this is a ceiling.
+    *Default:* `undefined`
+
+    ```js
+    const b = client.helpers.bulk({
+      flushBytes: 5000000,
+      maxRequestBytes: 10000000
+    })
+    ```
+
 `flushInterval`
 :   How much time (in milliseconds) the helper waits before flushing the body from the last document read.
     *Default:* `30000`
