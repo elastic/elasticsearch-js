@@ -78,7 +78,7 @@ When you start {{es}} for the first time you’ll see a distinct block like the 
 Depending on the circumstances there are two options for verifying the HTTPS connection, either verifying with the CA certificate itself or via the HTTP CA certificate fingerprint.
 
 ::::{warning}
-If you have set [the `agent` option](/reference/basic-config.md#agent-config) on your client instance to a function and are using `UndiciConnection`&mdash;the default `Connection` value starting in 8.0&mdash;all `caFingerprint` and `tls` options will be ignored. It is your responsibility to ensure that your custom agent will properly verify HTTPS connections.
+A function [`agent`](/reference/basic-config.md#agent-config) cannot be combined with `caFingerprint`. The client throws. A function agent also skips built-in `tls` handling, so that agent must verify HTTPS itself.
 ::::
 
 ### TLS configuration [auth-tls]
@@ -104,20 +104,15 @@ const client = new Client({
 
 ### CA fingerprint [auth-ca-fingerprint]
 
-You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a `caFingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value. You must configure a SHA256 digest.
+`caFingerprint` pins the matching certificate as the only trust anchor. Signature, expiry, and hostname checks stay on. The value is a SHA256 digest. Pin the CA fingerprint Elasticsearch prints at startup. A pinned leaf is kept for the life of the process, so restart the client when that leaf rotates.
 
 ```js
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'https://example.com'
+  node: 'https://example.com',
   auth: { ... },
-  // the fingerprint (SHA256) of the CA certificate that is used to sign
-  // the certificate that the Elasticsearch node presents for TLS.
-  caFingerprint: '20:0D:CA:FA:76:...',
-  tls: {
-    // might be required if it's a self-signed certificate
-    rejectUnauthorized: false
-  }
+  // SHA256 fingerprint of the CA certificate Elasticsearch prints at startup.
+  caFingerprint: '20:0D:CA:FA:76:...'
 })
 ```
 
