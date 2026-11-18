@@ -32,6 +32,9 @@ To check for security updates, go to [Security announcements for the Elastic sta
 - **Msearch helper accepts empty options:** `helpers.msearch()` can be created without `searches`. Searches are queued afterward with `search()`. Generated `MsearchRequest.searches` is required, so the helper type keeps that field optional.
 - **`retryOnTimeout` and `retryBackoff` client options are now applied:** Both options are now accepted by `ClientOptions` and forwarded to the transport. Previously, they were ignored.
 - **ES|QL Arrow types no longer break ESM type-checking:** The `apache-arrow` type definitions were removed from the package entrypoint and moved to an opt-in `@elastic/elasticsearch/helpers-arrow` module. Previously, ESM consumers using `nodenext` resolution hit a `TS2307` error even without using the Arrow helpers. See [breaking changes](breaking-changes.md) for details ([#3419](https://github.com/elastic/elasticsearch-js/issues/3419)).
+- **Child client headers are merged with the parent's:** `client.child({ headers })` now merges the given headers over the parent's headers instead of replacing them. Previously, a grandchild client lost its parent's headers. An inherited `authorization` header is dropped when the child sets its own `auth`.
+- **Bulk helper handles throttled deletes correctly:** When retries for throttled (`429`) operations are exhausted, `delete` actions are now reported correctly in `onDrop`. Previously, the next action was reported as the delete's document, and a trailing delete threw a `DeserializationError`.
+- **Invalid `cloud.id` values throw `ConfigurationError`:** A `cloud.id` that decodes to an invalid host, or to a host that contains credentials, now throws `ConfigurationError`. Previously, it threw a `TypeError` or `URIError`.
 
 ## 9.5.1 [elasticsearch-javascript-client-9.5.1]
 
