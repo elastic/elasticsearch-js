@@ -407,6 +407,29 @@ test('Elastic Cloud config', t => {
     t.end()
   })
 
+  t.test('Cloud ID decoding to an invalid host will throw ConfigurationError', t => {
+    t.throws(() => new Client({
+      cloud: {
+        id: `name:${Buffer.from('a b$c').toString('base64')}`
+      }
+    }), errors.ConfigurationError)
+    t.end()
+  })
+
+  t.test('Cloud ID decoding to a host with credentials will throw ConfigurationError', t => {
+    t.throws(() => new Client({
+      cloud: {
+        id: `name:${Buffer.from('example.com$%user@host').toString('base64')}`
+      }
+    }), errors.ConfigurationError)
+    t.throws(() => new Client({
+      cloud: {
+        id: `name:${Buffer.from('example.com$:pass%@host').toString('base64')}`
+      }
+    }), errors.ConfigurationError)
+    t.end()
+  })
+
   t.end()
 })
 

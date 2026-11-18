@@ -29,10 +29,11 @@ test('cloud.id "name:base64(host$es[$kb])" resolves to https://<es>.<host> with 
   assert.equal(sent[0].headers['content-encoding'], 'gzip')
 }))
 
-test('a malformed cloud.id only ever throws ConfigurationError', { todo: 'known bug: cloud ids decoding to an invalid host throw TypeError' }, async () => await hegel.test(tc => {
+test('a malformed cloud.id only ever throws ConfigurationError', async () => await hegel.test(tc => {
   const id = tc.draw(gs.oneOf(
     gs.text(),
-    gs.tuples(gs.text({ maxSize: 5 }), gs.text()).map(([n, rest]) => `${n}:${base64(rest)}`)
+    gs.tuples(gs.text({ maxSize: 5 }), gs.text()).map(([n, rest]) => `${n}:${base64(rest)}`),
+    gs.tuples(gs.text({ minSize: 1 }), gs.text({ minSize: 1 })).map(([host, es]) => `name:${base64(`${host}$${es}`)}`)
   ))
   try {
     // eslint-disable-next-line no-new
