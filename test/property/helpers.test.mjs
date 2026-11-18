@@ -20,8 +20,6 @@ test('bulk helper delivers every document once and accounts for each exactly onc
     payload: jsonObject
   }), { maxSize: 12 })).map((d, id) => ({ ...d, id: String(id) }))
   const retries = tc.draw(gs.integers({ minValue: 0, maxValue: 3 }))
-  // throttled deletes that exhaust retries are covered by the todo test below
-  for (const d of docs) if (d.op === 'delete') d.fate.throttled = Math.min(d.fate.throttled, retries)
   const attempts = new Map()
 
   const { client, sent } = scriptedClient(({ body }) => {
@@ -76,7 +74,7 @@ test('bulk helper delivers every document once and accounts for each exactly onc
   }
 }))
 
-test('bulk helper drops deletes that are still throttled after all retries', { todo: 'known bug: onDrop walks retried ndjson in pairs, so a dropped delete throws DeserializationError' }, async () => await hegel.testAsync(async tc => {
+test('bulk helper drops deletes that are still throttled after all retries', async () => await hegel.testAsync(async tc => {
   const ops = tc.draw(gs.arrays(gs.sampledFrom(['index', 'delete']), { minSize: 1, maxSize: 5 }))
   const retries = tc.draw(gs.integers({ minValue: 0, maxValue: 2 }))
   const { client } = scriptedClient(({ body }) => ({
@@ -91,7 +89,7 @@ test('bulk helper drops deletes that are still throttled after all retries', { t
     onDrop: d => dropped.push(d)
   })
   assert.equal(stats.failed, ops.length)
-  assert.deepEqual(dropped.map(d => Object.keys(d.operation)[0]), ops)
+  assert.deepEqual(dropped.map(d => [Object.keys(d.operation)[0], d.document]), ops.map((op, i) => [op, op === 'delete' ? null : { op, i }]))
 }))
 
 test('bulk helper never builds a request over maxRequestBytes unless one operation alone is bigger', async () => await hegel.testAsync(async tc => {
