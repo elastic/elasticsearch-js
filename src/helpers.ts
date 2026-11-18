@@ -871,7 +871,7 @@ export default class Helpers {
             setTimeout(tryBulk, wait, bulkBody, retryDocuments)
             return
           }
-          for (let i = 0, len = bulkBody.length; i < len; i = i + 2) {
+          for (let i = 0, len = bulkBody.length; i < len; i++) {
             const operation = Object.keys(serializer.deserialize(bulkBody[i]))[0]
             onDrop({
               status: 429,
@@ -879,8 +879,7 @@ export default class Helpers {
               operation: serializer.deserialize(bulkBody[i]),
               // @ts-expect-error
               document: operation !== 'delete'
-                ? serializer.deserialize(bulkBody[i + 1])
-                /* istanbul ignore next */
+                ? serializer.deserialize(bulkBody[++i])
                 : null,
               retried: isRetrying
             })
