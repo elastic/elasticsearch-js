@@ -44466,8 +44466,12 @@ export interface WatcherReportingEmailAttachment {
 
 export type WatcherResponseContentType = 'json' | 'yaml' | 'text'
 
-interface WatcherScheduleContainerExclusiveProps {
+interface WatcherScheduleContainerCommonProps {
+  /** The time zone to use for the schedule. Not supported for `interval` schedules. */
   timezone?: string
+}
+
+interface WatcherScheduleContainerExclusiveProps {
   cron?: WatcherCronExpression
   daily?: WatcherDailySchedule
   hourly?: WatcherHourlySchedule
@@ -44477,7 +44481,7 @@ interface WatcherScheduleContainerExclusiveProps {
   yearly?: WatcherTimeOfYear | WatcherTimeOfYear[]
 }
 
-export type WatcherScheduleContainer = ExactlyOne<WatcherScheduleContainerExclusiveProps>
+export type WatcherScheduleContainer = WatcherScheduleContainerCommonProps & ExactlyOne<WatcherScheduleContainerExclusiveProps>
 
 export type WatcherScheduleTimeOfDay = string | WatcherHourAndMinute
 
