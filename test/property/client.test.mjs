@@ -29,10 +29,11 @@ test('cloud.id "name:base64(host$es[$kb])" resolves to https://<es>.<host> with 
   assert.equal(sent[0].headers['content-encoding'], 'gzip')
 }))
 
-test('a malformed cloud.id only ever throws ConfigurationError', { todo: 'known bug: cloud ids decoding to an invalid host throw TypeError' }, async () => await hegel.test(tc => {
+test('a malformed cloud.id only ever throws ConfigurationError', async () => await hegel.test(tc => {
   const id = tc.draw(gs.oneOf(
     gs.text(),
-    gs.tuples(gs.text({ maxSize: 5 }), gs.text()).map(([n, rest]) => `${n}:${base64(rest)}`)
+    gs.tuples(gs.text({ maxSize: 5 }), gs.text()).map(([n, rest]) => `${n}:${base64(rest)}`),
+    gs.tuples(gs.text({ minSize: 1 }), gs.text({ minSize: 1 })).map(([host, es]) => `name:${base64(`${host}$${es}`)}`)
   ))
   try {
     // eslint-disable-next-line no-new
@@ -103,12 +104,21 @@ test('child clients share the pool, send their own headers, and never mutate the
 }))
 
 // matches elasticsearch-py, where client.options(headers=...) merges over the parent's headers
-test('child headers merge over the parent headers', { todo: 'known bug: child({ headers }) replaces the parent headers instead of merging' }, async () => await hegel.testAsync(async tc => {
+test('child headers merge over the parent headers', async () => await hegel.testAsync(async tc => {
   const parentHeaders = tc.draw(headerMap)
   const childHeaders = tc.draw(headerMap)
   const { client, sent } = scriptedClient(() => ({}), { headers: parentHeaders })
   await client.child({ headers: childHeaders }).info()
   for (const [k, v] of Object.entries({ ...parentHeaders, ...childHeaders })) assert.equal(sent[0].headers[k], v)
+}))
+
+test('grandchild headers merge over child and parent headers', async () => await hegel.testAsync(async tc => {
+  const parentHeaders = tc.draw(headerMap)
+  const childHeaders = tc.draw(headerMap)
+  const grandchildHeaders = tc.draw(headerMap)
+  const { client, sent } = scriptedClient(() => ({}), { headers: parentHeaders })
+  await client.child({ headers: childHeaders }).child({ headers: grandchildHeaders }).info()
+  for (const [k, v] of Object.entries({ ...parentHeaders, ...childHeaders, ...grandchildHeaders })) assert.equal(sent[0].headers[k], v)
 }))
 
 test('caFingerprint is rejected whenever any node is plain http', async () => await hegel.test(tc => {

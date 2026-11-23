@@ -269,6 +269,22 @@ test('Override authentication per request', async t => {
   )
 })
 
+test('Child client headers merge over the parent headers', async t => {
+  const root = new Client({ node: 'http://localhost:9200', headers: { a: 'parent', b: 'parent' } })
+  const child = root.child({ headers: { b: 'child', c: 'child' } })
+  const headers = child.transport[symbols.kHeaders]
+  t.equal(headers.a, 'parent')
+  t.equal(headers.b, 'child')
+  t.equal(headers.c, 'child')
+  t.equal(root.transport[symbols.kHeaders].c, undefined, 'parent should be unchanged')
+})
+
+test('Child client auth overrides parent auth when child headers are set', async t => {
+  const root = new Client({ node: 'http://localhost:9200', auth: { apiKey: 'parent' } })
+  const child = root.child({ auth: { apiKey: 'child' }, headers: { a: 'child' } })
+  t.equal(child.transport[symbols.kHeaders].authorization, 'ApiKey child')
+})
+
 test('Child client auth should not affect sibling children', async t => {
   const requests: { label: string, auth: string | undefined }[] = []
 
@@ -387,6 +403,29 @@ test('Elastic Cloud config', t => {
         password: 'changeme'
       }
 
+    }), errors.ConfigurationError)
+    t.end()
+  })
+
+  t.test('Cloud ID decoding to an invalid host will throw ConfigurationError', t => {
+    t.throws(() => new Client({
+      cloud: {
+        id: `name:${Buffer.from('a b$c').toString('base64')}`
+      }
+    }), errors.ConfigurationError)
+    t.end()
+  })
+
+  t.test('Cloud ID decoding to a host with credentials will throw ConfigurationError', t => {
+    t.throws(() => new Client({
+      cloud: {
+        id: `name:${Buffer.from('example.com$%user@host').toString('base64')}`
+      }
+    }), errors.ConfigurationError)
+    t.throws(() => new Client({
+      cloud: {
+        id: `name:${Buffer.from('example.com$:pass%@host').toString('base64')}`
+      }
     }), errors.ConfigurationError)
     t.end()
   })

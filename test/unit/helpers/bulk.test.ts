@@ -429,6 +429,43 @@ test('bulk index', t => {
       server.stop()
     })
 
+    t.test('Should drop deletes that are still throttled after all retries', async t => {
+      function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+        res.setHeader('content-type', 'application/json')
+        res.end(JSON.stringify({
+          took: 0,
+          errors: true,
+          items: [
+            { delete: { status: 429 } },
+            { index: { status: 429 } }
+          ]
+        }))
+      }
+
+      const [{ port }, server] = await buildServer(handler)
+      const client = new Client({ node: `http://localhost:${port}` })
+      const dropped: any[] = []
+      const result = await client.helpers.bulk({
+        datasource: [{ op: 'delete', id: '1' }, { op: 'index', id: '2' }],
+        concurrency: 1,
+        wait: 10,
+        retries: 1,
+        onDocument (doc) {
+          return { [doc.op]: { _index: 'test', _id: doc.id } } as any
+        },
+        onDrop (doc) {
+          dropped.push(doc)
+        }
+      })
+
+      t.same(dropped, [
+        { status: 429, error: null, operation: { delete: { _index: 'test', _id: '1' } }, document: null, retried: true },
+        { status: 429, error: null, operation: { index: { _index: 'test', _id: '2' } }, document: { op: 'index', id: '2' }, retried: true }
+      ])
+      t.match(result, { total: 2, successful: 0, failed: 2 })
+      server.stop()
+    })
+
     t.test('Should perform a bulk request (failure)', async t => {
       async function handler (req: http.IncomingMessage, res: http.ServerResponse) {
         t.equal(req.url, '/_bulk')
