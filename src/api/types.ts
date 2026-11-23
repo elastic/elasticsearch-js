@@ -42791,8 +42791,11 @@ export interface WatcherReportingEmailAttachment {
 
 export type WatcherResponseContentType = 'json' | 'yaml' | 'text'
 
-interface WatcherScheduleContainerExclusiveProps {
+interface WatcherScheduleContainerCommonProps {
   timezone?: string
+}
+
+interface WatcherScheduleContainerExclusiveProps {
   cron?: WatcherCronExpression
   daily?: WatcherDailySchedule
   hourly?: WatcherHourlySchedule
@@ -42802,7 +42805,7 @@ interface WatcherScheduleContainerExclusiveProps {
   yearly?: WatcherTimeOfYear | WatcherTimeOfYear[]
 }
 
-export type WatcherScheduleContainer = ExactlyOne<WatcherScheduleContainerExclusiveProps>
+export type WatcherScheduleContainer = WatcherScheduleContainerCommonProps & ExactlyOne<WatcherScheduleContainerExclusiveProps>
 
 export type WatcherScheduleTimeOfDay = string | WatcherHourAndMinute
 
