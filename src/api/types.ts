@@ -17864,8 +17864,8 @@ export interface ClusterStatsDenseVectorOffHeapStats {
   total_veq_size?: ByteSize
   total_vex_size_bytes: long
   total_vex_size?: ByteSize
-  total_cenif_size_bytes: long
-  total_cenif_size?: ByteSize
+  total_cenivf_size_bytes: long
+  total_cenivf_size?: ByteSize
   total_clivf_size_bytes: long
   total_clivf_size?: ByteSize
   fielddata?: Record<string, Record<string, long>>
@@ -41565,8 +41565,11 @@ export interface WatcherReportingEmailAttachment {
 
 export type WatcherResponseContentType = 'json' | 'yaml' | 'text'
 
-interface WatcherScheduleContainerExclusiveProps {
+interface WatcherScheduleContainerCommonProps {
   timezone?: string
+}
+
+interface WatcherScheduleContainerExclusiveProps {
   cron?: WatcherCronExpression
   daily?: WatcherDailySchedule
   hourly?: WatcherHourlySchedule
@@ -41576,7 +41579,7 @@ interface WatcherScheduleContainerExclusiveProps {
   yearly?: WatcherTimeOfYear | WatcherTimeOfYear[]
 }
 
-export type WatcherScheduleContainer = ExactlyOne<WatcherScheduleContainerExclusiveProps>
+export type WatcherScheduleContainer = WatcherScheduleContainerCommonProps & ExactlyOne<WatcherScheduleContainerExclusiveProps>
 
 export type WatcherScheduleTimeOfDay = string | WatcherHourAndMinute
 
