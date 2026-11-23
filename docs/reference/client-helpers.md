@@ -694,7 +694,7 @@ for await (const recordBatch of reader) {
 
 Added in `v8.16.0`
 
-If you would like to pull the entire data set in Arrow format but without streaming, you can use the `toArrowTable` helper to get a [Table](https://arrow.apache.org/docs/js/classes/Arrow_dom.Table.md) back instead.
+If you would like to pull the entire data set in Arrow format but without streaming, you can use the `toArrowTable` helper to get a [Table](https://arrow.apache.org/js/current/classes/Arrow.dom.Table.html) back instead.
 
 ```ts
 const table = await client.helpers
